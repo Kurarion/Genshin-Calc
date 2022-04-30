@@ -1,0 +1,15 @@
+/* Add application styles & imports to this file! */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'material-icons/iconfont/material-icons.css';
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+mat-progress-bar .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}

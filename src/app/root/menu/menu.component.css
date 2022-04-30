@@ -1,0 +1,15 @@
+/* .menu-list > a:first-child {
+  border-top: 1px solid gainsboro;
+}
+.menu-list > a {
+  border-bottom: 1px solid gainsboro;
+} */
+
+:host ::ng-deep .mat-list-base {
+  padding-top: 0 !important;
+}
+
+.menu-list > a {
+  text-align: left;
+  white-space: nowrap;
+}

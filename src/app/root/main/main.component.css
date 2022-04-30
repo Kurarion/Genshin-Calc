@@ -1,0 +1,33 @@
+.main {
+  min-height: 100vh;
+}
+
+.head {
+  z-index: 10;
+}
+
+.menu {
+  z-index: 9;
+}
+
+.outlet {
+  z-index: 1;
+}
+
+.footer {
+  z-index: 2;
+}
+
+.menu-container {
+  overflow: auto;
+  height: 100%;
+}
+
+:host ::ng-deep .menu-container > div:first-child::-webkit-scrollbar {
+  width: 5px;
+}
+
+:host ::ng-deep .menu-container > div:first-child::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: grey;
+}

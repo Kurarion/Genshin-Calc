@@ -1,0 +1,28 @@
+.menu-title {
+  margin-left: 3px;
+  font-size: medium;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.lang-list {
+  text-align: left;
+}
+
+.mat-progress-bar {
+  height: 2px;
+  z-index: 11;
+}
+
+:host ::ng-deep .mat-progress-bar-fill::after {
+  background-color: #3f51b5b4;
+}
+
+/* 背景 */
+/* .mat-toolbar {
+  background: url('') no-repeat center;
+  background-size: cover;
+  color: #fff;
+} */
