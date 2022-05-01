@@ -6,7 +6,7 @@ import {
   HostListener,
 } from '@angular/core';
 import html2canvas from 'html2canvas';
-import { Const } from '../../const/const';
+import { Const } from 'src/app/shared/shared.module';
 import {
   copyBlobToClipboard,
   canCopyImagesToClipboard,

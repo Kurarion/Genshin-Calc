@@ -1,27 +1,28 @@
-<div fxLayout="column" class="main">
+<div class="main">
   <app-head
     class="head"
     [langs]="langs"
     (langSelectEvent)="changeLang($event)"
     (menuButtonClickEvent)="toggleMenu()"
   ></app-head>
-  <mat-sidenav-container fxFlex="grow">
+  <mat-sidenav-container class="menu-container">
     <mat-sidenav
       [mode]="isLargeFlg ? 'side' : 'over'"
       [opened]="menuOpenStatus"
-      class="menu-container"
+      class="menu-sidenav"
     >
       <app-menu class="menu" (menuClickEvent)="closeMenu($event)"></app-menu>
     </mat-sidenav>
-    <div [id]="captureElementID">
-      <router-outlet class="outlet">
-        <app-paste-event-listener
-          (pastedImage)="addPastedImage($event)"
-        ></app-paste-event-listener>
-        <app-artifact-list #artifactList></app-artifact-list>
-        ????????
-      </router-outlet>
-    </div>
+    <mat-sidenav-content>
+      <div [id]="captureElementID" class="outlet">
+        <router-outlet>
+          <app-paste-event-listener
+            (pastedImage)="addPastedImage($event)"
+          ></app-paste-event-listener>
+          <app-artifact-list #artifactList></app-artifact-list>
+        </router-outlet>
+      </div>
+    </mat-sidenav-content>
   </mat-sidenav-container>
   <app-footer class="footer"></app-footer>
 </div>

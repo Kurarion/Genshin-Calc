@@ -1,3 +1,3 @@
 <div class="footer">
-  <span>△〇□×</span>
+  <span [innerText]="(progressFlg |async)?(progressMsg|async):defalutMsg"></span>
 </div>

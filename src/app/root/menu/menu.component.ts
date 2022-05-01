@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MenuInfo, Const } from '../../shared/shared.module';
+import { MenuInfo, Const } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-menu',

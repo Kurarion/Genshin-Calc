@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Const } from './shared/shared.module';
+import { Const } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
-  // {
-  //   path: Const.menu_1,
-  //   loadChildren: () =>
-  //     import('./feature/test1/test1.module').then((m) => m.Test1Module),
-  // },
+  {
+    path: Const.menu_1,
+    loadChildren: () =>
+      import('./features/character/character.module').then((m) => m.CharacterModule),
+  },
   // {
   //   path: Const.menu_2,
   //   loadChildren: () =>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createScheduler, createWorker } from 'tesseract.js';
-import { GlobalProgressService } from '../shared.module';
+import { GlobalProgressService } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root',
@@ -8,11 +8,11 @@ import { GlobalProgressService } from '../shared.module';
 export class OcrService {
   private scheduler = createScheduler();
   private worker1 = createWorker({
-    logger: (m) => this.progress(m.progress),
+    logger: (m) => this.progress(m),
   });
   private worker1ready: Promise<any>;
   private worker2 = createWorker({
-    logger: (m) => this.progress(m.progress),
+    logger: (m) => this.progress(m),
   });
   private worker2ready: Promise<any>;
 
@@ -46,7 +46,8 @@ export class OcrService {
     console.log(text);
   }
 
-  private progress(value: number) {
-    this.globalProgressService.setValue(value * 100);
+  private progress(log: any) {
+    this.globalProgressService.setProgressMessage(log.status);
+    this.globalProgressService.setValue(log.progress * 100);
   }
 }

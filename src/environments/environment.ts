@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   defaultLang: 'cn_sim',
+  footerMsgs: ['△〇□×'],
 };
 
 /*

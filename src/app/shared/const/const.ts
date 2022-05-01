@@ -1,4 +1,4 @@
-import { MenuInfo, LangInfo } from '../interface/interface';
+import { MenuInfo, LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
 
 export class Const {
   //*********************************
@@ -16,11 +16,18 @@ export class Const {
     { code: 'jp', displayName: '日本語' },
   ];
 
-  static readonly MAP_TESSERACT_LANG: Record<string, string> = {
+  static readonly MAP_TESSERACT_LANG: Record<TYPE_SYS_LANG, TYPE_TESSERACT_LANG> = {
     cn_sim: 'chi_sim',
     cn_tra: 'chi_tra',
     en: 'eng',
     jp: 'jpn',
+  };
+
+  static readonly MAP_GENSHINDB_LANG: Record<TYPE_SYS_LANG, TYPE_GENSHINDB_LANG> = {
+    cn_sim: 'ChineseSimplified',
+    cn_tra: 'ChineseTraditional',
+    en: 'English',
+    jp: 'Japanese',
   };
 
   //*********************************

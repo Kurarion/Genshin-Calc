@@ -9,7 +9,7 @@ import {
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { GlobalProgressService, LangInfo } from '../../shared/shared.module';
+import { GlobalProgressService, LangInfo } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-head',
@@ -35,9 +35,9 @@ export class HeadComponent implements OnInit {
     private translate: TranslateService,
     private globalProgressService: GlobalProgressService
   ) {
-    this.progressMode = globalProgressService.getMode();
-    this.progressValue = globalProgressService.getValue();
-    this.progressBufferValue = globalProgressService.getBufferValue();
+    this.progressMode = this.globalProgressService.getMode();
+    this.progressValue = this.globalProgressService.getValue();
+    this.progressBufferValue = this.globalProgressService.getBufferValue();
   }
 
   ngOnInit() {}

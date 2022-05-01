@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OcrService } from '../../shared.module';
+import { OcrService } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-artifact-list',

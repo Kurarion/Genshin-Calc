@@ -10,7 +10,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CookieService } from 'ngx-cookie-service';
 
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './root/main/main.component';

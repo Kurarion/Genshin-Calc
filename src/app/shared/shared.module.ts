@@ -10,9 +10,14 @@ export { ArtifactListComponent } from './component/artifact-list/artifact-list.c
 
 export { GlobalProgressService } from './service/global-progress.service';
 export { OcrService } from './service/ocr.service';
+export { CharacterService } from './service/character.service';
+export { StorageService } from './service/storage.service';
 
 export * from './const/const';
 export * from './interface/interface';
+export * from './class/character';
+
+export const genshindb = require('genshin-db');
 
 let shardList: any[] = [
   CaptureHtmlComponent,

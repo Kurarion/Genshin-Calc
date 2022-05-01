@@ -15,10 +15,12 @@ import {
   GlobalProgressService,
   LangInfo,
   MenuInfo,
+  Const,
   OcrService,
-} from '../../shared/shared.module';
-import { environment } from '../../../environments/environment';
-import { Const } from '../../shared/const/const';
+  StorageService,
+  TYPE_SYS_LANG,
+} from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -40,21 +42,22 @@ export class MainComponent implements OnInit, OnDestroy {
   //言語リスト
   langs: LangInfo[] = Const.LIST_LANG;
   langCodes: string[] = this.langs.map((l) => l.code);
-  currentLangCode: string = "";
+  currentLangCode!: TYPE_SYS_LANG;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private translateService: TranslateService,
     private titleService: Title,
     private globalProgressService: GlobalProgressService,
-    private ocrService: OcrService
+    private ocrService: OcrService,
+    private storageService: StorageService,
   ) {
     //言語設定
-    translateService.addLangs(this.langCodes);
+    this.translateService.addLangs(this.langCodes);
     //言語初期化
     this.initLang();
     //レイアウトフラグ
-    this.isLarge = breakpointObserver.observe(['(min-width: 700px)']).pipe(
+    this.isLarge = this.breakpointObserver.observe(['(min-width: 700px)']).pipe(
       takeUntil(this.destroyed),
       map((state: BreakpointState) => {
         return state.matches;
@@ -125,18 +128,18 @@ export class MainComponent implements OnInit, OnDestroy {
    * 言語初期化
    */
   private initLang() {
-    //ローカルストレージから復元
+    //ストレージから復元
     const lang =
-      localStorage.getItem(Const.STORAGE_LANG) ??
+      this.storageService.getLang() ??
       this.translateService.getDefaultLang();
     //言語設定
-    this.setLang(lang);
+    this.setLang(lang as TYPE_SYS_LANG);
   }
 
   /**
    * 言語設定
    */
-  private setLang(langCode: string) {
+  private setLang(langCode: TYPE_SYS_LANG) {
     //UI言語切り替え
     this.translateService
       .use(
@@ -153,8 +156,8 @@ export class MainComponent implements OnInit, OnDestroy {
         );
         //タブタイトル初期化
         this.updateTabTitleName();
-        //ローカルストレージに保存
-        localStorage.setItem(Const.STORAGE_LANG, this.currentLangCode);
+        //ストレージに保存
+        this.storageService.setLang(this.currentLangCode);
       });
   }
 
@@ -163,7 +166,6 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   private updateTabTitleName() {
     this.translateService.get('TITLE').subscribe((res: string) => {
-      console.log("to set: ", res)
       this.titleService.setTitle(res);
     });
   }
