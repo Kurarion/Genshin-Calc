@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DBCharacter, genshindb } from 'src/app/shared/shared.module';
+import { DBCharacter, HttpService } from 'src/app/shared/shared.module';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-main',
@@ -9,16 +10,29 @@ import { DBCharacter, genshindb } from 'src/app/shared/shared.module';
 export class MainComponent implements OnInit {
 
   backgroundURL!: string;
+  data!: any; 
 
-  constructor() { }
+  constructor(private httpClient: HttpClient, private httpService: HttpService) { }
 
   ngOnInit(): void {
-    let data = DBCharacter.create("ganyu", {resultLanguage: 'cn_sim'});
+    this.data = DBCharacter.create("hutao", {resultLanguage: 'cn_sim'});
     console.log(DBCharacter.listNames("liyue", {resultLanguage: 'cn_sim'}))
-    console.log(data)
-    console.log(data.stats("80"))
+    console.log(this.data)
+    console.log(this.data.stats("80"))
 
-    this.backgroundURL = data.images.cover1;
+    this.httpService.get<Blob>(this.data.images.cover1, 'blob').then((v: Blob|null)=>{
+      if(v){
+        this.backgroundURL = window.URL.createObjectURL(v);
+      }
+    })
+  }
+
+  test(){
+    this.httpService.get<Blob>(this.data.images.cover1, 'blob').then((v: Blob|null)=>{
+      if(v){
+        this.backgroundURL = window.URL.createObjectURL(v);
+      }
+    })
   }
 
 }

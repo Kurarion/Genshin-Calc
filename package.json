@@ -25,6 +25,7 @@
     "copy-image-clipboard": "^2.1.2",
     "genshin-db": "^4.1.1",
     "html2canvas": "^1.4.1",
+    "image-js": "^0.34.0",
     "material-icons": "^1.10.9",
     "ngx-cookie-service": "^13.2.0",
     "rxjs": "~7.5.0",

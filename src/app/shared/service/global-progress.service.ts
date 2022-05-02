@@ -103,6 +103,6 @@ export class GlobalProgressService {
   //処理終了
   private end() {
     this.isOnProgress.next(false);
-    this.progessMessage.next(' ');
+    this.progessMessage.next('');
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createScheduler, createWorker } from 'tesseract.js';
 import { GlobalProgressService } from 'src/app/shared/shared.module';
+const { Image } = require('image-js');
 
 @Injectable({
   providedIn: 'root',
@@ -40,10 +41,72 @@ export class OcrService {
   }
 
   async ocr(image: Blob) {
-    const {
-      data: { text },
-    } = await this.scheduler.addJob('recognize', image);
-    console.log(text);
+    //結果リスト[キャラ画面のアーティファクト, アーティファクト（サブ）, アーティファクト（メイン）]
+    let texts: string[];
+    //結果Promise
+    let textPromises: Promise<string>[] = [];
+    //元画像
+    let temp = await Image.load(await image.arrayBuffer())
+
+    //キャラ画面のアーティファクト
+    textPromises.push(temp
+    .gaussianFilter({
+      radius: '1',
+      sigma: '0.59'
+    })
+    .grey({
+      algorithm: 'lightness'
+    })
+    .mask({
+      algorithm: 'minimum'
+    }).toBlob().then(async (image: any) => {
+      return this.scheduler.addJob('recognize', await image.arrayBuffer());
+    }).then((data: any) => {
+      return data.data.text;
+    }));
+
+    //アーティファクト（サブ）
+    textPromises.push(temp
+    .gaussianFilter({
+      radius: '1',
+    })
+    .grey({
+      algorithm: 'red'
+    }).toBlob().then(async (image: any) => {
+      return this.scheduler.addJob('recognize', await image.arrayBuffer());
+    }).then((data: any) => {
+      return data.data.text;
+    }))
+    //アーティファクト（メイン）
+    textPromises.push(temp
+    .gaussianFilter({
+      radius: '1',
+    })
+    .grey({
+      algorithm: 'magenta'
+    }).toBlob().then(async (image: any) => {
+      return this.scheduler.addJob('recognize', await image.arrayBuffer());
+    }).then((data: any) => {
+      return data.data.text;
+    }));
+
+    // //test
+    // //aタグを作る
+    // let link = document.createElement('a');
+    // //ブラウザで表示、新タブでファイルを開く
+    // link.target = '_blank';
+    // //BlobのURLを作る
+    // const url = window.URL.createObjectURL(thresholdImage);
+    // //BolbのURLをaタグのURLに設定
+    // link.href = url;
+    // //ファイルをダウンロード
+    // link.click();
+
+    //ocr
+    texts = await Promise.all(textPromises);
+
+    //TODO
+    console.log(texts);
   }
 
   private progress(log: any) {

@@ -12,6 +12,7 @@ export { GlobalProgressService } from './service/global-progress.service';
 export { OcrService } from './service/ocr.service';
 export { CharacterService } from './service/character.service';
 export { StorageService } from './service/storage.service';
+export { HttpService } from './service/http.service';
 
 export * from './const/const';
 export * from './interface/interface';
