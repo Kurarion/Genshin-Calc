@@ -11,7 +11,7 @@
     position:absolute;
     background-position: right top;
     background-size: cover;
-    opacity: 0.15;
+    /* opacity: 0.15; */
     z-index: -1;
     height: 100%;
     width: 100%;

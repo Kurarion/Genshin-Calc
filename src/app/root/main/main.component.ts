@@ -4,23 +4,19 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
-  ElementRef,
 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import {
   ArtifactListComponent,
-  GlobalProgressService,
   LangInfo,
   MenuInfo,
   Const,
-  OcrService,
+  LanguageService,
   StorageService,
   TYPE_SYS_LANG,
 } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -40,20 +36,16 @@ export class MainComponent implements OnInit, OnDestroy {
   isLarge!: Observable<boolean>;
   isLargeFlg: boolean = true;
   //言語リスト
-  langs: LangInfo[] = Const.LIST_LANG;
-  langCodes: string[] = this.langs.map((l) => l.code);
-  currentLangCode!: TYPE_SYS_LANG;
+  langs!: LangInfo[];
 
   constructor(
     private breakpointObserver: BreakpointObserver,
+    private languageService: LanguageService,
     private translateService: TranslateService,
-    private titleService: Title,
-    private globalProgressService: GlobalProgressService,
-    private ocrService: OcrService,
     private storageService: StorageService,
   ) {
-    //言語設定
-    this.translateService.addLangs(this.langCodes);
+    //言語リスト初期化
+    this.langs = this.languageService.langs;
     //言語初期化
     this.initLang();
     //レイアウトフラグ
@@ -113,7 +105,7 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   changeLang(selectLang: LangInfo) {
     //言語設定
-    this.setLang(selectLang.code);
+    this.languageService.nextLang(selectLang.code);
   }
 
   /**
@@ -133,40 +125,6 @@ export class MainComponent implements OnInit, OnDestroy {
       this.storageService.getLang() ??
       this.translateService.getDefaultLang();
     //言語設定
-    this.setLang(lang as TYPE_SYS_LANG);
-  }
-
-  /**
-   * 言語設定
-   */
-  private setLang(langCode: TYPE_SYS_LANG) {
-    //UI言語切り替え
-    this.translateService
-      .use(
-        langCode?.match(new RegExp(this.langs.join('|')))
-          ? langCode
-          : environment.defaultLang
-      )
-      .subscribe(() => {
-        //デフォルト言語に設定
-        this.currentLangCode = langCode;
-        //OCR言語設定
-        this.ocrService.setLanguage(
-          Const.MAP_TESSERACT_LANG[this.currentLangCode]
-        );
-        //タブタイトル初期化
-        this.updateTabTitleName();
-        //ストレージに保存
-        this.storageService.setLang(this.currentLangCode);
-      });
-  }
-
-  /**
-   * タブタイトル言語更新
-   */
-  private updateTabTitleName() {
-    this.translateService.get('TITLE').subscribe((res: string) => {
-      this.titleService.setTitle(res);
-    });
+    this.languageService.nextLang(lang as TYPE_SYS_LANG);
   }
 }

@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Const } from 'src/app/shared/shared.module';
 
-const routes: Routes = [
+const routes: Routes = 
+[
   {
     path: Const.menu_1,
     loadChildren: () =>

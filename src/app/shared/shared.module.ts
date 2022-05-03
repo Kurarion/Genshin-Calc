@@ -3,9 +3,14 @@ import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from '../angular-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+export const genshindb = require('genshin-db');
+
 import { CaptureHtmlComponent } from './component/capture-html/capture-html.component';
 import { PasteEventListenerComponent } from './component/paste-event-listener/paste-event-listener.component';
 import { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
+import { Const } from './const/const';
+import { CharacterService } from './service/character.service';
+import { LanguageService } from './service/language.service';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 
 export { GlobalProgressService } from './service/global-progress.service';
@@ -13,12 +18,11 @@ export { OcrService } from './service/ocr.service';
 export { CharacterService } from './service/character.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
+export { LanguageService } from './service/language.service';
 
 export * from './const/const';
 export * from './interface/interface';
 export * from './class/character';
-
-export const genshindb = require('genshin-db');
 
 let shardList: any[] = [
   CaptureHtmlComponent,
@@ -35,6 +39,7 @@ let shardList: any[] = [
       extend: true,
     }),
   ],
+  providers: [Const, LanguageService],
   exports: shardList.concat([TranslateModule]),
 })
-export class SharedModule {}
+export class SharedModule { }

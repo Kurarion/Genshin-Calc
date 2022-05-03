@@ -1,12 +1,12 @@
 <div class="main">
-    <div class="background" [style.background-image]="'url(' + backgroundURL + ')'"></div>
+    <div [@imgLoad]="backgroundLoadFlg?'loaded':'beforeLoad'" class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'"></div>
     <!-- <img [src]="backgroundURL"> -->
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
-    <button mat-raised-button color="primary" (click)="test()">fdfdfdf</button>
+    <button mat-raised-button color="primary">fdfdfdf</button>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
     <p>dddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
