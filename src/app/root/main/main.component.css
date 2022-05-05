@@ -26,14 +26,15 @@
 }
 
 .menu-sidenav {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-:host ::ng-deep .menu-container > div:first-child::-webkit-scrollbar {
+:host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar {
   width: 5px;
 }
 
-:host ::ng-deep .menu-container > div:first-child::-webkit-scrollbar-thumb {
+:host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: grey;
 }

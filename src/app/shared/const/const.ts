@@ -1,4 +1,4 @@
-import { MenuInfo, LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
+import { LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
 
 export class Const {
   //*********************************
@@ -38,28 +38,6 @@ export class Const {
   //*********************************
   //            メニュー
   //*********************************
-  static readonly menu_1 = 'test1';
-  static readonly menu_2 = 'test2';
-  static readonly menu_3 = 'test3';
+  static readonly MENU_CHARACTER = 'character';
 
-  static readonly menus: MenuInfo[] = [
-    {
-      name: Const.menu_1,
-      link: 'test1',
-    },
-    {
-      name: Const.menu_2,
-      link: 'test2',
-    },
-    {
-      name: Const.menu_3,
-      link: 'test3',
-    },
-  ];
-
-  static readonly menuNames: Record<string, string> = {
-    test1: 'テスト１',
-    test2: 'テスト２',
-    test3: 'テスト３',
-  };
 }

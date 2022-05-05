@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CharacterService, DBCharacter, HttpService } from 'src/app/shared/shared.module';
-import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
+import { CharacterQueryParam, CharacterService, HttpService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -28,19 +27,17 @@ export class MainComponent implements OnInit {
   backgroundLoadFlg!: boolean;
   data!: any;
 
-  constructor(private httpService: HttpService, private router: ActivatedRoute, private characterService: CharacterService) { }
+  constructor(private httpService: HttpService, private route: ActivatedRoute, private characterService: CharacterService) { }
 
   ngOnInit(): void {
-    this.router.queryParamMap
-
-    this.data = this.characterService.get("胡桃");
+    this.route.queryParams
+      .subscribe((params: CharacterQueryParam) => {
+        this.data = this.characterService.get(params.name!);
+        //背景初期化
+        this.initializeBackGroundImage();
+      }
+    );
     console.log(this.data)
-    // this.data = DBCharacter.create("hutao", { resultLanguage: 'cn_sim' });
-    // console.log(DBCharacter.listNames("liyue", { resultLanguage: 'cn_sim' }))
-    // console.log(this.data)
-    // console.log(this.data.stats("80"))
-    //背景初期化
-    this.initializeBackGroundImage();
   }
 
   /**
@@ -49,7 +46,7 @@ export class MainComponent implements OnInit {
   private initializeBackGroundImage() {
     if (!this.backgroundURL) {
       this.backgroundLoadFlg = false;
-      this.httpService.get<Blob>(this.data.images.cover1, 'blob').then((v: Blob | null) => {
+      this.httpService.get<Blob>(this.data.images.cover1 ?? this.data.images.portrait, 'blob').then((v: Blob | null) => {
         if (v) {
           this.backgroundURL = window.URL.createObjectURL(v);
           setTimeout(() => {

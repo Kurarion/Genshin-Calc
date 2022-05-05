@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject } from 'rxjs';
+import { lastValueFrom, map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { CharacterService, Const, LangInfo, OcrService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
@@ -11,13 +11,14 @@ import { environment } from 'src/environments/environment';
 export class LanguageService {
 
   //言語リスト
-  langs: LangInfo[] = Const.LIST_LANG;
-  langCodes: string[] = this.langs.map((l) => l.code);
+  static langs: LangInfo[] = Const.LIST_LANG;
+  static langCodes: TYPE_SYS_LANG[] = LanguageService.langs.map((l) => l.code);
   private currentLang!: TYPE_SYS_LANG;
 
   //使用中の言語
   private currentLangCode: Subject<TYPE_SYS_LANG> = new Subject<TYPE_SYS_LANG>();
   private currentLangCode$: Observable<TYPE_SYS_LANG> = this.currentLangCode.asObservable();
+  private currentLangCodeAfterPreProcess: Observable<TYPE_SYS_LANG>;
 
   constructor(private translateService: TranslateService,
     private storageService: StorageService,
@@ -25,50 +26,58 @@ export class LanguageService {
     private ocrService: OcrService,
     private titleService: Title) {
     //言語設定
-    this.translateService.addLangs(this.langCodes);
+    this.translateService.addLangs(LanguageService.langCodes);
     //言語変更監視
-    this.currentLangCode$.subscribe((nextLang: TYPE_SYS_LANG)=>{
-      this.setLang(nextLang);
-      this.currentLang = nextLang;
-    })
+    this.currentLangCodeAfterPreProcess = this.currentLangCode$.pipe(
+      switchMap((nextLang: TYPE_SYS_LANG, index: number) => {
+        return this.setLang(nextLang).pipe(
+          tap(()=>{
+            this.currentLang = nextLang;
+          })
+        );
+      })
+    );
   }
 
-  nextLang(lang :TYPE_SYS_LANG){
+  nextLang(lang: TYPE_SYS_LANG) {
     //言語設定
     this.currentLangCode.next(lang);
   }
 
-  getLang(){
-    return this.currentLangCode$;
+  getLang() {
+    return this.currentLangCodeAfterPreProcess;
   }
 
-  getCurrentLang(){
+  getCurrentLang() {
     return this.currentLang;
   }
 
   /**
    * 言語設定
    */
-  private setLang(langCode: TYPE_SYS_LANG) {
+  private setLang(langCode: TYPE_SYS_LANG): Observable<TYPE_SYS_LANG> {
     //UI言語切り替え
-    this.translateService
+    return this.translateService
       .use(
-        langCode?.match(new RegExp(this.langs.join('|')))
+        langCode?.match(new RegExp(LanguageService.langs.join('|')))
           ? langCode
           : environment.defaultLang
-      )
-      .subscribe(() => {
-        //OCR言語設定
-        this.ocrService.setLanguage(
-          Const.MAP_TESSERACT_LANG[langCode]
-        );
-        //キャラ言語設定
-        this.characterService.initCharacters(langCode);
-        //タブタイトル初期化
-        this.updateTabTitleName();
-        //ストレージに保存
-        this.storageService.setLang(langCode);
-      });
+      ).pipe(
+        map(() => {
+          //キャラ言語設定
+          this.characterService.init(langCode);
+          //タブタイトル初期化
+          this.updateTabTitleName();
+          //OCR言語設定
+          this.ocrService.setLanguage(
+            Const.MAP_TESSERACT_LANG[langCode]
+          );
+          //ストレージに保存
+          this.storageService.setLang(langCode);
+
+          return langCode;
+        })
+      );
   }
 
   /**

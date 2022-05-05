@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { character, CharCreateOption, CharListOption, Const, genshindb, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { TranslateService } from '@ngx-translate/core';
+import { character, CharCreateOption, CharListOption, Const, genshindb, LanguageService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -10,40 +11,46 @@ export class CharacterService {
   characterMap = new Map<TYPE_SYS_LANG, Map<string, character>>();
   //現在の言語
   private currentCharaLang!: TYPE_SYS_LANG;
+  //検索言語(検索キー)
+  private readonly queryLanguage = 'cn_sim' as TYPE_SYS_LANG;
+  //検索キャラリスト（検索きー）
+  private characterNames!: string[];
 
-  constructor() { }
-
-  static listNames(keyword: string, option?: CharListOption): string[] {
-    let result = genshindb.characters(keyword, { ...this.changeLang(option), matchCategories: true })
-    return result;
+  constructor(private storageService: StorageService, private translateService: TranslateService) {
+    this.characterNames = CharacterService.dbGetAllNames({ resultLanguage: this.queryLanguage });
+    //初期化
+    this.init(this.queryLanguage);
+    // //ストレージから復元
+    // const lang =
+    // this.storageService.getLang() ??
+    // this.translateService.getDefaultLang();
+    // //初期化
+    // this.init(lang as TYPE_SYS_LANG);
   }
 
-  static getAllNames(option?: CharListOption){
-    return CharacterService.listNames('names', option);
+  getMap(lang: TYPE_SYS_LANG = this.currentCharaLang): Map<string, character>{
+    return this.characterMap.get(lang) as Map<string, character>;
   }
 
-  create(keyword: string, option?: CharCreateOption): character {
-    let result = new character(genshindb.characters(keyword, CharacterService.changeLang(option)));
-    return result;
+  get(name: string, lang: TYPE_SYS_LANG = this.currentCharaLang) {
+    return this.getMap(lang).get(name);
   }
 
-
-  get(name: string) {
-    return this.characterMap.get(this.currentCharaLang)?.get(name);
-  }
-
-  initCharacters(lang: TYPE_SYS_LANG) {
-    this.currentCharaLang = lang;
-    if (!this.characterMap.has(lang)) {
+  init(langCode: TYPE_SYS_LANG) {
+    if(!this.characterMap.has(langCode)){
       let temp = new Map<string, character>();
-      CharacterService.getAllNames({ resultLanguage: lang }).forEach((name: string) => {
+      this.characterNames.forEach((name: string) => {
         temp.set(name, this.create(name, {
-          queryLanguages: lang,
-          resultLanguage: lang,
-        }))
+          resultLanguage: langCode,
+        }));
       });
-      this.characterMap.set(lang, temp);
+      this.characterMap.set(langCode, temp);
     }
+    this.setCurrentCharaLang(langCode);
+  }
+
+  private static dbGetAllNames(option?: CharListOption){
+    return CharacterService.dbListNames('names', option);
   }
 
   private static changeLang(option: any) {
@@ -51,4 +58,19 @@ export class CharacterService {
     option.resultLanguage ? (option.resultLanguage = Const.MAP_GENSHINDB_LANG[option.resultLanguage as TYPE_SYS_LANG]) : '';
     return option;
   }
+
+  private static dbListNames(keyword: string, option?: CharListOption): string[] {
+    let result = genshindb.characters(keyword, this.changeLang({ ...option, matchCategories: true }))
+    return result;
+  }
+  
+  private create(keyword: string, option?: CharCreateOption): character {
+    let result = new character(genshindb.characters(keyword, CharacterService.changeLang({ ...option, queryLanguages: this.queryLanguage})));
+    return result;
+  }
+
+  private setCurrentCharaLang(lang: TYPE_SYS_LANG){
+    this.currentCharaLang = lang;
+  }
+
 }

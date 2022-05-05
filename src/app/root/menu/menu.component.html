@@ -1,5 +1,5 @@
 <mat-nav-list class="menu-list">
-  <ng-container *ngFor="let menu of menus">
-    <a mat-list-item (click)="onClick(menu)" [routerLink]="menu.link">{{ menu.name }}</a>
+  <ng-container *ngFor="let menu of menuList">
+    <a mat-list-item (click)="onClick(menu)">{{ menu.name }}</a>
   </ng-container>
 </mat-nav-list>

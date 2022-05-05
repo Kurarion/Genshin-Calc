@@ -12,13 +12,13 @@ export interface CharImagesType {
 
 export interface CharCreateOption {
     matchAliases?: boolean,
-    queryLanguages?: TYPE_SYS_LANG,
+    // queryLanguages?: TYPE_SYS_LANG,
     resultLanguage?: TYPE_SYS_LANG,
 }
 
 export interface CharListOption {
     // matchCategories: boolean,
-    queryLanguages?: TYPE_SYS_LANG,
+    // queryLanguages?: TYPE_SYS_LANG,
     resultLanguage?: TYPE_SYS_LANG,
 }
 

@@ -45,7 +45,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
   ) {
     //言語リスト初期化
-    this.langs = this.languageService.langs;
+    this.langs = LanguageService.langs;
     //言語初期化
     this.initLang();
     //レイアウトフラグ

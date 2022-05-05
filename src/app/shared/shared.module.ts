@@ -9,13 +9,13 @@ import { CaptureHtmlComponent } from './component/capture-html/capture-html.comp
 import { PasteEventListenerComponent } from './component/paste-event-listener/paste-event-listener.component';
 import { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 import { Const } from './const/const';
-import { CharacterService } from './service/character.service';
 import { LanguageService } from './service/language.service';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 
 export { GlobalProgressService } from './service/global-progress.service';
 export { OcrService } from './service/ocr.service';
 export { CharacterService } from './service/character.service';
+export { WeaponService } from './service/weapon.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
