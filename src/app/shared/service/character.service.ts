@@ -16,24 +16,18 @@ export class CharacterService {
   //検索キャラリスト（検索きー）
   private characterNames!: string[];
 
-  constructor(private storageService: StorageService, private translateService: TranslateService) {
+  constructor() {
     this.characterNames = CharacterService.dbGetAllNames({ resultLanguage: this.queryLanguage });
     //初期化
     this.init(this.queryLanguage);
-    // //ストレージから復元
-    // const lang =
-    // this.storageService.getLang() ??
-    // this.translateService.getDefaultLang();
-    // //初期化
-    // this.init(lang as TYPE_SYS_LANG);
   }
 
   getMap(lang: TYPE_SYS_LANG = this.currentCharaLang): Map<string, character>{
     return this.characterMap.get(lang) as Map<string, character>;
   }
 
-  get(name: string, lang: TYPE_SYS_LANG = this.currentCharaLang) {
-    return this.getMap(lang).get(name);
+  get(name: string, lang: TYPE_SYS_LANG = this.currentCharaLang): character {
+    return this.getMap(lang).get(name) as character;
   }
 
   init(langCode: TYPE_SYS_LANG) {
@@ -49,14 +43,14 @@ export class CharacterService {
     this.setCurrentCharaLang(langCode);
   }
 
-  private static dbGetAllNames(option?: CharListOption){
-    return CharacterService.dbListNames('names', option);
-  }
-
   private static changeLang(option: any) {
     option.queryLanguages ? (option.queryLanguages = Const.MAP_GENSHINDB_LANG[option.queryLanguages as TYPE_SYS_LANG]) : '';
     option.resultLanguage ? (option.resultLanguage = Const.MAP_GENSHINDB_LANG[option.resultLanguage as TYPE_SYS_LANG]) : '';
     return option;
+  }
+
+  private static dbGetAllNames(option?: CharListOption){
+    return CharacterService.dbListNames('names', option);
   }
 
   private static dbListNames(keyword: string, option?: CharListOption): string[] {

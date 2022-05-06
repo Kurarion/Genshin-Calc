@@ -7,8 +7,12 @@
     /* color: #fff; */
 }
 
-.background{
-    position:absolute;
+.content {
+    padding: 16px;
+}
+
+.background {
+    position: absolute;
     background-position: right top;
     background-size: cover;
     /* opacity: 0.15; */

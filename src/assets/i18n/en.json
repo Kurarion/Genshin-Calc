@@ -2,5 +2,35 @@
   "TITLE": "Could Genshin Impact",
   "HOME": {
     "TITLE": "Genshin Damage Calculate"
+  },
+  "PROPS": {
+    "CONSTELLATION": "Constellation",
+    "LEVEL": "Level",
+    "HP": "HP",
+    "ATTACK": "Attack",
+    "DEFENSE": "Defense",
+    "HP_UP": "HP(Up)",
+    "ATTACK_UP": "Attack(Up)",
+    "DEFENSE_UP": "Defense(Up)",
+    "CRIT_RATE": "暴击率",
+    "CRIT_DMG": "暴击伤害",
+    "ENERGY_RECHARGE": "充能效率",
+    "HEALING_BONUS": "治疗增益",
+    "REVERSE_HEALING_BONUS": "受治疗增益",
+    "ELEMENTAL_MASTERY": "元素精通",
+    "DMG_BONUS_CRYO": "冰伤",
+    "DMG_BONUS_ANEMO": "风伤",
+    "DMG_BONUS_PHYSICAL": "物伤",
+    "DMG_BONUS_ELECTRO": "雷伤",
+    "DMG_BONUS_GEO": "岩伤",
+    "DMG_BONUS_PYRO": "火伤",
+    "DMG_BONUS_HYDRO": "水伤",
+    "DMG_BONUS_DENDRO": "草伤",
+    "DMG_BONUS_ALL": "全增伤",
+    "DMG_BONUS_NORMAL": "普攻增伤",
+    "DMG_BONUS_CHARGED": "重击增伤",
+    "DMG_BONUS_PLUNGING": "下落增伤",
+    "DMG_BONUS_SKILL": "元素战技增伤",
+    "DMG_BONUS_ELEMENTAL_BURST": "元素爆发增伤"
   }
 }

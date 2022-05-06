@@ -12,4 +12,5 @@
 .menu-list > a {
   text-align: left;
   white-space: nowrap;
+  width: 190px;
 }

@@ -1,0 +1,26 @@
+<ng-container *ngIf="data">
+    <mat-card class="card">
+        <mat-card-header>
+            <div mat-card-avatar class="avatar" [style.background-image]="'url(' + avatarURL + ')'"></div>
+            <mat-card-title>{{data.fullname}}</mat-card-title>
+            <mat-card-subtitle>{{data.element}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        This is the expansion title
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        This is a summary of the content
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>This is the primary content of the panel.</p>
+            </mat-expansion-panel>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+        </mat-card-actions>
+    </mat-card>
+</ng-container>

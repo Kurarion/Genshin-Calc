@@ -1,0 +1,10 @@
+.card {
+    max-width: 400px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    margin-bottom: 5px;
+}

@@ -19,9 +19,9 @@ export class MenuComponent implements OnInit {
 
   constructor(private characterService: CharacterService, private router: Router, private languageService: LanguageService) {
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG)=>{
-      this.characterMap = this.characterService.getMap(lang);
+      let temp = this.characterService.getMap(lang);
       for(let i = 0; i < this.menuList.length; ++i){
-        this.menuList[i].name = this.characterMap.get(this.menuList[i].queryParams.name!)!.fullname;
+        this.menuList[i].name = temp.get(this.menuList[i].queryParams.name!)!.fullname;
       }
     })
   }

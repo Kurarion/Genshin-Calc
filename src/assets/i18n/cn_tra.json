@@ -2,5 +2,35 @@
   "TITLE": "雲原神",
   "HOME": {
     "TITLE": "原神傷害計算"
+  },
+  "PROPS": {
+    "CONSTELLATION": "命座",
+    "LEVEL": "等級",
+    "HP": "生命",
+    "ATTACK": "攻擊力",
+    "DEFENSE": "防禦力",
+    "HP_UP": "生命百分比",
+    "ATTACK_UP": "攻擊百分比",
+    "DEFENSE_UP": "防禦百分比",
+    "CRIT_RATE": "暴擊率",
+    "CRIT_DMG": "暴擊傷害",
+    "ENERGY_RECHARGE": "充能效率",
+    "HEALING_BONUS": "治療增益",
+    "REVERSE_HEALING_BONUS": "受治療增益",
+    "ELEMENTAL_MASTERY": "元素精通",
+    "DMG_BONUS_CRYO": "冰傷",
+    "DMG_BONUS_ANEMO": "風傷",
+    "DMG_BONUS_PHYSICAL": "物傷",
+    "DMG_BONUS_ELECTRO": "雷傷",
+    "DMG_BONUS_GEO": "岩傷",
+    "DMG_BONUS_PYRO": "火傷",
+    "DMG_BONUS_HYDRO": "水傷",
+    "DMG_BONUS_DENDRO": "草傷",
+    "DMG_BONUS_ALL": "全增傷",
+    "DMG_BONUS_NORMAL": "普攻增傷",
+    "DMG_BONUS_CHARGED": "重擊增傷",
+    "DMG_BONUS_PLUNGING": "下落增傷",
+    "DMG_BONUS_SKILL": "元素戰技增傷",
+    "DMG_BONUS_ELEMENTAL_BURST": "元素爆發增傷"
   }
 }
