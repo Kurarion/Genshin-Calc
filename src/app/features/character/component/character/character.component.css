@@ -8,3 +8,11 @@
     background-size: cover;
     margin-bottom: 5px;
 }
+
+.content {
+    padding-top: 2px;
+}
+
+.expand {
+    margin-top: 1px;
+}

@@ -3,6 +3,9 @@
   "HOME": {
     "TITLE": "原神伤害计算"
   },
+  "CHARACTER": {
+    "props": "人物属性cn"
+  },
   "PROPS": {
     "CONSTELLATION": "命座",
     "LEVEL": "等级",

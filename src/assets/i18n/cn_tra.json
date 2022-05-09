@@ -3,6 +3,9 @@
   "HOME": {
     "TITLE": "原神傷害計算"
   },
+  "CHARACTER": {
+    "props": "人物属性tra"
+  },
   "PROPS": {
     "CONSTELLATION": "命座",
     "LEVEL": "等級",

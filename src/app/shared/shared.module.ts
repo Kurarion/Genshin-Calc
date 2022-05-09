@@ -10,6 +10,7 @@ import { PasteEventListenerComponent } from './component/paste-event-listener/pa
 import { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 import { Const } from './const/const';
 import { LanguageService } from './service/language.service';
+import { CharacterService } from './service/character.service';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 
 export { GlobalProgressService } from './service/global-progress.service';
@@ -39,7 +40,7 @@ let shardList: any[] = [
       extend: true,
     }),
   ],
-  providers: [Const, LanguageService],
+  providers: [Const],
   exports: shardList.concat([TranslateModule]),
 })
 export class SharedModule { }

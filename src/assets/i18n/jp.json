@@ -3,6 +3,9 @@
   "HOME": {
     "TITLE": "原神ダメージ計算"
   },
+  "CHARACTER": {
+    "props": "人物属性jp"
+  },
   "PROPS": {
     "CONSTELLATION": "星座",
     "LEVEL": "レベル",

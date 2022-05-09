@@ -27,24 +27,29 @@ export class MainComponent implements OnInit {
   backgroundLoadFlg!: boolean;
   currentCharacterName!: string;
   data!: character;
+  dataForCal!: character;
 
   constructor(private httpService: HttpService, private route: ActivatedRoute, private characterService: CharacterService, private languageService: LanguageService) {
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG)=>{
       this.data = this.characterService.get(this.currentCharacterName, lang);
+      console.log(this.data)
     })
   }
 
   ngOnInit(): void {
     this.route.queryParams
-      .subscribe((params: CharacterQueryParam) => {
+    .subscribe((params: CharacterQueryParam) => {
+        //計算用
+        this.dataForCal = this.characterService.get(params.name!, "cn_sim");
+        //表示用
         this.data = this.characterService.get(params.name!);
         //チャラ名固定
-        this.currentCharacterName = this.data.fullname;
+        this.currentCharacterName = this.dataForCal.fullname;
         //背景初期化
         this.initializeBackGroundImage();
+        console.log(this.data)
       }
     );
-    console.log(this.data)
   }
 
   /**
