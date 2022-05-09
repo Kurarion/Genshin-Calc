@@ -2,6 +2,6 @@
     <div [@imgLoad]="backgroundLoadFlg?'loaded':'beforeLoad'" class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'"></div>
     <!-- <img [src]="backgroundURL"> -->
     <div class="content">
-        <app-character [data]="dataForCal"></app-character>
+        <app-character [data]="data" [dataForCal]="dataForCal"></app-character>
     </div>
 </div>

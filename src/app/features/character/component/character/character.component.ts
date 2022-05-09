@@ -9,6 +9,7 @@ import { character, HttpService } from 'src/app/shared/shared.module';
 export class CharacterComponent implements OnInit {
 
   @Input('data') data!: character;
+  @Input('dataForCal') dataForCal!: character;
   avatarURL!: string;
   avatarLoadFlg!: boolean;
 
