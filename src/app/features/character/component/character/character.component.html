@@ -1,29 +1,51 @@
 <ng-container *ngIf="data">
     <mat-card class="card">
         <mat-card-header>
-            <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''"></div>
+            <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
+            </div>
             <mat-card-title>{{data.fullname}}</mat-card-title>
-            <mat-card-subtitle>{{data.element}}</mat-card-subtitle>
+            <mat-card-subtitle>{{data.weapontype}} &nbsp; <{{data.element}}></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0 expand">
+            <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <span [innerText]="'CHARACTER.props' | translate"></span>
+                        <span [innerText]="'CHARACTER.PROPS' | translate"></span>
                     </mat-panel-title>
                     <mat-panel-description>
-                        
+
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-
-                <p>This is the primary content of the panel.</p>
-
+                <!-- レベル選択 -->
+                <mat-form-field appearance="legacy" color="" floatLabel="always">
+                    <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+                    <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
+                        <ng-container *ngFor="let option of levelOptions">
+                            <mat-option [value]="option"
+                                [innerText]="(option.level | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <!-- 属性情報 -->
+                <table>
+                    <tr *ngFor="let prop of props">
+                        <td [innerText]="'PROPS.' + prop | translate"></td>
+                        <td class="content-right" [innerText]="selectedLevelProps[prop] | number: '1.0-0' | noComma"></td>
+                    </tr>
+                    <ng-container *ngFor="let prop of props_sub">
+                        <tr *ngIf="selectedLevelProps[prop]">
+                            <td [innerText]="'PROPS.' + prop | translate"></td>
+                            <td class="content-right" [innerText]="selectedLevelProps[prop] | number: '1.2-2' | noComma"></td>
+                        </tr>
+                    </ng-container>
+                </table>
             </mat-expansion-panel>
         </mat-card-content>
-        <mat-card-actions>
+        <!-- <mat-card-actions>
             <button mat-button>LIKE</button>
             <button mat-button>SHARE</button>
-        </mat-card-actions>
+        </mat-card-actions> -->
     </mat-card>
 </ng-container>

@@ -4,11 +4,12 @@
     "TITLE": "原神ダメージ計算"
   },
   "CHARACTER": {
-    "props": "人物属性jp"
+    "PROPS": "人物属性"
   },
   "PROPS": {
     "CONSTELLATION": "星座",
     "LEVEL": "レベル",
+    "ASCENDED": "（已突破）",
     "HP": "生命力",
     "ATTACK": "攻撃力",
     "DEFENSE": "防御力",

@@ -4,11 +4,12 @@
     "TITLE": "原神伤害计算"
   },
   "CHARACTER": {
-    "props": "人物属性cn"
+    "PROPS": "人物属性"
   },
   "PROPS": {
     "CONSTELLATION": "命座",
     "LEVEL": "等级",
+    "ASCENDED": "（已突破）",
     "HP": "生命",
     "ATTACK": "攻击力",
     "DEFENSE": "防御力",
@@ -17,9 +18,9 @@
     "DEFENSE_UP": "防御百分比",
     "CRIT_RATE": "暴击率",
     "CRIT_DMG": "暴击伤害",
-    "ENERGY_RECHARGE": "充能效率",
-    "HEALING_BONUS": "治疗增益",
-    "REVERSE_HEALING_BONUS": "受治疗增益",
+    "ENERGY_RECHARGE": "元素充能效率",
+    "HEALING_BONUS": "治疗加成",
+    "REVERSE_HEALING_BONUS": "受治疗加成",
     "ELEMENTAL_MASTERY": "元素精通",
     "DMG_BONUS_CRYO": "冰伤",
     "DMG_BONUS_ANEMO": "风伤",

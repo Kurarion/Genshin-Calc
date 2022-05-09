@@ -4,11 +4,12 @@
     "TITLE": "Genshin Damage Calculate"
   },
   "CHARACTER": {
-    "props": "人物属性en"
+    "PROPS": "人物属性"
   },
   "PROPS": {
     "CONSTELLATION": "Constellation",
     "LEVEL": "Level",
+    "ASCENDED": "（已突破）",
     "HP": "HP",
     "ATTACK": "Attack",
     "DEFENSE": "Defense",

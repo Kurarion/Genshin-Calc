@@ -40,4 +40,34 @@ export class Const {
   //*********************************
   static readonly MENU_CHARACTER = 'character';
 
+  //*********************************
+  //            メニュー
+  //*********************************
+  static readonly MAP_PROPS_SPECIALIZED: Record<string, string> = {
+    "生命值": "HP_UP",
+    "攻击力": "ATTACK_UP",
+    "防御力": "DEFENSE_UP",
+    "暴击率": "CRIT_RATE",
+    "暴击伤害": "CRIT_DMG",
+    "元素充能效率": "ENERGY_RECHARGE",
+    "治疗加成": "HEALING_BONUS",
+    // "受治疗加成": "REVERSE_HEALING_BONUS",
+    "元素精通": "ELEMENTAL_MASTERY",
+    "冰元素伤害加成": "DMG_BONUS_CRYO",
+    "风元素伤害加成": "DMG_BONUS_ANEMO",
+    "物理伤害加成": "DMG_BONUS_PHYSICAL",
+    "雷元素伤害加成": "DMG_BONUS_ELECTRO",
+    "岩元素伤害加成": "DMG_BONUS_GEO",
+    "火元素伤害加成": "DMG_BONUS_PYRO",
+    "水元素伤害加成": "DMG_BONUS_HYDRO",
+    "草元素伤害加成": "DMG_BONUS_DENDRO",
+    // "全增伤": "DMG_BONUS_ALL",
+    // "普攻增伤": "DMG_BONUS_NORMAL",
+    // "重击增伤": "DMG_BONUS_CHARGED",
+    // "下落增伤": "DMG_BONUS_PLUNGING",
+    // "元素战技增伤": "DMG_BONUS_SKILL",
+    // "元素爆发增伤": "DMG_BONUS_ELEMENTAL_BURST",
+  };
+
+
 }
