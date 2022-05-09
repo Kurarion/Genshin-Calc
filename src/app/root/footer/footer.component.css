@@ -1,7 +1,18 @@
 .footer {
-  text-align: center;
   flex: 1 1 auto;
   border-top-width: 0.2px;
   border-top-color: gainsboro;
   border-top-style: solid;
+  white-space: nowrap;
+}
+
+.center{
+  position: fixed;
+  right: 50%;
+  text-align: center;
+}
+
+.right {
+  float: right;
+  text-align: center;
 }

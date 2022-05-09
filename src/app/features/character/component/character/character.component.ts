@@ -10,7 +10,7 @@ export class CharacterComponent implements OnInit {
 
   @Input('data') data!: character;
   avatarURL!: string;
-  backgroundLoadFlg!: boolean;
+  avatarLoadFlg!: boolean;
 
   constructor(private httpService: HttpService) { }
 
@@ -19,16 +19,16 @@ export class CharacterComponent implements OnInit {
   }
 
   /**
-   * 背景初期化
+   * プロフィール画像初期化
    */
   private initializeBackGroundImage() {
     if (!this.avatarURL) {
-      this.backgroundLoadFlg = false;
+      this.avatarLoadFlg = false;
       this.httpService.get<Blob>(this.data.images['hoyolab-avatar'] ?? this.data.images.icon, 'blob').then((v: Blob | null) => {
         if (v) {
           this.avatarURL = window.URL.createObjectURL(v);
           setTimeout(() => {
-            this.backgroundLoadFlg = true;
+            this.avatarLoadFlg = true;
           }, 100)
         }
       })

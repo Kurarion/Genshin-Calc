@@ -5,7 +5,7 @@
     (langSelectEvent)="changeLang($event)"
     (menuButtonClickEvent)="toggleMenu()"
   ></app-head>
-  <mat-sidenav-container class="menu-container">
+  <mat-sidenav-container class="menu-container" [autosize]="false">
     <mat-sidenav
       [mode]="isLargeFlg ? 'side' : 'over'"
       [opened]="menuOpenStatus"

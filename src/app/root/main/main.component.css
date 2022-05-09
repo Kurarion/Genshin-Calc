@@ -25,10 +25,9 @@
   flex: 1;
 }
 
-.menu-sidenav {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+/* .menu-sidenav {
+
+} */
 
 :host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar {
   width: 5px;
@@ -37,4 +36,8 @@
 :host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: grey;
+}
+
+:host ::ng-deep .menu-sidenav > div:first-child {
+  overflow-x: hidden;
 }

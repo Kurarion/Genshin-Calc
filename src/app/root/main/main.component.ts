@@ -46,8 +46,6 @@ export class MainComponent implements OnInit, OnDestroy {
   ) {
     //言語リスト初期化
     this.langs = LanguageService.langs;
-    //言語初期化
-    this.initLang();
     //レイアウトフラグ
     this.isLarge = this.breakpointObserver.observe(['(min-width: 700px)']).pipe(
       takeUntil(this.destroyed),
@@ -76,7 +74,10 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    //言語初期化
+    this.initLang();
+  }
 
   ngOnDestroy() {
     //レイアウト監視を終了

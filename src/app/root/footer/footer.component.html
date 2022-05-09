@@ -1,5 +1,5 @@
 <div class="footer">
-  <span [innerText]="defalutMsg"></span>
-  &nbsp;&nbsp;&nbsp;
-  <span *ngIf="progressFlg |async" [innerText]="progressMsg|async"></span>
+  <span class="center" [innerText]="defalutMsg"></span>
+  &nbsp;
+  <span class="right" *ngIf="progressFlg |async" [innerText]="progressMsg|async"></span>
 </div>
