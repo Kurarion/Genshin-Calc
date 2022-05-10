@@ -10,6 +10,7 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { GlobalProgressService, LangInfo } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-head',
@@ -17,6 +18,8 @@ import { GlobalProgressService, LangInfo } from 'src/app/shared/shared.module';
   styleUrls: ['./head.component.css'],
 })
 export class HeadComponent implements OnInit {
+  readonly githubRepository = environment.githubRepository;
+
   //言語リスト
   @Input('langs') langs!: LangInfo[];
   //キャプチャーするエレメント

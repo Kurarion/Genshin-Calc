@@ -12,10 +12,10 @@
 }
 
 .background {
-    position: absolute;
+    position: fixed;
     background-position: right top;
     background-size: cover;
-    /* opacity: 0.15; */
+    background-attachment: fixed;
     z-index: -1;
     height: 100%;
     width: 100%;

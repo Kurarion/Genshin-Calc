@@ -31,7 +31,7 @@ export class MainComponent implements OnInit, OnDestroy {
   //破棄状態
   destroyed = new Subject<void>();
   //メニューオープン状態
-  menuOpenStatus: boolean = false;
+  menuOpenStatus: boolean = true;
   //幅の広いフラグ
   isLarge!: Observable<boolean>;
   isLargeFlg: boolean = true;

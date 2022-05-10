@@ -26,3 +26,7 @@
   background-size: cover;
   color: #fff;
 } */
+
+.github {
+  transform: scale(0.9);
+}
