@@ -31,7 +31,7 @@ export class MainComponent implements OnInit, OnDestroy {
   //破棄状態
   destroyed = new Subject<void>();
   //メニューオープン状態
-  menuOpenStatus: boolean = true;
+  menuOpenStatus!: boolean;
   //幅の広いフラグ
   isLarge!: Observable<boolean>;
   isLargeFlg: boolean = true;
@@ -53,6 +53,11 @@ export class MainComponent implements OnInit, OnDestroy {
         return state.matches;
       })
     );
+    //メニューオープン状態初期化
+    let onceSubscription = this.isLarge.subscribe((isLarge: boolean) => {
+      this.menuOpenStatus = isLarge;
+      onceSubscription.unsubscribe();
+    })
     //ブラウザのレイアウトイベント
     this.isLarge.subscribe((isLarge: boolean) => {
       let openDelay = 0;

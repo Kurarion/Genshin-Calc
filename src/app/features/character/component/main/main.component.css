@@ -13,10 +13,11 @@
 
 .background {
     position: fixed;
+    bottom: 0;
     background-position: right top;
     background-size: cover;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     z-index: -1;
-    height: 100%;
+    min-height: 100%;
     width: 100%;
 }
