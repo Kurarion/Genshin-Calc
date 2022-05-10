@@ -54,10 +54,10 @@ export class MainComponent implements OnInit, OnDestroy {
       })
     );
     //メニューオープン状態初期化
-    let onceSubscription = this.isLarge.subscribe((isLarge: boolean) => {
-      this.menuOpenStatus = isLarge;
-      onceSubscription.unsubscribe();
-    })
+    // let onceSubscription = this.isLarge.subscribe((isLarge: boolean) => {
+    //   this.menuOpenStatus = isLarge;
+    //   onceSubscription.unsubscribe();
+    // })
     //ブラウザのレイアウトイベント
     this.isLarge.subscribe((isLarge: boolean) => {
       let openDelay = 0;

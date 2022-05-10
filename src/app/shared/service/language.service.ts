@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { CharacterService, Const, LangInfo, OcrService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
+import { WeaponService } from './weapon.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class LanguageService {
   constructor(private translateService: TranslateService,
     private storageService: StorageService,
     private characterService: CharacterService,
+    private weaponService: WeaponService,
     private ocrService: OcrService,
     private titleService: Title) {
     //言語設定
@@ -66,6 +68,8 @@ export class LanguageService {
         map(() => {
           //キャラ言語設定
           this.characterService.init(langCode);
+          //武器言語設定
+          this.weaponService.init(langCode);
           //タブタイトル初期化
           this.updateTabTitleName();
           //OCR言語設定

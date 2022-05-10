@@ -1,5 +1,6 @@
 .card {
     max-width: 400px;
+    min-width: 350px;
 }
 
 .avatar {
@@ -22,15 +23,25 @@ table {
     border-collapse: collapse;
 }
 
-table tr:first-child {
+table tr:first-child .content-left {
     border-top: 1px solid rgba(0,0,0,.12);
-    border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
-table tr {
+table tr:first-child .content-right {
+    border-top: 1px solid rgba(0,0,0,.12);
+}
+
+.content-left {
+    text-align: left;
     border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
 .content-right {
     text-align: right;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.content-right-button {
+    text-align: center;
+    border-bottom: none;
 }

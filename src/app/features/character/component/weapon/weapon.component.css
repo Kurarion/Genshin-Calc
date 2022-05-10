@@ -1,0 +1,52 @@
+.card {
+    max-width: 400px;
+    min-width: 350px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    margin-bottom: 5px;
+    border-radius: 0%;
+}
+
+.header-text {
+    font-size: inherit;
+}
+
+.content {
+    padding-top: 2px;
+}
+
+.expand {
+    margin-top: 1px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr:first-child .content-left {
+    border-top: 1px solid rgba(0,0,0,.12);
+}
+
+table tr:first-child .content-right {
+    border-top: 1px solid rgba(0,0,0,.12);
+}
+
+.content-left {
+    text-align: left;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.content-right {
+    text-align: right;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.content-right-button {
+    text-align: center;
+    border-bottom: none;
+}

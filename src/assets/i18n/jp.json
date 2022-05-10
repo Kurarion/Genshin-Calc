@@ -6,6 +6,10 @@
   "CHARACTER": {
     "PROPS": "人物属性"
   },
+  "WEAPON": {
+    "NAME": "武器名",
+    "PROPS": "武器属性"
+  },
   "PROPS": {
     "CONSTELLATION": "星座",
     "LEVEL": "レベル",

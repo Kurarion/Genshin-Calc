@@ -50,7 +50,7 @@ export class character {
     name!: string;
     fullname!: string;
     //レアリティー
-    rarity!: string;
+    rarity!: number;
     //元素タイプ
     element!: string;
     //所属
@@ -74,7 +74,7 @@ export class character {
     //             その他
     //*********************************
     //レベル基本属性クエリメソッド
-    stats!: (level: string, option?: "+") => CharStatus;
+    stats!: (level: string | number, option?: "+") => CharStatus;
 
     //コンストラクタ
     constructor(data: any) {
@@ -91,24 +91,5 @@ export class character {
             images: this.images,
             stats: this.stats,
         } = data);
-    }
-}
-
-export class DBCharacter {
-
-    static create(keyword: string, option?: CharCreateOption): character {
-        let result = new character(genshindb.characters(keyword, this.changeLang(option)));
-        return result;
-    }
-
-    static listNames(keyword: string, option?: CharListOption): string[] {
-        let result = genshindb.characters(keyword, {...this.changeLang(option), matchCategories: true})
-        return result;
-    }
-
-    private static changeLang(option: any){
-        option.queryLanguages?(option.queryLanguages = Const.MAP_GENSHINDB_LANG[option.queryLanguages as TYPE_SYS_LANG]):'';
-        option.resultLanguage?(option.resultLanguage = Const.MAP_GENSHINDB_LANG[option.resultLanguage as TYPE_SYS_LANG]):'';
-        return option;
     }
 }

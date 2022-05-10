@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { character, CharacterQueryParam, CharacterService, Const, HttpService, LanguageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 
@@ -40,7 +40,7 @@ export class MainComponent implements OnInit {
     this.route.queryParams
     .subscribe((params: CharacterQueryParam) => {
         //計算用
-        this.dataForCal = this.characterService.get(params.name!, "cn_sim");
+        this.dataForCal = this.characterService.get(params.name!, Const.QUERY_LANG);
         //表示用
         this.data = this.characterService.get(params.name!);
         //チャラ名固定

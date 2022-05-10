@@ -30,6 +30,8 @@ export class Const {
     jp: 'Japanese',
   };
 
+  static readonly QUERY_LANG: TYPE_SYS_LANG = 'cn_sim';
+
   //*********************************
   //          クッキーキー
   //*********************************
@@ -41,7 +43,7 @@ export class Const {
   static readonly MENU_CHARACTER = 'character';
 
   //*********************************
-  //            メニュー
+  //           スペシャル
   //*********************************
   static readonly MAP_PROPS_SPECIALIZED: Record<string, string> = {
     "生命值": "HP_UP",

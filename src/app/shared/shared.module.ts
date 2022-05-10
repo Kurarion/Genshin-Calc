@@ -24,6 +24,7 @@ export { LanguageService } from './service/language.service';
 export * from './const/const';
 export * from './interface/interface';
 export * from './class/character';
+export * from './class/weapon';
 
 let shardList: any[] = [
   CaptureHtmlComponent,

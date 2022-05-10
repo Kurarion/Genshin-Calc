@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { character, CharCreateOption, CharListOption, Const, genshindb, LanguageService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { character, CharCreateOption, CharListOption, Const, genshindb, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class CharacterService {
   //現在の言語
   private currentCharaLang!: TYPE_SYS_LANG;
   //検索言語(検索キー)
-  private readonly queryLanguage = 'cn_sim' as TYPE_SYS_LANG;
+  private readonly queryLanguage = Const.QUERY_LANG;
   //検索キャラリスト（検索きー）
   private characterNames!: string[];
 
