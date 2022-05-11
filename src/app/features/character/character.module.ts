@@ -8,6 +8,9 @@ import { MainComponent } from './component/main/main.component';
 import { CharacterComponent } from './component/character/character.component';
 import { WeaponComponent } from './component/weapon/weapon.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TalentComponent } from './component/talent/talent.component';
+import { PercentPipe } from '@angular/common';
+import { ConstellationComponent } from './component/constellation/constellation.component';
 
 
 @NgModule({
@@ -21,7 +24,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     MainComponent,
     CharacterComponent,
-    WeaponComponent
+    WeaponComponent,
+    TalentComponent,
+    ConstellationComponent
+  ],
+  providers: [
+    PercentPipe,
   ]
 })
 export class CharacterModule { }

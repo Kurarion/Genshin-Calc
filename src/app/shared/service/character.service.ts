@@ -21,7 +21,7 @@ export class CharacterService {
     this.init(this.queryLanguage);
   }
 
-  getMap(lang: TYPE_SYS_LANG = this.currentCharaLang): Map<string, character>{
+  getMap(lang: TYPE_SYS_LANG = this.currentCharaLang): Map<string, character> {
     return this.characterMap.get(lang) as Map<string, character>;
   }
 
@@ -30,7 +30,7 @@ export class CharacterService {
   }
 
   init(langCode: TYPE_SYS_LANG) {
-    if(!this.characterMap.has(langCode)){
+    if (!this.characterMap.has(langCode)) {
       let temp = new Map<string, character>();
       this.characterNames.forEach((name: string) => {
         temp.set(name, this.create(name, {
@@ -48,7 +48,7 @@ export class CharacterService {
     return option;
   }
 
-  private static dbGetAllNames(option?: CharListOption){
+  private static dbGetAllNames(option?: CharListOption) {
     return CharacterService.dbListNames('names', option);
   }
 
@@ -56,13 +56,17 @@ export class CharacterService {
     let result = genshindb.characters(keyword, this.changeLang({ ...option, matchCategories: true }))
     return result;
   }
-  
+
   private create(keyword: string, option?: CharCreateOption): character {
-    let result = new character(genshindb.characters(keyword, CharacterService.changeLang({ ...option, queryLanguages: this.queryLanguage})));
+    let result = new character(
+      genshindb.characters(keyword, CharacterService.changeLang({ ...option, queryLanguages: this.queryLanguage })),
+      genshindb.talents(keyword, CharacterService.changeLang({ ...option, queryLanguages: this.queryLanguage })),
+      genshindb.constellations(keyword, CharacterService.changeLang({ ...option, queryLanguages: this.queryLanguage })),
+    );
     return result;
   }
 
-  private setCurrentCharaLang(lang: TYPE_SYS_LANG){
+  private setCurrentCharaLang(lang: TYPE_SYS_LANG) {
     this.currentCharaLang = lang;
   }
 

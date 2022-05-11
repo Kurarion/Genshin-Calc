@@ -1,0 +1,72 @@
+<ng-container *ngIf="data.talents">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title [innerText]="'CHARACTER.TALENTS' | translate"></mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="content">
+            <mat-accordion>
+                <ng-container *ngFor="let combatIndex of combatNum; index as i">
+                    <mat-expansion-panel class="mat-elevation-z0 expand">
+                        <mat-expansion-panel-header [matTooltip]="getDataProperty(combatPrefix + combatIndex).info | noStrong" matTooltipPosition="right">
+                            <mat-panel-title>
+                                <span [innerText]="getDataProperty(combatPrefix + combatIndex).name"></span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <!-- レベル選択 -->
+                        <mat-form-field appearance="legacy" floatLabel="always">
+                            <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+                            <mat-select [(ngModel)]="selectedLevels[i]" (ngModelChange)="onChangeLevel(1, $event)">
+                                <ng-container *ngFor="let option of levelOptions">
+                                    <mat-option [value]="option" [innerText]="option">
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- 属性情報 -->
+                        <table>
+                            <tr *ngFor="let obj of getDataProperty(combatPrefix + combatIndex).values">
+                                <td class="content-left" [innerText]="obj.key"></td>
+                                <td class="content-right" [innerText]="getTalentValue(combatIndex, obj, selectedLevels[i])"
+                                    [matTooltip]="getTalentValue(combatIndex, obj, selectedLevels[i], true)" matTooltipPosition="right">
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </ng-container>
+                <ng-container *ngFor="let combatspIndex of combatspNum; index as i">
+                    <ng-container *ngIf="getDataProperty(combatPrefix + combatspIndex)">
+                        <mat-expansion-panel class="mat-elevation-z0 expand">
+                            <mat-expansion-panel-header [matTooltip]="getDataProperty(combatPrefix + combatspIndex).info | noStrong" matTooltipPosition="right">
+                                <mat-panel-title>
+                                    <span [innerText]="getDataProperty(combatPrefix + combatspIndex).name"></span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <!-- 属性情報 -->
+                            <table>
+                                <tr *ngFor="let obj of getDataProperty(combatPrefix + combatspIndex).values">
+                                    <td class="content-left" [innerText]="obj.key"></td>
+                                    <td class="content-right" [innerText]="getTalentValue(combatspIndex, obj, 1)"
+                                        [matTooltip]="getTalentValue(combatspIndex, obj, 1, true)" matTooltipPosition="right">
+                                    </td>
+                                </tr>
+                            </table>
+                        </mat-expansion-panel>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngFor="let passiveIndex of passiveNum; index as i">
+                    <ng-container *ngIf="getDataProperty(passivefix + passiveIndex)">
+                        <mat-expansion-panel class="mat-elevation-z0 expand">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <span [innerText]="getDataProperty(passivefix + passiveIndex).name"></span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <!-- 属性情報 -->
+                            <span [innerText]="getDataProperty(passivefix + passiveIndex).info | noStrong"></span>
+                        </mat-expansion-panel>
+                    </ng-container>
+                </ng-container>
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

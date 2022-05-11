@@ -1,0 +1,24 @@
+<ng-container *ngIf="data.constellations">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title [innerText]="'CHARACTER.CONSTELLATION' | translate"></mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="content">
+            <mat-accordion>
+                <ng-container *ngFor="let constellationIndex of constellationNum; index as i">
+                    <ng-container *ngIf="getDataProperty(constellationPrefix + constellationIndex)">
+                        <mat-expansion-panel class="mat-elevation-z0 expand">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <span [innerText]="getDataProperty(constellationPrefix + constellationIndex).name"></span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <!-- 効果情報 -->
+                            <span [innerText]="getDataProperty(constellationPrefix + constellationIndex).effect | noStrong"></span>
+                        </mat-expansion-panel>
+                    </ng-container>
+                </ng-container>
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
