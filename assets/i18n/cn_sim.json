@@ -1,0 +1,45 @@
+{
+  "TITLE": "云原神",
+  "HOME": {
+    "TITLE": "原神伤害计算"
+  },
+  "CHARACTER": {
+    "PROPS": "人物属性",
+    "TALENTS": "技能天赋",
+    "CONSTELLATION": "命座"
+  },
+  "WEAPON": {
+    "NAME": "武器名",
+    "PROPS": "武器属性"
+  },
+  "PROPS": {
+    "LEVEL": "等级",
+    "ASCENDED": "（已突破）",
+    "HP": "生命值",
+    "ATTACK": "攻击力",
+    "DEFENSE": "防御力",
+    "HP_UP": "生命值百分比",
+    "ATTACK_UP": "攻击力百分比",
+    "DEFENSE_UP": "防御力百分比",
+    "CRIT_RATE": "暴击率",
+    "CRIT_DMG": "暴击伤害",
+    "ENERGY_RECHARGE": "元素充能效率",
+    "HEALING_BONUS": "治疗加成",
+    "REVERSE_HEALING_BONUS": "受治疗加成",
+    "ELEMENTAL_MASTERY": "元素精通",
+    "DMG_BONUS_CRYO": "冰元素伤害加成",
+    "DMG_BONUS_ANEMO": "风元素伤害加成",
+    "DMG_BONUS_PHYSICAL": "物理伤害加成",
+    "DMG_BONUS_ELECTRO": "雷元素伤害加成",
+    "DMG_BONUS_GEO": "岩元素伤害加成",
+    "DMG_BONUS_PYRO": "火元素伤害加成",
+    "DMG_BONUS_HYDRO": "水元素伤害加成",
+    "DMG_BONUS_DENDRO": "草元素伤害加成",
+    "DMG_BONUS_ALL": "伤害加成",
+    "DMG_BONUS_NORMAL": "普通攻击伤害加成",
+    "DMG_BONUS_CHARGED": "重击伤害加成",
+    "DMG_BONUS_PLUNGING": "下落攻击伤害加成",
+    "DMG_BONUS_SKILL": "元素战技伤害加成",
+    "DMG_BONUS_ELEMENTAL_BURST": "元素爆发伤害加成"
+  }
+}

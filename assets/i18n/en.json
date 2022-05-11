@@ -1,0 +1,45 @@
+{
+  "TITLE": "Could Genshin Impact",
+  "HOME": {
+    "TITLE": "Genshin Damage Calculate"
+  },
+  "CHARACTER": {
+    "PROPS": "人物属性",
+    "TALENTS": "技能天赋",
+    "CONSTELLATION": "Constellation"
+  },
+  "WEAPON": {
+    "NAME": "武器名",
+    "PROPS": "武器属性"
+  },
+  "PROPS": {
+    "LEVEL": "Level",
+    "ASCENDED": "（已突破）",
+    "HP": "HP",
+    "ATTACK": "Attack",
+    "DEFENSE": "Defense",
+    "HP_UP": "HP(Up)",
+    "ATTACK_UP": "Attack(Up)",
+    "DEFENSE_UP": "Defense(Up)",
+    "CRIT_RATE": "CRIT RATE",
+    "CRIT_DMG": "CRIT DMG",
+    "ENERGY_RECHARGE": "Energy Recharge",
+    "HEALING_BONUS": "Healing Bonus",
+    "REVERSE_HEALING_BONUS": "Reverse Healing Bonus",
+    "ELEMENTAL_MASTERY": "Elemental Mastery",
+    "DMG_BONUS_CRYO": "Cryo DMG Bonus",
+    "DMG_BONUS_ANEMO": "Anemo DMG Bonus",
+    "DMG_BONUS_PHYSICAL": "Physical DMG Bonus",
+    "DMG_BONUS_ELECTRO": "Electro DMG Bonus",
+    "DMG_BONUS_GEO": "Geo DMG Bonus",
+    "DMG_BONUS_PYRO": "Pyro DMG Bonus",
+    "DMG_BONUS_HYDRO": "Hydro DMG Bonus",
+    "DMG_BONUS_DENDRO": "Dendro DMG Bonus",
+    "DMG_BONUS_ALL": "DMG Bonus",
+    "DMG_BONUS_NORMAL": "Normal DMG Bonus",
+    "DMG_BONUS_CHARGED": "Charged DMG Bonus",
+    "DMG_BONUS_PLUNGING": "Plunging DMG Bonus",
+    "DMG_BONUS_SKILL": "Skill DMG Bonus",
+    "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst DMG Bonus"
+  }
+}

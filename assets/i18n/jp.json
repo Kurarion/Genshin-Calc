@@ -1,0 +1,45 @@
+{
+  "TITLE": "クラウド原神",
+  "HOME": {
+    "TITLE": "原神ダメージ計算"
+  },
+  "CHARACTER": {
+    "PROPS": "人物属性",
+    "TALENTS": "技能天赋",
+    "CONSTELLATION": "星座"
+  },
+  "WEAPON": {
+    "NAME": "武器名",
+    "PROPS": "武器属性"
+  },
+  "PROPS": {
+    "LEVEL": "レベル",
+    "ASCENDED": "（已突破）",
+    "HP": "生命力",
+    "ATTACK": "攻撃力",
+    "DEFENSE": "防御力",
+    "HP_UP": "生命力アップ",
+    "ATTACK_UP": "攻撃力アップ",
+    "DEFENSE_UP": "防御力アップ",
+    "CRIT_RATE": "会心率",
+    "CRIT_DMG": "会心ダメージ",
+    "ENERGY_RECHARGE": "元素チャージ効率",
+    "HEALING_BONUS": "与える治療効果",
+    "REVERSE_HEALING_BONUS": "受ける治療効果",
+    "ELEMENTAL_MASTERY": "元素熟知",
+    "DMG_BONUS_CRYO": "氷元素ダメージ",
+    "DMG_BONUS_ANEMO": "風元素ダメージ",
+    "DMG_BONUS_PHYSICAL": "物理ダメージ",
+    "DMG_BONUS_ELECTRO": "雷元素ダメージ",
+    "DMG_BONUS_GEO": "岩元素ダメージ",
+    "DMG_BONUS_PYRO": "火元素ダメージ",
+    "DMG_BONUS_HYDRO": "水元素ダメージ",
+    "DMG_BONUS_DENDRO": "草元素ダメージ",
+    "DMG_BONUS_ALL": "全ダメージ",
+    "DMG_BONUS_NORMAL": "基本攻撃ダメージ",
+    "DMG_BONUS_CHARGED": "重撃ダメージ",
+    "DMG_BONUS_PLUNGING": "落下攻撃ダメージ",
+    "DMG_BONUS_SKILL": "元素スキルダメージ",
+    "DMG_BONUS_ELEMENTAL_BURST":"元素爆発ダメージ"
+  }
+}
