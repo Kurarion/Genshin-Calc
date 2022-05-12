@@ -8,7 +8,7 @@
 }
 
 .content {
-    padding: 16px;
+    padding: 6px;
 }
 
 .background {
@@ -17,7 +17,11 @@
     background-position: right top;
     background-size: cover;
     /* background-attachment: fixed; */
-    z-index: -1;
+    z-index: -10;
     min-height: 100%;
     width: 100%;
+}
+
+.float{
+    /* position: static; */
 }

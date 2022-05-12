@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService } from 'src/app/shared/shared.module';
 
@@ -18,6 +18,10 @@ export class MenuComponent implements OnInit {
   private readonly queryLanguage = 'cn_sim' as TYPE_SYS_LANG;
 
   constructor(private characterService: CharacterService, private router: Router, private languageService: LanguageService) {
+    history.pushState(null, '', '');
+    window.addEventListener('popstate', ()=>{
+      history.pushState(null, '', '');
+    })
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG)=>{
       let temp = this.characterService.getMap(lang);
       for(let i = 0; i < this.menuList.length; ++i){
@@ -46,6 +50,6 @@ export class MenuComponent implements OnInit {
   onClick(menu: MenuInfo) {
     this.menuClickEvent.emit(menu);
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([menu.routerLink], {queryParams: menu.queryParams}));
+    this.router.navigate([menu.routerLink], {queryParams: menu.queryParams, skipLocationChange: true}));
   }
 }

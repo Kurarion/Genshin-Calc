@@ -7,9 +7,9 @@ import { CharacterRoutingModule } from './character-routing.module';
 import { MainComponent } from './component/main/main.component';
 import { CharacterComponent } from './component/character/character.component';
 import { WeaponComponent } from './component/weapon/weapon.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { NoCommaPipe, SharedModule } from 'src/app/shared/shared.module';
 import { TalentComponent } from './component/talent/talent.component';
-import { PercentPipe } from '@angular/common';
+import { PercentPipe, DecimalPipe } from '@angular/common';
 import { ConstellationComponent } from './component/constellation/constellation.component';
 
 
@@ -30,6 +30,8 @@ import { ConstellationComponent } from './component/constellation/constellation.
   ],
   providers: [
     PercentPipe,
+    DecimalPipe,
+    NoCommaPipe,
   ]
 })
 export class CharacterModule { }

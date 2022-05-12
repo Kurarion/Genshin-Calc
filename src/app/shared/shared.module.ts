@@ -12,6 +12,8 @@ import { ArtifactListComponent } from './component/artifact-list/artifact-list.c
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
+export { NoCommaPipe } from './pipe/no-comma.pipe';
+export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 
 export { GlobalProgressService } from './service/global-progress.service';

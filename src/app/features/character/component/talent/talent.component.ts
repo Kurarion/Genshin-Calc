@@ -1,5 +1,6 @@
-import { PercentPipe } from '@angular/common';
+import { PercentPipe, DecimalPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
 import { character, characterTalents, CharStatus, CharTalentCombatInfo, CharTalentCombatPassiveType, CharTalentObject, Const, HttpService } from 'src/app/shared/shared.module';
 
 @Component({
@@ -52,7 +53,7 @@ export class TalentComponent implements OnInit {
   levelOptions: number[] = [];
 
   selectedLevels: number[] = [];
-  constructor(private percentPipe: PercentPipe) { }
+  constructor(private percentPipe: PercentPipe, private decimalPipe: DecimalPipe, private noCommaPipe: NoCommaPipe) { }
 
   ngOnInit(): void {
     //その他
@@ -70,17 +71,21 @@ export class TalentComponent implements OnInit {
 
   }
 
-  getDataProperty(key: string){
+  getDataProperty(key: string) {
     return this.data.talents![key as keyof characterTalents];
   }
 
   getTalentValue(index: CharTalentCombatPassiveType, obj: CharTalentObject, currentLevel: number, withOrigin: boolean = false): string {
     let result = obj.prefix;
     let values: string[] = [];
-    obj.valuePropKeys.forEach((key: string) => {
+    obj.valuePropKeys.forEach((key: string, i: number) => {
       let value: string | number = (this.data.talents!['combat' + index as keyof characterTalents] as CharTalentCombatInfo).attributes.parameters[key][currentLevel - 1];
-      if (!withOrigin && obj.isPercent) {
-        value = this.percentPipe.transform(value, '1.0-1') as string;
+      if (!withOrigin) {
+        if (obj.isPercent[i]) {
+          value = this.percentPipe.transform(value, '1.0-1') as string;
+        } else {
+          value = this.noCommaPipe.transform(this.decimalPipe.transform(value, '1.0-1') as string);
+        }
       }
       values.push(`${value}`);
     })

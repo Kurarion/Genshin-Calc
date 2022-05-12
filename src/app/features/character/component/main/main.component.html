@@ -1,9 +1,9 @@
 <div class="main">
     <div [@imgLoad]="backgroundLoadFlg?'loaded':'beforeLoad'" class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'"></div>
     <div class="content" fxLayout="row wrap">
-        <app-character [data]="data" [dataForCal]="dataForCal" fxFlexOffset="10px"></app-character>
-        <app-weapon [charWeaponType]="data.weapontype" fxFlexOffset="10px"></app-weapon>
-        <app-talent [data]="data" [dataForCal]="dataForCal" fxFlexOffset="10px"></app-talent>
-        <app-constellation [data]="data" [dataForCal]="dataForCal" fxFlexOffset="10px"></app-constellation>
+        <app-character class="float" [data]="data" [dataForCal]="dataForCal"></app-character>
+        <app-weapon  class="float" [charWeaponType]="data.weapontype"></app-weapon>
+        <app-talent  class="float" [data]="data" [dataForCal]="dataForCal"></app-talent>
+        <app-constellation  class="float" [data]="data" [dataForCal]="dataForCal"></app-constellation>
     </div>
 </div>

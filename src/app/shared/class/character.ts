@@ -61,7 +61,7 @@ export interface CharTalentObject {
     prefix: string;
     middles: string[];
     suffix: string;
-    isPercent: boolean;
+    isPercent: boolean[];
 }
 
 export class characterTalents {
@@ -130,10 +130,12 @@ export class characterTalents {
             let prefix: string;
             let middles: string[] = [];
             let suffix: string;
-            let isPercent: boolean;
+            let isPercent: boolean[] = [];
 
-            valuePropKeys = items[1].match(/param(\d+)/g) as Array<string>;
-            isPercent = items[1].indexOf('P') != -1;
+            valuePropKeys = items[1].match(/param\d+/g) as Array<string>;
+            items[1].match(/\{param\d+:.*?\}/g)?.forEach((value: string)=>{
+                isPercent.push(value.indexOf('P') != -1);
+            })
 
             let others = items[1].split(/\{param\d+:.*?\}/);
             prefix = others[0];
