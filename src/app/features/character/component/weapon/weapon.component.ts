@@ -28,6 +28,9 @@ export class WeaponComponent implements OnInit {
   private readonly notExitLevel = -1;
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
+  private readonly minSmeltingLevel = 1;
+  private readonly maxSmeltingLevel = 5;
+  private readonly defaultSmeltingLevel = this.minSmeltingLevel;
   private readonly ascendLevels = [20, 40, 50, 60, 70, 80, 90];
   private readonly ascendLevelsMap: Record<number, number> = {
     5: 6,
@@ -36,6 +39,8 @@ export class WeaponComponent implements OnInit {
     2: 4,
     1: 4,
   }
+
+  private readonly smeltingPropPrefix = 'r';
 
   readonly props = ['LEVEL', 'ATTACK'];
   readonly props_sub = [
@@ -74,6 +79,9 @@ export class WeaponComponent implements OnInit {
   selectedLevel!: levelOption;
   selectedLevelProps!: Record<string, subProp>;
 
+  selectedSmeltingLevel!: number;
+  smeltingLevelOptions: number[] = [];
+
   constructor(private httpService: HttpService, private weaponService: WeaponService, private languageService: LanguageService) {
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
       //武器リスト再設定
@@ -100,6 +108,9 @@ export class WeaponComponent implements OnInit {
         });
       }
     }
+    for (let i = this.minSmeltingLevel; i <= this.maxSmeltingLevel; ++i) {
+      this.smeltingLevelOptions.push(i);
+    }
     //武器初期選択
     for (let i = 1; i < this.weaponList.length; ++i) {
       if (this.weaponList[i].weaponType == this.charWeaponType && this.weaponList[i].rarity == 5) {
@@ -109,6 +120,7 @@ export class WeaponComponent implements OnInit {
     }
     //レベル初期選択
     this.selectedLevel = this.levelOptions[this.levelOptions.length - 1];
+    this.selectedSmeltingLevel = this.defaultSmeltingLevel;
     //初期データ更新
     this.onSelectWeapon(this.selectedWeaponKey);
   }
@@ -122,6 +134,7 @@ export class WeaponComponent implements OnInit {
     //武器の切り替え
     this.data = this.weaponService.get(weaponKey);
     this.dataForCal = this.weaponService.get(weaponKey, Const.QUERY_LANG);
+    console.log(this.data);
     //武器最高レベル
     this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.data.rarity]];
     if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.level || this.selectedLevel.level > this.selectedWeaponAbleMaxLevel) {
@@ -150,6 +163,22 @@ export class WeaponComponent implements OnInit {
         value: temp.specialized,
       }
     }
+  }
+
+  getEffectContent(selectedSmeltingLevel: number) {
+    let result: string = "";
+    let paramIndex: number = 0;
+    let paramMaxIndex: number = this.data.r1.length;
+    let temp = this.data.effect.split(/\{\d+\}/);
+    temp.forEach((v: string)=>{
+      result += v;
+      if(paramIndex < paramMaxIndex){
+        result += '<strong>'
+        result += (this.data![this.smeltingPropPrefix+selectedSmeltingLevel as keyof weapon] as string[])[paramIndex++];
+        result += '</strong>'
+      }
+    })
+    return result;
   }
 
   /**

@@ -75,6 +75,36 @@
                     </ng-container>
                 </table>
             </mat-expansion-panel>
+
+            <ng-container *ngIf="this.data.effect">
+                <mat-divider></mat-divider>
+                <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span [innerText]="'WEAPON.SMELTING' | translate"></span>
+                        </mat-panel-title>
+                        <mat-panel-description>
+    
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <!-- レベル選択 -->
+                    <mat-form-field appearance="legacy" floatLabel="always">
+                        <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+                        <mat-select [(ngModel)]="selectedSmeltingLevel">
+                            <ng-container *ngFor="let level of smeltingLevelOptions">
+                                <mat-option
+                                    [value]="level"
+                                    [innerText]="level">
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- 属性情報 -->
+                    <div>
+                        <span [innerHTML]="getEffectContent(selectedSmeltingLevel)"></span>
+                    </div>
+                </mat-expansion-panel>
+            </ng-container>
         </mat-card-content>
     </mat-card>
 </ng-container>
