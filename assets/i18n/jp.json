@@ -10,7 +10,8 @@
   },
   "WEAPON": {
     "NAME": "武器名",
-    "PROPS": "武器属性"
+    "PROPS": "武器属性",
+    "SMELTING":"精炼"
   },
   "PROPS": {
     "LEVEL": "レベル",
