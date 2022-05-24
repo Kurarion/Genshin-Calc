@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { character, CharStatus, Const, HttpService } from 'src/app/shared/shared.module';
+import { character, CharStatus, Const, ExtraDataService, HttpService } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: number;
@@ -54,7 +54,7 @@ export class CharacterComponent implements OnInit {
   selectedLevel!: levelOption;
   selectedLevelProps!: Record<string, subProp>;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService, private extraDataService: ExtraDataService) { }
 
   ngOnInit(): void {
     //プロフィール画像初期化

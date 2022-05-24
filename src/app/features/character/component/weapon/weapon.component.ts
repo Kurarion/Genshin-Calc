@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { weapon, CharStatus, Const, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService, WeaponStatus } from 'src/app/shared/shared.module';
+import { weapon, CharStatus, Const, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService, WeaponStatus, ExtraDataService } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: number;
@@ -82,7 +82,8 @@ export class WeaponComponent implements OnInit {
   selectedSmeltingLevel!: number;
   smeltingLevelOptions: number[] = [];
 
-  constructor(private httpService: HttpService, private weaponService: WeaponService, private languageService: LanguageService) {
+  constructor(private httpService: HttpService, private weaponService: WeaponService, private languageService: LanguageService,
+    private extraDataService: ExtraDataService) {
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
       //武器リスト再設定
       this.initializeWeaponList();
@@ -170,11 +171,11 @@ export class WeaponComponent implements OnInit {
     let paramIndex: number = 0;
     let paramMaxIndex: number = this.data.r1.length;
     let temp = this.data.effect.split(/\{\d+\}/);
-    temp.forEach((v: string)=>{
+    temp.forEach((v: string) => {
       result += v;
-      if(paramIndex < paramMaxIndex){
+      if (paramIndex < paramMaxIndex) {
         result += '<strong>'
-        result += (this.data![this.smeltingPropPrefix+selectedSmeltingLevel as keyof weapon] as string[])[paramIndex++];
+        result += (this.data![this.smeltingPropPrefix + selectedSmeltingLevel as keyof weapon] as string[])[paramIndex++];
         result += '</strong>'
       }
     })

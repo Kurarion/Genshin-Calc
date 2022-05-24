@@ -12,6 +12,7 @@ import { ArtifactListComponent } from './component/artifact-list/artifact-list.c
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
+import { from } from 'rxjs';
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
@@ -23,6 +24,7 @@ export { WeaponService } from './service/weapon.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
+export { ExtraDataService } from './service/extra-data.service';
 
 export * from './const/const';
 export * from './interface/interface';

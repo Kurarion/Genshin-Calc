@@ -38,19 +38,19 @@ export class HttpService {
       switch (event.type) {
         case HttpEventType.Sent:
           service.globalProgressService.setValue(0);
-          console.log('Request sent!');
+          // console.log('Request sent!');
           break;
         case HttpEventType.ResponseHeader:
           toLoad = parseInt(event.headers.get("content-length") as string);
-          console.log(`Response header received! ${toLoad}b to be load`);
+          // console.log(`Response header received! ${toLoad}b to be load`);
           break;
         case HttpEventType.DownloadProgress:
           const percent = Math.round(event.loaded * 100 / toLoad);
           service.globalProgressService.setValue(percent);
-          console.log(`Download in progress! ${percent}% loaded`);
+          // console.log(`Download in progress! ${percent}% loaded`);
           break;
         case HttpEventType.Response:
-          console.log('Done!', event.body);
+          // console.log('Done!', event.body);
           return event.body as T | null;
       }
       return null;
