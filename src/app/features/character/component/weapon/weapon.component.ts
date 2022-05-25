@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { weapon, CharStatus, Const, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService, WeaponStatus, ExtraDataService } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 interface levelOption {
   level: number;
@@ -187,14 +188,18 @@ export class WeaponComponent implements OnInit {
    */
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
-    this.httpService.get<Blob>(this.data.images.icon, 'blob').then((v: Blob | null) => {
+    let url = this.data.images.icon;
+    if (environment.useThirdPartyAPI) {
+      url = environment.thirdPartyAPIHost + this.data.images.nameicon + environment.thirdPartyAPIPicType;
+    }
+    this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
       if (v) {
         this.avatarURL = window.URL.createObjectURL(v);
         setTimeout(() => {
           this.avatarLoadFlg = true;
         }, 100)
       }
-    })
+    }).catch(()=>{});
   }
 
   /**

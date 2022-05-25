@@ -8,6 +8,7 @@ const routes: Routes =
     path: Const.MENU_CHARACTER,
     loadChildren: () =>
       import('./features/character/character.module').then((m) => m.CharacterModule),
+    data: { animation: 'characterPage' },
   },
 ];
 

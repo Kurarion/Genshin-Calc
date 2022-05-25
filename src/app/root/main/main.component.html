@@ -14,8 +14,8 @@
       <app-menu class="menu" (menuClickEvent)="closeMenu($event)"></app-menu>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div [id]="captureElementID" class="outlet">
-        <router-outlet>
+      <div [id]="captureElementID" class="outlet" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet">
           <app-paste-event-listener
             (pastedImage)="addPastedImage($event)"
           ></app-paste-event-listener>

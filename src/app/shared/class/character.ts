@@ -10,6 +10,8 @@ export interface CharImagesType {
     cover1: string;
     cover2: string;
     'hoyolab-avatar': string;
+    namegachasplash: string;
+    nameicon: string;
 }
 
 export interface CharCreateOption {

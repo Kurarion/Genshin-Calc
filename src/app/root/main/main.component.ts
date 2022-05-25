@@ -5,9 +5,11 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { routerAnimation } from 'src/animation';
 import {
   ArtifactListComponent,
   LangInfo,
@@ -22,6 +24,9 @@ import {
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
+  animations: [
+    routerAnimation
+  ],
 })
 export class MainComponent implements OnInit, OnDestroy {
   @ViewChild('artifactList') artifactList!: ArtifactListComponent;
@@ -120,6 +125,10 @@ export class MainComponent implements OnInit, OnDestroy {
   addPastedImage(image: Blob) {
     //TODO
     this.artifactList.addArtifactList(image);
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet?.activatedRouteData?.['animation'];
   }
 
   /**

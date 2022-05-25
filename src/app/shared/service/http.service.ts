@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { TYPE_HTTP_RESPONSE_TYPE, GlobalProgressService } from 'src/app/shared/shared.module';
 import { lastValueFrom, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,13 @@ export class HttpService {
     private globalProgressService: GlobalProgressService) { }
 
   get<T>(url: string, responseType: TYPE_HTTP_RESPONSE_TYPE = 'json'): Promise<T | null> {
+    // if (environment.useThirdPartyAPI) {
+    //   let index = url.lastIndexOf('/');
+    //   if (url.substring(index + 1, index + 4) == "UI_"){
+    //     url = environment.thirdPartyAPIHost + url.substring(index + 1);
+    //   }
+    // }
+
     let httpCallBack = this.getCallBackFunc<T>()
 
     let option: any = {

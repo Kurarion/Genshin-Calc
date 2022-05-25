@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { CharacterService, Const, LangInfo, OcrService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
+import { EnemyService } from './enemy.service';
 import { WeaponService } from './weapon.service';
 
 @Injectable({
@@ -25,6 +26,7 @@ export class LanguageService {
     private storageService: StorageService,
     private characterService: CharacterService,
     private weaponService: WeaponService,
+    private enemyService: EnemyService,
     private ocrService: OcrService,
     private titleService: Title) {
     //言語設定
@@ -70,6 +72,8 @@ export class LanguageService {
           this.characterService.init(langCode);
           //武器言語設定
           this.weaponService.init(langCode);
+          //敵言語設定
+          this.enemyService.init(langCode);
           //タブタイトル初期化
           this.updateTabTitleName();
           //OCR言語設定

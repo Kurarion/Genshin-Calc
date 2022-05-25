@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { weapon, CharCreateOption, CharListOption, Const, genshindb, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { weapon, WeaponCreateOption, WeaponListOption, Const, genshindb, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -48,16 +48,16 @@ export class WeaponService {
     return option;
   }
 
-  private static dbGetAllNames(option?: CharListOption){
+  private static dbGetAllNames(option?: WeaponListOption){
     return WeaponService.dbListNames('names', option);
   }
 
-  private static dbListNames(keyword: string, option?: CharListOption): string[] {
+  private static dbListNames(keyword: string, option?: WeaponListOption): string[] {
     let result = genshindb.weapons(keyword, this.changeLang({ ...option, matchCategories: true }))
     return result;
   }
   
-  private create(keyword: string, option?: CharCreateOption): weapon {
+  private create(keyword: string, option?: WeaponCreateOption): weapon {
     let result = new weapon(genshindb.weapons(keyword, WeaponService.changeLang({ ...option, queryLanguages: this.queryLanguage})));
     return result;
   }

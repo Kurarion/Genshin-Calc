@@ -6,6 +6,7 @@ export interface WeaponImagesType {
     icon: string;
     //突破後
     awakenicon: string;
+    nameicon: string;
 }
 
 export interface WeaponCreateOption {

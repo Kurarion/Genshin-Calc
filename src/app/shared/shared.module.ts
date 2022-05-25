@@ -12,15 +12,17 @@ import { ArtifactListComponent } from './component/artifact-list/artifact-list.c
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
-import { from } from 'rxjs';
+import { RatePipe } from './pipe/rate.pipe';
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
+export { RatePipe } from './pipe/rate.pipe';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 
 export { GlobalProgressService } from './service/global-progress.service';
 export { OcrService } from './service/ocr.service';
 export { CharacterService } from './service/character.service';
 export { WeaponService } from './service/weapon.service';
+export { EnemyService } from './service/enemy.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
@@ -30,6 +32,7 @@ export * from './const/const';
 export * from './interface/interface';
 export * from './class/character';
 export * from './class/weapon';
+export * from './class/enemy';
 
 let shardList: any[] = [
   CaptureHtmlComponent,
@@ -37,10 +40,11 @@ let shardList: any[] = [
   ArtifactListComponent,
   NoCommaPipe,
   NoStrongPipe,
+  RatePipe,
 ];
 
 @NgModule({
-  declarations: [shardList],
+  declarations: [shardList, RatePipe],
   imports: [
     CommonModule,
     AngularMaterialModule,
