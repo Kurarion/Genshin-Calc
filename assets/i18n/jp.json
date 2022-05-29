@@ -13,6 +13,11 @@
     "PROPS": "武器属性",
     "SMELTING":"精炼"
   },
+  "ENEMY": {
+    "NAME": "敌人名",
+    "PROPS": "敌人属性",
+    "PLAYERNUM": "玩家数"
+  },
   "PROPS": {
     "LEVEL": "レベル",
     "ASCENDED": "（已突破）",
