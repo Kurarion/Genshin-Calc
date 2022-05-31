@@ -81,16 +81,16 @@ func writeToFile(path string, content *bytes.Buffer) error {
 	return err
 }
 
-// //读取文件
-// func readFromFile(fileName string, content *bytes.Buffer) error {
-// 	f, err := os.Open(fileName)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	defer f.Close()
-// 	_, err = content.ReadFrom(f)
-// 	return err
-// }
+//读取文件
+func readFromFile(fileName string, content *bytes.Buffer) error {
+	f, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, err = content.ReadFrom(f)
+	return err
+}
 
 //深拷贝Struct
 func copyStruct(dst, src interface{}) {

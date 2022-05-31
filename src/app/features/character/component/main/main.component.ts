@@ -61,6 +61,15 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    //test
+    let x: Record<string, any> = {} 
+    this.characterService.getMap("cn_sim").forEach((v,k,m) =>{
+      x[v.name] = {
+        background: v.images.cover1 ?? v.images.portrait,
+        avatar: v.images['hoyolab-avatar'] ?? v.images.icon
+      }
+    })
+    console.log(x)
     this.route.queryParams
       .subscribe((params: CharacterQueryParam) => {
         //計算用

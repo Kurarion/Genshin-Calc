@@ -17,6 +17,15 @@ const (
 	languageJP  = "jp"
 )
 
+//图片资源Host
+const (
+	imgHostAvatarFormat  = "https://upload-bbs.mihoyo.com/game_record/genshin/character_icon/%s.png"
+	imgHostEquipFormat   = "https://upload-bbs.mihoyo.com/game_record/genshin/equip/%s.png"
+	imgHostMonsterFormat = "https://res.cloudinary.com/genshin/image/upload/sprites/%s.png"
+
+	imgAwakenSuffix = "_Awaken"
+)
+
 var (
 	sysLanguage = []string{languageCHS, languageCHT, languageEN, languageJP}
 	t2s         *gocc.OpenCC
@@ -73,6 +82,8 @@ const (
 	fileReliquaryAffix = "reliquary_affix_map.json"
 	fileReliquaryMain  = "reliquary_main_map.json"
 	fileReliquarySet   = "reliquary_set_map.json"
+
+	fileLocalCharacterExtra = "character.json"
 )
 
 //文件完整路径
@@ -87,6 +98,10 @@ const (
 	pathReliquarySetFile   = pathDir + pathSlash + fileReliquarySet
 	pathAvatarSkillsFile   = pathDir + pathSlash + fileAvatarSkills
 	pathMonsterFile        = pathDir + pathSlash + fileMonster
+
+	pathLocalDir = "./genshindata/extra"
+
+	pathLocalCharacterExtra = pathLocalDir + pathSlash + fileLocalCharacterExtra
 )
 
 //索引
@@ -283,6 +298,12 @@ func update() error {
 		case languageJP:
 			textMap[v] = textMapJP
 		}
+	}
+	//额外
+	extraCharacterMap := make(GenshinExtraAvatarMapData)
+	err := readMapFormLocal(pathLocalCharacterExtra, &extraCharacterMap)
+	if err != nil {
+		return err
 	}
 
 	for i, v := range repositoryJSON {
@@ -592,10 +613,14 @@ func update() error {
 			DescTextMapHash: currentAvatarData.DescTextMapHash,
 			IconName:        currentAvatarData.IconName,
 			WeaponType:      currentAvatarData.WeaponType,
-			LevelMap:        make(map[string]*PROPERTY),
-			SkillDepotId:    currentAvatarData.SkillDepotId,
-			QualityType:     currentAvatarData.QualityType,
-			SideIconName:    currentAvatarData.SideIconName,
+			Images: AVATARIMAGES{
+				Icon:       fmt.Sprintf(imgHostAvatarFormat, currentAvatarData.IconName),
+				Background: extraCharacterMap[nameText[languageCHS]].BackgroundUrl,
+			},
+			LevelMap:     make(map[string]*PROPERTY),
+			SkillDepotId: currentAvatarData.SkillDepotId,
+			QualityType:  currentAvatarData.QualityType,
+			SideIconName: currentAvatarData.SideIconName,
 		}
 		//技能
 		if _, exit := dataAvatarSkillsMap[currentAvatarData.SkillDepotId]; exit {
@@ -684,8 +709,12 @@ func update() error {
 			DescTextMapHash: currentWeaponData.DescTextMapHash,
 			IconName:        currentWeaponData.IconName,
 			WeaponType:      currentWeaponData.WeaponType,
-			SkillAffixMap:   weaponSkillAffixDataMap[currentWeaponData.SkillAffix[0]],
-			LevelMap:        make(map[string]*PROPERTY),
+			Images: WEAPONIMAGES{
+				Icon:       fmt.Sprintf(imgHostEquipFormat, currentWeaponData.IconName),
+				Awakenicon: fmt.Sprintf(imgHostEquipFormat, currentWeaponData.IconName+imgAwakenSuffix),
+			},
+			SkillAffixMap: weaponSkillAffixDataMap[currentWeaponData.SkillAffix[0]],
+			LevelMap:      make(map[string]*PROPERTY),
 		}
 		//级别曲线参数
 		var weaponBaseAtkIndex int
@@ -772,7 +801,10 @@ func update() error {
 			NameTextMapHash: currentMonsterData.NameTextMapHash,
 			MonsterName:     currentMonsterData.MonsterName,
 			Type:            currentMonsterData.Type,
-			LevelMap:        make(map[string]*MONSTERPROPERTY),
+			Images: MONSTERIMAGES{
+				Icon: fmt.Sprintf(imgHostEquipFormat, currentMonsterData.MonsterName),
+			},
+			LevelMap: make(map[string]*MONSTERPROPERTY),
 		}
 		//级别曲线参数
 		var hpTypeIndex int
@@ -839,6 +871,20 @@ func getDataFromRepository() error {
 		return err
 	}
 	return saveResult()
+}
+
+//从本地读取已往结果
+func readMapFormLocal(path string, targetObj interface{}) error {
+	content := bytes.NewBuffer(make([]byte, 0, defaultBuffSize))
+	err := readFromFile(path, content)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(content.Bytes(), targetObj)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 //取得文字

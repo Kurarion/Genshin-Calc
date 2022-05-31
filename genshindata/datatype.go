@@ -62,6 +62,7 @@ type AVATAR struct {
 	IconName        string               `json:"iconName"`
 	SideIconName    string               `json:"sideIconName"`
 	WeaponType      string               `json:"weaponType"`
+	Images          AVATARIMAGES         `json:"images"`
 	LevelMap        map[string]*PROPERTY `json:"levelMap"`
 	SkillDepotId    uint64               `json:"skillDepotId"`
 	Skills          AVATARSKILLS         `json:"skills"`
@@ -87,6 +88,12 @@ type AVATARSKILLINFO struct {
 	ParamMap      map[string][]float64 `json:"paramMap"`
 }
 
+//人物图片
+type AVATARIMAGES struct {
+	Icon       string `json:"icon"`
+	Background string `json:"background"`
+}
+
 //************************
 //         武器
 //************************
@@ -98,6 +105,7 @@ type WEAPON struct {
 	DescTextMapHash uint64                `json:"descTextMapHash"`
 	IconName        string                `json:"iconName"`
 	WeaponType      string                `json:"weaponType"`
+	Images          WEAPONIMAGES          `json:"images"`
 	SkillAffixMap   map[string]SKILLAFFIX `json:"skillAffixMap"`
 	LevelMap        map[string]*PROPERTY  `json:"levelMap"`
 }
@@ -109,6 +117,12 @@ type SKILLAFFIX struct {
 	GenshinSkillAffixData
 }
 
+//武器图片
+type WEAPONIMAGES struct {
+	Icon       string `json:"icon"`
+	Awakenicon string `json:"awakenicon"`
+}
+
 //************************
 //         怪物
 //************************
@@ -118,6 +132,7 @@ type MONSTER struct {
 	NameTextMapHash uint64                      `json:"nameTextMapHash"`
 	MonsterName     string                      `json:"monsterName"`
 	Type            string                      `json:"type"`
+	Images          MONSTERIMAGES               `json:"images"`
 	LevelMap        map[string]*MONSTERPROPERTY `json:"levelMap"`
 }
 
@@ -127,6 +142,11 @@ type MONSTERPROPERTY struct {
 	Attack  float64 `json:"attack"`
 	Defense float64 `json:"defense"`
 	DMG_ANTI
+}
+
+//武器图片
+type MONSTERIMAGES struct {
+	Icon string `json:"icon"`
 }
 
 //************************

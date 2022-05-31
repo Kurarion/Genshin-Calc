@@ -268,3 +268,14 @@ type GenshinAvatarTalentData struct {
 	Icon            string    `json:"icon"`
 	ParamList       []float64 `json:"paramList"`
 }
+
+//************************
+//       额外数据
+//************************
+
+type GenshinExtraAvatarMapData map[string]GenshinExtraAvatarData
+
+//补充
+type GenshinExtraAvatarData struct {
+	BackgroundUrl string `json:"backgroundUrl"`
+}
