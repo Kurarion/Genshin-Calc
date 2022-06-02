@@ -38,7 +38,7 @@ export interface WeaponStatus {
     //会心ダメージ
     crit_dmg: number;
     //元素チャージ効率
-    energy_rechage: number;
+    energy_recharge: number;
     //与える治療効果
     healing_bonus: number;
     //受ける治療効果

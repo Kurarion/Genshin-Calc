@@ -46,7 +46,7 @@
                             [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right"></td>
                     </tr>
                     <ng-container *ngFor="let prop of props_sub">
-                        <tr *ngIf="selectedLevelProps[prop]">
+                        <tr *ngIf="selectedLevelProps[prop] && selectedLevelProps[prop].value != 0">
                             <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
                             <td class="content-right"
                                 [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"

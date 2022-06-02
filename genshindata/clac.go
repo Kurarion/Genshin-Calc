@@ -658,12 +658,12 @@ func update() error {
 		}
 		for ii := genshinCharacterLevelMin; ii <= genshinCharacterLevelMax; ii++ {
 			currentProperty := &PROPERTY{
-				Hp:             currentAvatarData.HpBase,
-				Attack:         currentAvatarData.AttackBase,
-				Defense:        currentAvatarData.DefenseBase,
-				Crit_rate:      currentAvatarData.Critical,
-				Crit_dmg:       currentAvatarData.CriticalHurt,
-				Energy_rechage: currentAvatarData.ChargeEfficiency,
+				Hp:              currentAvatarData.HpBase,
+				Attack:          currentAvatarData.AttackBase,
+				Defense:         currentAvatarData.DefenseBase,
+				Crit_rate:       currentAvatarData.Critical,
+				Crit_dmg:        currentAvatarData.CriticalHurt,
+				Energy_recharge: currentAvatarData.ChargeEfficiency,
 			}
 			currentProperty.Level = ii
 			//此等级数值

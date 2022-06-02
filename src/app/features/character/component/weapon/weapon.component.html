@@ -22,16 +22,6 @@
                     </mat-select>
                 </mat-form-field>
             </mat-card-title>
-            <!-- <mat-form-field appearance="legacy" floatLabel="always">
-                <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
-                <mat-select [(ngModel)]="currentWeaponType" (ngModelChange)="onSelectWeaponType($event)">
-                    <ng-container *ngFor="let option of levelOptions">
-                        <mat-option [value]="option"
-                            [innerText]="(option.level | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
-                        </mat-option>
-                    </ng-container>
-                </mat-select>
-            </mat-form-field> -->
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
@@ -66,7 +56,7 @@
                             [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right"></td>
                     </tr>
                     <ng-container *ngFor="let prop of props_sub">
-                        <tr *ngIf="selectedLevelProps[prop]">
+                        <tr *ngIf="selectedLevelProps[prop] && selectedLevelProps[prop].value != 0">
                             <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
                             <td class="content-right"
                                 [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"

@@ -14,7 +14,7 @@ type PROPERTY struct {
 	Defense_up            float64 `json:"defense_up"`
 	Crit_rate             float64 `json:"crit_rate"`
 	Crit_dmg              float64 `json:"crit_dmg"`
-	Energy_rechage        float64 `json:"energy_rechage"`
+	Energy_recharge       float64 `json:"energy_recharge"`
 	Healing_bonus         float64 `json:"healing_bonus"`
 	Reverse_healing_bonus float64 `json:"reverse_healing_bonus"`
 	Elemental_mastery     float64 `json:"elemental_mastery"`
@@ -220,7 +220,7 @@ func GetNameFromTypeCode(code string) string {
 	case DMG_BONUS_DENDRO:
 		name = "Dmg_bonus_dendro"
 	case ENERGY_RECHARGE:
-		name = "Energy_rechage"
+		name = "Energy_recharge"
 	case ELEMENTAL_MASTERY:
 		name = "Elemental_mastery"
 	case HEALING_BONUS:
