@@ -5,12 +5,12 @@ export declare type TYPE_GENSHINDB_LANG = 'ChineseSimplified' | 'ChineseTraditio
 export declare type TYPE_HTTP_RESPONSE_TYPE = 'json' | 'text' | 'arraybuffer' | 'blob';
 
 export interface CharacterQueryParam {
-  name?: string,
+  index?: string | number,
 }
 
 /** メニューインタフェース */
 export interface MenuInfo {
-  name: string;
+  names: Record<TYPE_SYS_LANG, string>;
   routerLink: string;
   queryParams: CharacterQueryParam;
 }

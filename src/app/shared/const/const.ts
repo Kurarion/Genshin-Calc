@@ -1,4 +1,5 @@
 import { LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 export class Const {
   //*********************************
@@ -30,7 +31,7 @@ export class Const {
     jp: 'Japanese',
   };
 
-  static readonly QUERY_LANG: TYPE_SYS_LANG = 'cn_sim';
+  static DEFAULT_LANG: TYPE_SYS_LANG = environment.defaultLang as TYPE_SYS_LANG;
 
   //*********************************
   //          クッキーキー

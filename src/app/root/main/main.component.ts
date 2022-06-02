@@ -58,11 +58,6 @@ export class MainComponent implements OnInit, OnDestroy {
         return state.matches;
       })
     );
-    //メニューオープン状態初期化
-    // let onceSubscription = this.isLarge.subscribe((isLarge: boolean) => {
-    //   this.menuOpenStatus = isLarge;
-    //   onceSubscription.unsubscribe();
-    // })
     //ブラウザのレイアウトイベント
     this.isLarge.subscribe((isLarge: boolean) => {
       let openDelay = 0;
@@ -84,7 +79,7 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     //言語初期化
     this.initLang();
   }
@@ -127,6 +122,11 @@ export class MainComponent implements OnInit, OnDestroy {
     this.artifactList.addArtifactList(image);
   }
 
+  /**
+   * ルーター動画状態取得
+   * @param outlet 
+   * @returns 
+   */
   prepareRoute(outlet: RouterOutlet) {
     return outlet?.activatedRouteData?.['animation'];
   }
@@ -142,4 +142,5 @@ export class MainComponent implements OnInit, OnDestroy {
     //言語設定
     this.languageService.nextLang(lang as TYPE_SYS_LANG);
   }
+
 }

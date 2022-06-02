@@ -1,39 +1,22 @@
-import { genshindb, TYPE_SYS_LANG, Const } from "src/app/shared/shared.module";
+import { TYPE_SYS_LANG } from "src/app/shared/shared.module";
+import { CharPromotoLevelType as CharPromoteLevelType, CharQualityType, WeaponType } from "./type";
 
-export declare type CharTalentCombatPassiveType = 1|2|3|'sp';
-
-export interface CharImagesType {
-    card: string;
-    portrait: string;
+//*********************************
+//            画像情報
+//*********************************
+export interface CharImages {
+    background: string;
     icon: string;
-    sideicon: string;
-    cover1: string;
-    cover2: string;
-    'hoyolab-avatar': string;
-    namegachasplash: string;
-    nameicon: string;
 }
 
-export interface CharCreateOption {
-    matchAliases?: boolean,
-    // queryLanguages?: TYPE_SYS_LANG,
-    resultLanguage?: TYPE_SYS_LANG,
-}
-
-export interface CharListOption {
-    // matchCategories: boolean,
-    // queryLanguages?: TYPE_SYS_LANG,
-    resultLanguage?: TYPE_SYS_LANG,
-}
-
+//*********************************
+//            属性情報
+//*********************************
 export interface CharStatus {
-    //*********************************
-    //            属性情報
-    //*********************************
     //レベル
     level: number;
     //突破段階
-    ascension: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    promoteLevel: CharPromoteLevelType;
     //生命値
     hp: number;
     //攻撃値
@@ -42,212 +25,129 @@ export interface CharStatus {
     defense: number;
     //キャラ突破増加値
     specialized: number;
+    //生命力アップ
+    hp_up: number;
+    //攻撃力アップ
+    attack_up: number;
+    //防御力アップ
+    defense_up: number;
+    //会心率
+    crit_rate: number;
+    //会心ダメージ
+    crit_dmg: number;
+    //元素チャージ効率
+    energy_rechage: number;
+    //与える治療効果
+    healing_bonus: number;
+    //受ける治療効果
+    reverse_healing_bonus: number;
+    //元素熟知
+    elemental_mastery: number;
+    //氷元素ダメージ
+    dmg_bonus_cryo: number;
+    //風元素ダメージ
+    dmg_bonus_anemo: number;
+    //物理ダメージ
+    dmg_bonus_physical: number;
+    //雷元素ダメージ
+    dmg_bonus_electro: number;
+    //岩元素ダメージ
+    dmg_bonus_geo: number;
+    //火元素ダメージ
+    dmg_bonus_pyro: number;
+    //水元素ダメージ
+    dmg_bonus_hydro: number;
+    //草元素ダメージ
+    dmg_bonus_dendro: number;
+    //全ダメージ
+    dmg_bonus_all: number;
+    //基本攻撃ダメージ
+    dmg_bonus_normal: number;
+    //重撃ダメージ
+    dmg_bonus_charged: number;
+    //落下攻撃ダメージ
+    dmg_bonus_plunging: number;
+    //元素スキルダメージ
+    dmg_bonus_skill: number;
+    //元素爆発ダメージ
+    dmg_bonus_elemental_burst: number;
 }
 
-export interface CharTalentCombatInfo {
-    attributes: { labels: string[], parameters: Record<string, number[]> };
-    info: string;
-    name: string;
-    values: CharTalentObject[] | undefined;
-}
-
-export interface CharTalentOhterInfo {
-    info: string;
-    name: string;
-    values: undefined;
-}
-
-export interface CharTalentObject {
-    key: string;
-    valuePropKeys: string[];
+//*********************************
+//            スキル情報
+//*********************************
+export interface CharSkillDescObject {
+    desc: string;
+    valuePropIndexs: number[];
     prefix: string;
     middles: string[];
     suffix: string;
     isPercent: boolean[];
 }
 
-export class characterTalents {
-    combat1!: CharTalentCombatInfo;
-    combat2!: CharTalentCombatInfo;
-    combat3!: CharTalentCombatInfo;
-    combatsp!: CharTalentCombatInfo;
-    passive1!: CharTalentOhterInfo;
-    passive2!: CharTalentOhterInfo;
-    passive3!: CharTalentOhterInfo;
-
-    //コンストラクタ
-    constructor(data: any) {
-        ({
-            combat1: this.combat1,
-            combat2: this.combat2,
-            combat3: this.combat3,
-            combatsp: this.combatsp,
-            passive1: this.passive1,
-            passive2: this.passive2,
-            passive3: this.passive3,
-        } = data);
-        // this.combat1.attributes.labels.forEach((_,index,array)=>{
-        //     array[index] = this.removeSomeIdentifier(array[index]);
-        // })
-        // this.combat2.attributes.labels.forEach((_,index,array)=>{
-        //     array[index] = this.removeSomeIdentifier(array[index]);
-        // })
-        // this.combat3.attributes.labels.forEach((_,index,array)=>{
-        //     array[index] = this.removeSomeIdentifier(array[index]);
-        // })
-        // this.combatsp?.attributes.labels.forEach((_,index,array)=>{
-        //     array[index] = this.removeSomeIdentifier(array[index]);
-        // })
-        this.combat1.values = this.getCombatData(1);
-        this.combat2.values = this.getCombatData(2);
-        this.combat3.values = this.getCombatData(3);
-        if(this.combatsp){
-            this.combatsp.values = this.getCombatData('sp');
-        }
-    }
-
-    private getCombatData(index: CharTalentCombatPassiveType){
-        let targetCombat: CharTalentCombatInfo;
-        switch(index){
-            case 1:
-                targetCombat = this.combat1;
-                break;
-            case 2:
-                targetCombat = this.combat2;
-                break;
-            case 3:
-                targetCombat = this.combat3;
-                break;
-            case 'sp':
-                targetCombat = this.combatsp;
-                break;
-        }
-
-        let temp = targetCombat.attributes.labels;
-        let results: CharTalentObject[] = [];
-        for(let i = 0; i< temp.length; ++i){
-            let items = temp[i].split('|');
-            let key: string = items[0];
-            let valuePropKeys: string[] = [];
-            let prefix: string;
-            let middles: string[] = [];
-            let suffix: string;
-            let isPercent: boolean[] = [];
-
-            valuePropKeys = items[1].match(/param\d+/g) as Array<string>;
-            items[1].match(/\{param\d+:.*?\}/g)?.forEach((value: string)=>{
-                isPercent.push(value.indexOf('P') != -1);
-            })
-
-            let others = items[1].split(/\{param\d+:.*?\}/);
-            prefix = others[0];
-            middles = others.slice(1, others.length - 1);
-            suffix = others[others.length - 1];
-
-            results.push({
-                key: key,
-                valuePropKeys: valuePropKeys,
-                prefix: prefix,
-                middles: middles,
-                suffix: suffix,
-                isPercent: isPercent,
-            })
-        }
-
-        return results;
-    }
-
-    private removeSomeIdentifier(origin: string){
-        return origin.replace(/\{param(\d+):.*?\}/g,"{param$1}");
-    }
+export interface CharSkill {
+    //名前
+    name: Record<TYPE_SYS_LANG, string>;
+    //記述
+    desc: Record<TYPE_SYS_LANG, string>;
+    //アイコン
+    icon: string;
+    //記述パラメータ
+    paramDescList: Record<TYPE_SYS_LANG, string[]>;
+    //パラメータ
+    paramMap: Record<string, number[]>;
+    //計算後の記述パラメータ
+    paramDescSplitedList: Record<TYPE_SYS_LANG, CharSkillDescObject[]>;
 }
 
-export interface CharConstellationInfo {
-    effect: string;
-    name: string;
+export interface CharSkills {
+    //ID
+    id: number;
+    //普通攻撃
+    normal: CharSkill;
+    //元素戦技
+    skill: CharSkill;
+    //その他
+    other: CharSkill;
+    //元素爆発
+    elemental_burst: CharSkill;
+    //タレント
+    proudSkills: CharSkill[];
+    //星座
+    talents: CharSkill[];
 }
 
-export class characterConstellations {
-    c1!: CharConstellationInfo;
-    c2!: CharConstellationInfo;
-    c3!: CharConstellationInfo;
-    c4!: CharConstellationInfo;
-    c5!: CharConstellationInfo;
-    c6!: CharConstellationInfo;
-
-    //コンストラクタ
-    constructor(data: any) {
-        ({
-            c1: this.c1,
-            c2: this.c2,
-            c3: this.c3,
-            c4: this.c4,
-            c5: this.c5,
-            c6: this.c6,
-        } = data);
-    }
-}
-
-//キャラクターベース
+//*********************************
+//        キャラクターベース
+//*********************************
 export class character {
 
     //*********************************
     //            基本情報
     //*********************************
+    //ID
+    id!: number;
     //名前
-    name!: string;
-    fullname!: string;
+    name!: Record<TYPE_SYS_LANG, string>;
     //レアリティー
-    rarity!: number;
-    //元素タイプ
-    element!: string;
-    //所属
-    association!: string;
-    //出身
-    region!: string;
-    //星座名
-    constellation!: string;
+    qualityType!: CharQualityType;
+    //記述
+    desc!: Record<TYPE_SYS_LANG, string>;
     //武器タイプ
-    weapontype!: string;
-    //突破属性
-    substat!: string;
+    weaponType!: WeaponType;
 
     //*********************************
     //            リソース
     //*********************************
     //画像
-    images!: CharImagesType;
+    images!: CharImages;
 
     //*********************************
     //             その他
     //*********************************
-    //レベル基本属性クエリメソッド
-    stats!: (level: string | number, option?: "+") => CharStatus;
-    //タレント
-    talents!: characterTalents | undefined;
-    //星座
-    constellations!: characterConstellations | undefined;
+    //レベル属性マップ
+    levelMap!: Record<string, CharStatus>;
+    //スキル
+    skills!: CharSkills;
 
-    //コンストラクタ
-    constructor(data: any, talents: any, constellations: any) {
-        ({
-            name: this.name,
-            fullname: this.fullname,
-            rarity: this.rarity,
-            element: this.element,
-            association: this.association,
-            region: this.region,
-            constellation: this.constellation,
-            weapontype: this.weapontype,
-            substat: this.substat,
-            images: this.images,
-            stats: this.stats,
-        } = data);
-        if (talents) {
-            this.talents = new characterTalents(talents);
-        }
-        if (constellations) {
-            this.constellations = new characterConstellations(constellations);
-        }
-    }
 }

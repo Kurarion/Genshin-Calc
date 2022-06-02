@@ -30,15 +30,15 @@ type GenshinPromoteData struct {
 	UnlockMaxLevel      int              `json:"unlockMaxLevel"`
 }
 
-func (this GenshinPromoteListData) Len() int {
-	return len(this)
-}
-func (this GenshinPromoteListData) Swap(i, j int) {
-	this[i], this[j] = this[j], this[i]
-}
-func (this GenshinPromoteListData) Less(i, j int) bool {
-	return this[i].AvatarPromoteId < this[j].AvatarPromoteId
-}
+// func (this GenshinPromoteListData) Len() int {
+// 	return len(this)
+// }
+// func (this GenshinPromoteListData) Swap(i, j int) {
+// 	this[i], this[j] = this[j], this[i]
+// }
+// func (this GenshinPromoteListData) Less(i, j int) bool {
+// 	return this[i].AvatarPromoteId < this[j].AvatarPromoteId
+// }
 
 //属性增量
 type GenshinPropAdd struct {
@@ -87,9 +87,9 @@ type GenshinWeaponBaseListData []GenshinWeaponBaseData
 //武器定义
 type GenshinWeaponBaseData struct {
 	Id              uint64                        `json:"id"`
+	RankLevel       int                           `json:"rankLevel"`
 	NameTextMapHash uint64                        `json:"nameTextMapHash"`
 	DescTextMapHash uint64                        `json:"descTextMapHash"`
-	RankLevel       int                           `json:"rankLevel"`
 	IconName        string                        `json:"icon"`
 	WeaponType      string                        `json:"weaponType"`
 	PropGrowCurves  []GenshinWeaponPropGrowCurves `json:"weaponProp"`

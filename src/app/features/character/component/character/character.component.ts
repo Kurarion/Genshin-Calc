@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { character, CharStatus, Const, ExtraDataService, HttpService } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import { character, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
-  level: number;
+  level: string;
+  levelNum: number;
   isAscend?: boolean;
 }
 
@@ -22,6 +22,7 @@ export class CharacterComponent implements OnInit {
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
   private readonly ascendLevels = [20, 40, 50, 60, 70, 80, 90];
+  private readonly levelPadNum = 2;
 
   readonly props = ['LEVEL', 'HP', 'ATTACK', 'DEFENSE'];
   readonly props_sub = [
@@ -45,14 +46,19 @@ export class CharacterComponent implements OnInit {
     'DMG_BONUS_ELEMENTAL_BURST',
   ]
 
+  //キャラデータ
   @Input('data') data!: character;
-  @Input('dataForCal') dataForCal!: character;
+  //言語
+  @Input('language') currentLanguage!: TYPE_SYS_LANG;
+  //キャラアイコン
   avatarURL!: string;
+  //キャラアイコンローディングフラグ
   avatarLoadFlg!: boolean;
-
+  //レベルオプション
   levelOptions: levelOption[] = [];
-
+  //選択されたレベル
   selectedLevel!: levelOption;
+  //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
 
   constructor(private httpService: HttpService, private extraDataService: ExtraDataService) { }
@@ -60,14 +66,16 @@ export class CharacterComponent implements OnInit {
   ngOnInit(): void {
     //プロフィール画像初期化
     this.initializeBackGroundImage();
-    //その他
+    //レベルリスト初期化
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
       this.levelOptions.push({
-        level: i,
+        level: i.toString().padStart(this.levelPadNum, '0'),
+        levelNum: i,
       });
       if (this.ascendLevels.includes(i) && i != this.maxLevel) {
         this.levelOptions.push({
-          level: i,
+          level: i.toString().padStart(this.levelPadNum, '0') + '+',
+          levelNum: i,
           isAscend: true,
         });
       }
@@ -77,21 +85,18 @@ export class CharacterComponent implements OnInit {
     this.onChangeLevel(this.selectedLevel);
   }
 
+  /**
+   * レベル変更処理
+   * @param value 
+   */
   onChangeLevel(value: levelOption) {
     this.selectedLevelProps = {};
-    let temp = this.dataForCal.stats(value.level, value.isAscend ? '+' : undefined);
-    for (let propName of this.props) {
-      this.selectedLevelProps[propName] = {
-        isPercent: false,
-        value: temp[propName.toLowerCase() as keyof CharStatus],
-      }
-    }
-    //スペシャル
-    if (this.dataForCal.substat) {
-      const key = Const.MAP_PROPS_SPECIALIZED[this.dataForCal.substat];
-      this.selectedLevelProps[key] = {
-        isPercent: this.percent_props.includes(key),
-        value: temp.specialized,
+    let temp = this.data.levelMap[value.level];
+    for (let key in temp) {
+      let upperKey = key.toUpperCase();
+      this.selectedLevelProps[upperKey] = {
+        isPercent: this.percent_props.includes(upperKey),
+        value: temp[key as keyof CharStatus],
       }
     }
   }
@@ -102,10 +107,7 @@ export class CharacterComponent implements OnInit {
   private initializeBackGroundImage() {
     if (!this.avatarURL) {
       this.avatarLoadFlg = false;
-      let url = this.data.images['hoyolab-avatar'] ?? this.data.images.icon;
-      if (environment.useThirdPartyAPI) {
-        url = environment.thirdPartyAPIHost + this.data.images.nameicon + environment.thirdPartyAPIPicType;
-      }
+      let url = this.data.images.icon;
       this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
         if (v) {
           this.avatarURL = window.URL.createObjectURL(v);

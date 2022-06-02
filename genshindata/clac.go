@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"regexp"
+	"strconv"
+	"strings"
 
 	gocc "github.com/liuzl/gocc"
 )
@@ -21,7 +24,7 @@ const (
 const (
 	imgHostAvatarFormat  = "https://upload-bbs.mihoyo.com/game_record/genshin/character_icon/%s.png"
 	imgHostEquipFormat   = "https://upload-bbs.mihoyo.com/game_record/genshin/equip/%s.png"
-	imgHostMonsterFormat = "https://res.cloudinary.com/genshin/image/upload/sprites/%s.png"
+	imgHostMonsterFormat = "https://res.cloudinary.com/genshin/image/upload/sprites/UI_MonsterIcon_%s.png"
 
 	imgAwakenSuffix = "_Awaken"
 )
@@ -539,34 +542,45 @@ func update() error {
 		if temp.Skills[1] == 0 {
 			continue
 		}
+		normalParamDescList := getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId][0].ParamDescList, textMap, false)
+		skillParamDescList := getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId][0].ParamDescList, textMap, false)
+		burstParamDescList := getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId][0].ParamDescList, textMap, false)
 		dataAvatarSkillsMap[temp.Id] = &AVATARSKILLS{
 			Id: temp.Id,
 			Normal: AVATARSKILLINFO{
-				Name:          getTextFromHash(avatarSkillDataMap[temp.Skills[0]].NameTextMapHash, textMap, false),
-				Desc:          getRegxTextFromHash(avatarSkillDataMap[temp.Skills[0]].DescTextMapHash, textMap, false),
-				Icon:          avatarSkillDataMap[temp.Skills[0]].SkillIcon,
-				ParamDescList: getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId][0].ParamDescList, textMap, false),
-				ParamMap:      avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId],
+				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[0]].NameTextMapHash, textMap, false),
+				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[0]].DescTextMapHash, textMap, false),
+				Icon:                 avatarSkillDataMap[temp.Skills[0]].SkillIcon,
+				ParamDescList:        normalParamDescList,
+				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId],
+				ParamDescSplitedList: calParamDesc(normalParamDescList),
 			},
 			Skill: AVATARSKILLINFO{
-				Name:          getTextFromHash(avatarSkillDataMap[temp.Skills[1]].NameTextMapHash, textMap, false),
-				Desc:          getRegxTextFromHash(avatarSkillDataMap[temp.Skills[1]].DescTextMapHash, textMap, false),
-				ParamDescList: getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId][0].ParamDescList, textMap, false),
-				ParamMap:      avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId],
+				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[1]].NameTextMapHash, textMap, false),
+				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[1]].DescTextMapHash, textMap, false),
+				Icon:                 avatarSkillDataMap[temp.Skills[1]].SkillIcon,
+				ParamDescList:        skillParamDescList,
+				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId],
+				ParamDescSplitedList: calParamDesc(skillParamDescList),
 			},
 			Elemental_burst: AVATARSKILLINFO{
-				Name:          getTextFromHash(avatarSkillDataMap[temp.EnergySkill].NameTextMapHash, textMap, false),
-				Desc:          getRegxTextFromHash(avatarSkillDataMap[temp.EnergySkill].DescTextMapHash, textMap, false),
-				ParamDescList: getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId][0].ParamDescList, textMap, false),
-				ParamMap:      avatarProudSkillParamDataMap[avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId],
+				Name:                 getTextFromHash(avatarSkillDataMap[temp.EnergySkill].NameTextMapHash, textMap, false),
+				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.EnergySkill].DescTextMapHash, textMap, false),
+				Icon:                 avatarSkillDataMap[temp.EnergySkill].SkillIcon,
+				ParamDescList:        burstParamDescList,
+				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId],
+				ParamDescSplitedList: calParamDesc(burstParamDescList),
 			},
 		}
 		if temp.Skills[2] != 0 {
+			paramDescList := getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[2]].ProudSkillGroupId][0].ParamDescList, textMap, false)
 			dataAvatarSkillsMap[temp.Id].Other = AVATARSKILLINFO{
-				Name:          getTextFromHash(avatarSkillDataMap[temp.Skills[2]].NameTextMapHash, textMap, false),
-				Desc:          getRegxTextFromHash(avatarSkillDataMap[temp.Skills[2]].DescTextMapHash, textMap, false),
-				ParamDescList: getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[2]].ProudSkillGroupId][0].ParamDescList, textMap, false),
-				ParamMap:      avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[2]].ProudSkillGroupId],
+				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[2]].NameTextMapHash, textMap, false),
+				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[2]].DescTextMapHash, textMap, false),
+				Icon:                 avatarSkillDataMap[temp.Skills[2]].SkillIcon,
+				ParamDescList:        paramDescList,
+				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[2]].ProudSkillGroupId],
+				ParamDescSplitedList: calParamDesc(paramDescList),
 			}
 		}
 		for ii := range temp.InherentProudSkillOpens {
@@ -577,6 +591,7 @@ func update() error {
 			dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, AVATARSKILLINFO{
 				Name:     getTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].NameTextMapHash, textMap, false),
 				Desc:     getRegxTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].DescTextMapHash, textMap, false),
+				Icon:     avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
 				ParamMap: avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
 			})
 		}
@@ -588,6 +603,7 @@ func update() error {
 			dataAvatarSkillsMap[temp.Id].Talents = append(dataAvatarSkillsMap[temp.Id].Talents, AVATARSKILLINFO{
 				Name: getTextFromHash(avatarTalentDataMap[temp2].NameTextMapHash, textMap, false),
 				Desc: getRegxTextFromHash(avatarTalentDataMap[temp2].DescTextMapHash, textMap, false),
+				Icon: avatarTalentDataMap[temp2].Icon,
 				ParamMap: map[string][]float64{
 					fmt.Sprintf(configSkillLevelFormat, 1): avatarTalentDataMap[temp2].ParamList,
 				},
@@ -703,6 +719,7 @@ func update() error {
 		//创建
 		dataWeaponMap[currentWeaponData.Id] = &WEAPON{
 			Id:              currentWeaponData.Id,
+			RankLevel:       currentWeaponData.RankLevel,
 			Name:            nameText,
 			NameTextMapHash: currentWeaponData.NameTextMapHash,
 			Desc:            descText,
@@ -802,7 +819,7 @@ func update() error {
 			MonsterName:     currentMonsterData.MonsterName,
 			Type:            currentMonsterData.Type,
 			Images: MONSTERIMAGES{
-				Icon: fmt.Sprintf(imgHostEquipFormat, currentMonsterData.MonsterName),
+				Icon: fmt.Sprintf(imgHostMonsterFormat, currentMonsterData.MonsterName),
 			},
 			LevelMap: make(map[string]*MONSTERPROPERTY),
 		}
@@ -944,4 +961,50 @@ func tTos(in string) (out string) {
 		return ""
 	}
 	return
+}
+
+//技能描述解析
+func calParamDesc(paramDescList map[string][]string) map[string][]AVATARSKILLSPLITEDDESCINFO {
+	results := make(map[string][]AVATARSKILLSPLITEDDESCINFO)
+	for i, v := range paramDescList {
+		tempList := make([]AVATARSKILLSPLITEDDESCINFO, 0)
+		for _, vv := range v {
+			items := strings.Split(vv, "|")
+			desc := items[0]
+			valuePropIndexes := make([]int, 0)
+			prefix := ""
+			var middles []string
+			suffix := ""
+			isPercent := make([]bool, 0)
+
+			valuePropIndexesReg := regexp.MustCompile(`param\d+`)
+			for _, v := range valuePropIndexesReg.FindAllString(items[1], -1) {
+				tempNum, _ := strconv.Atoi(strings.TrimPrefix(v, "param"))
+				valuePropIndexes = append(valuePropIndexes, tempNum-1)
+			}
+
+			isPercentReg := regexp.MustCompile(`\{param\d+:.*?\}`)
+			for _, v := range isPercentReg.FindAllString(items[1], -1) {
+				isPercent = append(isPercent, strings.Contains(v, "P"))
+			}
+
+			others := isPercentReg.Split(items[1], -1)
+			prefix = others[0]
+			middles = others[1 : len(others)-1]
+			suffix = others[len(others)-1]
+
+			tempList = append(tempList, AVATARSKILLSPLITEDDESCINFO{
+				Desc:            desc,
+				ValuePropIndexs: valuePropIndexes,
+				Prefix:          prefix,
+				Middles:         middles,
+				Suffix:          suffix,
+				IsPercent:       isPercent,
+			})
+		}
+		results[i] = tempList
+	}
+
+	return results
+
 }

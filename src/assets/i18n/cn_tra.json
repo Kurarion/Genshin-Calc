@@ -46,6 +46,14 @@
     "DMG_BONUS_CHARGED": "重擊傷害加成",
     "DMG_BONUS_PLUNGING": "下落攻擊傷害加成",
     "DMG_BONUS_SKILL": "元素戰技傷害加成",
-    "DMG_BONUS_ELEMENTAL_BURST": "元素爆發傷害加成"
+    "DMG_BONUS_ELEMENTAL_BURST": "元素爆發傷害加成",
+    "DMG_ANTI_CRYO": "冰元素抗性",
+    "DMG_ANTI_ANEMO": "风元素抗性",
+    "DMG_ANTI_PHYSICAL": "物理抗性",
+    "DMG_ANTI_ELECTRO": "雷元素抗性",
+    "DMG_ANTI_GEO": "岩元素抗性",
+    "DMG_ANTI_PYRO": "火元素抗性",
+    "DMG_ANTI_HYDRO": "水元素抗性",
+    "DMG_ANTI_DENDRO": "草元素抗性"
   }
 }

@@ -1,4 +1,4 @@
-<ng-container *ngIf="data.talents">
+<ng-container *ngIf="data.skills">
     <mat-card class="card" cdkDrag>
         <div class="drap-handle" cdkDragHandle>
             <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
@@ -13,65 +13,71 @@
         </mat-card-header>
         <mat-card-content class="content">
             <mat-accordion>
-                <ng-container *ngFor="let combatIndex of combatNum; index as i">
+                <ng-container *ngFor="let skill of skills; index as i">
                     <mat-expansion-panel class="mat-elevation-z0 expand">
-                        <mat-expansion-panel-header [matTooltip]="getDataProperty(combatPrefix + combatIndex).info | noStrong" matTooltipPosition="right">
+                        <mat-expansion-panel-header matTooltipPosition="right">
                             <mat-panel-title>
-                                <span [innerText]="getDataProperty(combatPrefix + combatIndex).name"></span>
+                                <span [innerText]="getDataProperty(skill).name[currentLanguage]"></span>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <!-- レベル選択 -->
                         <mat-form-field appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
-                            <mat-select [(ngModel)]="selectedLevels[i]" (ngModelChange)="onChangeLevel(1, $event)">
+                            <mat-select [(ngModel)]="selectedLevels[i]" (ngModelChange)="onChangeLevel(skill, $event)">
                                 <ng-container *ngFor="let option of levelOptions">
-                                    <mat-option [value]="option" [innerText]="option">
+                                    <mat-option [value]="option" [innerText]="option.level">
                                     </mat-option>
                                 </ng-container>
                             </mat-select>
                         </mat-form-field>
                         <!-- 属性情報 -->
                         <table>
-                            <tr *ngFor="let obj of getDataProperty(combatPrefix + combatIndex).values">
-                                <td class="content-left" [innerText]="obj.key"></td>
-                                <td class="content-right" [innerText]="getTalentValue(combatIndex, obj, selectedLevels[i])"
-                                    [matTooltip]="getTalentValue(combatIndex, obj, selectedLevels[i], true)" matTooltipPosition="right">
+                            <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
+                                <td class="content-left" [innerText]="paramDesc.desc"></td>
+                                <td class="content-right" [innerText]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[i].level)"
+                                    [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[i].level, true)" matTooltipPosition="right">
                                 </td>
                             </tr>
                         </table>
+                        <br>
+                        <span [innerHTML]="getDataProperty(skill).desc[currentLanguage] | noStrong"></span>
                     </mat-expansion-panel>
                 </ng-container>
-                <ng-container *ngFor="let combatspIndex of combatspNum; index as i">
-                    <ng-container *ngIf="getDataProperty(combatPrefix + combatspIndex)">
+                <ng-container *ngFor="let skill of otherSkills; index as i">
+                    <ng-container *ngIf="getDataProperty(skill).name">
                         <mat-expansion-panel class="mat-elevation-z0 expand">
-                            <mat-expansion-panel-header [matTooltip]="getDataProperty(combatPrefix + combatspIndex).info | noStrong" matTooltipPosition="right">
+                            <mat-expansion-panel-header matTooltipPosition="right">
                                 <mat-panel-title>
-                                    <span [innerText]="getDataProperty(combatPrefix + combatspIndex).name"></span>
+                                    <span [innerText]="getDataProperty(skill).name[currentLanguage]"></span>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <!-- 属性情報 -->
                             <table>
-                                <tr *ngFor="let obj of getDataProperty(combatPrefix + combatspIndex).values">
-                                    <td class="content-left" [innerText]="obj.key"></td>
-                                    <td class="content-right" [innerText]="getTalentValue(combatspIndex, obj, 1)"
-                                        [matTooltip]="getTalentValue(combatspIndex, obj, 1, true)" matTooltipPosition="right">
+                                <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
+                                    <td class="content-left" [innerText]="paramDesc.desc"></td>
+                                    <td class="content-right" [innerText]="getTalentValue(skill, paramDesc, currentLanguage, '01')"
+                                        [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, '01', true)" matTooltipPosition="right">
                                     </td>
                                 </tr>
                             </table>
+                            <br>
+                            <span [innerHTML]="getDataProperty(skill).desc[currentLanguage] | noStrong"></span>
                         </mat-expansion-panel>
                     </ng-container>
                 </ng-container>
-                <ng-container *ngFor="let passiveIndex of passiveNum; index as i">
-                    <ng-container *ngIf="getDataProperty(passivefix + passiveIndex)">
-                        <mat-expansion-panel class="mat-elevation-z0 expand">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <span [innerText]="getDataProperty(passivefix + passiveIndex).name"></span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <!-- 属性情報 -->
-                            <span [innerText]="getDataProperty(passivefix + passiveIndex).info | noStrong"></span>
-                        </mat-expansion-panel>
+                <ng-container *ngFor="let skills of prundSkills">
+                    <ng-container *ngIf="getDataProperty(skills)">
+                        <ng-container *ngFor="let skill of getDataProperties(skills); index as i">
+                            <mat-expansion-panel class="mat-elevation-z0 expand">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <span [innerText]="skill.name[currentLanguage]"></span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <!-- 属性情報 -->
+                                <span [innerHTML]="skill.desc[currentLanguage] | noStrong"></span>
+                            </mat-expansion-panel>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
             </mat-accordion>

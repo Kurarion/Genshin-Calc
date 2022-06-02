@@ -1,6 +1,6 @@
 import { PercentPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { character, characterConstellations, characterTalents, CharStatus, CharTalentCombatInfo, CharTalentCombatPassiveType, CharTalentObject, Const, HttpService } from 'src/app/shared/shared.module';
+import { character, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 
 @Component({
@@ -35,18 +35,13 @@ export class ConstellationComponent implements OnInit {
     'DMG_BONUS_ELEMENTAL_BURST',
   ]
 
+  //キャラデータ
   @Input('data') data!: character;
-  @Input('dataForCal') dataForCal!: character;
+  //言語
+  @Input('language') currentLanguage!: TYPE_SYS_LANG;
 
-  levelOptions: number[] = [];
-
-  selectedLevels: number[] = [];
-  constructor(private percentPipe: PercentPipe) { }
+  constructor() { }
 
   ngOnInit(): void { }
-
-  getDataProperty(key: string){
-    return this.data.constellations![key as keyof characterConstellations];
-  }
 
 }

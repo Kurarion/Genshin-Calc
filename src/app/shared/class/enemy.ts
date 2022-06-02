@@ -1,25 +1,17 @@
-import { genshindb, TYPE_SYS_LANG, Const } from "src/app/shared/shared.module";
+import { TYPE_SYS_LANG } from "src/app/shared/shared.module";
+import { EnemyType } from "./type";
 
-export interface EnemyImagesType {
-    nameicon: string;
+//*********************************
+//            画像情報
+//*********************************
+export interface EnemyImages {
+    icon: string;
 }
 
-export interface EnemyCreateOption {
-    matchAliases?: boolean,
-    // queryLanguages?: TYPE_SYS_LANG,
-    resultLanguage?: TYPE_SYS_LANG,
-}
-
-export interface EnemyListOption {
-    // matchCategories: boolean,
-    // queryLanguages?: TYPE_SYS_LANG,
-    resultLanguage?: TYPE_SYS_LANG,
-}
-
+//*********************************
+//            属性情報
+//*********************************
 export interface EnemyStatus {
-    //*********************************
-    //            属性情報
-    //*********************************
     //レベル
     level: number;
     //生命値
@@ -28,43 +20,51 @@ export interface EnemyStatus {
     attack: number;
     //防御値
     defense: number;
+    //冰元素耐性
+    dmg_anti_cryo: number;
+    //風元素耐性
+    dmg_anti_anemo: number;
+    //物理耐性
+    dmg_anti_physical: number;
+    //雷元素耐性
+    dmg_anti_electro: number;
+    //岩元素耐性
+    dmg_anti_geo: number;
+    //火元素耐性
+    dmg_anti_pyro: number;
+    //水元素耐性
+    dmg_anti_hydro: number;
+    //草元素耐性
+    dmg_anti_dendro: number;
 }
 
-
-//キャラクターベース
+//*********************************
+//        モンスターベース
+//*********************************
 export class enemy {
 
     //*********************************
     //            基本情報
     //*********************************
+    //ID
+    id!: string;
     //名前
-    name!: string;
-    specialname!: string;
-    //レアリティー
-    enemytype!: string;
-    category!: string;
+    name!: Record<TYPE_SYS_LANG, string>;
+    //モンスターコード名
+    monsterName!: string;
+    //タイプ
+    type!: EnemyType;
 
     //*********************************
     //            リソース
     //*********************************
     //画像
-    images!: EnemyImagesType;
+    images!: EnemyImages;
 
     //*********************************
     //             その他
     //*********************************
-    //レベル基本属性クエリメソッド
-    stats!: (level: string | number, option?: "+") => EnemyStatus;
+    //レベル属性マップ
+    levelMap!: Record<string, EnemyStatus>;
 
-    //コンストラクタ
-    constructor(data: any) {
-        ({
-            name: this.name,
-            specialname: this.specialname,
-            enemytype: this.enemytype,
-            category: this.category,
-            images: this.images,
-            stats: this.stats,
-        } = data);
-    }
 }

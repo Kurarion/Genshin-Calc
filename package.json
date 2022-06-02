@@ -25,7 +25,6 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "copy-image-clipboard": "^2.1.2",
-    "genshin-db": "^4.1.1",
     "html2canvas": "^1.4.1",
     "image-js": "^0.34.0",
     "material-icons": "^1.10.9",

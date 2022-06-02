@@ -14,10 +14,10 @@
             <mat-card-title class="header-text">
                 <mat-form-field appearance="legacy" floatLabel="always">
                     <mat-label [innerText]="'WEAPON.NAME' | translate"></mat-label>
-                    <mat-select [(ngModel)]="selectedWeaponKey" (ngModelChange)="onSelectWeapon($event)">
+                    <mat-select [(ngModel)]="selectedWeaponIndex" (ngModelChange)="onSelectWeapon($event)">
                         <ng-container *ngFor="let weapon of weaponList">
-                            <mat-option *ngIf="weapon.weaponType == charWeaponType" [value]="weapon.queryName"
-                                [innerText]="weapon.name"></mat-option>
+                            <mat-option *ngIf="weapon.weaponType == charWeaponType" [value]="weapon.index"
+                                [innerText]="weapon.names[currentLanguage]"></mat-option>
                         </ng-container>
                     </mat-select>
                 </mat-form-field>
@@ -50,9 +50,9 @@
                     <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
                         <ng-container *ngFor="let option of levelOptions">
                             <mat-option
-                                *ngIf="(option.level < selectedWeaponAbleMaxLevel) || (option.level == selectedWeaponAbleMaxLevel && !option.isAscend )"
+                                *ngIf="(option.levelNum < selectedWeaponAbleMaxLevel) || (option.levelNum == selectedWeaponAbleMaxLevel && !option.isAscend )"
                                 [value]="option"
-                                [innerText]="(option.level | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
+                                [innerText]="(option.levelNum | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
                             </mat-option>
                         </ng-container>
                     </mat-select>
@@ -76,7 +76,7 @@
                 </table>
             </mat-expansion-panel>
 
-            <ng-container *ngIf="this.data.effect">
+            <ng-container *ngIf="this.weaponData.skillAffixMap">
                 <mat-divider></mat-divider>
                 <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true">
                     <mat-expansion-panel-header>
@@ -101,7 +101,7 @@
                     </mat-form-field>
                     <!-- 属性情報 -->
                     <div>
-                        <span [innerHTML]="getEffectContent(selectedSmeltingLevel)"></span>
+                        <span [innerHTML]="getEffectContent(selectedSmeltingLevel)[currentLanguage]"></span>
                     </div>
                 </mat-expansion-panel>
             </ng-container>

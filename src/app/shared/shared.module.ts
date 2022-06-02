@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-export const genshindb = require('genshin-db');
-
 import { CaptureHtmlComponent } from './component/capture-html/capture-html.component';
 import { PasteEventListenerComponent } from './component/paste-event-listener/paste-event-listener.component';
 import { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
@@ -27,6 +25,7 @@ export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
 export { ExtraDataService } from './service/extra-data.service';
+export { GenshinDataService } from './service/genshin-data.service';
 
 export * from './const/const';
 export * from './interface/interface';

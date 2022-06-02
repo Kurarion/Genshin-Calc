@@ -13,15 +13,43 @@ const regexColorToFront = `<color`
 const regexColorToFrontReplaced = `<font color`
 const regexColorToFrontSalsh = `</color`
 const regexColorToFrontSalshReplaced = `</font`
+const regexNToBR = `\\n`
+const regexNToBRReplaced = `<br>`
+const regexColorCode1 = `#99FFFFFF`
+const regexColorCode1Replaced = `#FF6600`
+const regexColorCode2 = `#FFD780FF`
+const regexColorCode2Replaced = `#FF6600`
+const regexColorCode3 = `#80C0FFFF`
+const regexColorCode3Replaced = `#FF6600`
+const regexColorCode4 = `#FF9999FF`
+const regexColorCode4Replaced = `#FF6600`
+const regexColorCode5 = `#80FFD7FF`
+const regexColorCode5Replaced = `#FF6600`
+const regexColorCode6 = `#FFACFFFF`
+const regexColorCode6Replaced = `#FF6600`
 
 //正则
 var regxList = []*regexp.Regexp{
 	regexp.MustCompile(regexColorToFront),
 	regexp.MustCompile(regexColorToFrontSalsh),
+	regexp.MustCompile(regexNToBR),
+	regexp.MustCompile(regexColorCode1),
+	regexp.MustCompile(regexColorCode2),
+	regexp.MustCompile(regexColorCode3),
+	regexp.MustCompile(regexColorCode4),
+	regexp.MustCompile(regexColorCode5),
+	regexp.MustCompile(regexColorCode6),
 }
 var regxReplaceList = []string{
 	regexColorToFrontReplaced,
 	regexColorToFrontSalshReplaced,
+	regexNToBRReplaced,
+	regexColorCode1Replaced,
+	regexColorCode2Replaced,
+	regexColorCode3Replaced,
+	regexColorCode4Replaced,
+	regexColorCode5Replaced,
+	regexColorCode6Replaced,
 }
 
 //文件定义

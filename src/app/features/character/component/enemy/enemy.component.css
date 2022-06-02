@@ -8,6 +8,7 @@
     width: 80px;
     height: 80px;
     background-size: cover;
+    margin-top: 10px;
     margin-bottom: 5px;
     border-radius: 0%;
 }

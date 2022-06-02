@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NoCommaPipe implements PipeTransform {
 
-  transform(val: string | null): string {
+  transform(val: string | null | undefined): string {
     if (val !== undefined && val !== null) {
       return val.replace(/,/g, "");
     } else {

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { lastValueFrom, map, Observable, Subject, switchMap, tap } from 'rxjs';
-import { CharacterService, Const, LangInfo, OcrService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { map, Observable, Subject, switchMap, tap } from 'rxjs';
+import { Const, LangInfo, OcrService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
-import { EnemyService } from './enemy.service';
-import { WeaponService } from './weapon.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +22,6 @@ export class LanguageService {
 
   constructor(private translateService: TranslateService,
     private storageService: StorageService,
-    private characterService: CharacterService,
-    private weaponService: WeaponService,
-    private enemyService: EnemyService,
     private ocrService: OcrService,
     private titleService: Title) {
     //言語設定
@@ -35,12 +30,14 @@ export class LanguageService {
     this.currentLangCodeAfterPreProcess = this.currentLangCode$.pipe(
       switchMap((nextLang: TYPE_SYS_LANG, index: number) => {
         return this.setLang(nextLang).pipe(
-          tap(()=>{
+          tap(() => {
             this.currentLang = nextLang;
           })
         );
       })
     );
+    //初期化
+    // this.initLang();
   }
 
   nextLang(lang: TYPE_SYS_LANG) {
@@ -68,12 +65,6 @@ export class LanguageService {
           : environment.defaultLang
       ).pipe(
         map(() => {
-          //キャラ言語設定
-          this.characterService.init(langCode);
-          //武器言語設定
-          this.weaponService.init(langCode);
-          //敵言語設定
-          this.enemyService.init(langCode);
           //タブタイトル初期化
           this.updateTabTitleName();
           //OCR言語設定
@@ -95,5 +86,18 @@ export class LanguageService {
     this.translateService.get('TITLE').subscribe((res: string) => {
       this.titleService.setTitle(res);
     });
+  }
+
+  /**
+   * 言語初期化
+   */
+  private initLang() {
+    //ストレージから復元
+    const lang =
+      this.storageService.getLang() ??
+      this.translateService.getDefaultLang();
+    //言語設定
+    this.currentLang = lang as TYPE_SYS_LANG;
+    this.nextLang(lang as TYPE_SYS_LANG);
   }
 }

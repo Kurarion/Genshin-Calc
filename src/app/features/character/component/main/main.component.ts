@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { character, CharacterQueryParam, CharacterService, Const, HttpService, LanguageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
+
+const CSS_STATUS_BEFORE = "beforeLoad";
+const CSS_STATUS_FIN = "loaded";
 
 @Component({
   selector: 'app-main',
@@ -10,30 +12,30 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./main.component.css'],
   animations: [
     trigger('imgLoad', [
-      state('beforeLoad', style({
+      state(CSS_STATUS_BEFORE, style({
         opacity: 0.01,
       })),
-      state('loaded', style({
+      state(CSS_STATUS_FIN, style({
         opacity: 0.16,
       })),
-      transition('beforeLoad=>loaded', [
+      transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
         animate('1s')
       ]),
-      transition('loaded=>beforeLoad', [
+      transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
         animate('0.2s')
       ])
     ]),
     trigger('otherLoad', [
-      state('beforeLoad', style({
+      state(CSS_STATUS_BEFORE, style({
         opacity: 0.01,
       })),
-      state('loaded', style({
+      state(CSS_STATUS_FIN, style({
         opacity: 1,
       })),
-      transition('beforeLoad=>loaded', [
+      transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
         animate('0.5s')
       ]),
-      transition('loaded=>beforeLoad', [
+      transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
         animate('0.2s')
       ])
     ])
@@ -41,53 +43,54 @@ import { environment } from 'src/environments/environment';
 })
 export class MainComponent implements OnInit, OnDestroy {
 
+  //背景画像URL
   backgroundURL!: string;
+  //背景画像ローディングフラグ
   backgroundLoadFlg!: boolean;
-  currentCharacterName!: string;
+  //キャラインデックス
+  currentCharacterIndex!: string;
+  //キャラデータ
   data!: character;
-  dataForCal!: character;
+  //CSS動画ステータス
+  otherState = CSS_STATUS_BEFORE;
+  //言語
+  currentLanguage!: TYPE_SYS_LANG;
 
-  otherState = 'beforeLoad';
-
-  constructor(private httpService: HttpService, private route: ActivatedRoute, private characterService: CharacterService, private languageService: LanguageService) {
+  constructor(private httpService: HttpService,
+    private route: ActivatedRoute, 
+    private characterService: CharacterService, 
+    private languageService: LanguageService) {
+    //初期言語設定
+    this.currentLanguage = this.languageService.getCurrentLang();
+    //言語変更検知
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
-      this.data = this.characterService.get(this.currentCharacterName, lang);
-      console.log(this.data)
+      this.currentLanguage = lang;
     })
-
-    setTimeout(()=>{
-      this.otherState = 'loaded';
+    //遅延CSSステータス変更
+    setTimeout(() => {
+      this.otherState = CSS_STATUS_FIN;
     }, 100)
   }
 
   ngOnInit(): void {
-    //test
-    let x: Record<string, any> = {} 
-    this.characterService.getMap("cn_sim").forEach((v,k,m) =>{
-      x[v.name] = {
-        background: v.images.cover1 ?? v.images.portrait,
-        avatar: v.images['hoyolab-avatar'] ?? v.images.icon
-      }
-    })
-    console.log(x)
     this.route.queryParams
       .subscribe((params: CharacterQueryParam) => {
-        //計算用
-        this.dataForCal = this.characterService.get(params.name!, Const.QUERY_LANG);
-        //表示用
-        this.data = this.characterService.get(params.name!);
-        //チャラ名固定
-        this.currentCharacterName = this.dataForCal.fullname;
+        //キャラデータ
+        this.data = this.characterService.get(params.index!);
+        //チャラインデックス
+        this.currentCharacterIndex = params.index!.toString();
         //背景初期化
         this.initializeBackGroundImage();
+        //DEBUG
         console.log(this.data)
       }
       );
   }
 
   ngOnDestroy(): void {
+    //CSS動画リセット
     this.backgroundLoadFlg = false;
-    this.otherState = 'beforeLoad';
+    this.otherState = CSS_STATUS_BEFORE;
   }
 
   /**
@@ -96,14 +99,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private initializeBackGroundImage() {
     if (!this.backgroundURL) {
       this.backgroundLoadFlg = false;
-      let url = this.data.images.cover1 ?? this.data.images.portrait
-      // if (environment.useThirdPartyAPI) {
-      //   if (this.data.images.namegachasplash) {
-      //     url = environment.thirdPartyAPIHost + this.data.images.namegachasplash + environment.thirdPartyAPIPicType;
-      //   } else {
-      //     url = '';
-      //   }
-      // }
+      let url = this.data.images.background;
       if (url) {
         this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
           if (v) {

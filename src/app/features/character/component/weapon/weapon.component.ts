@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { weapon, CharStatus, Const, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService, WeaponStatus, ExtraDataService } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character } from 'src/app/shared/shared.module';
 
 interface levelOption {
-  level: number;
+  level: string;
+  levelNum: number;
   isAscend?: boolean;
 }
 
@@ -13,9 +13,9 @@ interface subProp {
 }
 
 interface weaponOption {
-  queryName: string;
-  name: string;
-  rarity: number;
+  index: string;
+  names: Record<TYPE_SYS_LANG, string>;
+  rankLevel: number;
   weaponType: string;
 }
 
@@ -31,7 +31,7 @@ export class WeaponComponent implements OnInit {
   private readonly maxLevel = 90;
   private readonly minSmeltingLevel = 1;
   private readonly maxSmeltingLevel = 5;
-  private readonly defaultSmeltingLevel = this.minSmeltingLevel;
+  private readonly defaultSmeltingLevel = this.minSmeltingLevel.toString();
   private readonly ascendLevels = [20, 40, 50, 60, 70, 80, 90];
   private readonly ascendLevelsMap: Record<number, number> = {
     5: 6,
@@ -40,8 +40,8 @@ export class WeaponComponent implements OnInit {
     2: 4,
     1: 4,
   }
-
-  private readonly smeltingPropPrefix = 'r';
+  private readonly levelPadNum = 2;
+  private readonly smeltingLevelPadNum = 1;
 
   readonly props = ['LEVEL', 'ATTACK'];
   readonly props_sub = [
@@ -65,58 +65,66 @@ export class WeaponComponent implements OnInit {
     'DMG_BONUS_ELEMENTAL_BURST',
   ]
 
-  @Input('charWeaponType') charWeaponType!: string;
+  //キャラデータ
+  @Input('data') data!: character;
+  //言語
+  @Input('language') currentLanguage!: TYPE_SYS_LANG;
+  //武器タイプ
+  charWeaponType!: string;
+  //武器リスト
   weaponList: weaponOption[] = [];
-  selectedWeaponKey!: string;
+  //選択された武器インデックス
+  selectedWeaponIndex!: string;
+  //選択された武器マックスレベル
   selectedWeaponAbleMaxLevel!: number;
 
-  data!: weapon;
-  dataForCal!: weapon;
+  //武器データ
+  weaponData!: weapon;
+  //アイコン
   avatarURL!: string;
+  //アイコンローディングフラグ
   avatarLoadFlg!: boolean;
-
+  //レベル選択オプションリスト
   levelOptions: levelOption[] = [];
-
+  //選択されたレベル
   selectedLevel!: levelOption;
+  //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
+  //突破レベルオプションリスト
+  smeltingLevelOptions: string[] = [];
+  //選択された突破レベル
+  selectedSmeltingLevel!: string;
 
-  selectedSmeltingLevel!: number;
-  smeltingLevelOptions: number[] = [];
-
-  constructor(private httpService: HttpService, private weaponService: WeaponService, private languageService: LanguageService,
-    private extraDataService: ExtraDataService) {
-    this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
-      //武器リスト再設定
-      this.initializeWeaponList();
-      //選択された武器データ更新
-      if (this.selectedWeaponKey) {
-        this.data = this.weaponService.get(this.selectedWeaponKey, lang);
-      }
-    })
-  }
+  constructor(private httpService: HttpService,
+    private weaponService: WeaponService,
+    private extraDataService: ExtraDataService) { }
 
   ngOnInit(): void {
+    //武器タイプ設定
+    this.charWeaponType = this.data.weaponType;
     //武器リスト初期化
     this.initializeWeaponList();
     //その他
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
       this.levelOptions.push({
-        level: i,
+        level: i.toString().padStart(this.levelPadNum, '0'),
+        levelNum: i,
       });
       if (this.ascendLevels.includes(i) && i != this.maxLevel) {
         this.levelOptions.push({
-          level: i,
+          level: i.toString().padStart(this.levelPadNum, '0') + '+',
+          levelNum: i,
           isAscend: true,
         });
       }
     }
     for (let i = this.minSmeltingLevel; i <= this.maxSmeltingLevel; ++i) {
-      this.smeltingLevelOptions.push(i);
+      this.smeltingLevelOptions.push(i.toString().padStart(this.smeltingLevelPadNum, '0'));
     }
     //武器初期選択
     for (let i = 1; i < this.weaponList.length; ++i) {
-      if (this.weaponList[i].weaponType == this.charWeaponType && this.weaponList[i].rarity == 5) {
-        this.selectedWeaponKey = this.weaponList[i].queryName;
+      if (this.weaponList[i].weaponType == this.charWeaponType && this.weaponList[i].rankLevel == this.maxSmeltingLevel) {
+        this.selectedWeaponIndex = this.weaponList[i].index;
         break;
       }
     }
@@ -124,22 +132,26 @@ export class WeaponComponent implements OnInit {
     this.selectedLevel = this.levelOptions[this.levelOptions.length - 1];
     this.selectedSmeltingLevel = this.defaultSmeltingLevel;
     //初期データ更新
-    this.onSelectWeapon(this.selectedWeaponKey);
+    this.onSelectWeapon(this.selectedWeaponIndex);
   }
 
-  onSelectWeapon(weaponKey: string) {
+  /**
+   * 武器変更処理
+   * @param weaponIndex 
+   */
+  onSelectWeapon(weaponIndex: string) {
     let oldWeaponAbleMaxLevel = this.notExitLevel;
-    if (this.data) {
+    if (this.weaponData) {
       //旧武器最高レベル
-      oldWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.data.rarity]];
+      oldWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
     }
     //武器の切り替え
-    this.data = this.weaponService.get(weaponKey);
-    this.dataForCal = this.weaponService.get(weaponKey, Const.QUERY_LANG);
-    console.log(this.data);
+    this.weaponData = this.weaponService.get(weaponIndex);
+    //DEBUG
+    console.log(this.weaponData);
     //武器最高レベル
-    this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.data.rarity]];
-    if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.level || this.selectedLevel.level > this.selectedWeaponAbleMaxLevel) {
+    this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
+    if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.levelNum || this.selectedLevel.levelNum > this.selectedWeaponAbleMaxLevel) {
       this.selectedLevel = this.levelOptions[this.selectedWeaponAbleMaxLevel + this.ascendLevels.indexOf(this.selectedWeaponAbleMaxLevel) - 1];
     }
     //武器属性更新
@@ -150,37 +162,18 @@ export class WeaponComponent implements OnInit {
 
   onChangeLevel(value: levelOption) {
     this.selectedLevelProps = {};
-    let temp = this.dataForCal.stats(value.level, value.isAscend ? '+' : undefined);
-    for (let propName of this.props) {
-      this.selectedLevelProps[propName] = {
-        isPercent: false,
-        value: temp[propName.toLowerCase() as keyof WeaponStatus],
-      }
-    }
-    //スペシャル
-    if (this.dataForCal.substat) {
-      const key = Const.MAP_PROPS_SPECIALIZED[this.dataForCal.substat];
-      this.selectedLevelProps[key] = {
-        isPercent: this.percent_props.includes(key),
-        value: temp.specialized,
+    let temp = this.weaponData.levelMap[value.level];
+    for (let key in temp) {
+      let upperKey = key.toUpperCase();
+      this.selectedLevelProps[upperKey] = {
+        isPercent: this.percent_props.includes(upperKey),
+        value: temp[key as keyof CharStatus],
       }
     }
   }
 
-  getEffectContent(selectedSmeltingLevel: number) {
-    let result: string = "";
-    let paramIndex: number = 0;
-    let paramMaxIndex: number = this.data.r1.length;
-    let temp = this.data.effect.split(/\{\d+\}/);
-    temp.forEach((v: string) => {
-      result += v;
-      if (paramIndex < paramMaxIndex) {
-        result += '<strong>'
-        result += (this.data![this.smeltingPropPrefix + selectedSmeltingLevel as keyof weapon] as string[])[paramIndex++];
-        result += '</strong>'
-      }
-    })
-    return result;
+  getEffectContent(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {
+    return this.weaponData.skillAffixMap[selectedSmeltingLevel]!.desc;
   }
 
   /**
@@ -188,10 +181,7 @@ export class WeaponComponent implements OnInit {
    */
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
-    let url = this.data.images.icon;
-    if (environment.useThirdPartyAPI) {
-      url = environment.thirdPartyAPIHost + this.data.images.nameicon + environment.thirdPartyAPIPicType;
-    }
+    let url = this.weaponData.images.icon;
     this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
       if (v) {
         this.avatarURL = window.URL.createObjectURL(v);
@@ -199,22 +189,23 @@ export class WeaponComponent implements OnInit {
           this.avatarLoadFlg = true;
         }, 100)
       }
-    }).catch(()=>{});
+    }).catch(() => { });
   }
 
   /**
    * 武器選択リスト初期化
    */
-  private initializeWeaponList(lang?: TYPE_SYS_LANG) {
+  private initializeWeaponList() {
     this.weaponList = [];
-    this.weaponService.getMap(lang).forEach((value: weapon, key: string) => {
+    let tempMap = this.weaponService.getMap();
+    for (let key in tempMap) {
       this.weaponList.push({
-        queryName: key,
-        name: value.name,
-        rarity: value.rarity,
-        weaponType: value.weapontype,
+        index: key,
+        names: tempMap[key].name,
+        rankLevel: tempMap[key].rankLevel,
+        weaponType: tempMap[key].weaponType,
       })
-    })
+    }
   }
 
 }

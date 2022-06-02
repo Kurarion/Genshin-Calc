@@ -81,11 +81,22 @@ type AVATARSKILLS struct {
 
 //人物技能
 type AVATARSKILLINFO struct {
-	Name          map[string]string    `json:"name"`
-	Desc          map[string]string    `json:"desc"`
-	Icon          string               `json:"icon"`
-	ParamDescList map[string][]string  `json:"paramDescList"`
-	ParamMap      map[string][]float64 `json:"paramMap"`
+	Name                 map[string]string                       `json:"name"`
+	Desc                 map[string]string                       `json:"desc"`
+	Icon                 string                                  `json:"icon"`
+	ParamDescList        map[string][]string                     `json:"paramDescList"`
+	ParamMap             map[string][]float64                    `json:"paramMap"`
+	ParamDescSplitedList map[string][]AVATARSKILLSPLITEDDESCINFO `json:"paramDescSplitedList"`
+}
+
+//人物技能详细
+type AVATARSKILLSPLITEDDESCINFO struct {
+	Desc            string   `json:"desc"`
+	ValuePropIndexs []int    `json:"valuePropIndexs"`
+	Prefix          string   `json:"prefix"`
+	Middles         []string `json:"middles"`
+	Suffix          string   `json:"suffix"`
+	IsPercent       []bool   `json:"isPercent"`
 }
 
 //人物图片
@@ -99,6 +110,7 @@ type AVATARIMAGES struct {
 //************************
 type WEAPON struct {
 	Id              uint64                `json:"id"`
+	RankLevel       int                   `json:"rankLevel"`
 	Name            map[string]string     `json:"name"`
 	NameTextMapHash uint64                `json:"nameTextMapHash"`
 	Desc            map[string]string     `json:"desc"`

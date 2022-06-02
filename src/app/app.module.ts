@@ -10,7 +10,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CookieService } from 'ngx-cookie-service';
 
-import { SharedModule, ExtraDataService } from 'src/app/shared/shared.module';
+import { SharedModule, ExtraDataService, GenshinDataService } from 'src/app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './root/main/main.component';
@@ -18,20 +18,74 @@ import { MenuComponent } from './root/menu/menu.component';
 import { HeadComponent } from './root/head/head.component';
 import { FooterComponent } from './root/footer/footer.component';
 import { environment } from '../environments/environment';
-import { Observable, tap } from 'rxjs';
+import { lastValueFrom, tap } from 'rxjs';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `assets/i18n/`);
 }
 
-function initializeAppFactory(httpClient: HttpClient): () => Observable<any> {
-  return () => httpClient.get("assets/init/data.json")
-    .pipe(
-      tap(data => {
-        ExtraDataService.initData(data);
-      })
-    );
+function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
+  let promiseList: Promise<any>[] = [];
+  promiseList.push(
+    //スペシャル
+    lastValueFrom(httpClient.get("assets/init/data.json")
+      .pipe(
+        tap(data => {
+          ExtraDataService.initData(data);
+        })
+      )
+    ),
+    //原神キャラデータ
+    lastValueFrom(httpClient.get("assets/genshin/avatar_map.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initCharacterData(data);
+        })
+      )
+    ),
+    //原神武器データ
+    lastValueFrom(httpClient.get("assets/genshin/weapon_map.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initWeaponData(data);
+        })
+      )
+    ),
+    //原神敵データ
+    lastValueFrom(httpClient.get("assets/genshin/monster_map.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initMonsterData(data);
+        })
+      )
+    ),
+    //原神聖遺物セットデータ
+    lastValueFrom(httpClient.get("assets/genshin/reliquary_set_map.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initReliquarySetData(data);
+        })
+      )
+    ),
+    //原神聖遺物メインデータ
+    lastValueFrom(httpClient.get("assets/genshin/reliquary_main_map.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initReliquaryMainData(data);
+        })
+      )
+    ),
+    //原神聖遺物サブデータ
+    lastValueFrom(httpClient.get("assets/genshin/reliquary_affix_map.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initReliquaryAffixData(data);
+        })
+      )
+    ),
+  )
+  return () => Promise.all(promiseList);
 }
 
 @NgModule({

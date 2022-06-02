@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { enemy, Const, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import { Component, Input, OnInit } from '@angular/core';
+import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService } from 'src/app/shared/shared.module';
 
 interface levelOption {
-  level: number;
+  level: string;
+  levelNum: number;
   isAscend?: boolean;
 }
 
@@ -13,9 +13,9 @@ interface subProp {
 }
 
 interface enemyOption {
-  queryName: string;
-  name: string;
-  specialname: string;
+  index: string;
+  names: Record<TYPE_SYS_LANG, string>;
+  codeName: string;
   enemyType: string;
 }
 
@@ -34,6 +34,7 @@ export class EnemyComponent implements OnInit {
   private readonly maxPlayerNum = 4;
   readonly hpRates = [1.0, 1.5, 2.0, 2.5];
   readonly attackRates = [1.0, 1.10, 1.25, 1.40];
+  private readonly levelPadNum = 3;
 
   readonly props = ['LEVEL', 'HP', 'ATTACK', 'DEFENSE'];
   readonly props_sub = [
@@ -57,33 +58,34 @@ export class EnemyComponent implements OnInit {
     'DMG_BONUS_ELEMENTAL_BURST',
   ]
 
+  //言語
+  @Input('language') currentLanguage!: TYPE_SYS_LANG;
+  //敵リスト
   enemyList: enemyOption[] = [];
-  selectedEnemyKey!: string;
-  selectedEnemyAbleMaxLevel!: number;
+  //選択された敵インデックス
+  selectedEnemyIndex!: string;
 
-  data!: enemy;
-  dataForCal!: enemy;
+  //敵データ
+  enemyData!: enemy;
+  //アイコン
   avatarURL!: string;
+  //アイコンローディングフラグ
   avatarLoadFlg!: boolean;
 
+  //レベル選択オプションリスト
   levelOptions: levelOption[] = [];
+  //プレイヤー数オプションリスト
   playerNumOptions: number[] = [];
 
+  //選択されたレベル
   selectedLevel!: levelOption;
+  //選択されたプレイヤー数
   selectedPlayerNum!: number;
+  //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
 
   constructor(private httpService: HttpService, private enemyService: EnemyService, private languageService: LanguageService,
-    private extraDataService: ExtraDataService) {
-    this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
-      //敵リスト再設定
-      this.initializeEnemyList();
-      //選択された敵データ更新
-      if (this.selectedEnemyKey) {
-        this.data = this.enemyService.get(this.selectedEnemyKey, lang);
-      }
-    })
-  }
+    private extraDataService: ExtraDataService) { }
 
   ngOnInit(): void {
     //敵リスト初期化
@@ -91,39 +93,40 @@ export class EnemyComponent implements OnInit {
     //その他
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
       this.levelOptions.push({
-        level: i,
+        level: i.toString().padStart(this.levelPadNum, '0'),
+        levelNum: i,
       });
     }
     for (let i = this.minPlayerNum; i <= this.maxPlayerNum; ++i) {
       this.playerNumOptions.push(i);
     }
     //敵初期選択
-    this.selectedEnemyKey = this.enemyList[0].queryName;
+    this.selectedEnemyIndex = this.enemyList[0].index;
     this.selectedPlayerNum = this.minPlayerNum;
     //レベル初期選択
     this.selectedLevel = this.levelOptions[this.defaultLevel - 1];
     //初期データ更新
-    this.onSelectEnemy(this.selectedEnemyKey);
+    this.onSelectEnemy(this.selectedEnemyIndex);
   }
 
-  onSelectEnemy(enemyKey: string) {
+  onSelectEnemy(enemyIndex: string) {
     //敵の切り替え
-    this.data = this.enemyService.get(enemyKey);
-    this.dataForCal = this.enemyService.get(enemyKey, Const.QUERY_LANG);
-    console.log(this.data);
+    this.enemyData = this.enemyService.get(enemyIndex);
+    console.log(this.enemyData);
     //敵属性更新
     this.onChangeLevel(this.selectedLevel);
     //プロフィール画像初期化
-    // this.initializeBackGroundImage();
+    this.initializeBackGroundImage();
   }
 
   onChangeLevel(value: levelOption) {
     this.selectedLevelProps = {};
-    let temp = this.dataForCal.stats(value.level);
-    for (let propName of this.props) {
-      this.selectedLevelProps[propName] = {
-        isPercent: false,
-        value: temp[propName.toLowerCase() as keyof EnemyStatus],
+    let temp = this.enemyData.levelMap[value.level];
+    for (let key in temp) {
+      let upperKey = key.toUpperCase();
+      this.selectedLevelProps[upperKey] = {
+        isPercent: this.percent_props.includes(upperKey),
+        value: temp[key as keyof EnemyStatus],
       }
     }
   }
@@ -137,10 +140,7 @@ export class EnemyComponent implements OnInit {
    */
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
-    let url = this.data.images.nameicon;
-    if (true) {
-      url = environment.thirdPartyAPIHost + this.data.images.nameicon + environment.thirdPartyAPIPicType;
-    }
+    let url = this.enemyData.images.icon;
     this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
       if (v) {
         this.avatarURL = window.URL.createObjectURL(v);
@@ -156,14 +156,15 @@ export class EnemyComponent implements OnInit {
    */
   private initializeEnemyList(lang?: TYPE_SYS_LANG) {
     this.enemyList = [];
-    this.enemyService.getMap(lang).forEach((value: enemy, key: string) => {
+    let tempMap = this.enemyService.getMap();
+    for(let key in tempMap) {
       this.enemyList.push({
-        queryName: key,
-        name: value.name,
-        specialname: value.specialname,
-        enemyType: value.enemytype,
+        index: key,
+        names: tempMap[key].name,
+        codeName: tempMap[key].monsterName,
+        enemyType: tempMap[key].type,
       })
-    })
+    }
   }
 
 }

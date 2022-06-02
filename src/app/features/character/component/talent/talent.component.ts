@@ -1,7 +1,12 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
-import { character, characterTalents, CharStatus, CharTalentCombatInfo, CharTalentCombatPassiveType, CharTalentObject, Const, HttpService } from 'src/app/shared/shared.module';
+import { character, CharSkill, CharSkillDescObject, CharSkills, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+
+interface levelOption {
+  level: string;
+  levelNum: number;
+}
 
 @Component({
   selector: 'app-talent',
@@ -13,15 +18,11 @@ export class TalentComponent implements OnInit {
   private readonly minLevel = 1;
   private readonly maxLevel = 15;
   private readonly defaultLevel = 10;
-  readonly combatPrefix = 'combat';
-  readonly combatspPrefix = 'combatsp';
-  readonly passivefix = 'passive';
-  readonly combats = ['combat1', 'combat2', 'combat3'];
-  readonly combatsps = ['combatsp'];
-  readonly passives = ['passive1', 'passive2', 'passive3'];
-  readonly combatNum: CharTalentCombatPassiveType[] = [1, 2, 3];
-  readonly combatspNum: CharTalentCombatPassiveType[] = ['sp'];
-  readonly passiveNum: CharTalentCombatPassiveType[] = [1, 2, 3];
+
+  readonly skills = ['normal', 'skill', 'elemental_burst'];
+  readonly otherSkills = ['other'];
+  readonly prundSkills = ['proudSkills']
+  readonly levelPadNum = 2;
 
   readonly props = ['LEVEL', 'HP', 'ATTACK', 'DEFENSE'];
   readonly props_sub = [
@@ -45,41 +46,53 @@ export class TalentComponent implements OnInit {
     'DMG_BONUS_ELEMENTAL_BURST',
   ]
 
+  //キャラデータ
   @Input('data') data!: character;
-  @Input('dataForCal') dataForCal!: character;
-  avatarURL!: string;
-  avatarLoadFlg!: boolean;
+  //言語
+  @Input('language') currentLanguage!: TYPE_SYS_LANG;
+  //レベルオプションリスト
+  levelOptions: levelOption[] = [];
+  //選択されたレベルリスト
+  selectedLevels: levelOption[] = [];
 
-  levelOptions: number[] = [];
-
-  selectedLevels: number[] = [];
   constructor(private percentPipe: PercentPipe, private decimalPipe: DecimalPipe, private noCommaPipe: NoCommaPipe) { }
 
   ngOnInit(): void {
-    //その他
+    //レベル初期設定
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
-      this.levelOptions.push(i);
+      this.levelOptions.push({
+        level: i.toString().padStart(this.levelPadNum, '0'),
+        levelNum: i,
+      });
     }
     //初期選択
-    this.selectedLevels = Array.from({ length: this.combatNum.length }).map((_, i) => this.defaultLevel);
+    this.selectedLevels = Array.from({ length: this.skills.length }).map((_, i) => this.levelOptions[this.defaultLevel - 1]);
     this.selectedLevels.forEach((v, i) => {
-      this.onChangeLevel((i + 1) as CharTalentCombatPassiveType, v);
+      this.onChangeLevel(this.skills[i], v);
     });
   }
 
-  onChangeLevel(index: CharTalentCombatPassiveType, value: number) {
-
+  onChangeLevel(propName: string, value: levelOption) {
+    //TODO
   }
 
-  getDataProperty(key: string) {
-    return this.data.talents![key as keyof characterTalents];
+  getDataProperty(key: string): CharSkill {
+    return this.data.skills[key as keyof CharSkills] as CharSkill;
   }
 
-  getTalentValue(index: CharTalentCombatPassiveType, obj: CharTalentObject, currentLevel: number, withOrigin: boolean = false): string {
+  getDataProperties(key: string): CharSkill[] {
+    return this.data.skills[key as keyof CharSkills] as CharSkill[];
+  }
+
+  getCharSkillDescObject(key: string, lang: TYPE_SYS_LANG): CharSkillDescObject[] {
+    return this.getDataProperty(key).paramDescSplitedList[lang];
+  }
+
+  getTalentValue(key: string, obj: CharSkillDescObject, lang: TYPE_SYS_LANG, currentLevel: string, withOrigin: boolean = false): string {
     let result = obj.prefix;
     let values: string[] = [];
-    obj.valuePropKeys.forEach((key: string, i: number) => {
-      let value: string | number = (this.data.talents!['combat' + index as keyof characterTalents] as CharTalentCombatInfo).attributes.parameters[key][currentLevel - 1];
+    obj.valuePropIndexs.forEach((index: number, i: number) => {
+      let value: string | number = (this.data.skills[key as keyof CharSkills] as CharSkill).paramMap[currentLevel][index];
       if (!withOrigin) {
         if (obj.isPercent[i]) {
           value = this.percentPipe.transform(value, '1.0-1') as string;

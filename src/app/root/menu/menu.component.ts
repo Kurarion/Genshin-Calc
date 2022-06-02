@@ -14,34 +14,36 @@ export class MenuComponent implements OnInit {
   menuList: MenuInfo[] = [];
   //メニューボタン押下イベント
   @Output('menuClickEvent') menuClickEvent = new EventEmitter<MenuInfo>();
-  //検索言語(検索キー)
-  private readonly queryLanguage = 'cn_sim' as TYPE_SYS_LANG;
+  //言語
+  currentLanguage!: TYPE_SYS_LANG;
 
   constructor(private characterService: CharacterService, private router: Router, private languageService: LanguageService) {
+    //初期言語設定
+    this.currentLanguage = this.languageService.getCurrentLang();
+    //戻る防止
     history.pushState(null, '', '');
     window.addEventListener('popstate', ()=>{
       history.pushState(null, '', '');
     })
+    //言語変更検知
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG)=>{
-      let temp = this.characterService.getMap(lang);
-      for(let i = 0; i < this.menuList.length; ++i){
-        this.menuList[i].name = temp.get(this.menuList[i].queryParams.name!)!.fullname;
-      }
+      this.currentLanguage = lang;
     })
   }
 
   ngOnInit() { 
-    this.characterMap = this.characterService.getMap(this.queryLanguage);
-    this.characterMap.forEach((value: character, key: string) => {
+    //メニュー初期化
+    let tempMap = this.characterService.getMap();
+    for(let key in tempMap) {
       let temp: MenuInfo = {
-        name: value.fullname,
+        names: tempMap[key].name,
         routerLink: Const.MENU_CHARACTER,
         queryParams: {
-          name: value.fullname,
+          index: key,
         }
       };
       this.menuList.push(temp);
-    })
+    }
   }
 
   /**

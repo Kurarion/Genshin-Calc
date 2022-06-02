@@ -11,9 +11,9 @@
         <mat-card-header>
             <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
             </div>
-            <mat-card-title>{{data.fullname}}</mat-card-title>
-            <mat-card-subtitle>{{data.weapontype}} &nbsp; <{{data.element}}>
-            </mat-card-subtitle>
+            <mat-card-title>{{data.name[currentLanguage]}}</mat-card-title>
+            <!-- <mat-card-subtitle>{{data.weaponType}}
+            </mat-card-subtitle> -->
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
@@ -32,7 +32,7 @@
                     <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
                         <ng-container *ngFor="let option of levelOptions">
                             <mat-option [value]="option"
-                                [innerText]="(option.level | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
+                                [innerText]="(option.levelNum | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
                             </mat-option>
                         </ng-container>
                     </mat-select>
