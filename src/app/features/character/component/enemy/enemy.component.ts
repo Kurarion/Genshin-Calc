@@ -46,6 +46,9 @@ export class EnemyComponent implements OnInit {
     'DMG_BONUS_PYRO', 'DMG_BONUS_HYDRO', 'DMG_BONUS_DENDRO',
     'DMG_BONUS_ALL', 'DMG_BONUS_NORMAL', 'DMG_BONUS_CHARGED',
     'DMG_BONUS_PLUNGING', 'DMG_BONUS_SKILL', 'DMG_BONUS_ELEMENTAL_BURST',
+    "DMG_ANTI_CRYO", "DMG_ANTI_ANEMO", "DMG_ANTI_PHYSICAL",
+    "DMG_ANTI_ELECTRO", "DMG_ANTI_GEO", "DMG_ANTI_PYRO",
+    "DMG_ANTI_HYDRO", "DMG_ANTI_DENDRO"
   ];
   readonly percent_props = [
     'HP_UP', 'ATTACK_UP', 'DEFENSE_UP',
@@ -55,7 +58,9 @@ export class EnemyComponent implements OnInit {
     'DMG_BONUS_GEO', 'DMG_BONUS_PYRO', 'DMG_BONUS_HYDRO',
     'DMG_BONUS_DENDRO', 'DMG_BONUS_ALL', 'DMG_BONUS_NORMAL',
     'DMG_BONUS_CHARGED', 'DMG_BONUS_PLUNGING', 'DMG_BONUS_SKILL',
-    'DMG_BONUS_ELEMENTAL_BURST',
+    'DMG_BONUS_ELEMENTAL_BURST', "DMG_ANTI_CRYO", "DMG_ANTI_ANEMO",
+    "DMG_ANTI_PHYSICAL", "DMG_ANTI_ELECTRO", "DMG_ANTI_GEO",
+    "DMG_ANTI_PYRO", "DMG_ANTI_HYDRO", "DMG_ANTI_DENDRO"
   ]
 
   //言語
@@ -112,11 +117,12 @@ export class EnemyComponent implements OnInit {
   onSelectEnemy(enemyIndex: string) {
     //敵の切り替え
     this.enemyData = this.enemyService.get(enemyIndex);
+    //DEBUG
     console.log(this.enemyData);
     //敵属性更新
     this.onChangeLevel(this.selectedLevel);
-    //プロフィール画像初期化
-    this.initializeBackGroundImage();
+    // //プロフィール画像初期化
+    // this.initializeBackGroundImage();
   }
 
   onChangeLevel(value: levelOption) {
@@ -131,7 +137,7 @@ export class EnemyComponent implements OnInit {
     }
   }
 
-  getPropRate(name: string): number[]{
+  getPropRate(name: string): number[] {
     return this[name.toLocaleLowerCase() + 'Rates' as keyof EnemyComponent] as number[];
   }
 
@@ -148,7 +154,7 @@ export class EnemyComponent implements OnInit {
           this.avatarLoadFlg = true;
         }, 100)
       }
-    }).catch(()=>{});
+    }).catch(() => { });
   }
 
   /**
@@ -157,7 +163,7 @@ export class EnemyComponent implements OnInit {
   private initializeEnemyList(lang?: TYPE_SYS_LANG) {
     this.enemyList = [];
     let tempMap = this.enemyService.getMap();
-    for(let key in tempMap) {
+    for (let key in tempMap) {
       this.enemyList.push({
         index: key,
         names: tempMap[key].name,

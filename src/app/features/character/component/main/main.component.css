@@ -22,6 +22,6 @@
     width: 100%;
 }
 
-.float{
-    /* position: static; */
+.middle {
+    margin-top: 24px;
 }

@@ -91,6 +91,8 @@
                     </mat-form-field>
                     <!-- 属性情報 -->
                     <div>
+                        <span><strong>{{getEffectName(selectedSmeltingLevel)[currentLanguage]}}</strong></span>
+                        <br>
                         <span [innerHTML]="getEffectContent(selectedSmeltingLevel)[currentLanguage]"></span>
                     </div>
                 </mat-expansion-panel>

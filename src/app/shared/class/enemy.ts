@@ -41,30 +41,30 @@ export interface EnemyStatus {
 //*********************************
 //        モンスターベース
 //*********************************
-export class enemy {
+export interface enemy {
 
     //*********************************
     //            基本情報
     //*********************************
     //ID
-    id!: string;
+    id: string;
     //名前
-    name!: Record<TYPE_SYS_LANG, string>;
+    name: Record<TYPE_SYS_LANG, string>;
     //モンスターコード名
-    monsterName!: string;
+    monsterName: string;
     //タイプ
-    type!: EnemyType;
+    type: EnemyType;
 
     //*********************************
     //            リソース
     //*********************************
     //画像
-    images!: EnemyImages;
+    images: EnemyImages;
 
     //*********************************
     //             その他
     //*********************************
     //レベル属性マップ
-    levelMap!: Record<string, EnemyStatus>;
+    levelMap: Record<string, EnemyStatus>;
 
 }

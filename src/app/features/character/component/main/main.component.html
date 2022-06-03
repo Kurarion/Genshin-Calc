@@ -1,10 +1,19 @@
 <div class="main">
     <div [@imgLoad]="backgroundLoadFlg?'loaded':'beforeLoad'" class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'"></div>
-    <div class="content" fxLayout="row wrap" [@otherLoad]="otherState">
-        <app-character class="float" [data]="data" [language]="currentLanguage"></app-character>
-        <app-weapon class="float" [data]="data" [language]="currentLanguage"></app-weapon>
-        <app-talent class="float" [data]="data" [language]="currentLanguage"></app-talent>
-        <app-constellation class="float" [data]="data" [language]="currentLanguage"></app-constellation>
-        <app-enemy class="float" [language]="currentLanguage"></app-enemy>
+    <div class="content" fxLayout="row wrap" fxLayoutAlign="center" [@otherLoad]="otherState">
+        <div>
+            <app-character [data]="data" [language]="currentLanguage"></app-character>
+            <div class="middle"></div>
+            <app-enemy [language]="currentLanguage"></app-enemy>
+        </div>
+        <div>
+            <app-weapon [data]="data" [language]="currentLanguage"></app-weapon>
+        </div>
+        <div>
+            <app-talent [data]="data" [language]="currentLanguage"></app-talent>
+        </div>
+        <div>
+            <app-constellation [data]="data" [language]="currentLanguage"></app-constellation>
+        </div>
     </div>
 </div>

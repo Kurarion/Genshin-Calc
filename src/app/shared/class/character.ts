@@ -120,34 +120,34 @@ export interface CharSkills {
 //*********************************
 //        キャラクターベース
 //*********************************
-export class character {
+export interface character {
 
     //*********************************
     //            基本情報
     //*********************************
     //ID
-    id!: number;
+    id: number;
     //名前
-    name!: Record<TYPE_SYS_LANG, string>;
+    name: Record<TYPE_SYS_LANG, string>;
     //レアリティー
-    qualityType!: CharQualityType;
+    qualityType: CharQualityType;
     //記述
-    desc!: Record<TYPE_SYS_LANG, string>;
+    desc: Record<TYPE_SYS_LANG, string>;
     //武器タイプ
-    weaponType!: WeaponType;
+    weaponType: WeaponType;
 
     //*********************************
     //            リソース
     //*********************************
     //画像
-    images!: CharImages;
+    images: CharImages;
 
     //*********************************
     //             その他
     //*********************************
     //レベル属性マップ
-    levelMap!: Record<string, CharStatus>;
+    levelMap: Record<string, CharStatus>;
     //スキル
-    skills!: CharSkills;
+    skills: CharSkills;
 
 }

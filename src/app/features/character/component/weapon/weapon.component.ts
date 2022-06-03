@@ -172,6 +172,10 @@ export class WeaponComponent implements OnInit {
     }
   }
 
+  getEffectName(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {
+    return this.weaponData.skillAffixMap[selectedSmeltingLevel]!.name;
+  }
+
   getEffectContent(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {
     return this.weaponData.skillAffixMap[selectedSmeltingLevel]!.desc;
   }

@@ -92,36 +92,34 @@ export interface WeaponSkillAffix {
 //*********************************
 //            武器ベース
 //*********************************
-export class weapon {
+export interface weapon {
 
     //*********************************
     //            基本情報
     //*********************************
     //ID
-    id!: string;
+    id: string;
     //ランクレベル
-    rankLevel!: number;
+    rankLevel: number;
     //名前
-    name!: Record<TYPE_SYS_LANG, string>;
+    name: Record<TYPE_SYS_LANG, string>;
     //記述
-    description!: Record<TYPE_SYS_LANG, string>;
+    description: Record<TYPE_SYS_LANG, string>;
     //武器タイプ
-    weaponType!: WeaponType;
-    //武器効果
-    effect!: string;
+    weaponType: WeaponType;
     //武器効果マップ
-    skillAffixMap!: Record<string, WeaponSkillAffix>;
+    skillAffixMap: Record<string, WeaponSkillAffix>;
 
     //*********************************
     //            リソース
     //*********************************
     //画像
-    images!: WeaponImages;
+    images: WeaponImages;
 
     //*********************************
     //             その他
     //*********************************
     //レベル属性マップ
-    levelMap!: Record<string, WeaponStatus>;
+    levelMap: Record<string, WeaponStatus>;
 
 }
