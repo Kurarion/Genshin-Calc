@@ -75,6 +75,12 @@ export class Const {
   //*********************************
   //           原神データ
   //*********************************
-  
+
+  //キャラレベルデータ
+  static readonly SAVE_CHARACTER = "SAVE_CHARACTER";
+  //キャラ武器データ
+  static readonly SAVE_CHARACTER_WEAPON = "SAVE_CHARACTER_WEAPON";
+  //敵データ
+  static readonly SAVE_MONSTER = "SAVE_MONSTER";
 
 }

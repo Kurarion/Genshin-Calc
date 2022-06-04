@@ -53,6 +53,14 @@ export class LanguageService {
     return this.currentLang;
   }
 
+  setStorageLang(lang: TYPE_SYS_LANG){
+    this.storageService.setItem(Const.STORAGE_LANG, lang);
+  }
+
+  getStorageLang(){
+    return this.storageService.getItem(Const.STORAGE_LANG);
+  }
+
   /**
    * 言語設定
    */
@@ -72,7 +80,7 @@ export class LanguageService {
             Const.MAP_TESSERACT_LANG[langCode]
           );
           //ストレージに保存
-          this.storageService.setLang(langCode);
+          this.setStorageLang(langCode);
 
           return langCode;
         })
@@ -94,7 +102,7 @@ export class LanguageService {
   private initLang() {
     //ストレージから復元
     const lang =
-      this.storageService.getLang() ??
+      this.getStorageLang() ??
       this.translateService.getDefaultLang();
     //言語設定
     this.currentLang = lang as TYPE_SYS_LANG;

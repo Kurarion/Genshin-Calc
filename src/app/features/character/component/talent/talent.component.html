@@ -23,7 +23,7 @@
                         <!-- レベル選択 -->
                         <mat-form-field appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
-                            <mat-select [(ngModel)]="selectedLevels[i]" (ngModelChange)="onChangeLevel(skill, $event)">
+                            <mat-select [(ngModel)]="selectedLevels[skill]" (ngModelChange)="onChangeLevel(skill, $event)">
                                 <ng-container *ngFor="let option of levelOptions">
                                     <mat-option [value]="option" [innerText]="option.level">
                                     </mat-option>
@@ -34,8 +34,8 @@
                         <table>
                             <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
                                 <td class="content-left" [innerText]="paramDesc.desc"></td>
-                                <td class="content-right" [innerText]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[i].level)"
-                                    [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[i].level, true)" matTooltipPosition="right">
+                                <td class="content-right" [innerText]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level)"
+                                    [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level, true)" matTooltipPosition="right">
                                 </td>
                             </tr>
                         </table>

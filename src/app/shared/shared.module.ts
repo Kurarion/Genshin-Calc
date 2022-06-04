@@ -18,14 +18,14 @@ export { ArtifactListComponent } from './component/artifact-list/artifact-list.c
 
 export { GlobalProgressService } from './service/global-progress.service';
 export { OcrService } from './service/ocr.service';
-export { CharacterService } from './service/character.service';
-export { WeaponService } from './service/weapon.service';
-export { EnemyService } from './service/enemy.service';
+export { CharacterService } from './service/genshin/character.service';
+export { WeaponService } from './service/genshin/weapon.service';
+export { EnemyService } from './service/genshin/enemy.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
-export { ExtraDataService } from './service/extra-data.service';
-export { GenshinDataService } from './service/genshin-data.service';
+export { ExtraDataService } from './service/genshin/extra-data.service';
+export { GenshinDataService } from './service/genshin/genshin-data.service';
 
 export * from './const/const';
 export * from './interface/interface';

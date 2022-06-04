@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService } from 'src/app/shared/shared.module';
+import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -63,6 +63,8 @@ export class EnemyComponent implements OnInit {
     "DMG_ANTI_PYRO", "DMG_ANTI_HYDRO", "DMG_ANTI_DENDRO"
   ]
 
+  //キャラデータ
+  @Input('data') data!: character;
   //言語
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //敵リスト
@@ -106,12 +108,19 @@ export class EnemyComponent implements OnInit {
       this.playerNumOptions.push(i);
     }
     //敵初期選択
-    this.selectedEnemyIndex = this.enemyList[0].index;
-    this.selectedPlayerNum = this.minPlayerNum;
+    this.selectedEnemyIndex = this.enemyService.getIndex(this.data.id) ?? this.enemyList[0].index;
+    this.selectedPlayerNum = this.getPlayerNumFromNumber(this.enemyService.getPlayerNum(this.data.id)) ?? this.minPlayerNum;
     //レベル初期選択
-    this.selectedLevel = this.levelOptions[this.defaultLevel - 1];
+    this.selectedLevel = this.getLevelFromString(this.enemyService.getLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
     //初期データ更新
     this.onSelectEnemy(this.selectedEnemyIndex);
+    this.onChangeLevel(this.selectedLevel);
+    this.onChangePlayerNum(this.selectedPlayerNum);
+  }
+
+  ngOnDestroy(): void {
+    //データ保存
+    this.enemyService.saveData();
   }
 
   onSelectEnemy(enemyIndex: string) {
@@ -119,10 +128,12 @@ export class EnemyComponent implements OnInit {
     this.enemyData = this.enemyService.get(enemyIndex);
     //DEBUG
     console.log(this.enemyData);
-    //敵属性更新
-    this.onChangeLevel(this.selectedLevel);
+    // //敵属性更新
+    // this.onChangeLevel(this.selectedLevel);
     // //プロフィール画像初期化
     // this.initializeBackGroundImage();
+    //敵設定
+    this.enemyService.setIndex(this.data.id, this.enemyData.id);
   }
 
   onChangeLevel(value: levelOption) {
@@ -135,6 +146,13 @@ export class EnemyComponent implements OnInit {
         value: temp[key as keyof EnemyStatus],
       }
     }
+    //レベル設定
+    this.enemyService.setLevel(this.data.id, value.level);
+  }
+
+  onChangePlayerNum(num: number) {
+    //プレイヤー数設定
+    this.enemyService.setPlayerNum(this.data.id, num);
   }
 
   getPropRate(name: string): number[] {
@@ -171,6 +189,22 @@ export class EnemyComponent implements OnInit {
         enemyType: tempMap[key].type,
       })
     }
+  }
+
+  private getLevelFromString(level: string | undefined) {
+    if (!level) {
+      return undefined;
+    }
+
+    return this.levelOptions[parseInt(level) - 1];
+  }
+
+  private getPlayerNumFromNumber(playerNum: number | undefined) {
+    if (!playerNum) {
+      return undefined;
+    }
+
+    return playerNum;
   }
 
 }

@@ -137,7 +137,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private initLang() {
     //ストレージから復元
     const lang =
-      this.storageService.getLang() ??
+      this.languageService.getStorageLang() ??
       this.translateService.getDefaultLang();
     //言語設定
     this.languageService.nextLang(lang as TYPE_SYS_LANG);

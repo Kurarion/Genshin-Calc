@@ -1,7 +1,7 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
-import { character, CharSkill, CharSkillDescObject, CharSkills, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -53,9 +53,9 @@ export class TalentComponent implements OnInit {
   //レベルオプションリスト
   levelOptions: levelOption[] = [];
   //選択されたレベルリスト
-  selectedLevels: levelOption[] = [];
+  selectedLevels: Record<string, levelOption> = {};
 
-  constructor(private percentPipe: PercentPipe, private decimalPipe: DecimalPipe, private noCommaPipe: NoCommaPipe) { }
+  constructor(private percentPipe: PercentPipe, private decimalPipe: DecimalPipe, private noCommaPipe: NoCommaPipe, private characterService: CharacterService) { }
 
   ngOnInit(): void {
     //レベル初期設定
@@ -65,15 +65,39 @@ export class TalentComponent implements OnInit {
         levelNum: i,
       });
     }
-    //初期選択
-    this.selectedLevels = Array.from({ length: this.skills.length }).map((_, i) => this.levelOptions[this.defaultLevel - 1]);
-    this.selectedLevels.forEach((v, i) => {
-      this.onChangeLevel(this.skills[i], v);
-    });
+    // this.selectedLevels = Array.from({ length: this.skills.length }).map((_, i) => this.levelOptions[this.defaultLevel - 1]);
+    for (let key of this.skills) {
+      //初期選択
+      let temp: levelOption;
+      switch (key) {
+        case "normal":
+          temp = this.getLevelFromString(this.characterService.getNormalLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+          break;
+        case "skill":
+          temp = this.getLevelFromString(this.characterService.getSkillLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+          break;
+        case "elemental_burst":
+          temp = this.getLevelFromString(this.characterService.getElementalBurstLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+          break;
+      }
+      this.selectedLevels[key] = temp!;
+      //初期データ更新
+      this.onChangeLevel(key, this.selectedLevels[key]);
+    }
   }
 
   onChangeLevel(propName: string, value: levelOption) {
-    //TODO
+    switch (propName) {
+      case "normal":
+        this.characterService.setNormalLevel(this.data.id, value.level);
+        break;
+      case "skill":
+        this.characterService.setSkillLevel(this.data.id, value.level);
+        break;
+      case "elemental_burst":
+        this.characterService.setElementalBurstLevel(this.data.id, value.level);
+        break;
+    }
   }
 
   getDataProperty(key: string): CharSkill {
@@ -115,4 +139,11 @@ export class TalentComponent implements OnInit {
     return result;
   }
 
+  private getLevelFromString(level: string | undefined) {
+    if (!level) {
+      return undefined;
+    }
+
+    return this.levelOptions[parseInt(level) - 1];
+  }
 }

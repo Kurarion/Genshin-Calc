@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -24,7 +24,7 @@ interface weaponOption {
   templateUrl: './weapon.component.html',
   styleUrls: ['./weapon.component.css']
 })
-export class WeaponComponent implements OnInit {
+export class WeaponComponent implements OnInit, OnDestroy {
 
   private readonly notExitLevel = -1;
   private readonly minLevel = 1;
@@ -122,17 +122,29 @@ export class WeaponComponent implements OnInit {
       this.smeltingLevelOptions.push(i.toString().padStart(this.smeltingLevelPadNum, '0'));
     }
     //武器初期選択
-    for (let i = 1; i < this.weaponList.length; ++i) {
-      if (this.weaponList[i].weaponType == this.charWeaponType && this.weaponList[i].rankLevel == this.maxSmeltingLevel) {
-        this.selectedWeaponIndex = this.weaponList[i].index;
-        break;
+    let storageWeaponIndex = this.weaponService.getIndex(this.data.id);
+    if(storageWeaponIndex){
+      this.selectedWeaponIndex = storageWeaponIndex;
+    }else{
+      for (let i = 1; i < this.weaponList.length; ++i) {
+        if (this.weaponList[i].weaponType == this.charWeaponType && this.weaponList[i].rankLevel == this.maxSmeltingLevel) {
+          this.selectedWeaponIndex = this.weaponList[i].index;
+          break;
+        }
       }
     }
     //レベル初期選択
-    this.selectedLevel = this.levelOptions[this.levelOptions.length - 1];
-    this.selectedSmeltingLevel = this.defaultSmeltingLevel;
+    this.selectedLevel = this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ?? this.levelOptions[this.levelOptions.length - 1];
+    this.selectedSmeltingLevel = this.getSmeltingLevelFromString(this.weaponService.getSmeltingLevel(this.data.id)) ?? this.defaultSmeltingLevel;
     //初期データ更新
     this.onSelectWeapon(this.selectedWeaponIndex);
+    this.onChangeLevel(this.selectedLevel);
+    this.onChangeSmeltingLevel(this.selectedSmeltingLevel);
+  }
+
+  ngOnDestroy(): void {
+    //データ保存
+    this.weaponService.saveData();
   }
 
   /**
@@ -152,14 +164,21 @@ export class WeaponComponent implements OnInit {
     //武器最高レベル
     this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
     if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.levelNum || this.selectedLevel.levelNum > this.selectedWeaponAbleMaxLevel) {
-      this.selectedLevel = this.levelOptions[this.selectedWeaponAbleMaxLevel + this.ascendLevels.indexOf(this.selectedWeaponAbleMaxLevel) - 1];
+      //実行あり得ない（三星以上）
+      this.selectedLevel = this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ?? this.levelOptions[this.selectedWeaponAbleMaxLevel + this.ascendLevels.indexOf(this.selectedWeaponAbleMaxLevel) - 1];
+      //武器属性更新
+      this.onChangeLevel(this.selectedLevel);
     }
-    //武器属性更新
-    this.onChangeLevel(this.selectedLevel);
     //プロフィール画像初期化
     this.initializeBackGroundImage();
+    //武器設定
+    this.weaponService.setIndex(this.data.id, this.weaponData.id);
   }
 
+  /**
+   * レベル変更処理
+   * @param value 
+   */
   onChangeLevel(value: levelOption) {
     this.selectedLevelProps = {};
     let temp = this.weaponData.levelMap[value.level];
@@ -170,6 +189,17 @@ export class WeaponComponent implements OnInit {
         value: temp[key as keyof CharStatus],
       }
     }
+    //武器レベル設定
+    this.weaponService.setLevel(this.data.id, value.level);
+  }
+
+  /**
+   * 突破レベル変更処理
+   * @param value 
+   */
+  onChangeSmeltingLevel(value: string) {
+    //武器突破レベル設定
+    this.weaponService.setSmeltingLevel(this.data.id, value);
   }
 
   getEffectName(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {
@@ -210,6 +240,33 @@ export class WeaponComponent implements OnInit {
         weaponType: tempMap[key].weaponType,
       })
     }
+  }
+
+  private getLevelFromString(level: string | undefined) {
+    if (!level) {
+      return undefined;
+    }
+    let levelNum = parseInt(level);
+    let isAscend = level.includes("+");
+    let index = -1;
+    for (let i = 0; i < this.ascendLevels.length; ++i) {
+      if(this.ascendLevels[i] < levelNum){
+        ++index
+      }else{
+        break;
+      }
+    }
+    let resultIndex = index + (isAscend ? 1 : 0) + levelNum;
+
+    return this.levelOptions[resultIndex];
+  }
+
+  private getSmeltingLevelFromString(smeltingLevel: string | undefined) {
+    if (!smeltingLevel) {
+      return undefined;
+    }
+
+    return smeltingLevel;
   }
 
 }

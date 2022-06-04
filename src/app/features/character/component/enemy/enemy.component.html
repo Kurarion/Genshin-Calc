@@ -23,7 +23,7 @@
                 <br>
                 <mat-form-field appearance="legacy" floatLabel="always">
                     <mat-label [innerText]="'ENEMY.PLAYERNUM' | translate"></mat-label>
-                    <mat-select [(ngModel)]="selectedPlayerNum">
+                    <mat-select [(ngModel)]="selectedPlayerNum" (ngModelChange)="onChangePlayerNum($event)">
                         <ng-container *ngFor="let playerNum of playerNumOptions">
                             <mat-option [value]="playerNum" [innerText]="playerNum"></mat-option>
                         </ng-container>

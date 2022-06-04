@@ -80,7 +80,7 @@
                     <!-- レベル選択 -->
                     <mat-form-field appearance="legacy" floatLabel="always">
                         <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
-                        <mat-select [(ngModel)]="selectedSmeltingLevel">
+                        <mat-select [(ngModel)]="selectedSmeltingLevel" (ngModelChange)="onChangeSmeltingLevel($event)">
                             <ng-container *ngFor="let level of smeltingLevelOptions">
                                 <mat-option
                                     [value]="level"

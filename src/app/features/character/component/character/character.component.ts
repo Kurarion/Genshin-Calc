@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { character, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { character, CharacterService, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -17,7 +17,7 @@ interface subProp {
   templateUrl: './character.component.html',
   styleUrls: ['./character.component.css']
 })
-export class CharacterComponent implements OnInit {
+export class CharacterComponent implements OnInit, OnDestroy {
 
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
@@ -61,7 +61,7 @@ export class CharacterComponent implements OnInit {
   //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
 
-  constructor(private httpService: HttpService, private extraDataService: ExtraDataService) { }
+  constructor(private httpService: HttpService, private extraDataService: ExtraDataService, private characterService: CharacterService) { }
 
   ngOnInit(): void {
     //プロフィール画像初期化
@@ -81,8 +81,14 @@ export class CharacterComponent implements OnInit {
       }
     }
     //初期選択
-    this.selectedLevel = this.levelOptions[this.levelOptions.length - 1];
+    this.selectedLevel = this.getLevelFromString(this.characterService.getLevel(this.data.id)) ?? this.levelOptions[this.levelOptions.length - 1];
+    //初期データ更新
     this.onChangeLevel(this.selectedLevel);
+  }
+
+  ngOnDestroy(): void {
+    //データ保存
+    this.characterService.saveData();
   }
 
   /**
@@ -99,6 +105,7 @@ export class CharacterComponent implements OnInit {
         value: temp[key as keyof CharStatus],
       }
     }
+    this.characterService.setLevel(this.data.id, value.level);
   }
 
   /**
@@ -115,8 +122,27 @@ export class CharacterComponent implements OnInit {
             this.avatarLoadFlg = true;
           }, 100)
         }
-      }).catch(()=>{});
+      }).catch(() => { });
     }
+  }
+
+  private getLevelFromString(level: string | undefined) {
+    if (!level) {
+      return undefined;
+    }
+    let levelNum = parseInt(level);
+    let isAscend = level.includes("+");
+    let index = -1;
+    for (let i = 0; i < this.ascendLevels.length; ++i) {
+      if(this.ascendLevels[i] < levelNum){
+        ++index
+      }else{
+        break;
+      }
+    }
+    let resultIndex = index + (isAscend ? 1 : 0) + levelNum;
+
+    return this.levelOptions[resultIndex];
   }
 
 }
