@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character } from 'src/app/shared/shared.module';
+import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -43,27 +43,9 @@ export class WeaponComponent implements OnInit, OnDestroy {
   private readonly levelPadNum = 2;
   private readonly smeltingLevelPadNum = 1;
 
-  readonly props = ['LEVEL', 'ATTACK'];
-  readonly props_sub = [
-    'HP_UP', 'ATTACK_UP', 'DEFENSE_UP',
-    'CRIT_RATE', 'CRIT_DMG', 'ENERGY_RECHARGE',
-    'HEALING_BONUS', 'REVERSE_HEALING_BONUS',
-    'ELEMENTAL_MASTERY', 'DMG_BONUS_CRYO', 'DMG_BONUS_ANEMO',
-    'DMG_BONUS_PHYSICAL', 'DMG_BONUS_ELECTRO', 'DMG_BONUS_GEO',
-    'DMG_BONUS_PYRO', 'DMG_BONUS_HYDRO', 'DMG_BONUS_DENDRO',
-    'DMG_BONUS_ALL', 'DMG_BONUS_NORMAL', 'DMG_BONUS_CHARGED',
-    'DMG_BONUS_PLUNGING', 'DMG_BONUS_SKILL', 'DMG_BONUS_ELEMENTAL_BURST',
-  ];
-  readonly percent_props = [
-    'HP_UP', 'ATTACK_UP', 'DEFENSE_UP',
-    'CRIT_RATE', 'CRIT_DMG', 'ENERGY_RECHARGE',
-    'HEALING_BONUS', 'REVERSE_HEALING_BONUS', 'DMG_BONUS_CRYO',
-    'DMG_BONUS_ANEMO', 'DMG_BONUS_PHYSICAL', 'DMG_BONUS_ELECTRO',
-    'DMG_BONUS_GEO', 'DMG_BONUS_PYRO', 'DMG_BONUS_HYDRO',
-    'DMG_BONUS_DENDRO', 'DMG_BONUS_ALL', 'DMG_BONUS_NORMAL',
-    'DMG_BONUS_CHARGED', 'DMG_BONUS_PLUNGING', 'DMG_BONUS_SKILL',
-    'DMG_BONUS_ELEMENTAL_BURST',
-  ]
+  readonly props = Const.PROPS_WEAPON_BASE;
+  readonly props_sub = Const.PROPS_CHARA_WEAPON_SUB;
+  readonly percent_props = Const.PROPS_CHARA_WEAPON_PERCENT;
 
   //キャラデータ
   @Input('data') data!: character;

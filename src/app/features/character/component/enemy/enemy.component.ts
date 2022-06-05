@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character } from 'src/app/shared/shared.module';
+import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -36,32 +36,9 @@ export class EnemyComponent implements OnInit {
   readonly attackRates = [1.0, 1.10, 1.25, 1.40];
   private readonly levelPadNum = 3;
 
-  readonly props = ['LEVEL', 'HP', 'ATTACK', 'DEFENSE'];
-  readonly props_sub = [
-    'HP_UP', 'ATTACK_UP', 'DEFENSE_UP',
-    'CRIT_RATE', 'CRIT_DMG', 'ENERGY_RECHARGE',
-    'HEALING_BONUS', 'REVERSE_HEALING_BONUS',
-    'ELEMENTAL_MASTERY', 'DMG_BONUS_CRYO', 'DMG_BONUS_ANEMO',
-    'DMG_BONUS_PHYSICAL', 'DMG_BONUS_ELECTRO', 'DMG_BONUS_GEO',
-    'DMG_BONUS_PYRO', 'DMG_BONUS_HYDRO', 'DMG_BONUS_DENDRO',
-    'DMG_BONUS_ALL', 'DMG_BONUS_NORMAL', 'DMG_BONUS_CHARGED',
-    'DMG_BONUS_PLUNGING', 'DMG_BONUS_SKILL', 'DMG_BONUS_ELEMENTAL_BURST',
-    "DMG_ANTI_CRYO", "DMG_ANTI_ANEMO", "DMG_ANTI_PHYSICAL",
-    "DMG_ANTI_ELECTRO", "DMG_ANTI_GEO", "DMG_ANTI_PYRO",
-    "DMG_ANTI_HYDRO", "DMG_ANTI_DENDRO"
-  ];
-  readonly percent_props = [
-    'HP_UP', 'ATTACK_UP', 'DEFENSE_UP',
-    'CRIT_RATE', 'CRIT_DMG', 'ENERGY_RECHARGE',
-    'HEALING_BONUS', 'REVERSE_HEALING_BONUS', 'DMG_BONUS_CRYO',
-    'DMG_BONUS_ANEMO', 'DMG_BONUS_PHYSICAL', 'DMG_BONUS_ELECTRO',
-    'DMG_BONUS_GEO', 'DMG_BONUS_PYRO', 'DMG_BONUS_HYDRO',
-    'DMG_BONUS_DENDRO', 'DMG_BONUS_ALL', 'DMG_BONUS_NORMAL',
-    'DMG_BONUS_CHARGED', 'DMG_BONUS_PLUNGING', 'DMG_BONUS_SKILL',
-    'DMG_BONUS_ELEMENTAL_BURST', "DMG_ANTI_CRYO", "DMG_ANTI_ANEMO",
-    "DMG_ANTI_PHYSICAL", "DMG_ANTI_ELECTRO", "DMG_ANTI_GEO",
-    "DMG_ANTI_PYRO", "DMG_ANTI_HYDRO", "DMG_ANTI_DENDRO"
-  ]
+  readonly props = Const.PROPS_CHARA_ENEMY_BASE;
+  readonly props_sub = Const.PROPS_ENEMY_SUB;
+  readonly percent_props = Const.PROPS_ENEMY_PERCENT;
 
   //キャラデータ
   @Input('data') data!: character;

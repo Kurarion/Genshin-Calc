@@ -1,7 +1,137 @@
 {
     "characters": {
         "安柏": {
-            "c1":"dsfadasfds"
+            "skills": {
+                "normal": [
+                    {
+                        "indexs": [0,1,2,3,4],
+                        "attack": [0,1,2,3,4],
+                        "type": "value",
+                        "unOverride ": true,
+                        "elementType": "DMG_BONUS_PHYSICAL",
+                        "attackType": "DMG_BONUS_NORMAL"
+                    },
+                    {
+                        "indexs": [5],
+                        "attack": [5],
+                        "type": "value",
+                        "unOverride ": true,
+                        "elementType": "DMG_BONUS_PHYSICAL",
+                        "attackType": "DMG_BONUS_CHARGED"
+                    },
+                    {
+                        "indexs": [6],
+                        "attack": [6],
+                        "type": "value",
+                        "unOverride ": true,
+                        "elementType": "DMG_BONUS_PYRO",
+                        "attackType": "DMG_BONUS_CHARGED"
+                    },
+                    {
+                        "indexs": [7,8],
+                        "attack": [7,8],
+                        "type": "value",
+                        "unOverride ": true,
+                        "elementType": "DMG_BONUS_PHYSICAL",
+                        "attackType": "DMG_BONUS_PLUNGING"
+                    }
+                ],
+                "skill": [
+                    {
+                        "indexs": [0, 1],
+                        "attack": [0],
+                        "maxHp": [1],
+                        "type": "value",
+                        "unOverride ": true,
+                        "elementType": "DMG_BONUS_PYRO",
+                        "attackType": "DMG_BONUS_SKILL"
+                    }
+                ],
+                "elemental_burst": [
+                    {
+                        "indexs": [0, 2],
+                        "attack": [0, 2],
+                        "type": "value",
+                        "unOverride ": true,
+                        "elementType": "DMG_BONUS_PYRO",
+                        "attackType": "DMG_BONUS_ELEMENTAL_BURST"
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "indexs": [0],
+                            "type": "switch",
+                            "effect": [
+                                {
+                                    "prop": "CRIT_RATE",
+                                    "param": "+0.1",
+                                    "attackType": "DMG_BONUS_ELEMENTAL_BURST"
+                                }
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "indexs": [1],
+                            "type": "switch",
+                            "effect": [
+                                {
+                                    "prop": "ATTACK_UP",
+                                    "param": "+0.15",
+                                    "isGlobal": true
+                                }
+                            ]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": {
+                    "type": "value",
+                    "unOverride ": true,
+                    "extra": [
+                        {
+                            "prop": "DMG_FINAL_VAL",
+                            "param": "*0.2",
+                            "base": "normal[5]",
+                            "elementType": "DMG_BONUS_PHYSICAL",
+                            "attackType": "DMG_BONUS_CHARGED"
+                        },
+                        {
+                            "prop": "DMG_FINAL_VAL",
+                            "param": "*0.2",
+                            "base": "normal[6]",
+                            "elementType": "DMG_BONUS_PYRO",
+                            "attackType": "DMG_BONUS_CHARGED"
+                        }
+                    ]
+                },
+                "2": {
+                    "type": "value",
+                    "unOverride ": true,
+                    "extra": [
+                        {
+                            "prop": "DMG_DAMAGE_UP",
+                            "param": "+2",
+                            "base": "skill[1]",
+                            "elementType": "DMG_BONUS_PHYSICAL",
+                            "attackType": "DMG_BONUS_CHARGED"
+                        }
+                    ]
+                },
+                "6": {
+                    "type": "switch",
+                    "effect": [
+                        {
+                            "prop": "ATTACK_UP",
+                            "param": "+0.15",
+                            "isGlobal": true
+                        }
+                    ]
+                }
+
+            }
         }
     },
     "weapons": {

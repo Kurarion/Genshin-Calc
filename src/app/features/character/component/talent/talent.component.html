@@ -25,7 +25,7 @@
                             <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
                             <mat-select [(ngModel)]="selectedLevels[skill]" (ngModelChange)="onChangeLevel(skill, $event)">
                                 <ng-container *ngFor="let option of levelOptions">
-                                    <mat-option [value]="option" [innerText]="option.level">
+                                    <mat-option [value]="option" [innerText]="option.levelNum">
                                     </mat-option>
                                 </ng-container>
                             </mat-select>
