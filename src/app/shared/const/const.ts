@@ -48,6 +48,12 @@ export class Const {
   //*********************************
   //レベル
   static readonly PROP_LEVEL = "LEVEL";
+  //生命力ベース
+  static readonly PROP_HP_BASE = "HP_BASE";
+  //攻撃力ベース
+  static readonly PROP_ATTACK_BASE = "ATTACK_BASE";
+  //防御力ベース
+  static readonly PROP_DEFENSE_BASE = "DEFENSE_BASE";
   //生命力
   static readonly PROP_HP = "HP";
   //攻撃力
@@ -189,6 +195,64 @@ export class Const {
   static readonly PROP_HEALING_VAL_UP_SKILL = "HEALING_VAL_UP_SKILL";
   //元素爆発治療アップ値
   static readonly PROP_HEALING_VAL_UP_ELEMENTAL_BURST = "HEALING_VAL_UP_ELEMENTAL_BURST";
+
+  //氷元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_CRYO = "DMG_CRIT_RATE_UP_CRYO";
+  //風元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_ANEMO = "DMG_CRIT_RATE_UP_ANEMO";
+  //物理ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_PHYSICAL = "DMG_CRIT_RATE_UP_PHYSICAL";
+  //雷元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_ELECTRO = "DMG_CRIT_RATE_UP_ELECTRO";
+  //岩元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_GEO = "DMG_CRIT_RATE_UP_GEO";
+  //火元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_PYRO = "DMG_CRIT_RATE_UP_PYRO";
+  //水元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_HYDRO = "DMG_CRIT_RATE_UP_HYDRO";
+  //草元素ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_DENDRO = "DMG_CRIT_RATE_UP_DENDRO";
+  //全ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_ALL = "DMG_CRIT_RATE_UP_ALL";
+  //基本攻撃ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_NORMAL = "DMG_CRIT_RATE_UP_NORMAL";
+  //重撃ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_CHARGED = "DMG_CRIT_RATE_UP_CHARGED";
+  //落下攻撃ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_PLUNGING = "DMG_CRIT_RATE_UP_PLUNGING";
+  //元素スキルダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_SKILL = "DMG_CRIT_RATE_UP_SKILL";
+  //元素爆発ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST = "DMG_CRIT_RATE_UP_ELEMENTAL_BURST";
+
+  //氷元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_CRYO = "DMG_CRIT_DMG_UP_CRYO";
+  //風元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_ANEMO = "DMG_CRIT_DMG_UP_ANEMO";
+  //物理ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_PHYSICAL = "DMG_CRIT_DMG_UP_PHYSICAL";
+  //雷元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_ELECTRO = "DMG_CRIT_DMG_UP_ELECTRO";
+  //岩元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_GEO = "DMG_CRIT_DMG_UP_GEO";
+  //火元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_PYRO = "DMG_CRIT_DMG_UP_PYRO";
+  //水元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_HYDRO = "DMG_CRIT_DMG_UP_HYDRO";
+  //草元素ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_DENDRO = "DMG_CRIT_DMG_UP_DENDRO";
+  //全ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_ALL = "DMG_CRIT_DMG_UP_ALL";
+  //基本攻撃ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_NORMAL = "DMG_CRIT_DMG_UP_NORMAL";
+  //重撃ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_CHARGED = "DMG_CRIT_DMG_UP_CHARGED";
+  //落下攻撃ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_PLUNGING = "DMG_CRIT_DMG_UP_PLUNGING";
+  //元素スキルダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_SKILL = "DMG_CRIT_DMG_UP_SKILL";
+  //元素爆発ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST = "DMG_CRIT_DMG_UP_ELEMENTAL_BURST";
 
   //元素(増幅)
   static readonly PROP_DMG_VAL_ELEMENT_UP = "DMG_VAL_ELEMENT_UP";

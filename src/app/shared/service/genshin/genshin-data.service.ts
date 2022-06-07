@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { character, enemy, weapon } from 'src/app/shared/shared.module';
+import { character, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ export class GenshinDataService {
   static dataReliquarySet: any;
   static dataReliquaryMain: any;
   static dataReliquaryAffix: any;
+  static dataExtra: ExtraData;
 
   constructor() { }
   
@@ -33,6 +34,9 @@ export class GenshinDataService {
   static initReliquaryAffixData(data: any){
     this.dataReliquaryAffix = data;
   }
+  static initExtraData(data: any){
+    this.dataExtra = data;
+  }
 
   getCharacter(index: string){
     return GenshinDataService.dataCharacter[index];
@@ -51,6 +55,12 @@ export class GenshinDataService {
   }
   getReliquaryAffix(index: string){
     return GenshinDataService.dataReliquaryAffix[index];
+  }
+  getExtraCharacterData(index: string){
+    return GenshinDataService.dataExtra.characters[index];
+  }
+  getExtraWeaponData(index: string){
+    return GenshinDataService.dataExtra.weapons[index];
   }
 
 }

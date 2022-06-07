@@ -30,7 +30,7 @@ export interface ExtraData {
 /** 補足データ - 1階 */
 export interface ExtraCharacter {
   skills?: ExtraCharacterSkills;
-  constellation?: Record<string, ExtraSkillInfo>;
+  constellation?: Record<string, ExtraSkillInfo[]>;
 }
 
 export interface ExtraWeapon {
@@ -54,43 +54,56 @@ export interface ExtraSkillInfo {
   buff?: ExtraSkillBuff;//バフ値
   healing?: ExtraSkillHealing;//治療値
   shield?: ExtraSkillShield;//シールド
+  product?: ExtraSkillProduct;//召喚物
 }
 
 /** 補足データ - 4階 */
 export interface ExtraSkillDamage {
+  //連携スキル
+  originSkill?: TYPE_SKILL;
+  originIndex?: number[];
+  originRelation?: TYPE_RELATION;
   //数値計算ベースインデックスリスト
   index?: number[];
   //数値計算ベース
   base?: string;
   //その他
-  unOverride?: boolean; //元素オーバーライド可否
-  elementType?: string; //元素タイプ
-  attackType?: string; //攻撃タイプ
+  canOverride?: boolean; //元素オーバーライド可否
+  elementBonusType?: string; //元素タイプ
+  attackBonusType?: string; //攻撃タイプ
 }
 
 export interface ExtraSkillBuff {
   //数値計算ベースインデックスリスト
   index?: number[];
+  constIndex?: number[];
+  constCalRelation?: TYPE_RELATION;
   //数値計算ベース
   base?: string;
   //目標
-  target?: string;
+  target?: string[];
   convertElement?: string;
   //チームに有効可否
   isGlobal?: boolean;
+  unableSelf?: boolean;
   //上限
   maxValIndex?: number[];
   maxValBase?: string;
   maxValConstIndex?: number[];
-  //オーバーレイ上限
+  //スライダー
+  sliderMax?: number;
+  sliderInitialValue?: number;
+  sliderStep?: number;
+  //設定
   settingType?: TYPE_BUFF_SETTING;
-  maxNum?: number;
+  defaultEnable?: boolean;
 }
 
 export interface ExtraSkillHealing {
   //数値計算ベースインデックスリスト
   index?: number[];
   constIndex?: number[];
+  constCalRelation?: TYPE_RELATION;
   //数値計算ベース
   base?: string;
 }
@@ -99,10 +112,21 @@ export interface ExtraSkillShield {
   //数値計算ベースインデックスリスト
   index?: number[];
   constIndex?: number[];
+  constCalRelation?: TYPE_RELATION;
+  //数値計算ベース
+  base?: string;
+}
+
+export interface ExtraSkillProduct {
+  //数値計算ベースインデックスリスト
+  index?: number[];
+  constIndex?: number[];
+  constCalRelation?: TYPE_RELATION;
   //数値計算ベース
   base?: string;
 }
 
 /** 補足データ - 5階 */
-export declare type TYPE_RELATION = 'x' | '+' | '-' | '/';
-export declare type TYPE_BUFF_SETTING = 'switch-value' | 'slider' | 'switch';
+export declare type TYPE_SKILL = 'normal' | 'skill' | 'elemental_burst' | 'proudSkills';
+export declare type TYPE_RELATION = '*' | '+' | '-' | '/';
+export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' | 'switch';

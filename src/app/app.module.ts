@@ -10,7 +10,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CookieService } from 'ngx-cookie-service';
 
-import { SharedModule, ExtraDataService, GenshinDataService } from 'src/app/shared/shared.module';
+import { SharedModule, GenshinDataService } from 'src/app/shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './root/main/main.component';
@@ -32,7 +32,7 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
     lastValueFrom(httpClient.get("assets/init/data.json")
       .pipe(
         tap(data => {
-          ExtraDataService.initData(data);
+          GenshinDataService.initExtraData(data);
         })
       )
     ),

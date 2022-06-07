@@ -4,137 +4,183 @@
             "skills": {
                 "normal": [
                     {
-                        "indexs": [0,1,2,3,4],
-                        "attack": [0,1,2,3,4],
-                        "type": "value",
-                        "unOverride ": true,
-                        "elementType": "DMG_BONUS_PHYSICAL",
-                        "attackType": "DMG_BONUS_NORMAL"
+                        "index": [0,1,2,3,4],
+                        "damage": {
+                            "index": [0,1,2,3,4],
+                            "base": "PROP_ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
                     },
                     {
-                        "indexs": [5],
-                        "attack": [5],
-                        "type": "value",
-                        "unOverride ": true,
-                        "elementType": "DMG_BONUS_PHYSICAL",
-                        "attackType": "DMG_BONUS_CHARGED"
+                        "index": [5],
+                        "damage": {
+                            "index": [5],
+                            "base": "PROP_ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
                     },
                     {
-                        "indexs": [6],
-                        "attack": [6],
-                        "type": "value",
-                        "unOverride ": true,
-                        "elementType": "DMG_BONUS_PYRO",
-                        "attackType": "DMG_BONUS_CHARGED"
+                        "index": [6],
+                        "damage": {
+                            "index": [6],
+                            "base": "PROP_ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
                     },
                     {
-                        "indexs": [7,8],
-                        "attack": [7,8],
-                        "type": "value",
-                        "unOverride ": true,
-                        "elementType": "DMG_BONUS_PHYSICAL",
-                        "attackType": "DMG_BONUS_PLUNGING"
+                        "index": [7,8],
+                        "damage": {
+                            "index": [7,8],
+                            "base": "PROP_ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
                     }
                 ],
                 "skill": [
                     {
-                        "indexs": [0, 1],
-                        "attack": [0],
-                        "maxHp": [1],
-                        "type": "value",
-                        "unOverride ": true,
-                        "elementType": "DMG_BONUS_PYRO",
-                        "attackType": "DMG_BONUS_SKILL"
+                        "index": [0, 1],
+                        "damage": {
+                            "index": [1],
+                            "base": "PROP_ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        },
+                        "product": {
+                            "index": [0],
+                            "base": "PROP_HP"
+                        }
                     }
                 ],
                 "elemental_burst": [
                     {
-                        "indexs": [0, 2],
-                        "attack": [0, 2],
-                        "type": "value",
-                        "unOverride ": true,
-                        "elementType": "DMG_BONUS_PYRO",
-                        "attackType": "DMG_BONUS_ELEMENTAL_BURST"
+                        "index": [0, 2],
+                        "damage": {
+                            "index": [0, 2],
+                            "base": "PROP_ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
                     }
                 ],
                 "proudSkills": [
                     [
                         {
-                            "indexs": [0],
-                            "type": "switch",
-                            "effect": [
-                                {
-                                    "prop": "CRIT_RATE",
-                                    "param": "+0.1",
-                                    "attackType": "DMG_BONUS_ELEMENTAL_BURST"
-                                }
-                            ]
+                            "index": [0],
+                            "buff": {
+                                "constIndex": [0],
+                                "constCalRelation": "+",
+                                "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
+                                "settingType": "switch",
+                                "defaultEnable": true
+                            }
                         }
                     ],
                     [
                         {
-                            "indexs": [1],
-                            "type": "switch",
-                            "effect": [
-                                {
-                                    "prop": "ATTACK_UP",
-                                    "param": "+0.15",
-                                    "isGlobal": true
-                                }
-                            ]
+                            "index": [1],
+                            "buff": {
+                                "index": [1],
+                                "target": ["ATTACK_UP"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }
                         }
                     ]
                 ]
             },
             "constellation": {
-                "1": {
-                    "type": "value",
-                    "unOverride ": true,
-                    "extra": [
+                "0": [
                         {
-                            "prop": "DMG_FINAL_VAL",
-                            "param": "*0.2",
-                            "base": "normal[5]",
-                            "elementType": "DMG_BONUS_PHYSICAL",
-                            "attackType": "DMG_BONUS_CHARGED"
+                            "index": [0],
+                            "damage": {
+                                "originSkill": "normal",
+                                "originIndex": [5],
+                                "originRelation": "*",
+                                "index": [0],
+                                "base": "PROP_ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_PHYSICAL",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
                         },
                         {
-                            "prop": "DMG_FINAL_VAL",
-                            "param": "*0.2",
-                            "base": "normal[6]",
-                            "elementType": "DMG_BONUS_PYRO",
-                            "attackType": "DMG_BONUS_CHARGED"
+                            "index": [0],
+                            "damage": {
+                                "originSkill": "normal",
+                                "originIndex": [6],
+                                "originRelation": "*",
+                                "index": [0],
+                                "base": "PROP_ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_PYRO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
                         }
-                    ]
-                },
-                "2": {
-                    "type": "value",
-                    "unOverride ": true,
-                    "extra": [
+                ],
+                "1": [
                         {
-                            "prop": "DMG_DAMAGE_UP",
-                            "param": "+2",
-                            "base": "skill[1]",
-                            "elementType": "DMG_BONUS_PHYSICAL",
-                            "attackType": "DMG_BONUS_CHARGED"
+                            "index": [0],
+                            "damage": {
+                                "originSkill": "skill",
+                                "originIndex": [1],
+                                "base": "PROP_ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_PYRO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            },
+                            "buff": {
+                                "index": [0],
+                                "target": ["DMG_BONUS_SKILL"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }
                         }
-                    ]
-                },
-                "6": {
-                    "type": "switch",
-                    "effect": [
+                ],
+                "5": [
                         {
-                            "prop": "ATTACK_UP",
-                            "param": "+0.15",
-                            "isGlobal": true
+                            "buff": {
+                                "index": [1],
+                                "target": ["ATTACK_UP"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }
                         }
-                    ]
-                }
+                ]
 
             }
         }
     },
     "weapons": {
-        "阿莫斯之弓": {}
+        "阿莫斯之弓": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": [0],
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": [1],
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                }
+            ]
+        }
     }
 }

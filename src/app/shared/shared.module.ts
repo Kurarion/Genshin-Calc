@@ -11,6 +11,7 @@ import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
 import { RatePipe } from './pipe/rate.pipe';
+import { ExtraDataComponent } from './component/extra-data/extra-data.component';
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { RatePipe } from './pipe/rate.pipe';
@@ -37,13 +38,14 @@ let shardList: any[] = [
   CaptureHtmlComponent,
   PasteEventListenerComponent,
   ArtifactListComponent,
+  ExtraDataComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,
 ];
 
 @NgModule({
-  declarations: [shardList, RatePipe],
+  declarations: shardList,
   imports: [
     CommonModule,
     AngularMaterialModule,

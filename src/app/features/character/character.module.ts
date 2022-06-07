@@ -12,6 +12,7 @@ import { TalentComponent } from './component/talent/talent.component';
 import { PercentPipe, DecimalPipe } from '@angular/common';
 import { ConstellationComponent } from './component/constellation/constellation.component';
 import { EnemyComponent } from './component/enemy/enemy.component';
+import { ExtraInfoComponent } from './component/extra-info/extra-info.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { EnemyComponent } from './component/enemy/enemy.component';
     WeaponComponent,
     TalentComponent,
     ConstellationComponent,
-    EnemyComponent
+    EnemyComponent,
+    ExtraInfoComponent,
   ],
   providers: [
     PercentPipe,

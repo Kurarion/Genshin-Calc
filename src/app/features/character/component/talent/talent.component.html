@@ -40,7 +40,7 @@
                             </tr>
                         </table>
                         <br>
-                        <span [innerHTML]="getDataProperty(skill).desc[currentLanguage] | noStrong"></span>
+                        <span [innerHTML]="getDataProperty(skill).desc[currentLanguage]"></span>
                     </mat-expansion-panel>
                 </ng-container>
                 <ng-container *ngFor="let skill of otherSkills; index as i">
@@ -61,7 +61,7 @@
                                 </tr>
                             </table>
                             <br>
-                            <span [innerHTML]="getDataProperty(skill).desc[currentLanguage] | noStrong"></span>
+                            <span [innerHTML]="getDataProperty(skill).desc[currentLanguage]"></span>
                         </mat-expansion-panel>
                     </ng-container>
                 </ng-container>
@@ -75,7 +75,7 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <!-- 属性情報 -->
-                                <span [innerHTML]="skill.desc[currentLanguage] | noStrong"></span>
+                                <span [innerHTML]="skill.desc[currentLanguage]"></span>
                             </mat-expansion-panel>
                         </ng-container>
                     </ng-container>
