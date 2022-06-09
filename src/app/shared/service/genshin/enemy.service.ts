@@ -20,7 +20,7 @@ export class EnemyService {
     if(temp){
       this.dataMap = temp;
     }else{
-      this.dataMap = {};;
+      this.dataMap = {};
     }
   }
 
@@ -30,6 +30,12 @@ export class EnemyService {
 
   get(index: string | number): enemy {
     return this.genshinDataService.getMonster(index.toString())!;
+  }
+
+  //設定取得
+  getStorageInfo(charIndex: string | number){
+    let keyStr = charIndex.toString();
+    return this.dataMap[keyStr];
   }
 
   //デフォルト敵取得

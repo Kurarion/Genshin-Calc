@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Const, GenshinDataService, StorageService, weapon } from 'src/app/shared/shared.module';
+import { Const, ExtraDataService, ExtraWeaponData, GenshinDataService, StorageService, weapon } from 'src/app/shared/shared.module';
 
 export interface WeaponStorageInfo {
   weapon?: string;
   level?: string;
   smeltingLevel?: string;
+  extra?: ExtraWeaponData;
 }
 
 @Injectable({
@@ -15,12 +16,12 @@ export class WeaponService {
   //データマップ
   dataMap!: Record<string, WeaponStorageInfo>;
 
-  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService) { 
+  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService, private extraDataService: ExtraDataService) { 
     let temp = this.storageService.getJSONItem(Const.SAVE_CHARACTER_WEAPON)
     if(temp){
       this.dataMap = temp;
     }else{
-      this.dataMap = {};;
+      this.dataMap = {};
     }
   }
 
@@ -30,6 +31,12 @@ export class WeaponService {
 
   get(index: string | number): weapon {
     return this.genshinDataService.getWeapon(index.toString())!;
+  }
+
+  //設定取得
+  getStorageInfo(charIndex: string | number){
+    let keyStr = charIndex.toString();
+    return this.dataMap[keyStr];
   }
 
   //デフォルト武器取得
@@ -85,6 +92,32 @@ export class WeaponService {
       this.dataMap[charKeyStr] = {};
     }
     this.dataMap[charKeyStr].smeltingLevel = smeltingLevel;
+  }
+
+  //デフォールト追加データ設定
+  setDefaultExtraData(charIndex: string | number, index: string | number){
+    let charKeyStr = charIndex.toString();
+    let weaponKeyStr = index.toString();
+    if(!this.dataMap[charKeyStr]){
+      this.dataMap[charKeyStr] = {};
+    }
+    if(Object.keys(this.getExtraData(charIndex)??{}).length === 0){
+      this.dataMap[charKeyStr].extra = this.extraDataService.getWeaponDefaultSetting(weaponKeyStr);
+    }
+  }
+  
+  //追加データクリア
+  clearExtraData(index: string | number){
+    delete this.getExtraData(index)?.effect;
+  }
+
+  //追加データ取得
+  getExtraData(index: string | number){
+    let charKeyStr = index.toString();
+    if(charKeyStr in this.dataMap && this.dataMap[charKeyStr]){
+      return this.dataMap[charKeyStr].extra;
+    }
+    return undefined;
   }
 
   //ストレージに保存

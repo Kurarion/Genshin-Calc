@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { character, Const, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
+import { character, Const, GenshinDataService, ExtraCharacterData, StorageService, ExtraDataService } from 'src/app/shared/shared.module';
 
 export interface CharacterStorageInfo {
   level?: string;
   normalLevel?: string;
   skillLevel?: string;
   elementalBurstLevel?: string;
+  extra?: ExtraCharacterData;
 }
 
 @Injectable({
@@ -16,7 +17,7 @@ export class CharacterService {
   //データマップ
   dataMap!: Record<string, CharacterStorageInfo>;
 
-  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService) {
+  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService, private extraDataService: ExtraDataService) {
     let temp = this.storageService.getJSONItem(Const.SAVE_CHARACTER)
     if(temp){
       this.dataMap = temp;
@@ -30,7 +31,13 @@ export class CharacterService {
   }
 
   get(index: string | number): character {
-    return this.genshinDataService.getCharacter(index.toString())!;
+    return this.genshinDataService.getCharacter(index.toString());
+  }
+
+  //設定取得
+  getStorageInfo(charIndex: string | number){
+    let keyStr = charIndex.toString();
+    return this.dataMap[keyStr];
   }
 
   getNormalLevel(index: string | number): string|undefined {
@@ -97,6 +104,26 @@ export class CharacterService {
       this.dataMap[keyStr] = {};
     }
     this.dataMap[keyStr].level = level;
+  }
+
+  //デフォールト追加データ設定
+  setDefaultExtraData(index: string | number){
+    let keyStr = index.toString();
+    if(!this.dataMap[keyStr]){
+      this.dataMap[keyStr] = {};
+    }
+    if(Object.keys(this.getExtraData(keyStr)??{}).length === 0){
+      this.dataMap[keyStr].extra = this.extraDataService.getCharacterDefaultSetting(index);
+    }
+  }
+
+  //追加データ取得
+  getExtraData(index: string | number){
+    let keyStr = index.toString();
+    if(keyStr in this.dataMap && this.dataMap[keyStr]){
+      return this.dataMap[keyStr].extra;
+    }
+    return undefined;
   }
 
   //ストレージに保存

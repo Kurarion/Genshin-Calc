@@ -41,6 +41,7 @@ export interface ExtraWeapon {
 export interface ExtraCharacterSkills {
   normal: ExtraSkillInfo[];
   skill: ExtraSkillInfo[];
+  other?: ExtraSkillInfo[];
   elemental_burst: ExtraSkillInfo[];
   proudSkills: ExtraSkillInfo[][];
 }

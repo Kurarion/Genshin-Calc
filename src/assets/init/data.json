@@ -1,6 +1,6 @@
 {
     "characters": {
-        "安柏": {
+        "10000021": {
             "skills": {
                 "normal": [
                     {
@@ -161,7 +161,7 @@
         }
     },
     "weapons": {
-        "阿莫斯之弓": {
+        "15502": {
             "effect": [
                 {
                     "buff": {
@@ -175,7 +175,7 @@
                         "index": [1],
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
                         "settingType": "slider",
-                        "sliderInitialValue": 0,
+                        "sliderInitialValue": 1,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }

@@ -31,14 +31,22 @@
                             </mat-select>
                         </mat-form-field>
                         <!-- 属性情報 -->
-                        <table>
+                        <app-extra-info
+                            class="extra-info"
+                            [data]="data"
+                            [skill]="skill"
+                            [language]="currentLanguage"
+                            [hasLevel]="true"
+                            [skillLevelIndex]="selectedLevels[skill].level">
+                        </app-extra-info>
+                        <!-- <table>
                             <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
-                                <td class="content-left" [innerText]="paramDesc.desc"></td>
-                                <td class="content-right" [innerText]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level)"
+                                <td [innerText]="paramDesc.desc"></td>
+                                <td [innerText]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level)"
                                     [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level, true)" matTooltipPosition="right">
                                 </td>
                             </tr>
-                        </table>
+                        </table> -->
                         <br>
                         <span [innerHTML]="getDataProperty(skill).desc[currentLanguage]"></span>
                     </mat-expansion-panel>
@@ -52,14 +60,22 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <!-- 属性情報 -->
-                            <table>
+                            <app-extra-info
+                                class="extra-info"
+                                [data]="data"
+                                [skill]="skill"
+                                [language]="currentLanguage"
+                                [hasLevel]="true"
+                                [skillLevelIndex]="'01'">
+                            </app-extra-info>
+                            <!-- <table>
                                 <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
-                                    <td class="content-left" [innerText]="paramDesc.desc"></td>
-                                    <td class="content-right" [innerText]="getTalentValue(skill, paramDesc, currentLanguage, '01')"
+                                    <td [innerText]="paramDesc.desc"></td>
+                                    <td [innerText]="getTalentValue(skill, paramDesc, currentLanguage, '01')"
                                         [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, '01', true)" matTooltipPosition="right">
                                     </td>
                                 </tr>
-                            </table>
+                            </table> -->
                             <br>
                             <span [innerHTML]="getDataProperty(skill).desc[currentLanguage]"></span>
                         </mat-expansion-panel>

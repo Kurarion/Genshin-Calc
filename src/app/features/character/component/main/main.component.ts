@@ -81,10 +81,13 @@ export class MainComponent implements OnInit, OnDestroy {
         this.currentCharacterIndex = params.index!.toString();
         //背景初期化
         this.initializeBackGroundImage();
+        //追加データ初期化
+        this.characterService.setDefaultExtraData(params.index!);
         //DEBUG
         console.log(this.data)
+        console.log(this.characterService.getExtraData(params.index!));
       }
-      );
+    );
   }
 
   ngOnDestroy(): void {

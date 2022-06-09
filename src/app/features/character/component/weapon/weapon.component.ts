@@ -138,9 +138,13 @@ export class WeaponComponent implements OnInit, OnDestroy {
     if (this.weaponData) {
       //旧武器最高レベル
       oldWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
+      //旧追加データクリア
+      this.weaponService.clearExtraData(this.data.id);
     }
     //武器の切り替え
     this.weaponData = this.weaponService.get(weaponIndex);
+    //追加データ初期化
+    this.weaponService.setDefaultExtraData(this.data.id, weaponIndex);
     //DEBUG
     console.log(this.weaponData);
     //武器最高レベル

@@ -363,5 +363,7 @@ export class Const {
   static readonly SAVE_CHARACTER_WEAPON = "SAVE_CHARACTER_WEAPON";
   //敵データ
   static readonly SAVE_MONSTER = "SAVE_MONSTER";
+  //追加データ
+  static readonly SAVE_EXTRA = "SAVE_EXTRA";
 
 }
