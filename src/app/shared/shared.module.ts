@@ -25,8 +25,9 @@ export { EnemyStorageInfo, EnemyService } from './service/genshin/enemy.service'
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
-export { ExtraCharacterData, ExtraWeaponData, ExtraDataStorageInfo, ExtraDataService } from './service/genshin/extra-data.service';
+export { ExtraCharacterSkillsData, ExtraStatus, ExtraCharacterData, ExtraWeaponData, ExtraDataStorageInfo, ExtraDataService } from './service/genshin/extra-data.service';
 export { GenshinDataService } from './service/genshin/genshin-data.service';
+export { CalculatorService } from './service/genshin/calculator.service';
 
 export * from './const/const';
 export * from './interface/interface';

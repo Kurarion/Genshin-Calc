@@ -1,6 +1,6 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { character, CharSkill, CharSkillDescObject, CharSkills, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkills, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-info',
@@ -20,9 +20,15 @@ export class ExtraInfoComponent implements OnInit {
   //
   @Input('hasLevel') hasLevel!: boolean;
 
-  constructor(private percentPipe: PercentPipe, private decimalPipe: DecimalPipe, private noCommaPipe: NoCommaPipe) {}
+  constructor(private percentPipe: PercentPipe, 
+    private decimalPipe: DecimalPipe, 
+    private noCommaPipe: NoCommaPipe,
+    private calculatorService: CalculatorService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    //TEST
+    console.log(this.calculatorService.getExtraCharacterData(this.data.id));
+  }
 
   getDataProperty(key: string): CharSkill {
     return this.data.skills[key as keyof CharSkills] as CharSkill;

@@ -10,6 +10,10 @@ export class ExtraDataComponent implements OnInit {
 
   //キャラ
   @Input('characterIndex') characterIndex!: number | string;
+  //スキル
+  @Input('skill') skill!: string;
+  //インデックス値
+  @Input('valueIndexs') valueIndexs!: number[];
   //キャラデータ
   storageCharacterData!: CharacterStorageInfo;
   //武器データ
@@ -29,6 +33,10 @@ export class ExtraDataComponent implements OnInit {
     this.storageWeaponData = this.weaponService.getStorageInfo(this.characterIndex);
     //敵データ初期化
     this.storageEnemyData = this.enemyService.getStorageInfo(this.characterIndex);
+  }
+
+  private valueChange(){
+    this.storageWeaponData
   }
 
 }

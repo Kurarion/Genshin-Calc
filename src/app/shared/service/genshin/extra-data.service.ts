@@ -9,11 +9,15 @@ export interface ExtraDataStorageInfo {
 
 //
 export interface ExtraCharacterData {
+  skills?: ExtraCharacterSkillsData;
+  constellation?: Record<string, ExtraStatus>;
+}
+
+export interface ExtraCharacterSkillsData {
   // normal?: ExtraNormal;
   skill?: ExtraStatus;
   elemental_burst?: ExtraStatus;
   proudSkills?: ExtraStatus[];
-  constellation?: Record<string, ExtraStatus>;
 }
 
 export interface ExtraWeaponData {
@@ -69,13 +73,14 @@ export class ExtraDataService {
       return result;
     }
 
-    result.skill = this.getDefaultConfig(temp?.skills?.skill);
-    result.elemental_burst = this.getDefaultConfig(temp?.skills?.elemental_burst);
+    result.skills = {};
+    result.skills.skill = this.getDefaultConfig(temp?.skills?.skill);
+    result.skills.elemental_burst = this.getDefaultConfig(temp?.skills?.elemental_burst);
     for(let obj of temp?.skills?.proudSkills ?? []){
-      if(!(result.proudSkills)){
-        result.proudSkills = [];
+      if(!(result.skills.proudSkills)){
+        result.skills.proudSkills = [];
       }
-      result.proudSkills.push(this.getDefaultConfig(obj));
+      result.skills.proudSkills.push(this.getDefaultConfig(obj));
     }
     for(let key in temp?.constellation){
       if(!(result.constellation)){
@@ -124,6 +129,14 @@ export class ExtraDataService {
               }
               result.sliderNumMap![j.toString()] = obj.buff.sliderInitialValue;
             }
+          }
+          break;
+        case 'resident':
+          for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
+            if(!result.switchOnSet){
+              result.switchOnSet = {};
+            }
+            result.switchOnSet![j.toString()] = true;
           }
           break;
       }

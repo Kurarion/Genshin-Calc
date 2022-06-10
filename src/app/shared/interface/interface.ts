@@ -81,8 +81,9 @@ export interface ExtraSkillBuff {
   constCalRelation?: TYPE_RELATION;
   //数値計算ベース
   base?: string;
+  priority?: number;
   //目標
-  target?: string[];
+  target: string[];
   convertElement?: string;
   //チームに有効可否
   isGlobal?: boolean;

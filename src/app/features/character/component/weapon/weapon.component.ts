@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const } from 'src/app/shared/shared.module';
+import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -79,6 +79,7 @@ export class WeaponComponent implements OnInit, OnDestroy {
 
   constructor(private httpService: HttpService,
     private weaponService: WeaponService,
+    private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService) { }
 
   ngOnInit(): void {
@@ -143,8 +144,11 @@ export class WeaponComponent implements OnInit, OnDestroy {
     }
     //武器の切り替え
     this.weaponData = this.weaponService.get(weaponIndex);
-    //追加データ初期化
+    //追加データ更新
     this.weaponService.setDefaultExtraData(this.data.id, weaponIndex);
+    this.calculatorService.initWeaponData(this.data.id, weaponIndex);
+    //TEST
+    console.log(this.calculatorService.getExtraWeaponData(this.data.id));
     //DEBUG
     console.log(this.weaponData);
     //武器最高レベル

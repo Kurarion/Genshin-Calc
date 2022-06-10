@@ -18,7 +18,11 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <app-extra-data [characterIndex]="data.id"></app-extra-data>
+                    <app-extra-data 
+                        [characterIndex]="data.id"
+                        [skill]="skill"
+                        [valueIndexs]="paramDesc.valuePropIndexs">
+                    </app-extra-data>
                 </td>
             </tr>
         </ng-container>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 
@@ -58,7 +58,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(private httpService: HttpService,
     private route: ActivatedRoute, 
-    private characterService: CharacterService, 
+    private characterService: CharacterService,
+    private calculatorService: CalculatorService,
     private languageService: LanguageService) {
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
@@ -83,6 +84,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.initializeBackGroundImage();
         //追加データ初期化
         this.characterService.setDefaultExtraData(params.index!);
+        this.calculatorService.initCharacterData(params.index!);
         //DEBUG
         console.log(this.data)
         console.log(this.characterService.getExtraData(params.index!));
