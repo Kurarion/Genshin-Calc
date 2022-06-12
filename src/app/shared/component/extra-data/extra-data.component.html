@@ -1,10 +1,13 @@
 <table>
     <tr>
         <td>
-            dmg
+            
         </td>
         <td>
-            AAAA
+            <ng-container *ngFor="let info of getInfos()">
+                <span [innerText]="info.originDmg"></span>
+                <br>
+            </ng-container>
         </td>
     </tr>
 </table>

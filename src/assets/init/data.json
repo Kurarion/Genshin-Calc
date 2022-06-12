@@ -34,9 +34,9 @@
                         }
                     },
                     {
-                        "index": [7,8],
+                        "index": [7,8,9],
                         "damage": {
-                            "index": [7,8],
+                            "index": [7,8,9],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -62,9 +62,9 @@
                 ],
                 "elemental_burst": [
                     {
-                        "index": [0, 2],
+                        "index": [0, 3],
                         "damage": {
-                            "index": [0, 2],
+                            "index": [0, 3],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -104,7 +104,7 @@
                             "index": [0],
                             "damage": {
                                 "originSkill": "normal",
-                                "originIndex": [5],
+                                "originIndex": 5,
                                 "originRelation": "*",
                                 "index": [0],
                                 "base": "ATTACK",
@@ -117,7 +117,7 @@
                             "index": [0],
                             "damage": {
                                 "originSkill": "normal",
-                                "originIndex": [6],
+                                "originIndex": 6,
                                 "originRelation": "*",
                                 "index": [0],
                                 "base": "ATTACK",
@@ -132,7 +132,8 @@
                             "index": [0],
                             "damage": {
                                 "originSkill": "skill",
-                                "originIndex": [1],
+                                "originIndex": 1,
+                                "originRelation": "*",
                                 "base": "ATTACK",
                                 "canOverride": false,
                                 "elementBonusType": "DMG_BONUS_PYRO",

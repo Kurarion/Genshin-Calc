@@ -1,7 +1,7 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
-import { character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -37,7 +37,11 @@ export class TalentComponent implements OnInit {
   //選択されたレベルリスト
   selectedLevels: Record<string, levelOption> = {};
 
-  constructor(private percentPipe: PercentPipe, private decimalPipe: DecimalPipe, private noCommaPipe: NoCommaPipe, private characterService: CharacterService) { }
+  constructor(private percentPipe: PercentPipe, 
+    private decimalPipe: DecimalPipe, 
+    private noCommaPipe: NoCommaPipe, 
+    private characterService: CharacterService,
+    private calculatorService: CalculatorService) { }
 
   ngOnInit(): void {
     //レベル初期設定
@@ -64,11 +68,13 @@ export class TalentComponent implements OnInit {
       }
       this.selectedLevels[key] = temp!;
       //初期データ更新
-      this.onChangeLevel(key, this.selectedLevels[key]);
+      this.onChangeLevel(key, this.selectedLevels[key], true);
     }
+    //スキルレベル初期化
+    this.calculatorService.initExtraCharacterData(this.data.id);
   }
 
-  onChangeLevel(propName: string, value: levelOption) {
+  onChangeLevel(propName: string, value: levelOption, withoutInitExtra: boolean = false) {
     switch (propName) {
       case "normal":
         this.characterService.setNormalLevel(this.data.id, value.level);
@@ -79,6 +85,10 @@ export class TalentComponent implements OnInit {
       case "elemental_burst":
         this.characterService.setElementalBurstLevel(this.data.id, value.level);
         break;
+    }
+    if(!withoutInitExtra){
+      //更新
+      this.calculatorService.initExtraCharacterData(this.data.id);
     }
   }
 

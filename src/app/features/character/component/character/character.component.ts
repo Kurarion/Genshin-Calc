@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { character, CharacterService, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterService, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -43,7 +43,10 @@ export class CharacterComponent implements OnInit, OnDestroy {
   //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
 
-  constructor(private httpService: HttpService, private extraDataService: ExtraDataService, private characterService: CharacterService) { }
+  constructor(private httpService: HttpService, 
+    private extraDataService: ExtraDataService, 
+    private characterService: CharacterService,
+    private calculatorService: CalculatorService) { }
 
   ngOnInit(): void {
     //プロフィール画像初期化
@@ -88,6 +91,8 @@ export class CharacterComponent implements OnInit, OnDestroy {
       }
     }
     this.characterService.setLevel(this.data.id, value.level);
+    //更新
+    this.calculatorService.setDirtyFlag(this.data.id);
   }
 
   /**

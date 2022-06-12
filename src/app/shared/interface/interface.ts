@@ -62,7 +62,7 @@ export interface ExtraSkillInfo {
 export interface ExtraSkillDamage {
   //連携スキル
   originSkill?: TYPE_SKILL;
-  originIndex?: number[];
+  originIndex?: number;
   originRelation?: TYPE_RELATION;
   //数値計算ベースインデックスリスト
   index?: number[];
@@ -75,13 +75,14 @@ export interface ExtraSkillDamage {
 }
 
 export interface ExtraSkillBuff {
-  //数値計算ベースインデックスリスト
+  //数値計算ベース
   index?: number[];
+  base?: string;
+  calRelation?: TYPE_RELATION;
+  priority?: number;
+  //数値計算ベースインデックスリスト
   constIndex?: number[];
   constCalRelation?: TYPE_RELATION;
-  //数値計算ベース
-  base?: string;
-  priority?: number;
   //目標
   target: string[];
   convertElement?: string;
@@ -108,6 +109,7 @@ export interface ExtraSkillHealing {
   constCalRelation?: TYPE_RELATION;
   //数値計算ベース
   base?: string;
+  healingBonusType?: string; //治療タイプ
 }
 
 export interface ExtraSkillShield {

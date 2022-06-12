@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const } from 'src/app/shared/shared.module';
+import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -68,7 +68,9 @@ export class EnemyComponent implements OnInit {
   //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
 
-  constructor(private httpService: HttpService, private enemyService: EnemyService, private languageService: LanguageService,
+  constructor(private httpService: HttpService, 
+    private enemyService: EnemyService, 
+    private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService) { }
 
   ngOnInit(): void {
@@ -105,12 +107,14 @@ export class EnemyComponent implements OnInit {
     this.enemyData = this.enemyService.get(enemyIndex);
     //DEBUG
     console.log(this.enemyData);
+    //初期化
+    this.calculatorService.initEnemyData(this.data.id, enemyIndex);
+    //敵設定
+    this.enemyService.setIndex(this.data.id, this.enemyData.id);
     // //敵属性更新
     // this.onChangeLevel(this.selectedLevel);
     // //プロフィール画像初期化
     // this.initializeBackGroundImage();
-    //敵設定
-    this.enemyService.setIndex(this.data.id, this.enemyData.id);
   }
 
   onChangeLevel(value: levelOption) {
@@ -125,6 +129,8 @@ export class EnemyComponent implements OnInit {
     }
     //レベル設定
     this.enemyService.setLevel(this.data.id, value.level);
+    //更新
+    this.calculatorService.setDirtyFlag(this.data.id);
   }
 
   onChangePlayerNum(num: number) {

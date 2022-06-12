@@ -11,6 +11,11 @@
     <table>
         <ng-container *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
             <tr>
+                <td colspan="2">
+                    <div class="placeholder"></div>
+                </td>
+            </tr>
+            <tr>
                 <td [innerText]="paramDesc.desc"></td>
                 <td [innerText]="getTalentValue(skill, paramDesc, currentLanguage, skillLevelIndex)"
                     [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, skillLevelIndex, true)" matTooltipPosition="right">

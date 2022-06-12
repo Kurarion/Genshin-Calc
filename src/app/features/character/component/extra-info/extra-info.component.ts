@@ -25,10 +25,7 @@ export class ExtraInfoComponent implements OnInit {
     private noCommaPipe: NoCommaPipe,
     private calculatorService: CalculatorService) {}
 
-  ngOnInit(): void { 
-    //TEST
-    console.log(this.calculatorService.getExtraCharacterData(this.data.id));
-  }
+  ngOnInit(): void { }
 
   getDataProperty(key: string): CharSkill {
     return this.data.skills[key as keyof CharSkills] as CharSkill;

@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
-import { CharacterService, character, weapon, CharStatus, EnemyService, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills } from 'src/app/shared/shared.module';
 
 export interface CalResult{
   characterData?: character;
   weaponData?: weapon;
+  enemyData?: enemy;
+  reliquaryResult?: Record<string, number>;
+  extraCharaResult?: Record<string, number>;
+  extraWeaponResult?: Record<string, number>;
+  extraSpecialCharaResult?: SpecialBuff[];
+  extraSpecialWeaponResult?: SpecialBuff[];
+  reliquarySetResults?: (Record<string, number> | Record<string, SpecialBuff>)[];
+  allData?: Record<string, number>;
+  isDirty?: boolean;
 }
 
 export interface SpecialBuff {
+  target?: string;
   base?: string;
   multiValue?: number;
-  maxVal?: number;
   priority?: number;
+  maxVal?: number;
   specialMaxVal?: SpecialBuffMaxVal;
 }
 
@@ -19,10 +29,717 @@ export interface SpecialBuffMaxVal {
   multiValue?: number;
 }
 
+export interface DamageParam {
+  rate: number; //倍率
+  base: string; //数値ベース
+  elementBonusType: string; //元素タイプ
+  attackBonusType: string; //攻撃タイプ
+}
+
+export interface DamageResult {
+  originDmg: number;
+  critDmg: number;
+  expectDmg: number;
+
+  originVaporizeDmg: number;//蒸発 1.5
+  cirtVaporizeDmg: number;//蒸発 1.5
+  expectVaporizeDmg: number;//蒸発 1.5
+
+  originMeltDmg: number;//溶解 2.0
+  cirtMeltDmg: number;//溶解 2.0
+  expectMeltDmg: number;//溶解 2.0
+
+  overloadedDmg: number;//過負荷
+  burningDmg: number;//燃焼
+  electroChargedDmg: number;//感電
+  superconductDmg: number;//超電導
+  swirlDmg: number;//拡散
+  shieldHp: number;//結晶
+  destructionDmg: number;//氷砕き
+}
+
+export interface HealingParam {
+  rate?: number; //倍率
+  base?: string; //数値ベース
+  extra?: number; //追加値
+  healingBonusType?: string; //治療タイプ
+}
+
+export interface HealingResult {
+  healing: number;
+}
+
+export interface ShieldParam {
+  rate: number; //倍率
+  base: string; //数値ベース
+  extra: number; //追加値
+}
+
+export interface ShieldResult {
+  shield: number;
+}
+
 interface SkillParamInf {
   paramMap?: Record<string, number[]>;
   paramList?: number[];
 }
+
+interface CharLevelConfig {
+  skillLevel?: string;
+  elementalBurstLevel?: string;
+}
+
+interface WeaponLevelConfig {
+  smeltingLevel?: string;
+}
+
+const REACTION_RATE_1_5 = 1.5;
+const REACTION_RATE_2_0 = 2.0;
+
+const BASE_BURNING = [
+  4.325,
+  4.591666667,
+  5,
+  5.408333333,
+  5.65,
+  6.158333333,
+  6.625,
+  7.158333333,
+  7.908333333,
+  8.475,
+  9.325,
+  10.1,
+  11.11666667,
+  12.09166667,
+  13.40833333,
+  14.79166667,
+  16.11666667,
+  17.475,
+  18.81666667,
+  20.1,
+  21.525,
+  22.94166667,
+  24.325,
+  25.675,
+  27.09166667,
+  28.35,
+  29.53333333,
+  30.71666667,
+  32.475,
+  34.09166667,
+  35.65,
+  37.29166667,
+  38.88333333,
+  40.46666667,
+  42.29166667,
+  44.125,
+  45.975,
+  47.94166667,
+  49.9,
+  51.85,
+  53.84166667,
+  55.975,
+  58.375,
+  60.875,
+  64.025,
+  67.09166667,
+  70.40833333,
+  73.81666667,
+  77.29166667,
+  80.875,
+  84.15,
+  87.6,
+  91.11666667,
+  94.59166667,
+  99.59166667,
+  104.125,
+  108.6166667,
+  113.2166667,
+  118.15,
+  123.175,
+  128.375,
+  134.7916667,
+  141.3833333,
+  148.15,
+  156.1166667,
+  162.9083333,
+  169.9,
+  176.9916667,
+  184.125,
+  191.3833333,
+  198.6833333,
+  206.1583333,
+  212.8416667,
+  219.4666667,
+  228.5583333,
+  236.625,
+  244.9,
+  252.8416667,
+  261.1833333,
+  269.35,
+  277.5,
+  285.7166667,
+  294.125,
+  302.5,
+  313.475,
+  322.1583333,
+  331.3833333,
+  340.875,
+  351.3166667,
+  361.65,
+]
+const BASE_SUPERCONDUCT = [
+  9,
+  9,
+  10,
+  11,
+  11,
+  12,
+  13,
+  14,
+  16,
+  17,
+  19,
+  20,
+  22,
+  24,
+  27,
+  30,
+  32,
+  35,
+  38,
+  40,
+  43,
+  46,
+  49,
+  51,
+  54,
+  57,
+  59,
+  61,
+  65,
+  68,
+  71,
+  75,
+  78,
+  81,
+  85,
+  88,
+  92,
+  96,
+  100,
+  104,
+  108,
+  112,
+  117,
+  122,
+  128,
+  134,
+  141,
+  148,
+  155,
+  162,
+  168,
+  175,
+  182,
+  189,
+  199,
+  208,
+  217,
+  226,
+  236,
+  246,
+  257,
+  270,
+  283,
+  296,
+  312,
+  326,
+  340,
+  354,
+  368,
+  383,
+  397,
+  412,
+  426,
+  439,
+  457,
+  473,
+  490,
+  506,
+  522,
+  539,
+  555,
+  571,
+  588,
+  605,
+  627,
+  644,
+  663,
+  682,
+  703,
+  723,
+]
+const BASE_SWIRL = [
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  19,
+  20,
+  22,
+  24,
+  27,
+  29,
+  32,
+  35,
+  39,
+  42,
+  45,
+  48,
+  52,
+  55,
+  58,
+  62,
+  65,
+  68,
+  71,
+  74,
+  78,
+  82,
+  86,
+  89,
+  93,
+  97,
+  101,
+  106,
+  110,
+  115,
+  120,
+  124,
+  129,
+  134,
+  140,
+  146,
+  154,
+  161,
+  169,
+  177,
+  185,
+  194,
+  202,
+  210,
+  219,
+  227,
+  239,
+  250,
+  261,
+  272,
+  284,
+  296,
+  308,
+  323,
+  339,
+  356,
+  375,
+  391,
+  408,
+  425,
+  442,
+  459,
+  477,
+  495,
+  511,
+  527,
+  549,
+  568,
+  588,
+  607,
+  627,
+  646,
+  666,
+  686,
+  706,
+  726,
+  752,
+  773,
+  795,
+  818,
+  843,
+  868,
+]
+const BASE_ELECTROCHARGED = [
+  21,
+  22,
+  24,
+  26,
+  27,
+  30,
+  32,
+  35,
+  38,
+  41,
+  45,
+  49,
+  53,
+  58,
+  64,
+  71,
+  77,
+  84,
+  90,
+  97,
+  103,
+  110,
+  117,
+  123,
+  130,
+  136,
+  142,
+  148,
+  156,
+  164,
+  171,
+  179,
+  187,
+  194,
+  203,
+  212,
+  221,
+  230,
+  239,
+  249,
+  258,
+  269,
+  280,
+  292,
+  307,
+  322,
+  338,
+  354,
+  371,
+  388,
+  404,
+  421,
+  437,
+  454,
+  478,
+  500,
+  521,
+  544,
+  567,
+  591,
+  616,
+  647,
+  679,
+  711,
+  749,
+  782,
+  815,
+  849,
+  884,
+  919,
+  954,
+  990,
+  1021,
+  1053,
+  1097,
+  1136,
+  1175,
+  1213,
+  1254,
+  1293,
+  1332,
+  1372,
+  1412,
+  1452,
+  1505,
+  1547,
+  1591,
+  1636,
+  1686,
+  1736,
+]
+const BASE_DESTRUCTION = [
+  26,
+  28,
+  30,
+  32,
+  34,
+  37,
+  40,
+  43,
+  47,
+  51,
+  56,
+  61,
+  67,
+  73,
+  81,
+  89,
+  97,
+  105,
+  113,
+  121,
+  129,
+  138,
+  146,
+  154,
+  163,
+  170,
+  177,
+  184,
+  195,
+  204,
+  214,
+  224,
+  233,
+  243,
+  254,
+  265,
+  276,
+  288,
+  299,
+  311,
+  323,
+  336,
+  350,
+  365,
+  384,
+  403,
+  422,
+  443,
+  464,
+  485,
+  505,
+  526,
+  547,
+  568,
+  598,
+  625,
+  652,
+  679,
+  709,
+  739,
+  770,
+  809,
+  848,
+  889,
+  937,
+  977,
+  1019,
+  1062,
+  1105,
+  1148,
+  1192,
+  1237,
+  1277,
+  1317,
+  1371,
+  1420,
+  1469,
+  1517,
+  1567,
+  1616,
+  1665,
+  1714,
+  1765,
+  1815,
+  1881,
+  1933,
+  1988,
+  2045,
+  2108,
+  2170,
+]
+const BASE_OVERLOADED = [
+  34,
+  37,
+  40,
+  43,
+  45,
+  49,
+  53,
+  58,
+  63,
+  68,
+  74,
+  81,
+  89,
+  97,
+  107,
+  118,
+  129,
+  139,
+  150,
+  161,
+  172,
+  183,
+  194,
+  206,
+  217,
+  226,
+  236,
+  246,
+  259,
+  273,
+  285,
+  298,
+  311,
+  324,
+  338,
+  353,
+  368,
+  383,
+  399,
+  415,
+  431,
+  448,
+  467,
+  487,
+  512,
+  537,
+  563,
+  590,
+  618,
+  647,
+  674,
+  701,
+  729,
+  757,
+  797,
+  833,
+  869,
+  906,
+  945,
+  986,
+  1027,
+  1078,
+  1131,
+  1185,
+  1249,
+  1303,
+  1359,
+  1416,
+  1473,
+  1531,
+  1590,
+  1649,
+  1702,
+  1755,
+  1828,
+  1893,
+  1959,
+  2022,
+  2090,
+  2155,
+  2220,
+  2286,
+  2353,
+  2420,
+  2508,
+  2578,
+  2651,
+  2727,
+  2810,
+  2894,
+]
+const BASE_SHIELD = [
+  91.18,
+  98.71,
+  106.24,
+  113.76,
+  121.29,
+  128.82,
+  136.35,
+  143.88,
+  151.41,
+  158.94,
+  169.99,
+  181.08,
+  192.19,
+  204.05,
+  215.94,
+  227.86,
+  247.69,
+  267.54,
+  287.43,
+  303.83,
+  320.23,
+  336.63,
+  352.32,
+  368.01,
+  383.70,
+  394.43,
+  405.18,
+  415.95,
+  426.74,
+  437.54,
+  450.60,
+  463.70,
+  476.85,
+  491.13,
+  502.55,
+  514.01,
+  531.41,
+  549.98,
+  568.58,
+  585.00,
+  605.67,
+  626.39,
+  646.05,
+  665.76,
+  685.50,
+  700.84,
+  723.33,
+  745.87,
+  768.44,
+  786.79,
+  809.54,
+  832.33,
+  855.16,
+  878.04,
+  899.48,
+  919.36,
+  946.04,
+  974.76,
+  1003.58,
+  1030.08,
+  1056.64,
+  1085.25,
+  1113.92,
+  1149.26,
+  1178.06,
+  1200.22,
+  1227.66,
+  1257.24,
+  1284.92,
+  1314.75,
+  1342.67,
+  1372.75,
+  1396.32,
+  1427.31,
+  1458.37,
+  1482.34,
+  1511.91,
+  1541.55,
+  1569.15,
+  1596.81,
+  1622.42,
+  1648.07,
+  1666.38,
+  1684.68,
+  1702.98,
+  1726.10,
+  1754.67,
+  1785.87,
+  1817.14,
+  1851.06,
+]
 
 @Injectable({
   providedIn: 'root'
@@ -39,60 +756,562 @@ export class CalculatorService {
     private enemyService: EnemyService,
   ) { }
 
+  //更新フラグ設定
+  setDirtyFlag(index: string | number){
+    this.setDirty(index, true);
+  }
+
   //初期化（キャラ）
   initCharacterData(index: string | number) {
+    //DEBUG
+    console.log("初期化（キャラ）")
     let indexStr = index.toString();
     if(!(indexStr in this.dataMap)){
       this.dataMap[indexStr] = {};
     }
     this.dataMap[indexStr].characterData = this.characterService.get(indexStr);
+    this.setDirty(indexStr, true);
+  }
+  
+  //初期化（キャラ追加）
+  initExtraCharacterData(index: string | number, data?: CharLevelConfig) {
+    //DEBUG
+    console.log("初期化（キャラ追加）")
+    let indexStr = index.toString();
+    let temps = this.getExtraCharacterData(index, data);
+    this.dataMap[indexStr].extraCharaResult = temps[0] as Record<string, number>;
+    this.dataMap[indexStr].extraSpecialCharaResult = temps[1] as SpecialBuff[];
+    this.setDirty(indexStr, true);
   }
 
   //初期化（武器）
   initWeaponData(index: string | number, weaponIndex: string | number) {
+    //DEBUG
+    console.log("初期化（武器）")
     let indexStr = index.toString();
     let weaponIndexStr = weaponIndex.toString();
     if(!(indexStr in this.dataMap)){
       this.dataMap[indexStr] = {};
     }
     this.dataMap[indexStr].weaponData = this.weaponService.get(weaponIndexStr);
+    this.setDirty(indexStr, true);
   }
 
-  setProperty(index: string, prop: string, value: any) {
-
+  //初期化（武器追加）
+  initExtraWeaponData(index: string | number, data?: WeaponLevelConfig) {
+    //DEBUG
+    console.log("初期化（武器追加）")
+    let indexStr = index.toString();
+    let temps = this.getExtraWeaponData(index, data);
+    this.dataMap[indexStr].extraWeaponResult = temps[0] as Record<string, number>;
+    this.dataMap[indexStr].extraSpecialWeaponResult = temps[1] as SpecialBuff[];
+    this.setDirty(indexStr, true);
   }
 
-  getProperty(index: string, prop: string) {
-    let result = 0;
-    result += this.getCharacterData(index)[prop as keyof CharStatus] ?? 0;
-    result += this.getWeaponData(index)[prop as keyof WeaponStatus] ?? 0;
-    // result += this.getExtraCharacterData(index)?[prop] ?? 0;
-    // result += this.getExtraWeaponData(index)?[prop] ?? 0;
-    // result += this.getReliquaryData(index)?[prop] ?? 0;
+  //初期化（敵）
+  initEnemyData(index: string | number, enemyIndex: string | number) {
+    //DEBUG
+    console.log("初期化（敵）")
+    let indexStr = index.toString();
+    let enemyIndexStr = enemyIndex.toString();
+    if(!(indexStr in this.dataMap)){
+      this.dataMap[indexStr] = {};
+    }
+    this.dataMap[indexStr].enemyData = this.enemyService.get(enemyIndexStr);
+    this.setDirty(indexStr, true);
+  }
+
+  //初期化（計算用情報合計）
+  initAllData(index: string | number){
+    let indexStr = index.toString();
+    this.dataMap[indexStr].allData = this.getAllData(indexStr);
+    this.setDirty(indexStr, false);
+  }
+
+  //ダメージ取得
+  getDamage(index: string | number, param: DamageParam){
+    let indexStr = index.toString();
+    if(this.dataMap[indexStr]?.isDirty){
+      this.initAllData(indexStr);
+      //TEST
+      console.log("初期化（計算用情報合計）（ダメージ）")
+      console.log(this.dataMap[indexStr].allData);
+    }
+    let result: DamageResult;
+    let data = this.dataMap[indexStr].allData!;
+    let rate = param.rate;
+    let base = param.base;
+    let attackBonusType = param.attackBonusType;
+    let elementBonusType = param.elementBonusType;
+
+    //計算
+    //--------------------
+    //1.ダメージ値区域
+    //--------------------
+    let finalRate = rate;
+    let dmgSectionValue = 0;
+    //倍率
+    finalRate += data[Const.PROP_DMG_RATE_UP_ALL];
+    dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ALL];
+    //--------------------
+    //2.会心区域
+    //--------------------
+    let critSectionValue = 0;
+    let finalCritRate = data[Const.PROP_CRIT_RATE];
+    let finalCritDmg = data[Const.PROP_CRIT_DMG];
+    finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ALL];
+    finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ALL];
+    //--------------------
+    //3.ダメージアップ区域
+    //--------------------
+    let dmgUpSectionValue = 0;
+    dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ALL];
+    //--------------------
+    //4.耐性区域
+    //--------------------
+    let dmgAntiSectionValue = 0;
+    dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];    
+    //--------------------
+    //5.防御区域
+    //--------------------
+    let defenceSectionValue = 0;
+    defenceSectionValue = data[Const.PROP_DMG_ENEMY_DEFENSE]/(data[Const.PROP_DMG_ENEMY_DEFENSE] + data[Const.PROP_LEVEL]*5 + 500);
+    //--------------------
+    //6.元素反応区域
+    //--------------------
+    let elementSectionValue = 0;
+    let elementAmplitudeRate = 2.78/(1 + 1400/data[Const.PROP_ELEMENTAL_MASTERY]);
+    let elementCataclysmRate = 16.0/(1 + 2000/data[Const.PROP_ELEMENTAL_MASTERY]);
+    let elementShieldRate = 4.44/(1 + 1400/data[Const.PROP_ELEMENTAL_MASTERY]);
+
+    //--------------------
+    //補足
+    //--------------------
+    switch(elementBonusType){
+      case Const.PROP_DMG_BONUS_CRYO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_CRYO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CRYO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CRYO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CRYO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CRYO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_CRYO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_CRYO_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_ANEMO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_ANEMO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ANEMO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ANEMO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ANEMO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ANEMO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_ANEMO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ANEMO_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_PHYSICAL:
+        finalRate += data[Const.PROP_DMG_RATE_UP_PHYSICAL];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PHYSICAL];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PHYSICAL];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PHYSICAL];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PHYSICAL];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_PHYSICAL];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_PHYSICAL_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_ELECTRO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_ELECTRO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELECTRO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELECTRO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELECTRO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELECTRO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_ELECTRO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ELECTRO_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_GEO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_GEO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_GEO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_GEO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_GEO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_GEO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_GEO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_GEO_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_PYRO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_PYRO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PYRO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PYRO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PYRO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PYRO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_PYRO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_PYRO_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_HYDRO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_HYDRO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_HYDRO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_HYDRO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_HYDRO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_HYDRO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_HYDRO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_HYDRO_MINUS];
+        break;
+      case Const.PROP_DMG_BONUS_DENDRO:
+        finalRate += data[Const.PROP_DMG_RATE_UP_DENDRO];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_DENDRO];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_DENDRO];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_DENDRO];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_DENDRO];
+        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_DENDRO];
+        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_DENDRO_MINUS];
+        break;
+    }
+    switch(attackBonusType){
+      case Const.PROP_DMG_BONUS_NORMAL:
+        finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_NORMAL];
+        break;
+      case Const.PROP_DMG_BONUS_CHARGED:
+        finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CHARGED];
+        break;
+      case Const.PROP_DMG_BONUS_PLUNGING:
+        finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PLUNGING];
+        break;
+      case Const.PROP_DMG_BONUS_SKILL:
+        finalRate += data[Const.PROP_DMG_RATE_UP_SKILL];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SKILL];
+        break;
+      case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
+        finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST];
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELEMENTAL_BURST];
+        break;
+    }
+    //ダメージ値区域残り
+    switch(base){
+      case Const.PROP_ATTACK:
+        dmgSectionValue += finalRate * data[Const.PROP_ATTACK];
+        break;
+      case Const.PROP_HP:
+        dmgSectionValue += finalRate * data[Const.PROP_HP];
+        break;
+      case Const.PROP_DEFENSE:
+        dmgSectionValue += finalRate * data[Const.PROP_DEFENSE];
+        break;
+    }
+    //耐性区域残り
+    if(dmgAntiSectionValue < 0){
+      dmgAntiSectionValue = dmgAntiSectionValue/2;
+    }
+    //会心区域残り
+    if(finalCritRate < 0){
+      finalCritRate = 0;
+    }else if(finalCritRate > 1){
+      finalCritRate = 1;
+    }
+
+    //結果まとめ
+    let originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
+    let critDmg = originDmg * (1 + finalCritDmg);
+    let expectDmg = originDmg * (1 - finalCritRate) + critDmg * finalCritRate;
+    let originVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * originDmg;
+    let cirtVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * critDmg;
+    let expectVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * expectDmg;
+    let originMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * originDmg;
+    let cirtMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * critDmg;
+    let expectMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * expectDmg;
+    let burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP]) * (1 + elementCataclysmRate);
+    let superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP]) * (1 + elementCataclysmRate);
+    let swirlDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP]) * (1 + elementCataclysmRate);
+    let electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP]) * (1 + elementCataclysmRate);
+    let destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP]) * (1 + elementCataclysmRate);
+    let overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP]) * (1 + elementCataclysmRate);
+    let shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]) * (1 + elementShieldRate);
+    result = {
+      originDmg: originDmg,
+      critDmg: critDmg,
+      expectDmg: expectDmg,
+      originVaporizeDmg: originVaporizeDmg,
+      cirtVaporizeDmg: cirtVaporizeDmg,
+      expectVaporizeDmg: expectVaporizeDmg,
+      originMeltDmg: originMeltDmg,
+      cirtMeltDmg: cirtMeltDmg,
+      expectMeltDmg: expectMeltDmg,
+      overloadedDmg: overloadedDmg,
+      burningDmg: burningDmg,
+      electroChargedDmg: electroChargedDmg,
+      superconductDmg: superconductDmg,
+      swirlDmg: swirlDmg,
+      shieldHp: shieldHp,
+      destructionDmg: destructionDmg,
+    };
+
     return result;
   }
 
-  getCharacterData(index: string | number): CharStatus{
-    return this.dataMap[index]!.characterData!.levelMap[this.characterService.getLevel(index.toString())!];
+  //治療取得
+  getHealing(index: string | number, param: HealingParam){
+    let indexStr = index.toString();
+    if(this.dataMap[indexStr]?.isDirty){
+      this.initAllData(indexStr);
+    }
+    let result: HealingResult;
+    let data = this.dataMap[indexStr].allData!;
+    let base = param.base;
+    let extra = param.extra;
+    let rate = param.rate;
+    // let healingBonusType = param.healingBonusType;
+    //計算
+    let healing: number = 0;
+    if(base && rate){
+      healing += data[base] * rate;
+    }
+    if(extra){
+      healing += extra;
+    }
+    healing *= (1 + data[Const.PROP_HEALING_BONUS]) * (1 + data[Const.PROP_REVERSE_HEALING_BONUS]);
+    result = {
+      healing: healing,
+    }
+
+    return result;
   }
 
-  getWeaponData(index: string | number): WeaponStatus{
-    return this.dataMap[index]!.weaponData!.levelMap[this.weaponService.getLevel(index.toString())!];
+  //バリア強度取得
+  getShield(index: string | number, param: ShieldParam){
+    let indexStr = index.toString();
+    if(this.dataMap[indexStr]?.isDirty){
+      this.initAllData(indexStr);
+    }
+    let result: ShieldResult;
+    let data = this.dataMap[indexStr].allData!;
+    let base = param.base;
+    let extra = param.extra;
+    let rate = param.rate;
+    //計算
+    let shield: number = 0;
+    if(base && rate){
+      shield += data[base] * rate;
+    }
+    if(extra){
+      shield += extra;
+    }
+    shield *= (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]);
+    result = {
+      shield: shield,
+    }
+
+    return result;
   }
 
-  getExtraCharacterData(index: string | number){
+  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[]){
+    let indexStr = index.toString();
+    let extraCharacterData = this.extraDataService.getCharacter(indexStr);
+    let characterData = this.dataMap[indexStr].characterData;
+
+    let params: DamageParam[] = [];
+    let results: DamageResult[] = []
+
+    if(["normal", "skill", "elemental_burst"].includes(skill)){
+      let infos: ExtraSkillInfo[] = extraCharacterData.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[];
+      let currentLevel: string = this.getCharacterSkillLevel(indexStr, skill);
+      for(let info of infos){
+        //全含め必要
+        let damageInfo = info.damage;
+        for(let valueIndex of valueIndexs){
+          if(damageInfo && damageInfo.index && damageInfo.index.includes(valueIndex)){
+            let rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
+            let rate = rateInfo.paramMap[currentLevel!][valueIndex];
+            if(damageInfo.originSkill){
+              let originRateInfo = characterData!.skills![damageInfo.originSkill as keyof CharSkills] as CharSkill;
+              let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkill);
+              let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndex!]
+              switch(damageInfo.originRelation){
+                case "*":
+                  rate *= originRate
+                  break;
+                case "+":
+                  rate += originRate
+                  break;
+                case "-":
+                  rate -= originRate
+                  break;
+                case "/":
+                  rate /= originRate
+                  break;
+              }
+            }
+            let base = damageInfo.base!;
+            let attackBonusType = damageInfo.attackBonusType!;
+            let elementBonusType = damageInfo.elementBonusType!;
+            params.push({
+              base: base,
+              rate: rate,
+              attackBonusType: attackBonusType,
+              elementBonusType: elementBonusType,
+            });
+          }
+        }
+      }
+    }
+
+    for(let param of params){
+      results.push(this.getDamage(indexStr, param));
+    }
+
+    return results;
+  }
+
+  getProudSkillValue(index: string | number, proundIndex: number, valueIndexs: number[]){
+
+  }
+
+  getConstellationValue(index: string | number, constellationKey: string, valueIndexs: number[]){
+
+  }
+
+  //計算用情報合計取得
+  private getAllData(index: string | number){
+    let result: Record<string, number> = {};
+
+    for(let key of Const.PROPS_ALL_BASE){
+      if(!(key in result)){
+        result[key] = 0;
+      }
+      result[key] += this.getProperty(index, key);
+    }
+    for(let key of Const.PROPS_TO_CAL){
+      if(!(key in result)){
+        result[key] = 0;
+      }
+      let temp = 0;
+      switch(key){
+        case Const.PROP_HP:
+          temp = result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
+          break;
+        case Const.PROP_ATTACK:
+          temp = result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) + result[Const.PROP_VAL_ATTACK];
+          break;
+        case Const.PROP_DEFENSE:
+          temp = result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) + result[Const.PROP_VAL_DEFENSE];
+          break;
+        case Const.PROP_DMG_ENEMY_DEFENSE:
+          temp = result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
+          break;
+      }
+      result[key] = temp;
+    }
+
+    //スペシャルバフ
+    let specialOrders: SpecialBuff[] = [];
+    specialOrders = specialOrders.concat(
+      this.dataMap[index].extraSpecialCharaResult!,
+      this.dataMap[index].extraSpecialWeaponResult!,
+    );
+    specialOrders.sort((x, y) => x.priority! - y.priority!);
+
+    //スペシャル処理
+    for(let buff of specialOrders){
+      let toAdd = result[buff.base!] * buff.multiValue!;
+      if(buff.maxVal && toAdd > buff.maxVal){
+        toAdd = buff.maxVal;
+      }else if(buff.specialMaxVal){
+        let specialMaxVal = result[buff.specialMaxVal.base!] * buff.specialMaxVal.multiValue!;
+        if(toAdd > specialMaxVal){
+          toAdd = specialMaxVal;
+        }
+      }
+      result[buff.target!] += toAdd;
+    }
+
+    return result;
+  }
+
+  //全情報から属性取得（まとめ）
+  private getProperty(index: string | number, prop: string) {
+    let result = 0;
+    let indexStr = index.toString();
+    let genshinDataProp = prop;
+    if([Const.PROP_LEVEL, Const.PROP_DMG_ENEMY_DEFENSE_BASE, Const.PROP_HP_BASE, Const.PROP_ATTACK_BASE, Const.PROP_DEFENSE_BASE].includes(prop)){
+      switch(prop){
+        case Const.PROP_LEVEL:
+          result = this.getCharacterData(indexStr).level;
+          return result;
+          //break;
+        case Const.PROP_DMG_ENEMY_DEFENSE_BASE:
+          result = this.getEnemyData(indexStr).defense;
+          return result;
+          //break;
+        case Const.PROP_HP_BASE:
+          genshinDataProp = Const.PROP_HP;
+          break;
+        case Const.PROP_ATTACK_BASE:
+          genshinDataProp = Const.PROP_ATTACK;
+          break;
+        case Const.PROP_DEFENSE_BASE:
+          genshinDataProp = Const.PROP_DEFENSE;
+          break;
+      }
+    }
+    genshinDataProp = genshinDataProp.toLowerCase();
+    //敵のみのデータ
+    if(Const.PROPS_ENEMY_ANTI.includes(prop)){
+      return this.getEnemyData(indexStr)[genshinDataProp as keyof EnemyStatus] ?? 0;
+    }
+
+    result += this.getCharacterData(indexStr)[genshinDataProp as keyof CharStatus] ?? 0;
+    result += this.getWeaponData(indexStr)[genshinDataProp as keyof WeaponStatus] ?? 0;
+    let extraCharaResult = this.dataMap[indexStr].extraCharaResult!;
+    if(extraCharaResult[prop]){
+      result += extraCharaResult[prop];
+    }
+    let extraWeaponResult = this.dataMap[indexStr].extraWeaponResult!;
+    if(extraWeaponResult[prop]){
+      result += extraWeaponResult[prop];
+    }
+
+    // result += this.getReliquaryData(index)?[prop] ?? 0;
+
+    return result;
+  }
+
+  //キャラ追加データ解析
+  private getExtraCharacterData(index: string | number, data?: CharLevelConfig){
     let characterData = this.dataMap[index]!.characterData!;
+    let skillLevel;
+    let elementalBurstLevel;
     let characterStorageData = this.characterService.getStorageInfo(index);
+    if(data && data.skillLevel){
+      skillLevel = data.skillLevel!;
+    }else{
+      skillLevel = characterStorageData.skillLevel!;
+    }
+    if(data && data.elementalBurstLevel){
+      elementalBurstLevel = data.elementalBurstLevel!;
+    }else{
+      elementalBurstLevel = characterStorageData.elementalBurstLevel!;
+    }
     let extraCharacterData = this.extraDataService.getCharacter(index);
     let setting = this.characterService.getExtraData(index)!;
     let result: Record<string, number> = {};
-    let specialResult: Record<string, SpecialBuff> = {};
+    let specialResult: SpecialBuff[] = [];
 
     if("skills" in setting && setting.skills){
       if("skill" in setting.skills){
         this.setBuffDataToResult(
           characterData.skills?.skill, 
-          characterStorageData.skillLevel!, 
+          skillLevel, 
           extraCharacterData.skills!.skill,
           setting.skills.skill!,
           result,
@@ -102,7 +1321,7 @@ export class CalculatorService {
       if("elemental_burst" in setting.skills){
         this.setBuffDataToResult(
           characterData.skills?.elemental_burst, 
-          characterStorageData.elementalBurstLevel!, 
+          elementalBurstLevel, 
           extraCharacterData.skills!.elemental_burst,
           setting.skills.elemental_burst!,
           result,
@@ -144,18 +1363,25 @@ export class CalculatorService {
     return [result, specialResult];
   }
 
-  getExtraWeaponData(index: string | number){
+  //武器追加データ解析
+  private getExtraWeaponData(index: string | number, data?: WeaponLevelConfig){
     let weaponData = this.dataMap[index]!.weaponData!;
+    let smeltingLevel;
     let weaponStorageData = this.weaponService.getStorageInfo(index);
+    if(data && data.smeltingLevel){
+      smeltingLevel = data.smeltingLevel!;
+    }else{
+      smeltingLevel = weaponStorageData.smeltingLevel!;
+    }
     let extraWeaponData = this.extraDataService.getWeapon(weaponData.id);
     let setting = this.weaponService.getExtraData(index)!;
     let result: Record<string, number> = {};
-    let specialResult: Record<string, SpecialBuff> = {};
+    let specialResult: SpecialBuff[] = [];
 
     if("effect" in setting && setting.effect){
       this.setBuffDataToResult(
-        weaponData.skillAffixMap[weaponStorageData.smeltingLevel!], 
-        weaponStorageData.smeltingLevel!, 
+        weaponData.skillAffixMap[smeltingLevel], 
+        smeltingLevel, 
         extraWeaponData.effect!,
         setting.effect!,
         result,
@@ -166,19 +1392,13 @@ export class CalculatorService {
     return [result, specialResult];
   }
 
-  getReliquaryData(index: string){
-
+  //聖遺物追加データ解析
+  private getReliquaryData(index: string | number){
+    //TODO
   }
 
-  getEnemyData(index: string){
-
-  }
-
-  calculate(){
-    // let temp1 = 
-  }
-
-  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: Record<string, SpecialBuff>){
+  //追加データ解析
+  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[]){
     let switchOnSet = setting?.switchOnSet ?? {};
     let sliderNumMap = setting?.sliderNumMap ?? {};
 
@@ -216,6 +1436,12 @@ export class CalculatorService {
             }else if(skillData.paramList){
               constIndexValue = skillData.paramList[buff?.constIndex![id]];
             }
+          }
+          let calRelation = buff?.calRelation ?? '+';
+          switch(calRelation){
+            case "-":
+              indexValue = -1 * indexValue;
+              break;
           }
           let constCalRelation = buff?.constCalRelation ?? '+';
     
@@ -268,7 +1494,7 @@ export class CalculatorService {
               temp.maxVal = maxValConstIndexValue;
             }
             for(let tar of targets){
-              specialResult[tar] = temp;
+              specialResult.push({...temp, target: tar});
             }
           }else{
             //一般バフ
@@ -312,6 +1538,12 @@ export class CalculatorService {
               constIndexValue = skillData.paramList[buff?.constIndex![id]];
             }
           }
+          let calRelation = buff?.calRelation ?? '+';
+          switch(calRelation){
+            case "-":
+              indexValue = -1 * indexValue;
+              break;
+          }
           let constCalRelation = buff?.constCalRelation ?? '+';
     
           let base = buff?.base;
@@ -339,7 +1571,7 @@ export class CalculatorService {
             temp.priority = priority;
 
             for(let tar of targets){
-              specialResult[tar] = temp;
+              specialResult.push({...temp, target: tar});
             }
           }else{
             //一般バフ
@@ -368,20 +1600,38 @@ export class CalculatorService {
         }
       }
     }
-
-    for(let idStr in switchOnSet){
-      //key3が有効になっている
-
-
-    }
-    for(let key3 in sliderNumMap){
-      //key3の回数が設定されている
-
-
-    }
   }
 
-  private resolveBuffData(){
+  private getCharacterData(index: string | number): CharStatus{
+    return this.dataMap[index]!.characterData!.levelMap[this.characterService.getLevel(index.toString())!];
+  }
 
+  private getWeaponData(index: string | number): WeaponStatus{
+    return this.dataMap[index]!.weaponData!.levelMap[this.weaponService.getLevel(index.toString())!];
+  }
+
+  private getEnemyData(index: string | number): EnemyStatus{
+    return this.dataMap[index]!.enemyData!.levelMap[this.enemyService.getLevel(index.toString())!];
+  }
+
+  private setDirty(index: string | number, dirty: boolean){
+    this.dataMap[index.toString()].isDirty = dirty;
+  }
+
+  private getCharacterSkillLevel(index: string | number, skill: string){
+    let currentLevel: string;
+    let characterStorageData = this.characterService.getStorageInfo(index);
+    switch(skill){
+      case "normal":
+        currentLevel = characterStorageData.normalLevel!;
+        break;
+      case "skill":
+        currentLevel = characterStorageData.skillLevel!;
+        break;
+      case "elemental_burst":
+        currentLevel = characterStorageData.elementalBurstLevel!;
+        break;
+    }
+    return currentLevel!;
   }
 }

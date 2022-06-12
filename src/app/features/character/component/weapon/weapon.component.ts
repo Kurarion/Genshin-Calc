@@ -147,8 +147,6 @@ export class WeaponComponent implements OnInit, OnDestroy {
     //追加データ更新
     this.weaponService.setDefaultExtraData(this.data.id, weaponIndex);
     this.calculatorService.initWeaponData(this.data.id, weaponIndex);
-    //TEST
-    console.log(this.calculatorService.getExtraWeaponData(this.data.id));
     //DEBUG
     console.log(this.weaponData);
     //武器最高レベル
@@ -181,6 +179,8 @@ export class WeaponComponent implements OnInit, OnDestroy {
     }
     //武器レベル設定
     this.weaponService.setLevel(this.data.id, value.level);
+    //更新
+    this.calculatorService.setDirtyFlag(this.data.id);
   }
 
   /**
@@ -190,6 +190,8 @@ export class WeaponComponent implements OnInit, OnDestroy {
   onChangeSmeltingLevel(value: string) {
     //武器突破レベル設定
     this.weaponService.setSmeltingLevel(this.data.id, value);
+    //更新
+    this.calculatorService.initExtraWeaponData(this.data.id);
   }
 
   getEffectName(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {
