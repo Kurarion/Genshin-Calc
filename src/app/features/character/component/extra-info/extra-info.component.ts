@@ -1,11 +1,12 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkills, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-info',
   templateUrl: './extra-info.component.html',
-  styleUrls: ['./extra-info.component.css']
+  styleUrls: ['./extra-info.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExtraInfoComponent implements OnInit {
 
@@ -20,26 +21,53 @@ export class ExtraInfoComponent implements OnInit {
   //
   @Input('hasLevel') hasLevel!: boolean;
 
+  overrideElement!: string;
+
+  //データ
+  skillDescDatas!: CharSkillDescObject[];
+  //表示値
+  showValues!: string[];
+  //ヒント値
+  tipValues!: string[];
+
   constructor(private percentPipe: PercentPipe, 
     private decimalPipe: DecimalPipe, 
     private noCommaPipe: NoCommaPipe,
-    private calculatorService: CalculatorService) {}
+    private calculatorService: CalculatorService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.initDatas();
+  }
 
-  getDataProperty(key: string): CharSkill {
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['currentLanguage'] || changes['skillLevelIndex']) {
+  //     this.initDatas();
+  //   }
+  // }
+
+  private initDatas(){
+    this.skillDescDatas = this.getCharSkillDescObject(this.skill, this.currentLanguage);
+    this.showValues = [];
+    this.tipValues = [];
+    for(let skillDescData of this.skillDescDatas){
+      this.showValues.push(this.getTalentValue(this.skill, skillDescData, this.currentLanguage, this.skillLevelIndex));
+      this.tipValues.push(this.getTalentValue(this.skill, skillDescData, this.currentLanguage, this.skillLevelIndex, true));
+    }
+  }
+
+  private getDataProperty(key: string): CharSkill {
     return this.data.skills[key as keyof CharSkills] as CharSkill;
   }
 
-  getDataProperties(key: string): CharSkill[] {
+  private getDataProperties(key: string): CharSkill[] {
     return this.data.skills[key as keyof CharSkills] as CharSkill[];
   }
 
-  getCharSkillDescObject(key: string, lang: TYPE_SYS_LANG): CharSkillDescObject[] {
+  private getCharSkillDescObject(key: string, lang: TYPE_SYS_LANG): CharSkillDescObject[] {
     return this.getDataProperty(key).paramDescSplitedList[lang];
   }
 
-  getTalentValue(key: string, obj: CharSkillDescObject, lang: TYPE_SYS_LANG, currentLevel: string, withOrigin: boolean = false): string {
+  private getTalentValue(key: string, obj: CharSkillDescObject, lang: TYPE_SYS_LANG, currentLevel: string, withOrigin: boolean = false): string {
     let result = obj.prefix;
     let values: string[] = [];
     obj.valuePropIndexs.forEach((index: number, i: number) => {

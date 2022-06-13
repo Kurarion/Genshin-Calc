@@ -1,15 +1,9 @@
-<!-- <p>extra-info works!</p> -->
-<!-- if is normal can change the element type -->
-
-<!-- this is the origin skill rate table with extra data -->
-<!-- loop the data and use template Ref to show the origin data before the calculate data -->
-<!-- <app-extra-data [characterIndex]="data.id"></app-extra-data> -->
 <!-- 条件が真の時には「Update」と表示される -->
 <ng-container *ngIf="hasLevel; then skills else other"></ng-container>
 <!-- 条件が偽の時には「Create」と表示される -->
 <ng-template #skills>
     <table>
-        <ng-container *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
+        <ng-container *ngFor="let paramDesc of skillDescDatas; index as i">
             <tr>
                 <td colspan="2">
                     <div class="placeholder"></div>
@@ -17,16 +11,17 @@
             </tr>
             <tr>
                 <td [innerText]="paramDesc.desc"></td>
-                <td [innerText]="getTalentValue(skill, paramDesc, currentLanguage, skillLevelIndex)"
-                    [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, skillLevelIndex, true)" matTooltipPosition="right">
+                <td [innerText]="showValues[i]"
+                    [matTooltip]="tipValues[i]" matTooltipPosition="right">
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <app-extra-data 
+                    <app-extra-data
                         [characterIndex]="data.id"
                         [skill]="skill"
-                        [valueIndexs]="paramDesc.valuePropIndexs">
+                        [valueIndexs]="paramDesc.valuePropIndexs"
+                        [overrideElement]="overrideElement">
                     </app-extra-data>
                 </td>
             </tr>

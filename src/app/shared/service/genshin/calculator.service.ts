@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills } from 'src/app/shared/shared.module';
 
 export interface CalResult{
@@ -37,25 +38,31 @@ export interface DamageParam {
 }
 
 export interface DamageResult {
+  elementBonusType: string;
+
   originDmg: number;
   critDmg: number;
   expectDmg: number;
 
-  originVaporizeDmg: number;//蒸発 1.5
-  cirtVaporizeDmg: number;//蒸発 1.5
-  expectVaporizeDmg: number;//蒸発 1.5
+  originVaporizeDmg?: number;//蒸発 1.5
+  cirtVaporizeDmg?: number;//蒸発 1.5
+  expectVaporizeDmg?: number;//蒸発 1.5
 
-  originMeltDmg: number;//溶解 2.0
-  cirtMeltDmg: number;//溶解 2.0
-  expectMeltDmg: number;//溶解 2.0
+  originMeltDmg?: number;//溶解 2.0
+  cirtMeltDmg?: number;//溶解 2.0
+  expectMeltDmg?: number;//溶解 2.0
 
-  overloadedDmg: number;//過負荷
-  burningDmg: number;//燃焼
-  electroChargedDmg: number;//感電
-  superconductDmg: number;//超電導
-  swirlDmg: number;//拡散
-  shieldHp: number;//結晶
-  destructionDmg: number;//氷砕き
+  overloadedDmg?: number;//過負荷
+  burningDmg?: number;//燃焼
+  electroChargedDmg?: number;//感電
+  superconductDmg?: number;//超電導
+  shieldHp?: number;//結晶
+  destructionDmg?: number;//氷砕き
+
+  swirlCryoDmg?: number;//拡散 氷
+  swirlElectroDmg?: number;//拡散 雷
+  swirlPyroDmg?: number;//拡散 火
+  swirlHydroDmg?: number;//拡散 水
 }
 
 export interface HealingParam {
@@ -748,6 +755,9 @@ export class CalculatorService {
 
   //データマップ
   dataMap: Record<string, CalResult> = {};
+  //変更検知
+  private hasChanged: Subject<boolean> = new Subject<boolean>();
+  private hasChanged$: Observable<boolean> = this.hasChanged.asObservable();
 
   constructor(
     private characterService: CharacterService,
@@ -759,6 +769,17 @@ export class CalculatorService {
   //更新フラグ設定
   setDirtyFlag(index: string | number){
     this.setDirty(index, true);
+  }
+
+  //更新フラグ取得
+  isDirty(index: string | number){
+    let indexStr = index.toString();
+    return this.dataMap[indexStr]?.isDirty ?? false;
+  }
+
+  //変更検知
+  changed(){
+    return this.hasChanged$;
   }
 
   //初期化（キャラ）
@@ -831,7 +852,7 @@ export class CalculatorService {
   //ダメージ取得
   getDamage(index: string | number, param: DamageParam){
     let indexStr = index.toString();
-    if(this.dataMap[indexStr]?.isDirty){
+    if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
       //TEST
       console.log("初期化（計算用情報合計）（ダメージ）")
@@ -1025,20 +1046,68 @@ export class CalculatorService {
     let originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
     let critDmg = originDmg * (1 + finalCritDmg);
     let expectDmg = originDmg * (1 - finalCritRate) + critDmg * finalCritRate;
-    let originVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * originDmg;
-    let cirtVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * critDmg;
-    let expectVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * expectDmg;
-    let originMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * originDmg;
-    let cirtMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * critDmg;
-    let expectMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * expectDmg;
-    let burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP]) * (1 + elementCataclysmRate);
-    let superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP]) * (1 + elementCataclysmRate);
-    let swirlDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP]) * (1 + elementCataclysmRate);
-    let electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP]) * (1 + elementCataclysmRate);
-    let destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP]) * (1 + elementCataclysmRate);
-    let overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP]) * (1 + elementCataclysmRate);
-    let shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]) * (1 + elementShieldRate);
+    let originVaporizeDmg;
+    let cirtVaporizeDmg;
+    let expectVaporizeDmg;
+    let originMeltDmg;
+    let cirtMeltDmg;
+    let expectMeltDmg;
+    let burningDmg;
+    let superconductDmg;
+    let swirlCryoDmg;
+    let swirlElectroDmg;
+    let swirlPyroDmg;
+    let swirlHydroDmg;
+    let electroChargedDmg;
+    let destructionDmg;
+    let overloadedDmg;
+    let shieldHp;
+    if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_HYDRO].includes(elementBonusType)){
+      originVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * originDmg;
+      cirtVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * critDmg;
+      expectVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * expectDmg;
+    }
+    if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_CRYO].includes(elementBonusType)){
+      originMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * originDmg;
+      cirtMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * critDmg;
+      expectMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * expectDmg;
+    }
+    if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
+      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+      burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+    }
+    if([Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
+      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
+      superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+    }
+    if([Const.PROP_DMG_BONUS_ANEMO].includes(elementBonusType)){
+      let tempCryoDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
+      let tempElectroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
+      let tempPyroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+      let tempHydroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_HYDRO);
+      let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP]) * (1 + elementCataclysmRate);
+      swirlCryoDmg = swirlBaseDmg * (1 - tempCryoDmgAntiSectionValue);
+      swirlElectroDmg = swirlBaseDmg * (1 - tempElectroDmgAntiSectionValue);
+      swirlPyroDmg = swirlBaseDmg * (1 - tempPyroDmgAntiSectionValue);
+      swirlHydroDmg = swirlBaseDmg * (1 - tempHydroDmgAntiSectionValue);
+    }
+    if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
+      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
+      electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+    }
+    if([Const.PROP_DMG_BONUS_PHYSICAL].includes(elementBonusType)){
+      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PHYSICAL);
+      destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+    }
+    if([Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
+      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+      overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+    }
+    if([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType)){
+      shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]) * (1 + elementShieldRate);
+    }
     result = {
+      elementBonusType: elementBonusType,
       originDmg: originDmg,
       critDmg: critDmg,
       expectDmg: expectDmg,
@@ -1052,7 +1121,10 @@ export class CalculatorService {
       burningDmg: burningDmg,
       electroChargedDmg: electroChargedDmg,
       superconductDmg: superconductDmg,
-      swirlDmg: swirlDmg,
+      swirlCryoDmg: swirlCryoDmg,
+      swirlElectroDmg: swirlElectroDmg,
+      swirlPyroDmg: swirlPyroDmg,
+      swirlHydroDmg: swirlHydroDmg,
       shieldHp: shieldHp,
       destructionDmg: destructionDmg,
     };
@@ -1063,7 +1135,7 @@ export class CalculatorService {
   //治療取得
   getHealing(index: string | number, param: HealingParam){
     let indexStr = index.toString();
-    if(this.dataMap[indexStr]?.isDirty){
+    if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
     }
     let result: HealingResult;
@@ -1091,7 +1163,7 @@ export class CalculatorService {
   //バリア強度取得
   getShield(index: string | number, param: ShieldParam){
     let indexStr = index.toString();
-    if(this.dataMap[indexStr]?.isDirty){
+    if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
     }
     let result: ShieldResult;
@@ -1115,7 +1187,7 @@ export class CalculatorService {
     return result;
   }
 
-  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[]){
+  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[], overrideElement?: string){
     let indexStr = index.toString();
     let extraCharacterData = this.extraDataService.getCharacter(indexStr);
     let characterData = this.dataMap[indexStr].characterData;
@@ -1123,8 +1195,8 @@ export class CalculatorService {
     let params: DamageParam[] = [];
     let results: DamageResult[] = []
 
-    if(["normal", "skill", "elemental_burst"].includes(skill)){
-      let infos: ExtraSkillInfo[] = extraCharacterData.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[];
+    if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST].includes(skill)){
+      let infos: ExtraSkillInfo[] = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
       let currentLevel: string = this.getCharacterSkillLevel(indexStr, skill);
       for(let info of infos){
         //全含め必要
@@ -1155,6 +1227,9 @@ export class CalculatorService {
             let base = damageInfo.base!;
             let attackBonusType = damageInfo.attackBonusType!;
             let elementBonusType = damageInfo.elementBonusType!;
+            if(damageInfo?.canOverride && overrideElement){
+              elementBonusType = overrideElement;
+            }
             params.push({
               base: base,
               rate: rate,
@@ -1307,8 +1382,8 @@ export class CalculatorService {
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
 
-    if("skills" in setting && setting.skills){
-      if("skill" in setting.skills){
+    if(Const.NAME_SKILLS in setting && setting.skills){
+      if(Const.NAME_SKILLS_SKILL in setting.skills){
         this.setBuffDataToResult(
           characterData.skills?.skill, 
           skillLevel, 
@@ -1318,17 +1393,17 @@ export class CalculatorService {
           specialResult,
         );
       }
-      if("elemental_burst" in setting.skills){
+      if(Const.NAME_SKILLS_ELEMENTAL_BURST in setting.skills){
         this.setBuffDataToResult(
-          characterData.skills?.elemental_burst, 
+          characterData.skills?.elementalBurst, 
           elementalBurstLevel, 
-          extraCharacterData.skills!.elemental_burst,
-          setting.skills.elemental_burst!,
+          extraCharacterData.skills!.elementalBurst,
+          setting.skills.elementalBurst!,
           result,
           specialResult,
         );
       }
-      if("proudSkills" in setting.skills){
+      if(Const.NAME_SKILLS_PROUD in setting.skills){
         for(let index = 0; index < setting.skills.proudSkills!.length; ++index){
           let obj = setting.skills.proudSkills![index];
           if(Object.keys(obj).length === 0){
@@ -1336,7 +1411,7 @@ export class CalculatorService {
           }
           this.setBuffDataToResult(
             characterData.skills?.proudSkills[index], 
-            "01", 
+            Const.NAME_TALENT_DEFAULT_LEVEL, 
             extraCharacterData.skills!.proudSkills![index],
             obj,
             result,
@@ -1345,12 +1420,12 @@ export class CalculatorService {
       }
     }
 
-    if("constellation" in setting && setting.constellation){
-      for(let index of ["0", "1", "2", "3", "4", "5"]){
+    if(Const.NAME_CONSTELLATION in setting && setting.constellation){
+      for(let index of [Const.NAME_CONSTELLATION_1, Const.NAME_CONSTELLATION_2, Const.NAME_CONSTELLATION_3, Const.NAME_CONSTELLATION_4, Const.NAME_CONSTELLATION_5, Const.NAME_CONSTELLATION_6]){
         if(index in setting.constellation){
           this.setBuffDataToResult(
             characterData.skills.talents[parseInt(index)], 
-            "01", 
+            Const.NAME_TALENT_DEFAULT_LEVEL, 
             extraCharacterData.constellation![index],
             setting.constellation![index],
             result,
@@ -1616,22 +1691,72 @@ export class CalculatorService {
 
   private setDirty(index: string | number, dirty: boolean){
     this.dataMap[index.toString()].isDirty = dirty;
+    if(dirty){
+      this.hasChanged.next(dirty);
+    }
   }
 
   private getCharacterSkillLevel(index: string | number, skill: string){
     let currentLevel: string;
     let characterStorageData = this.characterService.getStorageInfo(index);
     switch(skill){
-      case "normal":
+      case Const.NAME_SKILLS_NORMAL:
         currentLevel = characterStorageData.normalLevel!;
         break;
-      case "skill":
+      case Const.NAME_SKILLS_SKILL:
         currentLevel = characterStorageData.skillLevel!;
         break;
-      case "elemental_burst":
+      case Const.NAME_SKILLS_ELEMENTAL_BURST:
         currentLevel = characterStorageData.elementalBurstLevel!;
         break;
     }
     return currentLevel!;
+  }
+
+  private getDmgAntiSectionValue(data: Record<string, number>, elementType: string){
+    let tempDmgAntiSectionValue = 0;
+    tempDmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];
+    let tempAntiStr = "";
+    let tempAntiMinusStr = "";
+    switch(elementType){
+      case Const.ELEMENT_CRYO:
+        tempAntiStr = Const.PROP_DMG_ANTI_CRYO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_CRYO_MINUS;
+        break;
+      case Const.ELEMENT_ANEMO:
+        tempAntiStr = Const.PROP_DMG_ANTI_ANEMO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_ANEMO_MINUS;
+        break;
+      case Const.ELEMENT_PHYSICAL:
+        tempAntiStr = Const.PROP_DMG_ANTI_PHYSICAL;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_PHYSICAL_MINUS;
+        break;
+      case Const.ELEMENT_ELECTRO:
+        tempAntiStr = Const.PROP_DMG_ANTI_ELECTRO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_ELECTRO_MINUS;
+        break;
+      case Const.ELEMENT_GEO:
+        tempAntiStr = Const.PROP_DMG_ANTI_GEO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_GEO_MINUS;
+        break;
+      case Const.ELEMENT_PYRO:
+        tempAntiStr = Const.PROP_DMG_ANTI_PYRO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_PYRO_MINUS;
+        break;
+      case Const.ELEMENT_HYDRO:
+        tempAntiStr = Const.PROP_DMG_ANTI_HYDRO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_HYDRO_MINUS;
+        break;
+      case Const.ELEMENT_DENDRO:
+        tempAntiStr = Const.PROP_DMG_ANTI_DENDRO;
+        tempAntiMinusStr = Const.PROP_DMG_ANTI_DENDRO_MINUS;
+        break;
+    }
+    tempDmgAntiSectionValue += data[tempAntiStr];
+    tempDmgAntiSectionValue -= data[tempAntiMinusStr];
+    if(tempDmgAntiSectionValue < 0){
+      tempDmgAntiSectionValue = tempDmgAntiSectionValue/2;
+    }
+    return tempDmgAntiSectionValue;
   }
 }

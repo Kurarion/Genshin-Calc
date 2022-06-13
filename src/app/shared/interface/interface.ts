@@ -42,7 +42,7 @@ export interface ExtraCharacterSkills {
   normal: ExtraSkillInfo[];
   skill: ExtraSkillInfo[];
   other?: ExtraSkillInfo[];
-  elemental_burst: ExtraSkillInfo[];
+  elementalBurst: ExtraSkillInfo[];
   proudSkills: ExtraSkillInfo[][];
 }
 
@@ -131,6 +131,6 @@ export interface ExtraSkillProduct {
 }
 
 /** 補足データ - 5階 */
-export declare type TYPE_SKILL = 'normal' | 'skill' | 'elemental_burst' | 'proudSkills';
+export declare type TYPE_SKILL = 'normal' | 'skill' | 'elementalBurst' | 'proudSkills';
 export declare type TYPE_RELATION = '*' | '+' | '-' | '/';
 export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' | 'switch';

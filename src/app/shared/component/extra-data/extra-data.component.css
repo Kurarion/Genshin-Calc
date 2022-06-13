@@ -1,11 +1,15 @@
 table {
     width: 100%;
-    border-collapse: collapse;
     word-break: break-all;
+    border-left: 1px solid rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 3px;
 }
 
 table tr:first-child td {
-    /* border-top: 1px solid rgba(0,0,0,.12); */
+    border-top: 1px solid rgba(0,0,0,.12);
 }
 
 tr td:nth-of-type(1) {

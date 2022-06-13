@@ -1,13 +1,15 @@
-<table>
-    <tr>
-        <td>
-            
-        </td>
-        <td>
-            <ng-container *ngFor="let info of getInfos()">
-                <span [innerText]="info.originDmg"></span>
-                <br>
-            </ng-container>
-        </td>
-    </tr>
-</table>
+<ng-container *ngFor="let info of dmgDatas; index as i">
+    <table>
+        <ng-container *ngFor="let prop of propList">
+            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop] ?? colors[i]">
+                <td>
+                    <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
+                </td>
+                <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
+                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <br>
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+</ng-container>

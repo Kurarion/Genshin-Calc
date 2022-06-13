@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CalculatorService, character, CharacterService, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -15,7 +15,8 @@ interface subProp {
 @Component({
   selector: 'app-character',
   templateUrl: './character.component.html',
-  styleUrls: ['./character.component.css']
+  styleUrls: ['./character.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharacterComponent implements OnInit, OnDestroy {
 

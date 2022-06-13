@@ -44,6 +44,44 @@ export class Const {
   static readonly MENU_CHARACTER = 'character';
 
   //*********************************
+  //            スキルなど
+  //*********************************
+  static readonly NAME_SKILLS = 'skills';
+  static readonly NAME_SKILLS_NORMAL = 'normal';
+  static readonly NAME_SKILLS_SKILL = 'skill';
+  static readonly NAME_SKILLS_ELEMENTAL_BURST = 'elementalBurst';
+  static readonly NAME_SKILLS_OTHER = 'other';
+  static readonly NAME_SKILLS_PROUD = 'proudSkills';
+  static readonly NAME_CONSTELLATION = 'constellation';
+
+  static readonly NAME_CONSTELLATION_1 = "0";
+  static readonly NAME_CONSTELLATION_2 = "1";
+  static readonly NAME_CONSTELLATION_3 = "2";
+  static readonly NAME_CONSTELLATION_4 = "3";
+  static readonly NAME_CONSTELLATION_5 = "4";
+  static readonly NAME_CONSTELLATION_6 = "5";
+
+  static readonly NAME_TALENT_DEFAULT_LEVEL = "01";
+
+  static readonly ELEMENT_CRYO = "CRYO";
+  static readonly ELEMENT_ANEMO = "ANEMO";
+  static readonly ELEMENT_PHYSICAL = "PHYSICAL";
+  static readonly ELEMENT_ELECTRO = "ELECTRO";
+  static readonly ELEMENT_GEO = "GEO";
+  static readonly ELEMENT_PYRO = "PYRO";
+  static readonly ELEMENT_HYDRO = "HYDRO";
+  static readonly ELEMENT_DENDRO = "DENDRO";
+  static readonly ELEMENT_VAPORIZE = "VAPORIZE";
+  static readonly ELEMENT_MELT = "MELT";
+  static readonly ELEMENT_OVERLOADED = "OVERLOADED";
+  static readonly ELEMENT_BURNING = "BURNING";
+  static readonly ELEMENT_ELECTROCHARGED = "ELECTROCHARGED";
+  static readonly ELEMENT_SUPERCONDUCT = "SUPERCONDUCT";
+  static readonly ELEMENT_SWIRL = "SWIRL";
+  static readonly ELEMENT_DESTRUCTION = "DESTRUCTION";
+  static readonly ELEMENT_SHIELD = "SHIELD";
+
+  //*********************************
   //           　属性
   //*********************************
   //レベル
@@ -113,7 +151,7 @@ export class Const {
   //元素爆発ダメージ
   static readonly PROP_DMG_BONUS_ELEMENTAL_BURST = "DMG_BONUS_ELEMENTAL_BURST";
 
-  //冰元素耐性
+  //氷元素耐性
   static readonly PROP_DMG_ANTI_CRYO = "DMG_ANTI_CRYO";
   //風元素耐性
   static readonly PROP_DMG_ANTI_ANEMO = "DMG_ANTI_ANEMO";
@@ -130,7 +168,7 @@ export class Const {
   //草元素耐性
   static readonly PROP_DMG_ANTI_DENDRO = "DMG_ANTI_DENDRO";
 
-  //冰元素耐性マイナス
+  //氷元素耐性マイナス
   static readonly PROP_DMG_ANTI_CRYO_MINUS = "DMG_ANTI_CRYO_MINUS";
   //風元素耐性マイナス
   static readonly PROP_DMG_ANTI_ANEMO_MINUS = "DMG_ANTI_ANEMO_MINUS";
@@ -309,6 +347,28 @@ export class Const {
   //ダメージ値結果
   //static readonly PROP_DMG_VAL_FINAL = "DMG_VAL_FINAL";
 
+  //マップ
+  static readonly MAP_ELEMENT: Map<string, string> = new Map([
+    [Const.ELEMENT_CRYO, Const.PROP_DMG_BONUS_CRYO],
+    [Const.ELEMENT_ANEMO, Const.PROP_DMG_BONUS_ANEMO],
+    [Const.ELEMENT_PHYSICAL, Const.PROP_DMG_BONUS_PHYSICAL],
+    [Const.ELEMENT_ELECTRO, Const.PROP_DMG_BONUS_ELECTRO],
+    [Const.ELEMENT_GEO, Const.PROP_DMG_BONUS_GEO],
+    [Const.ELEMENT_PYRO, Const.PROP_DMG_BONUS_PYRO],
+    [Const.ELEMENT_HYDRO, Const.PROP_DMG_BONUS_HYDRO],
+    [Const.ELEMENT_DENDRO, Const.PROP_DMG_BONUS_DENDRO],
+  ]);
+
+  static readonly MAP_ELEMENT_REVERSE: Map<string, string> = new Map([
+    [Const.PROP_DMG_BONUS_CRYO, Const.ELEMENT_CRYO],
+    [Const.PROP_DMG_BONUS_ANEMO, Const.ELEMENT_ANEMO],
+    [Const.PROP_DMG_BONUS_PHYSICAL, Const.ELEMENT_PHYSICAL],
+    [Const.PROP_DMG_BONUS_ELECTRO, Const.ELEMENT_ELECTRO],
+    [Const.PROP_DMG_BONUS_GEO, Const.ELEMENT_GEO],
+    [Const.PROP_DMG_BONUS_PYRO, Const.ELEMENT_PYRO],
+    [Const.PROP_DMG_BONUS_HYDRO, Const.ELEMENT_HYDRO],
+    [Const.PROP_DMG_BONUS_DENDRO, Const.ELEMENT_DENDRO],
+  ]);
 
   //ベース属性リスト（キャラ、敵）
   static readonly PROPS_CHARA_ENEMY_BASE = [

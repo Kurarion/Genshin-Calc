@@ -70,13 +70,13 @@ type AVATAR struct {
 
 //人物技能集
 type AVATARSKILLS struct {
-	Id              uint64            `json:"id"`
-	Normal          AVATARSKILLINFO   `json:"normal"`
-	Skill           AVATARSKILLINFO   `json:"skill"`
-	Other           AVATARSKILLINFO   `json:"other"`
-	Elemental_burst AVATARSKILLINFO   `json:"elemental_burst"`
-	ProudSkills     []AVATARSKILLINFO `json:"proudSkills"`
-	Talents         []AVATARSKILLINFO `json:"talents"`
+	Id             uint64            `json:"id"`
+	Normal         AVATARSKILLINFO   `json:"normal"`
+	Skill          AVATARSKILLINFO   `json:"skill"`
+	Other          AVATARSKILLINFO   `json:"other"`
+	ElementalBurst AVATARSKILLINFO   `json:"elementalBurst"`
+	ProudSkills    []AVATARSKILLINFO `json:"proudSkills"`
+	Talents        []AVATARSKILLINFO `json:"talents"`
 }
 
 //人物技能

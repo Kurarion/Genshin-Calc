@@ -563,7 +563,7 @@ func update() error {
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(skillParamDescList),
 			},
-			Elemental_burst: AVATARSKILLINFO{
+			ElementalBurst: AVATARSKILLINFO{
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.EnergySkill].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.EnergySkill].DescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.EnergySkill].SkillIcon,

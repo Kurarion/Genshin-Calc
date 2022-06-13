@@ -1,12 +1,13 @@
 import { PercentPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 
 @Component({
   selector: 'app-constellation',
   templateUrl: './constellation.component.html',
-  styleUrls: ['./constellation.component.css']
+  styleUrls: ['./constellation.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConstellationComponent implements OnInit {
 

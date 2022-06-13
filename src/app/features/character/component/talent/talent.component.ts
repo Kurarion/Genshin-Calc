@@ -1,5 +1,5 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
 import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
@@ -19,10 +19,12 @@ export class TalentComponent implements OnInit {
   private readonly maxLevel = 15;
   private readonly defaultLevel = 10;
 
-  readonly skills = ['normal', 'skill', 'elemental_burst'];
-  readonly otherSkills = ['other'];
-  readonly prundSkills = ['proudSkills']
+  readonly skills = [Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST];
+  readonly otherSkills = [Const.NAME_SKILLS_OTHER];
+  readonly prundSkills = [Const.NAME_SKILLS_PROUD]
   readonly levelPadNum = 2;
+  
+  readonly talentDefaultLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
 
   readonly props = Const.PROPS_CHARA_ENEMY_BASE;
   readonly props_sub = Const.PROPS_CHARA_WEAPON_SUB;
@@ -56,13 +58,13 @@ export class TalentComponent implements OnInit {
       //初期選択
       let temp: levelOption;
       switch (key) {
-        case "normal":
+        case Const.NAME_SKILLS_NORMAL:
           temp = this.getLevelFromString(this.characterService.getNormalLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
           break;
-        case "skill":
+        case Const.NAME_SKILLS_SKILL:
           temp = this.getLevelFromString(this.characterService.getSkillLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
           break;
-        case "elemental_burst":
+        case Const.NAME_SKILLS_ELEMENTAL_BURST:
           temp = this.getLevelFromString(this.characterService.getElementalBurstLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
           break;
       }
@@ -76,13 +78,13 @@ export class TalentComponent implements OnInit {
 
   onChangeLevel(propName: string, value: levelOption, withoutInitExtra: boolean = false) {
     switch (propName) {
-      case "normal":
+      case Const.NAME_SKILLS_NORMAL:
         this.characterService.setNormalLevel(this.data.id, value.level);
         break;
-      case "skill":
+      case Const.NAME_SKILLS_SKILL:
         this.characterService.setSkillLevel(this.data.id, value.level);
         break;
-      case "elemental_burst":
+      case Const.NAME_SKILLS_ELEMENTAL_BURST:
         this.characterService.setElementalBurstLevel(this.data.id, value.level);
         break;
     }
@@ -102,33 +104,6 @@ export class TalentComponent implements OnInit {
 
   getCharSkillDescObject(key: string, lang: TYPE_SYS_LANG): CharSkillDescObject[] {
     return this.getDataProperty(key).paramDescSplitedList[lang];
-  }
-
-  getTalentValue(key: string, obj: CharSkillDescObject, lang: TYPE_SYS_LANG, currentLevel: string, withOrigin: boolean = false): string {
-    let result = obj.prefix;
-    let values: string[] = [];
-    obj.valuePropIndexs.forEach((index: number, i: number) => {
-      let value: string | number = (this.data.skills[key as keyof CharSkills] as CharSkill).paramMap[currentLevel][index];
-      if (!withOrigin) {
-        if (obj.isPercent[i]) {
-          value = this.percentPipe.transform(value, '1.0-1') as string;
-        } else {
-          value = this.noCommaPipe.transform(this.decimalPipe.transform(value, '1.0-1') as string);
-        }
-      }
-      values.push(`${value}`);
-    })
-    let middlesLength = 0;
-    let middlesMaxLength = obj.middles.length;
-    for (let i = 0; i < values.length; ++i) {
-      result += values[i];
-      if (middlesLength < middlesMaxLength) {
-        result += obj.middles[middlesLength++];
-      }
-    }
-    result += obj.suffix;
-
-    return result;
   }
 
   private getLevelFromString(level: string | undefined) {

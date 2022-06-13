@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -22,7 +22,8 @@ interface enemyOption {
 @Component({
   selector: 'app-enemy',
   templateUrl: './enemy.component.html',
-  styleUrls: ['./enemy.component.css']
+  styleUrls: ['./enemy.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnemyComponent implements OnInit {
 

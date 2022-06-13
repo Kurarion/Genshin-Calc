@@ -60,7 +60,7 @@
                         }
                     }
                 ],
-                "elemental_burst": [
+                "elementalBurst": [
                     {
                         "index": [0, 3],
                         "damage": {

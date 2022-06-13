@@ -110,7 +110,7 @@ export interface CharSkills {
     //その他
     other: CharSkill;
     //元素爆発
-    elemental_burst: CharSkill;
+    elementalBurst: CharSkill;
     //タレント
     proudSkills: CharSkill[];
     //星座

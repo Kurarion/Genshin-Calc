@@ -55,5 +55,36 @@
     "DMG_ANTI_PYRO": "火元素抗性",
     "DMG_ANTI_HYDRO": "水元素抗性",
     "DMG_ANTI_DENDRO": "草元素抗性"
+  },
+  "GENSHIN": {
+    "DMG":{
+      "ORIGIN": "不暴击伤害",
+      "CRIT": "暴击伤害",
+      "EXPECT": "期望伤害",
+      "ORIGIN_VAPORIZE": "不暴击伤害(蒸发)",
+      "CRIT_VAPORIZE": "暴击伤害(蒸发)",
+      "EXPECT_VAPORIZE": "期望伤害(蒸发)",
+      "ORIGIN_MELT": "不暴击伤害(融化)",
+      "CRIT_MELT": "暴击伤害(融化)",
+      "EXPECT_MELT": "期望伤害(融化)",
+      "CRYO": "冰元素伤害",
+      "ANEMO": "风元素伤害",
+      "PHYSICAL": "物元素伤害",
+      "ELECTRO": "雷元素伤害",
+      "GEO": "岩元素伤害",
+      "PYRO": "火元素伤害",
+      "HYDRO": "水元素伤害",
+      "DENDRO": "草元素伤害",
+      "OVERLOADED": "超载伤害",
+      "BURNING": "燃烧伤害",
+      "ELECTROCHARGED": "感电伤害",
+      "SUPERCONDUCT": "超导伤害",
+      "SWIRL_CRYO": "冰扩散伤害",
+      "SWIRL_ELECTRO": "雷扩散伤害",
+      "SWIRL_PYRO": "火扩散伤害",
+      "SWIRL_HYDRO": "水扩散伤害",
+      "DESTRUCTION": "破冰伤害",
+      "SHIELD": "结晶生命值"
+    }
   }
 }
