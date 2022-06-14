@@ -1,5 +1,5 @@
 <div class="main">
-    <div [@imgLoad]="backgroundLoadFlg?'loaded':'beforeLoad'" class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'"></div>
+    <div [@imgLoad]="imgState" class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'"></div>
     <div class="content" fxLayout="row wrap" fxLayoutAlign="center" [@otherLoad]="otherState">
         <div>
             <app-character [data]="data" [language]="currentLanguage"></app-character>

@@ -5,8 +5,7 @@ import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkill
 @Component({
   selector: 'app-extra-info',
   templateUrl: './extra-info.component.html',
-  styleUrls: ['./extra-info.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./extra-info.component.css']
 })
 export class ExtraInfoComponent implements OnInit {
 

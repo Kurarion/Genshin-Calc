@@ -15,8 +15,7 @@ interface subProp {
 @Component({
   selector: 'app-character',
   templateUrl: './character.component.html',
-  styleUrls: ['./character.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./character.component.css']
 })
 export class CharacterComponent implements OnInit, OnDestroy {
 

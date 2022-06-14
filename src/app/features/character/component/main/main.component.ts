@@ -51,6 +51,8 @@ export class MainComponent implements OnInit, OnDestroy {
   currentCharacterIndex!: string;
   //キャラデータ
   data!: character;
+  //背景CSS動画ステータス
+  imgState = CSS_STATUS_BEFORE;
   //CSS動画ステータス
   otherState = CSS_STATUS_BEFORE;
   //言語
@@ -96,6 +98,7 @@ export class MainComponent implements OnInit, OnDestroy {
     //CSS動画リセット
     this.backgroundLoadFlg = false;
     this.otherState = CSS_STATUS_BEFORE;
+    this.imgState = CSS_STATUS_BEFORE;
   }
 
   /**
@@ -103,14 +106,15 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   private initializeBackGroundImage() {
     if (!this.backgroundURL) {
-      this.backgroundLoadFlg = false;
+      // this.backgroundLoadFlg = false;
       let url = this.data.images.background;
       if (url) {
         this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
           if (v) {
             this.backgroundURL = window.URL.createObjectURL(v);
             setTimeout(() => {
-              this.backgroundLoadFlg = true;
+              // this.backgroundLoadFlg = true;
+              this.imgState = CSS_STATUS_FIN;
             }, 100)
           }
         }).catch(() => { });

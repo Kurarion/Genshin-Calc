@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CalculatorService, DamageResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo } from 'src/app/shared/shared.module';
 
 @Component({
@@ -6,7 +7,7 @@ import { CalculatorService, DamageResult, character, Const, CharacterService, Ch
   templateUrl: './extra-data.component.html',
   styleUrls: ['./extra-data.component.css']
 })
-export class ExtraDataComponent implements OnInit {
+export class ExtraDataComponent implements OnInit, OnDestroy {
 
   private readonly colorMap: Record<string, string> = {
     "CRYO": "#B2DFEE",
@@ -87,18 +88,19 @@ export class ExtraDataComponent implements OnInit {
   dmgDatas!: DamageResult[];
   //カラー
   colors!: string[];
+  //変更検知
+  subscription!: Subscription;
 
-  constructor(private calculatorService: CalculatorService) { 
-    this.calculatorService.changed().subscribe((v: boolean)=>{
+  constructor(private calculatorService: CalculatorService) { }
+
+  ngOnInit(): void {
+    this.initDatas();
+    this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
       if(v){
         console.log("!!!!!!")
         this.initDatas();
       }
-    })
-  }
-
-  ngOnInit(): void { 
-    this.initDatas();
+    });
   }
 
   // ngOnChanges(changes: SimpleChanges) {
@@ -106,6 +108,12 @@ export class ExtraDataComponent implements OnInit {
   //     this.initDatas();
   //   }
   // }
+
+  ngOnDestroy(): void {
+    if(this.subscription && !this.subscription.closed){
+      this.subscription.unsubscribe();
+    }
+  }
 
   initDatas(){
     this.dmgDatas = this.getInfos();

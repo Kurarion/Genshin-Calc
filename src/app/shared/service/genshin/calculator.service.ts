@@ -1692,7 +1692,7 @@ export class CalculatorService {
   private setDirty(index: string | number, dirty: boolean){
     this.dataMap[index.toString()].isDirty = dirty;
     if(dirty){
-      this.hasChanged.next(dirty);
+      this.hasChanged.next(true);
     }
   }
 
