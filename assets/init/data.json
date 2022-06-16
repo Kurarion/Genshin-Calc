@@ -4,9 +4,9 @@
             "skills": {
                 "normal": [
                     {
-                        "index": [0,1,2,3,4],
+                        "indexs": [0,1,2,3,4],
                         "damage": {
-                            "index": [0,1,2,3,4],
+                            "indexs": [0,1,2,3,4],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -14,9 +14,9 @@
                         }
                     },
                     {
-                        "index": [5],
+                        "indexs": [5],
                         "damage": {
-                            "index": [5],
+                            "indexs": [5],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -24,9 +24,9 @@
                         }
                     },
                     {
-                        "index": [6],
+                        "indexs": [6],
                         "damage": {
-                            "index": [6],
+                            "indexs": [6],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -34,9 +34,9 @@
                         }
                     },
                     {
-                        "index": [7,8,9],
+                        "indexs": [7,8,9],
                         "damage": {
-                            "index": [7,8,9],
+                            "indexs": [7,8,9],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -46,25 +46,25 @@
                 ],
                 "skill": [
                     {
-                        "index": [0, 1],
+                        "indexs": [0, 1],
                         "damage": {
-                            "index": [1],
+                            "indexs": [1],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
                         },
                         "product": {
-                            "index": [0],
+                            "index": 0,
                             "base": "HP"
                         }
                     }
                 ],
                 "elementalBurst": [
                     {
-                        "index": [0, 3],
+                        "indexs": [0, 3],
                         "damage": {
-                            "index": [0, 3],
+                            "indexs": [0, 3],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -75,9 +75,9 @@
                 "proudSkills": [
                     [
                         {
-                            "index": [0],
+                            "indexs": [0],
                             "buff": {
-                                "constIndex": [0],
+                                "constIndex": 0,
                                 "constCalRelation": "+",
                                 "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
                                 "settingType": "switch",
@@ -87,9 +87,9 @@
                     ],
                     [
                         {
-                            "index": [1],
+                            "indexs": [0],
                             "buff": {
-                                "index": [1],
+                                "index": 0,
                                 "target": ["ATTACK_UP"],
                                 "settingType": "switch",
                                 "defaultEnable": false
@@ -101,36 +101,37 @@
             "constellation": {
                 "0": [
                         {
-                            "index": [0],
+                            "indexs": [0],
                             "damage": {
                                 "originSkill": "normal",
                                 "originIndex": 5,
                                 "originRelation": "*",
-                                "index": [0],
+                                "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
                                 "elementBonusType": "DMG_BONUS_PHYSICAL",
-                                "attackBonusType": "DMG_BONUS_SKILL"
+                                "attackBonusType": "DMG_BONUS_CHARGED"
                             }
                         },
                         {
-                            "index": [0],
+                            "indexs": [0],
                             "damage": {
                                 "originSkill": "normal",
                                 "originIndex": 6,
                                 "originRelation": "*",
-                                "index": [0],
+                                "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
                                 "elementBonusType": "DMG_BONUS_PYRO",
-                                "attackBonusType": "DMG_BONUS_SKILL"
+                                "attackBonusType": "DMG_BONUS_CHARGED"
                             }
                         }
                 ],
                 "1": [
                         {
-                            "index": [0],
+                            "indexs": [0],
                             "damage": {
+                                "customValues": [1],
                                 "originSkill": "skill",
                                 "originIndex": 1,
                                 "originRelation": "*",
@@ -140,7 +141,7 @@
                                 "attackBonusType": "DMG_BONUS_SKILL"
                             },
                             "buff": {
-                                "index": [0],
+                                "index": 0,
                                 "target": ["DMG_BONUS_SKILL"],
                                 "settingType": "switch",
                                 "defaultEnable": false
@@ -149,8 +150,9 @@
                 ],
                 "5": [
                         {
+                            "indexs": [1],
                             "buff": {
-                                "index": [1],
+                                "index": 1,
                                 "target": ["ATTACK_UP"],
                                 "settingType": "switch",
                                 "defaultEnable": false
@@ -165,15 +167,17 @@
         "15502": {
             "effect": [
                 {
+                    "indexs": [0],
                     "buff": {
-                        "index": [0],
+                        "index": 0,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
                         "settingType": "resident"
                     }
                 },
                 {
+                    "indexs": [1],
                     "buff": {
-                        "index": [1],
+                        "index": 1,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
                         "settingType": "slider",
                         "sliderInitialValue": 1,
