@@ -81,7 +81,7 @@
                         </mat-expansion-panel>
                     </ng-container>
                 </ng-container>
-                <ng-container *ngFor="let skills of prundSkills">
+                <ng-container *ngFor="let skills of proudSkills">
                     <ng-container *ngIf="getDataProperty(skills)">
                         <ng-container *ngFor="let skill of getDataProperties(skills); index as i">
                             <mat-expansion-panel class="mat-elevation-z0 expand">
@@ -92,6 +92,14 @@
                                 </mat-expansion-panel-header>
                                 <!-- 属性情報 -->
                                 <span [innerHTML]="skill.desc[currentLanguage]"></span>
+                                <app-extra-data
+                                    [characterIndex]="data.id"
+                                    [skill]="skills"
+                                    [skillIndex]="i"
+                                    [valueIndexs]="skill.paramValidIndexs">
+                                    <br>
+                                    <br>
+                                </app-extra-data>
                             </mat-expansion-panel>
                         </ng-container>
                     </ng-container>

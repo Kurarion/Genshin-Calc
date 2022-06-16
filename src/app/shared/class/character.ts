@@ -98,6 +98,8 @@ export interface CharSkill {
     paramMap: Record<string, number[]>;
     //計算後の記述パラメータ
     paramDescSplitedList: Record<TYPE_SYS_LANG, CharSkillDescObject[]>;
+    //レベルなしのスキルパラメータインデックス
+    paramValidIndexs: number[];
 }
 
 export interface CharSkills {

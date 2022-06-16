@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { CalculatorService, character, CharacterService, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -71,6 +71,7 @@ export class CharacterComponent implements OnInit, OnDestroy {
     this.onChangeLevel(this.selectedLevel);
   }
 
+  @HostListener('window:unload')
   ngOnDestroy(): void {
     //データ保存
     this.characterService.saveData();

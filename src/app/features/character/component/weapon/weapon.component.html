@@ -94,6 +94,13 @@
                         <span><strong>{{getEffectName(selectedSmeltingLevel)[currentLanguage]}}</strong></span>
                         <br>
                         <span [innerHTML]="getEffectContent(selectedSmeltingLevel)[currentLanguage]"></span>
+                        <app-extra-data
+                            [characterIndex]="data.id"
+                            [skill]="name_effect"
+                            [valueIndexs]="getEffectValidIndexs(selectedSmeltingLevel)">
+                            <br>
+                            <br>
+                        </app-extra-data>
                     </div>
                 </mat-expansion-panel>
             </ng-container>

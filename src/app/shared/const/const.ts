@@ -53,6 +53,7 @@ export class Const {
   static readonly NAME_SKILLS_OTHER = 'other';
   static readonly NAME_SKILLS_PROUD = 'proudSkills';
   static readonly NAME_CONSTELLATION = 'constellation';
+  static readonly NAME_EFFECT = 'effect';
 
   static readonly NAME_CONSTELLATION_1 = "0";
   static readonly NAME_CONSTELLATION_2 = "1";
@@ -150,6 +151,10 @@ export class Const {
   static readonly PROP_DMG_BONUS_SKILL = "DMG_BONUS_SKILL";
   //元素爆発ダメージ
   static readonly PROP_DMG_BONUS_ELEMENTAL_BURST = "DMG_BONUS_ELEMENTAL_BURST";
+  //武器ダメージ
+  static readonly PROP_DMG_BONUS_WEAPON = "DMG_BONUS_WEAPON";
+  //その他ダメージ
+  static readonly PROP_DMG_BONUS_OTHER = "DMG_BONUS_OTHER";
 
   //氷元素耐性
   static readonly PROP_DMG_ANTI_CRYO = "DMG_ANTI_CRYO";
@@ -215,6 +220,10 @@ export class Const {
   static readonly PROP_DMG_RATE_UP_SKILL = "DMG_RATE_UP_SKILL";
   //元素爆発ダメージ倍率アップ値
   static readonly PROP_DMG_RATE_UP_ELEMENTAL_BURST = "DMG_RATE_UP_ELEMENTAL_BURST";
+  //武器ダメージ倍率アップ値
+  static readonly PROP_DMG_RATE_UP_WEAPON = "DMG_RATE_UP_WEAPON";
+  //その他ダメージ倍率アップ値
+  static readonly PROP_DMG_RATE_UP_OTHER = "DMG_RATE_UP_OTHER";
   //元素スキル治療倍率アップ値
   static readonly PROP_HEALING_RATE_UP_SKILL = "HEALING_RATE_UP_SKILL";
   //元素爆発治療倍率アップ値
@@ -248,6 +257,10 @@ export class Const {
   static readonly PROP_DMG_VAL_UP_SKILL = "DMG_VAL_UP_SKILL";
   //元素爆発ダメージアップ値
   static readonly PROP_DMG_VAL_UP_ELEMENTAL_BURST = "DMG_VAL_UP_ELEMENTAL_BURST";
+  //武器ダメージアップ値
+  static readonly PROP_DMG_VAL_UP_WEAPON = "DMG_VAL_UP_WEAPON";
+  //その他ダメージアップ値
+  static readonly PROP_DMG_VAL_UP_OTHER = "DMG_VAL_UP_OTHER";
   //元素スキル治療アップ値
   static readonly PROP_HEALING_VAL_UP_SKILL = "HEALING_VAL_UP_SKILL";
   //元素爆発治療アップ値
@@ -281,6 +294,10 @@ export class Const {
   static readonly PROP_DMG_CRIT_RATE_UP_SKILL = "DMG_CRIT_RATE_UP_SKILL";
   //元素爆発ダメージ会心率アップ値
   static readonly PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST = "DMG_CRIT_RATE_UP_ELEMENTAL_BURST";
+  //武器ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_WEAPON = "DMG_CRIT_RATE_UP_WEAPON";
+  //その他ダメージ会心率アップ値
+  static readonly PROP_DMG_CRIT_RATE_UP_OTHER = "DMG_CRIT_RATE_UP_OTHER";
 
   //氷元素ダメージ会心ダメージアップ値
   static readonly PROP_DMG_CRIT_DMG_UP_CRYO = "DMG_CRIT_DMG_UP_CRYO";
@@ -310,6 +327,10 @@ export class Const {
   static readonly PROP_DMG_CRIT_DMG_UP_SKILL = "DMG_CRIT_DMG_UP_SKILL";
   //元素爆発ダメージ会心ダメージアップ値
   static readonly PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST = "DMG_CRIT_DMG_UP_ELEMENTAL_BURST";
+  //武器ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_WEAPON = "DMG_CRIT_DMG_UP_WEAPON";
+  //その他ダメージ会心ダメージアップ値
+  static readonly PROP_DMG_CRIT_DMG_UP_OTHER = "DMG_CRIT_DMG_UP_OTHER";
 
   //元素(増幅)（全）
   static readonly PROP_DMG_ELEMENT_UP = "DMG_ELEMENT_UP";
@@ -407,6 +428,8 @@ export class Const {
     Const.PROP_DMG_BONUS_PLUNGING,
     Const.PROP_DMG_BONUS_SKILL,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
+    Const.PROP_DMG_BONUS_WEAPON,
+    Const.PROP_DMG_BONUS_OTHER,
   ];
   //敵耐性
   static readonly PROPS_ENEMY_ANTI = [
@@ -447,6 +470,8 @@ export class Const {
     Const.PROP_DMG_BONUS_PLUNGING,
     Const.PROP_DMG_BONUS_SKILL,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
+    Const.PROP_DMG_BONUS_WEAPON,
+    Const.PROP_DMG_BONUS_OTHER,
   ];
   //パーセント属性リスト（敵）
   static readonly PROPS_ENEMY_PERCENT = Const.PROPS_CHARA_WEAPON_PERCENT.concat(
@@ -487,6 +512,8 @@ export class Const {
     Const.PROP_DMG_BONUS_PLUNGING,
     Const.PROP_DMG_BONUS_SKILL,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
+    Const.PROP_DMG_BONUS_WEAPON,
+    Const.PROP_DMG_BONUS_OTHER,
     Const.PROP_DMG_ANTI_CRYO,
     Const.PROP_DMG_ANTI_ANEMO,
     Const.PROP_DMG_ANTI_PHYSICAL,
@@ -518,6 +545,8 @@ export class Const {
     Const.PROP_DMG_RATE_UP_PLUNGING,
     Const.PROP_DMG_RATE_UP_SKILL,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST,
+    Const.PROP_DMG_RATE_UP_WEAPON,
+    Const.PROP_DMG_RATE_UP_OTHER,
     Const.PROP_HEALING_RATE_UP_SKILL,
     Const.PROP_HEALING_RATE_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_VAL_UP_CRYO,
@@ -534,6 +563,8 @@ export class Const {
     Const.PROP_DMG_VAL_UP_PLUNGING,
     Const.PROP_DMG_VAL_UP_SKILL,
     Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST,
+    Const.PROP_DMG_VAL_UP_WEAPON,
+    Const.PROP_DMG_VAL_UP_OTHER,
     Const.PROP_HEALING_VAL_UP_SKILL,
     Const.PROP_HEALING_VAL_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_CRIT_RATE_UP_CRYO,
@@ -550,6 +581,8 @@ export class Const {
     Const.PROP_DMG_CRIT_RATE_UP_PLUNGING,
     Const.PROP_DMG_CRIT_RATE_UP_SKILL,
     Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST,
+    Const.PROP_DMG_CRIT_RATE_UP_WEAPON,
+    Const.PROP_DMG_CRIT_RATE_UP_OTHER,
     Const.PROP_DMG_CRIT_DMG_UP_CRYO,
     Const.PROP_DMG_CRIT_DMG_UP_ANEMO,
     Const.PROP_DMG_CRIT_DMG_UP_PHYSICAL,
@@ -564,6 +597,8 @@ export class Const {
     Const.PROP_DMG_CRIT_DMG_UP_PLUNGING,
     Const.PROP_DMG_CRIT_DMG_UP_SKILL,
     Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST,
+    Const.PROP_DMG_CRIT_DMG_UP_WEAPON,
+    Const.PROP_DMG_CRIT_DMG_UP_OTHER,
     Const.PROP_DMG_ELEMENT_UP,
     Const.PROP_DMG_ELEMENT_VAPORIZE_UP,
     Const.PROP_DMG_ELEMENT_MELT_UP,

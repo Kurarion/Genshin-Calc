@@ -85,6 +85,11 @@
       "SWIRL_HYDRO": "水扩散伤害",
       "DESTRUCTION": "破冰伤害",
       "SHIELD": "结晶生命值"
+    },
+    "OTHER": {
+      "HEALING": "治疗值",
+      "PRODUCT": "创造物生命值",
+      "SHIELD": "盾量"
     }
   }
 }

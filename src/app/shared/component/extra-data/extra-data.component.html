@@ -1,9 +1,77 @@
-<ng-container *ngFor="let info of dmgDatas; index as i">
+<ng-container *ngIf="dmgDatas.length != 0 || healingDatas.length != 0">
+    <ng-content></ng-content>
+</ng-container>
+<ng-container>
     <table>
-        <ng-container *ngFor="let prop of propList">
-            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop] ?? colors[i]">
+        <!-- バフ -->
+        <!-- <ng-container *ngFor="let prop of dmgPropList">
+            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]">
                 <td>
                     <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
+                </td>
+                <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
+                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <br>
+                </td>
+            </tr>
+        </ng-container> -->
+    </table>
+</ng-container>
+<ng-container *ngFor="let info of dmgDatas; index as i">
+    <table>
+        <!-- ダメージ -->
+        <ng-container *ngFor="let prop of dmgPropList">
+            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]">
+                <td>
+                    <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
+                </td>
+                <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
+                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <br>
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+</ng-container>
+<ng-container *ngFor="let info of healingDatas; index as i">
+    <table>
+        <!-- 治療 -->
+        <ng-container *ngFor="let prop of healingPropList">
+            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop]">
+                <td>
+                    <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
+                </td>
+                <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
+                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <br>
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+</ng-container>
+<ng-container *ngFor="let info of productDatas; index as i">
+    <table>
+        <!-- 生成物 -->
+        <ng-container *ngFor="let prop of productPropList">
+            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop]">
+                <td>
+                    <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
+                </td>
+                <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
+                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <br>
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+</ng-container>
+<ng-container *ngFor="let info of shieldDatas; index as i">
+    <table>
+        <!-- バリア -->
+        <ng-container *ngFor="let prop of shieldPropList">
+            <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop]">
+                <td>
+                    <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                 </td>
                 <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
                     <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>

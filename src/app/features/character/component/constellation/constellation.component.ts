@@ -16,6 +16,7 @@ export class ConstellationComponent implements OnInit {
   readonly props = Const.PROPS_CHARA_ENEMY_BASE;
   readonly props_sub = Const.PROPS_CHARA_WEAPON_SUB;
   readonly percent_props = Const.PROPS_CHARA_WEAPON_PERCENT;
+  readonly name_constellation = Const.NAME_CONSTELLATION;
 
   //キャラデータ
   @Input('data') data!: character;

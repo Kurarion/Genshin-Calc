@@ -112,31 +112,42 @@ export class ExtraDataService {
       switch(obj?.buff?.settingType){
         case 'switch-value':
         case 'switch':
-          for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
-            if(obj.buff.defaultEnable){
-              if(!result.switchOnSet){
-                result.switchOnSet = {};
+          {
+            // for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
+            let j = obj.buff?.index ?? obj.buff?.constIndex;
+            if(j){
+              if(obj.buff.defaultEnable){
+                if(!result.switchOnSet){
+                  result.switchOnSet = {};
+                }
+                result.switchOnSet![j.toString()] = obj.buff.defaultEnable;
               }
-              result.switchOnSet![j.toString()] = obj.buff.defaultEnable;
             }
           }
           break;
         case 'slider':
-          for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
-            if(obj.buff.sliderInitialValue){
-              if(!result.sliderNumMap){
-                result.sliderNumMap = {};
+          {
+            // for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
+            let j = obj.buff?.index ?? obj.buff?.constIndex;
+            if(j){
+              if(obj.buff.sliderInitialValue){
+                if(!result.sliderNumMap){
+                  result.sliderNumMap = {};
+                }
+                result.sliderNumMap![j.toString()] = obj.buff.sliderInitialValue;
               }
-              result.sliderNumMap![j.toString()] = obj.buff.sliderInitialValue;
             }
           }
           break;
         case 'resident':
-          for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
-            if(!result.switchOnSet){
-              result.switchOnSet = {};
+          {
+            let j = obj.buff?.index ?? obj.buff?.constIndex;
+            if(j){
+              if(!result.switchOnSet){
+                result.switchOnSet = {};
+              }
+              result.switchOnSet![j.toString()] = true;
             }
-            result.switchOnSet![j.toString()] = true;
           }
           break;
       }

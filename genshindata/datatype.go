@@ -87,6 +87,7 @@ type AVATARSKILLINFO struct {
 	ParamDescList        map[string][]string                     `json:"paramDescList"`
 	ParamMap             map[string][]float64                    `json:"paramMap"`
 	ParamDescSplitedList map[string][]AVATARSKILLSPLITEDDESCINFO `json:"paramDescSplitedList"`
+	ParamValidIndexs     []int                                   `json:"paramValidIndexs"`
 }
 
 //人物技能详细
@@ -124,8 +125,9 @@ type WEAPON struct {
 
 //武器特效
 type SKILLAFFIX struct {
-	Name map[string]string `json:"name"`
-	Desc map[string]string `json:"desc"`
+	Name             map[string]string `json:"name"`
+	Desc             map[string]string `json:"desc"`
+	ParamValidIndexs []int             `json:"paramValidIndexs"`
 	GenshinSkillAffixData
 }
 

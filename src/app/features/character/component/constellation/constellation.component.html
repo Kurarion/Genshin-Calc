@@ -22,6 +22,14 @@
                         </mat-expansion-panel-header>
                         <!-- 効果情報 -->
                         <span [innerHTML]="talent.desc[currentLanguage]"></span>
+                        <app-extra-data
+                            [characterIndex]="data.id"
+                            [skill]="name_constellation"
+                            [skillIndex]="i"
+                            [valueIndexs]="talent.paramValidIndexs">
+                            <br>
+                            <br>
+                        </app-extra-data>
                     </mat-expansion-panel>
                 </ng-container>
             </mat-accordion>

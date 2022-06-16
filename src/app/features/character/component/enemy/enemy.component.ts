@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input, OnInit } from '@angular/core';
 import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -97,6 +97,7 @@ export class EnemyComponent implements OnInit {
     this.onChangePlayerNum(this.selectedPlayerNum);
   }
 
+  @HostListener('window:unload')
   ngOnDestroy(): void {
     //データ保存
     this.enemyService.saveData();

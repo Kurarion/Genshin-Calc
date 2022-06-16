@@ -21,7 +21,7 @@ export class TalentComponent implements OnInit {
 
   readonly skills = [Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST];
   readonly otherSkills = [Const.NAME_SKILLS_OTHER];
-  readonly prundSkills = [Const.NAME_SKILLS_PROUD]
+  readonly proudSkills = [Const.NAME_SKILLS_PROUD];
   readonly levelPadNum = 2;
   
   readonly talentDefaultLevel = Const.NAME_TALENT_DEFAULT_LEVEL;

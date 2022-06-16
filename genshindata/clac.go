@@ -409,6 +409,7 @@ func update() error {
 				GenshinSkillAffixData: weaponSkillAffixDataList[i],
 				Name:                  getTextFromHash(weaponSkillAffixDataList[i].NameTextMapHash, textMap, false),
 				Desc:                  getRegxTextFromHash(weaponSkillAffixDataList[i].DescTextMapHash, textMap, false),
+				ParamValidIndexs:      calWeaponNoLevelValidParamIndexs(weaponSkillAffixDataList[i].ParamList),
 			}
 	}
 	//圣遗物
@@ -589,10 +590,11 @@ func update() error {
 				continue
 			}
 			dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, AVATARSKILLINFO{
-				Name:     getTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].NameTextMapHash, textMap, false),
-				Desc:     getRegxTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].DescTextMapHash, textMap, false),
-				Icon:     avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
-				ParamMap: avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
+				Name:             getTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].NameTextMapHash, textMap, false),
+				Desc:             getRegxTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].DescTextMapHash, textMap, false),
+				Icon:             avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
+				ParamMap:         avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
+				ParamValidIndexs: calCharacterNoLevelValidParamIndexs(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]),
 			})
 		}
 		for ii := range temp.Talents {
@@ -600,13 +602,15 @@ func update() error {
 			if temp2 == 0 {
 				continue
 			}
+			tempParamMap := map[string][]float64{
+				fmt.Sprintf(configSkillLevelFormat, 1): avatarTalentDataMap[temp2].ParamList,
+			}
 			dataAvatarSkillsMap[temp.Id].Talents = append(dataAvatarSkillsMap[temp.Id].Talents, AVATARSKILLINFO{
-				Name: getTextFromHash(avatarTalentDataMap[temp2].NameTextMapHash, textMap, false),
-				Desc: getRegxTextFromHash(avatarTalentDataMap[temp2].DescTextMapHash, textMap, false),
-				Icon: avatarTalentDataMap[temp2].Icon,
-				ParamMap: map[string][]float64{
-					fmt.Sprintf(configSkillLevelFormat, 1): avatarTalentDataMap[temp2].ParamList,
-				},
+				Name:             getTextFromHash(avatarTalentDataMap[temp2].NameTextMapHash, textMap, false),
+				Desc:             getRegxTextFromHash(avatarTalentDataMap[temp2].DescTextMapHash, textMap, false),
+				Icon:             avatarTalentDataMap[temp2].Icon,
+				ParamMap:         tempParamMap,
+				ParamValidIndexs: calCharacterNoLevelValidParamIndexs(tempParamMap),
 			})
 		}
 	}
@@ -1007,4 +1011,31 @@ func calParamDesc(paramDescList map[string][]string) map[string][]AVATARSKILLSPL
 
 	return results
 
+}
+
+//无等级技能描述
+func calCharacterNoLevelValidParamIndexs(paramMap map[string][]float64) []int {
+	results := make([]int, 0)
+	paramList := paramMap[fmt.Sprintf(configSkillLevelFormat, 1)]
+	for i, v := range paramList {
+		if v == 0 {
+			break
+		}
+		results = append(results, i)
+	}
+
+	return results
+}
+
+//无等级技能描述
+func calWeaponNoLevelValidParamIndexs(paramList []float64) []int {
+	results := make([]int, 0)
+	for i, v := range paramList {
+		if v == 0 {
+			break
+		}
+		results = append(results, i)
+	}
+
+	return results
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -42,6 +42,8 @@ export class WeaponComponent implements OnInit, OnDestroy {
   }
   private readonly levelPadNum = 2;
   private readonly smeltingLevelPadNum = 1;
+
+  readonly name_effect = Const.NAME_EFFECT;
 
   readonly props = Const.PROPS_WEAPON_BASE;
   readonly props_sub = Const.PROPS_CHARA_WEAPON_SUB;
@@ -125,6 +127,7 @@ export class WeaponComponent implements OnInit, OnDestroy {
     this.onChangeSmeltingLevel(this.selectedSmeltingLevel);
   }
 
+  @HostListener('window:unload')
   ngOnDestroy(): void {
     //データ保存
     this.weaponService.saveData();
@@ -200,6 +203,10 @@ export class WeaponComponent implements OnInit, OnDestroy {
 
   getEffectContent(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {
     return this.weaponData.skillAffixMap[selectedSmeltingLevel]!.desc;
+  }
+
+  getEffectValidIndexs(selectedSmeltingLevel: string): number[]{
+    return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexs;
   }
 
   /**

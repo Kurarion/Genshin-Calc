@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CalculatorService, DamageResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo } from 'src/app/shared/shared.module';
+import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-data',
@@ -20,7 +20,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
     "DENDRO": "	#9BCD9B",
   }
 
-  readonly propList: (keyof DamageResult)[] = [
+  readonly dmgPropList: (keyof DamageResult)[] = [
     'originDmg',
     'critDmg',
     'expectDmg',
@@ -41,6 +41,16 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
     'shieldHp',
     'destructionDmg',
   ];
+  readonly healingPropList: (keyof HealingResult)[] = [
+    'healing',
+  ];
+  readonly productPropList: (keyof ProductResult)[] = [
+    'product',
+  ];
+  readonly shieldPropList: (keyof ShieldResult)[] = [
+    'shield',
+  ];
+
   readonly propNameMap: Record<string, string> = {
     'originDmg': 'ORIGIN',
     'critDmg': 'CRIT',
@@ -61,6 +71,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
     'swirlHydroDmg': 'SWIRL_HYDRO',
     'shieldHp': 'SHIELD',
     'destructionDmg': 'DESTRUCTION',
+
+    'healing': 'HEALING',
+    'product': 'PRODUCT',
+    'shield': 'SHIELD',
   };
   readonly specialColorMap: Record<string, string|undefined> = {
     'overloadedDmg': '#FFE4E1',
@@ -73,12 +87,18 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
     'swirlHydroDmg': '#C6E2FF',
     'shieldHp': '#EEE685',
     'destructionDmg': '#FAFAFA',
+
+    'healing': '#C1FFC1',
+    'product': '#C1FFC1',
+    'shield': '#EEE685',
   };
 
   //キャラ
   @Input('characterIndex') characterIndex!: number | string;
   //スキル
   @Input('skill') skill!: string;
+  //スキルサブインデックス
+  @Input('skillIndex') skillIndex!: number;
   //インデックス値
   @Input('valueIndexs') valueIndexs!: number[];
   //強制元素オーバライド
@@ -86,19 +106,32 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
 
   //ダメージデータ
   dmgDatas!: DamageResult[];
-  //カラー
-  colors!: string[];
+  //治療データ
+  healingDatas!: HealingResult[];
+  //バリアデータ
+  shieldDatas!: ShieldResult[];
+  //生成物生命値データ
+  productDatas!: ProductResult[];
+  //ダメージカラー
+  dmgColors!: string[];
   //変更検知
   subscription!: Subscription;
 
   constructor(private calculatorService: CalculatorService) { }
 
   ngOnInit(): void {
-    this.initDatas();
+    this.initDamageDatas();
+    this.initHealingDatas();
+    this.initShieldDatas();
+    this.initProducDatas();
+    //変更検知
     this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
       if(v){
         console.log("!!!!!!")
-        this.initDatas();
+        this.initDamageDatas();
+        this.initHealingDatas();
+        this.initShieldDatas();
+        this.initProducDatas();
       }
     });
   }
@@ -115,16 +148,40 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
     }
   }
 
-  initDatas(){
-    this.dmgDatas = this.getInfos();
-    this.colors = [];
+  initDamageDatas(){
+    this.dmgDatas = this.getDmgInfos();
+    this.dmgColors = [];
     for(let data of this.dmgDatas){
-      this.colors.push(this.getElementColor(data.elementBonusType));
+      this.dmgColors.push(this.getElementColor(data.elementBonusType));
     }
   }
+  initHealingDatas(){
+    this.healingDatas = this.getHealingInfos();
+  }
+  initShieldDatas(){
+    this.shieldDatas = this.getShieldInfos();
+  }
+  initProducDatas(){
+    this.productDatas = this.getProductInfos();
+  }
 
-  private getInfos(){
-    let temp = this.calculatorService.getSkillDmgValue(this.characterIndex, this.skill, this.valueIndexs, this.overrideElement);
+  private getDmgInfos(){
+    let temp = this.calculatorService.getSkillDmgValue(this.characterIndex, this.skill, this.valueIndexs, this.overrideElement, this.skillIndex);
+    return temp;
+  }
+
+  private getHealingInfos(){
+    let temp = this.calculatorService.getSkillHealingValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    return temp;
+  }
+
+  private getShieldInfos(){
+    let temp = this.calculatorService.getSkillShieldValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    return temp;
+  }
+
+  private getProductInfos(){
+    let temp = this.calculatorService.getSkillProductHpValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
     return temp;
   }
 
