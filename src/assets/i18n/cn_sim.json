@@ -89,7 +89,8 @@
     "OTHER": {
       "HEALING": "治疗值",
       "PRODUCT": "创造物生命值",
-      "SHIELD": "盾量"
+      "SHIELD": "盾量",
+      "BUFF": "增益"
     }
   }
 }

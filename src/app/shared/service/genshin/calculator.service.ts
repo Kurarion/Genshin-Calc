@@ -96,6 +96,16 @@ export interface ProductResult {
   product: number;
 }
 
+export interface BuffResult {
+  valueIndex: number;
+  type: string;
+  switchValue?: boolean;
+  sliderValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
 interface SkillParamInf {
   paramMap?: Record<string, number[]>;
   paramList?: number[];
@@ -856,6 +866,7 @@ export class CalculatorService {
   initAllData(index: string | number){
     let indexStr = index.toString();
     this.dataMap[indexStr].allData = this.getAllData(indexStr);
+    console.log(this.dataMap[indexStr].allData);
     this.setDirty(indexStr, false);
   }
 
@@ -1170,10 +1181,10 @@ export class CalculatorService {
     let healingBonusType = param.healingBonusType;
     //計算
     let healing: number = 0;
-    if(base && rate){
+    if(base != undefined && rate != undefined){
       healing += data[base] * rate;
     }
-    if(extra){
+    if(extra != undefined){
       healing += extra;
     }
     healing *= (1 + data[Const.PROP_HEALING_BONUS]) * (1 + data[Const.PROP_REVERSE_HEALING_BONUS]);
@@ -1200,10 +1211,10 @@ export class CalculatorService {
     let rate = param.rate;
     //計算
     let shield: number = 0;
-    if(base && rate){
+    if(base != undefined && rate != undefined){
       shield += data[base] * rate;
     }
-    if(extra){
+    if(extra != undefined){
       shield += extra;
     }
     shield *= (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]);
@@ -1227,10 +1238,10 @@ export class CalculatorService {
     let rate = param.rate;
     //計算
     let product: number = 0;
-    if(base && rate){
+    if(base != undefined && rate != undefined){
       product += data[base] * rate;
     }
-    if(extra){
+    if(extra != undefined){
       product += extra;
     }
     result = {
@@ -1393,7 +1404,7 @@ export class CalculatorService {
       for(let info of infos){
         //全含め必要
         let healingInfo = info.healing;
-        if(healingInfo?.customValue){
+        if(healingInfo?.customValue != undefined){
           let base = healingInfo.base!;
           let healingBonusType = healingInfo.healingBonusType;
           let rate = healingInfo.customValue;
@@ -1426,7 +1437,7 @@ export class CalculatorService {
               }
               let base = healingInfo.base!;
               let healingBonusType = healingInfo.healingBonusType;
-              if(healingInfo.constIndex){
+              if(healingInfo.constIndex != undefined){
                 switch(healingInfo.constCalRelation){
                   case "-":
                     extra *= -1;
@@ -1482,7 +1493,7 @@ export class CalculatorService {
         for(let info of infos){
           //全含め必要
           let shieldInfo = info.shield;
-          if(shieldInfo?.customValue){
+          if(shieldInfo?.customValue != undefined){
             let base = shieldInfo.base!;
             let rate = shieldInfo.customValue;
             params.push({
@@ -1513,7 +1524,7 @@ export class CalculatorService {
                 }
                 
                 let base = shieldInfo.base!;
-                if(shieldInfo.constIndex){
+                if(shieldInfo.constIndex != undefined){
                   switch(shieldInfo.constCalRelation){
                     case "-":
                       extra *= -1;
@@ -1568,7 +1579,7 @@ export class CalculatorService {
         for(let info of infos){
           //全含め必要
           let productHpInfo = info.product;
-          if(productHpInfo?.customValue){
+          if(productHpInfo?.customValue != undefined){
             let base = productHpInfo.base!;
             let rate = productHpInfo.customValue;
             params.push({
@@ -1598,7 +1609,7 @@ export class CalculatorService {
                   extra = productHpInfo.constIndex?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
                 }
                 let base = productHpInfo.base!;
-                if(productHpInfo.constIndex){
+                if(productHpInfo.constIndex != undefined){
                   switch(productHpInfo.constCalRelation){
                     case "-":
                       extra *= -1;
@@ -1621,6 +1632,103 @@ export class CalculatorService {
       }
   
       return results;
+  }
+
+  getSkillBuffValue(index: string | number, skill: string, valueIndexs: number[], skillIndex?: number | string){
+    let indexStr = index.toString();
+    let results: BuffResult[] = [];
+
+    if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT].includes(skill)){
+        let characterData = this.dataMap[indexStr].characterData;
+        let weaponData = this.dataMap[indexStr].weaponData;
+        let extraCharacterData = this.extraDataService.getCharacter(indexStr);
+        let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
+        let infos: ExtraSkillInfo[];
+        let currentLevel: string;
+        if(skill == Const.NAME_CONSTELLATION){
+          infos = extraCharacterData?.constellation![skillIndex as string] ?? [];
+          currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+        }else if(skill == Const.NAME_SKILLS_PROUD){
+          infos = extraCharacterData?.skills!.proudSkills[skillIndex as number] ?? [];
+          currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+        }else if(skill == Const.NAME_EFFECT){
+          infos = extraWeaponData?.effect ?? [];
+          currentLevel = this.getWeaponAffixLevel(index);
+        }else{
+          infos = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
+          currentLevel = this.getCharacterSkillLevel(indexStr, skill);
+        }
+  
+        for(let info of infos){
+          //全含め必要
+          let buffInfo = info.buff;
+          for(let valueIndex of valueIndexs){
+            let tempValue: any;
+            if(buffInfo && buffInfo.index != undefined && buffInfo.index == valueIndex){
+              switch(buffInfo.settingType){
+                case 'switch-value':
+                case 'switch':
+                  if(skill == Const.NAME_EFFECT){
+                    tempValue = this.weaponService.getExtraSwitch(indexStr, skill, valueIndex, skillIndex);
+                  }else{
+                    tempValue = this.characterService.getExtraSwitch(indexStr, skill, valueIndex, skillIndex);
+                  }
+                  results.push({
+                    valueIndex: valueIndex,
+                    type: 'switch',
+                    switchValue: tempValue,
+                  })
+                  break;
+                case 'slider':
+                  if(skill == Const.NAME_EFFECT){
+                    tempValue = this.weaponService.getExtraSlider(indexStr, skill, valueIndex, skillIndex);
+                  }else{
+                    tempValue = this.characterService.getExtraSlider(indexStr, skill, valueIndex, skillIndex);
+                  }
+                  results.push({
+                    valueIndex: valueIndex,
+                    type: 'slider',
+                    sliderValue: tempValue,
+                    min: buffInfo.sliderMin ?? 0,
+                    max: buffInfo.sliderMax ?? 1,
+                    step: buffInfo.sliderStep ?? 1,
+                  })
+                  break;
+                case 'resident':
+                default:
+                  continue;
+              }
+            }
+          }
+        }
+      }
+  
+      return results;
+  }
+
+  setSkillBuffValue(index: string | number, skill: string, valueIndex: number, type: string, setValue: number | boolean, skillIndex?: number | string){
+    let indexStr = index.toString();
+    if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
+    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD].includes(skill)){
+      switch(type){
+        case 'switch':
+          this.characterService.setExtraSwitch(indexStr, skill, valueIndex, setValue as boolean, skillIndex);
+          break;
+        case 'slider':
+          this.characterService.setExtraSlider(indexStr, skill, valueIndex, setValue as number, skillIndex);
+          break;
+      }
+    }else if([Const.NAME_EFFECT].includes(skill)){
+      switch(type){
+        case 'switch':
+          this.weaponService.setExtraSwitch(indexStr, skill, valueIndex, setValue as boolean, skillIndex);
+          break;
+        case 'slider':
+          this.weaponService.setExtraSlider(indexStr, skill, valueIndex, setValue as number, skillIndex);
+          break;
+      }
+    }
   }
 
   //計算用情報合計取得
@@ -1668,7 +1776,7 @@ export class CalculatorService {
       let toAdd = result[buff.base!] * buff.multiValue!;
       if(buff.maxVal && toAdd > buff.maxVal){
         toAdd = buff.maxVal;
-      }else if(buff.specialMaxVal){
+      }else if(buff.specialMaxVal != undefined){
         let specialMaxVal = result[buff.specialMaxVal.base!] * buff.specialMaxVal.multiValue!;
         if(toAdd > specialMaxVal){
           toAdd = specialMaxVal;
@@ -1715,11 +1823,11 @@ export class CalculatorService {
     result += this.getCharacterData(indexStr)[genshinDataProp as keyof CharStatus] ?? 0;
     result += this.getWeaponData(indexStr)[genshinDataProp as keyof WeaponStatus] ?? 0;
     let extraCharaResult = this.dataMap[indexStr].extraCharaResult!;
-    if(extraCharaResult[prop]){
+    if(extraCharaResult[prop] != undefined){
       result += extraCharaResult[prop];
     }
     let extraWeaponResult = this.dataMap[indexStr].extraWeaponResult!;
-    if(extraWeaponResult[prop]){
+    if(extraWeaponResult[prop] != undefined){
       result += extraWeaponResult[prop];
     }
 
@@ -1850,13 +1958,13 @@ export class CalculatorService {
       let isEnableInSlider = true;
       // for(let index of buff?.index ?? buff?.constIndex ?? []){
       let index = buff?.index ?? buff?.constIndex ?? -1;
-      if(!(index in switchOnSet)){
+      if(!(index in switchOnSet) || switchOnSet[index] != true){
         isEnableInSwitch = false;
         // break;
       }
       // }
       // for(let index of buff?.index ?? buff?.constIndex ?? []){
-      if(!(index in sliderNumMap)){
+      if(!(index in sliderNumMap) || typeof sliderNumMap[index] != "number"){
         isEnableInSlider = false;
         // break;
       }
@@ -1864,17 +1972,17 @@ export class CalculatorService {
       if(buff){
         if(isEnableInSwitch){
           let indexValue = 0;
-          if(buff?.index){
+          if(buff?.index != undefined){
             if(skillData.paramMap){
               indexValue = skillData.paramMap[skillLevel][buff?.index!];
             }else if(skillData.paramList){
               indexValue = skillData.paramList[buff?.index!];
             }
-          }else if(buff?.customValue){
+          }else if(buff?.customValue != undefined){
             indexValue = buff.customValue;
           }
           let constIndexValue = 0;
-          if(buff?.constIndex){
+          if(buff?.constIndex != undefined){
             if(skillData.paramMap){
               constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
             }else if(skillData.paramList){
@@ -1899,7 +2007,7 @@ export class CalculatorService {
           let unableSelf = buff?.unableSelf ?? false;
     
           let maxValIndexValue = 0;
-          if(buff?.maxValIndex){
+          if(buff?.maxValIndex != undefined){
             if(skillData.paramMap){
               maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
             }else if(skillData.paramList){
@@ -1908,7 +2016,7 @@ export class CalculatorService {
           }
           let maxValBase = buff?.maxValBase;
           let maxValConstIndexValue = 0;
-          if(buff?.maxValConstIndex){
+          if(buff?.maxValConstIndex != undefined){
             if(skillData.paramMap){
               maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
             }else if(skillData.paramList){
@@ -1967,17 +2075,17 @@ export class CalculatorService {
         }else if(isEnableInSlider){
           let id = 0;
           let indexValue = 0;
-          if(buff?.index){
+          if(buff?.index != undefined){
             if(skillData.paramMap){
               indexValue = skillData.paramMap[skillLevel][buff?.index!];
             }else if(skillData.paramList){
               indexValue = skillData.paramList[buff?.index!];
             }
-          }else if(buff?.customValue){
+          }else if(buff?.customValue != undefined){
             indexValue = buff.customValue;
           }
           let constIndexValue = 0;
-          if(buff?.constIndex){
+          if(buff?.constIndex != undefined){
             if(skillData.paramMap){
               constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
             }else if(skillData.paramList){
@@ -2037,7 +2145,7 @@ export class CalculatorService {
                 break;
             }
             for(let tar of targets){
-              if(!result[tar]){
+              if(result[tar] == undefined){
                 result[tar] = 0;
               }
               result[tar] += value * sliderNumMap[buff?.index!];

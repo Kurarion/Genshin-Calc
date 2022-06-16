@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Const, ExtraDataService, ExtraWeaponData, GenshinDataService, StorageService, weapon } from 'src/app/shared/shared.module';
+import { Const, ExtraDataService, ExtraStatus, ExtraWeaponData, GenshinDataService, StorageService, weapon } from 'src/app/shared/shared.module';
 
 export interface WeaponStorageInfo {
   weapon?: string;
@@ -120,8 +120,52 @@ export class WeaponService {
     return undefined;
   }
 
+  setExtraSwitch(index: string | number, skill: string, valueIndex: number, enable: boolean, skillIndex?: number | string){
+    let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
+    if(skillStatus['switchOnSet'] == undefined){
+      skillStatus['switchOnSet'] = {};
+    }
+    skillStatus['switchOnSet'][valueIndex.toString()] = enable;
+  }
+
+  setExtraSlider(index: string | number, skill: string, valueIndex: number, setValue: number, skillIndex?: number | string){
+    let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
+    if(skillStatus['sliderNumMap'] == undefined){
+      skillStatus['sliderNumMap'] = {};
+    }
+    skillStatus['sliderNumMap'][valueIndex.toString()] = setValue;
+  }
+
+  getExtraSwitch(index: string | number, skill: string, valueIndex: number, skillIndex?: number | string){
+    let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
+    if(skillStatus['switchOnSet'] != undefined){
+      return skillStatus['switchOnSet'][valueIndex.toString()];
+    }
+    return false;
+  }
+
+  getExtraSlider(index: string | number, skill: string, valueIndex: number, skillIndex?: number | string){
+    let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
+    if(skillStatus['sliderNumMap'] != undefined){
+      return skillStatus['sliderNumMap'][valueIndex.toString()];
+    }
+    return 0;
+  }
+
   //ストレージに保存
   saveData(){
     this.storageService.setJSONItem(Const.SAVE_CHARACTER_WEAPON, this.dataMap)
+  }
+
+  private getExtraSkillData(index: string | number, skill: string, skillIndex?: number | string){
+    let keyStr = index.toString();
+    let skillStatus!: ExtraStatus;
+    let extraData = this.dataMap[keyStr].extra;
+    switch(skill){
+      case Const.NAME_EFFECT:
+        skillStatus = extraData!.effect!;
+        break;
+    }
+    return skillStatus!;
   }
 }

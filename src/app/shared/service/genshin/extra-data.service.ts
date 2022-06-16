@@ -30,7 +30,7 @@ export interface ExtraWeaponData {
 // }
 
 export interface ExtraStatus {
-  switchOnSet?: Record<string, any>;
+  switchOnSet?: Record<string, boolean>;
   sliderNumMap?: Record<string, number>;
 }
 
@@ -115,7 +115,7 @@ export class ExtraDataService {
           {
             // for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
             let j = obj.buff?.index ?? obj.buff?.constIndex;
-            if(j){
+            if(j != undefined){
               if(obj.buff.defaultEnable){
                 if(!result.switchOnSet){
                   result.switchOnSet = {};
@@ -129,7 +129,7 @@ export class ExtraDataService {
           {
             // for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
             let j = obj.buff?.index ?? obj.buff?.constIndex;
-            if(j){
+            if(j != undefined){
               if(obj.buff.sliderInitialValue){
                 if(!result.sliderNumMap){
                   result.sliderNumMap = {};
@@ -142,7 +142,7 @@ export class ExtraDataService {
         case 'resident':
           {
             let j = obj.buff?.index ?? obj.buff?.constIndex;
-            if(j){
+            if(j != undefined){
               if(!result.switchOnSet){
                 result.switchOnSet = {};
               }

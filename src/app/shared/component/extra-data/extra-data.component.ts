@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSliderChange } from '@angular/material/slider';
 import { Subscription } from 'rxjs';
-import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult } from 'src/app/shared/shared.module';
+import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-data',
@@ -112,18 +114,29 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
   shieldDatas!: ShieldResult[];
   //生成物生命値データ
   productDatas!: ProductResult[];
+  //バフデータ
+  buffDatas!: BuffResult[];
+  //バフswitch
+  buffSwitchValue!: boolean;
+  //バフslider
+  buffSliderValue!: number;
+  buffSliderMin!: number;
+  buffSliderMax!: number;
+  buffSliderStep!: number;
   //ダメージカラー
   dmgColors!: string[];
   //変更検知
   subscription!: Subscription;
 
-  constructor(private calculatorService: CalculatorService) { }
+  constructor(private calculatorService: CalculatorService, 
+    private characterService: CharacterService) { }
 
   ngOnInit(): void {
     this.initDamageDatas();
     this.initHealingDatas();
     this.initShieldDatas();
     this.initProducDatas();
+    this.initBuffDatas();
     //変更検知
     this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
       if(v){
@@ -132,6 +145,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
         this.initHealingDatas();
         this.initShieldDatas();
         this.initProducDatas();
+        this.initBuffDatas();
       }
     });
   }
@@ -158,11 +172,35 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
   initHealingDatas(){
     this.healingDatas = this.getHealingInfos();
   }
+
   initShieldDatas(){
     this.shieldDatas = this.getShieldInfos();
   }
+
   initProducDatas(){
     this.productDatas = this.getProductInfos();
+  }
+
+  initBuffDatas(){
+    this.buffDatas = this.getBuffInfos();
+  }
+
+  onChangeSwitch(change: MatSlideToggleChange, valueIndex: number){
+    this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'switch', change.checked as boolean, this.skillIndex);
+    if(this.skill == Const.NAME_EFFECT){
+      this.calculatorService.initExtraWeaponData(this.characterIndex);
+    }else{
+      this.calculatorService.initExtraCharacterData(this.characterIndex);
+    }
+  }
+
+  onChangeSlider(change: MatSliderChange, valueIndex: number){
+    this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'slider', change.value as number, this.skillIndex);
+    if(this.skill == Const.NAME_EFFECT){
+      this.calculatorService.initExtraWeaponData(this.characterIndex);
+    }else{
+      this.calculatorService.initExtraCharacterData(this.characterIndex);
+    }
   }
 
   private getDmgInfos(){
@@ -182,6 +220,11 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
 
   private getProductInfos(){
     let temp = this.calculatorService.getSkillProductHpValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    return temp;
+  }
+
+  private getBuffInfos(){
+    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
     return temp;
   }
 

@@ -102,6 +102,7 @@ export interface ExtraSkillBuff {
   maxValConstIndex?: number;
   //スライダー
   sliderMax?: number;
+  sliderMin?: number;
   sliderInitialValue?: number;
   sliderStep?: number;
   //設定
