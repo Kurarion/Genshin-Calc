@@ -90,6 +90,8 @@ export interface ExtraSkillBuff {
   //----------------------
   //数値計算ベース
   base?: string;
+  baseModifyValue?: number;
+  baseModifyRelation?: TYPE_RELATION;
   //目標
   target: string[];
   convertElement?: string;
@@ -105,6 +107,8 @@ export interface ExtraSkillBuff {
   sliderMin?: number;
   sliderInitialValue?: number;
   sliderStep?: number;
+  //特殊スライダーインデックス
+  sliderStartIndex?: number;
   //設定
   settingType?: TYPE_BUFF_SETTING;
   defaultEnable?: boolean;

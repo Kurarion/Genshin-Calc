@@ -19,6 +19,7 @@ export interface CalResult{
 export interface SpecialBuff {
   target?: string;
   base?: string;
+  baseModifyValue?: number;
   multiValue?: number;
   priority?: number;
   maxVal?: number;
@@ -811,7 +812,8 @@ export class CalculatorService {
       this.dataMap[indexStr] = {};
     }
     this.dataMap[indexStr].characterData = this.characterService.get(indexStr);
-    this.setDirty(indexStr, true);
+    // this.setDirty(indexStr, true);
+    this.initExtraCharacterData(indexStr);
   }
   
   //初期化（キャラ追加）
@@ -835,7 +837,8 @@ export class CalculatorService {
       this.dataMap[indexStr] = {};
     }
     this.dataMap[indexStr].weaponData = this.weaponService.get(weaponIndexStr);
-    this.setDirty(indexStr, true);
+    // this.setDirty(indexStr, true);
+    this.initExtraWeaponData(indexStr);
   }
 
   //初期化（武器追加）
@@ -1773,7 +1776,7 @@ export class CalculatorService {
 
     //スペシャル処理
     for(let buff of specialOrders){
-      let toAdd = result[buff.base!] * buff.multiValue!;
+      let toAdd = (result[buff.base!] + buff?.baseModifyValue! ?? 0) * buff.multiValue!;
       if(buff.maxVal && toAdd > buff.maxVal){
         toAdd = buff.maxVal;
       }else if(buff.specialMaxVal != undefined){
@@ -1998,6 +2001,15 @@ export class CalculatorService {
           let constCalRelation = buff?.constCalRelation ?? '+';
     
           let base = buff?.base;
+          let baseModifyValue = buff?.baseModifyValue;
+          let baseModifyRelation = buff?.baseModifyRelation;
+          if(baseModifyValue != undefined){
+            switch(baseModifyRelation){
+              case "-":
+                baseModifyValue = -1 * baseModifyValue;
+                break;
+            }
+          }
           let priority = buff?.priority ?? 0;
     
           let targets = buff?.target;
@@ -2033,6 +2045,7 @@ export class CalculatorService {
             //特殊バフ
             let temp: SpecialBuff = {};
             temp.base = base;
+            temp.baseModifyValue = baseModifyValue;
             temp.multiValue = indexValue;
             temp.priority = priority;
             if(maxValBase){
@@ -2101,6 +2114,15 @@ export class CalculatorService {
           let constCalRelation = buff?.constCalRelation ?? '+';
     
           let base = buff?.base;
+          let baseModifyValue = buff?.baseModifyValue;
+          let baseModifyRelation = buff?.baseModifyRelation;
+          if(baseModifyValue != undefined){
+            switch(baseModifyRelation){
+              case "-":
+                baseModifyValue = -1 * baseModifyValue;
+                break;
+            }
+          }
           let priority = buff?.priority ?? 0;
     
           let targets = buff?.target;
@@ -2111,6 +2133,7 @@ export class CalculatorService {
 
           let sliderMax = buff?.sliderMax;
           let sliderStep = buff?.sliderStep;
+          let sliderStartIndex = buff?.sliderStartIndex;
     
           if(unableSelf){
             //TODO
@@ -2121,7 +2144,20 @@ export class CalculatorService {
             //特殊バフ
             let temp: SpecialBuff = {};
             temp.base = base;
-            temp.multiValue = indexValue * sliderNumMap[buff?.index!];
+            temp.baseModifyValue = baseModifyValue;
+            if(sliderStartIndex != undefined){
+              if(sliderNumMap[buff?.index!] == 0){
+                temp.multiValue = 0;
+              }else{
+                if(skillData.paramMap){
+                  temp.multiValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                }else if(skillData.paramList){
+                  temp.multiValue = skillData.paramList[sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                }
+              }
+            }else{
+              temp.multiValue = indexValue * sliderNumMap[buff?.index!];
+            }
             temp.priority = priority;
 
             for(let tar of targets){
@@ -2148,7 +2184,21 @@ export class CalculatorService {
               if(result[tar] == undefined){
                 result[tar] = 0;
               }
-              result[tar] += value * sliderNumMap[buff?.index!];
+              let resultValue: number;
+              if(sliderStartIndex != undefined){
+                if(sliderNumMap[buff?.index!] == 0){
+                  resultValue = 0;
+                }else{
+                  if(skillData.paramMap){
+                    resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                  }else if(skillData.paramList){
+                    resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                  }
+                }
+              }else{
+                resultValue = value * sliderNumMap[buff?.index!];
+              }
+              result[tar] += resultValue!;
             }
           }
         }

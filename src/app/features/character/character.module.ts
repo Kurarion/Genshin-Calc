@@ -13,6 +13,8 @@ import { PercentPipe, DecimalPipe } from '@angular/common';
 import { ConstellationComponent } from './component/constellation/constellation.component';
 import { EnemyComponent } from './component/enemy/enemy.component';
 import { ExtraInfoComponent } from './component/extra-info/extra-info.component';
+import { ArtifactComponent } from './component/artifact/artifact.component';
+import { OtherComponent } from './component/other/other.component';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { ExtraInfoComponent } from './component/extra-info/extra-info.component'
     ConstellationComponent,
     EnemyComponent,
     ExtraInfoComponent,
+    ArtifactComponent,
+    OtherComponent,
   ],
   providers: [
     PercentPipe,
