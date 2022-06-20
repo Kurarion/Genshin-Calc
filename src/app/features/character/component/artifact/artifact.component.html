@@ -9,15 +9,41 @@
             </svg>
         </div>
         <mat-card-header>
-            <mat-card-title [innerText]="'CHARACTER.TALENTS' | translate"></mat-card-title>
+            <mat-card-title [innerText]="'ARTIFACT.NAME' | translate"></mat-card-title>
         </mat-card-header>
         <mat-card-content class="content">
-            
-            <mat-tab-group>
-                <mat-tab label="First"> Content 1 </mat-tab>
-                <mat-tab label="Second"> Content 2 </mat-tab>
-                <mat-tab label="Third"> Content 3 </mat-tab>
-              </mat-tab-group>
+            <mat-tab-group [(selectedIndex)]="selectedIndex">
+                <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
+                    <!-- 聖遺物詳細 -->
+                    <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs>
+                        <mat-tab [label]="'ARTIFACT.FLOWER' | translate"> Content 1 </mat-tab>
+                        <mat-tab [label]="'ARTIFACT.PLUME' | translate"> Content 2 </mat-tab>
+                        <mat-tab [label]="'ARTIFACT.SANDS' | translate"> Content 3 </mat-tab>
+                        <mat-tab [label]="'ARTIFACT.GOBLET' | translate"> Content 4 </mat-tab>
+                        <mat-tab [label]="'ARTIFACT.CIRCLET' | translate"> Content 5 </mat-tab>
+                        <mat-tab disabled>
+                            <ng-template mat-tab-label>
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
+                                        <mat-icon>delete</mat-icon>
+                                        <span [innerText]="'SYS.DELETE' | translate"></span>
+                                    </button>
+                                </mat-menu>
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-tab>
+                <mat-tab disabled>
+                    <ng-template mat-tab-label>
+                        <button mat-icon-button (click)="addTab()">
+                            <mat-icon>add_circle</mat-icon>
+                        </button>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
         </mat-card-content>
     </mat-card>
 </ng-container>

@@ -1,36 +1,38 @@
 <ng-container *ngIf="buffDatas.length != 0 || dmgDatas.length != 0 || healingDatas.length != 0 || shieldDatas.length != 0 || productDatas.length != 0">
     <ng-content></ng-content>
 </ng-container>
-<ng-container *ngFor="let info of buffDatas; index as i">
-    <!-- バフ -->
-    <table>
-        <tr>
-            <td>
-                <span [innerText]="'GENSHIN.OTHER.BUFF' | translate"></span>
-            </td>
-            <td>
-                <ng-container *ngIf="info.type == 'switch'">
-                    <mat-slide-toggle
-                        color="primary"
-                        [checked]="info.switchValue"
-                        (change)="onChangeSwitch($event, info.valueIndex)">
-                    </mat-slide-toggle>
-                </ng-container>
-                <ng-container *ngIf="info.type == 'slider'">
-                    <mat-slider
-                        color="primary"
-                        [min]="info.min"
-                        [max]="info.max"
-                        [step]="info.step"
-                        [thumbLabel]="true"
-                        tickInterval="auto"
-                        [value]="info.sliderValue"
-                        (change)="onChangeSlider($event, info.valueIndex)">
-                    </mat-slider>
-                </ng-container>
-            </td>
-        </tr>
-    </table>
+<ng-container *ngFor="let info of buffDatas; index as i; first as isFirst">
+    <ng-container *ngIf="isFirst">
+        <!-- バフ -->
+        <table>
+            <tr>
+                <td>
+                    <span [innerText]="'GENSHIN.OTHER.BUFF' | translate"></span>
+                </td>
+                <td>
+                    <ng-container *ngIf="info.type == 'switch'">
+                        <mat-slide-toggle
+                            color="primary"
+                            [checked]="info.switchValue"
+                            (change)="onChangeSwitch($event, info.valueIndex)">
+                        </mat-slide-toggle>
+                    </ng-container>
+                    <ng-container *ngIf="info.type == 'slider'">
+                        <mat-slider
+                            color="primary"
+                            [min]="info.min"
+                            [max]="info.max"
+                            [step]="info.step"
+                            [thumbLabel]="true"
+                            tickInterval="auto"
+                            [value]="info.sliderValue"
+                            (change)="onChangeSlider($event, info.valueIndex)">
+                        </mat-slider>
+                    </ng-container>
+                </td>
+            </tr>
+        </table>
+    </ng-container>
 </ng-container>
 <ng-container *ngFor="let info of dmgDatas; index as i">
     <table>

@@ -62,3 +62,10 @@ table tr:first-child .content-right {
     width: 24px;
     height: 24px;
 }
+
+::ng-deep.mat-tab-label,
+::ng-deep.mat-tab-label-active {
+    min-width: 0 !important;
+    padding: 3px !important;
+    margin: 3px !important;
+}

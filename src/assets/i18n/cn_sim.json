@@ -18,6 +18,20 @@
     "PROPS": "敌人属性",
     "PLAYERNUM": "玩家数"
   },
+  "ARTIFACT": {
+    "NAME": "圣遗物",
+    "FLOWER": "生之花",
+    "PLUME": "死之羽",
+    "SANDS": "时之沙",
+    "GOBLET": "空之杯",
+    "CIRCLET": "理之冠"
+  },
+  "OTHER": {
+    "NAME": "其他"
+  },
+  "SYS": {
+    "DELETE": "删除"
+  },
   "PROPS": {
     "LEVEL": "等级",
     "ASCENDED": "（已突破）",

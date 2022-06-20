@@ -13,8 +13,8 @@
         </mat-card-header>
         <mat-card-content class="content">
             <mat-accordion>
-                <ng-container *ngFor="let skill of skills; index as i">
-                    <mat-expansion-panel class="mat-elevation-z0 expand">
+                <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
+                    <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="isFirst">
                         <mat-expansion-panel-header matTooltipPosition="right">
                             <mat-panel-title>
                                 <span [innerText]="getDataProperty(skill).name[currentLanguage]"></span>
