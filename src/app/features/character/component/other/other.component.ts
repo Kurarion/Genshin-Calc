@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Const } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-other',
@@ -10,9 +11,13 @@ export class OtherComponent implements OnInit {
   tabs = ['1', '2', '3'];
   selectedIndex = 0;
 
+  propList!: string[];
+
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.propList = Const.PROPS_OTHER;
+  }
 
   addTab() {
     this.tabs.push((this.tabs.length + 1).toString());

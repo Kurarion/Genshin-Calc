@@ -1,0 +1,22 @@
+<mat-form-field appearance="legacy" floatLabel="always">
+    <mat-label [innerText]="'ARTIFACT.MAIN' | translate"></mat-label>
+    <mat-select>
+        <mat-option></mat-option>
+        <mat-option *ngFor="let main of mainList" [value]="main.name">
+            <span [innerText]="'PROPS.' + main.name.toUpperCase() | translate"></span>
+            -
+            <span [innerText]="main.isPercent?(main.value | percent: '1.0-1' | noComma):(main.value | number: '1.0-0' | noComma)"></span>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<ng-container *ngFor="let sub of subs">
+    <mat-form-field appearance="legacy" floatLabel="always">
+        <mat-label [innerText]="'ARTIFACT.' + sub | translate"></mat-label>
+        <mat-select>
+            <mat-option></mat-option>
+            <mat-option *ngFor="let sub of subList" [value]="sub">
+                <span [innerText]="'PROPS.' + sub.toUpperCase() | translate"></span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>

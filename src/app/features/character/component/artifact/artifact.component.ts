@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Const } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-artifact',
@@ -8,6 +9,13 @@ import { FormControl } from '@angular/forms';
 })
 export class ArtifactComponent implements OnInit {
   tabs = ['1', '2', '3'];
+  artifactList = [
+    Const.ARTIFACT_FLOWER,
+    Const.ARTIFACT_PLUME,
+    Const.ARTIFACT_SANDS,
+    Const.ARTIFACT_GOBLET,
+    Const.ARTIFACT_CIRCLET,
+  ];
   selectedIndex = 0;
 
   constructor() { }

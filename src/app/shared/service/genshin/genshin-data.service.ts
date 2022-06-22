@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { character, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
+import { character, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class GenshinDataService {
   static dataWeapon: Record<string, weapon>;
   static dataMonster: Record<string, enemy>;
   static dataReliquarySet: any;
-  static dataReliquaryMain: any;
-  static dataReliquaryAffix: any;
+  static dataReliquaryMain: Record<string, number>;
+  static dataReliquaryAffix: Record<string, number[]>;
   static dataExtra: ExtraData;
 
   constructor() { }
@@ -29,10 +29,18 @@ export class GenshinDataService {
     this.dataReliquarySet = data;
   }
   static initReliquaryMainData(data: any){
-    this.dataReliquaryMain = data;
+    let result: Record<string, number> = {};
+    for(let key in data){
+      result[Const.MAP_ARTIFACE_PROP[key]] = data[key];
+    }
+    this.dataReliquaryMain = result;
   }
   static initReliquaryAffixData(data: any){
-    this.dataReliquaryAffix = data;
+    let result: Record<string, number[]> = {};
+    for(let key in data){
+      result[Const.MAP_ARTIFACE_PROP[key]] = data[key];
+    }
+    this.dataReliquaryAffix = result;
   }
   static initExtraData(data: any){
     this.dataExtra = data;

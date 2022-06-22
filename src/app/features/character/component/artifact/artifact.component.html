@@ -16,11 +16,12 @@
                 <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
                     <!-- 聖遺物詳細 -->
                     <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs>
-                        <mat-tab [label]="'ARTIFACT.FLOWER' | translate"> Content 1 </mat-tab>
-                        <mat-tab [label]="'ARTIFACT.PLUME' | translate"> Content 2 </mat-tab>
-                        <mat-tab [label]="'ARTIFACT.SANDS' | translate"> Content 3 </mat-tab>
-                        <mat-tab [label]="'ARTIFACT.GOBLET' | translate"> Content 4 </mat-tab>
-                        <mat-tab [label]="'ARTIFACT.CIRCLET' | translate"> Content 5 </mat-tab>
+                        <ng-container *ngFor="let type of artifactList">
+                            <mat-tab [label]="'ARTIFACT.' + type | translate">
+                                <br>
+                                <app-artifact-sub [artifactType]="type"></app-artifact-sub>
+                            </mat-tab>
+                        </ng-container>
                         <mat-tab disabled>
                             <ng-template mat-tab-label>
                                 <button mat-icon-button [matMenuTriggerFor]="menu">

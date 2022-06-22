@@ -1,5 +1,5 @@
 import { TYPE_SYS_LANG } from "src/app/shared/shared.module";
-import { CharPromotoLevelType as CharPromoteLevelType, CharQualityType, WeaponType } from "./type";
+import { CharPromotoLevelType, CharQualityType, WeaponType } from "./type";
 
 //*********************************
 //            画像情報
@@ -16,15 +16,15 @@ export interface CharStatus {
     //レベル
     level: number;
     //突破段階
-    promoteLevel: CharPromoteLevelType;
+    promoteLevel: CharPromotoLevelType;
     //生命値
     hp: number;
     //攻撃値
     attack: number;
     //防御値
     defense: number;
-    //キャラ突破増加値
-    specialized: number;
+    // //キャラ突破増加値
+    // specialized: number;
     //生命力アップ
     hp_up: number;
     //攻撃力アップ

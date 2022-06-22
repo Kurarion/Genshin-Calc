@@ -1,6 +1,6 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkills, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkills, Const, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-info',
@@ -20,7 +20,8 @@ export class ExtraInfoComponent implements OnInit {
   //
   @Input('hasLevel') hasLevel!: boolean;
 
-  overrideElement!: string;
+  overrideElement: string = "";
+  elementList!: string[];
 
   //データ
   skillDescDatas!: CharSkillDescObject[];
@@ -44,6 +45,8 @@ export class ExtraInfoComponent implements OnInit {
   //   }
   // }
 
+  onChangeElement(value: string){ }
+
   private initDatas(){
     this.skillDescDatas = this.getCharSkillDescObject(this.skill, this.currentLanguage);
     this.showValues = [];
@@ -52,6 +55,9 @@ export class ExtraInfoComponent implements OnInit {
       this.showValues.push(this.getTalentValue(this.skill, skillDescData, this.currentLanguage, this.skillLevelIndex));
       this.tipValues.push(this.getTalentValue(this.skill, skillDescData, this.currentLanguage, this.skillLevelIndex, true));
     }
+
+    //元素上書き
+    this.elementList = Const.PROPS_ELEMENTS;
   }
 
   private getDataProperty(key: string): CharSkill {

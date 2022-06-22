@@ -150,11 +150,11 @@ export class ExtraDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['skillLevelIndex'] || changes['overrideElement']) {
-  //     this.initDatas();
-  //   }
-  // }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['overrideElement']) {
+      this.initDamageDatas();
+    }
+  }
 
   ngOnDestroy(): void {
     if(this.subscription && !this.subscription.closed){

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus } from 'src/app/shared/shared.module';
 
 export interface CalResult{
   characterData?: character;
@@ -1796,6 +1796,7 @@ export class CalculatorService {
     let result = 0;
     let indexStr = index.toString();
     let genshinDataProp = prop;
+    let genshinArtifactDataProp = prop;
     if([Const.PROP_LEVEL, Const.PROP_DMG_ENEMY_DEFENSE_BASE, Const.PROP_HP_BASE, Const.PROP_ATTACK_BASE, Const.PROP_DEFENSE_BASE].includes(prop)){
       switch(prop){
         case Const.PROP_LEVEL:
@@ -1834,7 +1835,29 @@ export class CalculatorService {
       result += extraWeaponResult[prop];
     }
 
-    // result += this.getReliquaryData(index)?[prop] ?? 0;
+    if([Const.PROP_HP_BASE, Const.PROP_ATTACK_BASE, Const.PROP_DEFENSE_BASE].includes(prop)){
+      switch(prop){
+        case Const.PROP_VAL_HP:
+          genshinArtifactDataProp = Const.PROP_HP;
+          break;
+        case Const.PROP_VAL_ATTACK:
+          genshinArtifactDataProp = Const.PROP_ATTACK;
+          break;
+        case Const.PROP_VAL_DEFENSE:
+          genshinArtifactDataProp = Const.PROP_DEFENSE;
+          break;
+      }
+    }
+    genshinArtifactDataProp = genshinArtifactDataProp.toLowerCase();
+    result += this.getReliquaryData(index)[genshinArtifactDataProp as keyof artifactStatus] ?? 0;
+    let reliquarySetData = this.getReliquarySetData(index);
+    if(reliquarySetData && reliquarySetData[prop] != undefined){
+      result += reliquarySetData[prop] ?? 0;
+    }
+    let otherData = this.getOtherData(index);
+    if(otherData && otherData[prop] != undefined){
+      result += otherData[prop] ?? 0;
+    }
 
     return result;
   }
@@ -1945,9 +1968,22 @@ export class CalculatorService {
     return [result, specialResult];
   }
 
-  //聖遺物追加データ解析
-  private getReliquaryData(index: string | number){
+  //聖遺物データ解析
+  private getReliquaryData(index: string | number): artifactStatus{
     //TODO
+    return {};
+  }
+
+  //聖遺物セットデータ解析
+  private getReliquarySetData(index: string | number): Record<string, number> | undefined{
+    //TODO
+    return {};
+  }
+
+  //その他データ解析
+  private getOtherData(index: string | number): Record<string, number> | undefined{
+    //TODO
+    return {};
   }
 
   //追加データ解析

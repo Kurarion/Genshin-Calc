@@ -2,6 +2,19 @@
 <ng-container *ngIf="hasLevel; then skills else other"></ng-container>
 <!-- 条件が偽の時には「Create」と表示される -->
 <ng-template #skills>
+    <ng-container *ngIf="skill == 'normal'">
+        <mat-form-field appearance="legacy" floatLabel="always">
+            <mat-label [innerText]="'GENSHIN.OTHER.OVERRIDE_ELEMENT' | translate"></mat-label>
+            <mat-select [(ngModel)]="overrideElement" (ngModelChange)="onChangeElement($event)">
+                <mat-option value="">
+                    <span [innerText]="'GENSHIN.OTHER.DEFAULT_ELEMENT' | translate"></span>
+                </mat-option>
+                <mat-option *ngFor="let element of elementList" [value]="element">
+                    <span [innerText]="'GENSHIN.OTHER.' + element | translate"></span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
     <table>
         <ng-container *ngFor="let paramDesc of skillDescDatas; index as i">
             <tr>

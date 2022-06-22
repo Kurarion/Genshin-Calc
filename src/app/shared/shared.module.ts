@@ -34,6 +34,7 @@ export * from './interface/interface';
 export * from './class/character';
 export * from './class/weapon';
 export * from './class/enemy';
+export * from './class/artifact';
 
 let shardList: any[] = [
   CaptureHtmlComponent,

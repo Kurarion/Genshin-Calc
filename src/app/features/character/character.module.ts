@@ -15,6 +15,7 @@ import { EnemyComponent } from './component/enemy/enemy.component';
 import { ExtraInfoComponent } from './component/extra-info/extra-info.component';
 import { ArtifactComponent } from './component/artifact/artifact.component';
 import { OtherComponent } from './component/other/other.component';
+import { ArtifactSubComponent } from './component/artifact-sub/artifact-sub.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { OtherComponent } from './component/other/other.component';
     ExtraInfoComponent,
     ArtifactComponent,
     OtherComponent,
+    ArtifactSubComponent,
   ],
   providers: [
     PercentPipe,

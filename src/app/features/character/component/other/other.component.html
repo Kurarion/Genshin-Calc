@@ -14,7 +14,16 @@
         <mat-card-content class="content">
             <mat-tab-group [(selectedIndex)]="selectedIndex">
                 <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
-                    
+                    <br>
+                    <mat-form-field appearance="legacy" floatLabel="always">
+                        <mat-label [innerText]="'OTHER.TARGET' | translate"></mat-label>
+                        <mat-select>
+                            <mat-option></mat-option>
+                            <mat-option *ngFor="let prop of propList" [value]="prop">
+                                <span [innerText]="'PROPS.' + prop.toUpperCase() | translate"></span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </mat-tab>
                 <mat-tab disabled>
                     <ng-template mat-tab-label>
