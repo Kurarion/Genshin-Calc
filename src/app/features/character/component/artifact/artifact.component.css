@@ -69,3 +69,7 @@ table tr:first-child .content-right {
     padding: 3px !important;
     margin: 3px !important;
 }
+
+.add-button {
+    width: 30px;
+}

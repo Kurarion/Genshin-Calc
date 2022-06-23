@@ -112,8 +112,8 @@ export class EnemyComponent implements OnInit {
     this.calculatorService.initEnemyData(this.data.id, enemyIndex);
     //敵設定
     this.enemyService.setIndex(this.data.id, this.enemyData.id);
-    // //敵属性更新
-    // this.onChangeLevel(this.selectedLevel);
+    //敵属性更新
+    this.onChangeLevel(this.selectedLevel);
     // //プロフィール画像初期化
     // this.initializeBackGroundImage();
   }

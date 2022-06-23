@@ -700,6 +700,7 @@ export class Const {
   static readonly ARTIFACT_SANDS = "SANDS";
   static readonly ARTIFACT_GOBLET = "GOBLET";
   static readonly ARTIFACT_CIRCLET = "CIRCLET";
+  static readonly ARTIFACT_MAIN = "MAIN";
   static readonly ARTIFACT_SUB1 = "SUB1";
   static readonly ARTIFACT_SUB2 = "SUB2";
   static readonly ARTIFACT_SUB3 = "SUB3";
@@ -854,5 +855,7 @@ export class Const {
   static readonly SAVE_MONSTER = "SAVE_MONSTER";
   //追加データ
   static readonly SAVE_EXTRA = "SAVE_EXTRA";
+  //追加データ
+  static readonly SAVE_ARTIFACT = "SAVE_ARTIFACT";
 
 }

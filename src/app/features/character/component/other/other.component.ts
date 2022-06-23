@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Const } from 'src/app/shared/shared.module';
+import { Component, Input, OnInit } from '@angular/core';
+import { character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-other',
@@ -12,6 +12,11 @@ export class OtherComponent implements OnInit {
   selectedIndex = 0;
 
   propList!: string[];
+
+  //キャラデータ
+  @Input('data') data!: character;
+  //言語
+  @Input('language') currentLanguage!: TYPE_SYS_LANG;
 
   constructor() { }
 

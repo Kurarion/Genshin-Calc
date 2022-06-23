@@ -8,7 +8,7 @@
                         "damage": {
                             "indexs": [0,1,2,3,4],
                             "base": "ATTACK",
-                            "canOverride": false,
+                            "canOverride": true,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
                             "attackBonusType": "DMG_BONUS_NORMAL"
                         }
@@ -38,7 +38,7 @@
                         "damage": {
                             "indexs": [7,8,9],
                             "base": "ATTACK",
-                            "canOverride": false,
+                            "canOverride": true,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
                             "attackBonusType": "DMG_BONUS_PLUNGING"
                         }

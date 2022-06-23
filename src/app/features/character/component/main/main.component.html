@@ -11,7 +11,7 @@
         <div>
             <app-weapon [data]="data" [language]="currentLanguage"></app-weapon>
             <div class="middle"></div>
-            <app-artifact></app-artifact>
+            <app-artifact [data]="data" [language]="currentLanguage"></app-artifact>
         </div>
         <div>
             <app-talent [data]="data" [language]="currentLanguage"></app-talent>
@@ -19,7 +19,7 @@
         <div>
             <app-constellation [data]="data" [language]="currentLanguage"></app-constellation>
             <div class="middle"></div>
-            <app-other></app-other>
+            <app-other [data]="data" [language]="currentLanguage"></app-other>
         </div>
     </div>
 </div>

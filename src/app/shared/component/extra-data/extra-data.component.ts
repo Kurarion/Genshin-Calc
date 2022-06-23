@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { CalculatorService, DamageResult, HealingResult, character, Const, Chara
   templateUrl: './extra-data.component.html',
   styleUrls: ['./extra-data.component.css']
 })
-export class ExtraDataComponent implements OnInit, OnDestroy {
+export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   private readonly colorMap: Record<string, string> = {
     "CRYO": "#B2DFEE",
