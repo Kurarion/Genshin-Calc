@@ -1,1 +1,1781 @@
-{"14001":{"setId":14001,"rankLevel":5,"equipAffixId":214001,"nameTextMapHash":1959650699,"setName":{"cn_sim":"冰风迷途的勇士","cn_tra":"冰風迷途的勇士","en":"Blizzard Strayer","jp":"氷風を彷徨う勇士"},"setAffixs":[{"name":{"cn_sim":"冰风迷途的勇士","cn_tra":"冰風迷途的勇士","en":"Blizzard Strayer","jp":"氷風を彷徨う勇士"},"nameTextMapHash":1959650699,"desc":{"cn_sim":"获得15%冰元素伤害加成。","cn_tra":"獲得15%冰元素傷害加成。","en":"Cryo DMG Bonus +15%","jp":"氷元素ダメージ+15%。"},"descTextMapHash":2712405201,"level":1,"addProps":[{"propType":"FIGHT_PROP_ICE_ADD_HURT","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"冰风迷途的勇士","cn_tra":"冰風迷途的勇士","en":"Blizzard Strayer","jp":"氷風を彷徨う勇士"},"nameTextMapHash":933076627,"desc":{"cn_sim":"攻击处于冰元素影响下的敌人时，暴击率提高20%；若敌人处于冻结状态下，则暴击率额外提高20%。","cn_tra":"攻擊處於冰元素影響下的敵人時，暴擊率提高20%；若敵人處於凍結狀態下，則暴擊率額外提高20%。","en":"When a character attacks an opponent affected by Cryo, their CRIT Rate is increased by 20%. If the opponent is Frozen, CRIT Rate is increased by an additional 20%.","jp":"氷元素の影響を受けている敵を攻撃した場合、会心率+20%。敵が凍結状態の場合、会心率は更に+20%。"},"descTextMapHash":1080795585,"level":2,"addProps":[{},{},{}],"paramList":[0.20000000298023224,0.20000000298023224,0,0,0,0,0,0]}]},"14002":{"setId":14002,"rankLevel":5,"equipAffixId":214002,"nameTextMapHash":915693491,"setName":{"cn_sim":"平息鸣雷的尊者","cn_tra":"平息鳴雷的尊者","en":"Thundersoother","jp":"雷を鎮める尊者"},"setAffixs":[{"name":{"cn_sim":"平息鸣雷的尊者","cn_tra":"平息鳴雷的尊者","en":"Thundersoother","jp":"雷を鎮める尊者"},"nameTextMapHash":915693491,"desc":{"cn_sim":"雷元素抗性提高40%。","cn_tra":"雷元素抗性提高40%。","en":"Electro RES increased by 40%.","jp":"雷元素耐性+40%。"},"descTextMapHash":3556101057,"level":1,"addProps":[{"propType":"FIGHT_PROP_ELEC_SUB_HURT","value":0.4000000059604645},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"平息鸣雷的尊者","cn_tra":"平息鳴雷的尊者","en":"Thundersoother","jp":"雷を鎮める尊者"},"nameTextMapHash":1873342283,"desc":{"cn_sim":"对处于雷元素影响下的敌人造成的伤害提升35%。","cn_tra":"對處於雷元素影響下的敵人造成的傷害提升35%。","en":"Increases DMG against opponents affected by Electro by 35%.","jp":"雷元素の影響を受けた敵に対するダメージ+35%。"},"descTextMapHash":3318279857,"level":2,"addProps":[{},{},{}],"paramList":[0.3499999940395355,0,0,0,0,0,0,0]}]},"14003":{"setId":14003,"rankLevel":5,"equipAffixId":214003,"nameTextMapHash":1414807643,"setName":{"cn_sim":"渡过烈火的贤人","cn_tra":"渡過烈火的賢人","en":"Lavawalker","jp":"烈火を渡る賢者"},"setAffixs":[{"name":{"cn_sim":"渡过烈火的贤人","cn_tra":"渡過烈火的賢人","en":"Lavawalker","jp":"烈火を渡る賢者"},"nameTextMapHash":1414807643,"desc":{"cn_sim":"火元素抗性提高40%。","cn_tra":"火元素抗性提高40%。","en":"Pyro RES increased by 40%.","jp":"炎元素耐性+40%。"},"descTextMapHash":3669175857,"level":1,"addProps":[{"propType":"FIGHT_PROP_FIRE_SUB_HURT","value":0.4000000059604645},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"渡过烈火的贤人","cn_tra":"渡過烈火的賢人","en":"Lavawalker","jp":"烈火を渡る賢者"},"nameTextMapHash":1632377563,"desc":{"cn_sim":"对处于火元素影响下的敌人造成的伤害提升35%。","cn_tra":"對處於火元素影響下的敵人造成的傷害提升35%。","en":"Increases DMG against opponents affected by Pyro by 35%.","jp":"炎元素の影響を受けた敵に対するダメージ+35%。"},"descTextMapHash":2323993841,"level":2,"addProps":[{},{},{}],"paramList":[0.3499999940395355,0,0,0,0,0,0,0]}]},"14004":{"setId":14004,"rankLevel":5,"equipAffixId":214004,"nameTextMapHash":3135412419,"setName":{"cn_sim":"被怜爱的少女","cn_tra":"被憐愛的少女","en":"Maiden Beloved","jp":"愛される少女"},"setAffixs":[{"name":{"cn_sim":"被怜爱的少女","cn_tra":"被憐愛的少女","en":"Maiden Beloved","jp":"愛される少女"},"nameTextMapHash":3135412419,"desc":{"cn_sim":"角色造成的治疗效果提升15%。","cn_tra":"角色造成的治療效果提升15%。","en":"Character Healing Effectiveness +15%","jp":"与える治療効果+15%。"},"descTextMapHash":1619689457,"level":1,"addProps":[{"propType":"FIGHT_PROP_HEAL_ADD","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"被怜爱的少女","cn_tra":"被憐愛的少女","en":"Maiden Beloved","jp":"愛される少女"},"nameTextMapHash":83115355,"desc":{"cn_sim":"施放元素战技或元素爆发后的10秒内，队伍中所有角色受治疗效果加成提高20%。","cn_tra":"施放元素戰技或元素爆發後的10秒內，隊伍中所有角色受治療效果加成提高20%。","en":"Using an Elemental Skill or Burst increases healing received by all party members by 20% for 10s.","jp":"元素スキルまたは元素爆発を発動した後10秒間、チーム全員の受ける治療効果+20%。"},"descTextMapHash":1947253905,"level":2,"addProps":[{},{},{}],"paramList":[0.20000000298023224,10,0,0,0,0,0,0]}]},"15001":{"setId":15001,"rankLevel":5,"equipAffixId":215001,"nameTextMapHash":1312582827,"setName":{"cn_sim":"角斗士的终幕礼","cn_tra":"角鬥士的終幕禮","en":"Gladiator's Finale","jp":"剣闘士のフィナーレ"},"setAffixs":[{"name":{"cn_sim":"角斗士的终幕礼","cn_tra":"角鬥士的終幕禮","en":"Gladiator's Finale","jp":"剣闘士のフィナーレ"},"nameTextMapHash":1312582827,"desc":{"cn_sim":"攻击力提高18%。","cn_tra":"攻擊力提高18%。","en":"ATK +18%.","jp":"攻撃力+18%。"},"descTextMapHash":3552809081,"level":1,"addProps":[{"propType":"FIGHT_PROP_ATTACK_PERCENT","value":0.18000000715255737},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"角斗士的终幕礼","cn_tra":"角鬥士的終幕禮","en":"Gladiator's Finale","jp":"剣闘士のフィナーレ"},"nameTextMapHash":1212345779,"desc":{"cn_sim":"装备该圣遗物套装的角色为单手剑、双手剑、长柄武器角色时，角色普通攻击造成的伤害提高35%。","cn_tra":"裝備該聖遺物套裝的角色為單手劍、雙手劍、長柄武器角色時，角色普通攻擊造成的傷害提高35%。","en":"If the wielder of this artifact set uses a Sword, Claymore or Polearm, increases their Normal Attack DMG by 35%.","jp":"該当聖遺物セットを装備したキャラが片手剣、両手剣、長柄武器キャラの場合、通常攻撃ダメージ+35%。"},"descTextMapHash":3135183041,"level":2,"addProps":[{},{},{}],"paramList":[0.3499999940395355,0,0,0,0,0,0,0]}]},"15002":{"setId":15002,"rankLevel":5,"equipAffixId":215002,"nameTextMapHash":3237665819,"setName":{"cn_sim":"翠绿之影","cn_tra":"翠綠之影","en":"Viridescent Venerer","jp":"翠緑の影"},"setAffixs":[{"name":{"cn_sim":"翠绿之影","cn_tra":"翠綠之影","en":"Viridescent Venerer","jp":"翠緑の影"},"nameTextMapHash":3237665819,"desc":{"cn_sim":"获得15%风元素伤害加成。","cn_tra":"獲得15%風元素傷害加成。","en":"Anemo DMG Bonus +15%","jp":"風元素ダメージ+15%。"},"descTextMapHash":2092181985,"level":1,"addProps":[{"propType":"FIGHT_PROP_WIND_ADD_HURT","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"翠绿之影","cn_tra":"翠綠之影","en":"Viridescent Venerer","jp":"翠緑の影"},"nameTextMapHash":1562601179,"desc":{"cn_sim":"扩散反应造成的伤害提升60%。根据扩散的元素类型，降低受到影响的敌人40%的对应元素抗性，持续10秒。","cn_tra":"擴散反應造成的傷害提升60%。根據擴散的元素類型，降低受到影響的敵人40%的對應元素抗性，持續10秒。","en":"Increases Swirl DMG by 60%. Decreases opponent's Elemental RES to the element infused in the Swirl by 40% for 10s.","jp":"拡散反応によるダメージ+60%。拡散された元素タイプを基準に、影響を受けた敵の元素耐性-40%、継続時間10秒。"},"descTextMapHash":2340004825,"level":2,"addProps":[{},{},{}],"paramList":[0.6000000238418579,0.4000000059604645,10,0,0,0,0,0]}]},"15003":{"setId":15003,"rankLevel":5,"equipAffixId":215003,"nameTextMapHash":4257423931,"setName":{"cn_sim":"流浪大地的乐团","cn_tra":"流浪大地的樂團","en":"Wanderer's Troupe","jp":"大地を流浪する楽団"},"setAffixs":[{"name":{"cn_sim":"流浪大地的乐团","cn_tra":"流浪大地的樂團","en":"Wanderer's Troupe","jp":"大地を流浪する楽団"},"nameTextMapHash":4257423931,"desc":{"cn_sim":"元素精通提高80点。","cn_tra":"元素精通提高80點。","en":"Increases Elemental Mastery by 80.","jp":"元素熟知+80。"},"descTextMapHash":1653158305,"level":1,"addProps":[{"propType":"FIGHT_PROP_ELEMENT_MASTERY","value":80},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"流浪大地的乐团","cn_tra":"流浪大地的樂團","en":"Wanderer's Troupe","jp":"大地を流浪する楽団"},"nameTextMapHash":147298547,"desc":{"cn_sim":"装备该圣遗物套装的角色为法器、弓箭角色时，角色重击造成的伤害提高35%。","cn_tra":"裝備該聖遺物套裝的角色為法器、弓箭角色時，角色重擊造成的傷害提高35%。","en":"Increases Charged Attack DMG by 35% if the character uses a Catalyst or a Bow.","jp":"該当聖遺物セットを装備したキャラが法器、弓キャラの場合、キャラの重撃ダメージ+35%。"},"descTextMapHash":3961839441,"level":2,"addProps":[{},{},{}],"paramList":[0.3499999940395355,0,0,0,0,0,0,0]}]},"15005":{"setId":15005,"rankLevel":5,"equipAffixId":215005,"nameTextMapHash":1213967619,"setName":{"cn_sim":"如雷的盛怒","cn_tra":"如雷的盛怒","en":"Thundering Fury","jp":"雷のような怒り"},"setAffixs":[{"name":{"cn_sim":"如雷的盛怒","cn_tra":"如雷的盛怒","en":"Thundering Fury","jp":"雷のような怒り"},"nameTextMapHash":1213967619,"desc":{"cn_sim":"获得15%雷元素伤害加成。","cn_tra":"獲得15%雷元素傷害加成。","en":"Electro DMG Bonus +15%","jp":"雷元素ダメージ+15%。"},"descTextMapHash":1716838313,"level":1,"addProps":[{"propType":"FIGHT_PROP_ELEC_ADD_HURT","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"如雷的盛怒","cn_tra":"如雷的盛怒","en":"Thundering Fury","jp":"雷のような怒り"},"nameTextMapHash":2512309395,"desc":{"cn_sim":"超载、感电、超导反应造成的伤害提升40%。触发这些元素反应时，元素战技冷却时间减少1秒。该效果每0.8秒最多触发一次。","cn_tra":"超載、感電、超導反應造成的傷害提升40%。觸發這些元素反應時，元素戰技冷卻時間減少1秒。該效果每0.8秒最多觸發一次。","en":"Increases damage caused by Overloaded, Electro-Charged and Superconduct by 40%. Triggering such effects decreases Elemental Skill CD by 1s. Can only occur once every 0.8s.","jp":"過負荷、感電、超電導反応によるダメージ+40%。それらの元素反応を起こすと、元素スキルのクールタイム-1秒。0.8秒毎に最大1回のみ発動可能。"},"descTextMapHash":4186114257,"level":2,"addProps":[{},{},{}],"paramList":[0.4000000059604645,0.800000011920929,0,0,0,0,0,0]}]},"15006":{"setId":15006,"rankLevel":5,"equipAffixId":215006,"nameTextMapHash":1928302715,"setName":{"cn_sim":"炽烈的炎之魔女","cn_tra":"熾烈的炎之魔女","en":"Crimson Witch of Flames","jp":"燃え盛る炎の魔女"},"setAffixs":[{"name":{"cn_sim":"炽烈的炎之魔女","cn_tra":"熾烈的炎之魔女","en":"Crimson Witch of Flames","jp":"燃え盛る炎の魔女"},"nameTextMapHash":1928302715,"desc":{"cn_sim":"获得15%火元素伤害加成。","cn_tra":"獲得15%火元素傷害加成。","en":"Pyro DMG Bonus +15%","jp":"炎元素ダメージ+15%。"},"descTextMapHash":2602260593,"level":1,"addProps":[{"propType":"FIGHT_PROP_FIRE_ADD_HURT","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"炽烈的炎之魔女","cn_tra":"熾烈的炎之魔女","en":"Crimson Witch of Flames","jp":"燃え盛る炎の魔女"},"nameTextMapHash":1524173875,"desc":{"cn_sim":"超载、燃烧反应造成的伤害提升40%，蒸发、融化反应的加成系数提高15%。施放元素战技后的10秒内，2件套的效果提高50%，该效果最多叠加3次。","cn_tra":"超載、燃燒反應造成的傷害提升40%，蒸發、融化反應的加成係數提高15%。施放元素戰技後的10秒內，2件套的效果提高50%，該效果最多疊加三次。","en":"Increases Overloaded and Burning DMG by 40%. Increases Vaporize and Melt DMG by 15%. Using Elemental Skill increases the 2-Piece Set Bonus by 50% of its starting value for 10s. Max 3 stacks.","jp":"過負荷、燃焼反応によるダメージ+40%。蒸発、溶解反応による加算効果+15%。元素スキルを発動した10秒間、2セットの効果+50%、最大3重まで。"},"descTextMapHash":1376888985,"level":2,"addProps":[{},{},{}],"paramList":[0.4000000059604645,0.15000000596046448,0.15000000596046448,0.5,10,0,0,0]}]},"15007":{"setId":15007,"rankLevel":5,"equipAffixId":215007,"nameTextMapHash":1750139131,"setName":{"cn_sim":"昔日宗室之仪","cn_tra":"昔日宗室之儀","en":"Noblesse Oblige","jp":"旧貴族のしつけ"},"setAffixs":[{"name":{"cn_sim":"昔日宗室之仪","cn_tra":"昔日宗室之儀","en":"Noblesse Oblige","jp":"旧貴族のしつけ"},"nameTextMapHash":1750139131,"desc":{"cn_sim":"元素爆发造成的伤害提升20%。","cn_tra":"元素爆發造成的傷害提升20%。","en":"Elemental Burst DMG +20%","jp":"元素爆発のダメージ+20%。"},"descTextMapHash":4115763905,"level":1,"addProps":[{},{},{}],"paramList":[0.20000000298023224,0,0,0,0,0,0,0]},{"name":{"cn_sim":"昔日宗室之仪","cn_tra":"昔日宗室之儀","en":"Noblesse Oblige","jp":"旧貴族のしつけ"},"nameTextMapHash":1751039235,"desc":{"cn_sim":"施放元素爆发后，队伍中所有角色攻击力提升20%，持续12秒。该效果不可叠加。","cn_tra":"施放元素爆發後，隊伍中所有角色攻擊力提升20%，持續12秒。該效果不可疊加。","en":"Using an Elemental Burst increases all party members' ATK by 20% for 12s. This effect cannot stack.","jp":"元素爆発を発動すると、チーム全員の攻撃力+20%、継続時間12秒、重ねがけ不可。"},"descTextMapHash":2492204929,"level":2,"addProps":[{},{},{}],"paramList":[0.20000000298023224,12,0,0,0,0,0,0]}]},"15008":{"setId":15008,"rankLevel":5,"equipAffixId":215008,"nameTextMapHash":4211407267,"setName":{"cn_sim":"染血的骑士道","cn_tra":"染血的騎士道","en":"Bloodstained Chivalry","jp":"血染めの騎士道"},"setAffixs":[{"name":{"cn_sim":"染血的骑士道","cn_tra":"染血的騎士道","en":"Bloodstained Chivalry","jp":"血染めの騎士道"},"nameTextMapHash":4211407267,"desc":{"cn_sim":"造成的物理伤害提高25%。","cn_tra":"造成的物理傷害提高25%。","en":"Physical DMG +25%","jp":"物理ダメージ+25%。"},"descTextMapHash":1773482865,"level":1,"addProps":[{"propType":"FIGHT_PROP_PHYSICAL_ADD_HURT","value":0.25},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"染血的骑士道","cn_tra":"染血的騎士道","en":"Bloodstained Chivalry","jp":"血染めの騎士道"},"nameTextMapHash":1541919827,"desc":{"cn_sim":"击败敌人后的10秒内，施放重击时不消耗体力，且重击造成的伤害提升50%。","cn_tra":"擊敗敵人後的10秒內，施放重擊時不消耗體力，且重擊造成的傷害提升50%。","en":"After defeating an opponent, increases Charged Attack DMG by 50%, and reduces its Stamina cost to 0 for 10s.","jp":"敵を倒した後の10秒間、重撃の際にスタミナを消費しない。また、重撃のダメージ+50%。"},"descTextMapHash":4274195441,"level":2,"addProps":[{},{},{}],"paramList":[10,0.5,-5,0.10000000149011612,0,0,0,0]}]},"15014":{"setId":15014,"rankLevel":5,"equipAffixId":215014,"nameTextMapHash":1330908707,"setName":{"cn_sim":"悠古的磐岩","cn_tra":"悠古的磐岩","en":"Archaic Petra","jp":"悠久の磐岩"},"setAffixs":[{"name":{"cn_sim":"悠古的磐岩","cn_tra":"悠古的磐岩","en":"Archaic Petra","jp":"悠久の磐岩"},"nameTextMapHash":1330908707,"desc":{"cn_sim":"获得15%岩元素伤害加成。","cn_tra":"獲得15%岩元素傷害加成。","en":"Gain a 15% Geo DMG Bonus.","jp":"岩元素ダメージ+15%。"},"descTextMapHash":1236705993,"level":1,"addProps":[{"propType":"FIGHT_PROP_ROCK_ADD_HURT","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"悠古的磐岩","cn_tra":"悠古的磐岩","en":"Archaic Petra","jp":"悠久の磐岩"},"nameTextMapHash":2040573235,"desc":{"cn_sim":"获得结晶反应形成的晶片时，队伍中所有角色获得35%对应元素伤害加成，持续10秒。同时只能通过该效果获得一种元素伤害加成。","cn_tra":"獲得結晶反應形成的晶片時，隊伍中所有角色獲得35%對應元素傷害加成，持續10秒。同時只能通過該效果獲得一種元素傷害加成。","en":"Upon obtaining an Elemental Shard created through a Crystallize Reaction, all party members gain a 35% DMG Bonus for that particular element for 10s. Only one form of Elemental DMG Bonus can be gained in this manner at any one time.","jp":"結晶反応で形成された欠片を獲得すると、チーム全員の該当元素ダメージ+35%、継続時間10秒。元素ダメージアップは同時に1種類のみ獲得可能。"},"descTextMapHash":1797264985,"level":2,"addProps":[{},{},{}],"paramList":[0.3499999940395355,10,0,0,0,0,0,0]}]},"15015":{"setId":15015,"rankLevel":5,"equipAffixId":215015,"nameTextMapHash":3669096219,"setName":{"cn_sim":"逆飞的流星","cn_tra":"逆飛的流星","en":"Retracing Bolide","jp":"逆飛びの流星"},"setAffixs":[{"name":{"cn_sim":"逆飞的流星","cn_tra":"逆飛的流星","en":"Retracing Bolide","jp":"逆飛びの流星"},"nameTextMapHash":3669096219,"desc":{"cn_sim":"护盾强效提高35%。","cn_tra":"護盾強效提高35%。","en":"Increases Shield Strength by 35%.","jp":"シールド強化+35%"},"descTextMapHash":2028904593,"level":1,"addProps":[{"propType":"FIGHT_PROP_SHIELD_COST_MINUS_RATIO","value":0.3499999940395355},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"逆飞的流星","cn_tra":"逆飛的流星","en":"Retracing Bolide","jp":"逆飛びの流星"},"nameTextMapHash":1438974835,"desc":{"cn_sim":"处于护盾庇护下时，额外获得40%普通攻击和重击伤害加成。","cn_tra":"處於護盾庇護下時，額外獲得40%普通攻擊和重擊傷害加成。","en":"While protected by a shield, gain an additional 40% Normal and Charged Attack DMG.","jp":"シールド状態の時、通常攻撃と重撃ダメージ+40%。"},"descTextMapHash":2303302721,"level":2,"addProps":[{},{},{}],"paramList":[0.4000000059604645,0,0,0,0,0,0,0]}]},"15016":{"setId":15016,"rankLevel":5,"equipAffixId":215016,"nameTextMapHash":3639055403,"setName":{"cn_sim":"沉沦之心","cn_tra":"沉淪之心","en":"Heart of Depth","jp":"沈淪の心"},"setAffixs":[{"name":{"cn_sim":"沉沦之心","cn_tra":"沉淪之心","en":"Heart of Depth","jp":"沈淪の心"},"nameTextMapHash":3639055403,"desc":{"cn_sim":"获得15%水元素伤害加成。","cn_tra":"獲得15%水元素傷害加成。","en":"Hydro DMG Bonus +15%","jp":"水元素ダメージ+15%。"},"descTextMapHash":1931206529,"level":1,"addProps":[{"propType":"FIGHT_PROP_WATER_ADD_HURT","value":0.15000000596046448},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"沉沦之心","cn_tra":"沉淪之心","en":"Heart of Depth","jp":"沈淪の心"},"nameTextMapHash":156294403,"desc":{"cn_sim":"施放元素战技后的15秒内，普通攻击与重击造成的伤害提高30%。","cn_tra":"施放元素戰技後的15秒內，普通攻擊與重擊造成的傷害提高30%。","en":"After using Elemental Skill, increases Normal Attack and Charged Attack DMG by 30% for 15s.","jp":"元素スキルを発動した後の15秒間、通常攻撃と重撃のダメージ+30%。"},"descTextMapHash":83285737,"level":2,"addProps":[{},{},{}],"paramList":[0.30000001192092896,1,15,0,0,0,0,0]}]},"15017":{"setId":15017,"rankLevel":5,"equipAffixId":215017,"nameTextMapHash":4007102419,"setName":{"cn_sim":"千岩牢固","cn_tra":"千岩牢固","en":"Tenacity of the Millelith","jp":"千岩牢固"},"setAffixs":[{"name":{"cn_sim":"千岩牢固","cn_tra":"千岩牢固","en":"Tenacity of the Millelith","jp":"千岩牢固"},"nameTextMapHash":4007102419,"desc":{"cn_sim":"生命值提升20%","cn_tra":"生命值提升20%","en":"HP increased by 20%.","jp":"HP+20%。"},"descTextMapHash":417927761,"level":1,"addProps":[{"propType":"FIGHT_PROP_HP_PERCENT","value":0.20000000298023224},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"千岩牢固","cn_tra":"千岩牢固","en":"Tenacity of the Millelith","jp":"千岩牢固"},"nameTextMapHash":1337666507,"desc":{"cn_sim":"元素战技命中敌人后，使队伍中附近的所有角色攻击力提升20%，护盾强效提升30%，持续3秒。该效果每0.5秒至多触发一次。装备此圣遗物套装的角色处于队伍后台时，依然能触发该效果。","cn_tra":"元素戰技命中敵人後，使隊伍中附近的所有角色攻擊力提升20%，護盾強效提升30%，持續3秒。該效果每0.5秒至多觸發一次。裝備此聖遺物套裝的角色處於隊伍後台時，依然能觸發該效果。","en":"When an Elemental Skill hits an opponent, the ATK of all nearby party members is increased by 20% and their Shield Strength is increased by 30% for 3s. This effect can be triggered once every 0.5s. This effect can still be triggered even when the character who is using this artifact set is not on the field.","jp":"元素スキルが敵に命中すると、周囲のチーム全員の攻撃力+20%、シールド強化+30%、持続時間3秒。この効果は0.5秒毎に1回のみ発動可能。この聖遺物セットを装備したキャラクターが待機している場合にも効果を発動できる。"},"descTextMapHash":2524947961,"level":2,"addProps":[{},{},{}],"paramList":[0.20000000298023224,0.30000001192092896,3,0.5,0,0,0,0]}]},"15018":{"setId":15018,"rankLevel":5,"equipAffixId":215018,"nameTextMapHash":2704460819,"setName":{"cn_sim":"苍白之火","cn_tra":"蒼白之火","en":"Pale Flame","jp":"蒼白の炎"},"setAffixs":[{"name":{"cn_sim":"苍白之火","cn_tra":"蒼白之火","en":"Pale Flame","jp":"蒼白の炎"},"nameTextMapHash":2704460819,"desc":{"cn_sim":"造成的物理伤害提高25%。","cn_tra":"造成的物理傷害提高25%。","en":"Physical DMG is increased by 25%.","jp":"物理ダメージ+25%。"},"descTextMapHash":2678953001,"level":1,"addProps":[{"propType":"FIGHT_PROP_PHYSICAL_ADD_HURT","value":0.25},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"苍白之火","cn_tra":"蒼白之火","en":"Pale Flame","jp":"蒼白の炎"},"nameTextMapHash":862591315,"desc":{"cn_sim":"元素战技命中敌人后，攻击力提升9%。该效果持续7秒，至多叠加2层，每0.3秒至多触发一次。叠满2层时，2件套的效果提升100%。","cn_tra":"元素戰技命中敵人後，攻擊力提升9%。該效果持續7秒，至多疊加兩層，每0.3秒至多觸發一次。疊滿兩層時，2件套裝的效果提升100%。","en":"When an Elemental Skill hits an opponent, ATK is increased by 9% for 7s. This effect stacks up to 2 times and can be triggered once every 0.3s. Once 2 stacks are reached, the 2-set effect is increased by 100%.","jp":"元素スキルが敵に命中すると、攻撃力+9%。持続時間7秒、最大2重まで、0.3秒毎に1回のみ発動可能。2重まで重ねると、2セットの効果が2倍になる。"},"descTextMapHash":1972611657,"level":2,"addProps":[{},{},{}],"paramList":[0.09000000357627869,7,0.30000001192092896,0.25,0,0,0,0]}]},"15019":{"setId":15019,"rankLevel":5,"equipAffixId":215019,"nameTextMapHash":608159787,"setName":{"cn_sim":"追忆之注连","cn_tra":"追憶之注連","en":"Shimenawa's Reminiscence","jp":"追憶のしめ縄"},"setAffixs":[{"name":{"cn_sim":"追忆之注连","cn_tra":"追憶之注連","en":"Shimenawa's Reminiscence","jp":"追憶のしめ縄"},"nameTextMapHash":608159787,"desc":{"cn_sim":"攻击力提高18%。","cn_tra":"攻擊力提高18%。","en":"ATK +18%.","jp":"攻撃力+18%。"},"descTextMapHash":507246609,"level":1,"addProps":[{"propType":"FIGHT_PROP_ATTACK_PERCENT","value":0.18000000715255737},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"追忆之注连","cn_tra":"追憶之注連","en":"Shimenawa's Reminiscence","jp":"追憶のしめ縄"},"nameTextMapHash":4144069251,"desc":{"cn_sim":"施放元素战技时，如果角色的元素能量高于或等于15点，则会流失15点元素能量，使接下来的10秒内，普通攻击、重击、下落攻击造成的伤害提高50%，持续期间内该效果不会再次触发。","cn_tra":"施放元素戰技時，如果角色的元素能量高於或等於15點，則會流失15點元素能量，使接下來的10秒內，普通攻擊、重擊、下落攻擊造成的傷害提高50%，持續期間內該效果不會再次觸發。","en":"When casting an Elemental Skill, if the character has 15 or more Energy, they lose 15 Energy and Normal/Charged/Plunging Attack DMG is increased by 50% for 10s. This effect will not trigger again during that duration.","jp":"元素スキルを発動した時、キャラクターの元素エネルギーが15以上の場合、元素エネルギーを15消費し、次の10秒間通常攻撃、重撃、落下攻撃ダメージ+50%。継続時間中この効果は再発動できない。"},"descTextMapHash":2211841193,"level":2,"addProps":[{},{},{}],"paramList":[15,0.5,10,0,0,0,0,0]}]},"15020":{"setId":15020,"rankLevel":5,"equipAffixId":215020,"nameTextMapHash":930487011,"setName":{"cn_sim":"绝缘之旗印","cn_tra":"絕緣之旗印","en":"Emblem of Severed Fate","jp":"絶縁の旗印"},"setAffixs":[{"name":{"cn_sim":"绝缘之旗印","cn_tra":"絕緣之旗印","en":"Emblem of Severed Fate","jp":"絶縁の旗印"},"nameTextMapHash":930487011,"desc":{"cn_sim":"元素充能效率提高20%。","cn_tra":"元素充能效率提高20%。","en":"Energy Recharge +20%","jp":"元素チャージ効率+20%。"},"descTextMapHash":2240727577,"level":1,"addProps":[{"propType":"FIGHT_PROP_CHARGE_EFFICIENCY","value":0.20000000298023224},{},{}],"paramList":[0,0,0,0,0,0,0,0]},{"name":{"cn_sim":"绝缘之旗印","cn_tra":"絕緣之旗印","en":"Emblem of Severed Fate","jp":"絶縁の旗印"},"nameTextMapHash":2276480763,"desc":{"cn_sim":"基于元素充能效率的25%，提高元素爆发造成的伤害。至多通过这种方式获得75%提升。","cn_tra":"基於元素充能效率的25%，提高元素爆發造成的傷害。至多依此方式獲得75%提升。","en":"Increases Elemental Burst DMG by 25% of Energy Recharge. A maximum of 75% bonus DMG can be obtained in this way.","jp":"元素チャージ効率の25%を基準に、元素爆発ダメージがアップする。この方式でアップできるダメージは最大75%まで。"},"descTextMapHash":415295825,"level":2,"addProps":[{},{},{}],"paramList":[0.25,0.75,0,0,0,0,0,0]}]},"15021":{"setId":15021,"rankLevel":5,"equipAffixId":215021,"nameTextMapHash":797656147,"setName":{"cn_sim":"华馆梦醒形骸记","cn_tra":"華館夢醒形骸記","en":"Husk of Opulent Dreams","jp":"華館夢醒形骸記"},"setAffixs":[{"name":{"cn_sim":"华馆梦醒形骸记","cn_tra":"華館夢醒形骸記","en":"Husk of Opulent Dreams","jp":"華館夢醒形骸記"},"nameTextMapHash":797656147,"desc":{"cn_sim":"防御力提高30%。","cn_tra":"防禦力提高30%。","en":"DEF +30%","jp":"防御力+30%。"},"descTextMapHash":3536372153,"level":1,"addProps":[{"propType":"FIGHT_PROP_DEFENSE_PERCENT","value":0.30000001192092896},{},{}],"paramList":[0.30000001192092896,0,0,0,0,0,0,0]},{"name":{"cn_sim":"华馆梦醒形骸记","cn_tra":"華館夢醒形骸記","en":"Husk of Opulent Dreams","jp":"華館夢醒形骸記"},"nameTextMapHash":2546254811,"desc":{"cn_sim":"装备此圣遗物套装的角色在以下情况下，将获得「问答」效果：在场上用岩元素攻击命中敌人后获得一层，每0.3秒至多触发一次；在队伍后台中，每3秒获得一层。问答至多叠加4层，每层能提供6%防御力与6%岩元素伤害加成。每6秒，若未获得问答效果，将损失一层。","cn_tra":"裝備此聖遺物套裝的角色在以下情況下，將獲得「問答」效果：在場上用岩元素攻擊命中敵人後獲得一層，每0.3秒至多觸發一次；在隊伍後台中，每3秒獲得一層。問答至多疊加4層，每層能提供6%防禦力與6%岩元素傷害加成。每6秒，若未獲得問答效果，將損失一層。","en":"A character equipped with this Artifact set will obtain the Curiosity effect in the following conditions: When on the field, the character gains 1 stack after hitting an opponent with a Geo attack, triggering a maximum of once every 0.3s. When off the field, the character gains 1 stack every 3s. Curiosity can stack up to 4 times, each providing 6% DEF and a 6% Geo DMG Bonus. When 6 seconds pass without gaining a Curiosity stack, 1 stack is lost.","jp":"この聖遺物セットを装備したキャラクターは、以下の状況において「問答」効果を獲得する。「問答」効果：フィールド上で岩元素攻撃を敵に命中した後に1層獲得、0.3秒毎に1層のみ獲得できる。待機中の場合は、3秒毎に自動で1層獲得する。重ね掛けできる「問答」は最大4層までとなり、1層につき防御力+6%、岩元素ダメージ+6%。6秒毎に「問答」効果を獲得していない場合は、1層失う。"},"descTextMapHash":34198977,"level":2,"addProps":[{},{},{}],"paramList":[0.30000001192092896,3,0.05999999865889549,0.05999999865889549,6,0,0,0]}]},"15022":{"setId":15022,"rankLevel":5,"equipAffixId":215022,"nameTextMapHash":4186447371,"setName":{"cn_sim":"海染砗磲","cn_tra":"海染硨磲","en":"Ocean-Hued Clam","jp":"海染硨磲"},"setAffixs":[{"name":{"cn_sim":"海染砗磲","cn_tra":"海染硨磲","en":"Ocean-Hued Clam","jp":"海染硨磲"},"nameTextMapHash":4186447371,"desc":{"cn_sim":"治疗加成提高15%。","cn_tra":"治療加成提高15%。","en":"Healing Bonus +15%.","jp":"与える治療効果+15%。"},"descTextMapHash":437396137,"level":1,"addProps":[{"propType":"FIGHT_PROP_HEAL_ADD","value":0.15000000596046448},{},{}],"paramList":[0.15000000596046448,0,0,0,0,0,0,0]},{"name":{"cn_sim":"海染砗磲","cn_tra":"海染硨磲","en":"Ocean-Hued Clam","jp":"海染硨磲"},"nameTextMapHash":1756609915,"desc":{"cn_sim":"装备此圣遗物套装的角色对队伍中的角色进行治疗时，将产生持续3秒的海染泡沫，记录治疗的生命值回复量（包括溢出值）。持续时间结束时，海染泡沫将会爆炸，对周围的敌人造成90%累计回复量的伤害（该伤害结算方式同感电、超导等元素反应，但不受元素精通、等级或反应伤害加成效果影响）。每3.5秒至多产生一个海染泡沫；海染泡沫至多记录30000点回复量，含溢出部分的治疗量；自己的队伍中同时至多存在一个海染泡沫。装备此圣遗物套装的角色处于队伍后台时，依然能触发该效果。","cn_tra":"裝備此聖遺物套裝的角色對隊伍中的角色進行治療時，將產生持續3秒的海染泡沫，記錄治療的生命值回復量（包括溢出值）。持續時間結束時，海染泡沫將會爆炸，對周圍的敵人造成90%累計回復量的傷害（該傷害結算方式同感電、超導等元素反應，但不受元素精通、等級或反應傷害加成效果影響）。每3.5秒至多產生一個海染泡沫；海染泡沫至多記錄30000點回復量，含溢出部分的治療量；自己的隊伍中同時至多存在一個海染泡沫。裝備此聖遺物套裝的角色處於隊伍後台時，依然能觸發該效果。","en":"When the character equipping this artifact set heals a character in the party, a Sea-Dyed Foam will appear for 3 seconds, accumulating the amount of HP recovered from healing (including overflow healing). At the end of the duration, the Sea-Dyed Foam will explode, dealing DMG to nearby opponents based on 90% of the accumulated healing. (This DMG is calculated similarly to Reactions such as Electro-Charged, and Superconduct, but is not affected by Elemental Mastery, Character Levels, or Reaction DMG Bonuses). Only one Sea-Dyed Foam can be produced every 3.5 seconds. Each Sea-Dyed Foam can accumulate up to 30,000 HP (including overflow healing). There can be no more than one Sea-Dyed Foam active at any given time. This effect can still be triggered even when the character who is using this artifact set is not on the field.","jp":"この聖遺物セットを装備したキャラクターがチーム内のキャラクターに治療を行うと、治療によるHP回復量（HP上限を超えた回復量も含む）を記録する海染の泡を生成する。海染の泡は3秒継続する。継続時間終了時、海染の泡は破裂し、周囲の敵に記録した回復量の90%分のダメージを与える（このダメージは感電や超電導などの元素反応と同じように計算されるが、元素熟知、キャラクターLv、または元素反応のダメージアップ効果の影響は受けない）。海染の泡は3.5秒毎に1回のみ生成可能。海染の泡が記録できる回復量は最大30000までとなり、HP上限超過分の回復量を含む。チーム内で、海染の泡は同時に最大1つまで存在できる。この聖遺物セットを装備したキャラクターは待機中でも、この効果を発動できる。"},"descTextMapHash":912268385,"level":2,"addProps":[{},{},{}],"paramList":[3,0.8999999761581421,0,3.5,30000,0,0,0]}]},"15023":{"setId":15023,"rankLevel":5,"equipAffixId":215023,"nameTextMapHash":1931332699,"setName":{"cn_sim":"辰砂往生录","cn_tra":"辰砂往生錄","en":"Vermillion Hereafter","jp":"辰砂往生録"},"setAffixs":[{"name":{"cn_sim":"辰砂往生录","cn_tra":"辰砂往生錄","en":"Vermillion Hereafter","jp":"辰砂往生録"},"nameTextMapHash":1931332699,"desc":{"cn_sim":"攻击力提高18%。","cn_tra":"攻擊力提高18%。","en":"ATK +18%.","jp":"攻撃力+18%。"},"descTextMapHash":4135660569,"level":1,"addProps":[{"propType":"FIGHT_PROP_ATTACK_PERCENT","value":0.18000000715255737},{},{}],"paramList":[0.18000000715255737,0,0,0,0,0,0,0]},{"name":{"cn_sim":"辰砂往生录","cn_tra":"辰砂往生錄","en":"Vermillion Hereafter","jp":"辰砂往生録"},"nameTextMapHash":1558036915,"desc":{"cn_sim":"施放元素爆发后，将产生持续16秒的「潜光」效果：攻击力提升8%；并在角色的生命值降低时，攻击力进一步提升10%，至多通过这种方式提升4次，每0.8秒至多触发一次。「潜光」效果将在角色退场时消失；持续期间再次施放元素爆发，将移除原有的「潜光」。","cn_tra":"施放元素爆發後，將產生持續16秒的「潛光」效果：攻擊力提升8%；並在角色的生命值降低時，攻擊力進一步提升10%，至多依此方式提升4次，每0.8秒至多觸發一次。「潛光」效果將在角色退場時消失；持續期間再次施放元素爆發，將移除原有的「潛光」。","en":"After using an Elemental Burst, this character will gain the Nascent Light effect, increasing their ATK by 8% for 16s. When the character's HP decreases, their ATK will further increase by 10%. This further increase can occur this way a maximum of 4 times. This effect can be triggered once every 0.8s. Nascent Light will be dispelled when the character leaves the field. If an Elemental Burst is used again during the duration of Nascent Light, the original Nascent Light will be dispelled.","jp":"元素爆発を発動すると、継続時間16秒の「潜光」効果が発動する。「潜光」：攻撃力+8%、キャラクターがHPを失うたびに攻撃力がさらに10%アップする。HPの損失による攻撃力アップ効果は0.8秒毎に1回のみ発動でき、最大4回重ね掛けできる。「潜光」効果はキャラクターが戦闘不能、または退場する時に解除される。「潜光」効果の継続時間中に再び元素爆発を発動すると、既存の「潜光」効果が先にクリアされる。"},"descTextMapHash":3806784241,"level":2,"addProps":[{},{},{}],"paramList":[16,0.07999999821186066,0.10000000149011612,4,0.800000011920929,0,0,0]}]},"15024":{"setId":15024,"rankLevel":5,"equipAffixId":215024,"nameTextMapHash":2829471595,"setName":{"cn_sim":"来歆余响","cn_tra":"來歆餘響","en":"Echoes of an Offering","jp":"来歆の余響"},"setAffixs":[{"name":{"cn_sim":"来歆余响","cn_tra":"來歆餘響","en":"Echoes of an Offering","jp":"来歆の余響"},"nameTextMapHash":2829471595,"desc":{"cn_sim":"攻击力提高18%。","cn_tra":"攻擊力提高18%。","en":"ATK +18%.","jp":"攻撃力+18%。"},"descTextMapHash":1016673521,"level":1,"addProps":[{"propType":"FIGHT_PROP_ATTACK_PERCENT","value":0.18000000715255737},{},{}],"paramList":[0.18000000715255737,0,0,0,0,0,0,0]},{"name":{"cn_sim":"来歆余响","cn_tra":"來歆餘響","en":"Echoes of an Offering","jp":"来歆の余響"},"nameTextMapHash":3626268211,"desc":{"cn_sim":"普通攻击命中敌人时，有36%概率触发「幽谷祝祀」：普通攻击造成的伤害提高，伤害提高值为攻击力的70%，该效果将在普通攻击造成伤害后的0.05秒后清除。普通攻击未触发「幽谷祝祀」时，会使下次触发概率提升20%；0.2秒内至多判定1次触发与否。","cn_tra":"普通攻擊命中敵人時，有36%機率觸發「幽谷祝祀」：普通攻擊造成的傷害提高，傷害提高值為攻擊力的70%，該效果將在普通攻擊造成傷害後的0.05秒後清除。普通攻擊未觸發「幽谷祝祀」時，會使下次觸發機率提升20%；0.2秒內至多判定1次觸發與否。","en":"When Normal Attacks hit opponents, there is a 36% chance that it will trigger Valley Rite, which will increase Normal Attack DMG by 70% of ATK. This effect will be dispelled 0.05s after a Normal Attack deals DMG. If a Normal Attack fails to trigger Valley Rite, the odds of it triggering the next time will increase by 20%. This trigger can occur once every 0.2s.","jp":"通常攻撃が敵に命中すると、36%の確率で「幽谷祭祀」が発動する。「幽谷祭祀」：通常攻撃ダメージが攻撃力70%分アップする。この効果は通常攻撃でダメージを与えた0.05秒後にクリアされる。通常攻撃後に「幽谷祭祀」が発動しなかった場合、次回の発動確率+20%。発動判定は0.2秒毎に1回のみ行われる。"},"descTextMapHash":2940482105,"level":2,"addProps":[{},{},{}],"paramList":[0.36000001430511475,0.699999988079071,0.05000000074505806,0.20000000298023224,0.20000000298023224,0.20000000298023224,0,0]}]}}
+{
+    "14001": {
+        "setId": 14001,
+        "rankLevel": 5,
+        "equipAffixId": 214001,
+        "nameTextMapHash": 1959650699,
+        "setName": {
+            "cn_sim": "冰风迷途的勇士",
+            "cn_tra": "冰風迷途的勇士",
+            "en": "Blizzard Strayer",
+            "jp": "氷風を彷徨う勇士"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "冰风迷途的勇士",
+                    "cn_tra": "冰風迷途的勇士",
+                    "en": "Blizzard Strayer",
+                    "jp": "氷風を彷徨う勇士"
+                },
+                "nameTextMapHash": 1959650699,
+                "desc": {
+                    "cn_sim": "获得15%冰元素伤害加成。",
+                    "cn_tra": "獲得15%冰元素傷害加成。",
+                    "en": "Cryo DMG Bonus +15%",
+                    "jp": "氷元素ダメージ+15%。"
+                },
+                "descTextMapHash": 2712405201,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ICE_ADD_HURT",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "冰风迷途的勇士",
+                    "cn_tra": "冰風迷途的勇士",
+                    "en": "Blizzard Strayer",
+                    "jp": "氷風を彷徨う勇士"
+                },
+                "nameTextMapHash": 933076627,
+                "desc": {
+                    "cn_sim": "攻击处于冰元素影响下的敌人时，暴击率提高20%；若敌人处于冻结状态下，则暴击率额外提高20%。",
+                    "cn_tra": "攻擊處於冰元素影響下的敵人時，暴擊率提高20%；若敵人處於凍結狀態下，則暴擊率額外提高20%。",
+                    "en": "When a character attacks an opponent affected by Cryo, their CRIT Rate is increased by 20%. If the opponent is Frozen, CRIT Rate is increased by an additional 20%.",
+                    "jp": "氷元素の影響を受けている敵を攻撃した場合、会心率+20%。敵が凍結状態の場合、会心率は更に+20%。"
+                },
+                "descTextMapHash": 1080795585,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.20000000298023224,
+                    0.20000000298023224,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "14002": {
+        "setId": 14002,
+        "rankLevel": 5,
+        "equipAffixId": 214002,
+        "nameTextMapHash": 915693491,
+        "setName": {
+            "cn_sim": "平息鸣雷的尊者",
+            "cn_tra": "平息鳴雷的尊者",
+            "en": "Thundersoother",
+            "jp": "雷を鎮める尊者"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "平息鸣雷的尊者",
+                    "cn_tra": "平息鳴雷的尊者",
+                    "en": "Thundersoother",
+                    "jp": "雷を鎮める尊者"
+                },
+                "nameTextMapHash": 915693491,
+                "desc": {
+                    "cn_sim": "雷元素抗性提高40%。",
+                    "cn_tra": "雷元素抗性提高40%。",
+                    "en": "Electro RES increased by 40%.",
+                    "jp": "雷元素耐性+40%。"
+                },
+                "descTextMapHash": 3556101057,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ELEC_SUB_HURT",
+                        "value": 0.4000000059604645
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "平息鸣雷的尊者",
+                    "cn_tra": "平息鳴雷的尊者",
+                    "en": "Thundersoother",
+                    "jp": "雷を鎮める尊者"
+                },
+                "nameTextMapHash": 1873342283,
+                "desc": {
+                    "cn_sim": "对处于雷元素影响下的敌人造成的伤害提升35%。",
+                    "cn_tra": "對處於雷元素影響下的敵人造成的傷害提升35%。",
+                    "en": "Increases DMG against opponents affected by Electro by 35%.",
+                    "jp": "雷元素の影響を受けた敵に対するダメージ+35%。"
+                },
+                "descTextMapHash": 3318279857,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.3499999940395355,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "14003": {
+        "setId": 14003,
+        "rankLevel": 5,
+        "equipAffixId": 214003,
+        "nameTextMapHash": 1414807643,
+        "setName": {
+            "cn_sim": "渡过烈火的贤人",
+            "cn_tra": "渡過烈火的賢人",
+            "en": "Lavawalker",
+            "jp": "烈火を渡る賢者"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "渡过烈火的贤人",
+                    "cn_tra": "渡過烈火的賢人",
+                    "en": "Lavawalker",
+                    "jp": "烈火を渡る賢者"
+                },
+                "nameTextMapHash": 1414807643,
+                "desc": {
+                    "cn_sim": "火元素抗性提高40%。",
+                    "cn_tra": "火元素抗性提高40%。",
+                    "en": "Pyro RES increased by 40%.",
+                    "jp": "炎元素耐性+40%。"
+                },
+                "descTextMapHash": 3669175857,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_FIRE_SUB_HURT",
+                        "value": 0.4000000059604645
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "渡过烈火的贤人",
+                    "cn_tra": "渡過烈火的賢人",
+                    "en": "Lavawalker",
+                    "jp": "烈火を渡る賢者"
+                },
+                "nameTextMapHash": 1632377563,
+                "desc": {
+                    "cn_sim": "对处于火元素影响下的敌人造成的伤害提升35%。",
+                    "cn_tra": "對處於火元素影響下的敵人造成的傷害提升35%。",
+                    "en": "Increases DMG against opponents affected by Pyro by 35%.",
+                    "jp": "炎元素の影響を受けた敵に対するダメージ+35%。"
+                },
+                "descTextMapHash": 2323993841,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.3499999940395355,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "14004": {
+        "setId": 14004,
+        "rankLevel": 5,
+        "equipAffixId": 214004,
+        "nameTextMapHash": 3135412419,
+        "setName": {
+            "cn_sim": "被怜爱的少女",
+            "cn_tra": "被憐愛的少女",
+            "en": "Maiden Beloved",
+            "jp": "愛される少女"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "被怜爱的少女",
+                    "cn_tra": "被憐愛的少女",
+                    "en": "Maiden Beloved",
+                    "jp": "愛される少女"
+                },
+                "nameTextMapHash": 3135412419,
+                "desc": {
+                    "cn_sim": "角色造成的治疗效果提升15%。",
+                    "cn_tra": "角色造成的治療效果提升15%。",
+                    "en": "Character Healing Effectiveness +15%",
+                    "jp": "与える治療効果+15%。"
+                },
+                "descTextMapHash": 1619689457,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_HEAL_ADD",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "被怜爱的少女",
+                    "cn_tra": "被憐愛的少女",
+                    "en": "Maiden Beloved",
+                    "jp": "愛される少女"
+                },
+                "nameTextMapHash": 83115355,
+                "desc": {
+                    "cn_sim": "施放元素战技或元素爆发后的10秒内，队伍中所有角色受治疗效果加成提高20%。",
+                    "cn_tra": "施放元素戰技或元素爆發後的10秒內，隊伍中所有角色受治療效果加成提高20%。",
+                    "en": "Using an Elemental Skill or Burst increases healing received by all party members by 20% for 10s.",
+                    "jp": "元素スキルまたは元素爆発を発動した後10秒間、チーム全員の受ける治療効果+20%。"
+                },
+                "descTextMapHash": 1947253905,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.20000000298023224,
+                    10,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15001": {
+        "setId": 15001,
+        "rankLevel": 5,
+        "equipAffixId": 215001,
+        "nameTextMapHash": 1312582827,
+        "setName": {
+            "cn_sim": "角斗士的终幕礼",
+            "cn_tra": "角鬥士的終幕禮",
+            "en": "Gladiator's Finale",
+            "jp": "剣闘士のフィナーレ"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "角斗士的终幕礼",
+                    "cn_tra": "角鬥士的終幕禮",
+                    "en": "Gladiator's Finale",
+                    "jp": "剣闘士のフィナーレ"
+                },
+                "nameTextMapHash": 1312582827,
+                "desc": {
+                    "cn_sim": "攻击力提高18%。",
+                    "cn_tra": "攻擊力提高18%。",
+                    "en": "ATK +18%.",
+                    "jp": "攻撃力+18%。"
+                },
+                "descTextMapHash": 3552809081,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ATTACK_PERCENT",
+                        "value": 0.18000000715255737
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "角斗士的终幕礼",
+                    "cn_tra": "角鬥士的終幕禮",
+                    "en": "Gladiator's Finale",
+                    "jp": "剣闘士のフィナーレ"
+                },
+                "nameTextMapHash": 1212345779,
+                "desc": {
+                    "cn_sim": "装备该圣遗物套装的角色为单手剑、双手剑、长柄武器角色时，角色普通攻击造成的伤害提高35%。",
+                    "cn_tra": "裝備該聖遺物套裝的角色為單手劍、雙手劍、長柄武器角色時，角色普通攻擊造成的傷害提高35%。",
+                    "en": "If the wielder of this artifact set uses a Sword, Claymore or Polearm, increases their Normal Attack DMG by 35%.",
+                    "jp": "該当聖遺物セットを装備したキャラが片手剣、両手剣、長柄武器キャラの場合、通常攻撃ダメージ+35%。"
+                },
+                "descTextMapHash": 3135183041,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.3499999940395355,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15002": {
+        "setId": 15002,
+        "rankLevel": 5,
+        "equipAffixId": 215002,
+        "nameTextMapHash": 3237665819,
+        "setName": {
+            "cn_sim": "翠绿之影",
+            "cn_tra": "翠綠之影",
+            "en": "Viridescent Venerer",
+            "jp": "翠緑の影"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "翠绿之影",
+                    "cn_tra": "翠綠之影",
+                    "en": "Viridescent Venerer",
+                    "jp": "翠緑の影"
+                },
+                "nameTextMapHash": 3237665819,
+                "desc": {
+                    "cn_sim": "获得15%风元素伤害加成。",
+                    "cn_tra": "獲得15%風元素傷害加成。",
+                    "en": "Anemo DMG Bonus +15%",
+                    "jp": "風元素ダメージ+15%。"
+                },
+                "descTextMapHash": 2092181985,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_WIND_ADD_HURT",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "翠绿之影",
+                    "cn_tra": "翠綠之影",
+                    "en": "Viridescent Venerer",
+                    "jp": "翠緑の影"
+                },
+                "nameTextMapHash": 1562601179,
+                "desc": {
+                    "cn_sim": "扩散反应造成的伤害提升60%。根据扩散的元素类型，降低受到影响的敌人40%的对应元素抗性，持续10秒。",
+                    "cn_tra": "擴散反應造成的傷害提升60%。根據擴散的元素類型，降低受到影響的敵人40%的對應元素抗性，持續10秒。",
+                    "en": "Increases Swirl DMG by 60%. Decreases opponent's Elemental RES to the element infused in the Swirl by 40% for 10s.",
+                    "jp": "拡散反応によるダメージ+60%。拡散された元素タイプを基準に、影響を受けた敵の元素耐性-40%、継続時間10秒。"
+                },
+                "descTextMapHash": 2340004825,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.6000000238418579,
+                    0.4000000059604645,
+                    10,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15003": {
+        "setId": 15003,
+        "rankLevel": 5,
+        "equipAffixId": 215003,
+        "nameTextMapHash": 4257423931,
+        "setName": {
+            "cn_sim": "流浪大地的乐团",
+            "cn_tra": "流浪大地的樂團",
+            "en": "Wanderer's Troupe",
+            "jp": "大地を流浪する楽団"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "流浪大地的乐团",
+                    "cn_tra": "流浪大地的樂團",
+                    "en": "Wanderer's Troupe",
+                    "jp": "大地を流浪する楽団"
+                },
+                "nameTextMapHash": 4257423931,
+                "desc": {
+                    "cn_sim": "元素精通提高80点。",
+                    "cn_tra": "元素精通提高80點。",
+                    "en": "Increases Elemental Mastery by 80.",
+                    "jp": "元素熟知+80。"
+                },
+                "descTextMapHash": 1653158305,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ELEMENT_MASTERY",
+                        "value": 80
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "流浪大地的乐团",
+                    "cn_tra": "流浪大地的樂團",
+                    "en": "Wanderer's Troupe",
+                    "jp": "大地を流浪する楽団"
+                },
+                "nameTextMapHash": 147298547,
+                "desc": {
+                    "cn_sim": "装备该圣遗物套装的角色为法器、弓箭角色时，角色重击造成的伤害提高35%。",
+                    "cn_tra": "裝備該聖遺物套裝的角色為法器、弓箭角色時，角色重擊造成的傷害提高35%。",
+                    "en": "Increases Charged Attack DMG by 35% if the character uses a Catalyst or a Bow.",
+                    "jp": "該当聖遺物セットを装備したキャラが法器、弓キャラの場合、キャラの重撃ダメージ+35%。"
+                },
+                "descTextMapHash": 3961839441,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.3499999940395355,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15005": {
+        "setId": 15005,
+        "rankLevel": 5,
+        "equipAffixId": 215005,
+        "nameTextMapHash": 1213967619,
+        "setName": {
+            "cn_sim": "如雷的盛怒",
+            "cn_tra": "如雷的盛怒",
+            "en": "Thundering Fury",
+            "jp": "雷のような怒り"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "如雷的盛怒",
+                    "cn_tra": "如雷的盛怒",
+                    "en": "Thundering Fury",
+                    "jp": "雷のような怒り"
+                },
+                "nameTextMapHash": 1213967619,
+                "desc": {
+                    "cn_sim": "获得15%雷元素伤害加成。",
+                    "cn_tra": "獲得15%雷元素傷害加成。",
+                    "en": "Electro DMG Bonus +15%",
+                    "jp": "雷元素ダメージ+15%。"
+                },
+                "descTextMapHash": 1716838313,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ELEC_ADD_HURT",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "如雷的盛怒",
+                    "cn_tra": "如雷的盛怒",
+                    "en": "Thundering Fury",
+                    "jp": "雷のような怒り"
+                },
+                "nameTextMapHash": 2512309395,
+                "desc": {
+                    "cn_sim": "超载、感电、超导反应造成的伤害提升40%。触发这些元素反应时，元素战技冷却时间减少1秒。该效果每0.8秒最多触发一次。",
+                    "cn_tra": "超載、感電、超導反應造成的傷害提升40%。觸發這些元素反應時，元素戰技冷卻時間減少1秒。該效果每0.8秒最多觸發一次。",
+                    "en": "Increases damage caused by Overloaded, Electro-Charged and Superconduct by 40%. Triggering such effects decreases Elemental Skill CD by 1s. Can only occur once every 0.8s.",
+                    "jp": "過負荷、感電、超電導反応によるダメージ+40%。それらの元素反応を起こすと、元素スキルのクールタイム-1秒。0.8秒毎に最大1回のみ発動可能。"
+                },
+                "descTextMapHash": 4186114257,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.4000000059604645,
+                    0.800000011920929,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15006": {
+        "setId": 15006,
+        "rankLevel": 5,
+        "equipAffixId": 215006,
+        "nameTextMapHash": 1928302715,
+        "setName": {
+            "cn_sim": "炽烈的炎之魔女",
+            "cn_tra": "熾烈的炎之魔女",
+            "en": "Crimson Witch of Flames",
+            "jp": "燃え盛る炎の魔女"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "炽烈的炎之魔女",
+                    "cn_tra": "熾烈的炎之魔女",
+                    "en": "Crimson Witch of Flames",
+                    "jp": "燃え盛る炎の魔女"
+                },
+                "nameTextMapHash": 1928302715,
+                "desc": {
+                    "cn_sim": "获得15%火元素伤害加成。",
+                    "cn_tra": "獲得15%火元素傷害加成。",
+                    "en": "Pyro DMG Bonus +15%",
+                    "jp": "炎元素ダメージ+15%。"
+                },
+                "descTextMapHash": 2602260593,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_FIRE_ADD_HURT",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "炽烈的炎之魔女",
+                    "cn_tra": "熾烈的炎之魔女",
+                    "en": "Crimson Witch of Flames",
+                    "jp": "燃え盛る炎の魔女"
+                },
+                "nameTextMapHash": 1524173875,
+                "desc": {
+                    "cn_sim": "超载、燃烧反应造成的伤害提升40%，蒸发、融化反应的加成系数提高15%。施放元素战技后的10秒内，2件套的效果提高50%，该效果最多叠加3次。",
+                    "cn_tra": "超載、燃燒反應造成的傷害提升40%，蒸發、融化反應的加成係數提高15%。施放元素戰技後的10秒內，2件套的效果提高50%，該效果最多疊加三次。",
+                    "en": "Increases Overloaded and Burning DMG by 40%. Increases Vaporize and Melt DMG by 15%. Using Elemental Skill increases the 2-Piece Set Bonus by 50% of its starting value for 10s. Max 3 stacks.",
+                    "jp": "過負荷、燃焼反応によるダメージ+40%。蒸発、溶解反応による加算効果+15%。元素スキルを発動した10秒間、2セットの効果+50%、最大3重まで。"
+                },
+                "descTextMapHash": 1376888985,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.4000000059604645,
+                    0.15000000596046448,
+                    0.15000000596046448,
+                    0.5,
+                    10,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15007": {
+        "setId": 15007,
+        "rankLevel": 5,
+        "equipAffixId": 215007,
+        "nameTextMapHash": 1750139131,
+        "setName": {
+            "cn_sim": "昔日宗室之仪",
+            "cn_tra": "昔日宗室之儀",
+            "en": "Noblesse Oblige",
+            "jp": "旧貴族のしつけ"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "昔日宗室之仪",
+                    "cn_tra": "昔日宗室之儀",
+                    "en": "Noblesse Oblige",
+                    "jp": "旧貴族のしつけ"
+                },
+                "nameTextMapHash": 1750139131,
+                "desc": {
+                    "cn_sim": "元素爆发造成的伤害提升20%。",
+                    "cn_tra": "元素爆發造成的傷害提升20%。",
+                    "en": "Elemental Burst DMG +20%",
+                    "jp": "元素爆発のダメージ+20%。"
+                },
+                "descTextMapHash": 4115763905,
+                "level": 1,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.20000000298023224,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "昔日宗室之仪",
+                    "cn_tra": "昔日宗室之儀",
+                    "en": "Noblesse Oblige",
+                    "jp": "旧貴族のしつけ"
+                },
+                "nameTextMapHash": 1751039235,
+                "desc": {
+                    "cn_sim": "施放元素爆发后，队伍中所有角色攻击力提升20%，持续12秒。该效果不可叠加。",
+                    "cn_tra": "施放元素爆發後，隊伍中所有角色攻擊力提升20%，持續12秒。該效果不可疊加。",
+                    "en": "Using an Elemental Burst increases all party members' ATK by 20% for 12s. This effect cannot stack.",
+                    "jp": "元素爆発を発動すると、チーム全員の攻撃力+20%、継続時間12秒、重ねがけ不可。"
+                },
+                "descTextMapHash": 2492204929,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.20000000298023224,
+                    12,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15008": {
+        "setId": 15008,
+        "rankLevel": 5,
+        "equipAffixId": 215008,
+        "nameTextMapHash": 4211407267,
+        "setName": {
+            "cn_sim": "染血的骑士道",
+            "cn_tra": "染血的騎士道",
+            "en": "Bloodstained Chivalry",
+            "jp": "血染めの騎士道"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "染血的骑士道",
+                    "cn_tra": "染血的騎士道",
+                    "en": "Bloodstained Chivalry",
+                    "jp": "血染めの騎士道"
+                },
+                "nameTextMapHash": 4211407267,
+                "desc": {
+                    "cn_sim": "造成的物理伤害提高25%。",
+                    "cn_tra": "造成的物理傷害提高25%。",
+                    "en": "Physical DMG +25%",
+                    "jp": "物理ダメージ+25%。"
+                },
+                "descTextMapHash": 1773482865,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_PHYSICAL_ADD_HURT",
+                        "value": 0.25
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "染血的骑士道",
+                    "cn_tra": "染血的騎士道",
+                    "en": "Bloodstained Chivalry",
+                    "jp": "血染めの騎士道"
+                },
+                "nameTextMapHash": 1541919827,
+                "desc": {
+                    "cn_sim": "击败敌人后的10秒内，施放重击时不消耗体力，且重击造成的伤害提升50%。",
+                    "cn_tra": "擊敗敵人後的10秒內，施放重擊時不消耗體力，且重擊造成的傷害提升50%。",
+                    "en": "After defeating an opponent, increases Charged Attack DMG by 50%, and reduces its Stamina cost to 0 for 10s.",
+                    "jp": "敵を倒した後の10秒間、重撃の際にスタミナを消費しない。また、重撃のダメージ+50%。"
+                },
+                "descTextMapHash": 4274195441,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    10,
+                    0.5,
+                    -5,
+                    0.10000000149011612,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15014": {
+        "setId": 15014,
+        "rankLevel": 5,
+        "equipAffixId": 215014,
+        "nameTextMapHash": 1330908707,
+        "setName": {
+            "cn_sim": "悠古的磐岩",
+            "cn_tra": "悠古的磐岩",
+            "en": "Archaic Petra",
+            "jp": "悠久の磐岩"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "悠古的磐岩",
+                    "cn_tra": "悠古的磐岩",
+                    "en": "Archaic Petra",
+                    "jp": "悠久の磐岩"
+                },
+                "nameTextMapHash": 1330908707,
+                "desc": {
+                    "cn_sim": "获得15%岩元素伤害加成。",
+                    "cn_tra": "獲得15%岩元素傷害加成。",
+                    "en": "Gain a 15% Geo DMG Bonus.",
+                    "jp": "岩元素ダメージ+15%。"
+                },
+                "descTextMapHash": 1236705993,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ROCK_ADD_HURT",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "悠古的磐岩",
+                    "cn_tra": "悠古的磐岩",
+                    "en": "Archaic Petra",
+                    "jp": "悠久の磐岩"
+                },
+                "nameTextMapHash": 2040573235,
+                "desc": {
+                    "cn_sim": "获得结晶反应形成的晶片时，队伍中所有角色获得35%对应元素伤害加成，持续10秒。同时只能通过该效果获得一种元素伤害加成。",
+                    "cn_tra": "獲得結晶反應形成的晶片時，隊伍中所有角色獲得35%對應元素傷害加成，持續10秒。同時只能通過該效果獲得一種元素傷害加成。",
+                    "en": "Upon obtaining an Elemental Shard created through a Crystallize Reaction, all party members gain a 35% DMG Bonus for that particular element for 10s. Only one form of Elemental DMG Bonus can be gained in this manner at any one time.",
+                    "jp": "結晶反応で形成された欠片を獲得すると、チーム全員の該当元素ダメージ+35%、継続時間10秒。元素ダメージアップは同時に1種類のみ獲得可能。"
+                },
+                "descTextMapHash": 1797264985,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.3499999940395355,
+                    10,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15015": {
+        "setId": 15015,
+        "rankLevel": 5,
+        "equipAffixId": 215015,
+        "nameTextMapHash": 3669096219,
+        "setName": {
+            "cn_sim": "逆飞的流星",
+            "cn_tra": "逆飛的流星",
+            "en": "Retracing Bolide",
+            "jp": "逆飛びの流星"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "逆飞的流星",
+                    "cn_tra": "逆飛的流星",
+                    "en": "Retracing Bolide",
+                    "jp": "逆飛びの流星"
+                },
+                "nameTextMapHash": 3669096219,
+                "desc": {
+                    "cn_sim": "护盾强效提高35%。",
+                    "cn_tra": "護盾強效提高35%。",
+                    "en": "Increases Shield Strength by 35%.",
+                    "jp": "シールド強化+35%"
+                },
+                "descTextMapHash": 2028904593,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_SHIELD_COST_MINUS_RATIO",
+                        "value": 0.3499999940395355
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "逆飞的流星",
+                    "cn_tra": "逆飛的流星",
+                    "en": "Retracing Bolide",
+                    "jp": "逆飛びの流星"
+                },
+                "nameTextMapHash": 1438974835,
+                "desc": {
+                    "cn_sim": "处于护盾庇护下时，额外获得40%普通攻击和重击伤害加成。",
+                    "cn_tra": "處於護盾庇護下時，額外獲得40%普通攻擊和重擊傷害加成。",
+                    "en": "While protected by a shield, gain an additional 40% Normal and Charged Attack DMG.",
+                    "jp": "シールド状態の時、通常攻撃と重撃ダメージ+40%。"
+                },
+                "descTextMapHash": 2303302721,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.4000000059604645,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15016": {
+        "setId": 15016,
+        "rankLevel": 5,
+        "equipAffixId": 215016,
+        "nameTextMapHash": 3639055403,
+        "setName": {
+            "cn_sim": "沉沦之心",
+            "cn_tra": "沉淪之心",
+            "en": "Heart of Depth",
+            "jp": "沈淪の心"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "沉沦之心",
+                    "cn_tra": "沉淪之心",
+                    "en": "Heart of Depth",
+                    "jp": "沈淪の心"
+                },
+                "nameTextMapHash": 3639055403,
+                "desc": {
+                    "cn_sim": "获得15%水元素伤害加成。",
+                    "cn_tra": "獲得15%水元素傷害加成。",
+                    "en": "Hydro DMG Bonus +15%",
+                    "jp": "水元素ダメージ+15%。"
+                },
+                "descTextMapHash": 1931206529,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_WATER_ADD_HURT",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "沉沦之心",
+                    "cn_tra": "沉淪之心",
+                    "en": "Heart of Depth",
+                    "jp": "沈淪の心"
+                },
+                "nameTextMapHash": 156294403,
+                "desc": {
+                    "cn_sim": "施放元素战技后的15秒内，普通攻击与重击造成的伤害提高30%。",
+                    "cn_tra": "施放元素戰技後的15秒內，普通攻擊與重擊造成的傷害提高30%。",
+                    "en": "After using Elemental Skill, increases Normal Attack and Charged Attack DMG by 30% for 15s.",
+                    "jp": "元素スキルを発動した後の15秒間、通常攻撃と重撃のダメージ+30%。"
+                },
+                "descTextMapHash": 83285737,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.30000001192092896,
+                    1,
+                    15,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15017": {
+        "setId": 15017,
+        "rankLevel": 5,
+        "equipAffixId": 215017,
+        "nameTextMapHash": 4007102419,
+        "setName": {
+            "cn_sim": "千岩牢固",
+            "cn_tra": "千岩牢固",
+            "en": "Tenacity of the Millelith",
+            "jp": "千岩牢固"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "千岩牢固",
+                    "cn_tra": "千岩牢固",
+                    "en": "Tenacity of the Millelith",
+                    "jp": "千岩牢固"
+                },
+                "nameTextMapHash": 4007102419,
+                "desc": {
+                    "cn_sim": "生命值提升20%",
+                    "cn_tra": "生命值提升20%",
+                    "en": "HP increased by 20%.",
+                    "jp": "HP+20%。"
+                },
+                "descTextMapHash": 417927761,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_HP_PERCENT",
+                        "value": 0.20000000298023224
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "千岩牢固",
+                    "cn_tra": "千岩牢固",
+                    "en": "Tenacity of the Millelith",
+                    "jp": "千岩牢固"
+                },
+                "nameTextMapHash": 1337666507,
+                "desc": {
+                    "cn_sim": "元素战技命中敌人后，使队伍中附近的所有角色攻击力提升20%，护盾强效提升30%，持续3秒。该效果每0.5秒至多触发一次。装备此圣遗物套装的角色处于队伍后台时，依然能触发该效果。",
+                    "cn_tra": "元素戰技命中敵人後，使隊伍中附近的所有角色攻擊力提升20%，護盾強效提升30%，持續3秒。該效果每0.5秒至多觸發一次。裝備此聖遺物套裝的角色處於隊伍後台時，依然能觸發該效果。",
+                    "en": "When an Elemental Skill hits an opponent, the ATK of all nearby party members is increased by 20% and their Shield Strength is increased by 30% for 3s. This effect can be triggered once every 0.5s. This effect can still be triggered even when the character who is using this artifact set is not on the field.",
+                    "jp": "元素スキルが敵に命中すると、周囲のチーム全員の攻撃力+20%、シールド強化+30%、持続時間3秒。この効果は0.5秒毎に1回のみ発動可能。この聖遺物セットを装備したキャラクターが待機している場合にも効果を発動できる。"
+                },
+                "descTextMapHash": 2524947961,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.20000000298023224,
+                    0.30000001192092896,
+                    3,
+                    0.5,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15018": {
+        "setId": 15018,
+        "rankLevel": 5,
+        "equipAffixId": 215018,
+        "nameTextMapHash": 2704460819,
+        "setName": {
+            "cn_sim": "苍白之火",
+            "cn_tra": "蒼白之火",
+            "en": "Pale Flame",
+            "jp": "蒼白の炎"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "苍白之火",
+                    "cn_tra": "蒼白之火",
+                    "en": "Pale Flame",
+                    "jp": "蒼白の炎"
+                },
+                "nameTextMapHash": 2704460819,
+                "desc": {
+                    "cn_sim": "造成的物理伤害提高25%。",
+                    "cn_tra": "造成的物理傷害提高25%。",
+                    "en": "Physical DMG is increased by 25%.",
+                    "jp": "物理ダメージ+25%。"
+                },
+                "descTextMapHash": 2678953001,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_PHYSICAL_ADD_HURT",
+                        "value": 0.25
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "苍白之火",
+                    "cn_tra": "蒼白之火",
+                    "en": "Pale Flame",
+                    "jp": "蒼白の炎"
+                },
+                "nameTextMapHash": 862591315,
+                "desc": {
+                    "cn_sim": "元素战技命中敌人后，攻击力提升9%。该效果持续7秒，至多叠加2层，每0.3秒至多触发一次。叠满2层时，2件套的效果提升100%。",
+                    "cn_tra": "元素戰技命中敵人後，攻擊力提升9%。該效果持續7秒，至多疊加兩層，每0.3秒至多觸發一次。疊滿兩層時，2件套裝的效果提升100%。",
+                    "en": "When an Elemental Skill hits an opponent, ATK is increased by 9% for 7s. This effect stacks up to 2 times and can be triggered once every 0.3s. Once 2 stacks are reached, the 2-set effect is increased by 100%.",
+                    "jp": "元素スキルが敵に命中すると、攻撃力+9%。持続時間7秒、最大2重まで、0.3秒毎に1回のみ発動可能。2重まで重ねると、2セットの効果が2倍になる。"
+                },
+                "descTextMapHash": 1972611657,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.09000000357627869,
+                    7,
+                    0.30000001192092896,
+                    0.25,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15019": {
+        "setId": 15019,
+        "rankLevel": 5,
+        "equipAffixId": 215019,
+        "nameTextMapHash": 608159787,
+        "setName": {
+            "cn_sim": "追忆之注连",
+            "cn_tra": "追憶之注連",
+            "en": "Shimenawa's Reminiscence",
+            "jp": "追憶のしめ縄"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "追忆之注连",
+                    "cn_tra": "追憶之注連",
+                    "en": "Shimenawa's Reminiscence",
+                    "jp": "追憶のしめ縄"
+                },
+                "nameTextMapHash": 608159787,
+                "desc": {
+                    "cn_sim": "攻击力提高18%。",
+                    "cn_tra": "攻擊力提高18%。",
+                    "en": "ATK +18%.",
+                    "jp": "攻撃力+18%。"
+                },
+                "descTextMapHash": 507246609,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ATTACK_PERCENT",
+                        "value": 0.18000000715255737
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "追忆之注连",
+                    "cn_tra": "追憶之注連",
+                    "en": "Shimenawa's Reminiscence",
+                    "jp": "追憶のしめ縄"
+                },
+                "nameTextMapHash": 4144069251,
+                "desc": {
+                    "cn_sim": "施放元素战技时，如果角色的元素能量高于或等于15点，则会流失15点元素能量，使接下来的10秒内，普通攻击、重击、下落攻击造成的伤害提高50%，持续期间内该效果不会再次触发。",
+                    "cn_tra": "施放元素戰技時，如果角色的元素能量高於或等於15點，則會流失15點元素能量，使接下來的10秒內，普通攻擊、重擊、下落攻擊造成的傷害提高50%，持續期間內該效果不會再次觸發。",
+                    "en": "When casting an Elemental Skill, if the character has 15 or more Energy, they lose 15 Energy and Normal/Charged/Plunging Attack DMG is increased by 50% for 10s. This effect will not trigger again during that duration.",
+                    "jp": "元素スキルを発動した時、キャラクターの元素エネルギーが15以上の場合、元素エネルギーを15消費し、次の10秒間通常攻撃、重撃、落下攻撃ダメージ+50%。継続時間中この効果は再発動できない。"
+                },
+                "descTextMapHash": 2211841193,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    15,
+                    0.5,
+                    10,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15020": {
+        "setId": 15020,
+        "rankLevel": 5,
+        "equipAffixId": 215020,
+        "nameTextMapHash": 930487011,
+        "setName": {
+            "cn_sim": "绝缘之旗印",
+            "cn_tra": "絕緣之旗印",
+            "en": "Emblem of Severed Fate",
+            "jp": "絶縁の旗印"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "绝缘之旗印",
+                    "cn_tra": "絕緣之旗印",
+                    "en": "Emblem of Severed Fate",
+                    "jp": "絶縁の旗印"
+                },
+                "nameTextMapHash": 930487011,
+                "desc": {
+                    "cn_sim": "元素充能效率提高20%。",
+                    "cn_tra": "元素充能效率提高20%。",
+                    "en": "Energy Recharge +20%",
+                    "jp": "元素チャージ効率+20%。"
+                },
+                "descTextMapHash": 2240727577,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_CHARGE_EFFICIENCY",
+                        "value": 0.20000000298023224
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "绝缘之旗印",
+                    "cn_tra": "絕緣之旗印",
+                    "en": "Emblem of Severed Fate",
+                    "jp": "絶縁の旗印"
+                },
+                "nameTextMapHash": 2276480763,
+                "desc": {
+                    "cn_sim": "基于元素充能效率的25%，提高元素爆发造成的伤害。至多通过这种方式获得75%提升。",
+                    "cn_tra": "基於元素充能效率的25%，提高元素爆發造成的傷害。至多依此方式獲得75%提升。",
+                    "en": "Increases Elemental Burst DMG by 25% of Energy Recharge. A maximum of 75% bonus DMG can be obtained in this way.",
+                    "jp": "元素チャージ効率の25%を基準に、元素爆発ダメージがアップする。この方式でアップできるダメージは最大75%まで。"
+                },
+                "descTextMapHash": 415295825,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.25,
+                    0.75,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15021": {
+        "setId": 15021,
+        "rankLevel": 5,
+        "equipAffixId": 215021,
+        "nameTextMapHash": 797656147,
+        "setName": {
+            "cn_sim": "华馆梦醒形骸记",
+            "cn_tra": "華館夢醒形骸記",
+            "en": "Husk of Opulent Dreams",
+            "jp": "華館夢醒形骸記"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "华馆梦醒形骸记",
+                    "cn_tra": "華館夢醒形骸記",
+                    "en": "Husk of Opulent Dreams",
+                    "jp": "華館夢醒形骸記"
+                },
+                "nameTextMapHash": 797656147,
+                "desc": {
+                    "cn_sim": "防御力提高30%。",
+                    "cn_tra": "防禦力提高30%。",
+                    "en": "DEF +30%",
+                    "jp": "防御力+30%。"
+                },
+                "descTextMapHash": 3536372153,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_DEFENSE_PERCENT",
+                        "value": 0.30000001192092896
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.30000001192092896,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "华馆梦醒形骸记",
+                    "cn_tra": "華館夢醒形骸記",
+                    "en": "Husk of Opulent Dreams",
+                    "jp": "華館夢醒形骸記"
+                },
+                "nameTextMapHash": 2546254811,
+                "desc": {
+                    "cn_sim": "装备此圣遗物套装的角色在以下情况下，将获得「问答」效果：在场上用岩元素攻击命中敌人后获得一层，每0.3秒至多触发一次；在队伍后台中，每3秒获得一层。问答至多叠加4层，每层能提供6%防御力与6%岩元素伤害加成。每6秒，若未获得问答效果，将损失一层。",
+                    "cn_tra": "裝備此聖遺物套裝的角色在以下情況下，將獲得「問答」效果：在場上用岩元素攻擊命中敵人後獲得一層，每0.3秒至多觸發一次；在隊伍後台中，每3秒獲得一層。問答至多疊加4層，每層能提供6%防禦力與6%岩元素傷害加成。每6秒，若未獲得問答效果，將損失一層。",
+                    "en": "A character equipped with this Artifact set will obtain the Curiosity effect in the following conditions: When on the field, the character gains 1 stack after hitting an opponent with a Geo attack, triggering a maximum of once every 0.3s. When off the field, the character gains 1 stack every 3s. Curiosity can stack up to 4 times, each providing 6% DEF and a 6% Geo DMG Bonus. When 6 seconds pass without gaining a Curiosity stack, 1 stack is lost.",
+                    "jp": "この聖遺物セットを装備したキャラクターは、以下の状況において「問答」効果を獲得する。「問答」効果：フィールド上で岩元素攻撃を敵に命中した後に1層獲得、0.3秒毎に1層のみ獲得できる。待機中の場合は、3秒毎に自動で1層獲得する。重ね掛けできる「問答」は最大4層までとなり、1層につき防御力+6%、岩元素ダメージ+6%。6秒毎に「問答」効果を獲得していない場合は、1層失う。"
+                },
+                "descTextMapHash": 34198977,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.30000001192092896,
+                    3,
+                    0.05999999865889549,
+                    0.05999999865889549,
+                    6,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15022": {
+        "setId": 15022,
+        "rankLevel": 5,
+        "equipAffixId": 215022,
+        "nameTextMapHash": 4186447371,
+        "setName": {
+            "cn_sim": "海染砗磲",
+            "cn_tra": "海染硨磲",
+            "en": "Ocean-Hued Clam",
+            "jp": "海染硨磲"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "海染砗磲",
+                    "cn_tra": "海染硨磲",
+                    "en": "Ocean-Hued Clam",
+                    "jp": "海染硨磲"
+                },
+                "nameTextMapHash": 4186447371,
+                "desc": {
+                    "cn_sim": "治疗加成提高15%。",
+                    "cn_tra": "治療加成提高15%。",
+                    "en": "Healing Bonus +15%.",
+                    "jp": "与える治療効果+15%。"
+                },
+                "descTextMapHash": 437396137,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_HEAL_ADD",
+                        "value": 0.15000000596046448
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.15000000596046448,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "海染砗磲",
+                    "cn_tra": "海染硨磲",
+                    "en": "Ocean-Hued Clam",
+                    "jp": "海染硨磲"
+                },
+                "nameTextMapHash": 1756609915,
+                "desc": {
+                    "cn_sim": "装备此圣遗物套装的角色对队伍中的角色进行治疗时，将产生持续3秒的海染泡沫，记录治疗的生命值回复量（包括溢出值）。持续时间结束时，海染泡沫将会爆炸，对周围的敌人造成90%累计回复量的伤害（该伤害结算方式同感电、超导等元素反应，但不受元素精通、等级或反应伤害加成效果影响）。每3.5秒至多产生一个海染泡沫；海染泡沫至多记录30000点回复量，含溢出部分的治疗量；自己的队伍中同时至多存在一个海染泡沫。装备此圣遗物套装的角色处于队伍后台时，依然能触发该效果。",
+                    "cn_tra": "裝備此聖遺物套裝的角色對隊伍中的角色進行治療時，將產生持續3秒的海染泡沫，記錄治療的生命值回復量（包括溢出值）。持續時間結束時，海染泡沫將會爆炸，對周圍的敵人造成90%累計回復量的傷害（該傷害結算方式同感電、超導等元素反應，但不受元素精通、等級或反應傷害加成效果影響）。每3.5秒至多產生一個海染泡沫；海染泡沫至多記錄30000點回復量，含溢出部分的治療量；自己的隊伍中同時至多存在一個海染泡沫。裝備此聖遺物套裝的角色處於隊伍後台時，依然能觸發該效果。",
+                    "en": "When the character equipping this artifact set heals a character in the party, a Sea-Dyed Foam will appear for 3 seconds, accumulating the amount of HP recovered from healing (including overflow healing). At the end of the duration, the Sea-Dyed Foam will explode, dealing DMG to nearby opponents based on 90% of the accumulated healing. (This DMG is calculated similarly to Reactions such as Electro-Charged, and Superconduct, but is not affected by Elemental Mastery, Character Levels, or Reaction DMG Bonuses). Only one Sea-Dyed Foam can be produced every 3.5 seconds. Each Sea-Dyed Foam can accumulate up to 30,000 HP (including overflow healing). There can be no more than one Sea-Dyed Foam active at any given time. This effect can still be triggered even when the character who is using this artifact set is not on the field.",
+                    "jp": "この聖遺物セットを装備したキャラクターがチーム内のキャラクターに治療を行うと、治療によるHP回復量（HP上限を超えた回復量も含む）を記録する海染の泡を生成する。海染の泡は3秒継続する。継続時間終了時、海染の泡は破裂し、周囲の敵に記録した回復量の90%分のダメージを与える（このダメージは感電や超電導などの元素反応と同じように計算されるが、元素熟知、キャラクターLv、または元素反応のダメージアップ効果の影響は受けない）。海染の泡は3.5秒毎に1回のみ生成可能。海染の泡が記録できる回復量は最大30000までとなり、HP上限超過分の回復量を含む。チーム内で、海染の泡は同時に最大1つまで存在できる。この聖遺物セットを装備したキャラクターは待機中でも、この効果を発動できる。"
+                },
+                "descTextMapHash": 912268385,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    3,
+                    0.8999999761581421,
+                    0,
+                    3.5,
+                    30000,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15023": {
+        "setId": 15023,
+        "rankLevel": 5,
+        "equipAffixId": 215023,
+        "nameTextMapHash": 1931332699,
+        "setName": {
+            "cn_sim": "辰砂往生录",
+            "cn_tra": "辰砂往生錄",
+            "en": "Vermillion Hereafter",
+            "jp": "辰砂往生録"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "辰砂往生录",
+                    "cn_tra": "辰砂往生錄",
+                    "en": "Vermillion Hereafter",
+                    "jp": "辰砂往生録"
+                },
+                "nameTextMapHash": 1931332699,
+                "desc": {
+                    "cn_sim": "攻击力提高18%。",
+                    "cn_tra": "攻擊力提高18%。",
+                    "en": "ATK +18%.",
+                    "jp": "攻撃力+18%。"
+                },
+                "descTextMapHash": 4135660569,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ATTACK_PERCENT",
+                        "value": 0.18000000715255737
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.18000000715255737,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "辰砂往生录",
+                    "cn_tra": "辰砂往生錄",
+                    "en": "Vermillion Hereafter",
+                    "jp": "辰砂往生録"
+                },
+                "nameTextMapHash": 1558036915,
+                "desc": {
+                    "cn_sim": "施放元素爆发后，将产生持续16秒的「潜光」效果：攻击力提升8%；并在角色的生命值降低时，攻击力进一步提升10%，至多通过这种方式提升4次，每0.8秒至多触发一次。「潜光」效果将在角色退场时消失；持续期间再次施放元素爆发，将移除原有的「潜光」。",
+                    "cn_tra": "施放元素爆發後，將產生持續16秒的「潛光」效果：攻擊力提升8%；並在角色的生命值降低時，攻擊力進一步提升10%，至多依此方式提升4次，每0.8秒至多觸發一次。「潛光」效果將在角色退場時消失；持續期間再次施放元素爆發，將移除原有的「潛光」。",
+                    "en": "After using an Elemental Burst, this character will gain the Nascent Light effect, increasing their ATK by 8% for 16s. When the character's HP decreases, their ATK will further increase by 10%. This further increase can occur this way a maximum of 4 times. This effect can be triggered once every 0.8s. Nascent Light will be dispelled when the character leaves the field. If an Elemental Burst is used again during the duration of Nascent Light, the original Nascent Light will be dispelled.",
+                    "jp": "元素爆発を発動すると、継続時間16秒の「潜光」効果が発動する。「潜光」：攻撃力+8%、キャラクターがHPを失うたびに攻撃力がさらに10%アップする。HPの損失による攻撃力アップ効果は0.8秒毎に1回のみ発動でき、最大4回重ね掛けできる。「潜光」効果はキャラクターが戦闘不能、または退場する時に解除される。「潜光」効果の継続時間中に再び元素爆発を発動すると、既存の「潜光」効果が先にクリアされる。"
+                },
+                "descTextMapHash": 3806784241,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    16,
+                    0.07999999821186066,
+                    0.10000000149011612,
+                    4,
+                    0.800000011920929,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "15024": {
+        "setId": 15024,
+        "rankLevel": 5,
+        "equipAffixId": 215024,
+        "nameTextMapHash": 2829471595,
+        "setName": {
+            "cn_sim": "来歆余响",
+            "cn_tra": "來歆餘響",
+            "en": "Echoes of an Offering",
+            "jp": "来歆の余響"
+        },
+        "setAffixs": [
+            {
+                "name": {
+                    "cn_sim": "来歆余响",
+                    "cn_tra": "來歆餘響",
+                    "en": "Echoes of an Offering",
+                    "jp": "来歆の余響"
+                },
+                "nameTextMapHash": 2829471595,
+                "desc": {
+                    "cn_sim": "攻击力提高18%。",
+                    "cn_tra": "攻擊力提高18%。",
+                    "en": "ATK +18%.",
+                    "jp": "攻撃力+18%。"
+                },
+                "descTextMapHash": 1016673521,
+                "level": 1,
+                "addProps": [
+                    {
+                        "propType": "FIGHT_PROP_ATTACK_PERCENT",
+                        "value": 0.18000000715255737
+                    },
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.18000000715255737,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": {
+                    "cn_sim": "来歆余响",
+                    "cn_tra": "來歆餘響",
+                    "en": "Echoes of an Offering",
+                    "jp": "来歆の余響"
+                },
+                "nameTextMapHash": 3626268211,
+                "desc": {
+                    "cn_sim": "普通攻击命中敌人时，有36%概率触发「幽谷祝祀」：普通攻击造成的伤害提高，伤害提高值为攻击力的70%，该效果将在普通攻击造成伤害后的0.05秒后清除。普通攻击未触发「幽谷祝祀」时，会使下次触发概率提升20%；0.2秒内至多判定1次触发与否。",
+                    "cn_tra": "普通攻擊命中敵人時，有36%機率觸發「幽谷祝祀」：普通攻擊造成的傷害提高，傷害提高值為攻擊力的70%，該效果將在普通攻擊造成傷害後的0.05秒後清除。普通攻擊未觸發「幽谷祝祀」時，會使下次觸發機率提升20%；0.2秒內至多判定1次觸發與否。",
+                    "en": "When Normal Attacks hit opponents, there is a 36% chance that it will trigger Valley Rite, which will increase Normal Attack DMG by 70% of ATK. This effect will be dispelled 0.05s after a Normal Attack deals DMG. If a Normal Attack fails to trigger Valley Rite, the odds of it triggering the next time will increase by 20%. This trigger can occur once every 0.2s.",
+                    "jp": "通常攻撃が敵に命中すると、36%の確率で「幽谷祭祀」が発動する。「幽谷祭祀」：通常攻撃ダメージが攻撃力70%分アップする。この効果は通常攻撃でダメージを与えた0.05秒後にクリアされる。通常攻撃後に「幽谷祭祀」が発動しなかった場合、次回の発動確率+20%。発動判定は0.2秒毎に1回のみ行われる。"
+                },
+                "descTextMapHash": 2940482105,
+                "level": 2,
+                "addProps": [
+                    {},
+                    {},
+                    {}
+                ],
+                "paramList": [
+                    0.36000001430511475,
+                    0.699999988079071,
+                    0.05000000074505806,
+                    0.20000000298023224,
+                    0.20000000298023224,
+                    0.20000000298023224,
+                    0,
+                    0
+                ]
+            }
+        ]
+    }
+}
