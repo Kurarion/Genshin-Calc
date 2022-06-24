@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService } from 'src/app/shared/shared.module';
 
 export interface CalResult{
   characterData?: character;
@@ -785,6 +785,7 @@ export class CalculatorService {
     private weaponService: WeaponService,
     private extraDataService: ExtraDataService,
     private enemyService: EnemyService,
+    private artifactService: ArtifactService,
   ) { }
 
   //更新フラグ設定
@@ -1835,7 +1836,7 @@ export class CalculatorService {
       result += extraWeaponResult[prop];
     }
 
-    if([Const.PROP_HP_BASE, Const.PROP_ATTACK_BASE, Const.PROP_DEFENSE_BASE].includes(prop)){
+    if([Const.PROP_VAL_HP, Const.PROP_VAL_ATTACK, Const.PROP_VAL_DEFENSE].includes(prop)){
       switch(prop){
         case Const.PROP_VAL_HP:
           genshinArtifactDataProp = Const.PROP_HP;
@@ -1849,12 +1850,12 @@ export class CalculatorService {
       }
     }
     genshinArtifactDataProp = genshinArtifactDataProp.toLowerCase();
-    result += this.getReliquaryData(index)[genshinArtifactDataProp as keyof artifactStatus] ?? 0;
-    let reliquarySetData = this.getReliquarySetData(index);
+    result += this.getReliquaryData(indexStr)[genshinArtifactDataProp as keyof artifactStatus] ?? 0;
+    let reliquarySetData = this.getReliquarySetData(indexStr);
     if(reliquarySetData && reliquarySetData[prop] != undefined){
       result += reliquarySetData[prop] ?? 0;
     }
-    let otherData = this.getOtherData(index);
+    let otherData = this.getOtherData(indexStr);
     if(otherData && otherData[prop] != undefined){
       result += otherData[prop] ?? 0;
     }
@@ -1969,19 +1970,38 @@ export class CalculatorService {
   }
 
   //聖遺物データ解析
-  private getReliquaryData(index: string | number): artifactStatus{
-    //TODO
-    return {};
+  private getReliquaryData(index: string): artifactStatus{
+    let result: artifactStatus = {};
+    let data = this.artifactService.getStorageActiveArtifactInfo(index);
+    for(let temp of [
+      data.flower,
+      data.plume,
+      data.sands,
+      data.goblet,
+      data.circlet,
+    ]){
+      for(let key in temp){
+        if(temp[key].name == undefined){
+          continue;
+        }
+        let prop = temp[key].name!.toLowerCase();
+        if(result[prop as keyof artifactStatus] == undefined){
+          result[prop as keyof artifactStatus] = 0;
+        }
+        result[prop as keyof artifactStatus]! += temp[key].value!;
+      }
+    }
+    return result;
   }
 
   //聖遺物セットデータ解析
-  private getReliquarySetData(index: string | number): Record<string, number> | undefined{
+  private getReliquarySetData(index: string): Record<string, number> | undefined{
     //TODO
     return {};
   }
 
   //その他データ解析
-  private getOtherData(index: string | number): Record<string, number> | undefined{
+  private getOtherData(index: string): Record<string, number> | undefined{
     //TODO
     return {};
   }

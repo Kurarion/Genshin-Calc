@@ -1,5 +1,7 @@
+import { PercentPipe } from '@angular/common';
 import { Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, Const, GenshinDataService } from 'src/app/shared/shared.module';
+import { MatSliderChange } from '@angular/material/slider';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, GenshinDataService } from 'src/app/shared/shared.module';
 
 interface prop {
   name: string;
@@ -30,15 +32,26 @@ export class ArtifactSubComponent implements OnInit {
   //聖遺物パートタイプ
   @Input('artifactType') artifactType!: string;
 
+  //データ
   data!: ArtifactStoragePartData;
-
+  //サブ属性
+  dataReliquaryAffix = GenshinDataService.dataReliquaryAffix;
   //メインリスト
   mainList!: prop[];
   //サブリスト
   subList!: string[];
 
+  //表示メソッド
+  displayWith!: (value: number) => string | number;
+
   constructor(private genshinDataService: GenshinDataService,
-    private artifactService: ArtifactService) { }
+    private artifactService: ArtifactService,
+    private calculatorService: CalculatorService,
+    private percentPipe: PercentPipe) { 
+      this.displayWith = (value: number) => {
+        return this.percentPipe.transform(value, '1.0-1') as string;
+      }
+    }
 
   ngOnInit(): void {
     this.initList();
@@ -100,15 +113,57 @@ export class ArtifactSubComponent implements OnInit {
     this.data = this.artifactService.getStorageInfo(this.characterIndex, this.index, this.artifactType.toLowerCase());
   }
 
-  isDuplicate(value: string): boolean {
+  isDuplicate(thisKey: string, prop: string): boolean {
+    for(let key in this.data){
+      if(thisKey == key){
+        continue;
+      }
+      if(this.data[key].name == prop){
+        return true;
+      }
+    }
     return false;
   }
 
-  onSelect(key: string, value: string){
-    if(this.data[key.toLowerCase()] == undefined){
-      this.data[key.toLowerCase()] = {};
+  onSelect(key: string, prop: string){
+    let keyLow = key.toLowerCase();
+    if(this.data[keyLow] == undefined){
+      this.data[keyLow] = {};
     }
-    this.data[key.toLowerCase()].name = value;
+    //重複チェック
+    for(let innerKey in this.data){
+      if(innerKey == key){
+        continue;
+      }
+      if(this.data[innerKey].name == prop){
+        this.data[innerKey].name = undefined;
+        this.data[innerKey].value = 0;
+      }
+    }
+    //値設定
+    this.data[keyLow].name = prop;
+    if(Const.ARTIFACT_MAIN == key){
+      for(let v of this.mainList){
+        if(v.name == prop){
+          this.data[keyLow].value = v.value;
+          break;
+        }
+      }
+    }else{
+      this.data[keyLow].value = 0;
+    }
+    //更新
+    this.calculatorService.setDirtyFlag(this.characterIndex);
+  }
+
+  onChangeSubSlider(change: MatSliderChange, key: string, prop: string){
+    let keyLow = key.toLowerCase();
+    if(this.data[keyLow] == undefined || !this.data[keyLow].name){
+      return;
+    }
+    this.data[keyLow].value = this.dataReliquaryAffix[prop][change.value ?? 0];
+    //更新
+    this.calculatorService.setDirtyFlag(this.characterIndex);
   }
 
 }

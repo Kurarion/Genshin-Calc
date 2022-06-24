@@ -80,6 +80,13 @@ export class ArtifactService {
     this.dataMap[keyStr].info.push(JSON.parse(JSON.stringify(this.dataMap[keyStr].info[sourceIndex])));
   }
 
+  //ストレージ適用中聖遺物データ取得
+  getStorageActiveArtifactInfo(charIndex: string){
+    let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
+    return this.dataMap[keyStr].info[this.dataMap[keyStr].activeIndex];
+  }
+
   //設定取得
   getStorageInfo(charIndex: string | number, index: number, part: string){
     let keyStr = charIndex.toString();

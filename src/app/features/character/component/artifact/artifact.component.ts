@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ArtifactService, character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, CalculatorService, character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-artifact',
@@ -24,7 +24,8 @@ export class ArtifactComponent implements OnInit {
   //選択されたパートインデックス
   partIndex: number = 0;
 
-  constructor(private artifactService: ArtifactService) { }
+  constructor(private artifactService: ArtifactService,
+    private calculatorService: CalculatorService,) { }
 
   ngOnInit(): void {
     //タブリスト初期化
@@ -40,6 +41,7 @@ export class ArtifactComponent implements OnInit {
   addTab() {
     this.tabs.push((this.tabs.length + 1).toString());
     this.selectedIndex = this.tabs.length - 1;
+    this.setActiveIndex();
   }
 
   copyTab() {
@@ -53,11 +55,14 @@ export class ArtifactComponent implements OnInit {
     if(this.selectedIndex >= this.tabs.length){
       let toSetIndex = this.tabs.length - 1
       this.selectedIndex = toSetIndex > 0?toSetIndex:0;
+      this.setActiveIndex();
     }
   }
 
   setActiveIndex(){
     this.artifactService.setStorageActiveIndex(this.data.id, this.selectedIndex);
+    //更新
+    this.calculatorService.setDirtyFlag(this.data.id);
   }
 
 }

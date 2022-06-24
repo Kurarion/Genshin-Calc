@@ -12,17 +12,38 @@
     </mat-form-field>
     <br>
 </ng-container>
-<ng-container *ngFor="let sub of subs">
-    <mat-form-field appearance="legacy" floatLabel="always" class="sub-field">
-        <mat-label [innerText]="'ARTIFACT.' + sub | translate"></mat-label>
-        <mat-select [value]="data[sub.toLowerCase()].name" (selectionChange)="onSelect(sub, $event.value)">
-            <mat-option></mat-option>
-            <mat-option *ngFor="let subValue of subList" [value]="subValue">
-                <ng-container *ngIf="!isDuplicate(subValue)">
-                    <span [innerText]="'PROPS.' + subValue.toUpperCase() | translate"></span>
-                </ng-container>
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <br>
-</ng-container>
+<table>
+    <tr *ngFor="let sub of subs">
+        <td>
+            <mat-form-field appearance="legacy" floatLabel="always" class="sub-field">
+                <mat-label [innerText]="'ARTIFACT.' + sub | translate"></mat-label>
+                <mat-select [value]="data[sub.toLowerCase()].name" (selectionChange)="onSelect(sub, $event.value)">
+                    <mat-option></mat-option>
+                    <ng-container *ngFor="let subValue of subList">
+                        <ng-container *ngIf="!isDuplicate(sub.toLowerCase(), subValue)">
+                            <mat-option [value]="subValue">
+                                <span [innerText]="'PROPS.' + subValue.toUpperCase() | translate"></span>
+                            </mat-option>
+                        </ng-container>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+        </td>
+        <td>
+            <mat-slider
+                color="primary"
+                [thumbLabel]="true"
+                [value]="data[sub.toLowerCase()].name?(dataReliquaryAffix[data[sub.toLowerCase()].name!].indexOf(data[sub.toLowerCase()].value!)):0"
+                (change)="onChangeSubSlider($event, sub, data[sub.toLowerCase()].name!)"
+                [disabled]="!data[sub.toLowerCase()].name"
+                max="69"
+                min="0"
+                step="1"
+                tickInterval="auto">
+            </mat-slider>
+            <span class="sub-span"
+                [innerText]="percent_props.includes(data[sub.toLowerCase()].name ?? '')?(data[sub.toLowerCase()].value ?? 0 | percent: '1.0-1' | noComma):(data[sub.toLowerCase()].value ?? 0 | number: '1.0-0' | noComma)"
+                [matTooltip]="(data[sub.toLowerCase()].value ?? 0).toString()" matTooltipPosition="right"></span>
+        </td>
+    </tr>
+</table>

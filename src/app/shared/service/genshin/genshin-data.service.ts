@@ -37,10 +37,28 @@ export class GenshinDataService {
   }
   static initReliquaryAffixData(data: any){
     let result: Record<string, number[]> = {};
+    const originLength = 4;
+    const maxUpTimes = 6;
     for(let key in data){
-      result[Const.MAP_ARTIFACE_PROP[key]] = data[key];
+      let originList = data[key];
+      let resultList: number[] = [0];
+      for(let t = 1; t <= maxUpTimes; ++t){
+        let max = originLength * 1 + (t - 1) * (originLength - 1);
+        for(let x = 0; x < max; ++x){
+          let result = 0;
+          for(let i = 0; i < t; ++i){
+            let index = x - 3*i < 0 ?0:(x - 3*i);
+            result += originList[index>(originLength-1)?(originLength-1):index];
+          }
+          resultList.push(result);
+        }
+      }
+      result[Const.MAP_ARTIFACE_PROP[key]] = resultList.sort(function(a,b){
+        return a - b
+      });
     }
     this.dataReliquaryAffix = result;
+    console.log(result);
   }
   static initExtraData(data: any){
     this.dataExtra = data;
