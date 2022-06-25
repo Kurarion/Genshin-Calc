@@ -15,6 +15,35 @@
             <mat-tab-group [(selectedIndex)]="selectedIndex" (selectedIndexChange)="setActiveIndex()">
                 <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
                     <!-- 聖遺物詳細 -->
+                    <br>
+                    <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
+                        <mat-label [innerText]="'ARTIFACT.SET1' | translate"></mat-label>
+                        <mat-select [(ngModel)]="selectedArtifactSetIndexs[0]" (ngModelChange)="onSelectArtifactSet($event, 0)">
+                            <mat-option value=""></mat-option>
+                            <ng-container *ngFor="let artifactSet of artifactSetList">
+                                <mat-option 
+                                    [value]="artifactSet.setId"
+                                    [innerText]="artifactSet.setName[currentLanguage]"
+                                >
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp;
+                    &nbsp;
+                    <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
+                        <mat-label [innerText]="'ARTIFACT.SET2' | translate"></mat-label>
+                        <mat-select [(ngModel)]="selectedArtifactSetIndexs[1]" (ngModelChange)="onSelectArtifactSet($event, 1)">
+                            <mat-option value=""></mat-option>
+                            <ng-container *ngFor="let artifactSet of artifactSetList">
+                                <mat-option 
+                                    [value]="artifactSet.setId"
+                                    [innerText]="artifactSet.setName[currentLanguage]"
+                                >
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
                     <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs [(selectedIndex)]="partIndex">
                         <ng-container *ngFor="let type of artifactList">
                             <mat-tab [label]="'ARTIFACT.' + type | translate">

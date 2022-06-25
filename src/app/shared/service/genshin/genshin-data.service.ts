@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { character, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
+import { artifactSet, character, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class GenshinDataService {
   static dataCharacter: Record<string, character>;
   static dataWeapon: Record<string, weapon>;
   static dataMonster: Record<string, enemy>;
-  static dataReliquarySet: any;
+  static dataReliquarySet: Record<string, artifactSet>;
   static dataReliquaryMain: Record<string, number>;
   static dataReliquaryAffix: Record<string, number[]>;
   static dataExtra: ExtraData;

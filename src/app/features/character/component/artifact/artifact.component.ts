@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ArtifactService, CalculatorService, character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactSetAffixs, CalculatorService, character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+
+interface artifactSetOption {
+  setId: string;
+  setName: Record<TYPE_SYS_LANG, string>;
+  setAffixs: ArtifactSetAffixs[];
+}
 
 @Component({
   selector: 'app-artifact',
@@ -16,6 +22,10 @@ export class ArtifactComponent implements OnInit {
     Const.ARTIFACT_CIRCLET,
   ];
   selectedIndex!: number;
+  //聖遺物セットリスト
+  artifactSetList: artifactSetOption[] = [];
+  //選択された聖遺物セットインデックス
+  selectedArtifactSetIndexs!: string[];
 
   //キャラデータ
   @Input('data') data!: character;
@@ -28,6 +38,8 @@ export class ArtifactComponent implements OnInit {
     private calculatorService: CalculatorService,) { }
 
   ngOnInit(): void {
+    //聖遺物セットリスト初期化
+    this.initializeArtifactSetList();
     //タブリスト初期化
     let length = this.artifactService.getStorageInfoLength(this.data.id);
     if(length == undefined || length == 0){
@@ -36,6 +48,8 @@ export class ArtifactComponent implements OnInit {
     this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
     //選択中インデックス
     this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
+    //選択された聖遺物セット初期化
+    this.initSelectedArtifactSetIndexs();
   }
 
   addTab() {
@@ -61,8 +75,37 @@ export class ArtifactComponent implements OnInit {
 
   setActiveIndex(){
     this.artifactService.setStorageActiveIndex(this.data.id, this.selectedIndex);
+    //選択された聖遺物セット初期化
+    this.initSelectedArtifactSetIndexs();
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
   }
 
+  /**
+   * 聖遺物セット変更処理
+   * @param artifactSetIndex 
+   */
+  onSelectArtifactSet(artifactSetIndex: string, index: number) {
+    //TODO
+  }
+
+  /**
+   * 聖遺物セットリスト初期化
+   */
+  private initializeArtifactSetList() {
+    this.artifactSetList = [];
+    let tempMap = this.artifactService.getSetMap();
+    for (let key in tempMap) {
+      this.artifactSetList.push({
+        setId: key,
+        setName: tempMap[key].setName,
+        setAffixs: tempMap[key].setAffixs,
+      })
+    }
+  }
+
+  private initSelectedArtifactSetIndexs() {
+    //TODO
+    this.selectedArtifactSetIndexs = ['', ''];
+  }
 }

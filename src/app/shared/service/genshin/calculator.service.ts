@@ -1974,11 +1974,11 @@ export class CalculatorService {
     let result: artifactStatus = {};
     let data = this.artifactService.getStorageActiveArtifactInfo(index);
     for(let temp of [
-      data.flower,
-      data.plume,
-      data.sands,
-      data.goblet,
-      data.circlet,
+      data?.flower ?? {},
+      data?.plume ?? {},
+      data?.sands ?? {},
+      data?.goblet ?? {},
+      data?.circlet ?? {},
     ]){
       for(let key in temp){
         if(temp[key].name == undefined){

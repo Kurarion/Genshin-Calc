@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { retry } from 'rxjs';
-import { Const, StorageService } from 'src/app/shared/shared.module';
+import { artifactSet, Const, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
 
 export interface ArtifactStorageItemData {
   name?: string;
@@ -17,7 +17,7 @@ export interface ArtifactStoragePartData {
 }
 
 export interface ArtifactStorageInfo {
-  setIndexs?: number[];
+  setIndexs?: string[];
   flower?: ArtifactStoragePartData;
   plume?: ArtifactStoragePartData;
   sands?: ArtifactStoragePartData;
@@ -38,13 +38,21 @@ export class ArtifactService {
   //データマップ
   dataMap!: Record<string, ArtifactStorageData>;
 
-  constructor(private storageService: StorageService) {
+  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService) {
     let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
     if(temp){
       this.dataMap = temp;
     }else{
       this.dataMap = {};
     }
+  }
+
+  getSetMap(): Record<string, artifactSet> {
+    return GenshinDataService.dataReliquarySet;
+  }
+
+  getSet(index: string | number): artifactSet {
+    return this.genshinDataService.getReliquarySet(index.toString());
   }
 
   //適用中インデックス設定

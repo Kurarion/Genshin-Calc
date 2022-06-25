@@ -73,3 +73,7 @@ table tr:first-child .content-right {
 .add-button {
     width: 30px;
 }
+
+.set-field {
+    width: 140px;
+}
