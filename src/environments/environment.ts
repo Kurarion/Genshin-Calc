@@ -9,6 +9,7 @@ export const environment = {
   thirdPartyAPIHost: 'https://api.ambr.top/assets/UI/',
   thirdPartyAPIPicType: '.png',
   footerMsgs: ['△〇□×'],
+  artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/GSCal',
 };
 

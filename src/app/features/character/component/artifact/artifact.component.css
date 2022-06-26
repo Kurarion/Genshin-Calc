@@ -77,3 +77,13 @@ table tr:first-child .content-right {
 .set-field {
     width: 140px;
 }
+
+.artifact-set {
+    margin-left: 2%;
+    width: 96%;
+}
+
+.artifact-sub {
+    margin-left: 2%;
+    width: 96%;
+}

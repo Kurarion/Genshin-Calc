@@ -209,9 +209,9 @@ export class WeaponComponent implements OnInit, OnDestroy {
     return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexs;
   }
 
-  getEffectBuffIndex(selectedSmeltingLevel: string): number[]{
-    return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexs;
-  }
+  // getEffectBuffIndex(selectedSmeltingLevel: string): number[]{
+  //   return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexs;
+  // }
 
   /**
    * プロフィール画像初期化

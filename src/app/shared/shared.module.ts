@@ -11,10 +11,12 @@ import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
 import { RatePipe } from './pipe/rate.pipe';
+import { TruncatePipe } from './pipe/truncate.pipe';
 import { ExtraDataComponent } from './component/extra-data/extra-data.component';
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { RatePipe } from './pipe/rate.pipe';
+export { TruncatePipe } from './pipe/truncate.pipe';
 export { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 
 export { GlobalProgressService } from './service/global-progress.service';
@@ -26,7 +28,7 @@ export { ArtifactStoragePartData, ArtifactStorageItemData, ArtifactStorageInfo, 
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
-export { ExtraCharacterSkillsData, ExtraStatus, ExtraCharacterData, ExtraWeaponData, ExtraDataStorageInfo, ExtraDataService } from './service/genshin/extra-data.service';
+export { ExtraArtifactSetData, ExtraCharacterSkillsData, ExtraStatus, ExtraCharacterData, ExtraWeaponData, ExtraDataStorageInfo, ExtraDataService } from './service/genshin/extra-data.service';
 export { GenshinDataService } from './service/genshin/genshin-data.service';
 export { BuffResult, DamageResult, HealingResult, ShieldResult, ProductResult, CalculatorService } from './service/genshin/calculator.service';
 
@@ -45,6 +47,7 @@ let shardList: any[] = [
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,
+  TruncatePipe,
 ];
 
 @NgModule({

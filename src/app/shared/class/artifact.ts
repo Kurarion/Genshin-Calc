@@ -18,6 +18,8 @@ export interface ArtifactSetAffixs {
     level: number;
     //パラメータリスト
     paramList: number[];
+    //レベルなしのスキルパラメータインデックス
+    paramValidIndexs: number[];
 }
 
 //*********************************

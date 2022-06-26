@@ -4,7 +4,6 @@
             "skills": {
                 "normal": [
                     {
-                        "indexs": [0,1,2,3,4],
                         "damage": {
                             "indexs": [0,1,2,3,4],
                             "base": "ATTACK",
@@ -14,7 +13,6 @@
                         }
                     },
                     {
-                        "indexs": [5],
                         "damage": {
                             "indexs": [5],
                             "base": "ATTACK",
@@ -24,7 +22,6 @@
                         }
                     },
                     {
-                        "indexs": [6],
                         "damage": {
                             "indexs": [6],
                             "base": "ATTACK",
@@ -34,7 +31,6 @@
                         }
                     },
                     {
-                        "indexs": [7,8,9],
                         "damage": {
                             "indexs": [7,8,9],
                             "base": "ATTACK",
@@ -46,7 +42,6 @@
                 ],
                 "skill": [
                     {
-                        "indexs": [0, 1],
                         "damage": {
                             "indexs": [1],
                             "base": "ATTACK",
@@ -62,7 +57,6 @@
                 ],
                 "elementalBurst": [
                     {
-                        "indexs": [0, 3],
                         "damage": {
                             "indexs": [0, 3],
                             "base": "ATTACK",
@@ -75,7 +69,6 @@
                 "proudSkills": [
                     [
                         {
-                            "indexs": [0],
                             "buff": {
                                 "constIndex": 0,
                                 "constCalRelation": "+",
@@ -87,7 +80,6 @@
                     ],
                     [
                         {
-                            "indexs": [0],
                             "buff": {
                                 "index": 0,
                                 "target": ["ATTACK_UP"],
@@ -101,7 +93,6 @@
             "constellation": {
                 "0": [
                         {
-                            "indexs": [0],
                             "damage": {
                                 "originSkill": "normal",
                                 "originIndex": 5,
@@ -114,7 +105,6 @@
                             }
                         },
                         {
-                            "indexs": [0],
                             "damage": {
                                 "originSkill": "normal",
                                 "originIndex": 6,
@@ -129,7 +119,6 @@
                 ],
                 "1": [
                         {
-                            "indexs": [0],
                             "damage": {
                                 "customValues": [1],
                                 "originSkill": "skill",
@@ -150,7 +139,6 @@
                 ],
                 "5": [
                         {
-                            "indexs": [1],
                             "buff": {
                                 "index": 1,
                                 "target": ["ATTACK_UP"],
@@ -167,7 +155,6 @@
         "15502": {
             "effect": [
                 {
-                    "indexs": [0],
                     "buff": {
                         "index": 0,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
@@ -175,7 +162,6 @@
                     }
                 },
                 {
-                    "indexs": [1],
                     "buff": {
                         "index": 1,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
@@ -187,5 +173,70 @@
                 }
             ]
         }
+    },
+    "artifact": {
+        "15001": {
+            "set1": [
+                {
+                    "buff": {
+                        "propIndex": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident",
+                        "defaultEnable": true
+                    }
+                }
+            ],
+            "set2": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15006": {
+            "set1": [
+                {
+                    "buff": {
+                        "propIndex": 0,
+                        "target": ["DMG_BONUS_PYRO"],
+                        "settingType": "resident",
+                        "defaultEnable": true
+                    }
+                }
+            ],
+            "set2": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_ELEMENT_BURNING_UP", "DMG_ELEMENT_OVERLOADED_UP"],
+                        "settingType": "resident",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_ELEMENT_VAPORIZE_UP", "DMG_ELEMENT_MELT_UP"],
+                        "settingType": "resident",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "customValue": 0.075,
+                        "target": ["DMG_BONUS_PYRO"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        }
+        
     }
 }

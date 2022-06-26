@@ -29,7 +29,6 @@ import {
   ],
 })
 export class MainComponent implements OnInit, OnDestroy {
-  @ViewChild('artifactList') artifactList!: ArtifactListComponent;
 
   //キャプチャーするエレメントID
   captureElementID: string = Const.ID_CAPTURE_ELEMENT;
@@ -119,7 +118,6 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   addPastedImage(image: Blob) {
     //TODO
-    this.artifactList.addArtifactList(image);
   }
 
   /**

@@ -189,6 +189,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'switch', change.checked as boolean, this.skillIndex);
     if(this.skill == Const.NAME_EFFECT){
       this.calculatorService.initExtraWeaponData(this.characterIndex);
+    }else if(this.skill == Const.NAME_SET){
+      this.calculatorService.initExtraArtifactSetData(this.characterIndex);
     }else{
       this.calculatorService.initExtraCharacterData(this.characterIndex);
     }
@@ -198,6 +200,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'slider', change.value as number, this.skillIndex);
     if(this.skill == Const.NAME_EFFECT){
       this.calculatorService.initExtraWeaponData(this.characterIndex);
+    }else if(this.skill == Const.NAME_SET){
+      this.calculatorService.initExtraArtifactSetData(this.characterIndex);
     }else{
       this.calculatorService.initExtraCharacterData(this.characterIndex);
     }
@@ -224,7 +228,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private getBuffInfos(){
-    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.skillIndex);
     return temp;
   }
 

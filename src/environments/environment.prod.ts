@@ -5,5 +5,6 @@ export const environment = {
   thirdPartyAPIHost: 'https://enka.shinshin.moe/ui/',
   thirdPartyAPIPicType: '.png',
   footerMsgs: ['△〇□×'],
+  artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/GSCal',
 };

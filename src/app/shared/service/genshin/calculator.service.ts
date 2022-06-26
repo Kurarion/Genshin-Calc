@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp } from 'src/app/shared/shared.module';
 
 export interface CalResult{
   characterData?: character;
   weaponData?: weapon;
   enemyData?: enemy;
-  reliquaryResult?: Record<string, number>;
   extraCharaResult?: Record<string, number>;
   extraWeaponResult?: Record<string, number>;
+  extraArtifactSetResult?: Record<string, number>;
   extraSpecialCharaResult?: SpecialBuff[];
   extraSpecialWeaponResult?: SpecialBuff[];
-  reliquarySetResults?: (Record<string, number> | Record<string, SpecialBuff>)[];
+  extraSpecialArtifactSetResult?: SpecialBuff[];
   allData?: Record<string, number>;
   isDirty?: boolean;
 }
@@ -107,9 +107,15 @@ export interface BuffResult {
   step?: number;
 }
 
+export interface artifactSetInfo {
+  index: string;
+  level: number;
+}
+
 interface SkillParamInf {
   paramMap?: Record<string, number[]>;
   paramList?: number[];
+  addProps?: ArtifactSetAddProp[];
 }
 
 interface CharLevelConfig {
@@ -822,7 +828,7 @@ export class CalculatorService {
     //DEBUG
     console.log("初期化（キャラ追加）")
     let indexStr = index.toString();
-    let temps = this.getExtraCharacterData(index, data);
+    let temps = this.getExtraCharacterData(indexStr, data);
     this.dataMap[indexStr].extraCharaResult = temps[0] as Record<string, number>;
     this.dataMap[indexStr].extraSpecialCharaResult = temps[1] as SpecialBuff[];
     this.setDirty(indexStr, true);
@@ -847,9 +853,20 @@ export class CalculatorService {
     //DEBUG
     console.log("初期化（武器追加）")
     let indexStr = index.toString();
-    let temps = this.getExtraWeaponData(index, data);
+    let temps = this.getExtraWeaponData(indexStr, data);
     this.dataMap[indexStr].extraWeaponResult = temps[0] as Record<string, number>;
     this.dataMap[indexStr].extraSpecialWeaponResult = temps[1] as SpecialBuff[];
+    this.setDirty(indexStr, true);
+  }
+
+  //初期化（聖遺物セット追加）
+  initExtraArtifactSetData(index: string | number) {
+    //DEBUG
+    console.log("初期化（聖遺物セット追加）")
+    let indexStr = index.toString();
+    let temps = this.getExtraReliquarySetData(indexStr);
+    this.dataMap[indexStr].extraArtifactSetResult = temps[0] as Record<string, number>;
+    this.dataMap[indexStr].extraSpecialArtifactSetResult = temps[1] as SpecialBuff[];
     this.setDirty(indexStr, true);
   }
 
@@ -1102,29 +1119,29 @@ export class CalculatorService {
     let overloadedDmg;
     let shieldHp;
     if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_HYDRO].includes(elementBonusType)){
-      originVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * originDmg;
-      cirtVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * critDmg;
-      expectVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]) * (1 + elementAmplitudeRate) * expectDmg;
+      originVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * originDmg;
+      cirtVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * critDmg;
+      expectVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * expectDmg;
     }
     if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_CRYO].includes(elementBonusType)){
-      originMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * originDmg;
-      cirtMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * critDmg;
-      expectMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP]) * (1 + elementAmplitudeRate) * expectDmg;
+      originMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * originDmg;
+      cirtMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * critDmg;
+      expectMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * expectDmg;
     }
     if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
       let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-      burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
     }
     if([Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
       let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
-      superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
     }
     if([Const.PROP_DMG_BONUS_ANEMO].includes(elementBonusType)){
       let tempCryoDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
       let tempElectroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
       let tempPyroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
       let tempHydroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_HYDRO);
-      let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP]) * (1 + elementCataclysmRate);
+      let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP] + elementCataclysmRate);
       swirlCryoDmg = swirlBaseDmg * (1 - tempCryoDmgAntiSectionValue);
       swirlElectroDmg = swirlBaseDmg * (1 - tempElectroDmgAntiSectionValue);
       swirlPyroDmg = swirlBaseDmg * (1 - tempPyroDmgAntiSectionValue);
@@ -1132,18 +1149,18 @@ export class CalculatorService {
     }
     if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
       let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
-      electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
     }
     if([Const.PROP_DMG_BONUS_PHYSICAL].includes(elementBonusType)){
       let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PHYSICAL);
-      destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
     }
     if([Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
       let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-      overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP]) * (1 + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
     }
     if([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType)){
-      shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]) * (1 + elementShieldRate);
+      shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP] + elementShieldRate);
     }
     result = {
       elementBonusType: elementBonusType,
@@ -1261,11 +1278,14 @@ export class CalculatorService {
     let results: DamageResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT].includes(skill)){
+    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
       let characterData = this.dataMap[indexStr].characterData;
       let weaponData = this.dataMap[indexStr].weaponData;
+      let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
+      let artifactSetData = this.artifactService.getSetData(artifactSetId);
       let extraCharacterData = this.extraDataService.getCharacter(indexStr);
       let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
+      let extraArtifactSetData = this.extraDataService.getArtifactSet(artifactSetId);
       let infos: ExtraSkillInfo[];
       let currentLevel: string;
       if(skill == Const.NAME_CONSTELLATION){
@@ -1277,6 +1297,9 @@ export class CalculatorService {
       }else if(skill == Const.NAME_EFFECT){
         infos = extraWeaponData?.effect ?? [];
         currentLevel = this.getWeaponAffixLevel(index);
+      }else if(skill == Const.NAME_SET){
+        infos = extraArtifactSetData?(extraArtifactSetData[Const.NAME_SET + skillIndex!.toString() as keyof ExtraArtifact]??[]):[];
+        currentLevel = Const.NAME_NO_LEVEL;
       }else{
         infos = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
         currentLevel = this.getCharacterSkillLevel(indexStr, skill);
@@ -1330,6 +1353,8 @@ export class CalculatorService {
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
               }else if(skill == Const.NAME_EFFECT){
                 rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
+              }else if(skill == Const.NAME_SET){
+                rate = artifactSetData.setAffixs[1].paramList[valueIndex];
               }else{
                 rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
@@ -1384,11 +1409,14 @@ export class CalculatorService {
     let results: HealingResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT].includes(skill)){
+    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
       let characterData = this.dataMap[indexStr].characterData;
       let weaponData = this.dataMap[indexStr].weaponData;
+      let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
+      let artifactSetData = this.artifactService.getSetData(artifactSetId);
       let extraCharacterData = this.extraDataService.getCharacter(indexStr);
       let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
+      let extraArtifactSetData = this.extraDataService.getArtifactSet(artifactSetId);
       let infos: ExtraSkillInfo[];
       let currentLevel: string;
       if(skill == Const.NAME_CONSTELLATION){
@@ -1400,6 +1428,9 @@ export class CalculatorService {
       }else if(skill == Const.NAME_EFFECT){
         infos = extraWeaponData?.effect ?? [];
         currentLevel = this.getWeaponAffixLevel(index);
+      }else if(skill == Const.NAME_SET){
+        infos = extraArtifactSetData?(extraArtifactSetData[Const.NAME_SET + skillIndex!.toString() as keyof ExtraArtifact]??[]):[];
+        currentLevel = Const.NAME_NO_LEVEL;
       }else{
         infos = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
         currentLevel = this.getCharacterSkillLevel(indexStr, skill);
@@ -1434,6 +1465,9 @@ export class CalculatorService {
               }else if(skill == Const.NAME_EFFECT){
                 rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
                 extra = healingInfo.constIndex?weaponData!.skillAffixMap[currentLevel].paramList[healingInfo.constIndex] : 0;
+              }else if(skill == Const.NAME_SET){
+                rate = artifactSetData.setAffixs[1].paramList[valueIndex];
+                extra = healingInfo.constIndex?artifactSetData.setAffixs[1].paramList[healingInfo.constIndex] : 0;
               }else{
                 rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
@@ -1473,11 +1507,14 @@ export class CalculatorService {
     let results: ShieldResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT].includes(skill)){
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
         let characterData = this.dataMap[indexStr].characterData;
         let weaponData = this.dataMap[indexStr].weaponData;
+        let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
+        let artifactSetData = this.artifactService.getSetData(artifactSetId);
         let extraCharacterData = this.extraDataService.getCharacter(indexStr);
         let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
+        let extraArtifactSetData = this.extraDataService.getArtifactSet(artifactSetId);
         let infos: ExtraSkillInfo[];
         let currentLevel: string;
         if(skill == Const.NAME_CONSTELLATION){
@@ -1489,6 +1526,9 @@ export class CalculatorService {
         }else if(skill == Const.NAME_EFFECT){
           infos = extraWeaponData?.effect ?? [];
           currentLevel = this.getWeaponAffixLevel(index);
+        }else if(skill == Const.NAME_SET){
+          infos = extraArtifactSetData?(extraArtifactSetData[Const.NAME_SET + skillIndex!.toString() as keyof ExtraArtifact]??[]):[];
+          currentLevel = Const.NAME_NO_LEVEL;
         }else{
           infos = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
           currentLevel = this.getCharacterSkillLevel(indexStr, skill);
@@ -1521,6 +1561,9 @@ export class CalculatorService {
                 }else if(skill == Const.NAME_EFFECT){
                   rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
                   extra = shieldInfo.constIndex?weaponData!.skillAffixMap[currentLevel].paramList[shieldInfo.constIndex] : 0;
+                }else if(skill == Const.NAME_SET){
+                  rate = artifactSetData.setAffixs[1].paramList[valueIndex];
+                  extra = shieldInfo.constIndex?artifactSetData.setAffixs[1].paramList[shieldInfo.constIndex] : 0;
                 }else{
                   rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
@@ -1559,11 +1602,14 @@ export class CalculatorService {
     let results: ProductResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT].includes(skill)){
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
         let characterData = this.dataMap[indexStr].characterData;
         let weaponData = this.dataMap[indexStr].weaponData;
+        let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
+        let artifactSetData = this.artifactService.getSetData(artifactSetId);
         let extraCharacterData = this.extraDataService.getCharacter(indexStr);
         let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
+        let extraArtifactSetData = this.extraDataService.getArtifactSet(artifactSetId);
         let infos: ExtraSkillInfo[];
         let currentLevel: string;
         if(skill == Const.NAME_CONSTELLATION){
@@ -1575,6 +1621,9 @@ export class CalculatorService {
         }else if(skill == Const.NAME_EFFECT){
           infos = extraWeaponData?.effect ?? [];
           currentLevel = this.getWeaponAffixLevel(index);
+        }else if(skill == Const.NAME_SET){
+          infos = extraArtifactSetData?(extraArtifactSetData[Const.NAME_SET + skillIndex!.toString() as keyof ExtraArtifact]??[]):[];
+          currentLevel = Const.NAME_NO_LEVEL;
         }else{
           infos = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
           currentLevel = this.getCharacterSkillLevel(indexStr, skill);
@@ -1607,6 +1656,9 @@ export class CalculatorService {
                 }else if(skill == Const.NAME_EFFECT){
                   rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
                   extra = productHpInfo.constIndex?weaponData!.skillAffixMap[currentLevel].paramList[productHpInfo.constIndex] : 0;
+                }else if(skill == Const.NAME_SET){
+                  rate = artifactSetData.setAffixs[1].paramList[valueIndex];
+                  extra = productHpInfo.constIndex?artifactSetData.setAffixs[1].paramList[productHpInfo.constIndex] : 0;
                 }else{
                   rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
@@ -1638,16 +1690,19 @@ export class CalculatorService {
       return results;
   }
 
-  getSkillBuffValue(index: string | number, skill: string, valueIndexs: number[], skillIndex?: number | string){
+  getSkillBuffValue(index: string | number, skill: string, skillIndex?: number | string){
     let indexStr = index.toString();
     let results: BuffResult[] = [];
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT].includes(skill)){
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
         let characterData = this.dataMap[indexStr].characterData;
         let weaponData = this.dataMap[indexStr].weaponData;
+        let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
+        let artifactSetData = this.artifactService.getSetData(artifactSetId);
         let extraCharacterData = this.extraDataService.getCharacter(indexStr);
         let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
+        let extraArtifactSetData = this.extraDataService.getArtifactSet(artifactSetId);
         let infos: ExtraSkillInfo[];
         let currentLevel: string;
         if(skill == Const.NAME_CONSTELLATION){
@@ -1659,39 +1714,47 @@ export class CalculatorService {
         }else if(skill == Const.NAME_EFFECT){
           infos = extraWeaponData?.effect ?? [];
           currentLevel = this.getWeaponAffixLevel(index);
+        }else if(skill == Const.NAME_SET){
+          infos = extraArtifactSetData?(extraArtifactSetData[Const.NAME_SET + skillIndex!.toString() as keyof ExtraArtifact]??[]):[];
+          currentLevel = Const.NAME_NO_LEVEL;
         }else{
           infos = extraCharacterData?.skills![skill as keyof ExtraCharacterSkills] as ExtraSkillInfo[] ?? [];
           currentLevel = this.getCharacterSkillLevel(indexStr, skill);
         }
   
-        for(let info of infos){
+        for(let [infoIndex,info] of infos.entries()){
           //全含め必要
           let buffInfo = info.buff;
-          for(let valueIndex of valueIndexs){
+          // for(let valueIndex of valueIndexs){
             let tempValue: any;
-            if(buffInfo && buffInfo.index != undefined && buffInfo.index == valueIndex){
+            // if(buffInfo && buffInfo.index != undefined && buffInfo.index == valueIndex){
+            if(buffInfo){
               switch(buffInfo.settingType){
                 case 'switch-value':
                 case 'switch':
                   if(skill == Const.NAME_EFFECT){
-                    tempValue = this.weaponService.getExtraSwitch(indexStr, skill, valueIndex, skillIndex);
+                    tempValue = this.weaponService.getExtraSwitch(indexStr, skill, infoIndex, skillIndex);
+                  }else if(skill == Const.NAME_SET){
+                    tempValue = this.artifactService.getExtraSwitch(indexStr, skill, infoIndex, skillIndex);
                   }else{
-                    tempValue = this.characterService.getExtraSwitch(indexStr, skill, valueIndex, skillIndex);
+                    tempValue = this.characterService.getExtraSwitch(indexStr, skill, infoIndex, skillIndex);
                   }
                   results.push({
-                    valueIndex: valueIndex,
+                    valueIndex: infoIndex,
                     type: 'switch',
                     switchValue: tempValue,
                   })
                   break;
                 case 'slider':
                   if(skill == Const.NAME_EFFECT){
-                    tempValue = this.weaponService.getExtraSlider(indexStr, skill, valueIndex, skillIndex);
+                    tempValue = this.weaponService.getExtraSlider(indexStr, skill, infoIndex, skillIndex);
+                  }else if(skill == Const.NAME_SET){
+                    tempValue = this.artifactService.getExtraSlider(indexStr, skill, infoIndex, skillIndex);
                   }else{
-                    tempValue = this.characterService.getExtraSlider(indexStr, skill, valueIndex, skillIndex);
+                    tempValue = this.characterService.getExtraSlider(indexStr, skill, infoIndex, skillIndex);
                   }
                   results.push({
-                    valueIndex: valueIndex,
+                    valueIndex: infoIndex,
                     type: 'slider',
                     sliderValue: tempValue,
                     min: buffInfo.sliderMin ?? 0,
@@ -1702,8 +1765,9 @@ export class CalculatorService {
                 case 'resident':
                 default:
                   continue;
-              }
+              // }
             }
+            // }
           }
         }
       }
@@ -1730,6 +1794,15 @@ export class CalculatorService {
           break;
         case 'slider':
           this.weaponService.setExtraSlider(indexStr, skill, valueIndex, setValue as number, skillIndex);
+          break;
+      }
+    }else if([Const.NAME_SET].includes(skill)){
+      switch(type){
+        case 'switch':
+          this.artifactService.setExtraSwitch(indexStr, skill, valueIndex, setValue as boolean, skillIndex);
+          break;
+        case 'slider':
+          this.artifactService.setExtraSlider(indexStr, skill, valueIndex, setValue as number, skillIndex);
           break;
       }
     }
@@ -1772,6 +1845,7 @@ export class CalculatorService {
     specialOrders = specialOrders.concat(
       this.dataMap[index].extraSpecialCharaResult!,
       this.dataMap[index].extraSpecialWeaponResult!,
+      this.dataMap[index].extraSpecialArtifactSetResult!,
     );
     specialOrders.sort((x, y) => x.priority! - y.priority!);
 
@@ -1851,9 +1925,9 @@ export class CalculatorService {
     }
     genshinArtifactDataProp = genshinArtifactDataProp.toLowerCase();
     result += this.getReliquaryData(indexStr)[genshinArtifactDataProp as keyof artifactStatus] ?? 0;
-    let reliquarySetData = this.getReliquarySetData(indexStr);
-    if(reliquarySetData && reliquarySetData[prop] != undefined){
-      result += reliquarySetData[prop] ?? 0;
+    let extraArtifactSetResult = this.dataMap[indexStr].extraArtifactSetResult!;
+    if(extraArtifactSetResult[prop] != undefined){
+      result += extraArtifactSetResult[prop];
     }
     let otherData = this.getOtherData(indexStr);
     if(otherData && otherData[prop] != undefined){
@@ -1958,7 +2032,7 @@ export class CalculatorService {
     if("effect" in setting && setting.effect){
       this.setBuffDataToResult(
         weaponData.skillAffixMap[smeltingLevel], 
-        smeltingLevel, 
+        Const.NAME_NO_LEVEL, 
         extraWeaponData.effect!,
         setting.effect!,
         result,
@@ -1995,9 +2069,46 @@ export class CalculatorService {
   }
 
   //聖遺物セットデータ解析
-  private getReliquarySetData(index: string): Record<string, number> | undefined{
-    //TODO
-    return {};
+  private getExtraReliquarySetData(index: string){
+    let artifactSetIndexs = this.artifactService.getStorageSetIndexs(index);
+    let result: Record<string, number> = {};
+    let specialResult: SpecialBuff[] = [];
+    let targetIndexInfos: artifactSetInfo[] = [];
+    let ownedIndexs: string[] = [];
+    for(let setIndex of artifactSetIndexs){
+      if(setIndex != undefined && setIndex != ""){
+        ownedIndexs.push(setIndex);
+        targetIndexInfos.push({
+          index: setIndex,
+          level: ownedIndexs.filter(x => x == setIndex).length,
+        });
+      }
+    }
+    for(let targetIndexInfo of targetIndexInfos){
+      let tempResult: Record<string, number> = {};
+      let tempSpecialResult: SpecialBuff[] = [];
+      let artifactSetData = this.artifactService.getSet(targetIndexInfo.index);
+      let extraArtifactData = this.extraDataService.getArtifactSet(targetIndexInfo.index);
+      let setting = this.artifactService.getExtraData(index)!;
+      this.setBuffDataToResult(
+        artifactSetData.setAffixs[targetIndexInfo.level - 1], 
+        Const.NAME_NO_LEVEL,
+        extraArtifactData?extraArtifactData[Const.NAME_SET + targetIndexInfo.level as keyof ExtraArtifact]!:[],
+        setting[Const.NAME_SET + targetIndexInfo.level as keyof ExtraArtifactSetData] ?? {},
+        tempResult,
+        tempSpecialResult,
+      );
+      for(let key in tempResult){
+        if(result[key] == undefined){
+          result[key] = tempResult[key];
+        }else{
+          result[key] += tempResult[key];
+        }
+      }
+      specialResult.push(...tempSpecialResult);
+    }
+
+    return [result, specialResult];
   }
 
   //その他データ解析
@@ -2011,23 +2122,17 @@ export class CalculatorService {
     let switchOnSet = setting?.switchOnSet ?? {};
     let sliderNumMap = setting?.sliderNumMap ?? {};
 
-    for(let buffInfo of buffs){
+    for(let [buffIndex,buffInfo] of buffs.entries()){
       let buff = buffInfo?.buff;
       let isEnableInSwitch = true;
       let isEnableInSlider = true;
-      // for(let index of buff?.index ?? buff?.constIndex ?? []){
-      let index = buff?.index ?? buff?.constIndex ?? -1;
-      if(!(index in switchOnSet) || switchOnSet[index] != true){
+      if(!(buffIndex in switchOnSet) || switchOnSet[buffIndex] != true){
         isEnableInSwitch = false;
-        // break;
       }
-      // }
-      // for(let index of buff?.index ?? buff?.constIndex ?? []){
-      if(!(index in sliderNumMap) || typeof sliderNumMap[index] != "number"){
+      if(!(buffIndex in sliderNumMap) || typeof sliderNumMap[buffIndex] != "number"){
         isEnableInSlider = false;
-        // break;
       }
-      // }
+
       if(buff){
         if(isEnableInSwitch){
           let indexValue = 0;
@@ -2039,6 +2144,8 @@ export class CalculatorService {
             }
           }else if(buff?.customValue != undefined){
             indexValue = buff.customValue;
+          }else if(buff?.propIndex != undefined){
+            indexValue = skillData.addProps![buff?.propIndex].value;
           }
           let constIndexValue = 0;
           if(buff?.constIndex != undefined){
@@ -2152,6 +2259,8 @@ export class CalculatorService {
             }
           }else if(buff?.customValue != undefined){
             indexValue = buff.customValue;
+          }else if(buff?.propIndex != undefined){
+            indexValue = skillData.addProps![buff?.propIndex].value;
           }
           let constIndexValue = 0;
           if(buff?.constIndex != undefined){
@@ -2202,17 +2311,17 @@ export class CalculatorService {
             temp.base = base;
             temp.baseModifyValue = baseModifyValue;
             if(sliderStartIndex != undefined){
-              if(sliderNumMap[buff?.index!] == 0){
+              if(sliderNumMap[buffIndex] == 0){
                 temp.multiValue = 0;
               }else{
                 if(skillData.paramMap){
-                  temp.multiValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                  temp.multiValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
                 }else if(skillData.paramList){
-                  temp.multiValue = skillData.paramList[sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                  temp.multiValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
                 }
               }
             }else{
-              temp.multiValue = indexValue * sliderNumMap[buff?.index!];
+              temp.multiValue = indexValue * sliderNumMap[buffIndex];
             }
             temp.priority = priority;
 
@@ -2242,17 +2351,17 @@ export class CalculatorService {
               }
               let resultValue: number;
               if(sliderStartIndex != undefined){
-                if(sliderNumMap[buff?.index!] == 0){
+                if(sliderNumMap[buffIndex] == 0){
                   resultValue = 0;
                 }else{
                   if(skillData.paramMap){
-                    resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                    resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
                   }else if(skillData.paramList){
-                    resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buff?.index!] - 1];
+                    resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
                   }
                 }
               }else{
-                resultValue = value * sliderNumMap[buff?.index!];
+                resultValue = value * sliderNumMap[buffIndex];
               }
               result[tar] += resultValue!;
             }

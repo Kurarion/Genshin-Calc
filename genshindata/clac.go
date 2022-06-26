@@ -442,13 +442,14 @@ func update() error {
 			reliquarySetAffixMap[reliquarySetAffixDataList[i].Id] = make([]*RELIQUARYAFFIX, 0)
 		}
 		reliquarySetAffixMap[reliquarySetAffixDataList[i].Id] = append(reliquarySetAffixMap[reliquarySetAffixDataList[i].Id], &RELIQUARYAFFIX{
-			Name:            getTextFromHash(reliquarySetAffixDataList[i].NameTextMapHash, textMap, false),
-			Desc:            getRegxTextFromHash(reliquarySetAffixDataList[i].DescTextMapHash, textMap, false),
-			NameTextMapHash: reliquarySetAffixDataList[i].NameTextMapHash,
-			DescTextMapHash: reliquarySetAffixDataList[i].DescTextMapHash,
-			Level:           reliquarySetAffixDataList[i].Level + 1,
-			AddProps:        reliquarySetAffixDataList[i].AddProps,
-			ParamList:       reliquarySetAffixDataList[i].ParamList,
+			Name:             getTextFromHash(reliquarySetAffixDataList[i].NameTextMapHash, textMap, false),
+			Desc:             getRegxTextFromHash(reliquarySetAffixDataList[i].DescTextMapHash, textMap, false),
+			NameTextMapHash:  reliquarySetAffixDataList[i].NameTextMapHash,
+			DescTextMapHash:  reliquarySetAffixDataList[i].DescTextMapHash,
+			Level:            reliquarySetAffixDataList[i].Level + 1,
+			AddProps:         reliquarySetAffixDataList[i].AddProps,
+			ParamList:        reliquarySetAffixDataList[i].ParamList,
+			ParamValidIndexs: calWeaponNoLevelValidParamIndexs(reliquarySetAffixDataList[i].ParamList),
 		})
 	}
 	reliquaryCodexDataMap := make(map[uint64][]*GenshinReliquaryCodexData)

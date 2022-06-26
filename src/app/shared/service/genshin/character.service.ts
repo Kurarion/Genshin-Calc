@@ -126,34 +126,34 @@ export class CharacterService {
     return undefined;
   }
 
-  setExtraSwitch(index: string | number, skill: string, valueIndex: number, enable: boolean, skillIndex?: number | string){
+  setExtraSwitch(index: string | number, skill: string, buffIndex: number, enable: boolean, skillIndex?: number | string){
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
     if(skillStatus['switchOnSet'] == undefined){
       skillStatus['switchOnSet'] = {};
     }
-    skillStatus['switchOnSet'][valueIndex.toString()] = enable;
+    skillStatus['switchOnSet'][buffIndex.toString()] = enable;
   }
 
-  setExtraSlider(index: string | number, skill: string, valueIndex: number, setValue: number, skillIndex?: number | string){
+  setExtraSlider(index: string | number, skill: string, buffIndex: number, setValue: number, skillIndex?: number | string){
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
     if(skillStatus['sliderNumMap'] == undefined){
       skillStatus['sliderNumMap'] = {};
     }
-    skillStatus['sliderNumMap'][valueIndex.toString()] = setValue;
+    skillStatus['sliderNumMap'][buffIndex.toString()] = setValue;
   }
 
-  getExtraSwitch(index: string | number, skill: string, valueIndex: number, skillIndex?: number | string){
+  getExtraSwitch(index: string | number, skill: string, buffIndex: number, skillIndex?: number | string){
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
     if(skillStatus['switchOnSet'] != undefined){
-      return skillStatus['switchOnSet'][valueIndex.toString()];
+      return skillStatus['switchOnSet'][buffIndex.toString()];
     }
     return false;
   }
 
-  getExtraSlider(index: string | number, skill: string, valueIndex: number, skillIndex?: number | string){
+  getExtraSlider(index: string | number, skill: string, buffIndex: number, skillIndex?: number | string){
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
     if(skillStatus['sliderNumMap'] != undefined){
-      return skillStatus['sliderNumMap'][valueIndex.toString()];
+      return skillStatus['sliderNumMap'][buffIndex.toString()];
     }
     return 0;
   }

@@ -176,13 +176,14 @@ type RELIQUARY struct {
 }
 
 type RELIQUARYAFFIX struct {
-	Name            map[string]string `json:"name"`
-	NameTextMapHash uint64            `json:"nameTextMapHash"`
-	Desc            map[string]string `json:"desc"`
-	DescTextMapHash uint64            `json:"descTextMapHash"`
-	Level           int               `json:"level"`
-	AddProps        []interface{}     `json:"addProps"`
-	ParamList       []float64         `json:"paramList"`
+	Name             map[string]string `json:"name"`
+	NameTextMapHash  uint64            `json:"nameTextMapHash"`
+	Desc             map[string]string `json:"desc"`
+	DescTextMapHash  uint64            `json:"descTextMapHash"`
+	Level            int               `json:"level"`
+	AddProps         []interface{}     `json:"addProps"`
+	ParamList        []float64         `json:"paramList"`
+	ParamValidIndexs []int             `json:"paramValidIndexs"`
 }
 
 //GetNameFromTypeCode genshindataType名转换属性名

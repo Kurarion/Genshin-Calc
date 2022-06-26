@@ -25,6 +25,7 @@ export interface LangInfo {
 export interface ExtraData {
   characters: Record<string, ExtraCharacter>;
   weapons: Record<string, ExtraWeapon>;
+  artifact: Record<string, ExtraArtifact>;
 }
 
 /** 補足データ - 1階 */
@@ -35,6 +36,11 @@ export interface ExtraCharacter {
 
 export interface ExtraWeapon {
   effect?: ExtraSkillInfo[];
+}
+
+export interface ExtraArtifact {
+  set1?: ExtraSkillInfo[];
+  set2?: ExtraSkillInfo[];
 }
 
 /** 補足データ - 2階 */
@@ -49,7 +55,7 @@ export interface ExtraCharacterSkills {
 /** 補足データ - 3階 */
 export interface ExtraSkillInfo {
   //パラメータインデックスリスト
-  indexs?: number[];
+  // indexs?: number[];
   //計算
   damage?: ExtraSkillDamage;//ダメージ値
   buff?: ExtraSkillBuff;//バフ値
@@ -87,6 +93,8 @@ export interface ExtraSkillBuff {
   constCalRelation?: TYPE_RELATION;
   //カスタマー倍率
   customValue?: number;
+  //聖遺物二点セット用
+  propIndex?: number;
   //----------------------
   //数値計算ベース
   base?: string;

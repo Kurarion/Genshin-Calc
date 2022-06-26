@@ -88,5 +88,8 @@ export class GenshinDataService {
   getExtraWeaponData(index: string){
     return GenshinDataService.dataExtra.weapons[index];
   }
+  getExtraArtifactData(index: string){
+    return GenshinDataService.dataExtra.artifact[index];
+  }
 
 }

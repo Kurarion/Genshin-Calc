@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Const, ExtraSkillInfo, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
+import { Const, ExtraArtifact, ExtraSkillInfo, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
 
 //
 export interface ExtraDataStorageInfo {
@@ -22,6 +22,11 @@ export interface ExtraCharacterSkillsData {
 
 export interface ExtraWeaponData {
   effect?: ExtraStatus;
+}
+
+export interface ExtraArtifactSetData {
+  set1?: ExtraStatus;
+  set2?: ExtraStatus;
 }
 
 //
@@ -57,6 +62,10 @@ export class ExtraDataService {
 
   getWeapon(index: string | number){
     return this.genshinDataService.getExtraWeaponData(index.toString());
+  }
+
+  getArtifactSet(index: string | number){
+    return this.genshinDataService.getExtraArtifactData(index.toString());
   }
 
   // //設定取得
@@ -105,49 +114,59 @@ export class ExtraDataService {
     return result;
   }
 
+  getArtifactSetDefaultSetting(indexs: string[], fullIndex: string){
+    let result: ExtraArtifactSetData = {}
+    if(fullIndex != ''){
+      let temp = this.getArtifactSet(fullIndex);
+      result.set1 = this.getDefaultConfig(temp?.set1);
+      result.set2 = this.getDefaultConfig(temp?.set2);
+    }else{
+      for(let [index, value] of indexs.entries()){
+        let key = Const.NAME_SET + (index + 1).toString();
+        if(value && value != ''){
+          let temp = this.getArtifactSet(value);
+          result[key as keyof ExtraArtifactSetData] = this.getDefaultConfig(temp?temp[key as keyof ExtraArtifact]:undefined);
+        }else{
+          result[key as keyof ExtraArtifactSetData] = {};
+        }
+      }
+    }
+
+    return result;
+  }
+
   private getDefaultConfig(skills: ExtraSkillInfo[] | undefined){
     let result: ExtraStatus = {}
     
-    for(let obj of skills ?? []){
+    for(let [index,obj] of skills?.entries() ?? []){
       switch(obj?.buff?.settingType){
         case 'switch-value':
         case 'switch':
           {
-            // for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
-            let j = obj.buff?.index ?? obj.buff?.constIndex;
-            if(j != undefined){
-              if(obj.buff.defaultEnable){
-                if(!result.switchOnSet){
-                  result.switchOnSet = {};
-                }
-                result.switchOnSet![j.toString()] = obj.buff.defaultEnable;
+            if(obj.buff.defaultEnable){
+              if(!result.switchOnSet){
+                result.switchOnSet = {};
               }
+              result.switchOnSet![index.toString()] = obj.buff.defaultEnable;
             }
           }
           break;
         case 'slider':
           {
-            // for(let j of obj.buff?.index ?? obj.buff?.constIndex ?? []){
-            let j = obj.buff?.index ?? obj.buff?.constIndex;
-            if(j != undefined){
-              if(obj.buff.sliderInitialValue){
-                if(!result.sliderNumMap){
-                  result.sliderNumMap = {};
-                }
-                result.sliderNumMap![j.toString()] = obj.buff.sliderInitialValue;
+            if(obj.buff.sliderInitialValue){
+              if(!result.sliderNumMap){
+                result.sliderNumMap = {};
               }
+              result.sliderNumMap![index.toString()] = obj.buff.sliderInitialValue;
             }
           }
           break;
         case 'resident':
           {
-            let j = obj.buff?.index ?? obj.buff?.constIndex;
-            if(j != undefined){
-              if(!result.switchOnSet){
-                result.switchOnSet = {};
-              }
-              result.switchOnSet![j.toString()] = true;
+            if(!result.switchOnSet){
+              result.switchOnSet = {};
             }
+            result.switchOnSet![index.toString()] = true;
           }
           break;
       }

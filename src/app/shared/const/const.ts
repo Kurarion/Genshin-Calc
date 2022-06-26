@@ -10,6 +10,11 @@ export class Const {
   //*********************************
   //             言語
   //*********************************
+  static readonly LAN_CHS = "cn_sim";
+  static readonly LAN_CHT = "cn_tra";
+  static readonly LAN_EN = "en";
+  static readonly LAN_JP = "jp";
+
   static readonly LIST_LANG: LangInfo[] = [
     { code: 'cn_sim', displayName: '中文(简)' },
     { code: 'cn_tra', displayName: '中文(繁)' },
@@ -54,6 +59,7 @@ export class Const {
   static readonly NAME_SKILLS_PROUD = 'proudSkills';
   static readonly NAME_CONSTELLATION = 'constellation';
   static readonly NAME_EFFECT = 'effect';
+  static readonly NAME_SET = 'set';
 
   static readonly NAME_CONSTELLATION_1 = "0";
   static readonly NAME_CONSTELLATION_2 = "1";
@@ -63,6 +69,7 @@ export class Const {
   static readonly NAME_CONSTELLATION_6 = "5";
 
   static readonly NAME_TALENT_DEFAULT_LEVEL = "01";
+  static readonly NAME_NO_LEVEL = "";
 
   static readonly ELEMENT_CRYO = "CRYO";
   static readonly ELEMENT_ANEMO = "ANEMO";

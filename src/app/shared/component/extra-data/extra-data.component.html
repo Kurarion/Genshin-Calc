@@ -2,37 +2,35 @@
     <ng-content></ng-content>
 </ng-container>
 <ng-container *ngFor="let info of buffDatas; index as i; first as isFirst">
-    <ng-container *ngIf="isFirst">
-        <!-- バフ -->
-        <table>
-            <tr>
-                <td>
-                    <span [innerText]="'GENSHIN.OTHER.BUFF' | translate"></span>
-                </td>
-                <td>
-                    <ng-container *ngIf="info.type == 'switch'">
-                        <mat-slide-toggle
-                            color="primary"
-                            [checked]="info.switchValue"
-                            (change)="onChangeSwitch($event, info.valueIndex)">
-                        </mat-slide-toggle>
-                    </ng-container>
-                    <ng-container *ngIf="info.type == 'slider'">
-                        <mat-slider
-                            color="primary"
-                            [min]="info.min"
-                            [max]="info.max"
-                            [step]="info.step"
-                            [thumbLabel]="true"
-                            tickInterval="auto"
-                            [value]="info.sliderValue"
-                            (change)="onChangeSlider($event, info.valueIndex)">
-                        </mat-slider>
-                    </ng-container>
-                </td>
-            </tr>
-        </table>
-    </ng-container>
+    <!-- バフ -->
+    <table>
+        <tr>
+            <td>
+                <span [innerText]="'GENSHIN.OTHER.BUFF' | translate"></span>
+            </td>
+            <td>
+                <ng-container *ngIf="info.type == 'switch'">
+                    <mat-slide-toggle
+                        color="primary"
+                        [checked]="info.switchValue"
+                        (change)="onChangeSwitch($event, info.valueIndex)">
+                    </mat-slide-toggle>
+                </ng-container>
+                <ng-container *ngIf="info.type == 'slider'">
+                    <mat-slider
+                        color="primary"
+                        [min]="info.min"
+                        [max]="info.max"
+                        [step]="info.step"
+                        [thumbLabel]="true"
+                        tickInterval="auto"
+                        [value]="info.sliderValue"
+                        (change)="onChangeSlider($event, info.valueIndex)">
+                    </mat-slider>
+                </ng-container>
+            </td>
+        </tr>
+    </table>
 </ng-container>
 <ng-container *ngFor="let info of dmgDatas; index as i">
     <table>
@@ -43,7 +41,7 @@
                     <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
                 </td>
                 <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
-                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <span [innerText]="info[prop] | truncate"></span>
                     <br>
                 </td>
             </tr>
@@ -59,7 +57,7 @@
                     <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                 </td>
                 <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
-                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <span [innerText]="info[prop] | truncate"></span>
                     <br>
                 </td>
             </tr>
@@ -75,7 +73,7 @@
                     <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                 </td>
                 <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
-                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <span [innerText]="info[prop] | truncate"></span>
                     <br>
                 </td>
             </tr>
@@ -91,7 +89,7 @@
                     <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                 </td>
                 <td [matTooltip]="info[prop] + ''" matTooltipPosition="right">
-                    <span [innerText]="info[prop] | number:'1.0-0' | noComma"></span>
+                    <span [innerText]="info[prop] | truncate"></span>
                     <br>
                 </td>
             </tr>

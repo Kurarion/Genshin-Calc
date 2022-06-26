@@ -12,43 +12,71 @@
             <mat-card-title [innerText]="'ARTIFACT.NAME' | translate"></mat-card-title>
         </mat-card-header>
         <mat-card-content class="content">
-            <mat-tab-group [(selectedIndex)]="selectedIndex" (selectedIndexChange)="setActiveIndex()">
+            <mat-tab-group [(selectedIndex)]="selectedIndex" (selectedIndexChange)="setActiveIndex()" animationDuration="0">
                 <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
-                    <!-- 聖遺物詳細 -->
-                    <br>
-                    <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
-                        <mat-label [innerText]="'ARTIFACT.SET1' | translate"></mat-label>
-                        <mat-select [(ngModel)]="selectedArtifactSetIndexs[0]" (ngModelChange)="onSelectArtifactSet($event, 0)">
-                            <mat-option value=""></mat-option>
-                            <ng-container *ngFor="let artifactSet of artifactSetList">
-                                <mat-option 
-                                    [value]="artifactSet.setId"
-                                    [innerText]="artifactSet.setName[currentLanguage]"
-                                >
-                                </mat-option>
-                            </ng-container>
-                        </mat-select>
-                    </mat-form-field>
-                    &nbsp;
-                    &nbsp;
-                    <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
-                        <mat-label [innerText]="'ARTIFACT.SET2' | translate"></mat-label>
-                        <mat-select [(ngModel)]="selectedArtifactSetIndexs[1]" (ngModelChange)="onSelectArtifactSet($event, 1)">
-                            <mat-option value=""></mat-option>
-                            <ng-container *ngFor="let artifactSet of artifactSetList">
-                                <mat-option 
-                                    [value]="artifactSet.setId"
-                                    [innerText]="artifactSet.setName[currentLanguage]"
-                                >
-                                </mat-option>
-                            </ng-container>
-                        </mat-select>
-                    </mat-form-field>
+                    <div class="artifact-set">
+                        <!-- 聖遺物詳細 -->
+                        <br>
+                        <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
+                            <mat-label [innerText]="'ARTIFACT.SET1' | translate"></mat-label>
+                            <mat-select [(ngModel)]="selectedArtifactSetIndexs[0]" (ngModelChange)="onSelectArtifactSet($event, 0)">
+                                <mat-option value=""></mat-option>
+                                <ng-container *ngFor="let artifactSet of artifactSetList">
+                                    <mat-option 
+                                        [value]="artifactSet.setId"
+                                        [innerText]="artifactSet.setName[currentLanguage]"
+                                    >
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
+                            <mat-label [innerText]="'ARTIFACT.SET2' | translate"></mat-label>
+                            <mat-select [(ngModel)]="selectedArtifactSetIndexs[1]" (ngModelChange)="onSelectArtifactSet($event, 1)">
+                                <mat-option value=""></mat-option>
+                                <ng-container *ngFor="let artifactSet of artifactSetList">
+                                    <mat-option 
+                                        [value]="artifactSet.setId"
+                                        [innerText]="artifactSet.setName[currentLanguage]"
+                                    >
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                        <ng-container *ngIf="selectedArtifactSetIndexs[0] && selectedArtifactSetIndexs[0] != ''">
+                            <br><span [innerHTML]="effectContent1"></span>
+                        </ng-container>
+                        <ng-container *ngIf="selectedArtifactSetIndexs[1] && selectedArtifactSetIndexs[1] != ''">
+                            <br><span [innerHTML]="effectContent2"></span>
+                        </ng-container>
+                        <app-extra-data
+                            [characterIndex]="data.id"
+                            [skill]="name_set"
+                            [skillIndex]="2"
+                            [valueIndexs]="getEffectValidIndexs()">
+                            <br>
+                            <br>
+                            <app-extra-data
+                                [characterIndex]="data.id"
+                                [skill]="name_set"
+                                [skillIndex]="1"
+                                [valueIndexs]="getEffectValidIndexs()">
+                            </app-extra-data>
+                        </app-extra-data>
+                    </div>
                     <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs [(selectedIndex)]="partIndex">
                         <ng-container *ngFor="let type of artifactList">
                             <mat-tab [label]="'ARTIFACT.' + type | translate">
-                                <br>
-                                <app-artifact-sub [characterIndex]="data.id" [index]="index" [artifactType]="type"></app-artifact-sub>
+                                <div class="artifact-sub">
+                                    <br>
+                                    <app-artifact-sub [characterIndex]="data.id" [index]="index" [artifactType]="type"></app-artifact-sub>
+                                </div>
                             </mat-tab>
                         </ng-container>
                         <mat-tab disabled>
