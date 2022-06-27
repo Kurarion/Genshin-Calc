@@ -121,6 +121,8 @@ export class ArtifactComponent implements OnInit {
    */
   onSelectArtifactSet(artifactSetIndex: string, index: number) {
     this.selectedArtifactSetIndexs[index] = artifactSetIndex;
+    //DEBUG
+    console.log(this.artifactService.getSetData(artifactSetIndex));
     this.initSelectedFullArtifactSetIndex();
     this.initEffectContents();
     this.setDefaultExtraData();

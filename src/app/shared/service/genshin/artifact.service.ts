@@ -202,7 +202,7 @@ export class ArtifactService {
     let charKeyStr = charIndex.toString();
     this.initDefaultData(charKeyStr);
     this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra = 
-    {...this.extraDataService.getArtifactSetDefaultSetting(index, fullIndex), ...this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra};
+    {...this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra, ...this.extraDataService.getArtifactSetDefaultSetting(index, fullIndex)};
   }
   
   //追加データクリア

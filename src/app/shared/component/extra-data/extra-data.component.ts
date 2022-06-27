@@ -227,7 +227,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private getBuffInfos(){
-    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.skillIndex);
+    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.skillIndex, this.valueIndexs);
     return temp;
   }
 

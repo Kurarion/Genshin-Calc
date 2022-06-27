@@ -162,6 +162,16 @@ export class Const {
   static readonly PROP_DMG_BONUS_WEAPON = "DMG_BONUS_WEAPON";
   //その他ダメージ
   static readonly PROP_DMG_BONUS_OTHER = "DMG_BONUS_OTHER";
+  //基本治療
+  static readonly PROP_HEALING_BONUS_NORMAL = "HEALING_BONUS_NORMAL";
+  //元素スキル治療
+  static readonly PROP_HEALING_BONUS_SKILL = "HEALING_BONUS_SKILL";
+  //元素爆発治療
+  static readonly PROP_HEALING_BONUS_ELEMENTAL_BURST = "HEALING_BONUS_ELEMENTAL_BURST";
+  //武器治療
+  static readonly PROP_HEALING_BONUS_WEAPON = "HEALING_BONUS_WEAPON";
+  //その他治療
+  static readonly PROP_HEALING_BONUS_OTHER = "HEALING_BONUS_OTHER";
 
   //氷元素耐性
   static readonly PROP_DMG_ANTI_CRYO = "DMG_ANTI_CRYO";

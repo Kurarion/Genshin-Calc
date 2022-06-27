@@ -146,11 +146,17 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   updateRecords(){
-    this.effectNameRecord = this.getEffectName(this.selectedSmeltingLevel);
-    this.effectContentRecord = this.getEffectContent(this.selectedSmeltingLevel);
-    this.effectValidIndexs = this.getEffectValidIndexs(this.selectedSmeltingLevel);
-    this.effectName = this.effectNameRecord[this.currentLanguage];
-    this.effectContent = this.effectContentRecord[this.currentLanguage];
+    if(this.weaponData.skillAffixMap){
+      this.effectNameRecord = this.getEffectName(this.selectedSmeltingLevel);
+      this.effectContentRecord = this.getEffectContent(this.selectedSmeltingLevel);
+      this.effectValidIndexs = this.getEffectValidIndexs(this.selectedSmeltingLevel);
+      this.effectName = this.effectNameRecord[this.currentLanguage];
+      this.effectContent = this.effectContentRecord[this.currentLanguage];
+    }else{
+      this.effectValidIndexs = [];
+      this.effectName = "";
+      this.effectContent = "";
+    }
   }
 
   @HostListener('window:unload')
@@ -186,6 +192,8 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
       //武器属性更新
       this.onChangeLevel(this.selectedLevel);
     }
+    //表示用更新
+    this.updateRecords();
     //プロフィール画像初期化
     this.initializeBackGroundImage();
     //武器設定

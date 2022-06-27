@@ -1207,7 +1207,8 @@ export class CalculatorService {
     }
     healing *= (1 + data[Const.PROP_HEALING_BONUS]) * (1 + data[Const.PROP_REVERSE_HEALING_BONUS]);
     if(healingBonusType){
-      healing *= (1 + data[healingBonusType] ?? 0);
+      healing *= (1 + (data[healingBonusType] ?? 0));
+      //TODO その他治療アップ
     }
     result = {
       healing: healing,
@@ -1356,7 +1357,7 @@ export class CalculatorService {
                 rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
               }
-              if(damageInfo.originSkill && skill != Const.NAME_EFFECT){
+              if(damageInfo.originSkill){
                 let originRateInfo = characterData!.skills![damageInfo.originSkill as keyof CharSkills] as CharSkill;
                 let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkill);
                 let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndex!]
@@ -1687,7 +1688,7 @@ export class CalculatorService {
       return results;
   }
 
-  getSkillBuffValue(index: string | number, skill: string, skillIndex?: number | string){
+  getSkillBuffValue(index: string | number, skill: string, skillIndex?: number | string, valueIndexs?: number[]){
     let indexStr = index.toString();
     let results: BuffResult[] = [];
 
@@ -1723,6 +1724,18 @@ export class CalculatorService {
           //全含め必要
           let buffInfo = info.buff;
             let tempValue: any;
+            if(valueIndexs != undefined){
+              if(buffInfo?.index != undefined){
+                if(!valueIndexs.includes(buffInfo.index)){
+                  continue;
+                }
+              }
+              if(buffInfo?.constIndex != undefined){
+                if(!valueIndexs.includes(buffInfo.constIndex)){
+                  continue;
+                }
+              }
+            }
             if(buffInfo){
               switch(buffInfo.settingType){
                 case 'switch-value':
@@ -1844,7 +1857,9 @@ export class CalculatorService {
 
     //スペシャル処理
     for(let buff of specialOrders){
-      let toAdd = (result[buff.base!] + buff?.baseModifyValue! ?? 0) * buff.multiValue!;
+      let baseValue = buff.base?result[buff.base]:0;
+      let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
+      let toAdd = (baseValue + modifyValue) * buff.multiValue!;
       if(buff.maxVal && toAdd > buff.maxVal){
         toAdd = buff.maxVal;
       }else if(buff.specialMaxVal != undefined){
@@ -1854,6 +1869,24 @@ export class CalculatorService {
         }
       }
       result[buff.target!] += toAdd;
+      //計算必要分再計算
+      switch(buff.target){
+        case Const.PROP_HP_UP:
+        case Const.PROP_VAL_HP:
+          result[Const.PROP_HP] = result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
+          break;
+        case Const.PROP_ATTACK_UP:
+        case Const.PROP_VAL_ATTACK:
+          result[Const.PROP_ATTACK] += result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) + result[Const.PROP_VAL_ATTACK];
+          break;
+        case Const.PROP_DEFENSE_UP:
+        case Const.PROP_VAL_DEFENSE:
+          result[Const.PROP_DEFENSE] += result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) + result[Const.PROP_VAL_DEFENSE];
+          break;
+        case Const.PROP_DMG_ENEMY_DEFENSE_DOWN:
+          result[Const.PROP_DMG_ENEMY_DEFENSE] += result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
+          break;
+      }
     }
 
     return result;
@@ -2122,6 +2155,9 @@ export class CalculatorService {
 
   //追加データ解析
   private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[]){
+    if(skillData == undefined || buffs == undefined){
+      return;
+    }
     let switchOnSet = setting?.switchOnSet ?? {};
     let sliderNumMap = setting?.sliderNumMap ?? {};
 
