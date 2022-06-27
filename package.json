@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generateGenshinData": "go run GenshinData",
-    "deployGitPage": "ng deploy --repo=https://github.com/Kurarion/GSCal.git --base-href=/GSCal/ --branch=website"
+    "deployGitPage": "ng deploy --repo=https://github.com/Kurarion/Genshin-Calc.git --base-href=/Genshin-Calc/ --branch=website"
   },
   "private": true,
   "dependencies": {

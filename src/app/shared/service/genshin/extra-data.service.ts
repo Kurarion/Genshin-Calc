@@ -106,7 +106,7 @@ export class ExtraDataService {
         let key = Const.NAME_SET + (index + 1).toString();
         if(value && value != ''){
           let temp = this.getArtifactSet(value);
-          result[key as keyof ExtraArtifactSetData] = this.getDefaultConfig(temp?temp[key as keyof ExtraArtifact]:undefined);
+          result[key as keyof ExtraArtifactSetData] = this.getDefaultConfig(temp?temp.set1:undefined);
         }else{
           result[key as keyof ExtraArtifactSetData] = {};
         }

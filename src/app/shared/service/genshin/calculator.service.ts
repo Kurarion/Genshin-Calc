@@ -110,6 +110,7 @@ export interface BuffResult {
 export interface artifactSetInfo {
   index: string;
   level: number;
+  setIndex: number;
 }
 
 interface SkillParamInf {
@@ -2104,12 +2105,13 @@ export class CalculatorService {
     let specialResult: SpecialBuff[] = [];
     let targetIndexInfos: artifactSetInfo[] = [];
     let ownedIndexs: string[] = [];
-    for(let setIndex of artifactSetIndexs){
+    for(let [i,setIndex] of artifactSetIndexs.entries()){
       if(setIndex != undefined && setIndex != ""){
         ownedIndexs.push(setIndex);
         targetIndexInfos.push({
           index: setIndex,
           level: ownedIndexs.filter(x => x == setIndex).length,
+          setIndex: i + 1,
         });
       }
     }
@@ -2123,7 +2125,7 @@ export class CalculatorService {
         artifactSetData.setAffixs[targetIndexInfo.level - 1], 
         Const.NAME_NO_LEVEL,
         extraArtifactData?extraArtifactData[Const.NAME_SET + targetIndexInfo.level as keyof ExtraArtifact]!:[],
-        setting[Const.NAME_SET + targetIndexInfo.level as keyof ExtraArtifactSetData] ?? {},
+        setting[Const.NAME_SET + targetIndexInfo.setIndex as keyof ExtraArtifactSetData] ?? {},
         tempResult,
         tempSpecialResult,
       );
