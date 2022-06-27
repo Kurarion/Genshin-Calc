@@ -11,13 +11,15 @@ export class OcrService {
   private worker1 = createWorker({
     logger: (m) => this.progress(m),
   });
-  private worker1ready: Promise<any>;
+  private worker1ready!: Promise<any>;
   private worker2 = createWorker({
     logger: (m) => this.progress(m),
   });
-  private worker2ready: Promise<any>;
+  private worker2ready!: Promise<any>;
 
   constructor(private globalProgressService: GlobalProgressService) {
+    //TODO
+    return;
     this.worker1ready = this.worker1.load();
     this.worker2ready = this.worker2.load();
 
@@ -28,6 +30,8 @@ export class OcrService {
   }
 
   async setLanguage(language: string) {
+    //TODO
+    return;
     await Promise.all([
       this.worker1ready.then(async () => {
         await this.worker1.loadLanguage(language);
@@ -41,6 +45,8 @@ export class OcrService {
   }
 
   async ocr(image: Blob) {
+    //TODO
+    return;
     //結果リスト[キャラ画面のアーティファクト, アーティファクト（サブ）, アーティファクト（メイン）]
     let texts: string[];
     //結果Promise
@@ -110,6 +116,8 @@ export class OcrService {
   }
 
   private progress(log: any) {
+    //TODO
+    return;
     this.globalProgressService.setProgressMessage(log.status);
     this.globalProgressService.setValue(log.progress * 100);
   }
