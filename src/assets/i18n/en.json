@@ -1,0 +1,129 @@
+{
+  "TITLE": "Cloud Genshin Impact",
+  "HOME": {
+    "TITLE": "Genshin Damage Calculator"
+  },
+  "CHARACTER": {
+    "PROPS": "Character Attributes",
+    "TALENTS": "Skill Talents",
+    "CONSTELLATION": "Constellation"
+  },
+  "WEAPON": {
+    "NAME": "Weapon Name",
+    "PROPS": "Weapon Attributes",
+    "SMELTING":"Smelting"
+  },
+  "ENEMY": {
+    "NAME": "Enemy Name",
+    "PROPS": "Enemy Attributes",
+    "PLAYERNUM": "Number of Players"
+  },
+  "ARTIFACT": {
+    "NAME": "Artifact",
+    "FLOWER": "Flower",
+    "PLUME": "Plume",
+    "SANDS": "Sands",
+    "GOBLET": "Goblet",
+    "CIRCLET": "Circlet",
+    "MAIN": "Main Stat",
+    "SUB1": "Substat 1",
+    "SUB2": "Substat 2",
+    "SUB3": "Substat 3",
+    "SUB4": "Substat 4",
+    "SET1": "Set 1",
+    "SET2": "Set 2"
+  },
+  "OTHER": {
+    "NAME": "Other",
+    "TARGET": "Target Attribute",
+    "TARGETVALUE": "Target Value"
+  },
+  "SYS": {
+    "DELETE": "Delete"
+  },
+  "PROPS": {
+    "LEVEL": "Level",
+    "ASCENDED": "(broken)",
+    "HP": "HP",
+    "ATTACK": "Attack",
+    "DEFENSE": "Defense",
+    "HP_UP": "HP(Up)",
+    "ATTACK_UP": "Attack(Up)",
+    "DEFENSE_UP": "Defense(Up)",
+    "CRIT_RATE": "CRIT RATE",
+    "CRIT_DMG": "CRIT DMG",
+    "ENERGY_RECHARGE": "Energy Recharge",
+    "HEALING_BONUS": "Healing Bonus",
+    "REVERSE_HEALING_BONUS": "Reverse Healing Bonus",
+    "ELEMENTAL_MASTERY": "Elemental Mastery",
+    "DMG_BONUS_CRYO": "Cryo DMG Bonus",
+    "DMG_BONUS_ANEMO": "Anemo DMG Bonus",
+    "DMG_BONUS_PHYSICAL": "Physical DMG Bonus",
+    "DMG_BONUS_ELECTRO": "Electro DMG Bonus",
+    "DMG_BONUS_GEO": "Geo DMG Bonus",
+    "DMG_BONUS_PYRO": "Pyro DMG Bonus",
+    "DMG_BONUS_HYDRO": "Hydro DMG Bonus",
+    "DMG_BONUS_DENDRO": "Dendro DMG Bonus",
+    "DMG_BONUS_ALL": "DMG Bonus",
+    "DMG_BONUS_NORMAL": "Normal DMG Bonus",
+    "DMG_BONUS_CHARGED": "Charged DMG Bonus",
+    "DMG_BONUS_PLUNGING": "Plunging DMG Bonus",
+    "DMG_BONUS_SKILL": "Skill DMG Bonus",
+    "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst DMG Bonus",
+    "DMG_ANTI_CRYO": "Cryo Resistance",
+    "DMG_ANTI_ANEMO": "Anemo Resistance",
+    "DMG_ANTI_PHYSICAL": "Physical Resistance",
+    "DMG_ANTI_ELECTRO": "Electro Resistance",
+    "DMG_ANTI_GEO": "Geo Resistance",
+    "DMG_ANTI_PYRO": "Pyro Resistance",
+    "DMG_ANTI_HYDRO": "Hydro Resistance",
+    "DMG_ANTI_DENDRO": "Dendro Resistance"
+  },
+  "GENSHIN": {
+    "DMG":{
+      "ORIGIN": "No Critical Damage",
+      "CRIT": "Critical Damage",
+      "EXPECT": "Expected Damage",
+      "ORIGIN_VAPORIZE": "No Critical Damage (Vaporize)",
+      "CRIT_VAPORIZE": "Critical Damage (Vaporize)",
+      "EXPECT_VAPORIZE": "Expected Damage (Vaporize)",
+      "ORIGIN_MELT": "No Critical Damage (Melt)",
+      "CRIT_MELT": "Critical Damage (Melt)",
+      "EXPECT_MELT": "Expected Damage (Melt)",
+      "CRYO": "Cryo Damage",
+      "ANEMO": "Anemo Damage",
+      "PHYSICAL": "Physical Damage",
+      "ELECTRO": "Electro Damage",
+      "GEO": "Geo Damage",
+      "PYRO": "Pyro Damage",
+      "HYDRO": "Hydro Damage",
+      "DENDRO": "Dendro Damage",
+      "OVERLOADED": "Overloaded Damage",
+      "BURNING": "Burning Damage",
+      "ELECTROCHARGED": "Electrocharged Damage",
+      "SUPERCONDUCT": "Superconduct Damage",
+      "SWIRL_CRYO": "CRYO Swirl Damage",
+      "SWIRL_ELECTRO": "Electro Swirl Damage",
+      "SWIRL_PYRO": "Pyro Swirl Damage",
+      "SWIRL_HYDRO": "Hydro Swirl Damage",
+      "DESTRUCTION": "Destruction Damage",
+      "SHIELD": "Elemental Shield HP"
+    },
+    "OTHER": {
+      "HEALING": "Healing",
+      "PRODUCT": "Production HP",
+      "SHIELD": "Shield HP",
+      "BUFF": "Buff",
+      "OVERRIDE_ELEMENT": "Override Element",
+      "DEFAULT_ELEMENT": "Default",
+      "DMG_BONUS_CRYO": "Cryo",
+      "DMG_BONUS_ANEMO": "Anemo",
+      "DMG_BONUS_PHYSICAL": "Physical",
+      "DMG_BONUS_ELECTRO": "Electro",
+      "DMG_BONUS_GEO": "Geo",
+      "DMG_BONUS_PYRO": "Pyro",
+      "DMG_BONUS_HYDRO": "Hydro",
+      "DMG_BONUS_DENDRO": "Dendro"
+    }
+  }
+}

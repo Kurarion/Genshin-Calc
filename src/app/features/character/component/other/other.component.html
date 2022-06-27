@@ -1,0 +1,75 @@
+<ng-container *ngIf="data.skills.normal.name">
+    <mat-card class="card" cdkDrag>
+        <div class="drap-handle" cdkDragHandle>
+            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                </path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+        </div>
+        <mat-card-header>
+            <mat-card-title [innerText]="'OTHER.NAME' | translate"></mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="content">
+            <mat-tab-group [(selectedIndex)]="selectedIndex" animationDuration="0">
+                <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
+                    <div class="tab">
+                        <div class="menu-div">
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
+                                    <mat-icon>delete</mat-icon>
+                                    <span [innerText]="'SYS.DELETE' | translate"></span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                        <!-- 選択 -->
+                        <br>
+                        <mat-form-field class="prop-field" appearance="legacy" floatLabel="always">
+                            <mat-label [innerText]="'OTHER.TARGET' | translate"></mat-label>
+                            <mat-select [(ngModel)]="infos[selectedIndex].name" (ngModelChange)="onSelectProp($event)">
+                                <mat-option></mat-option>
+                                <mat-option *ngFor="let prop of propList" [value]="prop">
+                                    <span [innerText]="'PROPS.' + prop.toUpperCase() | translate"></span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- 値 -->
+                        <br>
+                        <mat-form-field appearance="legacy" floatLabel="always">
+                            <mat-label [innerText]="'OTHER.TARGETVALUE' | translate"></mat-label>
+                            <input matInput 
+                                type="number"
+                                step="0.01"
+                                [value]="infos[selectedIndex].value"
+                                (keyup)="onValueKeyup($event)"
+                            >
+                        </mat-form-field>
+                        <!-- スイッチ -->
+                        <mat-slide-toggle
+                            color="primary" 
+                            class="switch"
+                            [(ngModel)]="infos[selectedIndex].enable"
+                            (ngModelChange)="updateDirtyFlag()"
+                        ></mat-slide-toggle>
+                        <br>
+                        <br>
+                    </div>
+                </mat-tab>
+                <mat-tab disabled>
+                    <ng-template mat-tab-label>
+                        <button class="add-button" mat-icon-button (click)="copyTab()" matTooltip="Copy" matTooltipPosition="above">
+                            <mat-icon>content_copy</mat-icon>
+                        </button>
+                        <button class="add-button" mat-icon-button (click)="addTab()" matTooltip="Add" matTooltipPosition="above">
+                            <mat-icon>add_circle</mat-icon>
+                        </button>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

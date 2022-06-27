@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    word-break: break-all;
+    border-left: 2px solid rgba(0,0,0,.12);
+    border-right: 2px solid rgba(0,0,0,.12);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 3px;
+}
+
+table tr:first-child td {
+    border-top: 2px solid rgba(0,0,0,.12);
+}
+
+table tr:last-child td {
+    border-bottom: 2px solid rgba(0,0,0,.12);
+}
+
+tr td:nth-of-type(1) {
+    text-align: left;
+    /* border-bottom: 1px solid rgba(0,0,0,.12); */
+}
+
+tr td:nth-of-type(2) {
+    text-align: right;
+    /* border-bottom: 1px solid rgba(0,0,0,.12); */
+}

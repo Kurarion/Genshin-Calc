@@ -1,0 +1,44 @@
+<!-- 条件が真の時には「Update」と表示される -->
+<ng-container *ngIf="hasLevel; then skills else other"></ng-container>
+<!-- 条件が偽の時には「Create」と表示される -->
+<ng-template #skills>
+    <ng-container *ngIf="skill == 'normal'">
+        <mat-form-field appearance="legacy" floatLabel="always">
+            <mat-label [innerText]="'GENSHIN.OTHER.OVERRIDE_ELEMENT' | translate"></mat-label>
+            <mat-select [(ngModel)]="overrideElement" (ngModelChange)="onChangeElement($event)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let element of elementList" [value]="element">
+                    <span [innerText]="'GENSHIN.OTHER.' + element | translate"></span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+    <table>
+        <ng-container *ngFor="let paramDesc of skillDescDatas; index as i">
+            <tr>
+                <td colspan="2">
+                    <div class="placeholder"></div>
+                </td>
+            </tr>
+            <tr>
+                <td [innerText]="paramDesc.desc"></td>
+                <td [innerText]="showValues[i]"
+                    [matTooltip]="tipValues[i]" matTooltipPosition="right">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <app-extra-data
+                        [characterIndex]="data.id"
+                        [skill]="skill"
+                        [valueIndexs]="paramDesc.valuePropIndexs"
+                        [overrideElement]="overrideElement">
+                    </app-extra-data>
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+</ng-template>
+<ng-template #other>
+
+</ng-template>

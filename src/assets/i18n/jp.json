@@ -1,0 +1,129 @@
+{
+  "TITLE": "クラウド原神",
+  "HOME": {
+    "TITLE": "原神ダメージ計算"
+  },
+  "CHARACTER": {
+    "PROPS": "キャラ属性",
+    "TALENTS": "スキル",
+    "CONSTELLATION": "命ノ星座"
+  },
+  "WEAPON": {
+    "NAME": "武器",
+    "PROPS": "武器属性",
+    "SMELTING":"精錬"
+  },
+  "ENEMY": {
+    "NAME": "敵",
+    "PROPS": "敵属性",
+    "PLAYERNUM": "プレイヤー数"
+  },
+  "ARTIFACT": {
+    "NAME": "聖遺物",
+    "FLOWER": "生の花",
+    "PLUME": "死の羽",
+    "SANDS": "時の砂",
+    "GOBLET": "空の杯",
+    "CIRCLET": "理の冠",
+    "MAIN": "メイン",
+    "SUB1": "サブ１",
+    "SUB2": "サブ２",
+    "SUB3": "サブ３",
+    "SUB4": "サブ４",
+    "SET1": "セット１",
+    "SET2": "セット２"
+  },
+  "OTHER": {
+    "NAME": "その他",
+    "TARGET": "目標属性",
+    "TARGETVALUE": "目標値"
+  },
+  "SYS": {
+    "DELETE": "削除"
+  },
+  "PROPS": {
+    "LEVEL": "レベル",
+    "ASCENDED": "（突破済）",
+    "HP": "HP",
+    "ATTACK": "攻撃",
+    "DEFENSE": "防御",
+    "HP_UP": "HPアップ",
+    "ATTACK_UP": "攻撃アップ",
+    "DEFENSE_UP": "防御アップ",
+    "CRIT_RATE": "会心率",
+    "CRIT_DMG": "会心ダメージ",
+    "ENERGY_RECHARGE": "元素チャージ効率",
+    "HEALING_BONUS": "与える治療効果",
+    "REVERSE_HEALING_BONUS": "受ける治療効果",
+    "ELEMENTAL_MASTERY": "元素熟知",
+    "DMG_BONUS_CRYO": "氷元素ダメージ",
+    "DMG_BONUS_ANEMO": "風元素ダメージ",
+    "DMG_BONUS_PHYSICAL": "物理ダメージ",
+    "DMG_BONUS_ELECTRO": "雷元素ダメージ",
+    "DMG_BONUS_GEO": "岩元素ダメージ",
+    "DMG_BONUS_PYRO": "火元素ダメージ",
+    "DMG_BONUS_HYDRO": "水元素ダメージ",
+    "DMG_BONUS_DENDRO": "草元素ダメージ",
+    "DMG_BONUS_ALL": "全ダメージ",
+    "DMG_BONUS_NORMAL": "基本攻撃ダメージ",
+    "DMG_BONUS_CHARGED": "重撃ダメージ",
+    "DMG_BONUS_PLUNGING": "落下攻撃ダメージ",
+    "DMG_BONUS_SKILL": "元素スキルダメージ",
+    "DMG_BONUS_ELEMENTAL_BURST":"元素爆発ダメージ",
+    "DMG_ANTI_CRYO": "氷元素耐性",
+    "DMG_ANTI_ANEMO": "風元素耐性",
+    "DMG_ANTI_PHYSICAL": "物理耐性",
+    "DMG_ANTI_ELECTRO": "雷元素耐性",
+    "DMG_ANTI_GEO": "岩元素耐性",
+    "DMG_ANTI_PYRO": "火元素耐性",
+    "DMG_ANTI_HYDRO": "水元素耐性",
+    "DMG_ANTI_DENDRO": "草元素耐性"
+  },
+  "GENSHIN": {
+    "DMG":{
+      "ORIGIN": "通常ダメージ",
+      "CRIT": "クリティカルダメージ",
+      "EXPECT": "期待ダメージ",
+      "ORIGIN_VAPORIZE": "通常ダメージ（蒸発）",
+      "CRIT_VAPORIZE": "クリティカルダメージ（蒸発）",
+      "EXPECT_VAPORIZE": "期待ダメージ（蒸発）",
+      "ORIGIN_MELT": "通常ダメージ（溶解）",
+      "CRIT_MELT": "クリティカルダメージ（溶解）",
+      "EXPECT_MELT": "期待ダメージ（溶解）",
+      "CRYO": "氷元素ダメージ",
+      "ANEMO": "風元素ダメージ",
+      "PHYSICAL": "物理ダメージ",
+      "ELECTRO": "雷元素ダメージ",
+      "GEO": "岩元素ダメージ",
+      "PYRO": "火元素ダメージ",
+      "HYDRO": "水元素ダメージ",
+      "DENDRO": "草元素ダメージ",
+      "OVERLOADED": "過負荷ダメージ",
+      "BURNING": "燃焼ダメージ",
+      "ELECTROCHARGED": "感電ダメージ",
+      "SUPERCONDUCT": "超電導ダメージ",
+      "SWIRL_CRYO": "氷拡散ダメージ",
+      "SWIRL_ELECTRO": "雷拡散ダメージ",
+      "SWIRL_PYRO": "火拡散ダメージ",
+      "SWIRL_HYDRO": "水拡散ダメージ",
+      "DESTRUCTION": "氷砕きダメージ",
+      "SHIELD": "結晶吸収量"
+    },
+    "OTHER": {
+      "HEALING": "治療",
+      "PRODUCT": "創造物HP",
+      "SHIELD": "シールドHP",
+      "BUFF": "バフ",
+      "OVERRIDE_ELEMENT": "元素付与",
+      "DEFAULT_ELEMENT": "デフォルト",
+      "DMG_BONUS_CRYO": "氷",
+      "DMG_BONUS_ANEMO": "風",
+      "DMG_BONUS_PHYSICAL": "物理",
+      "DMG_BONUS_ELECTRO": "雷",
+      "DMG_BONUS_GEO": "岩",
+      "DMG_BONUS_PYRO": "火",
+      "DMG_BONUS_HYDRO": "水",
+      "DMG_BONUS_DENDRO": "草"
+    }
+  }
+}

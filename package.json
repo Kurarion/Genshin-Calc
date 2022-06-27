@@ -1,0 +1,52 @@
+{
+  "name": "gscal",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "generateGenshinData": "go run GenshinData",
+    "deployGitPage": "ng deploy --repo=https://github.com/Kurarion/Genshin-Calc.git --base-href=/Genshin-Calc/ --branch=website"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.3.0",
+    "@angular/common": "~13.3.0",
+    "@angular/compiler": "~13.3.0",
+    "@angular/core": "~13.3.0",
+    "@angular/flex-layout": "^13.0.0-beta.38",
+    "@angular/forms": "~13.3.0",
+    "@angular/material": "^13.3.5",
+    "@angular/platform-browser": "~13.3.0",
+    "@angular/platform-browser-dynamic": "~13.3.0",
+    "@angular/router": "~13.3.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
+    "copy-image-clipboard": "^2.1.2",
+    "html2canvas": "^1.4.1",
+    "image-js": "^0.34.0",
+    "material-icons": "^1.10.9",
+    "ngx-cookie-service": "^13.2.0",
+    "rxjs": "~7.5.0",
+    "tesseract.js": "^2.1.5",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.3.4",
+    "@angular/cli": "~13.3.4",
+    "@angular/compiler-cli": "~13.3.0",
+    "@types/jasmine": "~3.10.0",
+    "@types/node": "^12.20.50",
+    "angular-cli-ghpages": "^1.0.0",
+    "jasmine-core": "~4.0.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.1.0",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0",
+    "typescript": "~4.6.2"
+  }
+}

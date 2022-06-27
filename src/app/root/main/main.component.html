@@ -1,0 +1,27 @@
+<div class="main">
+  <app-head
+    class="head"
+    [langs]="langs"
+    (langSelectEvent)="changeLang($event)"
+    (menuButtonClickEvent)="toggleMenu()"
+  ></app-head>
+  <mat-sidenav-container class="menu-container" [autosize]="false">
+    <mat-sidenav
+      [mode]="isLargeFlg ? 'side' : 'over'"
+      [opened]="menuOpenStatus"
+      class="menu-sidenav"
+    >
+      <app-menu class="menu" (menuClickEvent)="closeMenu($event)"></app-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div [id]="captureElementID" class="outlet" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet">
+          <app-paste-event-listener
+            (pastedImage)="addPastedImage($event)"
+          ></app-paste-event-listener>
+        </router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <app-footer class="footer"></app-footer>
+</div>

@@ -1,0 +1,129 @@
+{
+  "TITLE": "云原神",
+  "HOME": {
+    "TITLE": "原神伤害计算"
+  },
+  "CHARACTER": {
+    "PROPS": "人物属性",
+    "TALENTS": "技能天赋",
+    "CONSTELLATION": "命座"
+  },
+  "WEAPON": {
+    "NAME": "武器名",
+    "PROPS": "武器属性",
+    "SMELTING":"精炼"
+  },
+  "ENEMY": {
+    "NAME": "敌人名",
+    "PROPS": "敌人属性",
+    "PLAYERNUM": "玩家数"
+  },
+  "ARTIFACT": {
+    "NAME": "圣遗物",
+    "FLOWER": "生之花",
+    "PLUME": "死之羽",
+    "SANDS": "时之沙",
+    "GOBLET": "空之杯",
+    "CIRCLET": "理之冠",
+    "MAIN": "主词条",
+    "SUB1": "副词条1",
+    "SUB2": "副词条2",
+    "SUB3": "副词条3",
+    "SUB4": "副词条4",
+    "SET1": "套装1",
+    "SET2": "套装2"
+  },
+  "OTHER": {
+    "NAME": "其他",
+    "TARGET": "目标属性",
+    "TARGETVALUE": "目标值"
+  },
+  "SYS": {
+    "DELETE": "删除"
+  },
+  "PROPS": {
+    "LEVEL": "等级",
+    "ASCENDED": "（已突破）",
+    "HP": "生命值",
+    "ATTACK": "攻击力",
+    "DEFENSE": "防御力",
+    "HP_UP": "生命值百分比",
+    "ATTACK_UP": "攻击力百分比",
+    "DEFENSE_UP": "防御力百分比",
+    "CRIT_RATE": "暴击率",
+    "CRIT_DMG": "暴击伤害",
+    "ENERGY_RECHARGE": "元素充能效率",
+    "HEALING_BONUS": "治疗加成",
+    "REVERSE_HEALING_BONUS": "受治疗加成",
+    "ELEMENTAL_MASTERY": "元素精通",
+    "DMG_BONUS_CRYO": "冰元素伤害加成",
+    "DMG_BONUS_ANEMO": "风元素伤害加成",
+    "DMG_BONUS_PHYSICAL": "物理伤害加成",
+    "DMG_BONUS_ELECTRO": "雷元素伤害加成",
+    "DMG_BONUS_GEO": "岩元素伤害加成",
+    "DMG_BONUS_PYRO": "火元素伤害加成",
+    "DMG_BONUS_HYDRO": "水元素伤害加成",
+    "DMG_BONUS_DENDRO": "草元素伤害加成",
+    "DMG_BONUS_ALL": "伤害加成",
+    "DMG_BONUS_NORMAL": "普通攻击伤害加成",
+    "DMG_BONUS_CHARGED": "重击伤害加成",
+    "DMG_BONUS_PLUNGING": "下落攻击伤害加成",
+    "DMG_BONUS_SKILL": "元素战技伤害加成",
+    "DMG_BONUS_ELEMENTAL_BURST": "元素爆发伤害加成",
+    "DMG_ANTI_CRYO": "冰元素抗性",
+    "DMG_ANTI_ANEMO": "风元素抗性",
+    "DMG_ANTI_PHYSICAL": "物理抗性",
+    "DMG_ANTI_ELECTRO": "雷元素抗性",
+    "DMG_ANTI_GEO": "岩元素抗性",
+    "DMG_ANTI_PYRO": "火元素抗性",
+    "DMG_ANTI_HYDRO": "水元素抗性",
+    "DMG_ANTI_DENDRO": "草元素抗性"
+  },
+  "GENSHIN": {
+    "DMG":{
+      "ORIGIN": "不暴击伤害",
+      "CRIT": "暴击伤害",
+      "EXPECT": "期望伤害",
+      "ORIGIN_VAPORIZE": "不暴击伤害(蒸发)",
+      "CRIT_VAPORIZE": "暴击伤害(蒸发)",
+      "EXPECT_VAPORIZE": "期望伤害(蒸发)",
+      "ORIGIN_MELT": "不暴击伤害(融化)",
+      "CRIT_MELT": "暴击伤害(融化)",
+      "EXPECT_MELT": "期望伤害(融化)",
+      "CRYO": "冰元素伤害",
+      "ANEMO": "风元素伤害",
+      "PHYSICAL": "物理伤害",
+      "ELECTRO": "雷元素伤害",
+      "GEO": "岩元素伤害",
+      "PYRO": "火元素伤害",
+      "HYDRO": "水元素伤害",
+      "DENDRO": "草元素伤害",
+      "OVERLOADED": "超载伤害",
+      "BURNING": "燃烧伤害",
+      "ELECTROCHARGED": "感电伤害",
+      "SUPERCONDUCT": "超导伤害",
+      "SWIRL_CRYO": "冰扩散伤害",
+      "SWIRL_ELECTRO": "雷扩散伤害",
+      "SWIRL_PYRO": "火扩散伤害",
+      "SWIRL_HYDRO": "水扩散伤害",
+      "DESTRUCTION": "破冰伤害",
+      "SHIELD": "结晶生命值"
+    },
+    "OTHER": {
+      "HEALING": "治疗值",
+      "PRODUCT": "创造物生命值",
+      "SHIELD": "盾量",
+      "BUFF": "增益",
+      "OVERRIDE_ELEMENT": "附魔",
+      "DEFAULT_ELEMENT": "默认",
+      "DMG_BONUS_CRYO": "冰元素附魔",
+      "DMG_BONUS_ANEMO": "风元素附魔",
+      "DMG_BONUS_PHYSICAL": "物理",
+      "DMG_BONUS_ELECTRO": "雷元素附魔",
+      "DMG_BONUS_GEO": "岩元素附魔",
+      "DMG_BONUS_PYRO": "火元素附魔",
+      "DMG_BONUS_HYDRO": "水元素附魔",
+      "DMG_BONUS_DENDRO": "草元素附魔"
+    }
+  }
+}

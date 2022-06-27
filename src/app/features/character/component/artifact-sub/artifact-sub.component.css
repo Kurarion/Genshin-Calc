@@ -1,0 +1,22 @@
+.sub-field {
+    width: 140px;
+}
+
+.sub-span {
+    display: inline-block;
+    text-align: left;
+    width: 27px;
+}
+
+table {
+    width: 96%;
+    border-collapse: collapse;
+}
+
+tr td:nth-of-type(1) {
+    text-align: left;
+}
+
+tr td:nth-of-type(2) {
+    text-align: right;
+}

@@ -1,0 +1,33 @@
+/* 背景 */
+.main {
+    height: 100%;
+    /* background-position: right; */
+    /* background-size: cover; */
+    /* opacity: 0.3; */
+    /* color: #fff; */
+}
+
+.content {
+    padding: 6px;
+}
+
+.background {
+    position: fixed;
+    bottom: 0;
+    background-position: right top;
+    background-size: cover;
+    /* background-attachment: fixed; */
+    z-index: -10;
+    min-height: 100%;
+    width: 100%;
+}
+
+.background-content {
+    position: fixed;
+    min-height: 100%;
+    width: 100%;
+}
+
+.middle {
+    margin-top: 24px;
+}

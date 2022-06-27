@@ -1,0 +1,109 @@
+<ng-container>
+    <mat-card class="card" cdkDrag>
+        <div class="drap-handle" cdkDragHandle>
+            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                </path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+        </div>
+        <mat-card-header>
+            <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
+            </div>
+            <mat-card-title class="header-text">
+                <mat-form-field appearance="legacy" floatLabel="always">
+                    <mat-label [innerText]="'WEAPON.NAME' | translate"></mat-label>
+                    <mat-select [(ngModel)]="selectedWeaponIndex" (ngModelChange)="onSelectWeapon($event)">
+                        <ng-container *ngFor="let weapon of weaponList">
+                            <mat-option *ngIf="weapon.weaponType == charWeaponType" [value]="weapon.index"
+                                [innerText]="weapon.names[currentLanguage]"></mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="content">
+            <mat-divider></mat-divider>
+            <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <span [innerText]="'WEAPON.PROPS' | translate"></span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <!-- レベル選択 -->
+                <mat-form-field appearance="legacy" floatLabel="always">
+                    <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+                    <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
+                        <ng-container *ngFor="let option of levelOptions">
+                            <mat-option
+                                *ngIf="(option.levelNum < selectedWeaponAbleMaxLevel) || (option.levelNum == selectedWeaponAbleMaxLevel && !option.isAscend )"
+                                [value]="option"
+                                [innerText]="(option.levelNum | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <!-- 属性情報 -->
+                <table>
+                    <tr *ngFor="let prop of props">
+                        <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
+                        <td class="content-right"
+                            [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
+                            [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right"></td>
+                    </tr>
+                    <ng-container *ngFor="let prop of props_sub">
+                        <tr *ngIf="selectedLevelProps[prop] && selectedLevelProps[prop].value != 0">
+                            <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
+                            <td class="content-right"
+                                [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
+                                [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right"></td>
+                        </tr>
+                    </ng-container>
+                </table>
+            </mat-expansion-panel>
+
+            <ng-container *ngIf="this.weaponData.skillAffixMap">
+                <mat-divider></mat-divider>
+                <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span [innerText]="'WEAPON.SMELTING' | translate"></span>
+                        </mat-panel-title>
+                        <mat-panel-description>
+    
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <!-- レベル選択 -->
+                    <mat-form-field appearance="legacy" floatLabel="always">
+                        <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+                        <mat-select [(ngModel)]="selectedSmeltingLevel" (ngModelChange)="onChangeSmeltingLevel($event)">
+                            <ng-container *ngFor="let level of smeltingLevelOptions">
+                                <mat-option
+                                    [value]="level"
+                                    [innerText]="level">
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- 属性情報 -->
+                    <div>
+                        <span><strong>{{ effectName }}</strong></span>
+                        <br>
+                        <span [innerHTML]="effectContent"></span>
+                        <app-extra-data
+                            [characterIndex]="data.id"
+                            [skill]="name_effect"
+                            [valueIndexs]="effectValidIndexs">
+                            <br>
+                            <br>
+                        </app-extra-data>
+                    </div>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

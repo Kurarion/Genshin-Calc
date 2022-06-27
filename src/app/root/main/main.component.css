@@ -1,0 +1,44 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.head {
+  z-index: 10;
+}
+
+.menu {
+  z-index: 9;
+}
+
+.outlet {
+  z-index: 1;
+  min-height: 100%;
+  height: auto;
+}
+
+.footer {
+  z-index: 2;
+}
+
+.menu-container {
+  flex: 1;
+}
+
+/* .menu-sidenav {
+
+} */
+
+:host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar {
+  width: 5px;
+}
+
+:host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: grey;
+}
+
+:host ::ng-deep .menu-sidenav > div:first-child {
+  overflow-x: hidden;
+}
