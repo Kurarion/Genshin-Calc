@@ -1724,15 +1724,18 @@ export class CalculatorService {
           //全含め必要
           let buffInfo = info.buff;
             let tempValue: any;
-            if(valueIndexs != undefined){
-              if(buffInfo?.index != undefined){
-                if(!valueIndexs.includes(buffInfo.index)){
-                  continue;
+            //聖遺物と武器効果が一箇所しないため、表示チェックを排除する（一時的）
+            if(skill != Const.NAME_SET && skill != Const.NAME_EFFECT){
+              if(valueIndexs != undefined){
+                if(buffInfo?.index != undefined){
+                  if(!valueIndexs.includes(buffInfo.index)){
+                    continue;
+                  }
                 }
-              }
-              if(buffInfo?.constIndex != undefined){
-                if(!valueIndexs.includes(buffInfo.constIndex)){
-                  continue;
+                if(buffInfo?.constIndex != undefined){
+                  if(!valueIndexs.includes(buffInfo.constIndex)){
+                    continue;
+                  }
                 }
               }
             }

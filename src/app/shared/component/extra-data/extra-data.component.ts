@@ -150,8 +150,15 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['overrideElement']) {
+    if(changes['overrideElement']){
       this.initDamageDatas();
+    }
+    if(changes['valueIndexs']){
+      this.initDamageDatas();
+      this.initHealingDatas();
+      this.initShieldDatas();
+      this.initProducDatas();
+      this.initBuffDatas();
     }
   }
 

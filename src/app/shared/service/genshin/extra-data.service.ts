@@ -124,22 +124,18 @@ export class ExtraDataService {
         case 'switch-value':
         case 'switch':
           {
-            if(obj.buff.defaultEnable){
-              if(!result.switchOnSet){
-                result.switchOnSet = {};
-              }
-              result.switchOnSet![index.toString()] = obj.buff.defaultEnable;
+            if(!result.switchOnSet){
+              result.switchOnSet = {};
             }
+            result.switchOnSet![index.toString()] = obj.buff.defaultEnable ?? false;
           }
           break;
         case 'slider':
           {
-            if(obj.buff.sliderInitialValue){
-              if(!result.sliderNumMap){
-                result.sliderNumMap = {};
-              }
-              result.sliderNumMap![index.toString()] = obj.buff.sliderInitialValue;
+            if(!result.sliderNumMap){
+              result.sliderNumMap = {};
             }
+            result.sliderNumMap![index.toString()] = obj.buff.sliderInitialValue ?? 0;
           }
           break;
         case 'resident':
