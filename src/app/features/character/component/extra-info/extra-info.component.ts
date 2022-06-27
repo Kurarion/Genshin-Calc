@@ -39,12 +39,6 @@ export class ExtraInfoComponent implements OnInit {
     this.initDatas();
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['currentLanguage'] || changes['skillLevelIndex']) {
-  //     this.initDatas();
-  //   }
-  // }
-
   onChangeElement(value: string){ }
 
   private initDatas(){

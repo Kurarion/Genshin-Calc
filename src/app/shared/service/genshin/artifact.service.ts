@@ -7,11 +7,6 @@ export interface ArtifactStorageItemData {
 }
 
 export interface ArtifactStoragePartData {
-  // main?: ArtifactStorageItemData;
-  // sub1?: ArtifactStorageItemData;
-  // sub2?: ArtifactStorageItemData;
-  // sub3?: ArtifactStorageItemData;
-  // sub4?: ArtifactStorageItemData;
   [key: string]: ArtifactStorageItemData;
 }
 

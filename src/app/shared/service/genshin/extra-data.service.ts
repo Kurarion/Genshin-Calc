@@ -14,7 +14,6 @@ export interface ExtraCharacterData {
 }
 
 export interface ExtraCharacterSkillsData {
-  // normal?: ExtraNormal;
   skill?: ExtraStatus;
   elementalBurst?: ExtraStatus;
   proudSkills?: ExtraStatus[];
@@ -29,11 +28,6 @@ export interface ExtraArtifactSetData {
   set2?: ExtraStatus;
 }
 
-//
-// export interface ExtraNormal {
-//   elementType?: string;
-// }
-
 export interface ExtraStatus {
   switchOnSet?: Record<string, boolean>;
   sliderNumMap?: Record<string, number>;
@@ -47,14 +41,7 @@ export class ExtraDataService {
   //データマップ
   dataMap!: Record<string, ExtraDataStorageInfo>;
 
-  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService) { 
-    // let temp = this.storageService.getJSONItem(Const.SAVE_EXTRA)
-    // if(temp){
-    //   this.dataMap = temp;
-    // }else{
-    //   this.dataMap = {};
-    // }
-  }
+  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService) { }
   
   getCharacter(index: string | number){
     return this.genshinDataService.getExtraCharacterData(index.toString());
@@ -67,12 +54,6 @@ export class ExtraDataService {
   getArtifactSet(index: string | number){
     return this.genshinDataService.getExtraArtifactData(index.toString());
   }
-
-  // //設定取得
-  // getStorageInfo(charIndex: string | number){
-  //   let keyStr = charIndex.toString();
-  //   return this.dataMap[keyStr];
-  // }
 
   getCharacterDefaultSetting(index: string | number){
 

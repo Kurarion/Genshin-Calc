@@ -820,7 +820,6 @@ export class CalculatorService {
       this.dataMap[indexStr] = {};
     }
     this.dataMap[indexStr].characterData = this.characterService.get(indexStr);
-    // this.setDirty(indexStr, true);
     this.initExtraCharacterData(indexStr);
   }
   
@@ -845,7 +844,6 @@ export class CalculatorService {
       this.dataMap[indexStr] = {};
     }
     this.dataMap[indexStr].weaponData = this.weaponService.get(weaponIndexStr);
-    // this.setDirty(indexStr, true);
     this.initExtraWeaponData(indexStr);
   }
 
@@ -888,6 +886,7 @@ export class CalculatorService {
   initAllData(index: string | number){
     let indexStr = index.toString();
     this.dataMap[indexStr].allData = this.getAllData(indexStr);
+    //DEBUG
     console.log(this.dataMap[indexStr].allData);
     this.setDirty(indexStr, false);
   }
@@ -897,9 +896,6 @@ export class CalculatorService {
     let indexStr = index.toString();
     if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
-      //TEST
-      console.log("初期化（計算用情報合計）（ダメージ）")
-      console.log(this.dataMap[indexStr].allData);
     }
     let result: DamageResult;
     let data = this.dataMap[indexStr].allData!;
@@ -1726,9 +1722,7 @@ export class CalculatorService {
         for(let [infoIndex,info] of infos.entries()){
           //全含め必要
           let buffInfo = info.buff;
-          // for(let valueIndex of valueIndexs){
             let tempValue: any;
-            // if(buffInfo && buffInfo.index != undefined && buffInfo.index == valueIndex){
             if(buffInfo){
               switch(buffInfo.settingType){
                 case 'switch-value':
@@ -1766,9 +1760,7 @@ export class CalculatorService {
                 case 'resident':
                 default:
                   continue;
-              // }
             }
-            // }
           }
         }
       }

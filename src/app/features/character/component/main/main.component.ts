@@ -89,7 +89,6 @@ export class MainComponent implements OnInit, OnDestroy {
         this.calculatorService.initCharacterData(params.index!);
         //DEBUG
         console.log(this.data)
-        console.log(this.characterService.getExtraData(params.index!));
       }
     );
   }

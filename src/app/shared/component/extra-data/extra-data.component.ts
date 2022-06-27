@@ -140,7 +140,6 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     //変更検知
     this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
       if(v){
-        console.log("!!!!!!")
         this.initDamageDatas();
         this.initHealingDatas();
         this.initShieldDatas();

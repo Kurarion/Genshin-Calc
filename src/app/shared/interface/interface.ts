@@ -54,8 +54,6 @@ export interface ExtraCharacterSkills {
 
 /** 補足データ - 3階 */
 export interface ExtraSkillInfo {
-  //パラメータインデックスリスト
-  // indexs?: number[];
   //計算
   damage?: ExtraSkillDamage;//ダメージ値
   buff?: ExtraSkillBuff;//バフ値
