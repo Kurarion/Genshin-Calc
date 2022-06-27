@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
 
 interface levelOption {
@@ -24,7 +24,7 @@ interface weaponOption {
   templateUrl: './weapon.component.html',
   styleUrls: ['./weapon.component.css']
 })
-export class WeaponComponent implements OnInit, OnDestroy {
+export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
 
   private readonly notExitLevel = -1;
   private readonly minLevel = 1;
@@ -79,6 +79,13 @@ export class WeaponComponent implements OnInit, OnDestroy {
   //選択された突破レベル
   selectedSmeltingLevel!: string;
 
+  //表示用
+  effectNameRecord!: Record<TYPE_SYS_LANG, string>;
+  effectName!: string;
+  effectContentRecord!: Record<TYPE_SYS_LANG, string>;
+  effectContent!: string;
+  effectValidIndexs!: number[];
+
   constructor(private httpService: HttpService,
     private weaponService: WeaponService,
     private calculatorService: CalculatorService,
@@ -125,6 +132,25 @@ export class WeaponComponent implements OnInit, OnDestroy {
     this.onSelectWeapon(this.selectedWeaponIndex);
     this.onChangeLevel(this.selectedLevel);
     this.onChangeSmeltingLevel(this.selectedSmeltingLevel);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['currentLanguage']) {
+      if(this.effectNameRecord != undefined){
+        this.effectName = this.effectNameRecord[this.currentLanguage];
+      }
+      if(this.effectContentRecord != undefined){
+        this.effectContent = this.effectContentRecord[this.currentLanguage];
+      }
+    }
+  }
+
+  updateRecords(){
+    this.effectNameRecord = this.getEffectName(this.selectedSmeltingLevel);
+    this.effectContentRecord = this.getEffectContent(this.selectedSmeltingLevel);
+    this.effectValidIndexs = this.getEffectValidIndexs(this.selectedSmeltingLevel);
+    this.effectName = this.effectNameRecord[this.currentLanguage];
+    this.effectContent = this.effectContentRecord[this.currentLanguage];
   }
 
   @HostListener('window:unload')
@@ -195,6 +221,8 @@ export class WeaponComponent implements OnInit, OnDestroy {
     this.weaponService.setSmeltingLevel(this.data.id, value);
     //更新
     this.calculatorService.initExtraWeaponData(this.data.id);
+    //表示用更新
+    this.updateRecords();
   }
 
   getEffectName(selectedSmeltingLevel: string): Record<TYPE_SYS_LANG, string> {

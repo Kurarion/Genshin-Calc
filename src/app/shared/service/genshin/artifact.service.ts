@@ -61,7 +61,7 @@ export class ArtifactService {
     return this.genshinDataService.getReliquarySet(index.toString());
   }
 
-  //適用中インデックス設定
+  //適用中インデックス取得
   getStorageActiveIndex(charIndex: string | number){
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);

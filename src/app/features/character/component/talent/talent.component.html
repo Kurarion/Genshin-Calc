@@ -17,7 +17,7 @@
                     <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="isFirst">
                         <mat-expansion-panel-header matTooltipPosition="right">
                             <mat-panel-title>
-                                <span [innerText]="getDataProperty(skill).name[currentLanguage]"></span>
+                                <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <!-- レベル選択 -->
@@ -39,24 +39,16 @@
                             [hasLevel]="true"
                             [skillLevelIndex]="selectedLevels[skill].level">
                         </app-extra-info>
-                        <!-- <table>
-                            <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
-                                <td [innerText]="paramDesc.desc"></td>
-                                <td [innerText]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level)"
-                                    [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, selectedLevels[skill].level, true)" matTooltipPosition="right">
-                                </td>
-                            </tr>
-                        </table> -->
                         <br>
-                        <span [innerHTML]="getDataProperty(skill).desc[currentLanguage]"></span>
+                        <span [innerHTML]="$any(this.data.skills[skill]).desc[currentLanguage]"></span>
                     </mat-expansion-panel>
                 </ng-container>
                 <ng-container *ngFor="let skill of otherSkills; index as i">
-                    <ng-container *ngIf="getDataProperty(skill).name">
+                    <ng-container *ngIf="$any(this.data.skills[skill]).name">
                         <mat-expansion-panel class="mat-elevation-z0 expand">
                             <mat-expansion-panel-header matTooltipPosition="right">
                                 <mat-panel-title>
-                                    <span [innerText]="getDataProperty(skill).name[currentLanguage]"></span>
+                                    <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <!-- 属性情報 -->
@@ -68,22 +60,14 @@
                                 [hasLevel]="true"
                                 [skillLevelIndex]="talentDefaultLevel">
                             </app-extra-info>
-                            <!-- <table>
-                                <tr *ngFor="let paramDesc of getCharSkillDescObject(skill, currentLanguage)">
-                                    <td [innerText]="paramDesc.desc"></td>
-                                    <td [innerText]="getTalentValue(skill, paramDesc, currentLanguage, talentDefaultLevel)"
-                                        [matTooltip]="getTalentValue(skill, paramDesc, currentLanguage, talentDefaultLevel, true)" matTooltipPosition="right">
-                                    </td>
-                                </tr>
-                            </table> -->
                             <br>
-                            <span [innerHTML]="getDataProperty(skill).desc[currentLanguage]"></span>
+                            <span [innerHTML]="$any(this.data.skills[skill]).desc[currentLanguage]"></span>
                         </mat-expansion-panel>
                     </ng-container>
                 </ng-container>
                 <ng-container *ngFor="let skills of proudSkills">
-                    <ng-container *ngIf="getDataProperty(skills)">
-                        <ng-container *ngFor="let skill of getDataProperties(skills); index as i">
+                    <ng-container *ngIf="$any(this.data.skills[skills])">
+                        <ng-container *ngFor="let skill of $any(this.data.skills[skills]); index as i">
                             <mat-expansion-panel class="mat-elevation-z0 expand">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>

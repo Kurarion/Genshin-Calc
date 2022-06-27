@@ -49,8 +49,12 @@ export class ArtifactComponent implements OnInit {
   effectContent1: string = "";
   effectContent2: string = "";
 
-  constructor(private artifactService: ArtifactService,
-    private calculatorService: CalculatorService,) { }
+  //表示用
+  effectValidIndexs!: number[];
+
+  constructor(
+    private artifactService: ArtifactService,
+    private calculatorService: CalculatorService) { }
 
   ngOnInit(): void {
     //聖遺物セットリスト初期化
@@ -73,6 +77,10 @@ export class ArtifactComponent implements OnInit {
         this.initEffectContents();
       }
     }
+  }
+
+  updateRecords(){
+    this.effectValidIndexs = this.getEffectValidIndexs();
   }
 
   addTab() {
@@ -176,6 +184,8 @@ export class ArtifactComponent implements OnInit {
       this.selectedFullArtifactSetIndex = '';
       this.artifactService.setStorageFullSetIndex(this.data.id, this.selectedIndex, '');
     }
+    //レコード更新
+    this.updateRecords()
   }
 
   private setDefaultExtraData(){

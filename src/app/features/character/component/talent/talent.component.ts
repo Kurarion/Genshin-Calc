@@ -19,9 +19,13 @@ export class TalentComponent implements OnInit {
   private readonly maxLevel = 15;
   private readonly defaultLevel = 10;
 
-  readonly skills = [Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST];
-  readonly otherSkills = [Const.NAME_SKILLS_OTHER];
-  readonly proudSkills = [Const.NAME_SKILLS_PROUD];
+  readonly skills: (keyof CharSkills)[] = [
+    Const.NAME_SKILLS_NORMAL, 
+    Const.NAME_SKILLS_SKILL, 
+    Const.NAME_SKILLS_ELEMENTAL_BURST,
+  ];
+  readonly otherSkills: (keyof CharSkills)[] = [Const.NAME_SKILLS_OTHER];
+  readonly proudSkills: (keyof CharSkills)[] = [Const.NAME_SKILLS_PROUD];
   readonly levelPadNum = 2;
   
   readonly talentDefaultLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
@@ -39,9 +43,7 @@ export class TalentComponent implements OnInit {
   //選択されたレベルリスト
   selectedLevels: Record<string, levelOption> = {};
 
-  constructor(private percentPipe: PercentPipe, 
-    private decimalPipe: DecimalPipe, 
-    private noCommaPipe: NoCommaPipe, 
+  constructor(
     private characterService: CharacterService,
     private calculatorService: CalculatorService) { }
 
@@ -53,7 +55,6 @@ export class TalentComponent implements OnInit {
         levelNum: i,
       });
     }
-    // this.selectedLevels = Array.from({ length: this.skills.length }).map((_, i) => this.levelOptions[this.defaultLevel - 1]);
     for (let key of this.skills) {
       //初期選択
       let temp: levelOption;
@@ -92,18 +93,6 @@ export class TalentComponent implements OnInit {
       //更新
       this.calculatorService.initExtraCharacterData(this.data.id);
     }
-  }
-
-  getDataProperty(key: string): CharSkill {
-    return this.data.skills[key as keyof CharSkills] as CharSkill;
-  }
-
-  getDataProperties(key: string): CharSkill[] {
-    return this.data.skills[key as keyof CharSkills] as CharSkill[];
-  }
-
-  getCharSkillDescObject(key: string, lang: TYPE_SYS_LANG): CharSkillDescObject[] {
-    return this.getDataProperty(key).paramDescSplitedList[lang];
   }
 
   private getLevelFromString(level: string | undefined) {

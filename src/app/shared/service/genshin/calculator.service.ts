@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo } from 'src/app/shared/shared.module';
 
 export interface CalResult{
   characterData?: character;
@@ -792,6 +792,7 @@ export class CalculatorService {
     private extraDataService: ExtraDataService,
     private enemyService: EnemyService,
     private artifactService: ArtifactService,
+    private otherService: OtherService,
   ) { }
 
   //更新フラグ設定
@@ -2113,8 +2114,18 @@ export class CalculatorService {
 
   //その他データ解析
   private getOtherData(index: string): Record<string, number> | undefined{
-    //TODO
-    return {};
+    let result: Record<string, number> = {};
+    let temps: OtherStorageInfo[] = this.otherService.getStorageInfos(index);
+    for(let value of temps){
+      if(value.enable && value.name != undefined && value.name != ''){
+        if(!(value.name in result)){
+          result[value.name] = 0;
+        }
+        result[value.name] += value.value ?? 0;
+      }
+    }
+
+    return result;
   }
 
   //追加データ解析

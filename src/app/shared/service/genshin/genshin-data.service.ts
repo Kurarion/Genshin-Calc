@@ -58,7 +58,6 @@ export class GenshinDataService {
       });
     }
     this.dataReliquaryAffix = result;
-    console.log(result);
   }
   static initExtraData(data: any){
     this.dataExtra = data;

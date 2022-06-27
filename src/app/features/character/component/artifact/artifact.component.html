@@ -34,8 +34,6 @@
                         &nbsp;
                         &nbsp;
                         &nbsp;
-                        &nbsp;
-                        &nbsp;
                         <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'ARTIFACT.SET2' | translate"></mat-label>
                             <mat-select [(ngModel)]="selectedArtifactSetIndexs[1]" (ngModelChange)="onSelectArtifactSet($event, 1)">
@@ -59,14 +57,14 @@
                             [characterIndex]="data.id"
                             [skill]="name_set"
                             [skillIndex]="2"
-                            [valueIndexs]="getEffectValidIndexs()">
+                            [valueIndexs]="effectValidIndexs">
                             <br>
                             <br>
                             <app-extra-data
                                 [characterIndex]="data.id"
                                 [skill]="name_set"
                                 [skillIndex]="1"
-                                [valueIndexs]="getEffectValidIndexs()">
+                                [valueIndexs]="effectValidIndexs">
                             </app-extra-data>
                         </app-extra-data>
                     </div>

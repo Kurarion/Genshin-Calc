@@ -862,7 +862,9 @@ export class Const {
   static readonly SAVE_MONSTER = "SAVE_MONSTER";
   //追加データ
   static readonly SAVE_EXTRA = "SAVE_EXTRA";
-  //追加データ
+  //聖遺物データ
   static readonly SAVE_ARTIFACT = "SAVE_ARTIFACT";
+  //その他データ
+  static readonly SAVE_OTHER = "SAVE_OTHER";
 
 }

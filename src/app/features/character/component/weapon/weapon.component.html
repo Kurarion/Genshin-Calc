@@ -91,13 +91,13 @@
                     </mat-form-field>
                     <!-- 属性情報 -->
                     <div>
-                        <span><strong>{{getEffectName(selectedSmeltingLevel)[currentLanguage]}}</strong></span>
+                        <span><strong>{{ effectName }}</strong></span>
                         <br>
-                        <span [innerHTML]="getEffectContent(selectedSmeltingLevel)[currentLanguage]"></span>
+                        <span [innerHTML]="effectContent"></span>
                         <app-extra-data
                             [characterIndex]="data.id"
                             [skill]="name_effect"
-                            [valueIndexs]="getEffectValidIndexs(selectedSmeltingLevel)">
+                            [valueIndexs]="effectValidIndexs">
                             <br>
                             <br>
                         </app-extra-data>
