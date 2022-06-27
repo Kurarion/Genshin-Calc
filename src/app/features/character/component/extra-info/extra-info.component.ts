@@ -1,5 +1,5 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkills, Const, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
@@ -7,7 +7,7 @@ import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkill
   templateUrl: './extra-info.component.html',
   styleUrls: ['./extra-info.component.css']
 })
-export class ExtraInfoComponent implements OnInit {
+export class ExtraInfoComponent implements OnInit, OnChanges {
 
   //キャラデータ
   @Input('data') data!: character;
@@ -39,7 +39,15 @@ export class ExtraInfoComponent implements OnInit {
     this.initDatas();
   }
 
-  onChangeElement(value: string){ }
+  onChangeElement(value: string){ 
+    //TODO
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentLanguage']) {
+      this.initDatas();
+    }
+  }
 
   private initDatas(){
     this.skillDescDatas = this.getCharSkillDescObject(this.skill, this.currentLanguage);

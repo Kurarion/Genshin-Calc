@@ -36,7 +36,7 @@
   "OTHER": {
     "NAME": "其他",
     "TARGET": "目标属性",
-    "SOURCE": "来源属性"
+    "TARGETVALUE": "目标值"
   },
   "SYS": {
     "DELETE": "删除"
@@ -92,7 +92,7 @@
       "EXPECT_MELT": "期望伤害(融化)",
       "CRYO": "冰元素伤害",
       "ANEMO": "风元素伤害",
-      "PHYSICAL": "物元素伤害",
+      "PHYSICAL": "物理伤害",
       "ELECTRO": "雷元素伤害",
       "GEO": "岩元素伤害",
       "PYRO": "火元素伤害",
@@ -118,7 +118,7 @@
       "DEFAULT_ELEMENT": "默认",
       "DMG_BONUS_CRYO": "冰元素附魔",
       "DMG_BONUS_ANEMO": "风元素附魔",
-      "DMG_BONUS_PHYSICAL": "物理附魔",
+      "DMG_BONUS_PHYSICAL": "物理",
       "DMG_BONUS_ELECTRO": "雷元素附魔",
       "DMG_BONUS_GEO": "岩元素附魔",
       "DMG_BONUS_PYRO": "火元素附魔",

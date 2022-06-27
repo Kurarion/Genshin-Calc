@@ -63,8 +63,8 @@ table tr:first-child .content-right {
     height: 24px;
 }
 
-::ng-deep.mat-tab-label,
-::ng-deep.mat-tab-label-active {
+:host ::ng-deep.mat-tab-label,
+:host ::ng-deep.mat-tab-label-active {
     min-width: 0 !important;
     padding: 3px !important;
     margin: 3px !important;
