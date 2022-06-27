@@ -10,7 +10,7 @@ export const environment = {
   thirdPartyAPIPicType: '.png',
   footerMsgs: ['△〇□×'],
   artifactEffectContentPreffix: '•',
-  githubRepository: 'https://github.com/Kurarion/GSCal',
+  githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
 };
 
 /*
