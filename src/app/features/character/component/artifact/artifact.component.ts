@@ -68,7 +68,7 @@ export class ArtifactComponent implements OnInit {
     //選択中インデックス
     this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs(false);
+    this.initSelectedArtifactSetIndexs(true);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -110,7 +110,7 @@ export class ArtifactComponent implements OnInit {
   setActiveIndex(){
     this.artifactService.setStorageActiveIndex(this.data.id, this.selectedIndex);
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs(true);
+    this.initSelectedArtifactSetIndexs();
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
   }
@@ -169,24 +169,24 @@ export class ArtifactComponent implements OnInit {
     }
   }
 
-  private initSelectedArtifactSetIndexs(withDefaultExtra: boolean) {
+  private initSelectedArtifactSetIndexs(isInit?: boolean) {
     this.selectedArtifactSetIndexs = this.artifactService.getStorageSetIndexs(this.data.id, this.selectedIndex);
-    this.initSelectedFullArtifactSetIndex();
+    this.initSelectedFullArtifactSetIndex(isInit);
     this.initEffectContents();
-    if(withDefaultExtra){
+    if(!isInit){
       this.setDefaultExtraData();
     }
     //更新
     this.calculatorService.initExtraArtifactSetData(this.data.id);
   }
 
-  private initSelectedFullArtifactSetIndex() {
+  private initSelectedFullArtifactSetIndex(isInit?: boolean) {
     if(this.selectedArtifactSetIndexs[0] == this.selectedArtifactSetIndexs[1] && this.selectedArtifactSetIndexs[0] != "" && this.selectedArtifactSetIndexs[0]){
       this.selectedFullArtifactSetIndex = this.selectedArtifactSetIndexs[0];
       this.artifactService.setStorageFullSetIndex(this.data.id, this.selectedIndex, this.selectedFullArtifactSetIndex);
     }else{
       this.selectedFullArtifactSetIndex = '';
-      this.artifactService.setStorageFullSetIndex(this.data.id, this.selectedIndex, '');
+      this.artifactService.setStorageFullSetIndex(this.data.id, this.selectedIndex, '', isInit);
     }
     //レコード更新
     this.updateRecords()

@@ -112,7 +112,7 @@ export class ArtifactService {
     return this.dataMap[keyStr].info[index].setIndexs!;
   }
 
-  setStorageFullSetIndex(charIndex: string | number, index?: number, value?: string){
+  setStorageFullSetIndex(charIndex: string | number, index?: number, value?: string, isInit?: boolean){
     let keyStr = charIndex.toString();
     if(index == undefined){
       index = this.dataMap[charIndex].activeIndex;
@@ -122,7 +122,7 @@ export class ArtifactService {
       this.dataMap[keyStr].info[index] = {};
     }
     this.dataMap[keyStr].info[index].setFullIndex = value;
-    if(value == ''){
+    if(value == '' && !isInit){
       this.clearExtraData(keyStr);
     }
   }

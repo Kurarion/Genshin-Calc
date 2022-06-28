@@ -2199,6 +2199,11 @@ export class CalculatorService {
               constIndexValue = skillData.paramList[buff?.constIndex!];
             }
           }
+          let indexMultiValue = 1;
+          if(buff?.indexMultiValue != undefined){
+            indexMultiValue = buff.indexMultiValue;
+          }
+          indexValue *= indexMultiValue;
           let calRelation = buff?.calRelation ?? '+';
           switch(calRelation){
             case "-":
@@ -2314,6 +2319,11 @@ export class CalculatorService {
               constIndexValue = skillData.paramList[buff?.constIndex!];
             }
           }
+          let indexMultiValue = 1;
+          if(buff?.indexMultiValue != undefined){
+            indexMultiValue = buff.indexMultiValue;
+          }
+          indexValue *= indexMultiValue;
           let calRelation = buff?.calRelation ?? '+';
           switch(calRelation){
             case "-":

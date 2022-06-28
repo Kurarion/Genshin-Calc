@@ -84,6 +84,7 @@ export interface ExtraSkillDamage {
 export interface ExtraSkillBuff {
   //数値計算ベース
   index?: number;
+  indexMultiValue?: number;
   calRelation?: TYPE_RELATION;
   priority?: number;
   //数値計算ベースインデックスリスト
