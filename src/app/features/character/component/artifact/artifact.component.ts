@@ -68,7 +68,7 @@ export class ArtifactComponent implements OnInit {
     //選択中インデックス
     this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs();
+    this.initSelectedArtifactSetIndexs(false);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -110,7 +110,7 @@ export class ArtifactComponent implements OnInit {
   setActiveIndex(){
     this.artifactService.setStorageActiveIndex(this.data.id, this.selectedIndex);
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs();
+    this.initSelectedArtifactSetIndexs(true);
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
   }
@@ -169,11 +169,13 @@ export class ArtifactComponent implements OnInit {
     }
   }
 
-  private initSelectedArtifactSetIndexs() {
+  private initSelectedArtifactSetIndexs(withDefaultExtra: boolean) {
     this.selectedArtifactSetIndexs = this.artifactService.getStorageSetIndexs(this.data.id, this.selectedIndex);
     this.initSelectedFullArtifactSetIndex();
     this.initEffectContents();
-    this.setDefaultExtraData();
+    if(withDefaultExtra){
+      this.setDefaultExtraData();
+    }
     //更新
     this.calculatorService.initExtraArtifactSetData(this.data.id);
   }

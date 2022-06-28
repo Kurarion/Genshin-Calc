@@ -1206,7 +1206,7 @@ export class CalculatorService {
     if(extra != undefined){
       healing += extra;
     }
-    healing *= (1 + data[Const.PROP_HEALING_BONUS]) * (1 + data[Const.PROP_REVERSE_HEALING_BONUS]);
+    healing *= (1 + data[Const.PROP_HEALING_BONUS] + data[Const.PROP_REVERSE_HEALING_BONUS]);
     if(healingBonusType){
       healing *= (1 + (data[healingBonusType] ?? 0));
       //TODO その他治療アップ
