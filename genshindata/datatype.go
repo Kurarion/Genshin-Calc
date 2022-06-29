@@ -81,6 +81,7 @@ type AVATARSKILLS struct {
 
 //人物技能
 type AVATARSKILLINFO struct {
+	Id                   uint64                                  `json:"id"`
 	Name                 map[string]string                       `json:"name"`
 	Desc                 map[string]string                       `json:"desc"`
 	Icon                 string                                  `json:"icon"`
@@ -88,6 +89,7 @@ type AVATARSKILLINFO struct {
 	ParamMap             map[string][]float64                    `json:"paramMap"`
 	ParamDescSplitedList map[string][]AVATARSKILLSPLITEDDESCINFO `json:"paramDescSplitedList"`
 	ParamValidIndexs     []int                                   `json:"paramValidIndexs"`
+	ProudSkillGroupId    uint64                                  `json:"proudSkillGroupId"`
 }
 
 //人物技能详细

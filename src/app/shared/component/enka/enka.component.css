@@ -1,0 +1,50 @@
+.enka {
+    border: 1px solid #ccc!important;
+    padding: 0.1em 0.04em 0.04em 0.3em;
+    border-radius: 4px;
+    background-color: #ebebeb;
+    margin-right: 10px;
+}
+
+.enka-field{
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.enka-input{
+    width: 114px;
+    margin-right: 4px;
+}
+
+.shinshinmoe {
+    line-height: 0;
+    width: 2em;
+    margin: 1.05em 1rem 0 .4em;
+    height: 0;
+    align-self: center;
+    position: absolute;
+    top: 0.2em;
+}
+
+.shinshinmoe:before {
+    content: "\e93a";
+    font-family: shicon;
+    font-size: 1.91em;
+}
+
+:host ::ng-deep.mat-form-field{
+    background-color: #ffffff81 !important;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+    margin-bottom: -1.4em;
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex{
+    padding: 0.1em .02em 0 .02em;
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix{
+    border-top: 0;
+    padding: .2em .2em 0.1em .2em;
+}

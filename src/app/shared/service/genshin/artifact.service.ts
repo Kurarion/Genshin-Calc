@@ -83,6 +83,30 @@ export class ArtifactService {
     this.dataMap[keyStr].info.splice(index, 1);
   }
 
+  //聖遺物プッシュ
+  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo){
+    let keyStr = charIndex.toString();
+    this.dataMap[keyStr].info.push(info);
+    this.setStorageActiveIndex(keyStr, this.dataMap[keyStr].info.length - 1);
+  }
+
+  //聖遺物セット設定
+  setStorageSetIndexsAll(charIndex: string | number, setIndexs: string[], index?: number){
+    let keyStr = charIndex.toString();
+    let infoIndex = this.dataMap[keyStr].activeIndex;
+    if(index != undefined){
+      infoIndex = index;
+    }
+    let info = this.dataMap[keyStr].info[infoIndex];
+    info.setIndexs = setIndexs;
+    if(setIndexs[0] == setIndexs[1] && setIndexs[0] != "" && setIndexs[0]){
+      info.setFullIndex = setIndexs[0];
+    }else{
+      info.setFullIndex = '';
+    }
+    this.setDefaultExtraData(keyStr, info.setIndexs, info.setFullIndex);
+  }
+
   //聖遺物情報コピー
   copyAndCreateStorageInfo(charIndex: string | number, sourceIndex: number){
     let keyStr = charIndex.toString();

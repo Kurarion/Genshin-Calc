@@ -86,6 +86,8 @@ export interface CharSkillDescObject {
 }
 
 export interface CharSkill {
+    //ID
+    id: number;
     //名前
     name: Record<TYPE_SYS_LANG, string>;
     //記述
@@ -100,6 +102,8 @@ export interface CharSkill {
     paramDescSplitedList: Record<TYPE_SYS_LANG, CharSkillDescObject[]>;
     //レベルなしのスキルパラメータインデックス
     paramValidIndexs: number[];
+    //スキルID
+    proudSkillGroupId: number;
 }
 
 export interface CharSkills {

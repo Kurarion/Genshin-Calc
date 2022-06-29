@@ -876,5 +876,7 @@ export class Const {
   static readonly SAVE_ARTIFACT = "SAVE_ARTIFACT";
   //その他データ
   static readonly SAVE_OTHER = "SAVE_OTHER";
+  //Enkaデータ
+  static readonly SAVE_ENKA = "SAVE_ENKA";
 
 }

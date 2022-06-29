@@ -79,6 +79,8 @@ export interface WeaponStatus {
 //          武器効果情報
 //*********************************
 export interface WeaponSkillAffix {
+    //ID
+    affixId: number;
     //名前
     name: Record<TYPE_SYS_LANG, string>;
     //記述

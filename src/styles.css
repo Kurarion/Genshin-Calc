@@ -1,6 +1,13 @@
 /* Add application styles & imports to this file! */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'material-icons/iconfont/material-icons.css';
+@font-face {
+  font-family: shicon;
+  src: url(assets/icons/shicon.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block
+}
 html,
 body {
   height: 100%;

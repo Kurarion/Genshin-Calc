@@ -550,28 +550,34 @@ func update() error {
 		dataAvatarSkillsMap[temp.Id] = &AVATARSKILLS{
 			Id: temp.Id,
 			Normal: AVATARSKILLINFO{
+				Id:                   avatarSkillDataMap[temp.Skills[0]].Id,
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[0]].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[0]].DescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.Skills[0]].SkillIcon,
 				ParamDescList:        normalParamDescList,
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(normalParamDescList),
+				ProudSkillGroupId:    avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId,
 			},
 			Skill: AVATARSKILLINFO{
+				Id:                   avatarSkillDataMap[temp.Skills[1]].Id,
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[1]].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[1]].DescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.Skills[1]].SkillIcon,
 				ParamDescList:        skillParamDescList,
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(skillParamDescList),
+				ProudSkillGroupId:    avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId,
 			},
 			ElementalBurst: AVATARSKILLINFO{
+				Id:                   avatarSkillDataMap[temp.EnergySkill].Id,
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.EnergySkill].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.EnergySkill].DescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.EnergySkill].SkillIcon,
 				ParamDescList:        burstParamDescList,
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(burstParamDescList),
+				ProudSkillGroupId:    avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId,
 			},
 		}
 		if temp.Skills[2] != 0 {
