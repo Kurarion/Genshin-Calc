@@ -125,5 +125,9 @@
       "DMG_BONUS_HYDRO": "水",
       "DMG_BONUS_DENDRO": "草"
     }
+  },
+  "ENKA": {
+    "DONE": "データ処理完了！",
+    "FAILED": "処理に失敗しました。"
   }
 }
