@@ -125,5 +125,9 @@
       "DMG_BONUS_HYDRO": "Hydro",
       "DMG_BONUS_DENDRO": "Dendro"
     }
+  },
+  "ENKA": {
+    "DONE": "Data processing completed!",
+    "FAILED": "Processing failed."
   }
 }

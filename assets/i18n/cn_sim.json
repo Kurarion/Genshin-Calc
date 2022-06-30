@@ -125,5 +125,9 @@
       "DMG_BONUS_HYDRO": "水元素附魔",
       "DMG_BONUS_DENDRO": "草元素附魔"
     }
+  },
+  "ENKA": {
+    "DONE": "数据处理完成！",
+    "FAILED": "处理失败。"
   }
 }
