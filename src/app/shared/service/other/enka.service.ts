@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CharacterService, Const, EnemyService, EnkaAvatar, EnkaEquip, EnkaInfos, EnkaPlayer, ExtraDataService, GenshinDataService, GlobalProgressService, HttpService, OtherService, StorageService, WeaponService } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 export interface EnkaStorageData {
   uid?: string;
@@ -10,7 +11,7 @@ export interface EnkaStorageData {
 
 const API_URL = [
   //CORSのため、一時処理
-  "https://enka.network/u/",
+  environment.apiProxyServer + "https://enka.network/u/",
   "/__data.json",
 ]
 const characterAscendLevels = [20, 40, 50, 60, 70, 80, 90];

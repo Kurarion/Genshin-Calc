@@ -11,6 +11,7 @@ export const environment = {
   footerMsgs: ['シロクマ'],
   artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
+  apiProxyServer: 'https://genshin-calc.irisu.cc/',
 };
 
 /*
