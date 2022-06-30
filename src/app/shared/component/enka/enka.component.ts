@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { EnkaService } from 'src/app/shared/shared.module';
 
 @Component({
@@ -8,20 +9,25 @@ import { EnkaService } from 'src/app/shared/shared.module';
 })
 export class EnkaComponent implements OnInit {
 
-  uid!: string;
+  uid = new FormControl();
 
   constructor(private enkaService: EnkaService) { }
 
   ngOnInit(): void {
     let temp = this.enkaService.getData();
     if(temp.uid){
-      this.uid = temp.uid;
+      this.uid.setValue(temp.uid);
     }
   }
 
   onClick(){
-    console.log("ddd")
-    this.enkaService.initEnkaData(this.uid);
+    if(this.uid.invalid || this.uid.value == undefined || this.uid.value == ""){
+      this.uid.markAsTouched();
+      this.uid.setErrors({'blank': true});
+    }else{
+      this.uid.setErrors(null);
+      this.enkaService.initEnkaData(this.uid.value);
+    }
   }
 
 }

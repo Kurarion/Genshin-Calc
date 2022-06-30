@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -61,6 +61,7 @@ let shardList: any[] = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     TranslateModule.forChild({
       extend: true,
