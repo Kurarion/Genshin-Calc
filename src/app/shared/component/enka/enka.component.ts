@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EnkaService } from 'src/app/shared/shared.module';
@@ -11,7 +12,7 @@ export class EnkaComponent implements OnInit {
 
   uid = new FormControl();
 
-  constructor(private enkaService: EnkaService) { }
+  constructor(private enkaService: EnkaService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     let temp = this.enkaService.getData();

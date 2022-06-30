@@ -63,11 +63,11 @@ export interface EnkaFlat {
     //星級
     rankLevel: number;
     //メイン
-    reliquaryMainstat?: EnkaFlatStat;
+    reliquaryMainstat?: EnkaFlatMainStat;
     //サブ
-    reliquarySubstats?: EnkaFlatStat[];
+    reliquarySubstats?: EnkaFlatSubStat[];
     //武器
-    weaponStats?: EnkaFlatStat[];
+    weaponStats?: EnkaFlatSubStat[];
     //タイプ
     itemType: string;
     //アイコン
@@ -81,9 +81,16 @@ export interface EnkaProp {
     val: string;
 }
 
-export interface EnkaFlatStat {
+export interface EnkaFlatSubStat {
     //属性
     appendPropId: string;
+    //値
+    statValue: number;
+}
+
+export interface EnkaFlatMainStat {
+    //属性
+    mainPropId: string;
     //値
     statValue: number;
 }

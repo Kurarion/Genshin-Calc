@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CharacterService, Const, EnemyService, EnkaAvatar, EnkaEquip, EnkaInfos, EnkaPlayer, ExtraDataService, GenshinDataService, GlobalProgressService, HttpService, OtherService, StorageService, WeaponService } from 'src/app/shared/shared.module';
 
 export interface EnkaStorageData {
@@ -8,6 +9,7 @@ export interface EnkaStorageData {
 }
 
 const API_URL = [
+  //CORSのため、一時処理
   "https://enka.network/u/",
   "/__data.json",
 ]
@@ -25,6 +27,9 @@ export class EnkaService {
 
   //データマップ
   data!: EnkaStorageData;
+  //プログレス値
+  private enkaUpdate: Subject<void> = new Subject<void>();
+  private enkaUpdate$ = this.enkaUpdate.asObservable();
 
   constructor(
     private globalProgressService: GlobalProgressService,
@@ -46,11 +51,24 @@ export class EnkaService {
   //ストレージに保存
   saveData(){
     this.storageService.setJSONItem(Const.SAVE_ENKA, this.data);
+    this.characterService.saveData();
+    this.weaponService.saveData();
+    this.artifactService.saveData();
   }
 
   //データ取得
   getData(){
     return this.data;
+  }
+
+  //キャラリスト取得
+  getAvatarList(){
+    return this.data.avatars;
+  }
+
+  //enka状態取得
+  getEnkaUpdate(){
+    return this.enkaUpdate$;
   }
 
   //-----------------------------------------
@@ -88,6 +106,8 @@ export class EnkaService {
     }
     //ストレージに保存
     this.saveData();
+    //状態更新
+    this.enkaUpdate.next();
   }
 
   //プレイヤーセット
@@ -110,9 +130,9 @@ export class EnkaService {
     let avatarData = this.genshinDataService.getCharacter(avatarId);
     //キャラ基本属性
     let level: string;
-    let normalLevel: string;
-    let skillLevel: string;
-    let elementalBurstLevel: string;
+    let normalLevelNumber: number;
+    let skillLevelNumber: number;
+    let elementalBurstLevelNumber: number;
 
     let tempLevel = parseInt(avatar.propMap[enkaPropTypeMap.level].val);
     let tempPromoteLevel = parseInt(avatar.propMap[enkaPropTypeMap.promoteLevel].val);
@@ -123,27 +143,27 @@ export class EnkaService {
       //突破済み
       level = avatar.propMap[enkaPropTypeMap.level].val + "+";
     }
-    normalLevel = avatar.skillLevelMap![avatarData.skills.normal.id].toString();
-    skillLevel = avatar.skillLevelMap![avatarData.skills.skill.id].toString();
-    elementalBurstLevel = avatar.skillLevelMap![avatarData.skills.elementalBurst.id].toString();
+    normalLevelNumber = avatar.skillLevelMap![avatarData.skills.normal.id];
+    skillLevelNumber = avatar.skillLevelMap![avatarData.skills.skill.id];
+    elementalBurstLevelNumber = avatar.skillLevelMap![avatarData.skills.elementalBurst.id];
     //星座追加
     if(avatar.proudSkillExtraLevelMap != undefined){
       let map = avatar.proudSkillExtraLevelMap;
       if(avatarData.skills.normal.proudSkillGroupId in map){
-        normalLevel += map[avatarData.skills.normal.proudSkillGroupId];
+        normalLevelNumber += map[avatarData.skills.normal.proudSkillGroupId];
       }
       if(avatarData.skills.skill.proudSkillGroupId in map){
-        skillLevel += map[avatarData.skills.normal.proudSkillGroupId];
+        skillLevelNumber += map[avatarData.skills.skill.proudSkillGroupId];
       }
       if(avatarData.skills.elementalBurst.proudSkillGroupId in map){
-        elementalBurstLevel += map[avatarData.skills.normal.proudSkillGroupId];
+        elementalBurstLevelNumber += map[avatarData.skills.elementalBurst.proudSkillGroupId];
       }
     }
 
     this.characterService.setLevel(avatarId, level);
-    this.characterService.setNormalLevel(avatarId, normalLevel);
-    this.characterService.setSkillLevel(avatarId, skillLevel);
-    this.characterService.setElementalBurstLevel(avatarId, elementalBurstLevel);
+    this.characterService.setNormalLevel(avatarId, normalLevelNumber.toString());
+    this.characterService.setSkillLevel(avatarId, skillLevelNumber.toString());
+    this.characterService.setElementalBurstLevel(avatarId, elementalBurstLevelNumber.toString());
     if(this.characterService.getExtraData(avatarId) == undefined){
       this.characterService.setDefaultExtraData(avatarId);
     }
@@ -191,7 +211,7 @@ export class EnkaService {
       setIndexMap[tempSetIndex] += 1;
       //値
       //メイン
-      let mainProp = Const.MAP_ARTIFACE_PROP[reliquary.flat.reliquaryMainstat!.appendPropId];
+      let mainProp = Const.MAP_ARTIFACE_PROP[reliquary.flat.reliquaryMainstat!.mainPropId];
       tempData['main'] ={
         name: mainProp,
         value: this.genshinDataService.getReliquaryMain(mainProp),
@@ -201,6 +221,9 @@ export class EnkaService {
         let key = "sub" + (i + 1);
         let subProp = Const.MAP_ARTIFACE_PROP[reliquary.flat.reliquarySubstats![i].appendPropId];
         let value = reliquary.flat.reliquarySubstats![i].statValue;
+        if(Const.PROPS_CHARA_WEAPON_PERCENT.includes(subProp)){
+          value = reliquary.flat.reliquarySubstats![i].statValue / 100;
+        }
         let finalValue = value;
         let minDiff = value + 1;
         for(let v of this.genshinDataService.getReliquaryAffix(subProp)){
@@ -238,10 +261,11 @@ export class EnkaService {
     }
     //セット情報
     for(let key in setIndexMap){
-      for(let i = 0; i < setIndexMap[key]%2; ++i){
+      for(let i = 0; i < Math.floor(setIndexMap[key]/2); ++i){
         for(let j = 0; j < setIndexs.length; ++j){
           if(setIndexs[j] == ''){
             setIndexs[j] = key;
+            break;
           }
         }
       }
@@ -258,6 +282,9 @@ export class EnkaService {
 
     weaponId = weapon.itemId.toString();
     let weaponData = this.genshinDataService.getWeapon(weaponId);
+    if(weaponData == undefined){
+      return;
+    }
     level = weapon.weapon!.level.toString();
     let tempLevel = weapon.weapon!.level;
     let tempPromoteLevel = weapon.weapon!.promoteLevel;
@@ -269,18 +296,15 @@ export class EnkaService {
       level = tempLevel.toString() + "+";
     }
     smeltingLevel = "1";
-    for(let key in weaponData.skillAffixMap){
-      if(weaponData.skillAffixMap[key].affixId in weapon.weapon!.affixMap){
-        smeltingLevel = key;
-      }
+    if(weaponData.skillAffixMap[smeltingLevel].id in weapon.weapon!.affixMap){
+      smeltingLevel = (1 + weapon.weapon!.affixMap[weaponData.skillAffixMap[smeltingLevel].id]).toString();
     }
 
-    if(this.weaponService.getIndex(avatarId) == weaponId){
-      this.weaponService.setDefaultExtraData(avatarId, weaponId);
-    }
     this.weaponService.setIndex(avatarId, weaponId);
     this.weaponService.setLevel(avatarId, level);
     this.weaponService.setSmeltingLevel(avatarId, smeltingLevel);
-
+    if(this.weaponService.getIndex(avatarId) != weaponId){
+      this.weaponService.setDefaultExtraData(avatarId, weaponId);
+    }
   }
 }

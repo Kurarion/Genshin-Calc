@@ -1,6 +1,16 @@
 .menu-title {
-  margin-left: 3px;
-  font-size: medium;
+  margin-left: 4px;
+  margin-top: 2px;
+  font-size: large;
+  font-weight: 500;
+
+  border: 1px solid #ccc!important;
+  padding: 0.1em 0.5em 0.04em 0.5em;
+  border-radius: 4px;
+  background-color: #ebebeb;
+  margin-right: 10px;
+
+  cursor: pointer;
 }
 
 .spacer {

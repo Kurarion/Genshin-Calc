@@ -80,12 +80,14 @@ export class ArtifactService {
   //聖遺物セット削除
   deleteStorageInfo(charIndex: string | number, index: number){
     let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
     this.dataMap[keyStr].info.splice(index, 1);
   }
 
   //聖遺物プッシュ
   pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo){
     let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
     this.dataMap[keyStr].info.push(info);
     this.setStorageActiveIndex(keyStr, this.dataMap[keyStr].info.length - 1);
   }
@@ -97,6 +99,7 @@ export class ArtifactService {
     if(index != undefined){
       infoIndex = index;
     }
+    this.initDefaultData(keyStr);
     let info = this.dataMap[keyStr].info[infoIndex];
     info.setIndexs = setIndexs;
     if(setIndexs[0] == setIndexs[1] && setIndexs[0] != "" && setIndexs[0]){
@@ -110,6 +113,7 @@ export class ArtifactService {
   //聖遺物情報コピー
   copyAndCreateStorageInfo(charIndex: string | number, sourceIndex: number){
     let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
     this.dataMap[keyStr].info.push(JSON.parse(JSON.stringify(this.dataMap[keyStr].info[sourceIndex])));
   }
 

@@ -14,3 +14,19 @@
   white-space: nowrap;
   width: 190px;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.shinshinmoe {
+  align-self: center;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.shinshinmoe:before {
+  content: "\e93a";
+  font-family: shicon;
+  font-size: 1.4em;
+}

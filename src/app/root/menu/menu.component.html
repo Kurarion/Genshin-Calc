@@ -1,5 +1,9 @@
 <mat-nav-list class="menu-list">
   <ng-container *ngFor="let menu of menuList">
-    <a mat-list-item (click)="onClick(menu)">{{ menu.names[currentLanguage] }}</a>
+    <a mat-list-item (click)="onClick(menu)">
+      {{ menu.names[currentLanguage] }}
+      <span class="spacer"></span>
+      <figure *ngIf="menu.isEnkaData" class="shinshinmoe"></figure>
+    </a>
   </ng-container>
 </mat-nav-list>

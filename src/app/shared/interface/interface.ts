@@ -13,6 +13,7 @@ export interface MenuInfo {
   names: Record<TYPE_SYS_LANG, string>;
   routerLink: string;
   queryParams: CharacterQueryParam;
+  isEnkaData?: boolean;
 }
 
 /** 言語インタフェース */

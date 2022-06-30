@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { GlobalProgressService, LangInfo } from 'src/app/shared/shared.module';
@@ -36,7 +37,8 @@ export class HeadComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private globalProgressService: GlobalProgressService
+    private globalProgressService: GlobalProgressService,
+    private router: Router,
   ) {
     this.progressMode = this.globalProgressService.getMode();
     this.progressValue = this.globalProgressService.getValue();
@@ -57,5 +59,12 @@ export class HeadComponent implements OnInit {
    */
   onClickLang(selected: LangInfo) {
     this.langSelectEvent.emit(selected);
+  }
+
+  /**
+   * ホームページに戻す
+   */
+  onClickTitle(){
+    this.router.navigate(['']);
   }
 }

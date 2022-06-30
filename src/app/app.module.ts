@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -92,6 +92,7 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,

@@ -81,6 +81,8 @@ export interface WeaponStatus {
 export interface WeaponSkillAffix {
     //ID
     affixId: number;
+    //武器ＩＤ
+    id: number;
     //名前
     name: Record<TYPE_SYS_LANG, string>;
     //記述

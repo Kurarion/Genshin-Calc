@@ -8,7 +8,7 @@ export const environment = {
   useThirdPartyAPI: false,
   thirdPartyAPIHost: 'https://api.ambr.top/assets/UI/',
   thirdPartyAPIPicType: '.png',
-  footerMsgs: ['△〇□×'],
+  footerMsgs: ['シロクマ'],
   artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
 };

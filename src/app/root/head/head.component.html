@@ -7,7 +7,7 @@
   <button mat-icon-button (click)="onClickMenu()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="menu-title" [innerHTML]="'HOME.TITLE' | translate"></span>
+  <span class="menu-title" [innerHTML]="'HOME.TITLE' | translate" (click)="onClickTitle()"></span>
   <span class="spacer"></span>
   <!-- <app-capture-html></app-capture-html> -->
   <app-enka></app-enka>

@@ -4,7 +4,7 @@ export const environment = {
   useThirdPartyAPI: false,
   thirdPartyAPIHost: 'https://enka.shinshin.moe/ui/',
   thirdPartyAPIPicType: '.png',
-  footerMsgs: ['△〇□×'],
+  footerMsgs: ['シロクマ'],
   artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
 };
