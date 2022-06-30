@@ -1708,6 +1708,213 @@
         }
     },
     "weapons": {
+        "11301": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11302": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["CRIT_RATE"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11303": {
+            "effect": [
+                {
+                    "healing": {
+                        "index": 0,
+                        "base": "HP",
+                        "healingBonusType": "HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "11304": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11305": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "ATTACK",
+                        "attackBonusType": "DMG_BONUS_WEAPON",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL"
+                    }
+                }
+            ]
+        },
+        "11306": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11402": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "ATTACK",
+                        "attackBonusType": "DMG_BONUS_WEAPON",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL"
+                    }
+                }
+            ]
+        },
+        "11405": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11406": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP", "DEFENSE_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "11407": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }
+                }
+            ]
+        },
+        "11408": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "11409": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType":"resident"
+                    },
+                    "healing": {
+                        "index": 1,
+                        "base": "ATTACK",
+                        "healingBonusType": "HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "11410": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11412": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "ATTACK",
+                        "attackBonusType": "DMG_BONUS_WEAPON",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL"
+                    }
+                }
+            ]
+        },
+        "11413": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_CRIT_RATE_UP_SKILL"],
+                        "settingType": "resident"
+                    }
+                }
+            ]
+        },
+        "11414": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "base": "DEFENSE",
+                        "target": ["DMG_VAL_UP_SKILL"],
+                        "settingType": "resident"
+                    }
+                }
+            ]
+        },
         "11501": {
             "effect": [
                 {
@@ -1735,6 +1942,83 @@
                 }
             ]
         },
+        "11502": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["CRIT_RATE"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "damage": {
+                        "indexs": [3],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "11503": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 3,
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 4,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11504": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_ELEMENT_SHIELD_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                }
+            ]
+        },
         "11505": {
             "effect": [
                 {
@@ -1754,6 +2038,137 @@
                 }
             ]
         },
+        "11509": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "sliderStartIndex": 1,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "11510": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 3,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }
+                }
+            ]
+        },
+        "12301": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "12302": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "12303": {
+            "effect": [
+                {
+                    "healing": {
+                        "index": 0,
+                        "base":"HP",
+                        "healingBonusType":"HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "12304": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "12305": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "12306": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "12402": {
+            "effect": [
+                {
+                    "shield": {
+                        "index": 0,
+                        "base": "HP"
+                    },
+                    "buff": {
+                        "index": 2,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
         "12405": {
             "effect": [
                 {
@@ -1762,6 +2177,138 @@
                         "target": ["DMG_BONUS_ALL"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "12406": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "12407": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP", "DEFENSE_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "12408": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "12409": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                }
+            ]
+        },
+        "12410": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["CRIT_RATE"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "12411": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1,2],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "12412": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType": "resident"
+                    },
+                    "damage": {
+                        "indexs": [2],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "12414": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "resident"
+                    }
+                }
+            ]
+        },
+        "12416": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 40,
+                        "sliderStep": 1,
+                        "sliderMax": 333.333
                     }
                 }
             ]
@@ -1805,6 +2352,128 @@
                 }
             ]
         },
+        "12503": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                }
+            ]
+        },
+        "12504": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_ELEMENT_SHIELD_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 4,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "12510": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DEFENSE_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "base": "DEFENSE",
+                        "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED"],
+                        "settingType": "resident"
+                    }
+                }
+            ]
+        },
+        "13301": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "resident"
+                    }
+                }
+            ]
+        },
+        "13302": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "13303": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "13304": {
+            "effect": [
+                {
+                    "healing": {
+                        "index": 0,
+                        "base":"HP",
+                        "healingBonusType":"HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
         "13401": {
             "effect": [
                 {
@@ -1813,6 +2482,112 @@
                         "target": ["DMG_BONUS_ALL"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "13402": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }
+                }
+            ]
+        },
+        "13403": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "base": "ATTACK",
+                        "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "13404": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "13405": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 2,
+                        "target": ["ATTACK_UP", "DEFENSE_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "13406": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["CRIT_RATE"],
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "13409": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1,2],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "13414": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType":"resident"
                     }
                 }
             ]
@@ -1831,6 +2606,20 @@
                         "index": 1,
                         "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
                         "settingType": "resident"
+                    }
+                }
+            ]
+        },
+        "13416": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 40,
+                        "sliderStep": 1,
+                        "sliderMax": 333.333
                     }
                 }
             ]
@@ -1863,6 +2652,56 @@
                 }
             ]
         },
+        "13502": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["CRIT_RATE"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "dmage": {
+                        "index": 3,
+                        "base": "ATTACK",
+                        "attackBonusType":"DMG_BONUS_WEAPON",
+                        "elementBonusType":"DMG_BONUS_PHYSICAL"
+                    }
+                }
+            ]
+        },
+        "13504": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_ELEMENT_SHIELD_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                }
+            ]
+        },
         "13505": {
             "effect": [
                 {
@@ -1881,6 +2720,27 @@
                         "target": ["DMG_BONUS_ALL"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "13507": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 2,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 6
                     }
                 }
             ]
@@ -1909,6 +2769,242 @@
                 }
             ]
         },
+        "14301": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14303": {
+            "effect": [
+                {
+                    "healing": {
+                        "index": 0,
+                        "base":"HP",
+                        "healingBonusType":"HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "14304": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14305": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14306": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }
+                }
+            ]
+        },
+        "14402": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 2,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14405": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14406": {
+            "effect": [
+                {
+                    "healing": {
+                        "index": 3,
+                        "base":"HP",
+                        "healingBonusType":"HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "14407": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }
+                }
+            ]
+        },
+        "14408": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "14409": {
+            "effect": [
+                {
+                    "dmage": {
+                        "index": 2,
+                        "base": "ATTACK",
+                        "elementBonusType":"DMG_BONUS_PHYSICAL",
+                        "attackBonusType":"DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "14410": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14412": {
+            "effect": [
+                {
+                    "dmage": {
+                        "index": 1,
+                        "base": "ATTACK",
+                        "elementBonusType":"DMG_BONUS_PHYSICAL",
+                        "attackBonusType":"DMG_BONUS_WEAPON"
+                    }
+                },
+                {
+                    "dmage": {
+                        "index": 2,
+                        "base": "ATTACK",
+                        "elementBonusType":"DMG_BONUS_PHYSICAL",
+                        "attackBonusType":"DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "14413": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 2,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14414": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "14415": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ENERGY_RECHARGE"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
         "14501": {
             "effect": [
                 {
@@ -1925,6 +3021,377 @@
                         "canOverride": false,
                         "elementBonusType": "DMG_BONUS_PHYSICAL",
                         "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "14502": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "14504": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_ELEMENT_SHIELD_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 5
+                    }
+                }
+            ]
+        },
+        "14506": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["HEALING_BONUS"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "base": "HP",
+                        "target": ["DMG_VAL_UP_NORMAL"],
+                        "settingType": "resident"
+                    }
+                }
+            ]
+        },
+        "14509": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 2,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "15301": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15302": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15303": {
+            "effect": [
+                {
+                    "healing": {
+                        "index": 0,
+                        "base": "HP",
+                        "healingBonusType":"HEALING_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "15304": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 2,
+                        "indexMultiValue": -1,
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15305": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "base":"ATTACK",
+                        "target": ["DMG_VAL_UP_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15306": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15402": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType":"resident"
+                    }
+                }
+            ]
+        },
+        "15405": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType":"resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "indexMultiValue": -1,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType":"resident"
+                    }
+                }
+            ]
+        },
+        "15406": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15407": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "15408": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "15409": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "ATTACK",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
+                }
+            ]
+        },
+        "15410": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 10
+                    }
+                }
+            ]
+        },
+        "15411": {
+            "effect": [
+                {
+                    "buff": {
+                        "sliderStartIndex": 1,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }
+                }
+            ]
+        },
+        "15412": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 2,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15413": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15414": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15415": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }
+                }
+            ]
+        },
+        "15416": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 40,
+                        "sliderStep": 1,
+                        "sliderMax": 333.333
                     }
                 }
             ]
@@ -1966,6 +3433,94 @@
                         "sliderInitialValue": 1,
                         "sliderStep": 1,
                         "sliderMax": 5
+                    }
+                }
+            ]
+        },
+        "15503": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 3,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 4,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15507": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "sliderStartIndex": 2,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }
+                }
+            ]
+        },
+        "15508": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["HP_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "index": 1,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "15509": {
+            "effect": [
+                {
+                    "buff": {
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "sliderStartIndex": 1,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
                     }
                 }
             ]
