@@ -137,12 +137,12 @@ export class EnkaService {
 
     let tempLevel = parseInt(avatar.propMap[enkaPropTypeMap.level].val);
     let tempPromoteLevel = parseInt(avatar.propMap[enkaPropTypeMap.promoteLevel].val);
-    if(tempPromoteLevel == characterAscendLevels.indexOf(tempLevel)){
-      //未突破
-      level = avatar.propMap[enkaPropTypeMap.level].val;
-    }else{
+    if(characterAscendLevels.includes(tempLevel) && tempPromoteLevel != characterAscendLevels.indexOf(tempLevel)){
       //突破済み
       level = avatar.propMap[enkaPropTypeMap.level].val + "+";
+    }else{
+      //未突破
+      level = avatar.propMap[enkaPropTypeMap.level].val;
     }
     normalLevelNumber = avatar.skillLevelMap![avatarData.skills.normal.id];
     skillLevelNumber = avatar.skillLevelMap![avatarData.skills.skill.id];
@@ -289,12 +289,12 @@ export class EnkaService {
     level = weapon.weapon!.level.toString();
     let tempLevel = weapon.weapon!.level;
     let tempPromoteLevel = weapon.weapon!.promoteLevel;
-    if(tempPromoteLevel == weaponAscendLevels.indexOf(tempLevel)){
-      //未突破
-      level = tempLevel.toString();
-    }else{
+    if(weaponAscendLevels.includes(tempLevel) && tempPromoteLevel != weaponAscendLevels.indexOf(tempLevel)){
       //突破済み
       level = tempLevel.toString() + "+";
+    }else{
+      //未突破
+      level = tempLevel.toString();
     }
     smeltingLevel = "1";
     if(weaponData.skillAffixMap[smeltingLevel].id in weapon.weapon!.affixMap){

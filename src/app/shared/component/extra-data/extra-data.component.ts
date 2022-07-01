@@ -145,7 +145,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         this.initHealingDatas();
         this.initShieldDatas();
         this.initProducDatas();
-        this.initBuffDatas();
+        // this.initBuffDatas();
       }
     });
   }
@@ -189,7 +189,14 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   initBuffDatas(){
-    this.buffDatas = this.getBuffInfos();
+    let temp = this.getBuffInfos();
+    // if(this.buffDatas != undefined && this.buffDatas.length == temp.length){
+    //   for(let i = 0; i < temp.length; ++i){
+    //     this.copyObjectValue(this.buffDatas, temp);
+    //   }
+    // }else{
+      this.buffDatas = temp;
+    // }
   }
 
   onChangeSwitch(change: MatSlideToggleChange, valueIndex: number){
@@ -245,6 +252,17 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   private getElementColor(element: string){
     return this.colorMap[this.getElementFromBonus(element)];
+  }
+
+  private copyObjectValue(target: any, source: any){
+    for(let key in source){
+      if(typeof source[key] === 'object'){
+        target[key] = {};
+        this.copyObjectValue(target[key], source[key])
+      }else{
+        target[key] = source[key];
+      }
+    }
   }
 
 }

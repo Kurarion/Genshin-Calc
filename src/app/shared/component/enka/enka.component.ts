@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EnkaService } from 'src/app/shared/shared.module';
 
@@ -14,7 +15,7 @@ export class EnkaComponent implements OnInit {
 
   uid = new FormControl();
 
-  constructor(private enkaService: EnkaService, private httpClient: HttpClient, private matSnackBar: MatSnackBar, private translateService: TranslateService) { }
+  constructor(private enkaService: EnkaService, private httpClient: HttpClient, private matSnackBar: MatSnackBar, private translateService: TranslateService, private router: Router) { }
 
   ngOnInit(): void {
     let temp = this.enkaService.getData();
@@ -29,6 +30,7 @@ export class EnkaComponent implements OnInit {
       this.uid.setErrors({'blank': true});
     }else{
       this.uid.setErrors(null);
+      this.router.navigate(['/']);
       this.enkaService.initEnkaData(this.uid.value).then(()=>{
         //完了
         this.translateService.get('ENKA.DONE').subscribe((res: string) => {

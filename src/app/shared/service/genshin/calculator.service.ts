@@ -2204,6 +2204,11 @@ export class CalculatorService {
             indexMultiValue = buff.indexMultiValue;
           }
           indexValue *= indexMultiValue;
+          let indexAddValue = 0;
+          if(buff?.indexAddValue != undefined){
+            indexAddValue = buff.indexAddValue;
+          }
+          indexValue += indexAddValue;
           let calRelation = buff?.calRelation ?? '+';
           switch(calRelation){
             case "-":
@@ -2324,6 +2329,11 @@ export class CalculatorService {
             indexMultiValue = buff.indexMultiValue;
           }
           indexValue *= indexMultiValue;
+          let indexAddValue = 0;
+          if(buff?.indexAddValue != undefined){
+            indexAddValue = buff.indexAddValue;
+          }
+          indexValue += indexAddValue;
           let calRelation = buff?.calRelation ?? '+';
           switch(calRelation){
             case "-":
