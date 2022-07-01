@@ -60,11 +60,5 @@ export class HeadComponent implements OnInit {
   onClickLang(selected: LangInfo) {
     this.langSelectEvent.emit(selected);
   }
-
-  /**
-   * ホームページに戻す
-   */
-  onClickTitle(){
-    this.router.navigate(['']);
-  }
+  
 }

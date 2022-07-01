@@ -4,10 +4,7 @@
   font-size: large;
   font-weight: 500;
 
-  border: 1px solid #ccc!important;
   padding: 0.1em 0.5em 0.04em 0.5em;
-  border-radius: 4px;
-  background-color: #ebebeb;
   margin-right: 10px;
 
   cursor: pointer;
@@ -28,6 +25,12 @@
 
 :host ::ng-deep .mat-progress-bar-fill::after {
   background-color: #3f51b5b4;
+}
+
+.logo {
+  height: 30px;
+  margin: 0 7px 3px 0;
+  vertical-align: middle;
 }
 
 /* 背景 */

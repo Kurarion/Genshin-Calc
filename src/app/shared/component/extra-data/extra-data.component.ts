@@ -3,6 +3,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { Subscription } from 'rxjs';
 import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-extra-data',
@@ -12,14 +13,14 @@ import { CalculatorService, DamageResult, HealingResult, character, Const, Chara
 export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   private readonly colorMap: Record<string, string> = {
-    "CRYO": "#B2DFEE",
-    "ANEMO": "	#C1FFC1",
-    "PHYSICAL": "#FAFAFA",
-    "ELECTRO": "#EEAEEE",
-    "GEO": "#EEE685",
-    "PYRO": "#FFE4E1",
-    "HYDRO": "#C6E2FF",
-    "DENDRO": "	#9BCD9B",
+    "CRYO": "#cce7f3" + environment.elementColorAlpha,
+    "ANEMO": "#afe9d8" + environment.elementColorAlpha,
+    "PHYSICAL": "#fafafa" + environment.elementColorAlpha,
+    "ELECTRO": "#f2d4f3" + environment.elementColorAlpha,
+    "GEO": "#ffefc4" + environment.elementColorAlpha,
+    "PYRO": "#f3a5a5" + environment.elementColorAlpha,
+    "HYDRO": "#c9e4ff" + environment.elementColorAlpha,
+    "DENDRO": "#7cde8c" + environment.elementColorAlpha,
   }
 
   readonly dmgPropList: (keyof DamageResult)[] = [
@@ -79,20 +80,20 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'shield': 'SHIELD',
   };
   readonly specialColorMap: Record<string, string|undefined> = {
-    'overloadedDmg': '#FFE4E1',
-    'burningDmg': '#FFE4E1',
-    'electroChargedDmg': '#EEAEEE',
-    'superconductDmg': '#B2DFEE',
-    'swirlCryoDmg': '#B2DFEE',
-    'swirlElectroDmg': '#EEAEEE',
-    'swirlPyroDmg': '#FFE4E1',
-    'swirlHydroDmg': '#C6E2FF',
-    'shieldHp': '#EEE685',
-    'destructionDmg': '#FAFAFA',
+    'overloadedDmg': this.colorMap["PYRO"],
+    'burningDmg': this.colorMap["PYRO"],
+    'electroChargedDmg': this.colorMap["ELECTRO"],
+    'superconductDmg': this.colorMap["CRYO"],
+    'swirlCryoDmg': this.colorMap["CRYO"],
+    'swirlElectroDmg': this.colorMap["ELECTRO"],
+    'swirlPyroDmg': this.colorMap["PYRO"],
+    'swirlHydroDmg': this.colorMap["HYDRO"],
+    'shieldHp': this.colorMap["GEO"],
+    'destructionDmg': this.colorMap["PHYSICAL"],
 
-    'healing': '#C1FFC1',
-    'product': '#C1FFC1',
-    'shield': '#EEE685',
+    'healing': '#91ffa3'+ environment.elementColorAlpha,
+    'product': '#91ffa3'+ environment.elementColorAlpha,
+    'shield': this.colorMap["GEO"],
   };
 
   //キャラ

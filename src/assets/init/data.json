@@ -1705,7 +1705,7 @@
                     {
                         "buff":{
                             "index":7,
-                            "indexMultiValue": 0.0416,
+                            "indexMultiValue": 0.0416666666666667,
                             "target":["DMG_ELEMENT_SHIELD_UP"],
                             "settingType":"switch",
                             "defaultEnable":true
@@ -1714,7 +1714,7 @@
                     {
                         "buff":{
                             "index":7,
-                            "indexMultiValue": 0.0166,
+                            "indexMultiValue": 0.0166665916666667,
                             "target":["DMG_ANTI_ALL_MINUS"],
                             "settingType":"switch",
                             "defaultEnable":true
@@ -1764,7 +1764,7 @@
                         },
                         {
                             "buff": {
-                                "index": 0,
+                                "index": 2,
                                 "base":"HP",
                                 "target":["DMG_VAL_UP_ELEMENTAL_BURST"],
                                 "settingType":"resident"

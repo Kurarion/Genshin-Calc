@@ -301,11 +301,11 @@ export class EnkaService {
       smeltingLevel = (1 + weapon.weapon!.affixMap[weaponData.skillAffixMap[smeltingLevel].id]).toString();
     }
 
-    this.weaponService.setIndex(avatarId, weaponId);
-    this.weaponService.setLevel(avatarId, level);
-    this.weaponService.setSmeltingLevel(avatarId, smeltingLevel);
     if(this.weaponService.getIndex(avatarId) != weaponId){
       this.weaponService.setDefaultExtraData(avatarId, weaponId);
     }
+    this.weaponService.setIndex(avatarId, weaponId);
+    this.weaponService.setLevel(avatarId, level);
+    this.weaponService.setSmeltingLevel(avatarId, smeltingLevel);
   }
 }
