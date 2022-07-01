@@ -166,7 +166,7 @@ export class EnkaService {
     this.characterService.setSkillLevel(avatarId, skillLevelNumber.toString());
     this.characterService.setElementalBurstLevel(avatarId, elementalBurstLevelNumber.toString());
     if(this.characterService.getExtraData(avatarId) == undefined){
-      this.characterService.setDefaultExtraData(avatarId);
+      this.characterService.setDefaultExtraData(avatarId, true);
     }
 
     //プログレス更新
@@ -302,7 +302,7 @@ export class EnkaService {
     }
 
     if(this.weaponService.getIndex(avatarId) != weaponId){
-      this.weaponService.setDefaultExtraData(avatarId, weaponId);
+      this.weaponService.setDefaultExtraData(avatarId, weaponId, true);
     }
     this.weaponService.setIndex(avatarId, weaponId);
     this.weaponService.setLevel(avatarId, level);

@@ -95,13 +95,13 @@ export class WeaponService {
   }
 
   //デフォールト追加データ設定
-  setDefaultExtraData(charIndex: string | number, index: string | number){
+  setDefaultExtraData(charIndex: string | number, index: string | number, force: boolean = false){
     let charKeyStr = charIndex.toString();
     let weaponKeyStr = index.toString();
     if(!this.dataMap[charKeyStr]){
       this.dataMap[charKeyStr] = {};
     }
-    if(Object.keys(this.getExtraData(charIndex)??{}).length === 0){
+    if(Object.keys(this.getExtraData(charIndex)??{}).length === 0 || force){
       this.dataMap[charKeyStr].extra = this.extraDataService.getWeaponDefaultSetting(weaponKeyStr);
     }
   }

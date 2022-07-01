@@ -107,12 +107,12 @@ export class CharacterService {
   }
 
   //デフォールト追加データ設定
-  setDefaultExtraData(index: string | number){
+  setDefaultExtraData(index: string | number, force: boolean = false){
     let keyStr = index.toString();
     if(!this.dataMap[keyStr]){
       this.dataMap[keyStr] = {};
     }
-    if(Object.keys(this.getExtraData(keyStr)??{}).length === 0){
+    if(Object.keys(this.getExtraData(keyStr)??{}).length === 0 || force){
       this.dataMap[keyStr].extra = this.extraDataService.getCharacterDefaultSetting(index);
     }
   }

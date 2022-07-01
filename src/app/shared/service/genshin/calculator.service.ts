@@ -19,6 +19,7 @@ export interface CalResult{
 export interface SpecialBuff {
   target?: string;
   base?: string;
+  base2?: string;
   baseModifyValue?: number;
   multiValue?: number;
   priority?: number;
@@ -1195,22 +1196,34 @@ export class CalculatorService {
     let result: HealingResult;
     let data = this.dataMap[indexStr].allData!;
     let base = param.base;
-    let extra = param.extra;
-    let rate = param.rate;
+    let extra = param.extra ?? 0;
+    let rate = param.rate ?? 0;
     let healingBonusType = param.healingBonusType;
     //計算
     let healing: number = 0;
+    //特殊
+    if(healingBonusType){
+      switch(healingBonusType){
+        case Const.PROP_HEALING_BONUS_SKILL:
+          rate += data[Const.PROP_HEALING_RATE_UP_SKILL] ?? 0;
+          extra += data[Const.PROP_HEALING_VAL_UP_SKILL] ?? 0;
+          break;
+        case Const.PROP_HEALING_BONUS_ELEMENTAL_BURST:
+          rate += data[Const.PROP_HEALING_RATE_UP_ELEMENTAL_BURST] ?? 0;
+          extra += data[Const.PROP_HEALING_VAL_UP_ELEMENTAL_BURST] ?? 0;
+          break;
+        case Const.PROP_HEALING_BONUS_WEAPON:
+        case Const.PROP_HEALING_BONUS_OTHER:
+          break;
+      }
+    }
     if(base != undefined && rate != undefined){
       healing += data[base] * rate;
     }
     if(extra != undefined){
       healing += extra;
     }
-    healing *= (1 + data[Const.PROP_HEALING_BONUS] + data[Const.PROP_REVERSE_HEALING_BONUS]);
-    if(healingBonusType){
-      healing *= (1 + (data[healingBonusType] ?? 0));
-      //TODO その他治療アップ
-    }
+    healing *= (1 + data[Const.PROP_HEALING_BONUS] + data[Const.PROP_REVERSE_HEALING_BONUS] + (healingBonusType?(data[healingBonusType] ?? 0):0));
     result = {
       healing: healing,
     }
@@ -1862,6 +1875,9 @@ export class CalculatorService {
     //スペシャル処理
     for(let buff of specialOrders){
       let baseValue = buff.base?result[buff.base]:0;
+      if(buff.base2 != undefined){
+        baseValue *= result[buff.base2];
+      }
       let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
       let toAdd = (baseValue + modifyValue) * buff.multiValue!;
       if(buff.maxVal && toAdd > buff.maxVal){
@@ -2218,6 +2234,8 @@ export class CalculatorService {
           let constCalRelation = buff?.constCalRelation ?? '+';
     
           let base = buff?.base;
+          //ベース２
+          let base2 = buff.base2;
           let baseModifyValue = buff?.baseModifyValue;
           let baseModifyRelation = buff?.baseModifyRelation;
           if(baseModifyValue != undefined){
@@ -2262,6 +2280,7 @@ export class CalculatorService {
             //特殊バフ
             let temp: SpecialBuff = {};
             temp.base = base;
+            temp.base2 = base2;
             temp.baseModifyValue = baseModifyValue;
             temp.multiValue = indexValue;
             temp.priority = priority;
@@ -2343,6 +2362,8 @@ export class CalculatorService {
           let constCalRelation = buff?.constCalRelation ?? '+';
     
           let base = buff?.base;
+          //ベース２
+          let base2 = buff.base2;
           let baseModifyValue = buff?.baseModifyValue;
           let baseModifyRelation = buff?.baseModifyRelation;
           if(baseModifyValue != undefined){
@@ -2373,6 +2394,7 @@ export class CalculatorService {
             //特殊バフ
             let temp: SpecialBuff = {};
             temp.base = base;
+            temp.base2 = base2;
             temp.baseModifyValue = baseModifyValue;
             if(sliderStartIndex != undefined){
               if(sliderNumMap[buffIndex] == 0){

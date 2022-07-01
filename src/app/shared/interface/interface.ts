@@ -101,6 +101,8 @@ export interface ExtraSkillBuff {
   base?: string;
   baseModifyValue?: number;
   baseModifyRelation?: TYPE_RELATION;
+  //数値計算ベース２
+  base2?: string;
   //目標
   target: string[];
   convertElement?: string;

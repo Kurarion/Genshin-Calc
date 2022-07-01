@@ -26,6 +26,8 @@ export interface ArtifactStorageData {
   info: ArtifactStorageInfo[];
 }
 
+const MAX_ARTIFACE_PUSH_LENGTH = 10;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -88,6 +90,9 @@ export class ArtifactService {
   pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo){
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
+    if(this.dataMap[keyStr].info.length >= MAX_ARTIFACE_PUSH_LENGTH){
+      this.dataMap[keyStr].info.pop();
+    }
     this.dataMap[keyStr].info.push(info);
     this.setStorageActiveIndex(keyStr, this.dataMap[keyStr].info.length - 1);
   }
