@@ -3553,6 +3553,144 @@
                         }
                 ]
             }
+        },
+        "10000060": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [7,8,9],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "canOverride": false,
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buff": {
+                                "sliderStartIndex":0,
+                                "target":["HP_UP"],
+                                "settingType":"slider",
+                                "sliderInitialValue":1,
+                                "sliderStep":1,
+                                "sliderMax":4
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buff": {
+                                "index":0,
+                                "target":["DMG_BONUS_ALL"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":50
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "base": "HP",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_HYDRO",
+                                "attackBonusType":"DMG_BONUS_ELEMENTAL_BURST"
+                            }
+                        }
+                ],
+                "3": [
+                        {
+                            "buff": {
+                                "index": 0,
+                                "target":["HP_UP"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":4
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "indexs": [2],
+                                "originSkill":"normal",
+                                "originIndex": 6,
+                                "originRelation":"*",
+                                "canOverride": false,
+                                "base": "HP",
+                                "elementBonusType": "DMG_BONUS_HYDRO",
+                                "attackBonusType": "DMG_BONUS_CHARGED"
+                            }
+                        }
+                ]
+            }
         }
     },
     "weapons": {
@@ -5582,7 +5720,7 @@
             "set1": [
                 {
                     "buff": {
-                        "propIndex": 0,
+                        "index": 0,
                         "target": ["DMG_BONUS_ELEMENTAL_BURST"],
                         "settingType": "resident"
                     }
