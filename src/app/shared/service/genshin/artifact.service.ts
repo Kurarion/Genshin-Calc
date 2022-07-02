@@ -90,6 +90,7 @@ export class ArtifactService {
   pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo){
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
+    this.checkAndSetInfoData(info);
     if(this.dataMap[keyStr].info.length >= MAX_ARTIFACE_PUSH_LENGTH){
       this.dataMap[keyStr].info.pop();
     }
@@ -184,43 +185,7 @@ export class ArtifactService {
       this.dataMap[keyStr].info[index] = {};
     }
     if(this.dataMap[keyStr].info[index][part as keyof ArtifactStorageInfo] == undefined){
-      this.dataMap[keyStr].info[index].setIndexs = [];
-      this.dataMap[keyStr].info[index].setFullIndex = '';
-      this.dataMap[keyStr].info[index].flower = {
-        "main":{},
-        "sub1":{},
-        "sub2":{},
-        "sub3":{},
-        "sub4":{},
-      };
-      this.dataMap[keyStr].info[index].plume = {
-        "main":{},
-        "sub1":{},
-        "sub2":{},
-        "sub3":{},
-        "sub4":{},
-      };
-      this.dataMap[keyStr].info[index].sands = {
-        "main":{},
-        "sub1":{},
-        "sub2":{},
-        "sub3":{},
-        "sub4":{},
-      };
-      this.dataMap[keyStr].info[index].goblet = {
-        "main":{},
-        "sub1":{},
-        "sub2":{},
-        "sub3":{},
-        "sub4":{},
-      };
-      this.dataMap[keyStr].info[index].circlet = {
-        "main":{},
-        "sub1":{},
-        "sub2":{},
-        "sub3":{},
-        "sub4":{},
-      };
+      this.checkAndSetInfoData(this.dataMap[keyStr].info[index]);
     }
     return this.dataMap[keyStr].info[index][part as keyof ArtifactStorageInfo] as ArtifactStoragePartData;
   }
@@ -304,6 +269,43 @@ export class ArtifactService {
         activeIndex: 0,
         info: [],
       };
+    }
+  }
+
+  private checkAndSetInfoData(info: ArtifactStorageInfo){
+    if(info.setIndexs == undefined){
+      info.setIndexs = [];
+    }
+    if(info.setFullIndex == undefined){
+      info.setFullIndex = '';
+    }
+    for(let key of ["flower", "plume", "sands", "goblet", "circlet"] as (keyof ArtifactStorageInfo)[]){
+      if(info[key] == undefined){
+        let temp = {
+          "main":{},
+          "sub1":{},
+          "sub2":{},
+          "sub3":{},
+          "sub4":{},
+        };
+        switch(key){
+          case "flower":
+            info.flower = temp;
+            break;
+          case "plume":
+            info.plume = temp;
+            break;
+          case "sands":
+            info.sands = temp;
+            break;
+          case "goblet":
+            info.goblet = temp;
+            break;
+          case "circlet":
+            info.circlet = temp;
+            break;
+        }
+      }
     }
   }
 }

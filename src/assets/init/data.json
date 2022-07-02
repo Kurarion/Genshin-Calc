@@ -795,7 +795,7 @@
                                 "constCalRelation": "+",
                                 "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
                                 "settingType": "switch",
-                                "defaultEnable": true
+                                "defaultEnable": false
                             }
                         }
                     ],
@@ -1205,7 +1205,7 @@
                             "index": 3,
                             "target": ["DMG_RATE_UP_SKILL"],
                             "settingType": "slider",
-                            "sliderInitialValue": 1,
+                            "sliderInitialValue": 0,
                             "sliderStep": 1,
                             "sliderMax": 2
                         }
@@ -1442,7 +1442,7 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_ALL"],
                                 "settingType": "slider",
-                                "sliderInitialValue": 1,
+                                "sliderInitialValue": 0,
                                 "sliderStep": 1,
                                 "sliderMax": 5
                             }
@@ -1454,7 +1454,7 @@
                                 "index": 1,
                                 "target": ["DMG_BONUS_SKILL"],
                                 "settingType": "slider",
-                                "sliderInitialValue": 1,
+                                "sliderInitialValue": 0,
                                 "sliderStep": 1,
                                 "sliderMax": 3
                             }
@@ -1562,7 +1562,7 @@
                     },
                     {
                         "damage": {
-                            "indexs": [4],
+                            "indexs": [3],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -1717,7 +1717,7 @@
                             "indexMultiValue": 0.0166665916666667,
                             "target":["DMG_ANTI_ALL_MINUS"],
                             "settingType":"switch",
-                            "defaultEnable":true
+                            "defaultEnable":false
                         }
                     }
                 ],
@@ -1739,7 +1739,7 @@
                                 "index": 0,
                                 "target":["DMG_ELEMENT_SHIELD_UP"],
                                 "settingType":"slider",
-                                "sliderInitialValue":1,
+                                "sliderInitialValue":0,
                                 "sliderStep":1,
                                 "sliderMax":5
                             }
@@ -2138,6 +2138,108 @@
             },
             "constellation": { }
         },
+        "10000035": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [7,8,9],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [4,7],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "healing": {
+                            "index": 0,
+                            "constIndex": 1,
+                            "base":"ATTACK",
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "healing": {
+                            "index": 2,
+                            "constIndex": 3,
+                            "base":"ATTACK",
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "healing": {
+                            "index": 0,
+                            "constIndex": 1,
+                            "base":"ATTACK",
+                            "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buff":{
+                                "customValue": 0.2,
+                                "target":["REVERSE_HEALING_BONUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                    ],
+                    []
+                ]
+            },
+            "constellation": { 
+                "1":[
+                    {
+                        "buff":{
+                            "customValue": 0.15,
+                            "target":["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+                            "settingType":"switch",
+                            "defaultEnable":false
+                        }
+                    }
+                ]
+            }
+        },
         "10000037": {
             "skills": {
                 "normal": [
@@ -2245,7 +2347,7 @@
                                 "customValue": 0.05,
                                 "target": ["DMG_BONUS_ALL"],
                                 "settingType": "slider",
-                                "sliderInitialValue":1,
+                                "sliderInitialValue":0,
                                 "sliderMax": 5,
                                 "sliderStep": 1
                             }
@@ -2455,7 +2557,7 @@
                                 "base":"ENERGY_RECHARGE",
                                 "target":["DMG_BONUS_HYDRO"],
                                 "settingType":"switch",
-                                "defaultEnable":true
+                                "defaultEnable":false
                             }
                         }
                     ]
@@ -3336,7 +3438,7 @@
                             "index": 1,
                             "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
                             "settingType": "slider",
-                            "sliderInitialValue": 1,
+                            "sliderInitialValue": 0,
                             "sliderStep": 1,
                             "sliderMax": 60
                         }
@@ -3346,7 +3448,7 @@
                             "index": 2,
                             "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
                             "settingType": "slider",
-                            "sliderInitialValue": 1,
+                            "sliderInitialValue": 0,
                             "sliderStep": 1,
                             "sliderMax": 60
                         }
@@ -3932,7 +4034,7 @@
                 "elementalBurst": [
                     {
                         "damage": {
-                            "indexs": [0],
+                            "indexs": [0,2],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_CRYO",
@@ -4224,7 +4326,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP", "DEFENSE_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -4238,7 +4340,7 @@
                         "index": 0,
                         "target": ["DMG_BONUS_ALL"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -4252,7 +4354,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -4317,7 +4419,7 @@
                 }
             ]
         },
-        "11414": {
+        "11415": {
             "effect": [
                 {
                     "buff": {
@@ -4416,7 +4518,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -4426,7 +4528,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -4447,6 +4549,7 @@
                         "index": 1,
                         "base": "HP",
                         "target": ["ATTACK"],
+                        "priority": -1,
                         "settingType": "resident"
                     }
                 }
@@ -4466,7 +4569,7 @@
                         "sliderStartIndex": 1,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -4487,7 +4590,7 @@
                         "index": 3,
                         "target": ["DMG_BONUS_NORMAL"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -4560,7 +4663,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -4614,7 +4717,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP", "DEFENSE_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -4628,7 +4731,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -4642,7 +4745,7 @@
                         "index": 1,
                         "target": ["DMG_BONUS_ALL"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -4656,7 +4759,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -4666,7 +4769,7 @@
                         "index": 1,
                         "target": ["CRIT_RATE"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -4780,7 +4883,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -4790,7 +4893,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -4907,7 +5010,7 @@
                         "index": 0,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -4934,7 +5037,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -4967,7 +5070,7 @@
                     "buff": {
                         "index": 0,
                         "target": ["ATTACK_UP"],
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -4976,7 +5079,7 @@
                     "buff": {
                         "index": 1,
                         "target": ["CRIT_RATE"],
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -5052,6 +5155,7 @@
                         "index": 1,
                         "base": "HP",
                         "target": ["ATTACK"],
+                        "priority": -1,
                         "settingType": "resident"
                     }
                 },
@@ -5060,6 +5164,7 @@
                         "index": 2,
                         "base": "HP",
                         "target": ["ATTACK"],
+                        "priority": -1,
                         "settingType": "switch",
                         "defaultEnable": false
                     }
@@ -5099,7 +5204,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -5109,7 +5214,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -5123,7 +5228,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType": "slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 7
                     }
@@ -5152,7 +5257,7 @@
                         "index": 2,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 6
                     }
@@ -5237,7 +5342,7 @@
                         "index": 0,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -5310,7 +5415,7 @@
                         "index": 0,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -5324,7 +5429,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -5446,7 +5551,7 @@
                         "index": 1,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -5467,7 +5572,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -5477,7 +5582,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -5517,7 +5622,7 @@
                         "index": 2,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -5654,7 +5759,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -5668,7 +5773,7 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -5695,7 +5800,7 @@
                         "index": 0,
                         "target": ["DMG_BONUS_ALL"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 10
                     }
@@ -5709,7 +5814,7 @@
                         "sliderStartIndex": 1,
                         "target": ["DMG_BONUS_ALL"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -5789,7 +5894,7 @@
                         "index": 0,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -5844,7 +5949,7 @@
                         "index": 1,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
                         "settingType": "slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
                     }
@@ -5892,7 +5997,7 @@
                         "sliderStartIndex": 2,
                         "target": ["ATTACK_UP"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -5932,7 +6037,7 @@
                         "sliderStartIndex": 1,
                         "target": ["DMG_BONUS_NORMAL"],
                         "settingType":"slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -6137,7 +6242,7 @@
                         "customValue": 0.075,
                         "target": ["DMG_BONUS_PYRO"],
                         "settingType": "slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
                     }
@@ -6294,7 +6399,7 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType": "slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 2
                     }
@@ -6369,7 +6474,7 @@
                         "index": 2,
                         "target": ["DEFENSE_UP", "DMG_BONUS_GEO"],
                         "settingType": "slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
@@ -6412,7 +6517,7 @@
                         "index": 4,
                         "target": ["ATTACK_UP"],
                         "settingType": "slider",
-                        "sliderInitialValue": 1,
+                        "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
                     }
