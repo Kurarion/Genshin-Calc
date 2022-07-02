@@ -1240,8 +1240,8 @@ export class CalculatorService {
     let result: ShieldResult;
     let data = this.dataMap[indexStr].allData!;
     let base = param.base;
-    let extra = param.extra;
-    let rate = param.rate;
+    let extra = param.extra ?? 0;
+    let rate = param.rate ?? 0;
     //計算
     let shield: number = 0;
     if(base != undefined && rate != undefined){
@@ -1267,8 +1267,8 @@ export class CalculatorService {
     let result: ProductResult;
     let data = this.dataMap[indexStr].allData!;
     let base = param.base;
-    let extra = param.extra;
-    let rate = param.rate;
+    let extra = param.extra ?? 0;
+    let rate = param.rate ?? 0;
     //計算
     let product: number = 0;
     if(base != undefined && rate != undefined){
@@ -1469,21 +1469,21 @@ export class CalculatorService {
               if(skill == Const.NAME_CONSTELLATION){
                 rateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                extra = healingInfo.constIndex?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
+                extra = (healingInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
               }else if(skill == Const.NAME_SKILLS_PROUD){
                 rateInfo = characterData!.skills.proudSkills[skillIndex as number];
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                extra = healingInfo.constIndex?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
+                extra = (healingInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
               }else if(skill == Const.NAME_EFFECT){
                 rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
-                extra = healingInfo.constIndex?weaponData!.skillAffixMap[currentLevel].paramList[healingInfo.constIndex] : 0;
+                extra = (healingInfo.constIndex!=undefined)?weaponData!.skillAffixMap[currentLevel].paramList[healingInfo.constIndex] : 0;
               }else if(skill == Const.NAME_SET){
                 rate = artifactSetData.setAffixs[1].paramList[valueIndex];
-                extra = healingInfo.constIndex?artifactSetData.setAffixs[1].paramList[healingInfo.constIndex] : 0;
+                extra = (healingInfo.constIndex!=undefined)?artifactSetData.setAffixs[1].paramList[healingInfo.constIndex] : 0;
               }else{
                 rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                extra = healingInfo.constIndex?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
+                extra = (healingInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
               }
               let base = healingInfo.base!;
               let healingBonusType = healingInfo.healingBonusType;
@@ -1565,21 +1565,21 @@ export class CalculatorService {
                 if(skill == Const.NAME_CONSTELLATION){
                   rateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                  extra = shieldInfo.constIndex?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
+                  extra = (shieldInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
                 }else if(skill == Const.NAME_SKILLS_PROUD){
                   rateInfo = characterData!.skills.proudSkills[skillIndex as number];
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                  extra = shieldInfo.constIndex?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
+                  extra = (shieldInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
                 }else if(skill == Const.NAME_EFFECT){
                   rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
-                  extra = shieldInfo.constIndex?weaponData!.skillAffixMap[currentLevel].paramList[shieldInfo.constIndex] : 0;
+                  extra = (shieldInfo.constIndex!=undefined)?weaponData!.skillAffixMap[currentLevel].paramList[shieldInfo.constIndex] : 0;
                 }else if(skill == Const.NAME_SET){
                   rate = artifactSetData.setAffixs[1].paramList[valueIndex];
-                  extra = shieldInfo.constIndex?artifactSetData.setAffixs[1].paramList[shieldInfo.constIndex] : 0;
+                  extra = (shieldInfo.constIndex!=undefined)?artifactSetData.setAffixs[1].paramList[shieldInfo.constIndex] : 0;
                 }else{
                   rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                  extra = shieldInfo.constIndex?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
+                  extra = (shieldInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
                 }
                 
                 let base = shieldInfo.base!;
@@ -1660,21 +1660,21 @@ export class CalculatorService {
                 if(skill == Const.NAME_CONSTELLATION){
                   rateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                  extra = productHpInfo.constIndex?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
+                  extra = (productHpInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
                 }else if(skill == Const.NAME_SKILLS_PROUD){
                   rateInfo = characterData!.skills.proudSkills[skillIndex as number];
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                  extra = productHpInfo.constIndex?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
+                  extra = (productHpInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
                 }else if(skill == Const.NAME_EFFECT){
                   rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
-                  extra = productHpInfo.constIndex?weaponData!.skillAffixMap[currentLevel].paramList[productHpInfo.constIndex] : 0;
+                  extra = (productHpInfo.constIndex!=undefined)?weaponData!.skillAffixMap[currentLevel].paramList[productHpInfo.constIndex] : 0;
                 }else if(skill == Const.NAME_SET){
                   rate = artifactSetData.setAffixs[1].paramList[valueIndex];
-                  extra = productHpInfo.constIndex?artifactSetData.setAffixs[1].paramList[productHpInfo.constIndex] : 0;
+                  extra = (productHpInfo.constIndex!=undefined)?artifactSetData.setAffixs[1].paramList[productHpInfo.constIndex] : 0;
                 }else{
                   rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
-                  extra = productHpInfo.constIndex?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
+                  extra = (productHpInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
                 }
                 let base = productHpInfo.base!;
                 if(productHpInfo.constIndex != undefined){
