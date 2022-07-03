@@ -133,7 +133,6 @@ export class MainComponent implements OnInit, OnDestroy {
   onWindowResize() {
     this.screenWidth = window.innerWidth;
     this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
-    console.log(this.setCardWidth)
   }
 
 }
