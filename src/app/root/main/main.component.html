@@ -2,6 +2,7 @@
   <app-head
     class="head"
     [langs]="langs"
+    [hideTitle]="isLargeFlg"
     (langSelectEvent)="changeLang($event)"
     (menuButtonClickEvent)="toggleMenu()"
   ></app-head>

@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { CalculatorService, character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 
 const CSS_STATUS_BEFORE = "beforeLoad";
 const CSS_STATUS_FIN = "loaded";
+const WIDTH_DECREASE = 65;
 
 @Component({
   selector: 'app-main',
@@ -57,6 +58,9 @@ export class MainComponent implements OnInit, OnDestroy {
   otherState = CSS_STATUS_BEFORE;
   //言語
   currentLanguage!: TYPE_SYS_LANG;
+  //画面横幅
+  screenWidth!: number;
+  setCardWidth!: number;
 
   constructor(private httpService: HttpService,
     private route: ActivatedRoute, 
@@ -91,6 +95,9 @@ export class MainComponent implements OnInit, OnDestroy {
         console.log(this.data)
       }
     );
+    //画面横幅取得
+    this.screenWidth = window.innerWidth;
+    this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
   }
 
   ngOnDestroy(): void {
@@ -119,6 +126,14 @@ export class MainComponent implements OnInit, OnDestroy {
         }).catch(() => { });
       }
     }
+  }
+
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.screenWidth = window.innerWidth;
+    this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
+    console.log(this.setCardWidth)
   }
 
 }

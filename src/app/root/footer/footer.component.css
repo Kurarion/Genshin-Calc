@@ -7,12 +7,19 @@
 }
 
 .center{
-  position: fixed;
-  right: 50%;
+  margin: 0 auto;
   text-align: center;
+  width: 100px;
 }
 
 .right {
   float: right;
-  text-align: center;
+  width: 400px;
+  text-align: right;
+}
+
+.left {
+  float: left;
+  width: 400px;
+  text-align: left;
 }

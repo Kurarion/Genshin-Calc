@@ -1,5 +1,5 @@
 <ng-container *ngIf="data.skills.talents">
-    <mat-card class="card" cdkDrag>
+    <mat-card class="card" [style.width.px]="cardWidth" cdkDrag>
         <div class="drap-handle" cdkDragHandle>
             <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
                 <path

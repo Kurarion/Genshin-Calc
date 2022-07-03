@@ -7,9 +7,11 @@
   <button mat-icon-button (click)="onClickMenu()">
     <mat-icon>menu</mat-icon>
   </button>
-  <a class="menu-title" mat-button routerLink="/">
-    <span [innerHTML]="'HOME.TITLE' | translate"></span>
-  </a>
+  <ng-container *ngIf="hideTitle">
+    <a class="menu-title" mat-button routerLink="/">
+      <span [innerHTML]="'HOME.TITLE' | translate"></span>
+    </a>
+  </ng-container>
   <span class="spacer"></span>
   <!-- <app-capture-html></app-capture-html> -->
   <app-enka></app-enka>

@@ -4,22 +4,22 @@
     </div>
     <div class="content" fxLayout="row wrap" fxLayoutAlign="center" [@otherLoad]="otherState">
         <div>
-            <app-character [data]="data" [language]="currentLanguage"></app-character>
+            <app-character [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-character>
             <div class="middle"></div>
-            <app-enemy [data]="data" [language]="currentLanguage"></app-enemy>
+            <app-enemy [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-enemy>
         </div>
         <div>
-            <app-weapon [data]="data" [language]="currentLanguage"></app-weapon>
+            <app-weapon [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-weapon>
             <div class="middle"></div>
-            <app-artifact [data]="data" [language]="currentLanguage"></app-artifact>
+            <app-artifact [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-artifact>
         </div>
         <div>
-            <app-talent [data]="data" [language]="currentLanguage"></app-talent>
+            <app-talent [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-talent>
         </div>
         <div>
-            <app-constellation [data]="data" [language]="currentLanguage"></app-constellation>
+            <app-constellation [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-constellation>
             <div class="middle"></div>
-            <app-other [data]="data" [language]="currentLanguage"></app-other>
+            <app-other [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth"></app-other>
         </div>
     </div>
 </div>

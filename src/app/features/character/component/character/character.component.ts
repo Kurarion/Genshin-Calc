@@ -32,6 +32,8 @@ export class CharacterComponent implements OnInit, OnDestroy {
   @Input('data') data!: character;
   //言語
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
+  //カード横幅
+  @Input('cardWidth') cardWidth!: number;
   //キャラアイコン
   avatarURL!: string;
   //キャラアイコンローディングフラグ

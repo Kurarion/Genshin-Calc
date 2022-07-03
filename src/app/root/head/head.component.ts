@@ -25,6 +25,8 @@ export class HeadComponent implements OnInit {
   @Input('langs') langs!: LangInfo[];
   //キャプチャーするエレメント
   @Input('captureElement') captureElement!: ElementRef;
+  //タイトル表示フラグ
+  @Input('hideTitle') hideTitle!: boolean;
   //言語選択イベント
   @Output('langSelectEvent') langSelectEvent = new EventEmitter<LangInfo>();
   //メニューボタン押下イベント

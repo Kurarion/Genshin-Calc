@@ -44,6 +44,8 @@ export class EnemyComponent implements OnInit {
   @Input('data') data!: character;
   //言語
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
+  //カード横幅
+  @Input('cardWidth') cardWidth!: number;
   //敵リスト
   enemyList: enemyOption[] = [];
   //選択された敵インデックス
