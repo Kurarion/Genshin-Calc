@@ -6878,7 +6878,7 @@
                 },
                 {
                     "buff": {
-                        "index": 3,
+                        "index": 2,
                         "target": ["ENERGY_RECHARGE"],
                         "settingType": "switch",
                         "defaultEnable": false
