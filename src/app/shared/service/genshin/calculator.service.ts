@@ -787,6 +787,8 @@ export class CalculatorService {
   //変更検知
   private hasChanged: Subject<boolean> = new Subject<boolean>();
   private hasChanged$: Observable<boolean> = this.hasChanged.asObservable();
+  private allDatahasChanged: Subject<boolean> = new Subject<boolean>();
+  private allDatahasChanged$: Observable<boolean> = this.allDatahasChanged.asObservable();
 
   constructor(
     private characterService: CharacterService,
@@ -811,6 +813,11 @@ export class CalculatorService {
   //変更検知
   changed(){
     return this.hasChanged$;
+  }
+
+  //計算後データ変更検知
+  allDataChanged(){
+    return this.allDatahasChanged$;
   }
 
   //初期化（キャラ）
@@ -888,9 +895,16 @@ export class CalculatorService {
   initAllData(index: string | number){
     let indexStr = index.toString();
     this.dataMap[indexStr].allData = this.getAllData(indexStr);
-    //DEBUG
-    console.log(this.dataMap[indexStr].allData);
+    // //DEBUG
+    // console.log(this.dataMap[indexStr].allData);
     this.setDirty(indexStr, false);
+    this.allDatahasChanged.next(true);
+  }
+
+  //計算後データ取得
+  getAllDataCache(index: string | number){
+    let indexStr = index.toString();
+    return this.dataMap[indexStr].allData;
   }
 
   //ダメージ取得

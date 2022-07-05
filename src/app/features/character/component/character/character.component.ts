@@ -27,6 +27,8 @@ export class CharacterComponent implements OnInit, OnDestroy {
   readonly props = Const.PROPS_CHARA_ENEMY_BASE;
   readonly props_sub = Const.PROPS_CHARA_WEAPON_SUB;
   readonly percent_props = Const.PROPS_CHARA_WEAPON_PERCENT;
+  readonly props_all = Const.PROPS_ALL_DATA;
+  readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
 
   //キャラデータ
   @Input('data') data!: character;
@@ -44,6 +46,8 @@ export class CharacterComponent implements OnInit, OnDestroy {
   selectedLevel!: levelOption;
   //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
+  //計算後データ
+  allData!: Record<string, number> | undefined;
 
   constructor(private httpService: HttpService, 
     private extraDataService: ExtraDataService, 
@@ -71,6 +75,15 @@ export class CharacterComponent implements OnInit, OnDestroy {
     this.selectedLevel = this.getLevelFromString(this.characterService.getLevel(this.data.id)) ?? this.levelOptions[this.levelOptions.length - 1];
     //初期データ更新
     this.onChangeLevel(this.selectedLevel);
+    //計算後データ取得
+    setTimeout(() => {
+      this.getAllData();
+    })
+    setTimeout(() => {
+      this.calculatorService.allDataChanged().subscribe(()=>{
+        this.getAllData();
+      })
+    })
   }
 
   @HostListener('window:unload')
@@ -133,6 +146,10 @@ export class CharacterComponent implements OnInit, OnDestroy {
     let resultIndex = index + (isAscend ? 1 : 0) + levelNum;
 
     return this.levelOptions[resultIndex];
+  }
+
+  private getAllData(){
+    this.allData = this.calculatorService.getAllDataCache(this.data.id);
   }
 
 }

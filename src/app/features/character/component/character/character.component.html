@@ -55,6 +55,37 @@
                     </ng-container>
                 </table>
             </mat-expansion-panel>
+            <ng-container *ngIf="allData">
+                <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span [innerText]="'CHARACTER.ALLPROPS' | translate"></span>
+                        </mat-panel-title>
+                        <mat-panel-description>
+    
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <!-- 属性情報 -->
+                    <table>
+                        <ng-container *ngFor="let prop of props_all">
+                            <tr *ngIf="allData[prop] != 0">
+                                <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
+                                <ng-container *ngIf="props_all_percent.includes(prop); then percent else value"></ng-container>
+                                <ng-template #percent>
+                                    <td class="content-right"
+                                        [innerText]="allData[prop] | percent: '1.0-1' | noComma"
+                                        [matTooltip]="allData[prop] + ''" matTooltipPosition="right"></td>
+                                </ng-template>
+                                <ng-template #value>
+                                    <td class="content-right"
+                                        [innerText]="allData[prop] | number: '1.0-0' | noComma"
+                                        [matTooltip]="allData[prop] + ''" matTooltipPosition="right"></td>
+                                </ng-template>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </mat-expansion-panel>
+            </ng-container>
         </mat-card-content>
     </mat-card>
 </ng-container>
