@@ -146,6 +146,7 @@ export interface ExtraSkillShield {
   customValue?: number;
   //数値計算ベース
   base?: string;
+  shieldBonusType?: string; //シールドタイプ
 }
 
 export interface ExtraSkillProduct {

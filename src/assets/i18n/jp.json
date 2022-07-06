@@ -181,7 +181,12 @@
     "DMG_ELEMENT_SHIELD_UP": "元素(増幅)（結晶）",
     "DMG_ENEMY_DEFENSE_BASE": "敵防御（基礎）",
     "DMG_ENEMY_DEFENSE": "敵防御",
-    "DMG_ENEMY_DEFENSE_DOWN": "敵防御(マイナス)"
+    "DMG_ENEMY_DEFENSE_DOWN": "敵防御(マイナス)",
+    "SHIELD_BONUS_NORMAL": "基本シールド",
+    "SHIELD_BONUS_SKILL": "元素スキルシールド",
+    "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆発シールド",
+    "SHIELD_BONUS_WEAPON": "武器シールド",
+    "SHIELD_BONUS_OTHER": "その他シールド"
   },
   "GENSHIN": {
     "DMG":{

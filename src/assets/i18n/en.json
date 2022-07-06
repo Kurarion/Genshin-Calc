@@ -181,7 +181,12 @@
     "DMG_ELEMENT_SHIELD_UP": "Element Amplification (Elemental Shield)",
     "DMG_ENEMY_DEFENSE_BASE": "Enemy Basic Defense",
     "DMG_ENEMY_DEFENSE": "Enemy Defense",
-    "DMG_ENEMY_DEFENSE_DOWN": "Enemy Defense Reduce"
+    "DMG_ENEMY_DEFENSE_DOWN": "Enemy Defense Reduce",
+    "SHIELD_BONUS_NORMAL": "Normal Shield Bonus",
+    "SHIELD_BONUS_SKILL": "Normal Shield Bonus",
+    "SHIELD_BONUS_ELEMENTAL_BURST": "Elemental Burst Shield Bonus",
+    "SHIELD_BONUS_WEAPON": "Weapon Shield Bonus",
+    "SHIELD_BONUS_OTHER": "Other Shield Bonus"
   },
   "GENSHIN": {
     "DMG":{

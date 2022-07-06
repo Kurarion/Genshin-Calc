@@ -101,8 +101,10 @@ export class WeaponService {
     if(!this.dataMap[charKeyStr]){
       this.dataMap[charKeyStr] = {};
     }
-    if(Object.keys(this.getExtraData(charIndex)??{}).length === 0 || force){
+    if(force){
       this.dataMap[charKeyStr].extra = this.extraDataService.getWeaponDefaultSetting(weaponKeyStr);
+    }else{
+      this.checkExtraData(charKeyStr, weaponKeyStr);
     }
   }
   
@@ -167,5 +169,53 @@ export class WeaponService {
         break;
     }
     return skillStatus!;
+  }
+  
+  private checkExtraData(index: string, weaponIndex: string){
+    let target = this.extraDataService.getWeaponDefaultSetting(weaponIndex);
+    if(Object.keys(this.getExtraData(index)??{}).length === 0){
+      this.dataMap[index].extra = target;
+    }else{
+      let origin = this.dataMap[index].extra;
+      if(!this.keysEqual(origin?.effect, target.effect)){
+        this.dataMap[index].extra = target;
+      } 
+    }
+  }
+
+  private keysEqual(origin: any, target: any){
+    if(origin == undefined && target != undefined || origin != undefined && target == undefined){
+      return false;
+    }
+    if(origin == undefined && target == undefined){
+      return true;
+    }
+    let result = true;
+    for(let i of ['switchOnSet', 'sliderNumMap']){
+      if(origin[i] == undefined && target[i] != undefined || origin[i] != undefined && target[i] == undefined){
+        result = false;
+        continue;
+      }
+      if(origin[i] == undefined && target[i] == undefined){
+        continue;
+      }
+      const keys1 = Object.keys(origin[i]), keys2 = Object.keys(target[i]);
+      if(result && keys1.length != keys2.length){
+        result = false;
+      }
+      if(result && keys1.every(key => !keys2.includes(key))){
+        result = false;
+      }
+      if(i == 'switchOnSet' && result && keys2.every(key => {
+        if(target[i][key] === true && origin[i][key] === false){
+          return true;
+        }
+        return false;
+      })){
+        result = false;
+      }
+    }
+    
+    return result;
   }
 }

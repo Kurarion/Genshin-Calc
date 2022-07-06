@@ -82,6 +82,7 @@ export interface ShieldParam {
   rate?: number; //倍率
   base?: string; //数値ベース
   extra?: number; //追加値
+  shieldBonusType?: string //シールドタイプ
 }
 
 export interface ShieldResult {
@@ -1256,6 +1257,7 @@ export class CalculatorService {
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
+    let shieldBonusType = param.shieldBonusType;
     //計算
     let shield: number = 0;
     if(base != undefined && rate != undefined){
@@ -1264,7 +1266,27 @@ export class CalculatorService {
     if(extra != undefined){
       shield += extra;
     }
-    shield *= (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP]);
+    //特殊
+    if(shieldBonusType){
+      switch(shieldBonusType){
+        case Const.PROP_SHIELD_BONUS_NORMAL:
+          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_NORMAL] ?? 0);
+          break;
+        case Const.PROP_SHIELD_BONUS_SKILL:
+          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_SKILL] ?? 0);
+          break;
+        case Const.PROP_SHIELD_BONUS_ELEMENTAL_BURST:
+          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_ELEMENTAL_BURST] ?? 0);
+          break;
+        case Const.PROP_SHIELD_BONUS_WEAPON:
+          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_WEAPON] ?? 0);
+          break;
+        case Const.PROP_SHIELD_BONUS_OTHER:
+          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_OTHER] ?? 0);
+          break;
+      }
+    }
+    shield *= 1 + (data[Const.PROP_DMG_ELEMENT_SHIELD_UP] ?? 0);
     result = {
       shield: shield,
     }
@@ -1566,9 +1588,11 @@ export class CalculatorService {
           if(shieldInfo?.customValue != undefined){
             let base = shieldInfo.base!;
             let rate = shieldInfo.customValue;
+            let shieldBonusType = shieldInfo.shieldBonusType;
             params.push({
               base: base,
               rate: rate,
+              shieldBonusType: shieldBonusType
             });
           }else{
             for(let valueIndex of valueIndexs){
@@ -1597,6 +1621,7 @@ export class CalculatorService {
                 }
                 
                 let base = shieldInfo.base!;
+                let shieldBonusType = shieldInfo.shieldBonusType;
                 if(shieldInfo.constIndex != undefined){
                   switch(shieldInfo.constCalRelation){
                     case "-":
@@ -1608,6 +1633,7 @@ export class CalculatorService {
                   base: base,
                   rate: rate,
                   extra: extra,
+                  shieldBonusType: shieldBonusType,
                 });
               }
             }

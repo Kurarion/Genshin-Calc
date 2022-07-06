@@ -181,7 +181,12 @@
     "DMG_ELEMENT_SHIELD_UP": "元素増幅（結晶）",
     "DMG_ENEMY_DEFENSE_BASE": "敵人基礎防禦",
     "DMG_ENEMY_DEFENSE": "敵人防禦",
-    "DMG_ENEMY_DEFENSE_DOWN": "敵人防禦減少"
+    "DMG_ENEMY_DEFENSE_DOWN": "敵人防禦減少",
+    "SHIELD_BONUS_NORMAL": "普攻盾量加成",
+    "SHIELD_BONUS_SKILL": "元素技能盾量加成",
+    "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆發盾量加成",
+    "SHIELD_BONUS_WEAPON": "武器盾量加成",
+    "SHIELD_BONUS_OTHER": "其他盾量加成"
   },
   "GENSHIN": {
     "DMG":{

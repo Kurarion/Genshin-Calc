@@ -494,7 +494,8 @@
                         {
                             "shield": {
                                 "customValue": 0.3,
-                                "base": "HP"
+                                "base": "HP",
+                                "shieldBonusType": "SHIELD_BONUS_OTHER"
                             }
                         }
                 ]
@@ -1188,7 +1189,8 @@
                             "index": 0,
                             "constIndex": 1,
                             "constCalRelation": "+",
-                            "base": "HP"
+                            "base": "HP",
+                            "shieldBonusType": "SHIELD_BONUS_SKILL"
                         }
                     },
                     {
@@ -1242,7 +1244,8 @@
                         {
                             "shield": {
                                 "index": 0,
-                                "base": "HP"
+                                "base": "HP",
+                                "shieldBonusType": "SHIELD_BONUS_OTHER"
                             }
                         }
                 ],
@@ -1699,16 +1702,15 @@
                             "index": 5,
                             "constIndex": 4,
                             "constCalRelation":"+",
-                            "base": "HP"
+                            "base": "HP",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     },
                     {
                         "buff":{
-                            "index":7,
-                            "indexMultiValue": 0.0416666666666667,
-                            "target":["DMG_ELEMENT_SHIELD_UP"],
-                            "settingType":"switch",
-                            "defaultEnable":true
+                            "customValue":0.5,
+                            "target":["SHIELD_BONUS_SKILL"],
+                            "settingType":"resident"
                         }
                     },
                     {
@@ -2182,7 +2184,13 @@
                             "index":0,
                             "base":"DEFENSE",
                             "constIndex":6,
-                            "constCalRelation":"+"
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                        },
+                        "buff":{
+                            "customValue": 0.5,
+                            "target":["SHIELD_BONUS_SKILL"],
+                            "settingType":"resident"
                         },
                         "healing": {
                             "index":1,
@@ -2216,13 +2224,8 @@
                         {
                             "shield": {
                                 "index":1,
-                                "base":"DEFENSE"
-                            },
-                            "buff":{
-                                "customValue": 0.5,
-                                "target":["DMG_ELEMENT_SHIELD_UP"],
-                                "settingType":"switch",
-                                "defaultEnable":false
+                                "base":"DEFENSE",
+                                "shieldBonusType":"SHIELD_BONUS_SKILL"
                             }
                         }
                     ],
@@ -2754,7 +2757,15 @@
                             "index":1,
                             "base":"HP",
                             "constIndex":2,
-                            "constCalRelation":"+"
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                        },
+                        "buff":{
+                            "index":4,
+                            "indexMultiValue":0.05,
+                            "target":["SHIELD_BONUS_SKILL"],
+                            "settingType":"switch",
+                            "defaultEnable":false
                         }
                     }
                 ],
@@ -2785,7 +2796,7 @@
                         {
                             "buff": {
                                 "index": 0,
-                                "target": ["DMG_BONUS_SKILL", "DMG_ELEMENT_SHIELD_UP"],
+                                "target": ["DMG_BONUS_SKILL", "SHIELD_BONUS_SKILL"],
                                 "settingType": "switch",
                                 "defaultEnable":false
                             }
@@ -3190,7 +3201,8 @@
                             "index":1,
                             "base":"DEFENSE",
                             "constIndex":2,
-                            "constCalRelation":"+"
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     },
                     {
@@ -3198,7 +3210,8 @@
                             "index":3,
                             "base":"DEFENSE",
                             "constIndex":4,
-                            "constCalRelation":"+"
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     },
                     {
@@ -3206,7 +3219,8 @@
                             "index":5,
                             "base":"DEFENSE",
                             "constIndex":6,
-                            "constCalRelation":"+"
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     }
                 ],
@@ -3782,7 +3796,8 @@
                         {
                             "shield":{
                                 "index":0,
-                                "base":"HP"
+                                "base":"HP",
+                                "shieldBonusType":"SHIELD_BONUS_OTHER"
                             }
                         }
                 ]
@@ -4048,7 +4063,8 @@
                             "index":1,
                             "constIndex":2,
                             "constCalRelation":"+",
-                            "base":"HP"
+                            "base":"HP",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     },
                     {
@@ -4056,7 +4072,8 @@
                             "index":4,
                             "constIndex":5,
                             "constCalRelation":"+",
-                            "base":"HP"
+                            "base":"HP",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     }
                 ],
@@ -4073,7 +4090,8 @@
                             "index":2,
                             "base":"HP",
                             "constIndex":3,
-                            "constCalRelation":"+"
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
                         }
                     }
                 ],
@@ -5523,7 +5541,13 @@
                             "index":0,
                             "constIndex":1,
                             "constCalRelation":"+",
-                            "base":"HP"
+                            "base":"HP",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                        },
+                        "buff":{
+                            "customValue": 0.5,
+                            "target":["SHIELD_BONUS_SKILL"],
+                            "settingType":"resident"
                         }
                     }
                 ],
@@ -6509,17 +6533,22 @@
                 },
                 {
                     "buff": {
-                        "index": 0,
+                        "index": 1,
                         "target": ["ATTACK_UP"],
-                        "settingType": "resident"
+                        "settingType": "slider",
+                        "sliderMax":5,
+                        "sliderStep":1,
+                        "sliderInitialValue": 0
                     }
                 },
                 {
                     "buff": {
-                        "index": 4,
+                        "index": 1,
                         "target": ["ATTACK_UP"],
-                        "settingType": "switch",
-                        "defaultEnable": false
+                        "settingType": "slider",
+                        "sliderMax":5,
+                        "sliderStep":1,
+                        "sliderInitialValue": 0
                     }
                 }
             ]
