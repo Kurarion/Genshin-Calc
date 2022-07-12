@@ -8,7 +8,7 @@
 
 + 暂无使用文档...
 
-+ <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">云原神</a> 或者 <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a> 
 
 ## 注意事项
 ■角色 
@@ -66,7 +66,7 @@
 
 + Currently, there is no manual, but it may not be difficult to use. Enjoy it!
 
-+ <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">Cloud Genshin Impact</a> OR <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
 
 ---
 
@@ -78,4 +78,4 @@
 
 + まだマニュアルが作成されておりません。
 
-+ <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">クラウド原神</a> または <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
