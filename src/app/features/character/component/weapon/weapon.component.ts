@@ -183,8 +183,6 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
     }
     //武器の切り替え
     this.weaponData = this.weaponService.get(weaponIndex);
-    //追加データ更新
-    this.weaponService.setDefaultExtraData(this.data.id, weaponIndex);
     //DEBUG
     console.log(this.weaponData);
     //武器最高レベル
@@ -199,14 +197,16 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
     this.selectedWeaponAbleMaxSmeltingLevel = Object.keys(this.weaponData.skillAffixMap??{}).length;
     if (this.selectedWeaponAbleMaxSmeltingLevel != 0 && parseInt(this.selectedSmeltingLevel) > this.selectedWeaponAbleMaxSmeltingLevel){
       this.selectedSmeltingLevel = this.selectedWeaponAbleMaxSmeltingLevel.toString();
-      //追加データ更新
-      this.onChangeSmeltingLevel(this.selectedSmeltingLevel);
-    }else{
-      //追加データ更新
-      this.calculatorService.initWeaponData(this.data.id, weaponIndex);
-      //表示用更新
-      this.updateRecords();
+      //武器突破レベル設定
+      this.weaponService.setSmeltingLevel(this.data.id, this.selectedSmeltingLevel);
+      //更新
+      this.calculatorService.initExtraWeaponData(this.data.id);
     }
+    //追加データ更新
+    this.weaponService.setDefaultExtraData(this.data.id, weaponIndex);
+    this.calculatorService.initWeaponData(this.data.id, weaponIndex);
+    //表示用更新
+    this.updateRecords();
     //プロフィール画像初期化
     this.initializeBackGroundImage();
     //武器設定
