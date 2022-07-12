@@ -245,7 +245,7 @@ func initialize() (err error) {
 			_, er := os.Stat(v.path)
 			if er != nil {
 				if os.IsNotExist(er) {
-					os.MkdirAll(v.path, 0666)
+					os.MkdirAll(v.path, 0777)
 					continue
 				}
 			}

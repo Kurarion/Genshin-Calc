@@ -104,7 +104,7 @@ func readBody(rp *http.Response) (buf *bytes.Buffer, err error) {
 
 //写入文件
 func writeToFile(path string, content *bytes.Buffer) error {
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777)
 	if err != nil {
 		return err
 	}
