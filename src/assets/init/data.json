@@ -6188,6 +6188,89 @@
                 }
             ]
         },
+        "11416": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    },
+                    "buff": {
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }
+                }
+            ]
+        },
+        "11419": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    },
+                    "healing": {
+                        "index": 1,
+                        "base": "ATTACK",
+                        "healingBonusType": "HEALING_BONUS_WEAPON"
+                    },
+                    "buff": {
+                        "index": 3,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"resident"
+                    }
+                }
+            ]
+        },
+        "11420": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    },
+                    "buff": {
+                        "index": 2,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"resident"
+                    }
+                }
+            ]
+        },
+        "11421": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    },
+                    "healing": {
+                        "index": 1,
+                        "base": "ATTACK",
+                        "healingBonusType": "HEALING_BONUS_WEAPON"
+                    },
+                    "buff": {
+                        "index": 3,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"resident"
+                    }
+                }
+            ]
+        },
         "11501": {
             "effect": [
                 {

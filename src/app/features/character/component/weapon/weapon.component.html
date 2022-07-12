@@ -81,10 +81,11 @@
                     <mat-form-field appearance="legacy" floatLabel="always">
                         <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
                         <mat-select [(ngModel)]="selectedSmeltingLevel" (ngModelChange)="onChangeSmeltingLevel($event)">
-                            <ng-container *ngFor="let level of smeltingLevelOptions">
+                            <ng-container *ngFor="let level of smeltingLevelOptions; index as i">
                                 <mat-option
                                     [value]="level"
-                                    [innerText]="level">
+                                    [innerText]="level"
+                                    [disabled]="i > selectedWeaponAbleMaxSmeltingLevel - 1">
                                 </mat-option>
                             </ng-container>
                         </mat-select>
