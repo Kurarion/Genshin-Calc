@@ -1,10 +1,17 @@
 package main
 
 import (
-	_ "GenshinData/genshindata"
+	genshindata "GenshinData/genshindata"
+	"flag"
 	"fmt"
 )
 
+var targetDir = flag.String("targetDir", "./src/assets/genshin", "example ./src/assets/genshin")
+
 func main() {
-	fmt.Println("OK!")
+	flag.Parse()
+	fmt.Println("Path:", *targetDir)
+	fmt.Println("Start!")
+	genshindata.Generate(*targetDir)
+	fmt.Println("End!")
 }

@@ -91,16 +91,16 @@ const (
 
 //文件完整路径
 const (
-	pathDir   = "./src/assets/genshin"
+	// pathDir   = "./src/assets/genshin"
 	pathSlash = "/"
 
-	pathAvatarFile         = pathDir + pathSlash + fileAvatar
-	pathWeaponFile         = pathDir + pathSlash + fileWeapon
-	pathReliquaryAffixFile = pathDir + pathSlash + fileReliquaryAffix
-	pathReliquaryMainFile  = pathDir + pathSlash + fileReliquaryMain
-	pathReliquarySetFile   = pathDir + pathSlash + fileReliquarySet
-	pathAvatarSkillsFile   = pathDir + pathSlash + fileAvatarSkills
-	pathMonsterFile        = pathDir + pathSlash + fileMonster
+	// pathAvatarFile         = pathDir + pathSlash + fileAvatar
+	// pathWeaponFile         = pathDir + pathSlash + fileWeapon
+	// pathReliquaryAffixFile = pathDir + pathSlash + fileReliquaryAffix
+	// pathReliquaryMainFile  = pathDir + pathSlash + fileReliquaryMain
+	// pathReliquarySetFile   = pathDir + pathSlash + fileReliquarySet
+	// pathAvatarSkillsFile   = pathDir + pathSlash + fileAvatarSkills
+	// pathMonsterFile        = pathDir + pathSlash + fileMonster
 
 	pathLocalDir = "./genshindata/extra"
 
@@ -157,7 +157,19 @@ const (
 	genshinMonsterLevelMax       = 100
 )
 
-func init() {
+func Generate(targetDir string) {
+	//文件完整路径
+	var (
+		pathDir = targetDir
+
+		pathAvatarFile         = pathDir + pathSlash + fileAvatar
+		pathWeaponFile         = pathDir + pathSlash + fileWeapon
+		pathReliquaryAffixFile = pathDir + pathSlash + fileReliquaryAffix
+		pathReliquaryMainFile  = pathDir + pathSlash + fileReliquaryMain
+		pathReliquarySetFile   = pathDir + pathSlash + fileReliquarySet
+		pathAvatarSkillsFile   = pathDir + pathSlash + fileAvatarSkills
+		pathMonsterFile        = pathDir + pathSlash + fileMonster
+	)
 	//下载URL初始化
 	dataJSONURLMap = map[string]string{
 		indexAvatarExcelConfig:           RepositoryURL + AvatarExcelConfigData,
