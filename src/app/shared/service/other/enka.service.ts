@@ -91,7 +91,11 @@ export class EnkaService {
     this.data.name = "";
     this.data.avatars = [];
     //API送信
-    let enka = await this.getUIDInfos(uidStr);
+    this.globalProgressService.setMode("buffer");
+    let enka = await this.getUIDInfos(uidStr).finally(()=>{
+      this.globalProgressService.setMode("determinate");
+      this.globalProgressService.setValue(100)
+    });
     //データ処理
     if(enka != null){
       this.initPlayer(enka.playerInfo);
@@ -121,7 +125,9 @@ export class EnkaService {
   initAvatar(avatar: EnkaAvatar | undefined, minProgress: number, maxProgress: number){
     if(avatar == undefined){
       //プログレス更新
-      this.globalProgressService.setValue(maxProgress);
+      setTimeout(()=>{
+        this.globalProgressService.setValue(maxProgress);
+      })
       return;
     }
     //プログレス差
@@ -170,7 +176,9 @@ export class EnkaService {
     }
 
     //プログレス更新
-    this.globalProgressService.setValue(minProgress + progressDiff * 1/6);
+    setTimeout(()=>{
+      this.globalProgressService.setValue(minProgress + progressDiff * 1/6);
+    })
 
     //装備
     let reliquaries: EnkaEquip[] = [];
@@ -187,11 +195,15 @@ export class EnkaService {
       }
     }
     //プログレス更新
-    this.globalProgressService.setValue(minProgress + progressDiff * 1/3);
+    setTimeout(()=>{
+      this.globalProgressService.setValue(minProgress + progressDiff * 1/3);
+    })
     this.initReliquary(avatarId, reliquaries);
 
     //プログレス更新
-    this.globalProgressService.setValue(maxProgress);
+    setTimeout(()=>{
+      this.globalProgressService.setValue(maxProgress);
+    })
   }
 
   initReliquary(avatarId: string, reliquaries: EnkaEquip[]){
