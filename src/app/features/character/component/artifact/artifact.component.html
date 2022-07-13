@@ -73,7 +73,13 @@
                             <mat-tab [label]="'ARTIFACT.' + type | translate">
                                 <div class="artifact-sub">
                                     <br>
-                                    <app-artifact-sub [characterIndex]="data.id" [index]="index" [artifactType]="type"></app-artifact-sub>
+                                    <app-artifact-sub
+                                        [characterIndex]="data.id"
+                                        [index]="index"
+                                        [artifactType]="type"
+                                        [isAuto]="isSelectedIndexAuto"
+                                    >
+                                    </app-artifact-sub>
                                 </div>
                             </mat-tab>
                         </ng-container>
@@ -91,6 +97,10 @@
                             </ng-template>
                         </mat-tab>
                     </mat-tab-group>
+                    <ng-container *ngIf="isSelectedIndexAuto">
+                        <mat-divider></mat-divider>
+                        <app-artifact-auto></app-artifact-auto>
+                    </ng-container>
                 </mat-tab>
                 <mat-tab disabled>
                     <ng-template mat-tab-label>
@@ -99,6 +109,9 @@
                         </button>
                         <button class="add-button" mat-icon-button (click)="addTab()" matTooltip="Add" matTooltipPosition="above">
                             <mat-icon>add_circle</mat-icon>
+                        </button>
+                        <button class="add-button" mat-icon-button (click)="addAutoTab()" matTooltip="Add Auto" matTooltipPosition="above">
+                            <mat-icon>queue_play_next</mat-icon>
                         </button>
                     </ng-template>
                 </mat-tab>

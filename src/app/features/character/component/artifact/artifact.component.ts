@@ -33,6 +33,8 @@ export class ArtifactComponent implements OnInit {
   ];
   //選択されたインデックス
   selectedIndex!: number;
+  //選択された聖遺物Autoフラグ
+  isSelectedIndexAuto: boolean = false;
   //聖遺物セットリスト
   artifactSetList: artifactSetOption[] = [];
   //選択された聖遺物セットインデックス
@@ -69,6 +71,8 @@ export class ArtifactComponent implements OnInit {
     this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
     //選択中インデックス
     this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
+    //Autoフラグ
+    this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
     //選択された聖遺物セット初期化
     this.initSelectedArtifactSetIndexs(true);
   }
@@ -88,6 +92,13 @@ export class ArtifactComponent implements OnInit {
   addTab() {
     this.tabs.push((this.tabs.length + 1).toString());
     this.selectedIndex = this.tabs.length - 1;
+    this.setActiveIndex();
+  }
+
+  addAutoTab() {
+    this.tabs.push((this.tabs.length + 1).toString());
+    this.selectedIndex = this.tabs.length - 1;
+    this.artifactService.pushStorageInfo(this.data.id, {isAuto: true})
     this.setActiveIndex();
   }
 
@@ -115,6 +126,8 @@ export class ArtifactComponent implements OnInit {
     this.initSelectedArtifactSetIndexs();
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
+    //Autoフラグ
+    this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
   }
 
   /**

@@ -11,6 +11,7 @@ export interface ArtifactStoragePartData {
 }
 
 export interface ArtifactStorageInfo {
+  isAuto?: boolean;
   setIndexs?: string[];
   setFullIndex?: string;
   extra?: ExtraArtifactSetData;
@@ -63,6 +64,13 @@ export class ArtifactService {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].activeIndex;
+  }
+
+  //適用中インデックスAutoフラグ取得
+  getStorageActiveIndexAutoFlag(charIndex: string | number){
+    let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
+    return this.dataMap[keyStr].info[this.getStorageActiveIndex(keyStr)].isAuto ?? false;
   }
 
   //適用中インデックス設定
