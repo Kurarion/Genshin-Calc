@@ -31,6 +31,8 @@ export class ArtifactSubComponent implements OnInit {
   @Input('index') index!: number;
   //聖遺物パートタイプ
   @Input('artifactType') artifactType!: string;
+  //Autoフラグ
+  @Input('isAuto') isAuto!: boolean;
 
   //データ
   data!: ArtifactStoragePartData;
