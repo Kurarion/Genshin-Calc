@@ -116,7 +116,7 @@ export class ArtifactComponent implements OnInit {
     this.artifactService.recoverData(this.data.id, index);
     this.subChanged += 1;
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs();
+    this.initSelectedArtifactSetIndexs(true);
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
   }
