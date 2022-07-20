@@ -75,12 +75,13 @@ table tr:first-child .content-right {
 }
 
 .set-field {
-    width: 150px;
+    width: 140px;
 }
 
 .artifact-set {
     margin-left: 2%;
-    width: 96%;
+    width: 94%;
+    margin-right: 2%;
 }
 
 .artifact-sub {

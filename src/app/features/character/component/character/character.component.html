@@ -41,16 +41,22 @@
                 <table>
                     <tr *ngFor="let prop of props">
                         <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
-                        <td class="content-right"
-                            [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
-                            [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right"></td>
+                        <td class="content-right">
+                            <span 
+                                [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
+                                [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right">
+                            </span>
+                        </td>
                     </tr>
                     <ng-container *ngFor="let prop of props_sub">
                         <tr *ngIf="selectedLevelProps[prop] && selectedLevelProps[prop].value != 0">
                             <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
-                            <td class="content-right"
-                                [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
-                                [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right"></td>
+                            <td class="content-right">
+                                <span 
+                                    [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
+                                    [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right">
+                                </span>
+                            </td>
                         </tr>
                     </ng-container>
                 </table>
@@ -72,14 +78,20 @@
                                 <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
                                 <ng-container *ngIf="props_all_percent.includes(prop); then percent else value"></ng-container>
                                 <ng-template #percent>
-                                    <td class="content-right"
-                                        [innerText]="allData[prop] | percent: '1.0-1' | noComma"
-                                        [matTooltip]="allData[prop] + ''" matTooltipPosition="right"></td>
+                                    <td class="content-right">
+                                        <span
+                                            [innerText]="allData[prop] | percent: '1.0-1' | noComma"
+                                            [matTooltip]="allData[prop] + ''" matTooltipPosition="right">
+                                        </span>
+                                    </td>
                                 </ng-template>
                                 <ng-template #value>
-                                    <td class="content-right"
-                                        [innerText]="allData[prop] | number: '1.0-0' | noComma"
-                                        [matTooltip]="allData[prop] + ''" matTooltipPosition="right"></td>
+                                    <td class="content-right">
+                                        <span
+                                            [innerText]="allData[prop] | number: '1.0-0' | noComma"
+                                            [matTooltip]="allData[prop] + ''" matTooltipPosition="right">
+                                        </span>
+                                    </td>
                                 </ng-template>
                             </tr>
                         </ng-container>

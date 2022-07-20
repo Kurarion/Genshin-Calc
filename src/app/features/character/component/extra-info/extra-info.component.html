@@ -22,8 +22,11 @@
             </tr>
             <tr>
                 <td [innerText]="paramDesc.desc"></td>
-                <td [innerText]="showValues[i]"
-                    [matTooltip]="tipValues[i]" matTooltipPosition="right">
+                <td>
+                    <span 
+                        [innerText]="showValues[i]"
+                        [matTooltip]="tipValues[i]" matTooltipPosition="right">
+                    </span>
                 </td>
             </tr>
             <tr>
