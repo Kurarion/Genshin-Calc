@@ -1133,14 +1133,22 @@ export class CalculatorService {
     let overloadedDmg;
     let shieldHp;
     if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_HYDRO].includes(elementBonusType)){
-      originVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * originDmg;
-      cirtVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * critDmg;
-      expectVaporizeDmg = REACTION_RATE_1_5 * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * expectDmg;
+      let reactionRate = REACTION_RATE_2_0;
+      if(elementBonusType == Const.PROP_DMG_BONUS_PYRO){
+        reactionRate = REACTION_RATE_1_5;
+      }
+      originVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * originDmg;
+      cirtVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * critDmg;
+      expectVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * expectDmg;
     }
     if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_CRYO].includes(elementBonusType)){
-      originMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * originDmg;
-      cirtMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * critDmg;
-      expectMeltDmg = REACTION_RATE_2_0 * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * expectDmg;
+      let reactionRate = REACTION_RATE_2_0;
+      if(elementBonusType == Const.PROP_DMG_BONUS_CRYO){
+        reactionRate = REACTION_RATE_1_5;
+      }
+      originMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * originDmg;
+      cirtMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * critDmg;
+      expectMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * expectDmg;
     }
     if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
       let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
