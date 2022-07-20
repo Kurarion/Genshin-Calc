@@ -97,13 +97,14 @@ export class OtherComponent implements OnInit, OnDestroy {
   onValueKeyup(event: KeyboardEvent){
     let originValue = (event.target as HTMLInputElement).value;
     let value = parseFloat(originValue);
-    if(!isNaN(value)){
-      if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
-        value /= 100; 
-      }
-      this.infos[this.selectedIndex].value = value;
-      this.updateDirtyFlag();
+    if(isNaN(value)){
+      value = 0;
     }
+    if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
+      value /= 100; 
+    }
+    this.infos[this.selectedIndex].value = value;
+    this.updateDirtyFlag();
   }
 
   updateDirtyFlag(){
