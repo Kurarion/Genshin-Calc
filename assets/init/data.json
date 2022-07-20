@@ -1973,7 +1973,7 @@
                         "buff":{
                             "index":3,
                             "base":"ATTACK_BASE",
-                            "target":["ATTACK"],
+                            "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }
@@ -1990,7 +1990,7 @@
                         "buff":{
                             "index":0,
                             "base":"ATTACK_BASE",
-                            "target":["ATTACK"],
+                            "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }
@@ -2213,7 +2213,7 @@
                         "buff": {
                             "index":2,
                             "base":"DEFENSE",
-                            "target":["ATTACK"],
+                            "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }
@@ -2259,7 +2259,7 @@
                         "buff":{
                             "index":0,
                             "base":"DEFENSE",
-                            "target":["ATTACK"],
+                            "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }
@@ -3432,7 +3432,7 @@
                             "maxValIndex": 6,
                             "maxValBase": "ATTACK_BASE",
                             "priority": 10,
-                            "target": ["ATTACK"],
+                            "target": ["ATTACK_VAL_UP"],
                             "settingType": "switch",
                             "defaultEnable": false
                         }
@@ -4998,7 +4998,7 @@
                         "buff": {
                             "index": 1,
                             "base":"DEFENSE",
-                            "target":["ATTACK"],
+                            "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }
@@ -6388,7 +6388,7 @@
                     "buff": {
                         "index": 1,
                         "base": "HP",
-                        "target": ["ATTACK"],
+                        "target": ["ATTACK_VAL_UP"],
                         "priority": -1,
                         "settingType": "resident"
                     }
@@ -6999,7 +6999,7 @@
                     "buff": {
                         "index": 1,
                         "base": "HP",
-                        "target": ["ATTACK"],
+                        "target": ["ATTACK_VAL_UP"],
                         "priority": -1,
                         "settingType": "resident"
                     }
@@ -7008,7 +7008,7 @@
                     "buff": {
                         "index": 2,
                         "base": "HP",
-                        "target": ["ATTACK"],
+                        "target": ["ATTACK_VAL_UP"],
                         "priority": -1,
                         "settingType": "switch",
                         "defaultEnable": false
@@ -7459,17 +7459,18 @@
                     "buff": {
                         "index": 0,
                         "target": ["DMG_BONUS_SKILL"],
-                        "settingType": "resident"
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
                     }
                 },
                 {
                     "buff": {
                         "index": 2,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
-                        "settingType":"slider",
-                        "sliderInitialValue": 0,
-                        "sliderStep": 1,
-                        "sliderMax": 4
+                        "settingType": "switch",
+                        "defaultEnable": false
                     }
                 }
             ]
@@ -8385,6 +8386,7 @@
                         "index": 1,
                         "base": "ATTACK",
                         "target": ["DMG_VAL_UP_NORMAL"],
+                        "priority": -10,
                         "settingType": "switch",
                         "defaultEnable": false
                     }
