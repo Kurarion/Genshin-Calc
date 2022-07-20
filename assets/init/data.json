@@ -7026,7 +7026,7 @@
                     }
                 },
                 {
-                    "dmage": {
+                    "damage": {
                         "index": 3,
                         "base": "ATTACK",
                         "attackBonusType":"DMG_BONUS_WEAPON",
@@ -7284,7 +7284,7 @@
         "14409": {
             "effect": [
                 {
-                    "dmage": {
+                    "damage": {
                         "index": 2,
                         "base": "ATTACK",
                         "elementBonusType":"DMG_BONUS_PHYSICAL",
@@ -7308,7 +7308,7 @@
         "14412": {
             "effect": [
                 {
-                    "dmage": {
+                    "damage": {
                         "index": 1,
                         "base": "ATTACK",
                         "elementBonusType":"DMG_BONUS_PHYSICAL",
@@ -7316,7 +7316,7 @@
                     }
                 },
                 {
-                    "dmage": {
+                    "damage": {
                         "index": 2,
                         "base": "ATTACK",
                         "elementBonusType":"DMG_BONUS_PHYSICAL",
