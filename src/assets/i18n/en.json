@@ -40,7 +40,8 @@
     "TARGETVALUE": "Target Value"
   },
   "SYS": {
-    "DELETE": "Delete"
+    "DELETE": "Delete",
+    "ROLLBACK": "Rollback"
   },
   "PROPS": {
     "LEVEL": "Level",

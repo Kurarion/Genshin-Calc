@@ -40,7 +40,8 @@
     "TARGETVALUE": "目标值"
   },
   "SYS": {
-    "DELETE": "删除"
+    "DELETE": "删除",
+    "ROLLBACK": "回滚"
   },
   "PROPS": {
     "LEVEL": "等级",

@@ -73,7 +73,7 @@
                             <mat-tab [label]="'ARTIFACT.' + type | translate">
                                 <div class="artifact-sub">
                                     <br>
-                                    <app-artifact-sub [characterIndex]="data.id" [index]="index" [artifactType]="type"></app-artifact-sub>
+                                    <app-artifact-sub [characterIndex]="data.id" [index]="index" [artifactType]="type" [changed]="subChanged"></app-artifact-sub>
                                 </div>
                             </mat-tab>
                         </ng-container>
@@ -83,6 +83,10 @@
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="rollback(index)">
+                                        <mat-icon>replay</mat-icon>
+                                        <span [innerText]="'SYS.ROLLBACK' | translate"></span>
+                                    </button>
                                     <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
                                         <mat-icon>delete</mat-icon>
                                         <span [innerText]="'SYS.DELETE' | translate"></span>

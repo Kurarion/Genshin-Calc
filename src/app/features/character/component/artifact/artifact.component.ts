@@ -54,6 +54,9 @@ export class ArtifactComponent implements OnInit {
   //表示用
   effectValidIndexs!: number[];
 
+  //子コンポーネント変更フラグ
+  subChanged: number = 0;
+
   constructor(
     private artifactService: ArtifactService,
     private calculatorService: CalculatorService) { }
@@ -107,6 +110,15 @@ export class ArtifactComponent implements OnInit {
       this.selectedIndex = 0;
       this.setActiveIndex();
     }
+  }
+
+  rollback(index: number) {
+    this.artifactService.recoverData(this.data.id, index);
+    this.subChanged += 1;
+    //選択された聖遺物セット初期化
+    this.initSelectedArtifactSetIndexs();
+    //更新
+    this.calculatorService.setDirtyFlag(this.data.id);
   }
 
   setActiveIndex(){

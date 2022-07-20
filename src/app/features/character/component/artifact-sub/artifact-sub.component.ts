@@ -31,6 +31,8 @@ export class ArtifactSubComponent implements OnInit {
   @Input('index') index!: number;
   //聖遺物パートタイプ
   @Input('artifactType') artifactType!: string;
+  //再レンダリング
+  @Input('changed') changed!: number;
 
   //データ
   data!: ArtifactStoragePartData;
@@ -59,7 +61,7 @@ export class ArtifactSubComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['index']) {
+    if (changes['index']||changes['changed']) {
       this.initData();
     }
   }

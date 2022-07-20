@@ -8,6 +8,8 @@ import { CalculatorService, character, Const, OtherService, OtherStorageInfo, TY
 })
 export class OtherComponent implements OnInit, OnDestroy {
 
+  readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
+
   tabs: string[] = [];
   //選択されたインデックス
   selectedIndex!: number;
@@ -22,6 +24,8 @@ export class OtherComponent implements OnInit, OnDestroy {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+
+  showValue!: number;
 
   constructor(private otherService: OtherService, private calculatorService: CalculatorService) { }
 
@@ -38,6 +42,8 @@ export class OtherComponent implements OnInit, OnDestroy {
     this.selectedIndex = this.otherService.getStorageSelectedIndex(this.data.id);
     //情報初期化
     this.initInfos();
+
+    this.updateShowValue();
   }
 
   @HostListener('window:unload')
@@ -73,18 +79,28 @@ export class OtherComponent implements OnInit, OnDestroy {
     this.updateDirtyFlag();
   }
 
+  onTabChanged() {
+    this.updateShowValue();
+  }
+
   setSelectedIndex(){
     this.otherService.setStorageSelectedIndex(this.data.id, this.selectedIndex);
+    this.updateShowValue();
   }
 
   onSelectProp(prop: string){
     this.infos[this.selectedIndex].value = 0;
+    this.updateShowValue();
     this.updateDirtyFlag();
   }
 
   onValueKeyup(event: KeyboardEvent){
-    let value = parseFloat((event.target as HTMLInputElement).value);
+    let originValue = (event.target as HTMLInputElement).value;
+    let value = parseFloat(originValue);
     if(!isNaN(value)){
+      if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
+        value /= 100; 
+      }
       this.infos[this.selectedIndex].value = value;
       this.updateDirtyFlag();
     }
@@ -102,5 +118,13 @@ export class OtherComponent implements OnInit, OnDestroy {
 
   private initInfos(){
     this.infos = this.otherService.getStorageInfos(this.data.id);
+  }
+
+  private updateShowValue(){
+    let value = this.infos[this.selectedIndex].value
+    if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
+      value *= 100; 
+    }
+    this.showValue = value;
   }
 }

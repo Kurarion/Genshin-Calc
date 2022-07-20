@@ -79,7 +79,7 @@ table tr:first-child .content-right {
 }
 
 .switch {
-    transform: translate(68px, 10px);
+    transform: translate(68px, 5px);
 }
 
 .tab {

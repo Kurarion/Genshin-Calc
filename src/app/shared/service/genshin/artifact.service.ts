@@ -45,6 +45,28 @@ export class ArtifactService {
     }
   }
 
+  //聖遺物全ロールバック
+  recoverAllData(index: string | number) {
+    let indexStr = index.toString();
+    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
+    if(temp){
+      let storageInfo: ArtifactStorageData = temp[indexStr];
+      this.dataMap[indexStr].info = storageInfo.info;
+    }
+  }
+
+  //聖遺物ロールバック
+  recoverData(index: string | number, artIndex: number) {
+    let indexStr = index.toString();
+    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
+    if(temp){
+      let storageInfo: ArtifactStorageData = temp[indexStr];
+      if(this.dataMap[indexStr].info.length == storageInfo.info.length && artIndex < storageInfo.info.length){
+        this.dataMap[indexStr].info[artIndex] = JSON.parse(JSON.stringify(storageInfo.info[artIndex]));
+      }
+    }
+  }
+
   getSetMap(): Record<string, artifactSet> {
     return GenshinDataService.dataReliquarySet;
   }

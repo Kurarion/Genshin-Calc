@@ -1937,14 +1937,14 @@ export class CalculatorService {
           break;
         case Const.PROP_ATTACK_UP:
         case Const.PROP_VAL_ATTACK:
-          result[Const.PROP_ATTACK] += result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) + result[Const.PROP_VAL_ATTACK];
+          result[Const.PROP_ATTACK] = result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) + result[Const.PROP_VAL_ATTACK];
           break;
         case Const.PROP_DEFENSE_UP:
         case Const.PROP_VAL_DEFENSE:
-          result[Const.PROP_DEFENSE] += result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) + result[Const.PROP_VAL_DEFENSE];
+          result[Const.PROP_DEFENSE] = result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) + result[Const.PROP_VAL_DEFENSE];
           break;
         case Const.PROP_DMG_ENEMY_DEFENSE_DOWN:
-          result[Const.PROP_DMG_ENEMY_DEFENSE] += result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
+          result[Const.PROP_DMG_ENEMY_DEFENSE] = result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
           break;
       }
     }
