@@ -187,12 +187,10 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
     console.log(this.weaponData);
     //武器最高レベル
     this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
-    if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.levelNum || this.selectedLevel.levelNum > this.selectedWeaponAbleMaxLevel) {
-      //実行あり得ない（三星以上）
-      this.selectedLevel = this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ?? this.levelOptions[this.selectedWeaponAbleMaxLevel + this.ascendLevels.indexOf(this.selectedWeaponAbleMaxLevel) - 1];
-      //武器属性更新
-      this.onChangeLevel(this.selectedLevel);
-    }
+    // if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.levelNum || this.selectedLevel.levelNum > this.selectedWeaponAbleMaxLevel) {
+    //   //実行あり得ない（三星以上）
+    //   this.selectedLevel = this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ?? this.levelOptions[this.selectedWeaponAbleMaxLevel + this.ascendLevels.indexOf(this.selectedWeaponAbleMaxLevel) - 1];
+    // }
     //武器最高精錬レベル
     this.selectedWeaponAbleMaxSmeltingLevel = Object.keys(this.weaponData.skillAffixMap??{}).length;
     if (this.selectedWeaponAbleMaxSmeltingLevel != 0 && parseInt(this.selectedSmeltingLevel) > this.selectedWeaponAbleMaxSmeltingLevel){
@@ -205,6 +203,8 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
     //追加データ更新
     this.weaponService.setDefaultExtraData(this.data.id, weaponIndex);
     this.calculatorService.initWeaponData(this.data.id, weaponIndex);
+    //武器属性更新
+    this.onChangeLevel(this.selectedLevel);
     //表示用更新
     this.updateRecords();
     //プロフィール画像初期化
