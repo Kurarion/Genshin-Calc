@@ -553,7 +553,7 @@ func update() error {
 	}
 	for i := range avatarSkillsDataMap {
 		temp := avatarSkillsDataMap[i]
-		if temp.Skills[1] == 0 {
+		if temp.Skills[1] == uint64(0) || temp.EnergySkill == uint64(0) {
 			continue
 		}
 		normalParamDescList := getRegxTextsFromHash(avatarProudSkillDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId][0].ParamDescList, textMap, false)
@@ -725,6 +725,40 @@ func update() error {
 					temp.FieldByName(addPropNames[iiii]).SetFloat(temp.FieldByName(addPropNames[iiii]).Float() + currentPromote.AddProps[iiii].Value)
 				}
 			}
+		}
+		//旅行者
+		if len(currentAvatarData.CandSkillDepotIds) > 0 {
+			for _, depotId := range currentAvatarData.CandSkillDepotIds {
+				if _, exit := dataAvatarSkillsMap[depotId]; !exit {
+					continue
+				}
+				newId, err := strconv.ParseUint(strconv.FormatUint(currentAvatarData.Id, 10)+strconv.FormatUint(depotId, 10), 10, 64)
+				if err != nil {
+					continue
+				}
+				dataAvatarMap[newId] = &AVATAR{
+					Id:              newId,
+					Name:            nameText,
+					NameTextMapHash: currentAvatarData.NameTextMapHash,
+					Desc:            descText,
+					DescTextMapHash: currentAvatarData.DescTextMapHash,
+					IconName:        currentAvatarData.IconName,
+					WeaponType:      currentAvatarData.WeaponType,
+					Images: AVATARIMAGES{
+						Icon:       fmt.Sprintf(imgHostAvatarFormat, currentAvatarData.IconName),
+						Background: extraCharacterMap[nameText[languageCHS]].BackgroundUrl,
+					},
+					LevelMap:     make(map[string]*PROPERTY),
+					SkillDepotId: depotId,
+					QualityType:  currentAvatarData.QualityType,
+					SideIconName: currentAvatarData.SideIconName,
+				}
+				//技能
+				dataAvatarMap[newId].Skills = *dataAvatarSkillsMap[depotId]
+				//等级
+				dataAvatarMap[newId].LevelMap = dataAvatarMap[currentAvatarData.Id].LevelMap
+			}
+			delete(dataAvatarMap, currentAvatarData.Id)
 		}
 	}
 	//武器

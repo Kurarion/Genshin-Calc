@@ -53,6 +53,14 @@ export class MenuComponent implements OnInit {
         },
         isEnkaData: enkaList.includes(key),
       };
+      //旅人さん
+      if (key.includes(Const.PLAYER_BOY)){
+        temp.sexType = "BOY";
+        temp.elementType = Const.PLAYER_BOY_ELEMENT[key.replace(Const.PLAYER_BOY, '')]
+      }else if (key.includes(Const.PLAYER_GIRL)){
+        temp.sexType = "GIRL";
+        temp.elementType = Const.PLAYER_GIRL_ELEMENT[key.replace(Const.PLAYER_GIRL, '')]
+      }
       this.menuList.push(temp);
     }
   }

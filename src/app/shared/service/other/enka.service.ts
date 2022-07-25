@@ -104,8 +104,10 @@ export class EnkaService {
       if(enka.avatarInfoList != undefined){
         let length = enka.avatarInfoList.length;
         for(let [i,info] of enka.avatarInfoList.entries()){
-          this.initAvatar(info, 100/length * i, 100/length * (i + 1));
-          this.data.avatars.push(info.avatarId.toString());
+          let addedId = this.initAvatar(info, 100/length * i, 100/length * (i + 1));
+          if(addedId){
+            this.data.avatars.push(addedId);
+          }
         }
       }
     }
@@ -122,19 +124,24 @@ export class EnkaService {
   }
 
   //キャラセット
-  initAvatar(avatar: EnkaAvatar | undefined, minProgress: number, maxProgress: number){
+  initAvatar(avatar: EnkaAvatar | undefined, minProgress: number, maxProgress: number): string{
     if(avatar == undefined){
       //プログレス更新
       setTimeout(()=>{
         this.globalProgressService.setValue(maxProgress);
       })
-      return;
+      return "";
     }
     //プログレス差
     let progressDiff = maxProgress - minProgress;
     //キー
     let avatarId = avatar.avatarId.toString();
     let avatarData = this.genshinDataService.getCharacter(avatarId);
+    //旅人さん
+    if(!avatarData){
+      avatarId = avatar.avatarId.toString() + avatar.skillDepotId.toString();
+      avatarData = this.genshinDataService.getCharacter(avatarId);
+    }
     //キャラ基本属性
     let level: string;
     let normalLevelNumber: number;
@@ -204,6 +211,8 @@ export class EnkaService {
     setTimeout(()=>{
       this.globalProgressService.setValue(maxProgress);
     })
+
+    return avatarId;
   }
 
   initReliquary(avatarId: string, reliquaries: EnkaEquip[]){

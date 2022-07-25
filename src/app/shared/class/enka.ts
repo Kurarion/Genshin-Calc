@@ -20,6 +20,8 @@ export interface EnkaPlayer {
 export interface EnkaAvatar {
     //キャラＩＤ
     avatarId: number;
+    //スキルＩＤ
+    skillDepotId: number;
     //基本情報
     propMap: Record<string, EnkaProp>;
     //命の星座

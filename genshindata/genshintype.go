@@ -54,22 +54,23 @@ type GenshinAvatarBaseListData []GenshinAvatarBaseData
 
 //人物定义
 type GenshinAvatarBaseData struct {
-	Id               uint64           `json:"id"`
-	NameTextMapHash  uint64           `json:"nameTextMapHash"`
-	DescTextMapHash  uint64           `json:"descTextMapHash"`
-	IconName         string           `json:"iconName"`
-	WeaponType       string           `json:"weaponType"`
-	HpBase           float64          `json:"hpBase"`
-	AttackBase       float64          `json:"attackBase"`
-	DefenseBase      float64          `json:"defenseBase"`
-	Critical         float64          `json:"critical"`
-	CriticalHurt     float64          `json:"criticalHurt"`
-	ChargeEfficiency float64          `json:"chargeEfficiency"`
-	PropGrowCurves   []propGrowCurves `json:"propGrowCurves"`
-	AvatarPromoteId  uint64           `json:"avatarPromoteId"`
-	SkillDepotId     uint64           `json:"skillDepotId"`
-	QualityType      string           `json:"qualityType"`
-	SideIconName     string           `json:"sideIconName"`
+	Id                uint64           `json:"id"`
+	NameTextMapHash   uint64           `json:"nameTextMapHash"`
+	DescTextMapHash   uint64           `json:"descTextMapHash"`
+	IconName          string           `json:"iconName"`
+	WeaponType        string           `json:"weaponType"`
+	HpBase            float64          `json:"hpBase"`
+	AttackBase        float64          `json:"attackBase"`
+	DefenseBase       float64          `json:"defenseBase"`
+	Critical          float64          `json:"critical"`
+	CriticalHurt      float64          `json:"criticalHurt"`
+	ChargeEfficiency  float64          `json:"chargeEfficiency"`
+	PropGrowCurves    []propGrowCurves `json:"propGrowCurves"`
+	AvatarPromoteId   uint64           `json:"avatarPromoteId"`
+	SkillDepotId      uint64           `json:"skillDepotId"`
+	CandSkillDepotIds []uint64         `json:"candSkillDepotIds"`
+	QualityType       string           `json:"qualityType"`
+	SideIconName      string           `json:"sideIconName"`
 }
 
 //成长参数

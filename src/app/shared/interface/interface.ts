@@ -13,6 +13,8 @@ export interface MenuInfo {
   names: Record<TYPE_SYS_LANG, string>;
   routerLink: string;
   queryParams: CharacterQueryParam;
+  elementType?: string; //旅人さん専用（現在）
+  sexType?: string; //旅人さん専用（現在）
   isEnkaData?: boolean;
 }
 

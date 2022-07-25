@@ -9,6 +9,19 @@
     "CONSTELLATION": "命座",
     "ALLPROPS": "全屬性"
   },
+  "PLAYER":{
+    "BOY": "空",
+    "GIRL": "熒"
+  },
+  "ELEMENT":{
+    "CRYO": "冰",
+    "ANEMO": "風",
+    "ELECTRO": "雷",
+    "GEO": "岩",
+    "PYRO": "火",
+    "HYDRO": "水",
+    "DENDRO": "草"
+  },
   "WEAPON": {
     "NAME": "武器名",
     "PROPS": "武器屬性",

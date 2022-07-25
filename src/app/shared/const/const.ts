@@ -1144,6 +1144,7 @@ export class Const {
     Const.PROP_DMG_BONUS_HYDRO,
     Const.PROP_DMG_BONUS_DENDRO,
   ]
+
   //*********************************
   //           原神データ
   //*********************************
@@ -1162,5 +1163,50 @@ export class Const {
   static readonly SAVE_OTHER = "SAVE_OTHER";
   //Enkaデータ
   static readonly SAVE_ENKA = "SAVE_ENKA";
+
+  //*********************************
+  //           原神その他データ
+  //*********************************
+
+  //旅人さん（男）
+  static readonly PLAYER_BOY = "10000005";
+  //旅人さん（女）
+  static readonly PLAYER_GIRL = "10000007";
+
+  static readonly PLAYER_BOY_ELEMENT:Record<string, string> = {
+    "502": "PYRO",  //旅人さん（火）
+    "503": "HYDRO",  //旅人さん（水）
+    "504": "ANEMO",  //旅人さん（風）
+    "505": "CRYO",  //旅人さん（氷）
+    "506": "GEO",  //旅人さん（岩）
+    "507": "ELECTRO",  //旅人さん（雷）
+    "508": "DENDRO" //旅人さん（草）
+  }
+  
+  static readonly PLAYER_GIRL_ELEMENT:Record<string, string> = {
+    "702": "PYRO",  //旅人さん（火）
+    "703": "HYDRO",  //旅人さん（水）
+    "704": "ANEMO",  //旅人さん（風）
+    "705": "CRYO",  //旅人さん（氷）
+    "706": "GEO",  //旅人さん（岩）
+    "707": "ELECTRO",  //旅人さん（雷）
+    "708": "DENDRO" //旅人さん（草）
+  }
+
+  static readonly PLAYER_BOY_CRYO = "505";  //旅人さん（氷）
+  static readonly PLAYER_BOY_ANEMO = "504";  //旅人さん（風）
+  static readonly PLAYER_BOY_ELECTRO = "507";  //旅人さん（雷）
+  static readonly PLAYER_BOY_GEO = "506";  //旅人さん（岩）
+  static readonly PLAYER_BOY_PYRO = "502";  //旅人さん（火）
+  static readonly PLAYER_BOY_HYDRO = "503";  //旅人さん（水）
+  static readonly PLAYER_BOY_DENDRO = "508";  //旅人さん（草）
+
+  static readonly PLAYER_GIRL_CRYO = "705";  //旅人さん（氷）
+  static readonly PLAYER_GIRL_ANEMO = "704";  //旅人さん（風）
+  static readonly PLAYER_GIRL_ELECTRO = "707";  //旅人さん（雷）
+  static readonly PLAYER_GIRL_GEO = "706";  //旅人さん（岩）
+  static readonly PLAYER_GIRL_PYRO = "702";  //旅人さん（火）
+  static readonly PLAYER_GIRL_HYDRO = "703";  //旅人さん（水）
+  static readonly PLAYER_GIRL_DENDRO = "708";  //旅人さん（草）
 
 }
