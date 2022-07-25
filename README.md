@@ -3,7 +3,6 @@
     <img src="./logo-readme.png" height="120">
 <p>
 
----
 
 ## 介绍
 
@@ -47,23 +46,4 @@
 + 所有由其他技能天赋或命座引发的附魔需要手动选择（胡桃，一斗，万叶等）
 
 ## 感谢
-+ 特别感谢<a href="https://github.com/EnkaNetwork/API-docs/" target="_blank">Enka.Network</a>提供展示角色查询API。
----
-
-## Introduction
-
-+ A Genshin Impact Damage Calculator
-
-## How to use
-
-+ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">Cloud Genshin Impact</a> Or <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
-
----
-
-## 説明
-
-+ 原神ダメージ計算
-
-## 使用方法について
-
-+ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">クラウド原神</a> または <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a>
++ 特别感谢<a href="https://github.com/EnkaNetwork/API-docs/" target="_blank">Enka.Network</a>提供展示角色查询API
