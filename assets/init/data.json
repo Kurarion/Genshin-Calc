@@ -5978,6 +5978,654 @@
                         }
                 ]
             }
+        },
+        "10000005504": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "damage": {
+                                "customValues": [0.6],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "healing": {
+                                "customValue": 0.02,
+                                "base": "HP",
+                                "healingBonusType": "HEALING_BONUS_SKILL"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buff": {
+                                "customValue": 0.16,
+                                "target":["ENERGY_RECHARGE"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "buff": {
+                                "customValue": 0.2,
+                                "target":["DMG_ANTI_ANEMO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        },
+                        {
+                            "buff": {
+                                "customValue": 0.2,
+                                "target":["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ]
+            }
+        },
+        "10000005506": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "damage": {
+                                "customValues": [0.6],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buff": {
+                                "customValue": 0.10,
+                                "target":["CRIT_RATE"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ],
+                "1": [
+                        {
+                            "damage": {
+                                "originSkill": "skill",
+                                "originIndex": 0,
+                                "originRelation": "*",
+                                "customValues": [1],
+                                "base": "ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000005507": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    []
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buff": {
+                                "index": 1,
+                                "indexMultiValue":-1,
+                                "target":["DMG_ANTI_ELECTRO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "originSkill":"elementalBurst",
+                                "originIndex": 1,
+                                "originRelation": "*",
+                                "indexs": [0],
+                                "base": "ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_ELECTRO",
+                                "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000007704": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "damage": {
+                                "customValues": [0.6],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "healing": {
+                                "customValue": 0.02,
+                                "base": "HP",
+                                "healingBonusType": "HEALING_BONUS_SKILL"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buff": {
+                                "customValue": 0.16,
+                                "target":["ENERGY_RECHARGE"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "buff": {
+                                "customValue": 0.2,
+                                "target":["DMG_ANTI_ANEMO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        },
+                        {
+                            "buff": {
+                                "customValue": 0.2,
+                                "target":["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ]
+            }
+        },
+        "10000007706": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "damage": {
+                                "customValues": [0.6],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buff": {
+                                "customValue": 0.10,
+                                "target":["CRIT_RATE"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ],
+                "1": [
+                        {
+                            "damage": {
+                                "originSkill": "skill",
+                                "originIndex": 0,
+                                "originRelation": "*",
+                                "customValues": [1],
+                                "base": "ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000007707": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    []
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buff": {
+                                "index": 1,
+                                "indexMultiValue":-1,
+                                "target":["DMG_ANTI_ELECTRO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "originSkill":"elementalBurst",
+                                "originIndex": 1,
+                                "originRelation": "*",
+                                "indexs": [0],
+                                "base": "ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_ELECTRO",
+                                "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            }
+                        }
+                ]
+            }
         }
     },
     "weapons": {

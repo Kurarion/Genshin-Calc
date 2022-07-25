@@ -9,6 +9,19 @@
     "CONSTELLATION": "Constellation",
     "ALLPROPS": "All Attributes"
   },
+  "PLAYER":{
+    "BOY": "Aether",
+    "GIRL": "Lumine"
+  },
+  "ELEMENT":{
+    "CRYO": "Cryo",
+    "ANEMO": "Anemo",
+    "ELECTRO": "Electro",
+    "GEO": "Geo",
+    "PYRO": "Pyro",
+    "HYDRO": "Hydro",
+    "DENDRO": "Dendro"
+  },
   "WEAPON": {
     "NAME": "Weapon Name",
     "PROPS": "Weapon Attributes",
