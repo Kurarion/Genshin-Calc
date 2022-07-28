@@ -1871,8 +1871,8 @@
                             "indexs": [0],
                             "base": "ATTACK",
                             "canOverride": false,
-                            "elementBonusType": "DMG_BONUS_ELECTRO",
-                            "attackBonusType": "DMG_BONUS_SKILL"
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
                         }
                     }
                 ],
@@ -1880,7 +1880,7 @@
                     {
                         "buff": {
                             "index":0,
-                            "target":["DMG_RATE_UP_ELEMENTAL_BURST"],
+                            "target":["DMG_RATE_UP_SKILL"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }
