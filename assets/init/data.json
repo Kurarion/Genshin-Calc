@@ -7309,6 +7309,7 @@
                 {
                     "buff": {
                         "index": 0,
+                        "indexMultiValue": 0.01,
                         "target": ["DMG_BONUS_ELEMENTAL_BURST"],
                         "settingType":"slider",
                         "sliderInitialValue": 40,
@@ -7625,6 +7626,7 @@
                 {
                     "buff": {
                         "index": 0,
+                        "indexMultiValue": 0.01,
                         "target": ["DMG_BONUS_ELEMENTAL_BURST"],
                         "settingType":"slider",
                         "sliderInitialValue": 40,
@@ -8400,6 +8402,7 @@
                 {
                     "buff": {
                         "index": 0,
+                        "indexMultiValue": 0.01,
                         "target": ["DMG_BONUS_ELEMENTAL_BURST"],
                         "settingType":"slider",
                         "sliderInitialValue": 40,
