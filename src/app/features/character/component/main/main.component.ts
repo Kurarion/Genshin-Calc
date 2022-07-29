@@ -2,6 +2,8 @@ import { Component, HostListener, OnDestroy, OnInit, SimpleChanges } from '@angu
 import { CalculatorService, character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { map, takeUntil, Observable, Subject } from 'rxjs';
 
 const CSS_STATUS_BEFORE = "beforeLoad";
 const CSS_STATUS_FIN = "loaded";
@@ -61,12 +63,36 @@ export class MainComponent implements OnInit, OnDestroy {
   //画面横幅
   screenWidth!: number;
   setCardWidth!: number;
+  //スクロールバー幅
+  scrollBarWidth!: number;
+  //幅の広いフラグ
+  isLarge!: Observable<boolean>;
+  isLargeFlg: boolean = true;
+  //破棄状態
+  destroyed = new Subject<void>();
 
   constructor(private httpService: HttpService,
     private route: ActivatedRoute, 
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
-    private languageService: LanguageService) {
+    private languageService: LanguageService,
+    private breakpointObserver: BreakpointObserver,) {
+    //レイアウトフラグ
+    this.isLarge = this.breakpointObserver.observe(['(min-width: 700px)']).pipe(
+      takeUntil(this.destroyed),
+      map((state: BreakpointState) => {
+        return state.matches;
+      })
+    );
+    //ブラウザのレイアウトイベント
+    this.isLarge.subscribe((isLarge: boolean) => {
+      //レイアウトフラグ設定（メニューモードに影響する）
+      if(isLarge){
+        this.scrollBarWidth = 0.9;
+      }else{
+        this.scrollBarWidth = 0;
+      }
+    });
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
     //言語変更検知
@@ -105,6 +131,9 @@ export class MainComponent implements OnInit, OnDestroy {
     this.backgroundLoadFlg = false;
     this.otherState = CSS_STATUS_BEFORE;
     this.imgState = CSS_STATUS_BEFORE;
+    //レイアウト監視を終了
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
   /**

@@ -17,9 +17,9 @@
     <mat-sidenav-content>
       <div [id]="captureElementID" class="outlet" [@routeAnimations]="prepareRoute(outlet)">
         <router-outlet #outlet="outlet">
-          <app-paste-event-listener
+          <!-- <app-paste-event-listener
             (pastedImage)="addPastedImage($event)"
-          ></app-paste-event-listener>
+          ></app-paste-event-listener> -->
         </router-outlet>
       </div>
     </mat-sidenav-content>
