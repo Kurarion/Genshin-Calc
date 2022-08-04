@@ -8703,7 +8703,14 @@
                 {
                     "buff": {
                         "index": 0,
-                        "target": ["DMG_ELEMENT_ELECTROCHARGED_UP", "DMG_ELEMENT_OVERLOADED_UP", "DMG_ELEMENT_SUPERCONDUCT_UP"],
+                        "target": ["DMG_ELEMENT_ELECTROCHARGED_UP", "DMG_ELEMENT_OVERLOADED_UP", "DMG_ELEMENT_SUPERCONDUCT_UP", "DMG_ELEMENT_HYPERBLOOM_UP"],
+                        "settingType": "resident"
+                    }
+                },
+                {
+                    "buff": {
+                        "customValue": 0.2,
+                        "target": ["DMG_ELEMENT_AGGRAVATE_UP"],
                         "settingType": "resident"
                     }
                 }
@@ -8723,7 +8730,7 @@
                 {
                     "buff": {
                         "index": 0,
-                        "target": ["DMG_ELEMENT_BURNING_UP", "DMG_ELEMENT_OVERLOADED_UP"],
+                        "target": ["DMG_ELEMENT_BURNING_UP", "DMG_ELEMENT_OVERLOADED_UP", "DMG_ELEMENT_BURGEON_UP"],
                         "settingType": "resident"
                     }
                 },
