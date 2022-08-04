@@ -1034,7 +1034,7 @@
                         {
                             "buff": {
                                 "customValue": 0.2,
-                                "target": ["DMG_ANTI_PHYSICAL_MINUS"],
+                                "target": ["DMG_ANTI_ANEMO_MINUS"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             }
