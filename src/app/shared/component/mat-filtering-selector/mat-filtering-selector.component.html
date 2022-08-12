@@ -1,0 +1,21 @@
+<mat-form-field appearance="legacy" floatLabel="always" floatLabel="always">
+    <mat-label [innerText]="title | translate"></mat-label>
+    <mat-select [ngModel]="model" (ngModelChange)="onModelChange($event)">
+        <mat-optgroup class="sticky">
+            <mat-form-field appearance="outline" class="select-filter">
+                <input matInput 
+                    type="text"
+                    placeholder="Filter"
+                    [(ngModel)]="filteringContent"
+                    (ngModelChange)="filteringOptions()">
+            </mat-form-field>
+            <mat-option *ngIf="(hasBlankOption && filteringContent == '')|| this.displayList.length == 0" value="" [disabled]="!hasBlankOption"></mat-option>
+            <ng-container *ngFor="let displayItem of displayList">
+                <mat-option 
+                    [value]="displayItem[OptionValueProperty]" 
+                    [innerText]="displayItem[OptionInnerTextProperty][currentLanguage]">
+                </mat-option>
+            </ng-container>
+        </mat-optgroup>
+    </mat-select>
+</mat-form-field>

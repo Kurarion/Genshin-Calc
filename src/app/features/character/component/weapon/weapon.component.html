@@ -12,15 +12,16 @@
             <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
             </div>
             <mat-card-title class="header-text">
-                <mat-form-field appearance="legacy" floatLabel="always">
-                    <mat-label [innerText]="'WEAPON.NAME' | translate"></mat-label>
-                    <mat-select [(ngModel)]="selectedWeaponIndex" (ngModelChange)="onSelectWeapon($event)">
-                        <ng-container *ngFor="let weapon of weaponList">
-                            <mat-option *ngIf="weapon.weaponType == charWeaponType" [value]="weapon.index"
-                                [innerText]="weapon.names[currentLanguage]"></mat-option>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field>
+                <app-mat-filtering-selector
+                    [title]="'WEAPON.NAME'"
+                    [model]="selectedWeaponIndex"
+                    (modelChange)="onSelectWeapon($event)"
+                    [OriginList]="weaponList"
+                    [OriginListFilterFunc]="listFilterFunc"
+                    [OptionValueProperty]="'index'"
+                    [OptionInnerTextProperty]="'names'"
+                    [currentLanguage]="currentLanguage">
+                </app-mat-filtering-selector>
             </mat-card-title>
         </mat-card-header>
         <mat-card-content class="content">

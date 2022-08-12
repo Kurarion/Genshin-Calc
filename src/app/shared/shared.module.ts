@@ -9,6 +9,7 @@ import { PasteEventListenerComponent } from './component/paste-event-listener/pa
 import { ArtifactListComponent } from './component/artifact-list/artifact-list.component';
 import { ExtraDataComponent } from './component/extra-data/extra-data.component';
 import { EnkaComponent } from './component/enka/enka.component';
+import { MatFilteringSelectorComponent } from './component/mat-filtering-selector/mat-filtering-selector.component';
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -50,6 +51,7 @@ let shardList: any[] = [
   ArtifactListComponent,
   ExtraDataComponent,
   EnkaComponent,
+  MatFilteringSelectorComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,

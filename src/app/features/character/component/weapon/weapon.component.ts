@@ -90,6 +90,8 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
   effectContent!: string;
   effectValidIndexs!: number[];
 
+  listFilterFunc!: ((value:any) => boolean);
+
   constructor(private httpService: HttpService,
     private weaponService: WeaponService,
     private calculatorService: CalculatorService,
@@ -98,6 +100,8 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     //武器タイプ設定
     this.charWeaponType = this.data.weaponType;
+    //フィルター関数
+    this.listFilterFunc = ((weapon: any)=>weapon.weaponType == this.charWeaponType);
     //武器リスト初期化
     this.initializeWeaponList();
     //その他
@@ -174,6 +178,7 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
    * @param weaponIndex 
    */
   onSelectWeapon(weaponIndex: string) {
+    this.selectedWeaponIndex = weaponIndex;
     let oldWeaponAbleMaxLevel = this.notExitLevel;
     if (this.weaponData) {
       //旧武器最高レベル

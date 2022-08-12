@@ -88,7 +88,7 @@ table tr:first-child .content-right {
     width: 96%;
 }
 
-.prop-field {
+:host ::ng-deep .prop-field mat-form-field {
     width: 280px;
 }
 

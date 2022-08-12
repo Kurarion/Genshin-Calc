@@ -1,5 +1,11 @@
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { CalculatorService, character, Const, OtherService, OtherStorageInfo, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+
+interface propObj {
+  value: any,
+  names: Record<string, string>
+}
 
 @Component({
   selector: 'app-other',
@@ -14,7 +20,7 @@ export class OtherComponent implements OnInit, OnDestroy {
   //選択されたインデックス
   selectedIndex!: number;
   //属性リスト
-  propList!: string[];
+  propList: propObj[] = [];
   //全情報
   infos!: OtherStorageInfo[];
 
@@ -27,11 +33,24 @@ export class OtherComponent implements OnInit, OnDestroy {
 
   showValue!: number;
 
-  constructor(private otherService: OtherService, private calculatorService: CalculatorService) { }
+  constructor(
+    private otherService: OtherService, 
+    private calculatorService: CalculatorService, 
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     //リスト初期化
-    this.propList = Const.PROPS_OTHER;
+    this.propList = Array.from(Const.PROPS_OTHER, (v,i)=>{
+      let initNames: Record<string, string> = {};
+      for(let lang of Const.LIST_LANG){
+        initNames[lang.code] = "";
+      }
+      return {
+        value: v,
+        names: initNames
+      }
+    });
+    this.updateNames();
     //タブリスト初期化
     let length = this.otherService.getStorageInfoLength(this.data.id);
     if(length == undefined || length == 0){
@@ -44,6 +63,12 @@ export class OtherComponent implements OnInit, OnDestroy {
     this.initInfos();
 
     this.updateShowValue();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentLanguage']) {
+      this.updateNames();
+    }
   }
 
   @HostListener('window:unload')
@@ -88,7 +113,8 @@ export class OtherComponent implements OnInit, OnDestroy {
     this.updateShowValue();
   }
 
-  onSelectProp(prop: string){
+  onSelectProp(prop: string, index: number){
+    this.infos[index].name = prop;
     this.infos[this.selectedIndex].value = 0;
     this.updateShowValue();
     this.updateDirtyFlag();
@@ -126,6 +152,14 @@ export class OtherComponent implements OnInit, OnDestroy {
     if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
       value *= 100; 
     }
-    this.showValue = value;
+    this.showValue = parseFloat(value.toFixed(8));
+  }
+
+  private updateNames(){
+    this.propList?.forEach((v)=>{
+      this.translateService.get('PROPS.' + v.value.toUpperCase()).subscribe((res: string) => {
+        v.names[this.currentLanguage] = res;
+      })
+    })
   }
 }

@@ -74,7 +74,7 @@ table tr:first-child .content-right {
     width: 30px;
 }
 
-.set-field {
+:host ::ng-deep .set-field mat-form-field {
     width: 140px;
 }
 

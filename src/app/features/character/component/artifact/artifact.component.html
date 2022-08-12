@@ -17,7 +17,7 @@
                     <div class="artifact-set">
                         <!-- 聖遺物詳細 -->
                         <br>
-                        <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
+                        <!-- <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'ARTIFACT.SET1' | translate"></mat-label>
                             <mat-select [(ngModel)]="selectedArtifactSetIndexs[0]" (ngModelChange)="onSelectArtifactSet($event, 0)">
                                 <mat-option value=""></mat-option>
@@ -29,12 +29,22 @@
                                     </mat-option>
                                 </ng-container>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <app-mat-filtering-selector class="set-field"
+                            [title]="'ARTIFACT.SET1'"
+                            [model]="selectedArtifactSetIndexs[0]"
+                            (modelChange)="onSelectArtifactSet($event, 0)"
+                            [hasBlankOption]="true"
+                            [OriginList]="artifactSetList"
+                            [OptionValueProperty]="'setId'"
+                            [OptionInnerTextProperty]="'setName'"
+                            [currentLanguage]="currentLanguage">
+                        </app-mat-filtering-selector>
                         &nbsp;
                         &nbsp;
                         &nbsp;
                         &nbsp;
-                        <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
+                        <!-- <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'ARTIFACT.SET2' | translate"></mat-label>
                             <mat-select [(ngModel)]="selectedArtifactSetIndexs[1]" (ngModelChange)="onSelectArtifactSet($event, 1)">
                                 <mat-option value=""></mat-option>
@@ -46,7 +56,17 @@
                                     </mat-option>
                                 </ng-container>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <app-mat-filtering-selector class="set-field"
+                            [title]="'ARTIFACT.SET2'"
+                            [model]="selectedArtifactSetIndexs[1]"
+                            (modelChange)="onSelectArtifactSet($event, 1)"
+                            [hasBlankOption]="true"
+                            [OriginList]="artifactSetList"
+                            [OptionValueProperty]="'setId'"
+                            [OptionInnerTextProperty]="'setName'"
+                            [currentLanguage]="currentLanguage">
+                        </app-mat-filtering-selector>
                         <ng-container *ngIf="selectedArtifactSetIndexs[0] && selectedArtifactSetIndexs[0] != ''">
                             <br><span [innerHTML]="effectContent1"></span>
                         </ng-container>

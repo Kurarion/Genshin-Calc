@@ -1,4 +1,21 @@
 ::ng-deep .mat-form-field {
     line-height: 1.24 !important;
 }
-  
+
+::ng-deep .mat-select-panel::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar:vertical {
+    width: 8px;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar:horizontal {
+    height: 8px;
+}
+
+::ng-deep .mat-select-panel::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: 1px solid white;
+    background-color: grey;
+}

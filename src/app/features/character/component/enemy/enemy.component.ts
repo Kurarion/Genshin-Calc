@@ -106,6 +106,7 @@ export class EnemyComponent implements OnInit {
   }
 
   onSelectEnemy(enemyIndex: string) {
+    this.selectedEnemyIndex = enemyIndex;
     //敵の切り替え
     this.enemyData = this.enemyService.get(enemyIndex);
     //DEBUG

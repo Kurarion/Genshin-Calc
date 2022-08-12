@@ -28,7 +28,7 @@
                         </div>
                         <!-- 選択 -->
                         <br>
-                        <mat-form-field class="prop-field" appearance="legacy" floatLabel="always">
+                        <!-- <mat-form-field class="prop-field" appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'OTHER.TARGET' | translate"></mat-label>
                             <mat-select [(ngModel)]="infos[selectedIndex].name" (ngModelChange)="onSelectProp($event)">
                                 <mat-option></mat-option>
@@ -36,7 +36,16 @@
                                     <span [innerText]="'PROPS.' + prop.toUpperCase() | translate"></span>
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <app-mat-filtering-selector class="prop-field"
+                            [title]="'OTHER.TARGET'"
+                            [model]="infos[selectedIndex].name"
+                            (modelChange)="onSelectProp($event, selectedIndex)"
+                            [OriginList]="propList"
+                            [OptionValueProperty]="'value'"
+                            [OptionInnerTextProperty]="'names'"
+                            [currentLanguage]="currentLanguage">
+                        </app-mat-filtering-selector>
                         <!-- 値 -->
                         <br>
                         <mat-form-field appearance="legacy" floatLabel="always">

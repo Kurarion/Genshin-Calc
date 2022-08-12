@@ -12,14 +12,15 @@
             <!-- <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
             </div> -->
             <mat-card-title class="header-text">
-                <mat-form-field appearance="legacy" floatLabel="always">
-                    <mat-label [innerText]="'ENEMY.NAME' | translate"></mat-label>
-                    <mat-select [(ngModel)]="selectedEnemyIndex" (ngModelChange)="onSelectEnemy($event)">
-                        <ng-container *ngFor="let enemy of enemyList">
-                            <mat-option [value]="enemy.index" [innerText]="enemy.names[currentLanguage]"></mat-option>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field>
+                <app-mat-filtering-selector
+                    [title]="'ENEMY.NAME'"
+                    [model]="selectedEnemyIndex"
+                    (modelChange)="onSelectEnemy($event)"
+                    [OriginList]="enemyList"
+                    [OptionValueProperty]="'index'"
+                    [OptionInnerTextProperty]="'names'"
+                    [currentLanguage]="currentLanguage">
+                </app-mat-filtering-selector>
                 <br>
                 <mat-form-field appearance="legacy" floatLabel="always">
                     <mat-label [innerText]="'ENEMY.PLAYERNUM' | translate"></mat-label>
