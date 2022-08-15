@@ -44,5 +44,22 @@
 ■技能天赋/命座
 + 所有由其他技能天赋或命座引发的附魔需要手动选择（胡桃，一斗，万叶等）
 
+## 测试或搭建自己的计算器
+
+■环境需求
++ <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a> (推荐v16.15.0)
++ <a href="https://go.dev/dl/" target="_blank">Golang</a> (推荐1.16.3以上)
+
+■本地构建
+```
+git clone https://github.com/Kurarion/Genshin-Calc.git
+cd Genshin-Calc
+npm install
+npm run generateGenshinData //游戏版本更新后需再执行以获取最新数据并需向src/assets/init/data.json中追加新增内容配置
+```
+■启动
+```
+npm run start //npm run build
+```
 ## 感谢
 + 特别感谢<a href="https://github.com/EnkaNetwork/API-docs/" target="_blank">Enka.Network</a>提供展示角色查询API
