@@ -4252,7 +4252,7 @@
                 "0": [
                         {
                             "buff": {
-                                "index": 1,
+                                "index": 0,
                                 "target": ["DMG_BONUS_PHYSICAL"],
                                 "settingType": "switch",
                                 "defaultEnable": false
