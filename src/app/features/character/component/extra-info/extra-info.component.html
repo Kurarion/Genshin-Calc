@@ -5,7 +5,7 @@
     <ng-container *ngIf="skill == 'normal'">
         <mat-form-field appearance="legacy" floatLabel="always">
             <mat-label [innerText]="'GENSHIN.OTHER.OVERRIDE_ELEMENT' | translate"></mat-label>
-            <mat-select [(ngModel)]="overrideElement" (ngModelChange)="onChangeElement($event)">
+            <mat-select [ngModel]="overrideElement" (ngModelChange)="onChangeElement($event)">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let element of elementList" [value]="element">
                     <span [innerText]="'GENSHIN.OTHER.' + element | translate"></span>

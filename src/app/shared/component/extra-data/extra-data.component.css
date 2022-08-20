@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    margin-left: 5px;
     word-break: break-all;
     border-left: 2px solid rgba(0,0,0,.12);
     border-right: 2px solid rgba(0,0,0,.12);
@@ -24,4 +25,26 @@ tr td:nth-of-type(1) {
 tr td:nth-of-type(2) {
     text-align: right;
     /* border-bottom: 1px solid rgba(0,0,0,.12); */
+}
+
+.padding-div {
+    padding-right: 5px;
+}
+
+.scroll-div {
+    max-height: 9.48em;
+    overflow: auto;
+}
+
+.scroll-div::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scroll-div::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: grey;
+}
+
+.scroll-div {
+    overflow-x: hidden;
 }

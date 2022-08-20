@@ -1,6 +1,7 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { CalculatorService, character, CharSkill, CharSkillDescObject, CharSkills, Const, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { Subscription } from 'rxjs';
+import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-info',
@@ -20,7 +21,7 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
   //
   @Input('hasLevel') hasLevel!: boolean;
 
-  overrideElement: string = "";
+  overrideElement!: string;
   elementList!: string[];
 
   //データ
@@ -30,23 +31,43 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
   //ヒント値
   tipValues!: string[];
 
+  //通常攻撃
+  isNormal!: boolean;
+  //元素付与変更検知
+  elementChangedSub!: Subscription;
+
   constructor(private percentPipe: PercentPipe, 
     private decimalPipe: DecimalPipe, 
     private noCommaPipe: NoCommaPipe,
-    private calculatorService: CalculatorService) { }
+    private calculatorService: CalculatorService,
+    private characterService: CharacterService,) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this.isNormal = this.skill == 'normal';
+    if(this.isNormal){
+      this.elementChangedSub = this.characterService.getOverrideElementChanged().subscribe(()=>{
+        //元素付与更新
+        this.overrideElement = this.characterService.getOverrideElement(this.data.id);
+      });
+    }
     this.initDatas();
-  }
-
-  onChangeElement(value: string){ 
-    //TODO
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['currentLanguage'] || changes['skillLevelIndex']) {
       this.initDatas();
     }
+  }
+
+  ngOnDestroy(): void {
+    if(this.isNormal && !this.elementChangedSub.closed){
+      this.elementChangedSub.unsubscribe();
+    }
+  }
+
+  onChangeElement(value: string){
+    this.overrideElement = value;
+    this.characterService.setOverrideElement(this.data.id, value);
   }
 
   private initDatas(){
@@ -58,6 +79,8 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
       this.tipValues.push(this.getTalentValue(this.skill, skillDescData, this.currentLanguage, this.skillLevelIndex, true));
     }
 
+    //元素付与初期化
+    this.overrideElement = this.characterService.getOverrideElement(this.data.id);
     //元素上書き
     this.elementList = Const.PROPS_ELEMENTS;
   }

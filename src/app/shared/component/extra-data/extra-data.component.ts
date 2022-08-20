@@ -169,7 +169,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         this.initHealingDatas();
         this.initShieldDatas();
         this.initProducDatas();
-        this.initBuffDatas();
+        //ユーザースライド操作のため更新しないように
+        // this.initBuffDatas();
       }
     });
   }

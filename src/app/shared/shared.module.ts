@@ -43,6 +43,7 @@ export * from './class/character';
 export * from './class/weapon';
 export * from './class/enemy';
 export * from './class/artifact';
+export * from './class/type';
 export * from './class/enka';
 
 let shardList: any[] = [

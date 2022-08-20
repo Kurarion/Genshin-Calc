@@ -82,6 +82,8 @@ export interface ExtraSkillDamage {
   canOverride?: boolean; //元素オーバーライド可否
   elementBonusType?: string; //元素タイプ
   attackBonusType?: string; //攻撃タイプ
+  //タグ
+  tag?: string; //タグ
 }
 
 export interface ExtraSkillBuff {
@@ -91,6 +93,8 @@ export interface ExtraSkillBuff {
   indexAddValue?: number;
   calRelation?: TYPE_RELATION;
   priority?: number;
+  //元素付与
+  overrideElement?: string;
   //数値計算ベースインデックスリスト
   constIndex?: number;
   constCalRelation?: TYPE_RELATION;
@@ -125,6 +129,8 @@ export interface ExtraSkillBuff {
   //設定
   settingType?: TYPE_BUFF_SETTING;
   defaultEnable?: boolean;
+  //限定武器タイプ
+  weaponTypeLimit?: string[];
 }
 
 export interface ExtraSkillHealing {

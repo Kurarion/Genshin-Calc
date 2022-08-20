@@ -15,6 +15,7 @@ export interface ExtraCharacterData {
 
 export interface ExtraCharacterSkillsData {
   skill?: ExtraStatus;
+  other?: ExtraStatus;
   elementalBurst?: ExtraStatus;
   proudSkills?: ExtraStatus[];
 }
@@ -65,6 +66,7 @@ export class ExtraDataService {
 
     result.skills = {};
     result.skills.skill = this.getDefaultConfig(temp?.skills?.skill);
+    result.skills.other = this.getDefaultConfig(temp?.skills?.other);
     result.skills.elementalBurst = this.getDefaultConfig(temp?.skills?.elementalBurst);
     for(let obj of temp?.skills?.proudSkills ?? []){
       if(!(result.skills.proudSkills)){

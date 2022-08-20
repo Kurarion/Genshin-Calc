@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { character, Const, GenshinDataService, ExtraCharacterData, StorageService, ExtraDataService, ExtraStatus } from 'src/app/shared/shared.module';
 
 export interface CharacterStorageInfo {
@@ -7,6 +8,7 @@ export interface CharacterStorageInfo {
   skillLevel?: string;
   elementalBurstLevel?: string;
   extra?: ExtraCharacterData;
+  overrideElement?: string;
 }
 
 @Injectable({
@@ -16,6 +18,9 @@ export class CharacterService {
 
   //データマップ
   dataMap!: Record<string, CharacterStorageInfo>;
+  //元素付与変更
+  private overrideElementChanged: Subject<void> = new Subject<void>();
+  private overrideElementChanged$ = this.overrideElementChanged.asObservable();
 
   constructor(private genshinDataService: GenshinDataService, private storageService: StorageService, private extraDataService: ExtraDataService) {
     let temp = this.storageService.getJSONItem(Const.SAVE_CHARACTER)
@@ -106,6 +111,30 @@ export class CharacterService {
     this.dataMap[keyStr].level = level;
   }
 
+  //元素付与取得
+  getOverrideElement(index: string | number): string {
+    let keyStr = index.toString();
+    if(keyStr in this.dataMap && this.dataMap[keyStr]){
+      return this.dataMap[keyStr].overrideElement ?? "";
+    }
+    return "";
+  }
+
+  //元素付与設定
+  setOverrideElement(index: string | number, overrideElement: string | undefined) {
+    let keyStr = index.toString();
+    let toSetElement = overrideElement ?? "";
+    if(!this.dataMap[keyStr]){
+      this.dataMap[keyStr] = {};
+    }
+    this.dataMap[keyStr].overrideElement = toSetElement;
+    this.overrideElementChanged.next();
+  }
+
+  getOverrideElementChanged(){
+    return this.overrideElementChanged$;
+  }
+
   //デフォールト追加データ設定
   setDefaultExtraData(index: string | number, force: boolean = false){
     let keyStr = index.toString();
@@ -179,6 +208,9 @@ export class CharacterService {
       case Const.NAME_SKILLS_PROUD:
         skillStatus = extraData!.skills!.proudSkills![skillIndex as number]!;
         break;
+      case Const.NAME_SKILLS_OTHER:
+        skillStatus = extraData!.skills!.other!;
+        break;
       case Const.NAME_CONSTELLATION:
         skillStatus = extraData!.constellation![skillIndex as string]!;
         break;
@@ -203,6 +235,7 @@ export class CharacterService {
         ||!this.keysEqual(origin?.constellation?origin?.constellation[4]:undefined, target?.constellation?target?.constellation[4]:undefined)
         ||!this.keysEqual(origin?.constellation?origin?.constellation[5]:undefined, target?.constellation?target?.constellation[5]:undefined)
         ||!this.keysEqual(origin?.skills?.skill, target.skills?.skill)
+        ||!this.keysEqual(origin?.skills?.other, target.skills?.other)
         ||!this.keysEqual(origin?.skills?.elementalBurst, target.skills?.elementalBurst)
       ){
         this.dataMap[index].extra = target;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType } from 'src/app/shared/shared.module';
 
 export interface CalResult{
   characterData?: character;
@@ -37,6 +37,7 @@ export interface DamageParam {
   base: string; //数値ベース
   elementBonusType: string; //元素タイプ
   attackBonusType: string; //攻撃タイプ
+  tag?: string; //タグ
 }
 
 export interface DamageResult {
@@ -141,6 +142,10 @@ interface CharLevelConfig {
 
 interface WeaponLevelConfig {
   smeltingLevel?: string;
+}
+
+interface SetBuffResult {
+  overrideElement?: string;
 }
 
 const REACTION_RATE_1_5 = 1.5;
@@ -1110,6 +1115,8 @@ export class CalculatorService {
     let base = param.base;
     let attackBonusType = param.attackBonusType;
     let elementBonusType = param.elementBonusType;
+    let hasTag = param.tag != undefined;
+    let tag = Const.CONCATENATION_TAG + param.tag;
 
     //計算
     //--------------------
@@ -1142,7 +1149,25 @@ export class CalculatorService {
     //5.防御区域
     //--------------------
     let defenceSectionValue = 0;
-    defenceSectionValue = data[Const.PROP_DMG_ENEMY_DEFENSE]/(data[Const.PROP_DMG_ENEMY_DEFENSE] + data[Const.PROP_LEVEL]*5 + 500);
+    let tempDefenseValue = data[Const.PROP_DMG_ENEMY_DEFENSE];
+    switch(attackBonusType){
+      case Const.PROP_DMG_BONUS_NORMAL:
+        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_NORMAL];
+        break;
+      case Const.PROP_DMG_BONUS_CHARGED:
+        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_CHARGED];
+        break;
+      case Const.PROP_DMG_BONUS_PLUNGING:
+        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_PLUNGING];
+        break;
+      case Const.PROP_DMG_BONUS_SKILL:
+        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_SKILL];
+        break;
+      case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
+        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST];
+        break;
+    }
+    defenceSectionValue = tempDefenseValue/(tempDefenseValue + data[Const.PROP_LEVEL]*5 + 500);
     //--------------------
     //6.元素反応区域
     //--------------------
@@ -1237,6 +1262,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_NORMAL];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_NORMAL + tag] ?? 0;
+        }
         break;
       case Const.PROP_DMG_BONUS_CHARGED:
         finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED];
@@ -1244,6 +1277,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CHARGED];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CHARGED + tag] ?? 0;
+        }
         break;
       case Const.PROP_DMG_BONUS_PLUNGING:
         finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING];
@@ -1251,6 +1292,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PLUNGING];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PLUNGING + tag] ?? 0;
+        }
         break;
       case Const.PROP_DMG_BONUS_SKILL:
         finalRate += data[Const.PROP_DMG_RATE_UP_SKILL];
@@ -1258,6 +1307,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SKILL];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SKILL + tag] ?? 0;
+        }
         break;
       case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
         finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST];
@@ -1265,6 +1322,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELEMENTAL_BURST];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELEMENTAL_BURST + tag] ?? 0;
+        }
         break;
       case Const.PROP_DMG_BONUS_WEAPON:
         finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON];
@@ -1272,6 +1337,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_WEAPON];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_WEAPON];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_WEAPON];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_WEAPON + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_WEAPON + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_WEAPON + tag] ?? 0;
+        }
         break;
       case Const.PROP_DMG_BONUS_OTHER:
         finalRate += data[Const.PROP_DMG_RATE_UP_OTHER];
@@ -1279,6 +1352,14 @@ export class CalculatorService {
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_OTHER];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_OTHER];
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_OTHER];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0;
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_OTHER + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_OTHER + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_OTHER + tag] ?? 0;
+        }
         break;
     }
     //ダメージ値区域残り
@@ -1568,7 +1649,7 @@ export class CalculatorService {
     let results: DamageResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
+    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_SKILLS_OTHER, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
       let characterData = this.dataMap[indexStr].characterData;
       let weaponData = this.dataMap[indexStr].weaponData;
       let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
@@ -1583,6 +1664,9 @@ export class CalculatorService {
         currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
       }else if(skill == Const.NAME_SKILLS_PROUD){
         infos = extraCharacterData?.skills!.proudSkills[skillIndex as number] ?? [];
+        currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+      }else if(skill == Const.NAME_SKILLS_OTHER){
+        infos = extraCharacterData?.skills!.other ?? [];
         currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
       }else if(skill == Const.NAME_EFFECT){
         infos = extraWeaponData?.effect ?? [];
@@ -1628,6 +1712,7 @@ export class CalculatorService {
               rate: rate,
               attackBonusType: attackBonusType,
               elementBonusType: elementBonusType,
+              tag: damageInfo.tag,
             });
           }
         }else{
@@ -1640,6 +1725,9 @@ export class CalculatorService {
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
               }else if(skill == Const.NAME_SKILLS_PROUD){
                 rateInfo = characterData!.skills.proudSkills[skillIndex as number];
+                rate = rateInfo.paramMap[currentLevel!][valueIndex];
+              }else if(skill == Const.NAME_SKILLS_OTHER){
+                rateInfo = characterData!.skills.other;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
               }else if(skill == Const.NAME_EFFECT){
                 rate = weaponData!.skillAffixMap[currentLevel].paramList[valueIndex];
@@ -1679,6 +1767,7 @@ export class CalculatorService {
                 rate: rate,
                 attackBonusType: attackBonusType,
                 elementBonusType: elementBonusType,
+                tag: damageInfo.tag,
               });
             }
           }
@@ -1699,7 +1788,7 @@ export class CalculatorService {
     let results: HealingResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
+    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_SKILLS_OTHER, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
       let characterData = this.dataMap[indexStr].characterData;
       let weaponData = this.dataMap[indexStr].weaponData;
       let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
@@ -1714,6 +1803,9 @@ export class CalculatorService {
         currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
       }else if(skill == Const.NAME_SKILLS_PROUD){
         infos = extraCharacterData?.skills!.proudSkills[skillIndex as number] ?? [];
+        currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+      }else if(skill == Const.NAME_SKILLS_OTHER){
+        infos = extraCharacterData?.skills!.other ?? [];
         currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
       }else if(skill == Const.NAME_EFFECT){
         infos = extraWeaponData?.effect ?? [];
@@ -1750,6 +1842,10 @@ export class CalculatorService {
                 extra = (healingInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
               }else if(skill == Const.NAME_SKILLS_PROUD){
                 rateInfo = characterData!.skills.proudSkills[skillIndex as number];
+                rate = rateInfo.paramMap[currentLevel!][valueIndex];
+                extra = (healingInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
+              }else if(skill == Const.NAME_SKILLS_OTHER){
+                rateInfo = characterData!.skills.other;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
                 extra = (healingInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][healingInfo.constIndex] : 0;
               }else if(skill == Const.NAME_EFFECT){
@@ -1797,7 +1893,7 @@ export class CalculatorService {
     let results: ShieldResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_SKILLS_OTHER, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
         let characterData = this.dataMap[indexStr].characterData;
         let weaponData = this.dataMap[indexStr].weaponData;
         let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
@@ -1812,6 +1908,9 @@ export class CalculatorService {
           currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
         }else if(skill == Const.NAME_SKILLS_PROUD){
           infos = extraCharacterData?.skills!.proudSkills[skillIndex as number] ?? [];
+          currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+        }else if(skill == Const.NAME_SKILLS_OTHER){
+          infos = extraCharacterData?.skills!.other!;
           currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
         }else if(skill == Const.NAME_EFFECT){
           infos = extraWeaponData?.effect ?? [];
@@ -1848,6 +1947,10 @@ export class CalculatorService {
                   extra = (shieldInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
                 }else if(skill == Const.NAME_SKILLS_PROUD){
                   rateInfo = characterData!.skills.proudSkills[skillIndex as number];
+                  rate = rateInfo.paramMap[currentLevel!][valueIndex];
+                  extra = (shieldInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
+                }else if(skill == Const.NAME_SKILLS_OTHER){
+                  rateInfo = characterData!.skills.other;
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
                   extra = (shieldInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][shieldInfo.constIndex] : 0;
                 }else if(skill == Const.NAME_EFFECT){
@@ -1896,7 +1999,7 @@ export class CalculatorService {
     let results: ProductResult[] = []
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_SKILLS_OTHER, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
         let characterData = this.dataMap[indexStr].characterData;
         let weaponData = this.dataMap[indexStr].weaponData;
         let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
@@ -1911,6 +2014,9 @@ export class CalculatorService {
           currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
         }else if(skill == Const.NAME_SKILLS_PROUD){
           infos = extraCharacterData?.skills!.proudSkills[skillIndex as number] ?? [];
+          currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+        }else if(skill == Const.NAME_SKILLS_OTHER){
+          infos = extraCharacterData?.skills!.other ?? [];
           currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
         }else if(skill == Const.NAME_EFFECT){
           infos = extraWeaponData?.effect ?? [];
@@ -1945,6 +2051,10 @@ export class CalculatorService {
                   extra = (productHpInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
                 }else if(skill == Const.NAME_SKILLS_PROUD){
                   rateInfo = characterData!.skills.proudSkills[skillIndex as number];
+                  rate = rateInfo.paramMap[currentLevel!][valueIndex];
+                  extra = (productHpInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
+                }else if(skill == Const.NAME_SKILLS_OTHER){
+                  rateInfo = characterData!.skills.other;
                   rate = rateInfo.paramMap[currentLevel!][valueIndex];
                   extra = (productHpInfo.constIndex!=undefined)?rateInfo.paramMap[currentLevel!][valueIndex] : 0;
                 }else if(skill == Const.NAME_EFFECT){
@@ -1989,7 +2099,7 @@ export class CalculatorService {
     let results: BuffResult[] = [];
 
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
+      Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_SKILLS_OTHER, Const.NAME_EFFECT, Const.NAME_SET].includes(skill)){
         let characterData = this.dataMap[indexStr].characterData;
         let weaponData = this.dataMap[indexStr].weaponData;
         let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
@@ -2004,6 +2114,9 @@ export class CalculatorService {
           currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
         }else if(skill == Const.NAME_SKILLS_PROUD){
           infos = extraCharacterData?.skills!.proudSkills[skillIndex as number] ?? [];
+          currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
+        }else if(skill == Const.NAME_SKILLS_OTHER){
+          infos = extraCharacterData?.skills!.other ?? [];
           currentLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
         }else if(skill == Const.NAME_EFFECT){
           infos = extraWeaponData?.effect ?? [];
@@ -2083,7 +2196,7 @@ export class CalculatorService {
   setSkillBuffValue(index: string | number, skill: string, valueIndex: number, type: string, setValue: number | boolean, skillIndex?: number | string){
     let indexStr = index.toString();
     if([Const.NAME_SKILLS_NORMAL, Const.NAME_SKILLS_SKILL, Const.NAME_SKILLS_ELEMENTAL_BURST,
-    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD].includes(skill)){
+    Const.NAME_CONSTELLATION, Const.NAME_SKILLS_PROUD, Const.NAME_SKILLS_OTHER].includes(skill)){
       switch(type){
         case 'switch':
           this.characterService.setExtraSwitch(indexStr, skill, valueIndex, setValue as boolean, skillIndex);
@@ -2271,6 +2384,7 @@ export class CalculatorService {
     let skillLevel;
     let elementalBurstLevel;
     let characterStorageData = this.characterService.getStorageInfo(index);
+    let overrideElement = this.characterService.getOverrideElement(index);
     if(data && data.skillLevel){
       skillLevel = data.skillLevel!;
     }else{
@@ -2285,56 +2399,103 @@ export class CalculatorService {
     let setting = this.characterService.getExtraData(index)!;
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
+    let hasOverride: boolean = false;
 
     if(Const.NAME_SKILLS in setting && setting.skills){
       if(Const.NAME_SKILLS_SKILL in setting.skills){
-        this.setBuffDataToResult(
+        let setBuffResult = this.setBuffDataToResult(
           characterData.skills?.skill, 
           skillLevel, 
           extraCharacterData.skills!.skill,
           setting.skills.skill!,
           result,
           specialResult,
+          characterData.weaponType,
+          overrideElement,
         );
+        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+          hasOverride = true;
+          overrideElement = setBuffResult.overrideElement!;
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+        }
       }
       if(Const.NAME_SKILLS_ELEMENTAL_BURST in setting.skills){
-        this.setBuffDataToResult(
+        let setBuffResult = this.setBuffDataToResult(
           characterData.skills?.elementalBurst, 
           elementalBurstLevel, 
           extraCharacterData.skills!.elementalBurst,
           setting.skills.elementalBurst!,
           result,
           specialResult,
+          characterData.weaponType,
+          overrideElement,
         );
+        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+          hasOverride = true;
+          overrideElement = setBuffResult.overrideElement!;
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+        }
+      }
+      if(Const.NAME_SKILLS_OTHER in setting.skills && extraCharacterData.skills!.other != undefined){
+        let setBuffResult = this.setBuffDataToResult(
+          characterData.skills?.other, 
+          Const.NAME_TALENT_DEFAULT_LEVEL, 
+          extraCharacterData.skills!.other,
+          setting.skills.other!,
+          result,
+          specialResult,
+          characterData.weaponType,
+          overrideElement,
+        );
+        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+          hasOverride = true;
+          overrideElement = setBuffResult.overrideElement!;
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+        }
       }
       if(Const.NAME_SKILLS_PROUD in setting.skills){
-        for(let index = 0; index < setting.skills.proudSkills!.length; ++index){
-          let obj = setting.skills.proudSkills![index];
+        for(let i = 0; i < setting.skills.proudSkills!.length; ++i){
+          let obj = setting.skills.proudSkills![i];
           if(Object.keys(obj).length === 0){
             continue;
           }
-          this.setBuffDataToResult(
-            characterData.skills?.proudSkills[index], 
+          let setBuffResult = this.setBuffDataToResult(
+            characterData.skills?.proudSkills[i], 
             Const.NAME_TALENT_DEFAULT_LEVEL, 
-            extraCharacterData.skills!.proudSkills![index],
+            extraCharacterData.skills!.proudSkills![i],
             obj,
             result,
-            specialResult);
+            specialResult,
+            characterData.weaponType,
+            overrideElement,
+          );
+          if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+            hasOverride = true;
+            overrideElement = setBuffResult.overrideElement!;
+            this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+          }
         }
       }
     }
 
     if(Const.NAME_CONSTELLATION in setting && setting.constellation){
-      for(let index of [Const.NAME_CONSTELLATION_1, Const.NAME_CONSTELLATION_2, Const.NAME_CONSTELLATION_3, Const.NAME_CONSTELLATION_4, Const.NAME_CONSTELLATION_5, Const.NAME_CONSTELLATION_6]){
-        if(index in setting.constellation){
-          this.setBuffDataToResult(
-            characterData.skills.talents[parseInt(index)], 
+      for(let i of [Const.NAME_CONSTELLATION_1, Const.NAME_CONSTELLATION_2, Const.NAME_CONSTELLATION_3, Const.NAME_CONSTELLATION_4, Const.NAME_CONSTELLATION_5, Const.NAME_CONSTELLATION_6]){
+        if(i in setting.constellation){
+          let setBuffResult = this.setBuffDataToResult(
+            characterData.skills.talents[parseInt(i)], 
             Const.NAME_TALENT_DEFAULT_LEVEL, 
-            extraCharacterData.constellation![index],
-            setting.constellation![index],
+            extraCharacterData.constellation![i],
+            setting.constellation![i],
             result,
             specialResult,
+            characterData.weaponType,
+            overrideElement,
           );
+          if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+            hasOverride = true;
+            overrideElement = setBuffResult.overrideElement!;
+            this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+          }
         }
       }
     }
@@ -2345,8 +2506,10 @@ export class CalculatorService {
   //武器追加データ解析
   private getExtraWeaponData(index: string | number, data?: WeaponLevelConfig){
     let weaponData = this.dataMap[index]!.weaponData!;
+    let characterData = this.dataMap[index]!.characterData!;
     let smeltingLevel;
     let weaponStorageData = this.weaponService.getStorageInfo(index);
+    let overrideElement = this.characterService.getOverrideElement(index);
     if(data && data.smeltingLevel){
       smeltingLevel = data.smeltingLevel!;
     }else{
@@ -2358,14 +2521,19 @@ export class CalculatorService {
     let specialResult: SpecialBuff[] = [];
 
     if("effect" in setting && setting.effect){
-      this.setBuffDataToResult(
+      let setBuffResult = this.setBuffDataToResult(
         weaponData.skillAffixMap[smeltingLevel], 
         Const.NAME_NO_LEVEL, 
         extraWeaponData.effect!,
         setting.effect!,
         result,
         specialResult,
+        characterData.weaponType,
+        overrideElement,
       );
+      if(overrideElement != setBuffResult.overrideElement){
+        this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+      }
     }
 
     return [result, specialResult];
@@ -2398,7 +2566,9 @@ export class CalculatorService {
 
   //聖遺物セットデータ解析
   private getExtraReliquarySetData(index: string){
+    let characterData = this.dataMap[index]!.characterData!;
     let artifactSetIndexs = this.artifactService.getStorageSetIndexs(index);
+    let overrideElement = this.characterService.getOverrideElement(index);
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
     let targetIndexInfos: artifactSetInfo[] = [];
@@ -2419,14 +2589,19 @@ export class CalculatorService {
       let artifactSetData = this.artifactService.getSet(targetIndexInfo.index);
       let extraArtifactData = this.extraDataService.getArtifactSet(targetIndexInfo.index);
       let setting = this.artifactService.getExtraData(index)!;
-      this.setBuffDataToResult(
+      let setBuffResult = this.setBuffDataToResult(
         artifactSetData.setAffixs[targetIndexInfo.level - 1], 
         Const.NAME_NO_LEVEL,
         extraArtifactData?extraArtifactData[Const.NAME_SET + targetIndexInfo.level as keyof ExtraArtifact]!:[],
         setting[Const.NAME_SET + targetIndexInfo.setIndex as keyof ExtraArtifactSetData] ?? {},
         tempResult,
         tempSpecialResult,
+        characterData.weaponType,
+        overrideElement,
       );
+      if(overrideElement != setBuffResult.overrideElement){
+        this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+      }
       for(let key in tempResult){
         if(result[key] == undefined){
           result[key] = tempResult[key];
@@ -2457,12 +2632,14 @@ export class CalculatorService {
   }
 
   //追加データ解析
-  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[]){
+  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[], weaponType: WeaponType, crruentOverrideElement: string): SetBuffResult{
+    let setBuffResult: SetBuffResult = {};
     if(skillData == undefined || buffs == undefined){
-      return;
+      return setBuffResult;
     }
     let switchOnSet = setting?.switchOnSet ?? {};
     let sliderNumMap = setting?.sliderNumMap ?? {};
+    let overrideElement = crruentOverrideElement;
 
     for(let [buffIndex,buffInfo] of buffs.entries()){
       let buff = buffInfo?.buff;
@@ -2476,7 +2653,21 @@ export class CalculatorService {
       }
 
       if(buff){
+        //元素付与リセット
+        if(buff.overrideElement == crruentOverrideElement){
+          overrideElement = "";
+        }
         if(isEnableInSwitch){
+          //限定武器タイプチェック
+          if(buff?.weaponTypeLimit != undefined){
+            if(!buff.weaponTypeLimit.includes(weaponType)){
+              continue;
+            }
+          }
+          //元素付与
+          if(buff.overrideElement != undefined){
+            overrideElement = buff.overrideElement;
+          }
           let indexValue = 0;
           if(buff?.index != undefined){
             if(skillData.paramMap){
@@ -2737,6 +2928,11 @@ export class CalculatorService {
         }
       }
     }
+
+    //結果セット
+    setBuffResult.overrideElement = overrideElement;
+
+    return setBuffResult;
   }
 
   private getCharacterData(index: string | number): CharStatus{

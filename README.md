@@ -8,9 +8,18 @@
 
 + 原神伤害计算
 
-## 使用方法
+## 食用地址
 
 + <a href="https://genshin-calc.sirokuma.cc/" target="_blank">云原神</a> 或者 <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a> 
+
+## 使用方法
+
+<details>
+    <summary>点击查看简单说明</summary>
+    <img src="./doc/example_ch_sim_1.png">
+    <br>
+    <img src="./doc/example_ch_sim_2.png">
+</details>
 
 ## 注意事项
 ■角色 
@@ -29,10 +38,7 @@
 
 ## 其他
 ■整体
-
 + 所有用户数据使用浏览器的LocalStorage技术，暂时不支持自动清理
-+ 部分BUFF无法同游戏内一样详细细分（目前设定为全局增益），开启后可能会影响到其他技能的计算
-（如雷神Q的愿力加成分一刀和后续普攻，开启一刀加成的BUFF会影响到后续普攻，开启后续普攻BUFF会影响到一刀，优菈Q叠层，雷神和神子减防，乐团和角斗4件等）
 
 ■敌人
 + 可能含有部分非正常敌人或缺少部分敌人
@@ -40,9 +46,6 @@
 ■武器
 + 只列举了3星及其以上的武器
 + 可能含有部分非正常武器（如鱼竿）
-
-■技能天赋/命座
-+ 所有由其他技能天赋或命座引发的附魔需要手动选择（胡桃，一斗，万叶等）
 
 ## 测试或搭建自己的计算器
 
