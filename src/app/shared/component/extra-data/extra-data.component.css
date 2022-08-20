@@ -27,17 +27,18 @@ tr td:nth-of-type(2) {
     /* border-bottom: 1px solid rgba(0,0,0,.12); */
 }
 
-.padding-div {
-    padding-right: 5px;
+.no-scroll-div {
+    padding-right: 11px;
 }
 
 .scroll-div {
+    padding-right: 5px;
     max-height: 9.48em;
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 .scroll-div::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
 }
 
 .scroll-div::-webkit-scrollbar-thumb {

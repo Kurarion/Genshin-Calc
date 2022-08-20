@@ -2,7 +2,7 @@
     <ng-content></ng-content>
 </ng-container>
 <ng-container *ngFor="let info of buffDatas; index as i; first as isFirst">
-    <div class="padding-div">
+    <div class="no-scroll-div">
         <table>
             <!-- バフ -->
             <tr>
@@ -35,7 +35,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let info of dmgDatas; index as i">
-    <div class="padding-div scroll-div">
+    <div class="scroll-div">
         <table>
             <!-- ダメージ -->
             <ng-container *ngFor="let prop of dmgPropList">
@@ -53,7 +53,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let info of healingDatas; index as i">
-    <div class="padding-div">
+    <div class="no-scroll-div">
         <table>
             <!-- 治療 -->
             <ng-container *ngFor="let prop of healingPropList">
@@ -71,7 +71,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let info of productDatas; index as i">
-    <div class="padding-div">
+    <div class="no-scroll-div">
         <table>
             <!-- 生成物 -->
             <ng-container *ngFor="let prop of productPropList">
@@ -89,7 +89,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let info of shieldDatas; index as i">
-    <div class="padding-div">
+    <div class="no-scroll-div">
         <table>
             <!-- バリア -->
             <ng-container *ngFor="let prop of shieldPropList">
