@@ -42,6 +42,17 @@
                         }
                     }
                 ],
+                "other": [
+                    {
+                        "buff": {
+                            "index": 2,
+                            "overrideElement": "DMG_BONUS_CRYO",
+                            "target":[],
+                            "settingType": "switch",
+                            "defaultEnable": false
+                        }
+                    }
+                ],
                 "elementalBurst": [
                     {
                         "damage": {
@@ -551,6 +562,13 @@
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
                             "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "buff": {
+                            "index": 4,
+                            "overrideElement": "DMG_BONUS_PYRO",
+                            "target": [],
+                            "settingType": "switch",
+                            "defaultEnable": false
                         }
                     }
                 ],
@@ -1432,6 +1450,7 @@
                     {
                         "buff": {
                             "index": 0,
+                            "overrideElement": "DMG_BONUS_ANEMO",
                             "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
                             "settingType": "switch",
                             "defaultEnable": false
@@ -2036,6 +2055,7 @@
                     {
                         "buff": {
                             "index":0,
+                            "overrideElement":"DMG_BONUS_PYRO",
                             "target":["DMG_BONUS_PYRO"],
                             "settingType":"switch",
                             "defaultEnable":false
@@ -2213,6 +2233,7 @@
                         "buff": {
                             "index":2,
                             "base":"DEFENSE",
+                            "overrideElement":"DMG_BONUS_GEO",
                             "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
@@ -2408,6 +2429,13 @@
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_CRYO",
                             "attackBonusType": "DMG_BONUS_SKILL"
+                        },
+                        "buff": {
+                            "index": 1,
+                            "overrideElement": "DMG_BONUS_CRYO",
+                            "target":[],
+                            "settingType": "switch",
+                            "defaultEnable": false
                         }
                     }
                 ],
@@ -2864,6 +2892,7 @@
                         }
                     }
                 ],
+                "other":[],
                 "elementalBurst": [
                     {
                         "damage": {
@@ -2984,6 +3013,13 @@
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_ELECTRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
+                        },
+                        "buff": {
+                            "index": 3,
+                            "overrideElement": "DMG_BONUS_ELECTRO",
+                            "target":[],
+                            "settingType": "switch",
+                            "defaultEnable": false
                         }
                     }
                 ],
@@ -3428,6 +3464,7 @@
                         "buff": {
                             "index": 1,
                             "base": "HP",
+                            "overrideElement":"DMG_BONUS_PYRO",
                             "calRelation": "*",
                             "maxValIndex": 6,
                             "maxValBase": "ATTACK_BASE",
@@ -3694,6 +3731,7 @@
                             "buff": {
                                 "index": 0,
                                 "base":"ELEMENTAL_MASTERY",
+                                "overrideElement":"DMG_BONUS_ANEMO",
                                 "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
                                 "settingType": "switch",
                                 "defaultEnable": false
@@ -4216,13 +4254,14 @@
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
-                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+                            "tag": "EULA_KOUKEN"
                         }
                     },
                     {
                         "buff": {
                             "index": 2,
-                            "target":["DMG_RATE_UP_ELEMENTAL_BURST"],
+                            "target":["DMG_RATE_UP_ELEMENTAL_BURST_EULA_KOUKEN"],
                             "settingType":"slider",
                             "sliderInitialValue":0,
                             "sliderMax": 30,
@@ -4325,17 +4364,28 @@
                 "elementalBurst": [
                     {
                         "damage": {
-                            "indexs": [0,4,5,6,7,8,9,10,11,13,14,15],
+                            "indexs": [4,5,6,7,8,9,10,11,13,14,15],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_ELECTRO",
-                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+                            "tag": "RAIDEN_ISSHIN"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+                            "tag": "RAIDEN_ITTOU"
                         }
                     },
                     {
                         "buff": {
                             "index": 1,
-                            "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
+                            "target": ["DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU"],
                             "settingType": "slider",
                             "sliderInitialValue": 0,
                             "sliderStep": 1,
@@ -4345,7 +4395,7 @@
                     {
                         "buff": {
                             "index": 2,
-                            "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
+                            "target": ["DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ISSHIN"],
                             "settingType": "slider",
                             "sliderInitialValue": 0,
                             "sliderStep": 1,
@@ -4376,7 +4426,7 @@
                         {
                             "buff": {
                                 "index": 0,
-                                "target": ["DMG_ENEMY_DEFENSE_DOWN"],
+                                "target": ["DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             }
@@ -4998,6 +5048,7 @@
                         "buff": {
                             "index": 1,
                             "base":"DEFENSE",
+                            "overrideElement":"DMG_BONUS_GEO",
                             "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
                             "defaultEnable":false
@@ -5125,7 +5176,7 @@
                         {
                             "buff": {
                                 "index": 0,
-                                "target": ["DMG_ENEMY_DEFENSE_DOWN"],
+                                "target": ["DMG_ENEMY_DEFENSE_DOWN_SKILL"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             }
@@ -8634,8 +8685,8 @@
                     "buff": {
                         "index": 0,
                         "target": ["DMG_BONUS_NORMAL"],
-                        "settingType": "switch",
-                        "defaultEnable": false
+                        "settingType": "resident",
+                        "weaponTypeLimit": ["WEAPON_POLE","WEAPON_SWORD_ONE_HAND","WEAPON_CLAYMORE"]
                     }
                 }
             ]
@@ -8683,8 +8734,8 @@
                     "buff": {
                         "index": 0,
                         "target": ["DMG_BONUS_CHARGED"],
-                        "settingType": "switch",
-                        "defaultEnable": false
+                        "settingType": "resident",
+                        "weaponTypeLimit": ["WEAPON_CATALYST","WEAPON_BOW"]
                     }
                 }
             ]
