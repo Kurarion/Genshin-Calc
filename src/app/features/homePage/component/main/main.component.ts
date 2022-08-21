@@ -5,7 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 const CSS_STATUS_BEFORE = "beforeLoad";
 const CSS_STATUS_FIN = "loaded";
-const HOMEPAGE_BG = "assets/init/homePageBG.png";
+const HOMEPAGE_BG = "assets/init/homePageBG-compress.png";
 
 @Component({
   selector: 'app-main',
