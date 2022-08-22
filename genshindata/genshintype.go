@@ -183,18 +183,40 @@ type GenshinReliquaryCodexData struct {
 //************************
 
 type GenshinMonsterBaseListData []GenshinMonsterBaseData
+type GenshinMonsterDescribeListData []GenshinMonsterDescribeData
+type GenshinMonsterTitleListData []GenshinMonsterTitleData
 
 //怪物定义
 type GenshinMonsterBaseData struct {
-	Id              uint64           `json:"id"`
-	MonsterName     string           `json:"monsterName"`
-	Type            string           `json:"type"`
-	NameTextMapHash uint64           `json:"nameTextMapHash"`
-	HpBase          float64          `json:"hpBase"`
-	AttackBase      float64          `json:"attackBase"`
-	DefenseBase     float64          `json:"defenseBase"`
-	PropGrowCurves  []propGrowCurves `json:"propGrowCurves"`
+	Id                uint64           `json:"id"`
+	MonsterName       string           `json:"monsterName"`
+	Type              string           `json:"type"`
+	NameTextMapHash   uint64           `json:"nameTextMapHash"`
+	VisionLevel       string           `json:"visionLevel"`
+	IsInvisibleReset  bool             `json:"isInvisibleReset"`
+	FeatureTagGroupID uint64           `json:"featureTagGroupID"`
+	DescribeId        uint64           `json:"describeId"`
+	Affix             []uint64         `json:"affix"`
+	HpBase            float64          `json:"hpBase"`
+	AttackBase        float64          `json:"attackBase"`
+	DefenseBase       float64          `json:"defenseBase"`
+	PropGrowCurves    []propGrowCurves `json:"propGrowCurves"`
 	GenshinSubHurtData
+}
+
+//怪物描述
+type GenshinMonsterDescribeData struct {
+	Id               uint64 `json:"id"`
+	NameTextMapHash  uint64 `json:"nameTextMapHash"`
+	TitleID          uint64 `json:"titleID"`
+	SpecialNameLabID uint64 `json:"specialNameLabID"`
+	Icon             string `json:"icon"`
+}
+
+//怪物标题
+type GenshinMonsterTitleData struct {
+	TitleID              uint64 `json:"titleID"`
+	TitleNameTextMapHash uint64 `json:"titleNameTextMapHash"`
 }
 
 //抗性定义

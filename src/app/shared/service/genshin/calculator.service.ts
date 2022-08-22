@@ -2131,7 +2131,8 @@ export class CalculatorService {
   
         for(let [infoIndex,info] of infos.entries()){
           //全含め必要
-          let buffInfo = info.buff;
+          let buffInfos = info.buffs || [];
+          for(let buffInfo of buffInfos){       
             let tempValue: any;
             //聖遺物と武器効果が一箇所しないため、表示チェックを排除する（一時的）
             if(skill != Const.NAME_SET && skill != Const.NAME_EFFECT){
@@ -2185,6 +2186,7 @@ export class CalculatorService {
                 case 'resident':
                 default:
                   continue;
+              }
             }
           }
         }
@@ -2400,6 +2402,10 @@ export class CalculatorService {
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
     let hasOverride: boolean = false;
+    
+    if(skillLevel == undefined || elementalBurstLevel == undefined){
+      return [result, specialResult];
+    }
 
     if(Const.NAME_SKILLS in setting && setting.skills){
       if(Const.NAME_SKILLS_SKILL in setting.skills){
@@ -2642,287 +2648,304 @@ export class CalculatorService {
     let overrideElement = crruentOverrideElement;
 
     for(let [buffIndex,buffInfo] of buffs.entries()){
-      let buff = buffInfo?.buff;
-      let isEnableInSwitch = true;
-      let isEnableInSlider = true;
-      if(!(buffIndex in switchOnSet) || switchOnSet[buffIndex] != true){
-        isEnableInSwitch = false;
-      }
-      if(!(buffIndex in sliderNumMap) || typeof sliderNumMap[buffIndex] != "number"){
-        isEnableInSlider = false;
-      }
-
-      if(buff){
-        //元素付与リセット
-        if(buff.overrideElement == crruentOverrideElement){
-          overrideElement = "";
+      let subBuffs = buffInfo?.buffs || [];
+      for(let buff of subBuffs){
+        let isEnableInSwitch = true;
+        let isEnableInSlider = true;
+        if(!(buffIndex in switchOnSet) || switchOnSet[buffIndex] != true){
+          isEnableInSwitch = false;
         }
-        if(isEnableInSwitch){
-          //限定武器タイプチェック
-          if(buff?.weaponTypeLimit != undefined){
-            if(!buff.weaponTypeLimit.includes(weaponType)){
+        if(!(buffIndex in sliderNumMap) || typeof sliderNumMap[buffIndex] != "number"){
+          isEnableInSlider = false;
+        }
+  
+        if(buff){
+          //元素付与リセット
+          if(buff.overrideElement == crruentOverrideElement){
+            overrideElement = "";
+          }
+          if(isEnableInSwitch){
+            //限定武器タイプチェック
+            if(buff?.weaponTypeLimit != undefined){
+              if(!buff.weaponTypeLimit.includes(weaponType)){
+                continue;
+              }
+            }
+            //元素付与
+            if(buff.overrideElement != undefined){
+              overrideElement = buff.overrideElement;
+            }
+            let indexValue = 0;
+            if(buff?.index != undefined){
+              if(skillData.paramMap){
+                indexValue = skillData.paramMap[skillLevel][buff?.index!];
+              }else if(skillData.paramList){
+                indexValue = skillData.paramList[buff?.index!];
+              }
+            }else if(buff?.customValue != undefined){
+              indexValue = buff.customValue;
+            }else if(buff?.propIndex != undefined){
+              indexValue = skillData.addProps![buff?.propIndex].value;
+            }
+            let constIndexValue = 0;
+            if(buff?.constIndex != undefined){
+              if(skillData.paramMap){
+                constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
+              }else if(skillData.paramList){
+                constIndexValue = skillData.paramList[buff?.constIndex!];
+              }
+            }
+            let indexMultiValue = 1;
+            if(buff?.indexMultiValue != undefined){
+              indexMultiValue = buff.indexMultiValue;
+            }
+            indexValue *= indexMultiValue;
+            let indexAddValue = 0;
+            if(buff?.indexAddValue != undefined){
+              indexAddValue = buff.indexAddValue;
+            }
+            indexValue += indexAddValue;
+            let calRelation = buff?.calRelation ?? '+';
+            switch(calRelation){
+              case "-":
+                indexValue = -1 * indexValue;
+                break;
+            }
+            let constCalRelation = buff?.constCalRelation ?? '+';
+      
+            let base = buff?.base;
+            //ベース２
+            let base2 = buff.base2;
+            let baseModifyValue = buff?.baseModifyValue;
+            let baseModifyRelation = buff?.baseModifyRelation;
+            if(baseModifyValue != undefined){
+              switch(baseModifyRelation){
+                case "-":
+                  baseModifyValue = -1 * baseModifyValue;
+                  break;
+              }
+            }
+            let priority = buff?.priority ?? 0;
+      
+            let targets = buff?.target;
+            let convertElement = buff?.convertElement;
+      
+            let isGlobal = buff?.isGlobal ?? false;
+            let unableSelf = buff?.unableSelf ?? false;
+      
+            let maxValIndexValue = 0;
+            if(buff?.maxValIndex != undefined){
+              if(skillData.paramMap){
+                maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
+              }else if(skillData.paramList){
+                maxValIndexValue = skillData.paramList[buff?.maxValIndex!];
+              }
+            }
+            let maxValBase = buff?.maxValBase;
+            let maxValConstIndexValue = 0;
+            if(buff?.maxValConstIndex != undefined){
+              if(skillData.paramMap){
+                maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
+              }else if(skillData.paramList){
+                maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
+              }
+            }
+      
+            if(unableSelf){
+              //TODO
               continue;
             }
-          }
-          //元素付与
-          if(buff.overrideElement != undefined){
-            overrideElement = buff.overrideElement;
-          }
-          let indexValue = 0;
-          if(buff?.index != undefined){
-            if(skillData.paramMap){
-              indexValue = skillData.paramMap[skillLevel][buff?.index!];
-            }else if(skillData.paramList){
-              indexValue = skillData.paramList[buff?.index!];
-            }
-          }else if(buff?.customValue != undefined){
-            indexValue = buff.customValue;
-          }else if(buff?.propIndex != undefined){
-            indexValue = skillData.addProps![buff?.propIndex].value;
-          }
-          let constIndexValue = 0;
-          if(buff?.constIndex != undefined){
-            if(skillData.paramMap){
-              constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
-            }else if(skillData.paramList){
-              constIndexValue = skillData.paramList[buff?.constIndex!];
-            }
-          }
-          let indexMultiValue = 1;
-          if(buff?.indexMultiValue != undefined){
-            indexMultiValue = buff.indexMultiValue;
-          }
-          indexValue *= indexMultiValue;
-          let indexAddValue = 0;
-          if(buff?.indexAddValue != undefined){
-            indexAddValue = buff.indexAddValue;
-          }
-          indexValue += indexAddValue;
-          let calRelation = buff?.calRelation ?? '+';
-          switch(calRelation){
-            case "-":
-              indexValue = -1 * indexValue;
-              break;
-          }
-          let constCalRelation = buff?.constCalRelation ?? '+';
-    
-          let base = buff?.base;
-          //ベース２
-          let base2 = buff.base2;
-          let baseModifyValue = buff?.baseModifyValue;
-          let baseModifyRelation = buff?.baseModifyRelation;
-          if(baseModifyValue != undefined){
-            switch(baseModifyRelation){
-              case "-":
-                baseModifyValue = -1 * baseModifyValue;
-                break;
-            }
-          }
-          let priority = buff?.priority ?? 0;
-    
-          let targets = buff?.target;
-          let convertElement = buff?.convertElement;
-    
-          let isGlobal = buff?.isGlobal ?? false;
-          let unableSelf = buff?.unableSelf ?? false;
-    
-          let maxValIndexValue = 0;
-          if(buff?.maxValIndex != undefined){
-            if(skillData.paramMap){
-              maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
-            }else if(skillData.paramList){
-              maxValIndexValue = skillData.paramList[buff?.maxValIndex!];
-            }
-          }
-          let maxValBase = buff?.maxValBase;
-          let maxValConstIndexValue = 0;
-          if(buff?.maxValConstIndex != undefined){
-            if(skillData.paramMap){
-              maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
-            }else if(skillData.paramList){
-              maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
-            }
-          }
-    
-          if(unableSelf){
-            //TODO
-            continue;
-          }
-    
-          if(base){
-            //特殊バフ
-            let temp: SpecialBuff = {};
-            temp.base = base;
-            temp.base2 = base2;
-            temp.baseModifyValue = baseModifyValue;
-            temp.multiValue = indexValue;
-            temp.priority = priority;
-            if(maxValBase){
-              //特殊上限
-              temp.specialMaxVal = {
-                base: maxValBase,
-                multiValue: maxValIndexValue,
+      
+            if(base){
+              //特殊バフ
+              let temp: SpecialBuff = {};
+              temp.base = base;
+              temp.base2 = base2;
+              temp.baseModifyValue = baseModifyValue;
+              temp.multiValue = indexValue;
+              temp.priority = priority;
+              if(maxValBase){
+                //特殊上限
+                temp.specialMaxVal = {
+                  base: maxValBase,
+                  multiValue: maxValIndexValue,
+                }
+              }else{
+                //一般上限
+                temp.maxVal = maxValConstIndexValue;
+              }
+              for(let tar of targets){
+                specialResult.push({...temp, target: tar});
               }
             }else{
-              //一般上限
-              temp.maxVal = maxValConstIndexValue;
-            }
-            for(let tar of targets){
-              specialResult.push({...temp, target: tar});
-            }
-          }else{
-            //一般バフ
-            let value = indexValue;
-            switch(constCalRelation){
-              case '+':
-                value += constIndexValue;
-                break;
-              case '-':
-                value -= constIndexValue;
-                break;
-              case '*':
-                value *= constIndexValue;
-                break;
-              case '/':
-                value /= constIndexValue;
-                break;
-            }
-            for(let tar of targets){
-              if(!result[tar]){
-                result[tar] = 0;
+              //一般バフ
+              let value = indexValue;
+              switch(constCalRelation){
+                case '+':
+                  value += constIndexValue;
+                  break;
+                case '-':
+                  value -= constIndexValue;
+                  break;
+                case '*':
+                  value *= constIndexValue;
+                  break;
+                case '/':
+                  value /= constIndexValue;
+                  break;
               }
-              result[tar] += value;
+              for(let tar of targets){
+                if(!result[tar]){
+                  result[tar] = 0;
+                }
+                result[tar] += value;
+              }
             }
-          }
-        }else if(isEnableInSlider){
-          let id = 0;
-          let indexValue = 0;
-          if(buff?.index != undefined){
-            if(skillData.paramMap){
-              indexValue = skillData.paramMap[skillLevel][buff?.index!];
-            }else if(skillData.paramList){
-              indexValue = skillData.paramList[buff?.index!];
+          }else if(isEnableInSlider){
+            let id = 0;
+            let indexValue = 0;
+            let isMaximumStackBuff = buff?.isMaximumStackBuff || false;
+            if(buff?.index != undefined){
+              if(skillData.paramMap){
+                indexValue = skillData.paramMap[skillLevel][buff?.index!];
+              }else if(skillData.paramList){
+                indexValue = skillData.paramList[buff?.index!];
+              }
+            }else if(buff?.customValue != undefined){
+              indexValue = buff.customValue;
+            }else if(buff?.propIndex != undefined){
+              indexValue = skillData.addProps![buff?.propIndex].value;
             }
-          }else if(buff?.customValue != undefined){
-            indexValue = buff.customValue;
-          }else if(buff?.propIndex != undefined){
-            indexValue = skillData.addProps![buff?.propIndex].value;
-          }
-          let constIndexValue = 0;
-          if(buff?.constIndex != undefined){
-            if(skillData.paramMap){
-              constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
-            }else if(skillData.paramList){
-              constIndexValue = skillData.paramList[buff?.constIndex!];
+            let constIndexValue = 0;
+            if(buff?.constIndex != undefined){
+              if(skillData.paramMap){
+                constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
+              }else if(skillData.paramList){
+                constIndexValue = skillData.paramList[buff?.constIndex!];
+              }
             }
-          }
-          let indexMultiValue = 1;
-          if(buff?.indexMultiValue != undefined){
-            indexMultiValue = buff.indexMultiValue;
-          }
-          indexValue *= indexMultiValue;
-          let indexAddValue = 0;
-          if(buff?.indexAddValue != undefined){
-            indexAddValue = buff.indexAddValue;
-          }
-          indexValue += indexAddValue;
-          let calRelation = buff?.calRelation ?? '+';
-          switch(calRelation){
-            case "-":
-              indexValue = -1 * indexValue;
-              break;
-          }
-          let constCalRelation = buff?.constCalRelation ?? '+';
-    
-          let base = buff?.base;
-          //ベース２
-          let base2 = buff.base2;
-          let baseModifyValue = buff?.baseModifyValue;
-          let baseModifyRelation = buff?.baseModifyRelation;
-          if(baseModifyValue != undefined){
-            switch(baseModifyRelation){
+            let indexMultiValue = 1;
+            if(buff?.indexMultiValue != undefined){
+              indexMultiValue = buff.indexMultiValue;
+            }
+            indexValue *= indexMultiValue;
+            let indexAddValue = 0;
+            if(buff?.indexAddValue != undefined){
+              indexAddValue = buff.indexAddValue;
+            }
+            indexValue += indexAddValue;
+            let calRelation = buff?.calRelation ?? '+';
+            switch(calRelation){
               case "-":
-                baseModifyValue = -1 * baseModifyValue;
+                indexValue = -1 * indexValue;
                 break;
             }
-          }
-          let priority = buff?.priority ?? 0;
-    
-          let targets = buff?.target;
-          let convertElement = buff?.convertElement;
-    
-          let isGlobal = buff?.isGlobal ?? false;
-          let unableSelf = buff?.unableSelf ?? false;
-
-          let sliderMax = buff?.sliderMax;
-          let sliderStep = buff?.sliderStep;
-          let sliderStartIndex = buff?.sliderStartIndex;
-    
-          if(unableSelf){
-            //TODO
-            continue;
-          }
-          
-          if(base){
-            //特殊バフ
-            let temp: SpecialBuff = {};
-            temp.base = base;
-            temp.base2 = base2;
-            temp.baseModifyValue = baseModifyValue;
-            if(sliderStartIndex != undefined){
-              if(sliderNumMap[buffIndex] == 0){
+            let constCalRelation = buff?.constCalRelation ?? '+';
+      
+            let base = buff?.base;
+            //ベース２
+            let base2 = buff.base2;
+            let baseModifyValue = buff?.baseModifyValue;
+            let baseModifyRelation = buff?.baseModifyRelation;
+            if(baseModifyValue != undefined){
+              switch(baseModifyRelation){
+                case "-":
+                  baseModifyValue = -1 * baseModifyValue;
+                  break;
+              }
+            }
+            let priority = buff?.priority ?? 0;
+      
+            let targets = buff?.target;
+            let convertElement = buff?.convertElement;
+      
+            let isGlobal = buff?.isGlobal ?? false;
+            let unableSelf = buff?.unableSelf ?? false;
+  
+            let sliderMax = buff?.sliderMax;
+            let sliderStep = buff?.sliderStep;
+            let sliderStartIndex = buff?.sliderStartIndex;
+      
+            if(unableSelf){
+              //TODO
+              continue;
+            }
+            
+            if(base){
+              //特殊バフ
+              let temp: SpecialBuff = {};
+              temp.base = base;
+              temp.base2 = base2;
+              temp.baseModifyValue = baseModifyValue;
+              if(isMaximumStackBuff){
                 temp.multiValue = 0;
+                if((buff?.sliderMax || 0) <= sliderNumMap[buffIndex]){
+                  temp.multiValue = indexValue;
+                }
               }else{
-                if(skillData.paramMap){
-                  temp.multiValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
-                }else if(skillData.paramList){
-                  temp.multiValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                if(sliderStartIndex != undefined){
+                  if(sliderNumMap[buffIndex] == 0){
+                    temp.multiValue = 0;
+                  }else{
+                    if(skillData.paramMap){
+                      temp.multiValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                    }else if(skillData.paramList){
+                      temp.multiValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                    }
+                  }
+                }else{
+                  temp.multiValue = indexValue * sliderNumMap[buffIndex];
                 }
               }
-            }else{
-              temp.multiValue = indexValue * sliderNumMap[buffIndex];
-            }
-            temp.priority = priority;
-
-            for(let tar of targets){
-              specialResult.push({...temp, target: tar});
-            }
-          }else{
-            //一般バフ
-            let value = indexValue;
-            switch(constCalRelation){
-              case '+':
-                value += constIndexValue;
-                break;
-              case '-':
-                value -= constIndexValue;
-                break;
-              case '*':
-                value *= constIndexValue;
-                break;
-              case '/':
-                value /= constIndexValue;
-                break;
-            }
-            for(let tar of targets){
-              if(result[tar] == undefined){
-                result[tar] = 0;
+              temp.priority = priority;
+  
+              for(let tar of targets){
+                specialResult.push({...temp, target: tar});
               }
-              let resultValue: number;
-              if(sliderStartIndex != undefined){
-                if(sliderNumMap[buffIndex] == 0){
+            }else{
+              //一般バフ
+              let value = indexValue;
+              switch(constCalRelation){
+                case '+':
+                  value += constIndexValue;
+                  break;
+                case '-':
+                  value -= constIndexValue;
+                  break;
+                case '*':
+                  value *= constIndexValue;
+                  break;
+                case '/':
+                  value /= constIndexValue;
+                  break;
+              }
+              for(let tar of targets){
+                if(result[tar] == undefined){
+                  result[tar] = 0;
+                }
+                let resultValue: number;
+                if(isMaximumStackBuff){
                   resultValue = 0;
+                  if((buff?.sliderMax || 0) <= sliderNumMap[buffIndex]){
+                    resultValue = value;
+                  }
                 }else{
-                  if(skillData.paramMap){
-                    resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
-                  }else if(skillData.paramList){
-                    resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                  if(sliderStartIndex != undefined){
+                    if(sliderNumMap[buffIndex] == 0){
+                      resultValue = 0;
+                    }else{
+                      if(skillData.paramMap){
+                        resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                      }else if(skillData.paramList){
+                        resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                      }
+                    }
+                  }else{
+                    resultValue = value * sliderNumMap[buffIndex];
                   }
                 }
-              }else{
-                resultValue = value * sliderNumMap[buffIndex];
+                result[tar] += resultValue!;
               }
-              result[tar] += resultValue!;
             }
           }
         }

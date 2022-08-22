@@ -130,6 +130,10 @@ const (
 	ReliquaryCodexExcelConfigData = "/ExcelBinOutput/ReliquaryCodexExcelConfigData.json"
 	//怪物定义
 	MonsterExcelConfigData = "/ExcelBinOutput/MonsterExcelConfigData.json"
+	//怪物描述
+	MonsterDescribeExcelConfigData = "/ExcelBinOutput/MonsterDescribeExcelConfigData.json"
+	//怪物标题
+	MonsterTitleExcelConfigData = "/ExcelBinOutput/MonsterTitleExcelConfigData.json"
 	//怪物基础升级提升值(对应)
 	MonsterCurveExcelConfigData = "/ExcelBinOutput/MonsterCurveExcelConfigData.json"
 	//人物全技能列表

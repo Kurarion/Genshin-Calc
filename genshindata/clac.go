@@ -69,12 +69,12 @@ const (
 	configWeaponAffixLevelFormat = "%01d"
 )
 
-var (
-	configUnlistMonsterType = map[string]interface{}{
-		MONSTER_ENV_ANIMAL: nil,
-		MONSTER_FISH:       nil,
-	}
-)
+// var (
+// 	configUnlistMonsterType = map[string]interface{}{
+// 		MONSTER_ENV_ANIMAL: nil,
+// 		MONSTER_FISH:       nil,
+// 	}
+// )
 
 //保存路径
 const (
@@ -109,28 +109,30 @@ const (
 
 //索引
 const (
-	indexAvatarExcelConfig           = "AvatarExcelConfigData"
-	indexAvatarCurveExcelConfig      = "AvatarCurveExcelConfigData"
-	indexAvatarPromoteExcelConfig    = "AvatarPromoteExcelConfigData"
-	indexWeaponExcelConfig           = "WeaponExcelConfigData"
-	indexWeaponCurveExcelConfig      = "WeaponCurveExcelConfigData"
-	indexWeaponPromoteExcelConfig    = "WeaponPromoteExcelConfigData"
-	indexEquipAffixExcelConfig       = "EquipAffixExcelConfigData"
-	indexReliquaryExcelConfigData    = "ReliquaryExcelConfigData"
-	indexReliquaryAffixExcelConfig   = "ReliquaryAffixExcelConfigData"
-	indexReliquaryLevelExcelConfig   = "ReliquaryLevelExcelConfigData"
-	indexReliquarySetExcelConfig     = "ReliquarySetExcelConfigData"
-	indexReliquaryCodexExcelConfig   = "ReliquaryCodexExcelConfigData"
-	indexMonsterExcelConfig          = "MonsterExcelConfigData"
-	indexMonsterCurveExcelConfig     = "MonsterCurveExcelConfigData"
-	indexAvatarSkillDepotExcelConfig = "AvatarSkillDepotExcelConfigData"
-	indexAvatarSkillExcelConfig      = "AvatarSkillExcelConfigData"
-	indexProudSkillExcelConfig       = "ProudSkillExcelConfigData"
-	indexAvatarTalentExcelConfig     = "AvatarTalentExcelConfigData"
-	indexTextMapCHSFile              = "TextMapDataCHS"
-	indexTextMapCHTFile              = "TextMapDataCHT"
-	indexTextMapENFile               = "TextMapDataEN"
-	indexTextMapJPFile               = "TextMapDataJP"
+	indexAvatarExcelConfig              = "AvatarExcelConfigData"
+	indexAvatarCurveExcelConfig         = "AvatarCurveExcelConfigData"
+	indexAvatarPromoteExcelConfig       = "AvatarPromoteExcelConfigData"
+	indexWeaponExcelConfig              = "WeaponExcelConfigData"
+	indexWeaponCurveExcelConfig         = "WeaponCurveExcelConfigData"
+	indexWeaponPromoteExcelConfig       = "WeaponPromoteExcelConfigData"
+	indexEquipAffixExcelConfig          = "EquipAffixExcelConfigData"
+	indexReliquaryExcelConfigData       = "ReliquaryExcelConfigData"
+	indexReliquaryAffixExcelConfig      = "ReliquaryAffixExcelConfigData"
+	indexReliquaryLevelExcelConfig      = "ReliquaryLevelExcelConfigData"
+	indexReliquarySetExcelConfig        = "ReliquarySetExcelConfigData"
+	indexReliquaryCodexExcelConfig      = "ReliquaryCodexExcelConfigData"
+	indexMonsterExcelConfig             = "MonsterExcelConfigData"
+	indexMonsterDescribeExcelConfigData = "MonsterDescribeExcelConfigData"
+	indexMonsterTitleExcelConfigData    = "MonsterTitleExcelConfigData"
+	indexMonsterCurveExcelConfig        = "MonsterCurveExcelConfigData"
+	indexAvatarSkillDepotExcelConfig    = "AvatarSkillDepotExcelConfigData"
+	indexAvatarSkillExcelConfig         = "AvatarSkillExcelConfigData"
+	indexProudSkillExcelConfig          = "ProudSkillExcelConfigData"
+	indexAvatarTalentExcelConfig        = "AvatarTalentExcelConfigData"
+	indexTextMapCHSFile                 = "TextMapDataCHS"
+	indexTextMapCHTFile                 = "TextMapDataCHT"
+	indexTextMapENFile                  = "TextMapDataEN"
+	indexTextMapJPFile                  = "TextMapDataJP"
 
 	indexFileSaveDir        = "map_dir"
 	indexAvatarPath         = "avatar_map"
@@ -172,28 +174,30 @@ func Generate(targetDir string) {
 	)
 	//下载URL初始化
 	dataJSONURLMap = map[string]string{
-		indexAvatarExcelConfig:           RepositoryURL + AvatarExcelConfigData,
-		indexAvatarCurveExcelConfig:      RepositoryURL + AvatarCurveExcelConfigData,
-		indexAvatarPromoteExcelConfig:    RepositoryURL + AvatarPromoteExcelConfigData,
-		indexWeaponExcelConfig:           RepositoryURL + WeaponExcelConfigData,
-		indexWeaponCurveExcelConfig:      RepositoryURL + WeaponCurveExcelConfigData,
-		indexWeaponPromoteExcelConfig:    RepositoryURL + WeaponPromoteExcelConfigData,
-		indexEquipAffixExcelConfig:       RepositoryURL + EquipAffixExcelConfigData,
-		indexReliquaryExcelConfigData:    RepositoryURL + ReliquaryExcelConfigData,
-		indexReliquaryAffixExcelConfig:   RepositoryURL + ReliquaryAffixExcelConfigData,
-		indexReliquaryLevelExcelConfig:   RepositoryURL + ReliquaryLevelExcelConfigData,
-		indexReliquarySetExcelConfig:     RepositoryURL + ReliquarySetExcelConfigData,
-		indexReliquaryCodexExcelConfig:   RepositoryURL + ReliquaryCodexExcelConfigData,
-		indexMonsterExcelConfig:          RepositoryURL + MonsterExcelConfigData,
-		indexMonsterCurveExcelConfig:     RepositoryURL + MonsterCurveExcelConfigData,
-		indexAvatarSkillDepotExcelConfig: RepositoryURL + AvatarSkillDepotExcelConfigData,
-		indexAvatarSkillExcelConfig:      RepositoryURL + AvatarSkillExcelConfigData,
-		indexProudSkillExcelConfig:       RepositoryURL + ProudSkillExcelConfigData,
-		indexAvatarTalentExcelConfig:     RepositoryURL + AvatarTalentExcelConfigData,
-		indexTextMapCHSFile:              RepositoryURL + TextMapDataCHS,
-		indexTextMapCHTFile:              RepositoryURL + TextMapDataCHT,
-		indexTextMapENFile:               RepositoryURL + TextMapDataEN,
-		indexTextMapJPFile:               RepositoryURL + TextMapDataJP,
+		indexAvatarExcelConfig:              RepositoryURL + AvatarExcelConfigData,
+		indexAvatarCurveExcelConfig:         RepositoryURL + AvatarCurveExcelConfigData,
+		indexAvatarPromoteExcelConfig:       RepositoryURL + AvatarPromoteExcelConfigData,
+		indexWeaponExcelConfig:              RepositoryURL + WeaponExcelConfigData,
+		indexWeaponCurveExcelConfig:         RepositoryURL + WeaponCurveExcelConfigData,
+		indexWeaponPromoteExcelConfig:       RepositoryURL + WeaponPromoteExcelConfigData,
+		indexEquipAffixExcelConfig:          RepositoryURL + EquipAffixExcelConfigData,
+		indexReliquaryExcelConfigData:       RepositoryURL + ReliquaryExcelConfigData,
+		indexReliquaryAffixExcelConfig:      RepositoryURL + ReliquaryAffixExcelConfigData,
+		indexReliquaryLevelExcelConfig:      RepositoryURL + ReliquaryLevelExcelConfigData,
+		indexReliquarySetExcelConfig:        RepositoryURL + ReliquarySetExcelConfigData,
+		indexReliquaryCodexExcelConfig:      RepositoryURL + ReliquaryCodexExcelConfigData,
+		indexMonsterExcelConfig:             RepositoryURL + MonsterExcelConfigData,
+		indexMonsterDescribeExcelConfigData: RepositoryURL + MonsterDescribeExcelConfigData,
+		indexMonsterTitleExcelConfigData:    RepositoryURL + MonsterTitleExcelConfigData,
+		indexMonsterCurveExcelConfig:        RepositoryURL + MonsterCurveExcelConfigData,
+		indexAvatarSkillDepotExcelConfig:    RepositoryURL + AvatarSkillDepotExcelConfigData,
+		indexAvatarSkillExcelConfig:         RepositoryURL + AvatarSkillExcelConfigData,
+		indexProudSkillExcelConfig:          RepositoryURL + ProudSkillExcelConfigData,
+		indexAvatarTalentExcelConfig:        RepositoryURL + AvatarTalentExcelConfigData,
+		indexTextMapCHSFile:                 RepositoryURL + TextMapDataCHS,
+		indexTextMapCHTFile:                 RepositoryURL + TextMapDataCHT,
+		indexTextMapENFile:                  RepositoryURL + TextMapDataEN,
+		indexTextMapJPFile:                  RepositoryURL + TextMapDataJP,
 	}
 	//文件列表初始化
 	dataFileMap = map[string]FILEINFO{
@@ -287,6 +291,8 @@ func update() error {
 	weaponSkillAffixDataList := make(GenshinSkillAffixListData, 0)
 	//怪物
 	monsterBaseDataList := make(GenshinMonsterBaseListData, 0)
+	monsterDescribeDataList := make(GenshinMonsterDescribeListData, 0)
+	monsterTitleDataList := make(GenshinMonsterTitleListData, 0)
 	monsterGrowCurvesDataList := make(GenshinGrowCurvesListData, 0)
 	//圣遗物
 	reliquaryDataList := make(GenshinReliquaryListData, 0)
@@ -350,6 +356,10 @@ func update() error {
 			json.Unmarshal(v.Bytes(), &reliquaryCodexDataList)
 		case indexMonsterExcelConfig:
 			json.Unmarshal(v.Bytes(), &monsterBaseDataList)
+		case indexMonsterDescribeExcelConfigData:
+			json.Unmarshal(v.Bytes(), &monsterDescribeDataList)
+		case indexMonsterTitleExcelConfigData:
+			json.Unmarshal(v.Bytes(), &monsterTitleDataList)
 		case indexMonsterCurveExcelConfig:
 			json.Unmarshal(v.Bytes(), &monsterGrowCurvesDataList)
 		case indexAvatarSkillDepotExcelConfig:
@@ -518,6 +528,18 @@ func update() error {
 	monsterCurvesIndexMap := make(map[string]int)
 	for i, v := range monsterGrowCurvesDataMap[1].CurveInfos {
 		monsterCurvesIndexMap[v.Type] = i
+	}
+	monsterBaseDataMap := make(map[uint64]*GenshinMonsterBaseData)
+	for i, v := range monsterBaseDataList {
+		monsterBaseDataMap[v.Id] = &monsterBaseDataList[i]
+	}
+	monsterDescribeDataMap := make(map[uint64]*GenshinMonsterDescribeData)
+	for i, v := range monsterDescribeDataList {
+		monsterDescribeDataMap[v.Id] = &monsterDescribeDataList[i]
+	}
+	monsterTitleDataMap := make(map[uint64]*GenshinMonsterTitleData)
+	for i, v := range monsterTitleDataList {
+		monsterTitleDataMap[v.TitleID] = &monsterTitleDataList[i]
 	}
 	//人物技能
 	avatarSkillsDataMap := make(map[uint64]*GenshinAvatarSkillsData)
@@ -770,7 +792,7 @@ func update() error {
 		if currentWeaponData.RankLevel < genshinMinWeaponRankLevel {
 			continue
 		}
-		if nameText[languageCHS] == "" {
+		if nameText[languageCHS] == "" || nameText[languageEN] == "" {
 			continue
 		}
 		//创建
@@ -852,21 +874,56 @@ func update() error {
 	//怪物
 	for i := range monsterBaseDataList {
 		currentMonsterData := &monsterBaseDataList[i]
-		monsterText := getTextFromHash(currentMonsterData.NameTextMapHash, textMap, true)
-		//过滤
-		filterType := currentMonsterData.Type
-		filterId := currentMonsterData.Id
-		if _, exit := configUnlistMonsterType[filterType]; exit {
+		if currentMonsterData.DescribeId == 0 ||
+			len(currentMonsterData.VisionLevel) != 0 ||
+			strings.Contains(currentMonsterData.MonsterName, "Activity") ||
+			strings.Contains(currentMonsterData.MonsterName, "Tutorial") ||
+			strings.Contains(currentMonsterData.MonsterName, "Multi") ||
+			strings.Contains(currentMonsterData.MonsterName, "Enhance") {
 			continue
 		}
-		if filterType == MONSTER_ORDINARY {
-			if filterId%100 != 1 {
+		var monsterText map[string]string
+		// var titleText map[string]string
+		if v, has := monsterDescribeDataMap[currentMonsterData.DescribeId]; has {
+			monsterText = getTextFromHash(v.NameTextMapHash, textMap, false)
+			// if vv, hasTitleId := monsterTitleDataMap[v.TitleID]; hasTitleId {
+			// 	titleText = getTextFromHash(vv.TitleNameTextMapHash, textMap, false)
+			// 	for ii := range monsterText {
+			// 		if titleText[ii] != monsterText[ii] {
+			// 			monsterText[ii] += " " + titleText[ii]
+			// 		}
+			// 	}
+			// }
+			filterName := monsterText[languageCHS]
+			if len(filterName) < 1 {
 				continue
 			}
-		}
-		filterName := monsterText[languageCHS]
-		if filterName == "" {
+		} else {
 			continue
+		}
+		//过滤
+		monsterTextTofilter := getTextFromHash(currentMonsterData.NameTextMapHash, textMap, true)
+		filterName := monsterTextTofilter[languageCHT]
+		if strings.Contains(filterName, "（") {
+			continue
+		}
+		if currentMonsterData.Id%100 != 1 {
+			var i uint64
+			var isDuplicated bool
+			for i = 1; i < currentMonsterData.Id%100; i++ {
+				tempId := currentMonsterData.Id/100*100 + i
+				if tempData, has := monsterBaseDataMap[tempId]; has {
+					if currentMonsterData.HpBase == tempData.HpBase &&
+						currentMonsterData.AttackBase == tempData.AttackBase &&
+						currentMonsterData.DefenseBase == tempData.DefenseBase {
+						isDuplicated = true
+						break
+					}
+				}
+			}
+			if isDuplicated {
+				continue
+			}
 		}
 		//创建对象
 		dataMonsterMap[currentMonsterData.Id] = &MONSTER{

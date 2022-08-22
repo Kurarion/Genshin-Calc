@@ -122,32 +122,35 @@ export class ExtraDataService {
     let result: ExtraStatus = {}
     
     for(let [index,obj] of skills?.entries() ?? []){
-      switch(obj?.buff?.settingType){
-        case 'switch-value':
-        case 'switch':
-          {
-            if(!result.switchOnSet){
-              result.switchOnSet = {};
+      if(obj?.buffs != undefined && obj?.buffs.length > 0){
+        let standardBuff = obj.buffs[0];
+        switch(standardBuff.settingType){
+          case 'switch-value':
+          case 'switch':
+            {
+              if(!result.switchOnSet){
+                result.switchOnSet = {};
+              }
+              result.switchOnSet![index.toString()] = standardBuff.defaultEnable ?? false;
             }
-            result.switchOnSet![index.toString()] = obj.buff.defaultEnable ?? false;
-          }
-          break;
-        case 'slider':
-          {
-            if(!result.sliderNumMap){
-              result.sliderNumMap = {};
+            break;
+          case 'slider':
+            {
+              if(!result.sliderNumMap){
+                result.sliderNumMap = {};
+              }
+              result.sliderNumMap![index.toString()] = standardBuff.sliderInitialValue ?? 0;
             }
-            result.sliderNumMap![index.toString()] = obj.buff.sliderInitialValue ?? 0;
-          }
-          break;
-        case 'resident':
-          {
-            if(!result.switchOnSet){
-              result.switchOnSet = {};
+            break;
+          case 'resident':
+            {
+              if(!result.switchOnSet){
+                result.switchOnSet = {};
+              }
+              result.switchOnSet![index.toString()] = true;
             }
-            result.switchOnSet![index.toString()] = true;
-          }
-          break;
+            break;
+        }
       }
     }
 

@@ -90,6 +90,10 @@ export class EnemyComponent implements OnInit {
     }
     //敵初期選択
     this.selectedEnemyIndex = this.enemyService.getIndex(this.data.id) ?? this.enemyList[0].index;
+    //存在性チェック
+    if(this.selectedEnemyIndex != this.enemyList[0].index && this.enemyService.get(this.selectedEnemyIndex) == undefined){
+      this.selectedEnemyIndex = this.enemyList[0].index;
+    }
     this.selectedPlayerNum = this.getPlayerNumFromNumber(this.enemyService.getPlayerNum(this.data.id)) ?? this.minPlayerNum;
     //レベル初期選択
     this.selectedLevel = this.getLevelFromString(this.enemyService.getLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];

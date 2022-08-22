@@ -29,6 +29,8 @@ const regexColorCode6 = `#FFACFFFF`
 const regexColorCode6Replaced = `#FF6600`
 const regexColorCode7 = `#FFE699FF`
 const regexColorCode7Replaced = `#FF6600`
+const regexColorCode8 = `#99FF88FF`
+const regexColorCode8Replaced = `#FF6600`
 
 //正则
 var regxList = []*regexp.Regexp{
@@ -42,6 +44,7 @@ var regxList = []*regexp.Regexp{
 	regexp.MustCompile(regexColorCode5),
 	regexp.MustCompile(regexColorCode6),
 	regexp.MustCompile(regexColorCode7),
+	regexp.MustCompile(regexColorCode8),
 }
 var regxReplaceList = []string{
 	regexColorToFrontReplaced,
@@ -54,6 +57,7 @@ var regxReplaceList = []string{
 	regexColorCode5Replaced,
 	regexColorCode6Replaced,
 	regexColorCode7Replaced,
+	regexColorCode8Replaced,
 }
 
 //文件定义

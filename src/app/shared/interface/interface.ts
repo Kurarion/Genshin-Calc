@@ -59,7 +59,7 @@ export interface ExtraCharacterSkills {
 export interface ExtraSkillInfo {
   //計算
   damage?: ExtraSkillDamage;//ダメージ値
-  buff?: ExtraSkillBuff;//バフ値
+  buffs?: ExtraSkillBuff[];//バフ値
   healing?: ExtraSkillHealing;//治療値
   shield?: ExtraSkillShield;//シールド
   product?: ExtraSkillProduct;//召喚物
@@ -131,6 +131,8 @@ export interface ExtraSkillBuff {
   defaultEnable?: boolean;
   //限定武器タイプ
   weaponTypeLimit?: string[];
+  //マックススタックバフ（複数バフのみ適用）
+  isMaximumStackBuff?: boolean;
 }
 
 export interface ExtraSkillHealing {
