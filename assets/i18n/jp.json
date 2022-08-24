@@ -218,19 +218,19 @@
   "GENSHIN": {
     "DMG":{
       "ORIGIN": "通常ダメージ",
-      "CRIT": "クリティカルダメージ",
+      "CRIT": "クリティカルヒット",
       "EXPECT": "期待ダメージ",
       "ORIGIN_VAPORIZE": "通常ダメージ(蒸発)",
-      "CRIT_VAPORIZE": "クリティカルダメージ(蒸発)",
+      "CRIT_VAPORIZE": "クリティカルヒット(蒸発)",
       "EXPECT_VAPORIZE": "期待ダメージ(蒸発)",
       "ORIGIN_MELT": "通常ダメージ(溶解)",
-      "CRIT_MELT": "クリティカルダメージ(溶解)",
+      "CRIT_MELT": "クリティカルヒット(溶解)",
       "EXPECT_MELT": "期待ダメージ(溶解)",
       "ORIGIN_AGGRAVATE": "通常ダメージ(超激化)",
-      "CRIT_AGGRAVATE": "クリティカルダメージ(超激化)",
+      "CRIT_AGGRAVATE": "クリティカルヒット(超激化)",
       "EXPECT_AGGRAVATE": "期待ダメージ(超激化)",
       "ORIGIN_SPREAD": "通常ダメージ(拡激化)",
-      "CRIT_SPREAD": "クリティカルダメージ(拡激化)",
+      "CRIT_SPREAD": "クリティカルヒット(拡激化)",
       "EXPECT_SPREAD": "期待ダメージ(拡激化)",
       "CRYO": "氷元素ダメージ",
       "ANEMO": "風元素ダメージ",
@@ -275,5 +275,24 @@
   "ENKA": {
     "DONE": "データ処理完了！",
     "FAILED": "処理に失敗しました。"
+  },
+  "CHIP": {
+    "CONTENT": {
+      "ALL_RARITY": "レアリティ: {{ALL}}%",
+      "CRIT_RATE_RARITY": "会心率成長: {{CRIT_RATE}}%",
+      "CRIT_DMG_RARITY": "会心ダメージ成長: {{CRIT_DMG}}%",
+      "ELEMENTAL_MASTERY_RARITY": "元素熟知成長: {{ELEMENTAL_MASTERY}}%",
+      "ENERGY_RECHARGE_RARITY": "チャージ効率成長: {{ENERGY_RECHARGE}}%",
+      "ATTACK_UP_RARITY": "攻撃アップ成長: {{ATTACK_UP}}%",
+      "HP_UP_RARITY": "HPアップ成長: {{HP_UP}}%",
+      "DEFENSE_UP_RARITY": "防御アップ成長: {{DEFENSE_UP}}%",
+      "ATTACK_RARITY": "攻撃成長: {{ATTACK}}%",
+      "HP_RARITY": "HP成長: {{HP}}%",
+      "DEFENSE_RARITY": "防御成長: {{DEFENSE}}%",
+      "ZHONGLI_CHAIR": "天丼ここにあり"
+    },
+    "TIP": {
+      "MAIN_HP_HP_HP_SUB_HPUP_GE_16_OR_HP_GE_20": "1.HPメイン三つ有すること 2.HP成長が20%を超え(現在{{HP}}%)またはHPアップ成長が16%を超え(現在{{HP_UP}}%)ること"
+    }
   }
 }

@@ -275,5 +275,24 @@
   "ENKA": {
     "DONE": "Data processing completed!",
     "FAILED": "Processing failed."
+  },
+  "CHIP": {
+    "CONTENT": {
+      "ALL_RARITY": "Rarity: {{ALL}}%",
+      "CRIT_RATE_RARITY": "CRIT Rate Growth: {{CRIT_RATE}}%",
+      "CRIT_DMG_RARITY": "CRIT DMG Growth: {{CRIT_DMG}}%",
+      "ELEMENTAL_MASTERY_RARITY": "Elemental Mastery Growth: {{ELEMENTAL_MASTERY}}%",
+      "ENERGY_RECHARGE_RARITY": "Recharge Growth: {{ENERGY_RECHARGE}}%",
+      "ATTACK_UP_RARITY": "Attack (UP) Growth: {{ATTACK_UP}}%",
+      "HP_UP_RARITY": "HP (UP) Growth: {{HP_UP}}%",
+      "DEFENSE_UP_RARITY": "Defense (UP) Growth: {{DEFENSE_UP}}%",
+      "ATTACK_RARITY": "Attack Growth: {{ATTACK}}%",
+      "HP_RARITY": "HP Growth: {{HP}}%",
+      "DEFENSE_RARITY": "Defense Growth: {{DEFENSE}}%",
+      "ZHONGLI_CHAIR": "Maybe false damage but I have shield"
+    },
+    "TIP": {
+      "MAIN_HP_HP_HP_SUB_HPUP_GE_16_OR_HP_GE_20": "1.Three Main HP 2.HP is greater than 20% (current {{HP}}%) OR HP (UP) is greater than 16% (current {{HP_UP}}%)"
+    }
   }
 }
