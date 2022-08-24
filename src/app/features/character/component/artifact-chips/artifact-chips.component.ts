@@ -89,8 +89,8 @@ export class ArtifactChipsComponent implements OnInit {
         break;
       }
     }
-    for(let key in allData){
-      if(key != Const.ALL_PROPS_KEY){
+    for(let key of Const.PROPS_ARTIFACT_SUB){
+      if(allData[key] != undefined){
         allData[Const.ALL_PROPS_KEY] += allData[key];
       }
     }
