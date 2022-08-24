@@ -130,7 +130,7 @@ export class ArtifactService {
   getStorageActiveIndexAutoFlag(charIndex: string | number){
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
-    return this.dataMap[keyStr].info[this.getStorageActiveIndex(keyStr)].isAuto ?? false;
+    return this.dataMap[keyStr]?.info[this.getStorageActiveIndex(keyStr)]?.isAuto ?? false;
   }
 
   //適用中インデックス設定
