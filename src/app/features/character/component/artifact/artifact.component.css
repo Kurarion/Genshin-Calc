@@ -87,4 +87,12 @@ table tr:first-child .content-right {
 .artifact-sub {
     margin-left: 2%;
     width: 96%;
+    height: 99%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.chip-div {
+    padding-top: 0.5em;
+    padding-bottom: 0.1em;
 }

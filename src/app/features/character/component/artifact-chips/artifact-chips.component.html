@@ -1,0 +1,30 @@
+<mat-chip-list aria-label="Joyful Chip" [multiple]="true">
+    <mat-chip class="none-display"></mat-chip>
+    <ng-container *ngFor="let chip of chips">
+        <mat-chip 
+        class="normal-chip"
+        [matTooltip]="chip.tip==undefined?'':(chip.needValue!=true?('CHIP.TIP.' + chip.tip.toUpperCase() | translate):('CHIP.TIP.' + chip.tip.toUpperCase() | translate:chip.value))" 
+        matTooltipPosition="above" 
+        [color]="getColor(chip)" 
+        [selectable]="false"
+        selected>
+            <mat-icon *ngIf="chip.icon" class="chip-icon">{{chip.icon}}</mat-icon>
+            <img *ngIf="chip.imgUrl" 
+            [style.width.px]="chip.imgWidth" 
+            [style.height.px]="chip.imgHeight" 
+            [src]="chip.imgUrl">
+            <svg *ngIf="chip.svg" class="svg-icon" viewBox="0 0 14 14" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">
+                <svg:g>
+                    <svg:path *ngFor="let path of chip.svgPaths!" [attr.d]="path.d ?? ''" [attr.style]="path.style ?? ''"></svg:path>
+                </svg:g>
+            </svg>
+            <span 
+            *ngIf="chip.needValue != true" 
+            [innerText]="'CHIP.CONTENT.' + chip.content.toUpperCase() | translate"></span>
+            <span 
+            *ngIf="chip.needValue == true" 
+            [innerText]="'CHIP.CONTENT.' + chip.content.toUpperCase() | translate:chip.value"></span>
+        </mat-chip>
+    </ng-container>
+    
+</mat-chip-list>

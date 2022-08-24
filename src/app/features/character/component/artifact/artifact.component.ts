@@ -15,29 +15,31 @@ interface artifactSetOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtifactComponent implements OnInit {
-  readonly name_set = Const.NAME_SET;
   private readonly no_desc: Record<TYPE_SYS_LANG, string> = {
     cn_sim: '',
     cn_tra: '',
     en: '',
     jp: ''
   };
-
-  tabs: string[] = [];
-  artifactList = [
+  readonly name_set = Const.NAME_SET;
+  readonly artifactList = [
     Const.ARTIFACT_FLOWER,
     Const.ARTIFACT_PLUME,
     Const.ARTIFACT_SANDS,
     Const.ARTIFACT_GOBLET,
     Const.ARTIFACT_CIRCLET,
   ];
+
+  tabs!: string[];
   //選択されたインデックス
   selectedIndex!: number;
+  //選択された聖遺物Autoフラグ
+  isSelectedIndexAuto!: boolean;
   //聖遺物セットリスト
-  artifactSetList: artifactSetOption[] = [];
+  artifactSetList!: artifactSetOption[];
   //選択された聖遺物セットインデックス
   selectedArtifactSetIndexs!: string[];
-  selectedFullArtifactSetIndex: string = '';
+  selectedFullArtifactSetIndex!: string;
 
   //キャラデータ
   @Input('data') data!: character;
@@ -46,20 +48,32 @@ export class ArtifactComponent implements OnInit {
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
   //選択されたパートインデックス
-  partIndex: number = 0;
+  partIndex!: number;
   //効果記述
-  effectContent1: string = "";
-  effectContent2: string = "";
+  effectContent1!: string;
+  effectContent2!: string;
 
   //表示用
   effectValidIndexs!: number[];
 
   //子コンポーネント変更フラグ
-  subChanged: number = 0;
+  subChanged!: number;
+  //チップ変更
+  chipChanged!: number;
 
   constructor(
     private artifactService: ArtifactService,
-    private calculatorService: CalculatorService) { }
+    private calculatorService: CalculatorService) { 
+      this.tabs = [];
+      this.artifactSetList = [];
+      this.isSelectedIndexAuto = false;
+      this.selectedFullArtifactSetIndex = '';
+      this.effectContent1 = '';
+      this.effectContent2 = '';
+      this.partIndex = 0;
+      this.subChanged = 0;
+      this.chipChanged = 0;
+    }
 
   ngOnInit(): void {
     //聖遺物セットリスト初期化
@@ -72,6 +86,8 @@ export class ArtifactComponent implements OnInit {
     this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
     //選択中インデックス
     this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
+    //Autoフラグ
+    this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
     //選択された聖遺物セット初期化
     this.initSelectedArtifactSetIndexs(true);
   }
@@ -91,6 +107,13 @@ export class ArtifactComponent implements OnInit {
   addTab() {
     this.tabs.push((this.tabs.length + 1).toString());
     this.selectedIndex = this.tabs.length - 1;
+    this.setActiveIndex();
+  }
+
+  addAutoTab() {
+    this.tabs.push((this.tabs.length + 1).toString());
+    this.selectedIndex = this.tabs.length - 1;
+    this.artifactService.pushStorageInfo(this.data.id, {isAuto: true})
     this.setActiveIndex();
   }
 
@@ -127,6 +150,8 @@ export class ArtifactComponent implements OnInit {
     this.initSelectedArtifactSetIndexs();
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
+    //Autoフラグ
+    this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
   }
 
   /**
@@ -166,6 +191,10 @@ export class ArtifactComponent implements OnInit {
       setAffixIndex = 1;
     }
     return this.artifactService.getSetData(artifactIndex)?.setAffixs[setAffixIndex].desc ?? this.no_desc;
+  }
+
+  updateChips(){
+    this.chipChanged += 1;
   }
 
   /**

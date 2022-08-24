@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { artifactSet, character, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
+import { artifactSet, character, ChipData, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,8 @@ export class GenshinDataService {
   static dataReliquarySet: Record<string, artifactSet>;
   static dataReliquaryMain: Record<string, number>;
   static dataReliquaryAffix: Record<string, number[]>;
+  static dataOptimalReliquaryAffixStep: Record<string, number>;
+  static dataChip: Record<string, ChipData[]>;
   static dataExtra: ExtraData;
 
   constructor() { }
@@ -59,6 +61,19 @@ export class GenshinDataService {
     }
     this.dataReliquaryAffix = result;
   }
+  static initOptimalReliquaryAffixStep(data: any){
+    let result: Record<string, number> = {};
+    const stepDivider = 10;
+    for(let key in data){
+      let originValues = data[key];
+      let targetValue = originValues[originValues.length - 1];
+      result[Const.MAP_ARTIFACE_PROP[key]] = targetValue / stepDivider;
+    }
+    this.dataOptimalReliquaryAffixStep = result;
+  }
+  static initChipData(data: any){
+    this.dataChip = data;
+  }
   static initExtraData(data: any){
     this.dataExtra = data;
   }
@@ -80,6 +95,12 @@ export class GenshinDataService {
   }
   getReliquaryAffix(index: string){
     return GenshinDataService.dataReliquaryAffix[index];
+  }
+  getOptimalReliquaryAffixStep(index: string){
+    return GenshinDataService.dataOptimalReliquaryAffixStep[index];
+  }
+  getChip(index: string){
+    return GenshinDataService.dataChip[index];
   }
   getExtraCharacterData(index: string){
     return GenshinDataService.dataExtra.characters[index];

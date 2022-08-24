@@ -11,6 +11,7 @@ export interface ArtifactStoragePartData {
 }
 
 export interface ArtifactStorageInfo {
+  isAuto?: boolean;
   setIndexs?: string[];
   setFullIndex?: string;
   extra?: ExtraArtifactSetData;
@@ -24,6 +25,44 @@ export interface ArtifactStorageInfo {
 export interface ArtifactStorageData {
   activeIndex: number;
   info: ArtifactStorageInfo[];
+}
+
+export interface ChipData {
+  onlyForAll?: boolean;
+  onlyForOne?: boolean;
+
+  rules: chipRule[][]; //([]||[])&&([]||[])
+
+  content: string;
+  needValue?: boolean;
+  value?: any;
+
+  icon?: string;
+  iconSize?: number;
+
+  imgUrl?: string;
+  imgWidth?: number;
+  imgHeight?: number;
+
+  svg?: boolean;
+  svgPaths?: chipSvgPath[];
+
+  tip?: string;
+  colorPropName?: string;
+  colorDivides?: number[];
+  colors?: string[];
+  disable?: boolean;
+}
+
+export interface chipRule {
+  propName?: string;
+  expectGEValue?: number;
+  expectLEValue?: number;
+}
+
+export interface chipSvgPath {
+  style?: string;
+  d?: string;
 }
 
 const MAX_ARTIFACE_PUSH_LENGTH = 10;
@@ -87,6 +126,13 @@ export class ArtifactService {
     return this.dataMap[keyStr].activeIndex;
   }
 
+  //適用中インデックスAutoフラグ取得
+  getStorageActiveIndexAutoFlag(charIndex: string | number){
+    let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
+    return this.dataMap[keyStr].info[this.getStorageActiveIndex(keyStr)].isAuto ?? false;
+  }
+
   //適用中インデックス設定
   setStorageActiveIndex(charIndex: string | number, index: number){
     let keyStr = charIndex.toString();
@@ -109,11 +155,11 @@ export class ArtifactService {
   }
 
   //聖遺物プッシュ
-  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo){
+  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo, withoutLimit = false){
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     this.checkAndSetInfoData(info);
-    if(this.dataMap[keyStr].info.length >= MAX_ARTIFACE_PUSH_LENGTH){
+    if(withoutLimit || this.dataMap[keyStr].info.length >= MAX_ARTIFACE_PUSH_LENGTH){
       this.dataMap[keyStr].info.pop();
     }
     this.dataMap[keyStr].info.push(info);

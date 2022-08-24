@@ -81,6 +81,15 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
       .pipe(
         tap(data => {
           GenshinDataService.initReliquaryAffixData(data);
+          GenshinDataService.initOptimalReliquaryAffixStep(data);
+        })
+      )
+    ),
+    //チップデータ
+    lastValueFrom(httpClient.get("assets/init/chip.json")
+      .pipe(
+        tap(data => {
+          GenshinDataService.initChipData(data);
         })
       )
     ),

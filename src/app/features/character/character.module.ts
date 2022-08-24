@@ -16,6 +16,8 @@ import { ExtraInfoComponent } from './component/extra-info/extra-info.component'
 import { ArtifactComponent } from './component/artifact/artifact.component';
 import { OtherComponent } from './component/other/other.component';
 import { ArtifactSubComponent } from './component/artifact-sub/artifact-sub.component';
+import { ArtifactAutoComponent } from './component/artifact-auto/artifact-auto.component';
+import { ArtifactChipsComponent } from './component/artifact-chips/artifact-chips.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { ArtifactSubComponent } from './component/artifact-sub/artifact-sub.comp
     ArtifactComponent,
     OtherComponent,
     ArtifactSubComponent,
+    ArtifactAutoComponent,
+    ArtifactChipsComponent,
   ],
   providers: [
     PercentPipe,

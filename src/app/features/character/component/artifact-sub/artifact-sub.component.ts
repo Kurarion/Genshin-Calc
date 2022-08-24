@@ -1,5 +1,5 @@
 import { PercentPipe } from '@angular/common';
-import { Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, GenshinDataService } from 'src/app/shared/shared.module';
 
@@ -24,6 +24,9 @@ export class ArtifactSubComponent implements OnInit {
     Const.ARTIFACT_SUB3,
     Const.ARTIFACT_SUB4,
   ];
+  readonly subMax = 69;
+  readonly subMin = 0;
+  readonly subStep = 1;
 
   //キャラインデックス
   @Input('characterIndex') characterIndex!: number;
@@ -33,6 +36,10 @@ export class ArtifactSubComponent implements OnInit {
   @Input('artifactType') artifactType!: string;
   //再レンダリング
   @Input('changed') changed!: number;
+  //Autoフラグ
+  @Input('isAuto') isAuto!: boolean;
+  //チップ変更通知
+  @Output('chipChanged') chipChangedForParent = new EventEmitter<void>();
 
   //データ
   data!: ArtifactStoragePartData;
@@ -42,6 +49,8 @@ export class ArtifactSubComponent implements OnInit {
   mainList!: prop[];
   //サブリスト
   subList!: string[];
+  //チップ変更
+  chipChanged!: number;
 
   //表示メソッド
   displayWith!: (value: number) => string | number;
@@ -50,8 +59,9 @@ export class ArtifactSubComponent implements OnInit {
     private artifactService: ArtifactService,
     private calculatorService: CalculatorService,
     private percentPipe: PercentPipe) { 
+      this.chipChanged = 0;
       this.displayWith = (value: number) => {
-        return this.percentPipe.transform(value, '1.0-1') as string;
+        return this.percentPipe.transform(value / this.subMax, '1.0-0') as string;
       }
     }
 
@@ -63,6 +73,7 @@ export class ArtifactSubComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['index']||changes['changed']) {
       this.initData();
+      this.updateChips();
     }
   }
 
@@ -156,6 +167,7 @@ export class ArtifactSubComponent implements OnInit {
     }
     //更新
     this.calculatorService.setDirtyFlag(this.characterIndex);
+    this.updateChips();
   }
 
   onChangeSubSlider(change: MatSliderChange, key: string, prop: string){
@@ -166,6 +178,12 @@ export class ArtifactSubComponent implements OnInit {
     this.data[keyLow].value = this.dataReliquaryAffix[prop][change.value ?? 0];
     //更新
     this.calculatorService.setDirtyFlag(this.characterIndex);
+    this.updateChips();
+  }
+
+  updateChips(){
+    this.chipChanged += 1;
+    this.chipChangedForParent.emit();
   }
 
 }

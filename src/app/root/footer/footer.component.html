@@ -3,7 +3,7 @@
 
   </div>
   <div class="center">
-    <span [innerText]="defalutMsg"></span>
+    <span [@contentChange]="animeState" [innerText]="defalutMsg"></span>
   </div>
   <div class="right">
     <span *ngIf="progressFlg |async" [innerText]="progressMsg|async"></span>

@@ -1,0 +1,43 @@
+.none-display {
+    display: none;
+}
+
+.normal-chip {
+    font-size: 1em;
+}
+
+.chip-icon {
+    transform: translate(-0.1em);
+}
+
+.svg-icon {
+    margin-left: 0.2em;
+    margin-right: 0.12em;
+    transform: translate(-0.3em);
+}
+
+.mat-white {
+    background-color: #dcdcdc;
+    color: #000;
+    fill: #000;
+}
+.mat-blue {
+    background-color: #5083b1;
+    color: #fff;
+    fill: #fff;
+}
+.mat-purple {
+    background-color: #ae82c3;
+    color: #fff;
+    fill: #fff;
+}
+.mat-gold {
+    background-color: #eba543;
+    color: #fff;
+    fill: #fff;
+}
+.mat-red {
+    background-color: #e62716;
+    color: #fff;
+    fill: #fff;
+}

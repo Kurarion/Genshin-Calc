@@ -1220,6 +1220,17 @@ export class Const {
     Const.PROP_DMG_BONUS_DENDRO,
   ]
 
+  //最適化用サブ属性リスト
+  static readonly PROPS_OPTIMAL_ARTIFACT_SUB = [
+    Const.PROP_CRIT_RATE,
+    Const.PROP_CRIT_DMG,
+    Const.PROP_ATTACK_UP,
+    Const.PROP_HP_UP,
+    Const.PROP_DEFENSE_UP,
+    Const.PROP_ELEMENTAL_MASTERY,
+    Const.PROP_ENERGY_RECHARGE,
+  ]
+  
   //*********************************
   //           原神データ
   //*********************************
@@ -1289,4 +1300,14 @@ export class Const {
   //*********************************
   //タグ
   static readonly CONCATENATION_TAG = "_";
+  
+  //*********************************
+  //           共通符
+  //*********************************
+  //全キャラキー
+  static readonly ALL_CHARACTER_KEY = "";
+  //全属性キー
+  static readonly ALL_PROPS_KEY = "ALL";
+  //チップ
+  static readonly CONCATENATION_CHIP = "_";
 }
