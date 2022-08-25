@@ -3008,14 +3008,7 @@
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_ELECTRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
-                        },
-                        "buffs":[{
-                            "index": 3,
-                            "overrideElement": "DMG_BONUS_ELECTRO",
-                            "target":[],
-                            "settingType": "switch",
-                            "defaultEnable": false
-                        }]
+                        }
                     }
                 ],
                 "elementalBurst": [
@@ -3030,7 +3023,17 @@
                     }
                 ],
                 "proudSkills": [
-                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "overrideElement": "DMG_BONUS_ELECTRO",
+                                "target":[],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                    ],
                     [
                         {
                             "buffs":[{
