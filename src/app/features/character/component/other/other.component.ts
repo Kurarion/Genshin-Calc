@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CalculatorService, character, Const, OtherService, OtherStorageInfo, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
@@ -30,6 +30,12 @@ export class OtherComponent implements OnInit, OnDestroy {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+  //Z-index
+  @Input('zIndex') zIndex!: number;
+  //命名
+  @Input('name') name!: string;
+  //ドラッグイベント
+  @Output('draged') draged = new EventEmitter<string>();
 
   showValue!: number;
 
@@ -136,6 +142,11 @@ export class OtherComponent implements OnInit, OnDestroy {
   updateDirtyFlag(){
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
+  }
+
+  //ドラッグ開始
+  onDrag(){
+    this.draged.emit(this.name);
   }
 
   private localAddTab(){

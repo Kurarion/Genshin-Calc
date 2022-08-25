@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, HostListener, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 interface levelOption {
   level: string;
@@ -46,6 +47,12 @@ export class EnemyComponent implements OnInit {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+  //Z-index
+  @Input('zIndex') zIndex!: number;
+  //命名
+  @Input('name') name!: string;
+  //ドラッグイベント
+  @Output('draged') draged = new EventEmitter<string>();
   //敵リスト
   enemyList: enemyOption[] = [];
   //選択された敵インデックス
@@ -113,8 +120,10 @@ export class EnemyComponent implements OnInit {
     this.selectedEnemyIndex = enemyIndex;
     //敵の切り替え
     this.enemyData = this.enemyService.get(enemyIndex);
-    //DEBUG
-    console.log(this.enemyData);
+    if(environment.outputLog){
+      //DEBUG
+      console.log(this.enemyData);
+    }
     //初期化
     this.calculatorService.initEnemyData(this.data.id, enemyIndex);
     //敵設定
@@ -148,6 +157,11 @@ export class EnemyComponent implements OnInit {
 
   getPropRate(name: string): number[] {
     return this[name.toLocaleLowerCase() + 'Rates' as keyof EnemyComponent] as number[];
+  }
+
+  //ドラッグ開始
+  onDrag(){
+    this.draged.emit(this.name);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ArtifactService, ArtifactSetAffixs, CalculatorService, character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
@@ -47,6 +47,12 @@ export class ArtifactComponent implements OnInit {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+  //Z-index
+  @Input('zIndex') zIndex!: number;
+  //命名
+  @Input('name') name!: string;
+  //ドラッグイベント
+  @Output('draged') draged = new EventEmitter<string>();
   //選択されたパートインデックス
   partIndex!: number;
   //効果記述
@@ -160,8 +166,10 @@ export class ArtifactComponent implements OnInit {
    */
   onSelectArtifactSet(artifactSetIndex: string, index: number) {
     this.selectedArtifactSetIndexs[index] = artifactSetIndex;
-    //DEBUG
-    console.log(this.artifactService.getSetData(artifactSetIndex));
+    if(environment.outputLog){
+      //DEBUG
+      console.log(this.artifactService.getSetData(artifactSetIndex));
+    }
     this.initSelectedFullArtifactSetIndex();
     this.initEffectContents();
     this.setDefaultExtraData();
@@ -196,6 +204,11 @@ export class ArtifactComponent implements OnInit {
   updateChips(){
     this.chipChanged += 1;
   }
+
+  //ドラッグ開始
+  onDrag(){
+    this.draged.emit(this.name);
+  }  
 
   /**
    * 聖遺物セットリスト初期化

@@ -1,5 +1,5 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
 import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
@@ -40,6 +40,12 @@ export class TalentComponent implements OnInit {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+  //Z-index
+  @Input('zIndex') zIndex!: number;
+  //命名
+  @Input('name') name!: string;
+  //ドラッグイベント
+  @Output('draged') draged = new EventEmitter<string>();
   //レベルオプションリスト
   levelOptions: levelOption[] = [];
   //選択されたレベルリスト
@@ -95,6 +101,11 @@ export class TalentComponent implements OnInit {
       //更新
       this.calculatorService.initExtraCharacterData(this.data.id);
     }
+  }
+
+  //ドラッグ開始
+  onDrag(){
+    this.draged.emit(this.name);
   }
 
   private getLevelFromString(level: string | undefined) {

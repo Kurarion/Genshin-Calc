@@ -62,4 +62,5 @@ export const environment = {
   githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
   apiProxyServer: '',
   elementColorAlpha: '75',
+  outputLog: false,
 };

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 export interface CalResult{
   characterData?: character;
@@ -1018,8 +1019,10 @@ export class CalculatorService {
 
   //初期化（キャラ）
   initCharacterData(index: string | number) {
-    //DEBUG
-    console.log("初期化（キャラ）")
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（キャラ）")
+    }
     let indexStr = index.toString();
     if(!(indexStr in this.dataMap)){
       this.dataMap[indexStr] = {};
@@ -1030,8 +1033,10 @@ export class CalculatorService {
   
   //初期化（キャラ追加）
   initExtraCharacterData(index: string | number, data?: CharLevelConfig) {
-    //DEBUG
-    console.log("初期化（キャラ追加）")
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（キャラ追加）")
+    }
     let indexStr = index.toString();
     let temps = this.getExtraCharacterData(indexStr, data);
     this.dataMap[indexStr].extraCharaResult = temps[0] as Record<string, number>;
@@ -1041,8 +1046,10 @@ export class CalculatorService {
 
   //初期化（武器）
   initWeaponData(index: string | number, weaponIndex: string | number) {
-    //DEBUG
-    console.log("初期化（武器）")
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（武器）")
+    }
     let indexStr = index.toString();
     let weaponIndexStr = weaponIndex.toString();
     if(!(indexStr in this.dataMap)){
@@ -1054,8 +1061,10 @@ export class CalculatorService {
 
   //初期化（武器追加）
   initExtraWeaponData(index: string | number, data?: WeaponLevelConfig) {
-    //DEBUG
-    console.log("初期化（武器追加）")
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（武器追加）")
+    }
     let indexStr = index.toString();
     let temps = this.getExtraWeaponData(indexStr, data);
     this.dataMap[indexStr].extraWeaponResult = temps[0] as Record<string, number>;
@@ -1065,8 +1074,10 @@ export class CalculatorService {
 
   //初期化（聖遺物セット追加）
   initExtraArtifactSetData(index: string | number) {
-    //DEBUG
-    console.log("初期化（聖遺物セット追加）")
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（聖遺物セット追加）")
+    }
     let indexStr = index.toString();
     let temps = this.getExtraReliquarySetData(indexStr);
     this.dataMap[indexStr].extraArtifactSetResult = temps[0] as Record<string, number>;
@@ -1076,8 +1087,10 @@ export class CalculatorService {
 
   //初期化（敵）
   initEnemyData(index: string | number, enemyIndex: string | number) {
-    //DEBUG
-    console.log("初期化（敵）")
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（敵）")
+    }
     let indexStr = index.toString();
     let enemyIndexStr = enemyIndex.toString();
     if(!(indexStr in this.dataMap)){
@@ -1091,8 +1104,6 @@ export class CalculatorService {
   initAllData(index: string | number){
     let indexStr = index.toString();
     this.dataMap[indexStr].allData = this.getAllData(indexStr);
-    // //DEBUG
-    // console.log(this.dataMap[indexStr].allData);
     this.setDirty(indexStr, false);
     this.allDatahasChanged.next(true);
   }

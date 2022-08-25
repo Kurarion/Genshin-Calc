@@ -1,5 +1,5 @@
 import { PercentPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 
@@ -24,9 +24,21 @@ export class ConstellationComponent implements OnInit {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+  //Z-index
+  @Input('zIndex') zIndex!: number;
+  //命名
+  @Input('name') name!: string;
+  //ドラッグイベント
+  @Output('draged') draged = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void { }
+
+  //ドラッグ開始
+  onDrag(){
+    this.draged.emit(this.name);
+  }
+  
 
 }

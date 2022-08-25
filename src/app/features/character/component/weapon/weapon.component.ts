@@ -1,5 +1,6 @@
-import { Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 interface levelOption {
   level: string;
@@ -55,6 +56,12 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
   @Input('language') currentLanguage!: TYPE_SYS_LANG;
   //カード横幅
   @Input('cardWidth') cardWidth!: number;
+  //Z-index
+  @Input('zIndex') zIndex!: number;
+  //命名
+  @Input('name') name!: string;
+  //ドラッグイベント
+  @Output('draged') draged = new EventEmitter<string>();
   //武器タイプ
   charWeaponType!: string;
   //武器リスト
@@ -188,8 +195,10 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
     }
     //武器の切り替え
     this.weaponData = this.weaponService.get(weaponIndex);
-    //DEBUG
-    console.log(this.weaponData);
+    if(environment.outputLog){
+      //DEBUG
+      console.log(this.weaponData);
+    }
     //武器最高レベル
     this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
     // if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.levelNum || this.selectedLevel.levelNum > this.selectedWeaponAbleMaxLevel) {
@@ -261,6 +270,11 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
 
   getEffectValidIndexs(selectedSmeltingLevel: string): number[]{
     return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexs;
+  }
+
+  //ドラッグ開始
+  onDrag(){
+    this.draged.emit(this.name);
   }
 
   /**

@@ -4,6 +4,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { map, takeUntil, Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const CSS_STATUS_BEFORE = "beforeLoad";
 const CSS_STATUS_FIN = "loaded";
@@ -45,6 +46,33 @@ const WIDTH_DECREASE = 65;
   ]
 })
 export class MainComponent implements OnInit, OnDestroy {
+  readonly name_character = 'character';
+  readonly name_enemy = 'enemy';
+  readonly name_weapon = 'weapon';
+  readonly name_artifact = 'artifact';
+  readonly name_talent = 'talent';
+  readonly name_constellation = 'constellation';
+  readonly name_other = 'other';
+
+  readonly childNameMap: Record<string,string> = {
+    'character': '0',
+    'enemy': '1',
+    'weapon': '2',
+    'artifact': '3',
+    'talent': '4',
+    'constellation': '5',
+    'other': '6',
+  };
+
+  readonly childNames = [
+    '0',//'character',
+    '1',//'enemy',
+    '2',//'weapon',
+    '3',//'artifact',
+    '4',//'talent',
+    '5',//'constellation',
+    '6',//'other',
+  ];
 
   //背景画像URL
   backgroundURL!: string;
@@ -70,6 +98,10 @@ export class MainComponent implements OnInit, OnDestroy {
   isLargeFlg: boolean = true;
   //破棄状態
   destroyed = new Subject<void>();
+  //z-indexs
+  childZIndexs!: Record<string, number>;
+  //
+  private zIndexs!: string[];
 
   constructor(private httpService: HttpService,
     private route: ActivatedRoute, 
@@ -77,6 +109,10 @@ export class MainComponent implements OnInit, OnDestroy {
     private calculatorService: CalculatorService,
     private languageService: LanguageService,
     private breakpointObserver: BreakpointObserver,) {
+    //z-index初期化
+    this.zIndexs = [];
+    this.childZIndexs = {};
+    this.refreshChildZIndexs();
     //レイアウトフラグ
     this.isLarge = this.breakpointObserver.observe(['(min-width: 700px)']).pipe(
       takeUntil(this.destroyed),
@@ -117,8 +153,10 @@ export class MainComponent implements OnInit, OnDestroy {
         //追加データ初期化
         this.characterService.setDefaultExtraData(params.index!);
         this.calculatorService.initCharacterData(params.index!);
-        //DEBUG
-        console.log(this.data)
+        if(environment.outputLog){
+          //DEBUG
+          console.log(this.data)
+        }
       }
     );
     //画面横幅取得
@@ -164,4 +202,16 @@ export class MainComponent implements OnInit, OnDestroy {
     this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
   }
 
+  onChildStartDrag(name: string){
+    if(this.childNameMap[name] != this.zIndexs[this.zIndexs.length-1]){
+      this.zIndexs.push(this.childNameMap[name]);
+      this.refreshChildZIndexs();
+    }
+  }
+
+  refreshChildZIndexs(){
+    for(let key of this.childNames){
+      this.childZIndexs[key] = (this.zIndexs.lastIndexOf(key) + 1);
+    }
+  }
 }
