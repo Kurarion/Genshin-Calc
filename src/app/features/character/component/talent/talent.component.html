@@ -1,8 +1,9 @@
 <ng-container *ngIf="data.skills.normal.name">
     <mat-card class="card" [style.width.px]="cardWidth" cdkDrag [cdkDragStartDelay]="300" [style.z-index]="zIndex" (cdkDragStarted)="onDrag()">
-        <mat-card-header>
+        <mat-card-header cdkDragHandle>
             <mat-card-title [innerText]="'CHARACTER.TALENTS' | translate"></mat-card-title>
         </mat-card-header>
+        <mat-divider></mat-divider>
         <mat-card-content class="content">
             <mat-accordion>
                 <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
