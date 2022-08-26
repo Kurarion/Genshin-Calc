@@ -1,1 +1,79 @@
-
+<div class="auto-div">
+    <table [formGroup]="userInput">
+        <tr>
+            <td class="left">
+                <div class="higher-div">
+                    <span [innerText]="'AUTO.AUTO_PROGRESS' | translate"></span>
+                </div>
+            </td>
+            <td class="right">
+                <div class="one-line-div">
+                    <br>
+                    <mat-slider
+                        class="fiedl-part-1"
+                        color="primary"
+                        [thumbLabel]="true"
+                        [formControl]="currentPoint"
+                        (change)="onChangeCurrentPointSlider()"
+                        [displayWith]="displayWith"
+                        [max]="maxValidArray[effectNum - 1]"
+                        [min]="minValid"
+                        [step]="step"
+                        tickInterval="auto">
+                    </mat-slider>
+                    <mat-form-field appearance="legacy" class="fiedl-part-2">
+                        <input type="number" matInput 
+                        [max]="maxValidArray[effectNum - 1]/10"
+                        [min]="minValid"
+                        step="0.1"
+                        [formControl]="currentPointInput" 
+                        (change)="onChangeCurrentPointInput()">
+                    </mat-form-field>
+                </div>
+            </td>
+        </tr>
+        <ng-container *ngFor="let item of inputItems">
+            <tr *ngIf="item.isSelect?(userInputList[item.selectListName!].length > 0):true">
+                <td class="left">
+                    <span [innerText]="'AUTO.' + item.name | translate"></span>
+                </td>
+                <td class="right">
+                    <mat-form-field appearance="legacy" floatLabel="always" *ngIf="item.isInput" class="normal-fiedld">
+                        <mat-label [innerText]="'AUTO.' + item.title | translate"></mat-label>
+                        <input matInput
+                            type="number"
+                            step="0.01"
+                            [formControlName]="item.model"
+                            (ngModelChange)="item.onChange($event)"
+                        >
+                        <span matSuffix>%&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field appearance="legacy" floatLabel="always" *ngIf="item.isSelect" class="normal-fiedld">
+                        <mat-label [innerText]="'AUTO.' + item.title | translate"></mat-label>
+                        <mat-select 
+                            [formControlName]="item.model"
+                            (ngModelChange)="item.onChange($event)">
+                            <mat-option *ngIf="item.hasEmpty" value=""></mat-option>
+                            <ng-container *ngFor="let option of userInputList[item.selectListName!]">
+                                <mat-option *ngIf="!item.useNameMap" [value]="option" [innerText]="item.optionTranslationTag + option| translate"></mat-option>
+                                <mat-option *ngIf="item.useNameMap" [value]="option" [innerText]="item.optionTranslationTag + item.optionNameMap![option] | translate"></mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+    <div class="button-div right">
+        <button mat-raised-button color="primary" 
+            (click)="optimize()"
+            [innerText]="'AUTO.CALC'| translate"
+        ></button>
+    </div>
+    <div>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <span class="tip" [innerText]="'AUTO.TIPS'| translate"></span>
+    </div>
+</div>

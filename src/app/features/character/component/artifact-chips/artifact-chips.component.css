@@ -10,10 +10,16 @@
     transform: translate(-0.1em);
 }
 
+.chip-img {
+    transform: translate(-0.2em);
+}
+
 .svg-icon {
     margin-left: 0.2em;
     margin-right: 0.12em;
     transform: translate(-0.3em);
+    width: 20px;
+    height: 20px;
 }
 
 .mat-white {
@@ -38,6 +44,46 @@
 }
 .mat-red {
     background-color: #e62716;
+    color: #fff;
+    fill: #fff;
+}
+.mat-cryo {
+    background-color: #187ea0;
+    color: #fff;
+    fill: #fff;
+}
+.mat-anemo {
+    background-color: #1b6d6e;
+    color: #fff;
+    fill: #fff;
+}
+.mat-physical {
+    background-color: #adb7bb;
+    color: #000;
+    fill: #000;
+}
+.mat-electro {
+    background-color: #704691;
+    color: #fff;
+    fill: #fff;
+}
+.mat-geo {
+    background-color: #a7721e;
+    color: #fff;
+    fill: #fff;
+}
+.mat-pyro {
+    background-color: #b1412b;
+    color: #fff;
+    fill: #fff;
+}
+.mat-hydro {
+    background-color: #2e66aa;
+    color: #fff;
+    fill: #fff;
+}
+.mat-dendro {
+    background-color: #296d34;
     color: #fff;
     fill: #fff;
 }

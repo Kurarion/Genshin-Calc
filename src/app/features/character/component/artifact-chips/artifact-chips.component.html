@@ -9,11 +9,12 @@
         [selectable]="false"
         selected>
             <mat-icon *ngIf="chip.icon" class="chip-icon">{{chip.icon}}</mat-icon>
-            <img *ngIf="chip.imgUrl" 
+            <img *ngIf="chip.imgUrl" class="chip-img"
             [style.width.px]="chip.imgWidth" 
             [style.height.px]="chip.imgHeight" 
+            [style.marginRight.em]="chip.imgRightEm" 
             [src]="chip.imgUrl">
-            <svg *ngIf="chip.svg" class="svg-icon" viewBox="0 0 14 14" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">
+            <svg *ngIf="chip.svg" class="svg-icon" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
                 <svg:g>
                     <svg:path *ngFor="let path of chip.svgPaths!" [attr.d]="path.d ?? ''" [attr.style]="path.style ?? ''"></svg:path>
                 </svg:g>

@@ -43,6 +43,7 @@ export interface DamageParam {
 
 export interface DamageResult {
   elementBonusType: string;
+  finalCritRate: number;
 
   originDmg: number;
   critDmg: number;
@@ -1115,13 +1116,16 @@ export class CalculatorService {
   }
 
   //ダメージ取得
-  getDamage(index: string | number, param: DamageParam){
+  getDamage(index: string | number, param: DamageParam, extraData?: Record<string, number>){
     let indexStr = index.toString();
-    if(this.isDirty(indexStr)){
+    if(this.isDirty(indexStr) && extraData == undefined){
       this.initAllData(indexStr);
     }
     let result: DamageResult;
     let data = this.dataMap[indexStr].allData!;
+    if(extraData != undefined){
+      data = this.getAllData(indexStr, extraData);
+    }
     let rate = param.rate;
     let base = param.base;
     let attackBonusType = param.attackBonusType;
@@ -1502,6 +1506,7 @@ export class CalculatorService {
     }
     result = {
       elementBonusType: elementBonusType,
+      finalCritRate: finalCritRate,
       originDmg: originDmg,
       critDmg: critDmg,
       expectDmg: expectDmg,
@@ -2240,7 +2245,7 @@ export class CalculatorService {
   }
 
   //計算用情報合計取得
-  private getAllData(index: string | number){
+  private getAllData(index: string | number, extraData?: Record<string, number>){
     let result: Record<string, number> = {};
 
     for(let key of Const.PROPS_ALL_BASE){
@@ -2248,6 +2253,11 @@ export class CalculatorService {
         result[key] = 0;
       }
       result[key] += this.getProperty(index, key);
+    }
+    if(extraData != undefined){
+      for(let key in extraData){
+        result[key] += extraData[key];
+      }
     }
     for(let key of Const.PROPS_TO_CAL){
       if(!(key in result)){

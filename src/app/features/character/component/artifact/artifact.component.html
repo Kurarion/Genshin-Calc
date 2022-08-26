@@ -10,19 +10,6 @@
                     <div class="artifact-set">
                         <!-- 聖遺物詳細 -->
                         <br>
-                        <!-- <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
-                            <mat-label [innerText]="'ARTIFACT.SET1' | translate"></mat-label>
-                            <mat-select [(ngModel)]="selectedArtifactSetIndexs[0]" (ngModelChange)="onSelectArtifactSet($event, 0)">
-                                <mat-option value=""></mat-option>
-                                <ng-container *ngFor="let artifactSet of artifactSetList">
-                                    <mat-option 
-                                        [value]="artifactSet.setId"
-                                        [innerText]="artifactSet.setName[currentLanguage]"
-                                    >
-                                    </mat-option>
-                                </ng-container>
-                            </mat-select>
-                        </mat-form-field> -->
                         <app-mat-filtering-selector class="set-field"
                             [title]="'ARTIFACT.SET1'"
                             [model]="selectedArtifactSetIndexs[0]"
@@ -37,19 +24,6 @@
                         &nbsp;
                         &nbsp;
                         &nbsp;
-                        <!-- <mat-form-field class="set-field" appearance="legacy" floatLabel="always">
-                            <mat-label [innerText]="'ARTIFACT.SET2' | translate"></mat-label>
-                            <mat-select [(ngModel)]="selectedArtifactSetIndexs[1]" (ngModelChange)="onSelectArtifactSet($event, 1)">
-                                <mat-option value=""></mat-option>
-                                <ng-container *ngFor="let artifactSet of artifactSetList">
-                                    <mat-option 
-                                        [value]="artifactSet.setId"
-                                        [innerText]="artifactSet.setName[currentLanguage]"
-                                    >
-                                    </mat-option>
-                                </ng-container>
-                            </mat-select>
-                        </mat-form-field> -->
                         <app-mat-filtering-selector class="set-field"
                             [title]="'ARTIFACT.SET2'"
                             [model]="selectedArtifactSetIndexs[1]"
@@ -85,6 +59,7 @@
                                 [characterIndex]="data.id"
                                 [index]="index"
                                 [isFull]="true"
+                                [isAuto]="isSelectedIndexAuto"
                                 [changed]="chipChanged"
                             ></app-artifact-chips>
                         </div>
@@ -112,7 +87,7 @@
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="rollback(index)">
+                                    <button *ngIf="!isSelectedIndexAuto" mat-menu-item (click)="rollback(index)">
                                         <mat-icon>replay</mat-icon>
                                         <span [innerText]="'SYS.ROLLBACK' | translate"></span>
                                     </button>
@@ -124,9 +99,14 @@
                             </ng-template>
                         </mat-tab>
                     </mat-tab-group>
-                    <ng-container *ngIf="isSelectedIndexAuto">
+                    <ng-container *ngIf="selectedIndex == index && isSelectedIndexAuto">
                         <mat-divider></mat-divider>
-                        <app-artifact-auto></app-artifact-auto>
+                        <app-artifact-auto
+                            *ngIf="isSelectedIndexAuto"
+                            [characterIndex]="data.id"
+                            [index]="index"
+                            (chipChanged)="updateChips()"
+                        ></app-artifact-auto>
                     </ng-container>
                 </mat-tab>
                 <mat-tab disabled>
@@ -137,10 +117,9 @@
                         <button class="add-button" mat-icon-button (click)="addTab()" matTooltip="Add" matTooltipPosition="above">
                             <mat-icon>add_circle</mat-icon>
                         </button>
-                        <!-- WIP -->
-                        <!-- <button class="add-button" mat-icon-button (click)="addAutoTab()" matTooltip="Add Auto" matTooltipPosition="above">
+                        <button class="add-button" mat-icon-button (click)="addAutoTab()" matTooltip="Add Auto" matTooltipPosition="above">
                             <mat-icon>queue_play_next</mat-icon>
-                        </button> -->
+                        </button>
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>

@@ -20,6 +20,17 @@ export interface ArtifactStorageInfo {
   sands?: ArtifactStoragePartData;
   goblet?: ArtifactStoragePartData;
   circlet?: ArtifactStoragePartData;
+  autoDamageRate?: number;
+  autoDamageBase?: string;
+  autoElementType?: string;
+  autoAttackType?: string;
+  autoDamageType?: string;
+  autoDamageTag?: string;
+  autoEffectNum?: number;
+  autoPropCurve?: string;
+  autoPropCurrentPoint?: number;
+  autoMaxCritRate?: number;
+  autoNeedUpdate?: boolean;
 }
 
 export interface ArtifactStorageData {
@@ -43,6 +54,7 @@ export interface ChipData {
   imgUrl?: string;
   imgWidth?: number;
   imgHeight?: number;
+  imgRightEm?: number;
 
   svg?: boolean;
   svgPaths?: chipSvgPath[];
@@ -256,6 +268,19 @@ export class ArtifactService {
       this.checkAndSetInfoData(this.dataMap[keyStr].info[index]);
     }
     return this.dataMap[keyStr].info[index][part as keyof ArtifactStorageInfo] as ArtifactStoragePartData;
+  }
+
+  //全設定取得
+  getAllStorageInfo(charIndex: string | number, index: number){
+    let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
+    if(!(index in this.dataMap[keyStr].info)){
+      this.dataMap[keyStr].info[index] = {};
+    }
+    if(this.dataMap[keyStr].info[index] == undefined){
+      this.checkAndSetInfoData(this.dataMap[keyStr].info[index]);
+    }
+    return this.dataMap[keyStr].info[index];
   }
 
   //ストレージに保存

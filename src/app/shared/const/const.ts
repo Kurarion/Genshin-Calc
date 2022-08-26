@@ -1220,6 +1220,66 @@ export class Const {
     Const.PROP_DMG_BONUS_DENDRO,
   ]
 
+  //聖遺物全属性
+  static readonly PROPS_CHIP_ALL = [
+    Const.PROP_HP_UP,
+    Const.PROP_ATTACK_UP,
+    Const.PROP_DEFENSE_UP,
+    Const.PROP_HP,
+    Const.PROP_ATTACK,
+    Const.PROP_DEFENSE,
+    Const.PROP_ELEMENTAL_MASTERY,
+    Const.PROP_CRIT_RATE,
+    Const.PROP_CRIT_DMG,
+    Const.PROP_ENERGY_RECHARGE,
+    Const.PROP_DMG_BONUS_CRYO,
+    Const.PROP_DMG_BONUS_ANEMO,
+    Const.PROP_DMG_BONUS_PHYSICAL,
+    Const.PROP_DMG_BONUS_ELECTRO,
+    Const.PROP_DMG_BONUS_GEO,
+    Const.PROP_DMG_BONUS_PYRO,
+    Const.PROP_DMG_BONUS_HYDRO,
+    Const.PROP_DMG_BONUS_DENDRO,
+  ]
+
+  //聖遺物属性全属性
+  static readonly PROPS_CHIP_ELEMENT_ALL = [
+    Const.PROP_DMG_BONUS_CRYO,
+    Const.PROP_DMG_BONUS_ANEMO,
+    Const.PROP_DMG_BONUS_PHYSICAL,
+    Const.PROP_DMG_BONUS_ELECTRO,
+    Const.PROP_DMG_BONUS_GEO,
+    Const.PROP_DMG_BONUS_PYRO,
+    Const.PROP_DMG_BONUS_HYDRO,
+    Const.PROP_DMG_BONUS_DENDRO,
+  ]
+
+  //聖遺物（パーセント）
+  static readonly PROPS_CHIP_PERCENT = [
+    Const.PROP_HP_UP,
+    Const.PROP_ATTACK_UP,
+    Const.PROP_DEFENSE_UP,
+    Const.PROP_CRIT_RATE,
+    Const.PROP_CRIT_DMG,
+    Const.PROP_ENERGY_RECHARGE,
+    Const.PROP_DMG_BONUS_CRYO,
+    Const.PROP_DMG_BONUS_ANEMO,
+    Const.PROP_DMG_BONUS_PHYSICAL,
+    Const.PROP_DMG_BONUS_ELECTRO,
+    Const.PROP_DMG_BONUS_GEO,
+    Const.PROP_DMG_BONUS_PYRO,
+    Const.PROP_DMG_BONUS_HYDRO,
+    Const.PROP_DMG_BONUS_DENDRO,
+  ]
+
+  //聖遺物（小数）
+  static readonly PROPS_CHIP_DECIMAL = [
+    Const.PROP_HP,
+    Const.PROP_ATTACK,
+    Const.PROP_DEFENSE,
+    Const.PROP_ELEMENTAL_MASTERY,
+  ]
+
   //最適化用サブ属性リスト
   static readonly PROPS_OPTIMAL_ARTIFACT_SUB = [
     Const.PROP_CRIT_RATE,
@@ -1230,7 +1290,137 @@ export class Const {
     Const.PROP_ELEMENTAL_MASTERY,
     Const.PROP_ENERGY_RECHARGE,
   ]
+
+  //最適化用ダメージベースリスト
+  static readonly PROPS_OPTIMAL_DAMAGE_BASE_LIST = [
+    Const.PROP_HP,
+    Const.PROP_ATTACK,
+    Const.PROP_DEFENSE,
+  ]
+
+  //最適化用元素タイプリスト
+  static readonly PROPS_OPTIMAL_ELEMENT_TYPE_LIST = [
+    Const.PROP_DMG_BONUS_CRYO,
+    Const.PROP_DMG_BONUS_ANEMO,
+    Const.PROP_DMG_BONUS_PHYSICAL,
+    Const.PROP_DMG_BONUS_ELECTRO,
+    Const.PROP_DMG_BONUS_GEO,
+    Const.PROP_DMG_BONUS_PYRO,
+    Const.PROP_DMG_BONUS_HYDRO,
+    Const.PROP_DMG_BONUS_DENDRO,
+  ]
+
+  //最適化用攻撃タイプリスト
+  static readonly PROPS_OPTIMAL_ATTACK_TYPE_LIST = [
+    Const.PROP_DMG_BONUS_NORMAL,
+    Const.PROP_DMG_BONUS_CHARGED,
+    Const.PROP_DMG_BONUS_PLUNGING,
+    Const.PROP_DMG_BONUS_SKILL,
+    Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
+    Const.PROP_DMG_BONUS_WEAPON,
+    Const.PROP_DMG_BONUS_OTHER,
+  ]
+
+  //最適化用ダメージタイプリストマップ
+  static readonly PROPS_OPTIMAL_DAMAGE_TYPE_LIST_MAP: Map<string, string[]> = new Map([
+    [Const.PROP_DMG_BONUS_CRYO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "originMeltDmg",
+      "cirtMeltDmg",
+      "expectMeltDmg",
+      "superconductDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_ANEMO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "swirlCryoDmg",
+      "swirlElectroDmg",
+      "swirlElectroAggravateDmg",
+      "swirlPyroDmg",
+      "swirlHydroDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_PHYSICAL, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "destructionDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_ELECTRO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "originAggravateDmg",
+      "cirtAggravateDmg",
+      "expectAggravateDmg",
+      "overloadedDmg",
+      "electroChargedDmg",
+      "superconductDmg",
+      "hyperbloomDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_GEO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_PYRO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "originVaporizeDmg",
+      "cirtVaporizeDmg",
+      "expectVaporizeDmg",
+      "originMeltDmg",
+      "cirtMeltDmg",
+      "expectMeltDmg",
+      "overloadedDmg",
+      "burningDmg",
+      "burgeonDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_HYDRO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "originVaporizeDmg",
+      "cirtVaporizeDmg",
+      "expectVaporizeDmg",
+      "electroChargedDmg",
+      "ruptureDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_DENDRO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "originSpreadDmg",
+      "cirtSpreadDmg",
+      "expectSpreadDmg",
+      "burningDmg",
+      "ruptureDmg",
+    ]],
+  ]);
+
+  static readonly PORP_TAG_RAIDEN_ITTOU = "RAIDEN_ITTOU";
+  static readonly PORP_TAG_RAIDEN_ISSHIN = "RAIDEN_ISSHIN";
+  static readonly PORP_TAG_EULA_KOUKEN = "EULA_KOUKEN";
   
+  static readonly PROPS_TAG_LIST = [
+    Const.PORP_TAG_RAIDEN_ITTOU,
+    Const.PORP_TAG_RAIDEN_ISSHIN,
+    Const.PORP_TAG_EULA_KOUKEN,
+  ]
+
+  static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
+    ["10000052", [
+      Const.PORP_TAG_RAIDEN_ITTOU,
+      Const.PORP_TAG_RAIDEN_ISSHIN,
+    ]],
+    ["10000051", [
+      Const.PORP_TAG_EULA_KOUKEN,
+    ]]
+  ])
+
   //*********************************
   //           原神データ
   //*********************************
@@ -1308,6 +1498,10 @@ export class Const {
   static readonly ALL_CHARACTER_KEY = "";
   //全属性キー
   static readonly ALL_PROPS_KEY = "ALL";
+  //属性キー実際の値
+  static readonly SUFFIX_ACTUAL_KEY = "_ACTUAL";
+  //属性キー（文字列）
+  static readonly SUFFIX_KEY_STR = "_STR";
   //チップ
   static readonly CONCATENATION_CHIP = "_";
 }

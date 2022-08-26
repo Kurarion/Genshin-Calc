@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from 'src/app/angular-material.module';
 
@@ -22,6 +23,8 @@ import { ArtifactChipsComponent } from './component/artifact-chips/artifact-chip
 
 @NgModule({
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     FlexLayoutModule,
     AngularMaterialModule,

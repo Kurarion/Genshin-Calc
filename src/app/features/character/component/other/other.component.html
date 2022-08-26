@@ -41,7 +41,7 @@
                         </app-mat-filtering-selector>
                         <!-- 値 -->
                         <br>
-                        <mat-form-field appearance="legacy" floatLabel="always">
+                        <mat-form-field appearance="legacy" floatLabel="always" class="normal-fiedld">
                             <mat-label [innerText]="'OTHER.TARGETVALUE' | translate"></mat-label>
                             <input matInput 
                                 type="number"
@@ -49,8 +49,7 @@
                                 [(ngModel)]="showValue"
                                 (keyup)="onValueKeyup($event)"
                             >
-                            <span matSuffix *ngIf="props_all_percent.includes(infos[selectedIndex].name??'')">%</span>
-                            <span matSuffix *ngIf="!props_all_percent.includes(infos[selectedIndex].name??'')">&nbsp;&nbsp;&nbsp;</span>
+                            <span matSuffix *ngIf="props_all_percent.includes(infos[selectedIndex].name??'')">%&nbsp;</span>
                         </mat-form-field>
                         <!-- スイッチ -->
                         <mat-slide-toggle
