@@ -106,6 +106,13 @@ func readBody(rp *http.Response) (buf *bytes.Buffer, err error) {
 	return buf, nil
 }
 
+//从本地读取JSON
+func getLocalJSON(path string) (*bytes.Buffer, error) {
+	content := bytes.NewBuffer(make([]byte, 0, defaultBuffSize))
+	err := readFromFile(path, content)
+	return content, err
+}
+
 //写入文件
 func writeToFile(path string, content *bytes.Buffer) error {
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777)

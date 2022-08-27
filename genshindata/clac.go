@@ -159,7 +159,7 @@ const (
 	genshinMonsterLevelMax       = 100
 )
 
-func Generate(targetDir string) {
+func Generate(targetDir string, localResPath string) {
 	//文件完整路径
 	var (
 		pathDir = targetDir
@@ -236,13 +236,13 @@ func Generate(targetDir string) {
 	dataReliquaryMainMap = make(map[string]float64)
 
 	//初始化
-	err := initialize()
+	err := initialize(localResPath)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
-func initialize() (err error) {
+func initialize(localResPath string) (err error) {
 	//检查目录是否存在
 	for _, v := range dataFileMap {
 		if v.class == typeDir {
@@ -261,15 +261,21 @@ func initialize() (err error) {
 		return err
 	}
 
-	return getDataFromRepository()
+	return getDataFromRepository(localResPath)
 }
 
 //更新
-func update() error {
+func update(localResPath string) error {
 	//仓库JSON文件缓存
 	repositoryJSON := make(map[string]*bytes.Buffer)
 	for i, v := range dataJSONURLMap {
-		temp, err := getJSON(v)
+		var temp *bytes.Buffer
+		var err error
+		if len(localResPath) > 0 {
+			temp, err = getLocalJSON(strings.Replace(v, RepositoryURL, localResPath, -1))
+		} else {
+			temp, err = getJSON(v)
+		}
 		if err != nil {
 			return err
 		}
@@ -996,8 +1002,8 @@ func saveResult() error {
 }
 
 //获取最新数据
-func getDataFromRepository() error {
-	err := update()
+func getDataFromRepository(localResPath string) error {
+	err := update(localResPath)
 	if err != nil {
 		return err
 	}
