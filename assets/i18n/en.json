@@ -146,9 +146,11 @@
     "DMG_VAL_UP_DENDRO": "Dendro DMG Increase",
     "DMG_VAL_UP_ALL": "All DMG Increase",
     "DMG_VAL_UP_NORMAL": "Normal DMG Increase",
+    "DMG_VAL_UP_NORMAL_CYONO_Q": "Normal DMG Increase (Pactsworn Pathclearer)",
     "DMG_VAL_UP_CHARGED": "Charged DMG Increase",
     "DMG_VAL_UP_PLUNGING": "Plunging DMG Increase",
     "DMG_VAL_UP_SKILL": "Skill DMG Increase",
+    "DMG_VAL_UP_SKILL_CYNO_BOLT": "Skill DMG Increase (Duststalker Bolt)",
     "DMG_VAL_UP_ELEMENTAL_BURST": "Elemental Burst DMG Increase",
     "DMG_VAL_UP_WEAPON": "Weapon DMG Increase",
     "DMG_VAL_UP_OTHER": "Other DMG Increase",
@@ -329,7 +331,9 @@
   "TAG": {
     "RAIDEN_ITTOU": "Musou Hitotachi",
     "RAIDEN_ISSHIN": "Musou Isshin",
-    "EULA_KOUKEN": "Lightfall Sword"
+    "EULA_KOUKEN": "Lightfall Sword",
+    "CYNO_BOLT": "Duststalker Bolt",
+    "CYNO_Q": "Pactsworn Pathclearer (Normal)"
   },
   "AUTO": {
     "CALC": "Calculate",
