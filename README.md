@@ -19,6 +19,8 @@
     <img src="./doc/example_ch_sim_1.png">
     <br>
     <img src="./doc/example_ch_sim_2.png">
+    <br>
+    <img src="./doc/example_ch_sim_3.png">
 </details>
 
 ## 注意事项
