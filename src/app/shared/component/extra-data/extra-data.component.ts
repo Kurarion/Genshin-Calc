@@ -130,6 +130,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   @Input('valueIndexs') valueIndexs!: number[];
   //強制元素オーバライド
   @Input('overrideElement') overrideElement!: string;
+  //更新フラグ
+  @Input('refreshFlg') refreshFlg!: number;
 
   //ダメージデータ
   dmgDatas!: DamageResult[];
@@ -184,6 +186,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       this.initHealingDatas();
       this.initShieldDatas();
       this.initProducDatas();
+      this.initBuffDatas();
+    }
+    if(changes['refreshFlg']){
       this.initBuffDatas();
     }
   }

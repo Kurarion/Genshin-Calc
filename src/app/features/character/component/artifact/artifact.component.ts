@@ -66,6 +66,8 @@ export class ArtifactComponent implements OnInit {
   subChanged!: number;
   //チップ変更
   chipChanged!: number;
+  //セットバフ更新
+  setBuffRefreshFlg!: number;
 
   constructor(
     private artifactService: ArtifactService,
@@ -79,6 +81,7 @@ export class ArtifactComponent implements OnInit {
       this.partIndex = 0;
       this.subChanged = 0;
       this.chipChanged = 0;
+      this.setBuffRefreshFlg = 0;
     }
 
   ngOnInit(): void {
@@ -234,6 +237,7 @@ export class ArtifactComponent implements OnInit {
     }
     //更新
     this.calculatorService.initExtraArtifactSetData(this.data.id);
+    ++this.setBuffRefreshFlg;
   }
 
   private initSelectedFullArtifactSetIndex(isInit?: boolean) {
