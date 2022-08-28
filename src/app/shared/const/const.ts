@@ -297,7 +297,7 @@ export class Const {
   //基本攻撃ダメージアップ値
   static readonly PROP_DMG_VAL_UP_NORMAL = "DMG_VAL_UP_NORMAL";
   //基本攻撃ダメージ（CYNO）
-  static readonly PROP_DMG_VAL_UP_NORMAL_CYONO_Q = "DMG_VAL_UP_NORMAL_CYONO_Q";
+  static readonly PROP_DMG_VAL_UP_NORMAL_CYNO_Q = "DMG_VAL_UP_NORMAL_CYNO_Q";
   //重撃ダメージアップ値
   static readonly PROP_DMG_VAL_UP_CHARGED = "DMG_VAL_UP_CHARGED";
   //落下攻撃ダメージアップ値
@@ -646,7 +646,7 @@ export class Const {
     Const.PROP_DMG_VAL_UP_DENDRO,
     Const.PROP_DMG_VAL_UP_ALL,
     Const.PROP_DMG_VAL_UP_NORMAL,
-    Const.PROP_DMG_VAL_UP_NORMAL_CYONO_Q,
+    Const.PROP_DMG_VAL_UP_NORMAL_CYNO_Q,
     Const.PROP_DMG_VAL_UP_CHARGED,
     Const.PROP_DMG_VAL_UP_PLUNGING,
     Const.PROP_DMG_VAL_UP_SKILL,
@@ -804,7 +804,7 @@ export class Const {
     Const.PROP_DMG_VAL_UP_DENDRO,
     Const.PROP_DMG_VAL_UP_ALL,
     Const.PROP_DMG_VAL_UP_NORMAL,
-    Const.PROP_DMG_VAL_UP_NORMAL_CYONO_Q,
+    Const.PROP_DMG_VAL_UP_NORMAL_CYNO_Q,
     Const.PROP_DMG_VAL_UP_CHARGED,
     Const.PROP_DMG_VAL_UP_PLUNGING,
     Const.PROP_DMG_VAL_UP_SKILL,

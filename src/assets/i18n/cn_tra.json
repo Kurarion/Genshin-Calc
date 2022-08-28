@@ -147,7 +147,7 @@
     "DMG_VAL_UP_DENDRO": "草元素傷害增加值",
     "DMG_VAL_UP_ALL": "全傷害增加值",
     "DMG_VAL_UP_NORMAL": "基本攻擊傷害增加值",
-    "DMG_VAL_UP_NORMAL_CYONO_Q": "基本攻击伤害增加值（启途誓使）",
+    "DMG_VAL_UP_NORMAL_CYNO_Q": "基本攻击伤害增加值（启途誓使）",
     "DMG_VAL_UP_CHARGED": "重擊傷害增加值",
     "DMG_VAL_UP_PLUNGING": "落下攻擊傷害增加值",
     "DMG_VAL_UP_SKILL": "元素技能傷害增加值",
