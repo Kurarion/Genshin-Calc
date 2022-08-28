@@ -6625,7 +6625,7 @@
                             "buffs":[{
                                 "index":0,
                                 "base": "ELEMENTAL_MASTERY",
-                                "target": ["DMG_VAL_UP_NORMAL_CYONO_Q"],
+                                "target": ["DMG_VAL_UP_NORMAL_CYNO_Q"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             },
@@ -6651,16 +6651,6 @@
                             },{
                                 "index":1,
                                 "target":["CRIT_DMG"]
-                            }]
-                        }
-                ],
-                "3": [
-                        {
-                            "buffs":[{
-                                "index":1,
-                                "target":["DMG_BONUS_ELEMENTAL_BURST"],
-                                "settingType":"switch",
-                                "defaultEnable":false
                             }]
                         }
                 ]
