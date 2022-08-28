@@ -84,6 +84,7 @@
     "DMG_BONUS_CHARGED": "Charged DMG Bonus",
     "DMG_BONUS_PLUNGING": "Plunging DMG Bonus",
     "DMG_BONUS_SKILL": "Skill DMG Bonus",
+    "DMG_BONUS_SKILL_NILOU_MOON": "Skill DMG Bonus (Watery Moon)",
     "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst DMG Bonus",
     "DMG_ANTI_CRYO": "Cryo Resistance",
     "DMG_ANTI_ANEMO": "Anemo Resistance",
@@ -333,7 +334,8 @@
     "RAIDEN_ISSHIN": "Musou Isshin",
     "EULA_KOUKEN": "Lightfall Sword",
     "CYNO_BOLT": "Duststalker Bolt",
-    "CYNO_Q": "Pactsworn Pathclearer (Normal)"
+    "CYNO_Q": "Pactsworn Pathclearer (Normal)",
+    "NILOU_MOON": "Watery Moon"
   },
   "AUTO": {
     "CALC": "Calculate",

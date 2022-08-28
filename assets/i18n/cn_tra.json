@@ -84,6 +84,7 @@
     "DMG_BONUS_CHARGED": "重擊傷害加成",
     "DMG_BONUS_PLUNGING": "下落攻擊傷害加成",
     "DMG_BONUS_SKILL": "元素戰技傷害加成",
+    "DMG_BONUS_SKILL_NILOU_MOON": "元素战技伤害加成(水月)",
     "DMG_BONUS_ELEMENTAL_BURST": "元素爆發傷害加成",
     "DMG_ANTI_CRYO": "冰元素抗性",
     "DMG_ANTI_ANEMO": "風元素抗性",
@@ -333,7 +334,8 @@
     "RAIDEN_ISSHIN": "夢想一心",
     "EULA_KOUKEN": "光降之劍",
     "CYNO_BOLT": "落羽的裁择",
-    "CYNO_Q": "启途誓使（普通攻击）"
+    "CYNO_Q": "启途誓使（普通攻击）",
+    "NILOU_MOON": "水月"
   },
   "AUTO": {
     "CALC": "計算",

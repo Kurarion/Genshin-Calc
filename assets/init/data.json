@@ -6404,7 +6404,17 @@
                 "skill": [
                     {
                         "damage": {
-                            "indexs": [0,1,2,3,4,5,6],
+                            "indexs": [3],
+                            "canOverride": false,
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag":"NILOU_MOON"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,4,5,6],
                             "canOverride": false,
                             "base": "HP",
                             "elementBonusType": "DMG_BONUS_HYDRO",
@@ -6456,7 +6466,7 @@
                         {
                             "buffs":[{
                                 "index":0,
-                                "target":["DMG_BONUS_SKILL"],
+                                "target":["DMG_BONUS_SKILL_NILOU_MOON"],
                                 "settingType":"switch",
                                 "defaultEnable":false
                             }]
@@ -6652,6 +6662,114 @@
                                 "settingType":"switch",
                                 "defaultEnable":false
                             }]
+                        }
+                ]
+            }
+        },
+        "10000072": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [7,8,9],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "shield":{
+                            "index":0,
+                            "base":"HP",
+                            "constIndex":1,
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                        },
+                        "damage": {
+                            "indexs": [2,3],
+                            "canOverride": false,
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,3],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "index":2,
+                            "target":["DMG_BONUS_NORMAL"],
+                            "settingType":"switch",
+                            "defaultEnable":false,
+                            "overrideElement":"DMG_BONUS_HYDRO"
+                        }]
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"HP",
+                                "target":["DMG_BONUS_NORMAL"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target":["HP_UP"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "base": "HP",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_HYDRO",
+                                "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            }
                         }
                 ]
             }
