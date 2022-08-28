@@ -168,6 +168,8 @@ export class Const {
   static readonly PROP_DMG_BONUS_PLUNGING = "DMG_BONUS_PLUNGING";
   //元素スキルダメージ
   static readonly PROP_DMG_BONUS_SKILL = "DMG_BONUS_SKILL";
+  //元素スキルダメージ（NILOU）
+  static readonly PROP_DMG_BONUS_SKILL_NILOU_MOON = "DMG_BONUS_SKILL_NILOU_MOON";
   //元素爆発ダメージ
   static readonly PROP_DMG_BONUS_ELEMENTAL_BURST = "DMG_BONUS_ELEMENTAL_BURST";
   //武器ダメージ
@@ -294,12 +296,16 @@ export class Const {
   static readonly PROP_DMG_VAL_UP_ALL = "DMG_VAL_UP_ALL";
   //基本攻撃ダメージアップ値
   static readonly PROP_DMG_VAL_UP_NORMAL = "DMG_VAL_UP_NORMAL";
+  //基本攻撃ダメージ（CYNO）
+  static readonly PROP_DMG_VAL_UP_NORMAL_CYONO_Q = "DMG_VAL_UP_NORMAL_CYONO_Q";
   //重撃ダメージアップ値
   static readonly PROP_DMG_VAL_UP_CHARGED = "DMG_VAL_UP_CHARGED";
   //落下攻撃ダメージアップ値
   static readonly PROP_DMG_VAL_UP_PLUNGING = "DMG_VAL_UP_PLUNGING";
   //元素スキルダメージアップ値
   static readonly PROP_DMG_VAL_UP_SKILL = "DMG_VAL_UP_SKILL";
+  //元素スキルダメージアップ値（CYNO）
+  static readonly PROP_DMG_VAL_UP_SKILL_CYNO_BOLT = "DMG_VAL_UP_SKILL_CYNO_BOLT";
   //元素爆発ダメージアップ値
   static readonly PROP_DMG_VAL_UP_ELEMENTAL_BURST = "DMG_VAL_UP_ELEMENTAL_BURST";
   //武器ダメージアップ値
@@ -377,35 +383,37 @@ export class Const {
   //その他ダメージ会心ダメージアップ値
   static readonly PROP_DMG_CRIT_DMG_UP_OTHER = "DMG_CRIT_DMG_UP_OTHER";
 
-  //元素(増幅)（全）
+  //元素(増幅）（全）
   static readonly PROP_DMG_ELEMENT_UP = "DMG_ELEMENT_UP";
-  //元素(増幅)（蒸発）
+  //元素(増幅）（蒸発）
   static readonly PROP_DMG_ELEMENT_VAPORIZE_UP = "DMG_ELEMENT_VAPORIZE_UP";
-  //元素(増幅)（溶解）
+  //元素(増幅）（溶解）
   static readonly PROP_DMG_ELEMENT_MELT_UP = "DMG_ELEMENT_MELT_UP";
-  //元素(増幅)（過負荷）
+  //元素(増幅）（過負荷）
   static readonly PROP_DMG_ELEMENT_OVERLOADED_UP = "DMG_ELEMENT_OVERLOADED_UP";
-  //元素(増幅)（燃焼）
+  //元素(増幅）（燃焼）
   static readonly PROP_DMG_ELEMENT_BURNING_UP = "DMG_ELEMENT_BURNING_UP";
-  //元素(増幅)（感電）
+  //元素(増幅）（感電）
   static readonly PROP_DMG_ELEMENT_ELECTROCHARGED_UP = "DMG_ELEMENT_ELECTROCHARGED_UP";
-  //元素(増幅)（超電導）
+  //元素(増幅）（超電導）
   static readonly PROP_DMG_ELEMENT_SUPERCONDUCT_UP = "DMG_ELEMENT_SUPERCONDUCT_UP";
-  //元素(増幅)（拡散）
+  //元素(増幅）（拡散）
   static readonly PROP_DMG_ELEMENT_SWIRL_UP = "DMG_ELEMENT_SWIRL_UP";
-  //元素(増幅)（氷砕き）
+  //元素(増幅）（氷砕き）
   static readonly PROP_DMG_ELEMENT_DESTRUCTION_UP = "DMG_ELEMENT_DESTRUCTION_UP";
-  //元素(増幅)（結晶）
+  //元素(増幅）（結晶）
   static readonly PROP_DMG_ELEMENT_SHIELD_UP = "DMG_ELEMENT_SHIELD_UP";
-  //元素(増幅)（開花）
+  //元素(増幅）（開花）
   static readonly PROP_DMG_ELEMENT_RUPTURE_UP = "DMG_ELEMENT_RUPTURE_UP";
-  //元素(増幅)（列開花）
+  // //元素(増幅）（開花）（倍率）
+  // static readonly PROP_DMG_ELEMENT_RUPTURE_RATE_UP = "DMG_ELEMENT_RUPTURE_RATE_UP";
+  //元素(増幅）（列開花）
   static readonly PROP_DMG_ELEMENT_BURGEON_UP = "DMG_ELEMENT_BURGEON_UP";
-  //元素(増幅)（超開花）
+  //元素(増幅）（超開花）
   static readonly PROP_DMG_ELEMENT_HYPERBLOOM_UP = "DMG_ELEMENT_HYPERBLOOM_UP";
-  //元素(増幅)（超激化）
+  //元素(増幅）（超激化）
   static readonly PROP_DMG_ELEMENT_AGGRAVATE_UP = "DMG_ELEMENT_AGGRAVATE_UP";
-  //元素(増幅)（拡激化）
+  //元素(増幅）（拡激化）
   static readonly PROP_DMG_ELEMENT_SPREAD_UP = "DMG_ELEMENT_SPREAD_UP";
 
   //敵防御（基礎）
@@ -414,20 +422,20 @@ export class Const {
   static readonly PROP_DMG_ENEMY_DEFENSE = "DMG_ENEMY_DEFENSE";
   //敵防御マイナス
   static readonly PROP_DMG_ENEMY_DEFENSE_DOWN = "DMG_ENEMY_DEFENSE_DOWN";
-  //敵防御マイナス(基本攻撃)
+  //敵防御マイナス(基本攻撃）
   static readonly PROP_DMG_ENEMY_DEFENSE_DOWN_NORMAL = "DMG_ENEMY_DEFENSE_DOWN_NORMAL";
-  //敵防御マイナス(重撃)
+  //敵防御マイナス(重撃）
   static readonly PROP_DMG_ENEMY_DEFENSE_DOWN_CHARGED = "DMG_ENEMY_DEFENSE_DOWN_CHARGED";
-  //敵防御マイナス(落下攻撃)
+  //敵防御マイナス(落下攻撃）
   static readonly PROP_DMG_ENEMY_DEFENSE_DOWN_PLUNGING = "DMG_ENEMY_DEFENSE_DOWN_PLUNGING";
-  //敵防御マイナス(元素スキル)
+  //敵防御マイナス(元素スキル）
   static readonly PROP_DMG_ENEMY_DEFENSE_DOWN_SKILL = "DMG_ENEMY_DEFENSE_DOWN_SKILL";
-  //敵防御マイナス(元素爆発)
+  //敵防御マイナス(元素爆発）
   static readonly PROP_DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST = "DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST";
 
 
 
-  //耐性(増幅)
+  //耐性(増幅）
   //static readonly PROP_DMG_VAL_ENEMY_ANTI_DMG = "DMG_VAL_ENEMY_ANTI_DMG";
 
   //ダメージ値結果
@@ -576,6 +584,7 @@ export class Const {
     Const.PROP_DMG_BONUS_CHARGED,
     Const.PROP_DMG_BONUS_PLUNGING,
     Const.PROP_DMG_BONUS_SKILL,
+    Const.PROP_DMG_BONUS_SKILL_NILOU_MOON,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,
@@ -637,9 +646,11 @@ export class Const {
     Const.PROP_DMG_VAL_UP_DENDRO,
     Const.PROP_DMG_VAL_UP_ALL,
     Const.PROP_DMG_VAL_UP_NORMAL,
+    Const.PROP_DMG_VAL_UP_NORMAL_CYONO_Q,
     Const.PROP_DMG_VAL_UP_CHARGED,
     Const.PROP_DMG_VAL_UP_PLUNGING,
     Const.PROP_DMG_VAL_UP_SKILL,
+    Const.PROP_DMG_VAL_UP_SKILL_CYNO_BOLT,
     Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_VAL_UP_WEAPON,
     Const.PROP_DMG_VAL_UP_OTHER,
@@ -688,6 +699,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_DESTRUCTION_UP,
     Const.PROP_DMG_ELEMENT_SHIELD_UP,
     Const.PROP_DMG_ELEMENT_RUPTURE_UP,
+    // Const.PROP_DMG_ELEMENT_RUPTURE_RATE_UP,
     Const.PROP_DMG_ELEMENT_BURGEON_UP,
     Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP,
     Const.PROP_DMG_ELEMENT_AGGRAVATE_UP,
@@ -730,6 +742,7 @@ export class Const {
     Const.PROP_DMG_BONUS_CHARGED,
     Const.PROP_DMG_BONUS_PLUNGING,
     Const.PROP_DMG_BONUS_SKILL,
+    Const.PROP_DMG_BONUS_SKILL_NILOU_MOON,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,
@@ -791,9 +804,11 @@ export class Const {
     Const.PROP_DMG_VAL_UP_DENDRO,
     Const.PROP_DMG_VAL_UP_ALL,
     Const.PROP_DMG_VAL_UP_NORMAL,
+    Const.PROP_DMG_VAL_UP_NORMAL_CYONO_Q,
     Const.PROP_DMG_VAL_UP_CHARGED,
     Const.PROP_DMG_VAL_UP_PLUNGING,
     Const.PROP_DMG_VAL_UP_SKILL,
+    Const.PROP_DMG_VAL_UP_SKILL_CYNO_BOLT,
     Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_VAL_UP_WEAPON,
     Const.PROP_DMG_VAL_UP_OTHER,
@@ -842,6 +857,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_DESTRUCTION_UP,
     Const.PROP_DMG_ELEMENT_SHIELD_UP,
     Const.PROP_DMG_ELEMENT_RUPTURE_UP,
+    // Const.PROP_DMG_ELEMENT_RUPTURE_RATE_UP,
     Const.PROP_DMG_ELEMENT_BURGEON_UP,
     Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP,
     Const.PROP_DMG_ELEMENT_AGGRAVATE_UP,
@@ -876,6 +892,7 @@ export class Const {
     Const.PROP_DMG_BONUS_CHARGED,
     Const.PROP_DMG_BONUS_PLUNGING,
     Const.PROP_DMG_BONUS_SKILL,
+    Const.PROP_DMG_BONUS_SKILL_NILOU_MOON,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,
@@ -970,6 +987,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_DESTRUCTION_UP,
     Const.PROP_DMG_ELEMENT_SHIELD_UP,
     Const.PROP_DMG_ELEMENT_RUPTURE_UP,
+    // Const.PROP_DMG_ELEMENT_RUPTURE_RATE_UP,
     Const.PROP_DMG_ELEMENT_BURGEON_UP,
     Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP,
     Const.PROP_DMG_ELEMENT_AGGRAVATE_UP,
@@ -1209,6 +1227,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_DESTRUCTION_UP,
     Const.PROP_DMG_ELEMENT_SHIELD_UP,
     Const.PROP_DMG_ELEMENT_RUPTURE_UP,
+    // Const.PROP_DMG_ELEMENT_RUPTURE_RATE_UP,
     Const.PROP_DMG_ELEMENT_BURGEON_UP,
     Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP,
     Const.PROP_DMG_ELEMENT_AGGRAVATE_UP,
@@ -1416,11 +1435,17 @@ export class Const {
   static readonly PORP_TAG_RAIDEN_ITTOU = "RAIDEN_ITTOU";
   static readonly PORP_TAG_RAIDEN_ISSHIN = "RAIDEN_ISSHIN";
   static readonly PORP_TAG_EULA_KOUKEN = "EULA_KOUKEN";
+  static readonly PORP_TAG_CYNO_BOLT = "CYNO_BOLT";
+  static readonly PORP_TAG_CYNO_Q = "CYNO_Q";
+  static readonly PORP_TAG_NILOU_MOON = "NILOU_MOON";
   
   static readonly PROPS_TAG_LIST = [
     Const.PORP_TAG_RAIDEN_ITTOU,
     Const.PORP_TAG_RAIDEN_ISSHIN,
     Const.PORP_TAG_EULA_KOUKEN,
+    Const.PORP_TAG_CYNO_BOLT,
+    Const.PORP_TAG_CYNO_Q,
+    Const.PORP_TAG_NILOU_MOON,
   ]
 
   static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
@@ -1430,7 +1455,14 @@ export class Const {
     ]],
     ["10000051", [
       Const.PORP_TAG_EULA_KOUKEN,
-    ]]
+    ]],
+    ["10000070", [
+      Const.PORP_TAG_NILOU_MOON,
+    ]],
+    ["10000071", [
+      Const.PORP_TAG_CYNO_BOLT,
+      Const.PORP_TAG_CYNO_Q,
+    ]],
   ])
 
   //*********************************

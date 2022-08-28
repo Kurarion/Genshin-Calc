@@ -33,7 +33,7 @@ tr td:nth-of-type(2) {
 
 .scroll-div {
     padding-right: 5px;
-    max-height: 9.48em;
+    /* max-height: 9.48em; */
     overflow-y: scroll;
 }
 
