@@ -15,6 +15,18 @@ export class Const {
   static readonly LAN_EN = "en";
   static readonly LAN_JP = "jp";
 
+  static readonly CULTURELANG_MAP: Map<string, TYPE_SYS_LANG> = new Map([
+    ['ja', Const.LAN_JP],
+    ['ja-JP', Const.LAN_JP],
+    ['jp-JP', Const.LAN_JP],
+    ['zh', Const.LAN_CHS],
+    ['zh-Hans', Const.LAN_CHS],
+    ['zh-CN', Const.LAN_CHS],
+    ['zh-Hant', Const.LAN_CHT],
+    ['zh-HK', Const.LAN_CHT],
+    ['zh-TW', Const.LAN_CHT],
+  ])
+
   static readonly LIST_LANG: LangInfo[] = [
     { code: 'cn_sim', displayName: '中文(简)' },
     { code: 'cn_tra', displayName: '中文(繁)' },

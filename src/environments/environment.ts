@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  defaultLang: 'cn_sim',
+  defaultLang: 'en',
   useThirdPartyAPI: false,
   thirdPartyAPIHost: 'https://api.ambr.top/assets/UI/',
   thirdPartyAPIPicType: '.png',

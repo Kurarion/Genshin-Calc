@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  defaultLang: 'cn_sim',
+  defaultLang: 'en',
   useThirdPartyAPI: false,
   thirdPartyAPIHost: 'https://enka.shinshin.moe/ui/',
   thirdPartyAPIPicType: '.png',
