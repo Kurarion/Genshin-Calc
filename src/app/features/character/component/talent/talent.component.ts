@@ -1,7 +1,7 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
-import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -13,7 +13,7 @@ interface levelOption {
   templateUrl: './talent.component.html',
   styleUrls: ['./talent.component.css']
 })
-export class TalentComponent implements OnInit {
+export class TalentComponent extends ExpansionPanelCommon implements OnInit {
 
   private readonly minLevel = 1;
   private readonly maxLevel = 15;
@@ -53,7 +53,10 @@ export class TalentComponent implements OnInit {
 
   constructor(
     private characterService: CharacterService,
-    private calculatorService: CalculatorService) { }
+    private calculatorService: CalculatorService,
+    private relayoutMsgService: RelayoutMsgService,) { 
+      super(relayoutMsgService);
+    }
 
   ngOnInit(): void {
     //レベル初期設定

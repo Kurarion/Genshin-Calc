@@ -7,7 +7,7 @@
         <mat-card-content class="content">
             <mat-accordion>
                 <ng-container *ngFor="let talent of data.skills.talents; index as i">
-                    <mat-expansion-panel class="mat-elevation-z0 expand">
+                    <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <span [innerText]="talent.name[currentLanguage]"></span>

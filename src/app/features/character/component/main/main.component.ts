@@ -1,10 +1,11 @@
 import { Component, HostListener, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { CalculatorService, character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
+import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { map, takeUntil, Observable, Subject } from 'rxjs';
+import { map, takeUntil, Observable, Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import MagicGrid from "magic-grid"
 
 const CSS_STATUS_BEFORE = "beforeLoad";
 const CSS_STATUS_FIN = "loaded";
@@ -100,7 +101,11 @@ export class MainComponent implements OnInit, OnDestroy {
   destroyed = new Subject<void>();
   //z-indexs
   childZIndexs!: Record<string, number>;
-  //
+  //レイアウトマネジャー
+  magicGrid!: MagicGrid|null;
+  //subscription
+  subscriptions!: Subscription[];
+  //z-index
   private zIndexs!: string[];
 
   constructor(private httpService: HttpService,
@@ -108,7 +113,19 @@ export class MainComponent implements OnInit, OnDestroy {
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
     private languageService: LanguageService,
-    private breakpointObserver: BreakpointObserver,) {
+    private breakpointObserver: BreakpointObserver,
+    private relayoutMsgService: RelayoutMsgService,) {
+    this.subscriptions = [];
+    this.subscriptions.push(this.relayoutMsgService.status().subscribe(()=>{
+      setTimeout(()=>{
+        this.reLayout();
+      })
+    }));
+    this.subscriptions.push(this.calculatorService.changed().subscribe(()=>{
+      setTimeout(()=>{
+        this.reLayout();
+      })
+    }));
     //z-index初期化
     this.zIndexs = [];
     this.childZIndexs = {};
@@ -124,9 +141,9 @@ export class MainComponent implements OnInit, OnDestroy {
     this.isLarge.subscribe((isLarge: boolean) => {
       //レイアウトフラグ設定（メニューモードに影響する）
       if(isLarge){
-        this.scrollBarWidth = 0.9;
+        this.scrollBarWidth = 9;
       }else{
-        this.scrollBarWidth = 0;
+        this.scrollBarWidth = 9;
       }
     });
     //初期言語設定
@@ -157,6 +174,18 @@ export class MainComponent implements OnInit, OnDestroy {
           //DEBUG
           console.log(this.data)
         }
+        //レイアウト
+        setTimeout(()=>{
+          this.magicGrid = new MagicGrid({
+            container: ".content",
+            items: 7,
+            gutter: 8,
+            maxColumns: 4,
+            animate: true,
+            useMin: true,
+          });
+          this.magicGrid.listen();
+        })
       }
     );
     //画面横幅取得
@@ -172,6 +201,13 @@ export class MainComponent implements OnInit, OnDestroy {
     //レイアウト監視を終了
     this.destroyed.next();
     this.destroyed.complete();
+    this.magicGrid = null;
+    //
+    for(let sub of this.subscriptions){
+      if(sub && !(sub?.closed)){
+        sub.unsubscribe();
+      }
+    }
   }
 
   /**
@@ -212,6 +248,17 @@ export class MainComponent implements OnInit, OnDestroy {
   refreshChildZIndexs(){
     for(let key of this.childNames){
       this.childZIndexs[key] = (this.zIndexs.lastIndexOf(key) + 1);
+    }
+  }
+
+  ngAfterViewChecked(){
+    // this.reLayout();
+
+  }
+
+  reLayout(){
+    if(this.magicGrid?.ready()){
+      this.magicGrid.positionItems();
     }
   }
 }

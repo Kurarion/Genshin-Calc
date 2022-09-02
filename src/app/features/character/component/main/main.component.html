@@ -1,25 +1,14 @@
 <div class="main">
-    <div class="background" [style.right]="scrollBarWidth+'%'" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'" [@imgLoad]="imgState">
+    <div class="background" [style.right]="scrollBarWidth+'px'" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'" [@imgLoad]="imgState">
         <div class="background"></div>
     </div>
-    <div class="content" fxLayout="row wrap" fxLayoutAlign="center" [@otherLoad]="otherState">
-        <div>
-            <app-character [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_character]]" [name]="name_character" (draged)="onChildStartDrag($event)"></app-character>
-            <div class="middle"></div>
-            <app-enemy [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_enemy]]" [name]="name_enemy" (draged)="onChildStartDrag($event)"></app-enemy>
-        </div>
-        <div>
-            <app-weapon [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_weapon]]" [name]="name_weapon" (draged)="onChildStartDrag($event)"></app-weapon>
-            <div class="middle"></div>
-            <app-artifact [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_artifact]]" [name]="name_artifact" (draged)="onChildStartDrag($event)"></app-artifact>
-        </div>
-        <div>
-            <app-talent [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_talent]]" [name]="name_talent" (draged)="onChildStartDrag($event)"></app-talent>
-        </div>
-        <div>
-            <app-constellation [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_constellation]]" [name]="name_constellation" (draged)="onChildStartDrag($event)"></app-constellation>
-            <div class="middle"></div>
-            <app-other [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_other]]" [name]="name_other" (draged)="onChildStartDrag($event)"></app-other>
-        </div>
+    <div class="content" [@otherLoad]="otherState">
+        <app-character [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_character]]" [name]="name_character" (draged)="onChildStartDrag($event)"></app-character>
+        <app-weapon [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_weapon]]" [name]="name_weapon" (draged)="onChildStartDrag($event)"></app-weapon>
+        <app-talent [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_talent]]" [name]="name_talent" (draged)="onChildStartDrag($event)"></app-talent>
+        <app-constellation [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_constellation]]" [name]="name_constellation" (draged)="onChildStartDrag($event)"></app-constellation>
+        <app-enemy [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_enemy]]" [name]="name_enemy" (draged)="onChildStartDrag($event)"></app-enemy>
+        <app-artifact [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_artifact]]" [name]="name_artifact" (draged)="onChildStartDrag($event)"></app-artifact>
+        <app-other [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_other]]" [name]="name_other" (draged)="onChildStartDrag($event)"></app-other>
     </div>
 </div>

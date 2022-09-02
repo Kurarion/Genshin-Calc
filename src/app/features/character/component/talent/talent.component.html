@@ -7,7 +7,7 @@
         <mat-card-content class="content">
             <mat-accordion>
                 <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
-                    <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="isFirst">
+                    <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="isFirst" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                         <mat-expansion-panel-header matTooltipPosition="right">
                             <mat-panel-title>
                                 <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
@@ -38,7 +38,7 @@
                 </ng-container>
                 <ng-container *ngFor="let skill of otherSkills; index as i">
                     <ng-container *ngIf="$any(this.data.skills[skill]).name">
-                        <mat-expansion-panel class="mat-elevation-z0 expand">
+                        <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                             <mat-expansion-panel-header matTooltipPosition="right">
                                 <mat-panel-title>
                                     <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
@@ -61,7 +61,7 @@
                 <ng-container *ngFor="let skills of proudSkills">
                     <ng-container *ngIf="$any(this.data.skills[skills])">
                         <ng-container *ngFor="let skill of $any(this.data.skills[skills]); index as i">
-                            <mat-expansion-panel class="mat-elevation-z0 expand">
+                            <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <span [innerText]="skill.name[currentLanguage]"></span>

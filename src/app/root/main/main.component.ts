@@ -18,6 +18,7 @@ import {
   LanguageService,
   StorageService,
   TYPE_SYS_LANG,
+  RelayoutMsgService,
 } from 'src/app/shared/shared.module';
 
 @Component({
@@ -47,6 +48,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private languageService: LanguageService,
     private translateService: TranslateService,
     private storageService: StorageService,
+    private relayoutMsgService: RelayoutMsgService,
   ) {
     //言語リスト初期化
     this.langs = LanguageService.langs;
@@ -127,6 +129,10 @@ export class MainComponent implements OnInit, OnDestroy {
    */
   prepareRoute(outlet: RouterOutlet) {
     return outlet?.activatedRouteData?.['animation'];
+  }
+
+  openedChange(){
+    this.relayoutMsgService.update("sidenav");
   }
 
   /**

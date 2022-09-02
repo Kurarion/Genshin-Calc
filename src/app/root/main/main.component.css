@@ -42,3 +42,16 @@
 :host ::ng-deep .menu-sidenav > div:first-child {
   overflow-x: hidden;
 }
+
+/* .sidenav-content {
+
+} */
+
+.sidenav-content::-webkit-scrollbar{
+  width: 9px;
+}
+
+.sidenav-content::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: grey;
+}

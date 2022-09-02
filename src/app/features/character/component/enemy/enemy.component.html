@@ -26,7 +26,7 @@
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true">
+            <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <span [innerText]="'ENEMY.PROPS' | translate"></span>

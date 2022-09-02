@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CalculatorService, character, CharacterService, CharStatus, Const, ExtraDataService, HttpService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterService, CharStatus, Const, ExpansionPanelCommon, ExtraDataService, HttpService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -17,7 +17,7 @@ interface subProp {
   templateUrl: './character.component.html',
   styleUrls: ['./character.component.css']
 })
-export class CharacterComponent implements OnInit, OnDestroy {
+export class CharacterComponent extends ExpansionPanelCommon implements OnInit, OnDestroy {
 
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
@@ -58,7 +58,10 @@ export class CharacterComponent implements OnInit, OnDestroy {
   constructor(private httpService: HttpService, 
     private extraDataService: ExtraDataService, 
     private characterService: CharacterService,
-    private calculatorService: CalculatorService) { }
+    private calculatorService: CalculatorService,
+    private relayoutMsgService: RelayoutMsgService,) { 
+      super(relayoutMsgService);
+    }
 
   ngOnInit(): void {
     //プロフィール画像初期化

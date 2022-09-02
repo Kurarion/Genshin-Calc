@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
+import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService, RelayoutMsgService, ExpansionPanelCommon } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 interface levelOption {
@@ -25,7 +25,7 @@ interface weaponOption {
   templateUrl: './weapon.component.html',
   styleUrls: ['./weapon.component.css']
 })
-export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
+export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnDestroy, OnChanges {
 
   private readonly notExitLevel = -1;
   private readonly minLevel = 1;
@@ -102,7 +102,10 @@ export class WeaponComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private httpService: HttpService,
     private weaponService: WeaponService,
     private calculatorService: CalculatorService,
-    private extraDataService: ExtraDataService) { }
+    private extraDataService: ExtraDataService,
+    private relayoutMsgService: RelayoutMsgService,) { 
+      super(relayoutMsgService);
+    }
 
   ngOnInit(): void {
     //武器タイプ設定

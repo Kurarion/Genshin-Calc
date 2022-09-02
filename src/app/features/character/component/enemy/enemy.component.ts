@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService } from 'src/app/shared/shared.module';
+import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService, RelayoutMsgService, ExpansionPanelCommon } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 interface levelOption {
@@ -25,7 +25,7 @@ interface enemyOption {
   templateUrl: './enemy.component.html',
   styleUrls: ['./enemy.component.css']
 })
-export class EnemyComponent implements OnInit {
+export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
 
   private readonly minLevel = 1;
   private readonly maxLevel = 100;
@@ -80,7 +80,10 @@ export class EnemyComponent implements OnInit {
   constructor(private httpService: HttpService, 
     private enemyService: EnemyService, 
     private calculatorService: CalculatorService,
-    private extraDataService: ExtraDataService) { }
+    private extraDataService: ExtraDataService,
+    private relayoutMsgService: RelayoutMsgService,) { 
+      super(relayoutMsgService);
+    }
 
   ngOnInit(): void {
     //敵リスト初期化

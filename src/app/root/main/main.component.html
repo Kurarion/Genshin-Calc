@@ -10,11 +10,12 @@
     <mat-sidenav
       [mode]="isLargeFlg ? 'side' : 'over'"
       [opened]="menuOpenStatus"
+      (openedChange)="openedChange()"
       class="menu-sidenav"
     >
       <app-menu class="menu" (menuClickEvent)="closeMenu($event)"></app-menu>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="sidenav-content">
       <div [id]="captureElementID" class="outlet" [@routeAnimations]="prepareRoute(outlet)">
         <router-outlet #outlet="outlet">
           <!-- <app-paste-event-listener

@@ -1,6 +1,6 @@
 import { PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { character, Const, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
   templateUrl: './constellation.component.html',
   styleUrls: ['./constellation.component.css']
 })
-export class ConstellationComponent implements OnInit {
+export class ConstellationComponent extends ExpansionPanelCommon implements OnInit {
 
   readonly constellationPrefix: string = 'c';
   readonly constellationNum: number[] = [1, 2, 3, 4, 5, 6];
@@ -31,7 +31,9 @@ export class ConstellationComponent implements OnInit {
   //ドラッグイベント
   @Output('draged') draged = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private relayoutMsgService: RelayoutMsgService,) { 
+    super(relayoutMsgService);
+  }
 
   ngOnInit(): void { }
 
