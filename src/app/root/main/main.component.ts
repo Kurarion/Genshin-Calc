@@ -5,6 +5,7 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
+import { MatDrawerMode } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
@@ -42,6 +43,8 @@ export class MainComponent implements OnInit, OnDestroy {
   isLargeFlg: boolean = true;
   //言語リスト
   langs!: LangInfo[];
+  //モード
+  menuMode!: MatDrawerMode;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -50,6 +53,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private relayoutMsgService: RelayoutMsgService,
   ) {
+    this.menuMode = 'side';
     //言語リスト初期化
     this.langs = LanguageService.langs;
     //レイアウトフラグ
@@ -76,6 +80,7 @@ export class MainComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         //レイアウトフラグ設定（メニューモードに影響する）
         this.isLargeFlg = isLarge;
+        this.menuMode = isLarge?'side':'over';
       }, flgDelay);
     });
   }
@@ -102,9 +107,9 @@ export class MainComponent implements OnInit, OnDestroy {
    * メニューを閉じる（幅の狭いのみ）
    */
   closeMenu(event: MenuInfo) {
-    if (!this.isLargeFlg) {
-      this.menuOpenStatus = false;
-    }
+    // if (!this.isLargeFlg) {
+    //   this.menuOpenStatus = false;
+    // }
   }
 
   /**

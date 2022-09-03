@@ -8,7 +8,8 @@
   ></app-head>
   <mat-sidenav-container class="menu-container" [autosize]="false">
     <mat-sidenav
-      [mode]="isLargeFlg ? 'side' : 'over'"
+      [autoFocus]="false"
+      [mode]="menuMode"
       [opened]="menuOpenStatus"
       (openedChange)="openedChange()"
       class="menu-sidenav"
