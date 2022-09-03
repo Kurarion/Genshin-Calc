@@ -1,6 +1,6 @@
 <ng-container *ngIf="data.skills.normal.name">
-    <mat-card class="card" [style.width.px]="cardWidth" cdkDrag [cdkDragStartDelay]="300" [style.z-index]="zIndex" (cdkDragStarted)="onDrag()">
-        <mat-card-header cdkDragHandle>
+    <mat-card class="card" [style.width.px]="cardWidth">
+        <mat-card-header>
             <mat-card-title [innerText]="'OTHER.NAME' | translate"></mat-card-title>
         </mat-card-header>
         <mat-card-content class="content">

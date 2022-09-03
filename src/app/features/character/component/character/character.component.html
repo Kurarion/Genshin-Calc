@@ -1,6 +1,6 @@
 <ng-container *ngIf="data">
-    <mat-card class="card" [style.width.px]="cardWidth" cdkDrag [cdkDragStartDelay]="300" [style.z-index]="zIndex" (cdkDragStarted)="onDrag()">
-        <mat-card-header cdkDragHandle>
+    <mat-card class="card" [style.width.px]="cardWidth">
+        <mat-card-header>
             <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
             </div>
             <mat-card-title>{{data.name[currentLanguage]}}</mat-card-title>
