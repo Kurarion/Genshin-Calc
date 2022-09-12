@@ -881,7 +881,6 @@ func update(localResPath string) error {
 	for i := range monsterBaseDataList {
 		currentMonsterData := &monsterBaseDataList[i]
 		if currentMonsterData.DescribeId == 0 ||
-			len(currentMonsterData.VisionLevel) != 0 ||
 			strings.Contains(currentMonsterData.MonsterName, "Activity") ||
 			strings.Contains(currentMonsterData.MonsterName, "Tutorial") ||
 			strings.Contains(currentMonsterData.MonsterName, "Multi") ||
