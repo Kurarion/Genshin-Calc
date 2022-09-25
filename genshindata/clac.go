@@ -157,6 +157,8 @@ const (
 	genshinCharacterPromotedMark = "+"
 	genshinMonsterLevelMin       = 1
 	genshinMonsterLevelMax       = 100
+
+	genshinMaxEmptySkillDesc = 2
 )
 
 func Generate(targetDir string, localResPath string) {
@@ -1054,6 +1056,7 @@ func getRegxTextsFromHash(hashs []uint64, textMap map[string]map[uint64]string, 
 	result := make(map[string][]string)
 	for _, v := range sysLanguage {
 		result[v] = make([]string, 0)
+		currentEmpty := 0
 		for _, hash := range hashs {
 			if useT2s && v == languageCHS {
 				origin, exit := textMap[languageCHT][hash]
@@ -1065,6 +1068,10 @@ func getRegxTextsFromHash(hashs []uint64, textMap map[string]map[uint64]string, 
 			}
 			origin, exit := textMap[v][hash]
 			if !exit || origin == "" {
+				currentEmpty++
+				if currentEmpty < genshinMaxEmptySkillDesc {
+					continue
+				}
 				break
 			}
 			result[v] = append(result[v], htmlColorTag(origin))

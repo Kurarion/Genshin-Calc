@@ -3788,7 +3788,14 @@
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
                             "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
-                        }
+                        },
+                        "buffs":[{
+                            "index":1,
+                            "target":["DMG_BONUS_CHARGED"],
+                            "settingType":"switch",
+                            "defaultEnable": false
+                        }]
+                        
                     }
                 ],
                 "proudSkills": [
