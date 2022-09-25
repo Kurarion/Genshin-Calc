@@ -8632,7 +8632,7 @@
                 {
                     "buffs":[{
                         "index": 0,
-                        "target": ["ATTACK_UP"],
+                        "target": ["ENERGY_RECHARGE"],
                         "settingType": "switch",
                         "defaultEnable": false
                     }]
