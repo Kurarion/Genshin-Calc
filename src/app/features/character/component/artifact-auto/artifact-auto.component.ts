@@ -429,20 +429,21 @@ export class ArtifactAutoComponent implements OnInit {
 
   async optimize(){
     let result = new Promise<void>((resolve) => {
+      //チェック
+      let hasError = false;
+      for(let key in this.userInput.controls){
+        this.userInput.get(key)!.markAsDirty();
+        this.userInput.get(key)!.markAsTouched();
+        const controlErrors: ValidationErrors|undefined|null = this.userInput!.get(key)?.errors;
+        if (controlErrors != null && controlErrors != undefined) {
+          hasError = true;
+        }
+      }
+      if(hasError){
+        return;
+      }
+      
       setTimeout(()=>{
-        //チェック
-        let hasError = false;
-        for(let key in this.userInput.controls){
-          this.userInput.get(key)!.markAsDirty();
-          this.userInput.get(key)!.markAsTouched();
-          const controlErrors: ValidationErrors|undefined|null = this.userInput!.get(key)?.errors;
-          if (controlErrors != null && controlErrors != undefined) {
-            hasError = true;
-          }
-        }
-        if(hasError){
-          return;
-        }
 
         //リセット
         this.currentPoint.setValue(0);
