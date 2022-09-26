@@ -6650,14 +6650,11 @@
                         {
                             "buffs":[{
                                 "index":0,
-                                "target":["CRIT_RATE"],
+                                "target":["DMG_BONUS_ELECTRO"],
                                 "settingType":"slider",
                                 "sliderStep":1,
                                 "sliderInitialValue":0,
                                 "sliderMax":5
-                            },{
-                                "index":1,
-                                "target":["CRIT_DMG"]
                             }]
                         }
                 ]
@@ -6738,6 +6735,7 @@
                         {
                             "buffs":[{
                                 "index":0,
+                                "indexMultiValue":0.001,
                                 "base":"HP",
                                 "target":["DMG_BONUS_NORMAL"],
                                 "settingType":"switch",
@@ -7877,6 +7875,29 @@
                 }
             ]
         },
+        "11418": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "indexMultiValue":0.01,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ENERGY_RECHARGE"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "indexMultiValue":0.01,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ENERGY_RECHARGE"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }]
+                }
+            ]
+        },
         "11419": {
             "effect": [
                 {
@@ -8124,7 +8145,7 @@
                         "sliderMax": 3
                     },
                     {
-                        "index": 3,
+                        "index": 4,
                         "base": "HP",
                         "target": ["ELEMENTAL_MASTERY"],
                         "sliderMax": 3,
@@ -8342,6 +8363,27 @@
                         "index": 0,
                         "target": ["DMG_BONUS_SKILL"],
                         "settingType": "resident"
+                    }]
+                }
+            ]
+        },
+        "12415": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false
                     }]
                 }
             ]
@@ -8683,6 +8725,21 @@
                         "target": ["ATTACK_UP"],
                         "settingType":"switch",
                         "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "13419": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"switch",
+                        "defaultEnable":false
+                    },{
+                        "index": 1,
+                        "target": ["ELEMENTAL_MASTERY"]
                     }]
                 }
             ]
@@ -9086,6 +9143,27 @@
                     "buffs":[{
                         "index": 0,
                         "target": ["ENERGY_RECHARGE"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }]
+                }
+            ]
+        },
+        "14416": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
                         "settingType": "switch",
                         "defaultEnable": false
                     }]
