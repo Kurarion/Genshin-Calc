@@ -84,6 +84,7 @@
     "DMG_BONUS_CHARGED": "重撃ダメージ",
     "DMG_BONUS_PLUNGING": "落下攻撃ダメージ",
     "DMG_BONUS_SKILL": "元素スキルダメージ",
+    "DMG_BONUS_SKILL_NILOU_MOON": "元素战技伤害加成(水月)",
     "DMG_BONUS_ELEMENTAL_BURST":"元素爆発ダメージ",
     "DMG_ANTI_CRYO": "氷元素耐性",
     "DMG_ANTI_ANEMO": "風元素耐性",
@@ -146,9 +147,11 @@
     "DMG_VAL_UP_DENDRO": "草元素ダメージアップ値",
     "DMG_VAL_UP_ALL": "全ダメージアップ値",
     "DMG_VAL_UP_NORMAL": "基本攻撃ダメージアップ値",
+    "DMG_VAL_UP_NORMAL_CYNO_Q": "基本攻击伤害增加值（启途誓使）",
     "DMG_VAL_UP_CHARGED": "重撃ダメージアップ値",
     "DMG_VAL_UP_PLUNGING": "落下攻撃ダメージアップ値",
     "DMG_VAL_UP_SKILL": "元素スキルダメージアップ値",
+    "DMG_VAL_UP_SKILL_CYNO_BOLT": "元素技能伤害增加值（落羽的裁择）",
     "DMG_VAL_UP_ELEMENTAL_BURST": "元素爆発ダメージアップ値",
     "DMG_VAL_UP_WEAPON": "武器ダメージアップ値",
     "DMG_VAL_UP_OTHER": "その他ダメージアップ値",
@@ -329,7 +332,10 @@
   "TAG": {
     "RAIDEN_ITTOU": "夢想の一刀",
     "RAIDEN_ISSHIN": "夢想の一心",
-    "EULA_KOUKEN": "光臨の剣"
+    "EULA_KOUKEN": "光臨の剣",
+    "CYNO_BOLT": "落羽的裁择",
+    "CYNO_Q": "启途誓使（普通攻击）",
+    "NILOU_MOON": "水月"
   },
   "AUTO": {
     "CALC": "計算",

@@ -2297,7 +2297,7 @@ export class CalculatorService {
         baseValue *= result[buff.base2];
       }
       let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
-      let toAdd = (baseValue + modifyValue) * buff.multiValue!;
+      let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * buff.multiValue!;
       if(buff.maxVal && toAdd > buff.maxVal){
         toAdd = buff.maxVal;
       }else if(buff.specialMaxVal != undefined){
