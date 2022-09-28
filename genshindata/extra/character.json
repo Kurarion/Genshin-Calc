@@ -157,5 +157,11 @@
     },
     "多莉":{
         "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2022/08/29/9b5c8d26504c19154056175bbb7e287a_7101312865137287700.png"
+    },
+    "赛诺":{
+        "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2022/09/21/c4f05fb0c04afac045171c27c7d03cdc_7123941963780824423.png"
+    },
+    "坎蒂丝":{
+        "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2022/09/22/d0226e61c64dbd14f3041775ceebb59a_6490657115701128356.png"
     }
 }

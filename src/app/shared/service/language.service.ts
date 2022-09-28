@@ -22,7 +22,7 @@ export class LanguageService {
 
   constructor(private translateService: TranslateService,
     private storageService: StorageService,
-    private ocrService: OcrService,
+    //private ocrService: OcrService,
     private titleService: Title) {
     //言語設定
     this.translateService.addLangs(LanguageService.langCodes);
@@ -76,9 +76,9 @@ export class LanguageService {
           //タブタイトル初期化
           this.updateTabTitleName();
           //OCR言語設定
-          this.ocrService.setLanguage(
-            Const.MAP_TESSERACT_LANG[langCode]
-          );
+          // this.ocrService.setLanguage(
+          //   Const.MAP_TESSERACT_LANG[langCode]
+          // );
           //ストレージに保存
           this.setStorageLang(langCode);
 

@@ -12,7 +12,6 @@ import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { routerAnimation } from 'src/animation';
 import {
-  ArtifactListComponent,
   LangInfo,
   MenuInfo,
   Const,
