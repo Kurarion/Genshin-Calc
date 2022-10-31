@@ -453,6 +453,8 @@ export class ArtifactAutoComponent implements OnInit {
         let param: DamageParam = {
           rate: this.userInput.get('damageRate')!.value as number / 100,
           base: this.userInput.get('damageBase')!.value as string,
+          rateAttach: [],
+          baseAttach: [],
           elementBonusType: this.userInput.get('elementType')!.value as string,
           attackBonusType: this.userInput.get('attackType')!.value as string,
           tag: this.userInput.get('damageTag')!.value as string ?? undefined,

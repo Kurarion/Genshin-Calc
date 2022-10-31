@@ -6769,6 +6769,281 @@
                 ]
             }
         },
+        "10000073": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "indexsAttach": [[3]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["ELEMENTAL_MASTERY"],
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "NAHIDA_TRI_KARMA"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "buffs":[{
+                            "index":1,
+                            "target":["DMG_BONUS_SKILL_NAHIDA_TRI_KARMA"],
+                            "settingType":"slider",
+                            "sliderStartIndex": 0,
+                            "sliderInitialValue": 0,
+                            "sliderStep": 1,
+                            "sliderMax": 2
+                        }]
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"ELEMENTAL_MASTERY",
+                                "target":["ELEMENTAL_MASTERY"],
+                                "maxValConstIndex":1,
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":2,
+                                "baseModifyValue": 200,
+                                "baseModifyRelation": "-",
+                                "maxValValue": 0.8,
+                                "base": "ELEMENTAL_MASTERY",
+                                "target": ["DMG_BONUS_SKILL_NAHIDA_TRI_KARMA"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            },
+                            {
+                                "index":3,
+                                "baseModifyValue": 200,
+                                "baseModifyRelation": "-",
+                                "maxValValue": 0.24,
+                                "base": "ELEMENTAL_MASTERY",
+                                "target": ["DMG_CRIT_RATE_UP_SKILL_NAHIDA_TRI_KARMA"]
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buffs":[{
+                                "index":1,
+                                "target":["DMG_ENEMY_DEFENSE_DOWN"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target":["ELEMENTAL_MASTERY"],
+                                "settingType":"slider",
+                                "sliderStartIndex": 0,
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 4
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "indexsAttach": [[1]],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "baseAttach": ["ELEMENTAL_MASTERY"],
+                                "elementBonusType": "DMG_BONUS_DENDRO",
+                                "attackBonusType": "DMG_BONUS_SKILL",
+                                "tag": "NAHIDA_TRI_KARMA"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000074": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "shield":{
+                            "index":2,
+                            "base":"HP",
+                            "constIndex":3,
+                            "constCalRelation":"+",
+                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                        },
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },{
+                        "damage": {
+                            "indexs": [1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag":"LAYLA_SHOOTING_STAR"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target":["DMG_ELEMENT_SHIELD_UP"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":4
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"HP",
+                                "target":["DMG_VAL_UP_SKILL_LAYLA_SHOOTING_STAR"],
+                                "settingType":"switch"
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target":["SHIELD_BONUS_SKILL"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"HP",
+                                "target":["DMG_VAL_UP_NORMAL","DMG_VAL_UP_CHARGED"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs":[{
+                                "index":1,
+                                "target":["DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            },{
+                                "index":1,
+                                "target":["DMG_BONUS_ELEMENTAL_BURST"]
+                            }]
+                        }
+                ]
+            }
+        },
         "10000005504": {
             "skills": {
                 "normal": [
@@ -9289,6 +9564,30 @@
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "sliderMax": 3,
                         "isMaximumStackBuff": true
+                    }]
+                }
+            ]
+        },
+        "14511": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
                     }]
                 }
             ]

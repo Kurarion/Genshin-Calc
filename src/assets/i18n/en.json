@@ -85,6 +85,8 @@
     "DMG_BONUS_PLUNGING": "Plunging DMG Bonus",
     "DMG_BONUS_SKILL": "Skill DMG Bonus",
     "DMG_BONUS_SKILL_NILOU_MOON": "Skill DMG Bonus (Watery Moon)",
+    "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "Skill DMG Bonus (Tri-Karma Purification)",
+    "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "Skill DMG Bonus (Shooting Star)",
     "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst DMG Bonus",
     "DMG_ANTI_CRYO": "Cryo Resistance",
     "DMG_ANTI_ANEMO": "Anemo Resistance",
@@ -152,6 +154,7 @@
     "DMG_VAL_UP_PLUNGING": "Plunging DMG Increase",
     "DMG_VAL_UP_SKILL": "Skill DMG Increase",
     "DMG_VAL_UP_SKILL_CYNO_BOLT": "Skill DMG Increase (Duststalker Bolt)",
+    "DMG_VAL_UP_SKILL_LAYLA_SHOOTING_STAR": "Skill DMG Increase (Shooting Star)",
     "DMG_VAL_UP_ELEMENTAL_BURST": "Elemental Burst DMG Increase",
     "DMG_VAL_UP_WEAPON": "Weapon DMG Increase",
     "DMG_VAL_UP_OTHER": "Other DMG Increase",
@@ -170,6 +173,7 @@
     "DMG_CRIT_RATE_UP_CHARGED": "Charged DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_PLUNGING": "Plunging DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_SKILL": "Skill DMG CRIT Rate Increase",
+    "DMG_CRIT_RATE_UP_SKILL_NAHIDA_TRI_KARMA": "Skill DMG CRIT Rate Increase (Tri-Karma Purification)",
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "Elemental Burst DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_WEAPON": "Weapon DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_OTHER": "Other DMG CRIT Rate Increase",
@@ -335,7 +339,9 @@
     "EULA_KOUKEN": "Lightfall Sword",
     "CYNO_BOLT": "Duststalker Bolt",
     "CYNO_Q": "Pactsworn Pathclearer (Normal)",
-    "NILOU_MOON": "Watery Moon"
+    "NILOU_MOON": "Watery Moon",
+    "NAHIDA_TRI_KARMA": "Tri-Karma Purification",
+    "LAYLA_SHOOTING_STAR": "Shooting Star"
   },
   "AUTO": {
     "CALC": "Calculate",

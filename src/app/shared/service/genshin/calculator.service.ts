@@ -36,6 +36,8 @@ export interface SpecialBuffMaxVal {
 export interface DamageParam {
   rate: number; //倍率
   base: string; //数値ベース
+  rateAttach: number[][]; //倍率
+  baseAttach: string[]; //数値ベース
   elementBonusType: string; //元素タイプ
   attackBonusType: string; //攻撃タイプ
   tag?: string; //タグ
@@ -1128,6 +1130,8 @@ export class CalculatorService {
     }
     let rate = param.rate;
     let base = param.base;
+    let rateAttach = param.rateAttach ?? [];
+    let baseAttach = param.baseAttach ?? [];
     let attackBonusType = param.attackBonusType;
     let elementBonusType = param.elementBonusType;
     let hasTag = param.tag != undefined;
@@ -1141,6 +1145,7 @@ export class CalculatorService {
     let dmgSectionValue = 0;
     //倍率
     finalRate += data[Const.PROP_DMG_RATE_UP_ALL];
+    // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ALL]));
     dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ALL];
     //--------------------
     //2.会心区域
@@ -1199,6 +1204,7 @@ export class CalculatorService {
     switch(elementBonusType){
       case Const.PROP_DMG_BONUS_CRYO:
         finalRate += data[Const.PROP_DMG_RATE_UP_CRYO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CRYO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CRYO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CRYO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CRYO];
@@ -1208,6 +1214,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_ANEMO:
         finalRate += data[Const.PROP_DMG_RATE_UP_ANEMO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ANEMO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ANEMO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ANEMO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ANEMO];
@@ -1217,6 +1224,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_PHYSICAL:
         finalRate += data[Const.PROP_DMG_RATE_UP_PHYSICAL];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PHYSICAL]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PHYSICAL];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PHYSICAL];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PHYSICAL];
@@ -1226,6 +1234,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_ELECTRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_ELECTRO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELECTRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELECTRO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELECTRO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELECTRO];
@@ -1235,6 +1244,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_GEO:
         finalRate += data[Const.PROP_DMG_RATE_UP_GEO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_GEO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_GEO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_GEO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_GEO];
@@ -1244,6 +1254,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_PYRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_PYRO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PYRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PYRO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PYRO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PYRO];
@@ -1253,6 +1264,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_HYDRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_HYDRO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_HYDRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_HYDRO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_HYDRO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_HYDRO];
@@ -1262,6 +1274,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_DENDRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_DENDRO];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_DENDRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_DENDRO];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_DENDRO];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_DENDRO];
@@ -1273,6 +1286,7 @@ export class CalculatorService {
     switch(attackBonusType){
       case Const.PROP_DMG_BONUS_NORMAL:
         finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_NORMAL]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL];
@@ -1280,6 +1294,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL + tag] ?? 0;
@@ -1288,6 +1303,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_CHARGED:
         finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CHARGED]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED];
@@ -1295,6 +1311,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED + tag] ?? 0;
@@ -1303,6 +1320,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_PLUNGING:
         finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PLUNGING]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING];
@@ -1310,6 +1328,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING + tag] ?? 0;
@@ -1318,6 +1337,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_SKILL:
         finalRate += data[Const.PROP_DMG_RATE_UP_SKILL];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_SKILL]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL];
@@ -1325,6 +1345,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL + tag] ?? 0;
@@ -1333,6 +1354,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
         finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST];
@@ -1340,6 +1362,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST + tag] ?? 0;
@@ -1348,6 +1371,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_WEAPON:
         finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_WEAPON]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_WEAPON];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_WEAPON];
@@ -1355,6 +1379,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_WEAPON + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_WEAPON + tag] ?? 0;
@@ -1363,6 +1388,7 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_BONUS_OTHER:
         finalRate += data[Const.PROP_DMG_RATE_UP_OTHER];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_OTHER]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER];
         finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_OTHER];
         finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_OTHER];
@@ -1370,6 +1396,7 @@ export class CalculatorService {
         //特別処理
         if(hasTag){
           finalRate += data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER + tag] ?? 0;
           finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_OTHER + tag] ?? 0;
           finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_OTHER + tag] ?? 0;
@@ -1388,6 +1415,33 @@ export class CalculatorService {
       case Const.PROP_DEFENSE:
         dmgSectionValue += finalRate * data[Const.PROP_DEFENSE];
         break;
+      case Const.PROP_ELEMENTAL_MASTERY:
+        dmgSectionValue += finalRate * data[Const.PROP_ELEMENTAL_MASTERY];
+        break;
+    }
+    for(let i = 0; i < rateAttach.length; ++i){
+      switch(baseAttach[i]){
+        case Const.PROP_ATTACK:
+          rateAttach[i].forEach((v)=>{
+            dmgSectionValue += v * data[Const.PROP_ATTACK];
+          })
+          break;
+        case Const.PROP_HP:
+          rateAttach[i].forEach((v)=>{
+            dmgSectionValue += v * data[Const.PROP_HP];
+          })
+          break;
+        case Const.PROP_DEFENSE:
+          rateAttach[i].forEach((v)=>{
+            dmgSectionValue += v * data[Const.PROP_DEFENSE];
+          })
+          break;
+        case Const.PROP_ELEMENTAL_MASTERY:
+          rateAttach[i].forEach((v)=>{
+            dmgSectionValue += v * data[Const.PROP_ELEMENTAL_MASTERY];
+          })
+          break;
+      }
     }
     //耐性区域残り
     if(dmgAntiSectionValue < 0){
@@ -1698,9 +1752,73 @@ export class CalculatorService {
       for(let info of infos){
         //全含め必要
         let damageInfo = info.damage;
+        let indexsAttach = damageInfo?.indexsAttach ?? [];
+        let tempRateInfo: CharSkill;
+        let rateAttach: number[][] = [];
+        switch(skill){
+          case Const.NAME_CONSTELLATION:
+            tempRateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
+            indexsAttach.forEach((valueIndexs)=>{
+              let temp:number[] = [];
+              valueIndexs.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_SKILLS_PROUD:
+            tempRateInfo = characterData!.skills.proudSkills[skillIndex as number];
+            indexsAttach.forEach((valueIndexs)=>{
+              let temp:number[] = [];
+              valueIndexs.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_SKILLS_OTHER:
+            tempRateInfo = characterData!.skills.other;
+            indexsAttach.forEach((valueIndexs)=>{
+              let temp:number[] = [];
+              valueIndexs.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_EFFECT:
+            indexsAttach.forEach((valueIndexs)=>{
+              let temp:number[] = [];
+              valueIndexs.forEach((valueIndex)=>{
+                temp.push(weaponData!.skillAffixMap[currentLevel].paramList[valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_SET:
+            indexsAttach.forEach((valueIndexs)=>{
+              let temp:number[] = [];
+              valueIndexs.forEach((valueIndex)=>{
+                temp.push(artifactSetData.setAffixs[1].paramList[valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          default:
+            tempRateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
+            indexsAttach.forEach((valueIndexs)=>{
+              let temp:number[] = [];
+              valueIndexs.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+        }
         if(damageInfo?.customValues){
           for(let value of damageInfo.customValues){
-            let base = damageInfo.base!;
+            let base = damageInfo.base!;     
+            let baseAttach = damageInfo.baseAttach!;
             let attackBonusType = damageInfo.attackBonusType!;
             let elementBonusType = damageInfo.elementBonusType!;
             let rate = value;
@@ -1726,6 +1844,8 @@ export class CalculatorService {
             params.push({
               base: base,
               rate: rate,
+              baseAttach: baseAttach,
+              rateAttach: rateAttach,
               attackBonusType: attackBonusType,
               elementBonusType: elementBonusType,
               tag: damageInfo.tag,
@@ -1773,6 +1893,7 @@ export class CalculatorService {
                 }
               }
               let base = damageInfo.base!;
+              let baseAttach = damageInfo.baseAttach!;
               let attackBonusType = damageInfo.attackBonusType!;
               let elementBonusType = damageInfo.elementBonusType!;
               if(damageInfo?.canOverride && overrideElement){
@@ -1781,6 +1902,8 @@ export class CalculatorService {
               params.push({
                 base: base,
                 rate: rate,
+                baseAttach: baseAttach,
+                rateAttach: rateAttach,
                 attackBonusType: attackBonusType,
                 elementBonusType: elementBonusType,
                 tag: damageInfo.tag,
@@ -2770,6 +2893,8 @@ export class CalculatorService {
               }else if(skillData.paramList){
                 maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
               }
+            }else if(buff?.maxValValue != undefined){
+              maxValConstIndexValue = buff.maxValValue;
             }
       
             if(unableSelf){

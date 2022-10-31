@@ -163,5 +163,11 @@
     },
     "坎蒂丝":{
         "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2022/09/22/d0226e61c64dbd14f3041775ceebb59a_6490657115701128356.png"
+    },
+    "妮露": {
+        "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2022/09/27/d978cf1ce85e372971bdcf6add639e8f_5385395843160526652.png"
+    },
+    "纳西妲": {
+        "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2022/10/24/fe684624008db25ac4b44ea4704f9ba0_4542359697614905341.png"
     }
 }

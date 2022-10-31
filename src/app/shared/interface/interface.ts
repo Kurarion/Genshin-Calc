@@ -73,11 +73,13 @@ export interface ExtraSkillDamage {
   originRelation?: TYPE_RELATION;
   //数値計算ベースインデックスリスト
   indexs?: number[];
+  indexsAttach?: number[][];
   //カスタマー倍率
   customValues?: number[];
   //----------------------
   //数値計算ベース
   base?: string;
+  baseAttach?: string[];
   //その他
   canOverride?: boolean; //元素オーバーライド可否
   elementBonusType?: string; //元素タイプ
@@ -119,6 +121,7 @@ export interface ExtraSkillBuff {
   maxValIndex?: number;
   maxValBase?: string;
   maxValConstIndex?: number;
+  maxValValue?: number;
   //スライダー
   sliderMax?: number;
   sliderMin?: number;
