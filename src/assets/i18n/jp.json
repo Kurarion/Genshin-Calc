@@ -352,6 +352,8 @@
     "AUTO_PROGRESS": "進行数",
     "DAMAGE_RATE": "ダメージ倍率",
     "DAMAGE_BASE": "ダメージベース",
+    "DAMAGE_RATE_ATTACH": "ダメージ倍率(追加)",
+    "DAMAGE_BASE_ATTACH": "ダメージベース(追加)",
     "ELEMENT_TYPE": "元素タイプボーナス",
     "ATTACK_TYPE": "攻撃タイプボーナス",
     "DAMAGE_TYPE": "最適するタイプ",

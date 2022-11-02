@@ -22,6 +22,8 @@ export interface ArtifactStorageInfo {
   circlet?: ArtifactStoragePartData;
   autoDamageRate?: number;
   autoDamageBase?: string;
+  autoDamageRateAttach?: number;
+  autoDamageBaseAttach?: string;
   autoElementType?: string;
   autoAttackType?: string;
   autoDamageType?: string;

@@ -1346,6 +1346,7 @@ export class Const {
     Const.PROP_HP,
     Const.PROP_ATTACK,
     Const.PROP_DEFENSE,
+    Const.PROP_ELEMENTAL_MASTERY,
   ]
 
   //最適化用元素タイプリスト
@@ -1493,6 +1494,10 @@ export class Const {
       Const.PORP_TAG_LAYLA_SHOOTING_STAR,
     ]],
   ])
+
+  static readonly PROPS_HAS_MIX_RATE: Set<string> = new Set([
+    "10000073",
+  ]);
 
   //*********************************
   //           原神データ

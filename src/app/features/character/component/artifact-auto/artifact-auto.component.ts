@@ -96,7 +96,7 @@ export class ArtifactAutoComponent implements OnInit {
   ]);
   readonly defaultPoint: number = 250;
 
-  readonly inputItems: InputItem[] = [
+  readonly inputItemsMix: InputItem[] = [
     {
       name: "DAMAGE_RATE",
       title: "DAMAGE_RATE",
@@ -115,6 +115,25 @@ export class ArtifactAutoComponent implements OnInit {
       optionTranslationTag: "PROPS.",
       model: "damageBase",
       onChange: this.setDamageBase.bind(this),
+    },
+    {
+      name: "DAMAGE_RATE_ATTACH",
+      title: "DAMAGE_RATE_ATTACH",
+      isInput: true,
+      isRequire: false,
+      model: "damageRateAttach",
+      onChange: this.setDamageRateAttach.bind(this),
+    },
+    {
+      name: "DAMAGE_BASE_ATTACH",
+      title: "DAMAGE_BASE_ATTACH",
+      isSelect: true,
+      isRequire: false,
+      hasEmpty: true,
+      selectListName: "damageBaseList",
+      optionTranslationTag: "PROPS.",
+      model: "damageBaseAttach",
+      onChange: this.setDamageBaseAttach.bind(this),
     },
     {
       name: "ELEMENT_TYPE",
@@ -172,6 +191,8 @@ export class ArtifactAutoComponent implements OnInit {
     },
   ]
 
+  readonly inputItems: InputItem[] = this.inputItemsMix.concat();
+
   readonly maxCritRate: number = 101;
   readonly minCritRate: number = 5;
   readonly initDamageRate: number = 50;
@@ -185,10 +206,14 @@ export class ArtifactAutoComponent implements OnInit {
   @Output('chipChanged') chipChangedForParent = new EventEmitter<void>();
   //データ
   data!: ArtifactStorageInfo;
+  //ミクスタイプ
+  isMixRate: boolean = false;
 
   userInput = new FormGroup({
     damageRate: new FormControl(0, [Validators.min(0.01), Validators.required]),//ダメージ倍率
     damageBase: new FormControl('', Validators.required),//ダメージベース
+    damageRateAttach: new FormControl(0, [Validators.min(0)]),//ダメージ倍率(追加)
+    damageBaseAttach: new FormControl(''),//ダメージベース(追加)
     elementType: new FormControl('', Validators.required),//元素タイプ
     attackType: new FormControl('', Validators.required),//攻撃タイプ
     damageType: new FormControl('', Validators.required),//ダメージタイプ
@@ -259,6 +284,9 @@ export class ArtifactAutoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.inputItems.splice(2,2);
+    //チェックミクス
+    this.isMixRate = Const.PROPS_HAS_MIX_RATE.has(this.characterIndex.toString());
     this.initList();
     this.initData();
   }
@@ -273,6 +301,8 @@ export class ArtifactAutoComponent implements OnInit {
     this.data = this.artifactService.getAllStorageInfo(this.characterIndex, this.index);
     this.userInput.get('damageRate')?.setValue((this.data.autoDamageRate ?? this.initDamageRate));
     this.userInput.get('damageBase')?.setValue(this.data.autoDamageBase ?? '');
+    this.userInput.get('damageRateAttach')?.setValue((this.data.autoDamageRateAttach ?? 0));
+    this.userInput.get('damageBaseAttach')?.setValue(this.data.autoDamageBaseAttach ?? '');
     this.userInput.get('elementType')?.setValue(this.data.autoElementType ?? '');
     this.userInput.get('attackType')?.setValue(this.data.autoAttackType ?? '');
     this.userInput.get('damageType')?.setValue(this.data.autoDamageType ?? '');
@@ -293,6 +323,7 @@ export class ArtifactAutoComponent implements OnInit {
 
   initList(){
     this.userInputList['damageBaseList'] = Const.PROPS_OPTIMAL_DAMAGE_BASE_LIST;
+    this.userInputList['damageBaseListAttach'] = Const.PROPS_OPTIMAL_DAMAGE_BASE_LIST;
     this.userInputList['elementTypeList'] = Const.PROPS_OPTIMAL_ELEMENT_TYPE_LIST;
     this.userInputList['attackTypeList'] = Const.PROPS_OPTIMAL_ATTACK_TYPE_LIST;
     this.userInputList['damageTypeList'] = [];
@@ -312,6 +343,20 @@ export class ArtifactAutoComponent implements OnInit {
       this.willNeedUpdate();
     }
     this.data.autoDamageBase = value;
+  }
+
+  setDamageRateAttach(value: number){
+    if(value != this.data.autoDamageRateAttach){
+      this.willNeedUpdate();
+    }
+    this.data.autoDamageRateAttach = value;
+  }
+
+  setDamageBaseAttach(value: string){
+    if(value != this.data.autoDamageBaseAttach){
+      this.willNeedUpdate();
+    }
+    this.data.autoDamageBaseAttach = value;
   }
 
   setElementType(value: string){
@@ -458,6 +503,12 @@ export class ArtifactAutoComponent implements OnInit {
           elementBonusType: this.userInput.get('elementType')!.value as string,
           attackBonusType: this.userInput.get('attackType')!.value as string,
           tag: this.userInput.get('damageTag')!.value as string ?? undefined,
+        }
+        if(this.isMixRate){
+          if(this.userInput.get('damageRateAttach')!.value !== 0 && this.userInput.get('damageBase')!.value !== ''){
+            param.rateAttach = [[this.userInput.get('damageRateAttach')!.value as number / 100]];
+            param.baseAttach = [this.userInput.get('damageBaseAttach')!.value as string];
+          }
         }
         let calcResult: DamageResult;
         let actualEffectSet = new Set();

@@ -32,7 +32,7 @@
                 </div>
             </td>
         </tr>
-        <ng-container *ngFor="let item of inputItems">
+        <ng-container *ngFor="let item of (isMixRate?inputItemsMix:inputItems)">
             <tr *ngIf="item.isSelect?(userInputList[item.selectListName!].length > 0):true">
                 <td class="left">
                     <span [innerText]="'AUTO.' + item.name | translate"></span>
