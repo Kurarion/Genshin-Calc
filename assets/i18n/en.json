@@ -352,6 +352,8 @@
     "AUTO_PROGRESS": "Step of Progress",
     "DAMAGE_RATE": "Damage Rate",
     "DAMAGE_BASE": "Damage Base",
+    "DAMAGE_RATE_ATTACH": "Damage Rate (Addition)",
+    "DAMAGE_BASE_ATTACH": "Damage Base (Addition)",
     "ELEMENT_TYPE": "Element Type Bonus",
     "ATTACK_TYPE": "Attack Type Bonus",
     "DAMAGE_TYPE": "Target Damage Type",

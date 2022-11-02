@@ -352,6 +352,8 @@
     "AUTO_PROGRESS": "词条数",
     "DAMAGE_RATE": "伤害倍率",
     "DAMAGE_BASE": "伤害基础",
+    "DAMAGE_RATE_ATTACH": "伤害倍率(附加)",
+    "DAMAGE_BASE_ATTACH": "伤害基础(附加)",
     "ELEMENT_TYPE": "元素类型加成",
     "ATTACK_TYPE": "攻击类型加成",
     "DAMAGE_TYPE": "最优伤害类型",
