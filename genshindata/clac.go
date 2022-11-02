@@ -161,7 +161,7 @@ const (
 	genshinMaxEmptySkillDesc = 2
 )
 
-func Generate(targetDir string, localResPath string) {
+func Generate(targetDir string, localResPath string, resURL string) {
 	//文件完整路径
 	var (
 		pathDir = targetDir
@@ -176,30 +176,30 @@ func Generate(targetDir string, localResPath string) {
 	)
 	//下载URL初始化
 	dataJSONURLMap = map[string]string{
-		indexAvatarExcelConfig:              RepositoryURL + AvatarExcelConfigData,
-		indexAvatarCurveExcelConfig:         RepositoryURL + AvatarCurveExcelConfigData,
-		indexAvatarPromoteExcelConfig:       RepositoryURL + AvatarPromoteExcelConfigData,
-		indexWeaponExcelConfig:              RepositoryURL + WeaponExcelConfigData,
-		indexWeaponCurveExcelConfig:         RepositoryURL + WeaponCurveExcelConfigData,
-		indexWeaponPromoteExcelConfig:       RepositoryURL + WeaponPromoteExcelConfigData,
-		indexEquipAffixExcelConfig:          RepositoryURL + EquipAffixExcelConfigData,
-		indexReliquaryExcelConfigData:       RepositoryURL + ReliquaryExcelConfigData,
-		indexReliquaryAffixExcelConfig:      RepositoryURL + ReliquaryAffixExcelConfigData,
-		indexReliquaryLevelExcelConfig:      RepositoryURL + ReliquaryLevelExcelConfigData,
-		indexReliquarySetExcelConfig:        RepositoryURL + ReliquarySetExcelConfigData,
-		indexReliquaryCodexExcelConfig:      RepositoryURL + ReliquaryCodexExcelConfigData,
-		indexMonsterExcelConfig:             RepositoryURL + MonsterExcelConfigData,
-		indexMonsterDescribeExcelConfigData: RepositoryURL + MonsterDescribeExcelConfigData,
-		indexMonsterTitleExcelConfigData:    RepositoryURL + MonsterTitleExcelConfigData,
-		indexMonsterCurveExcelConfig:        RepositoryURL + MonsterCurveExcelConfigData,
-		indexAvatarSkillDepotExcelConfig:    RepositoryURL + AvatarSkillDepotExcelConfigData,
-		indexAvatarSkillExcelConfig:         RepositoryURL + AvatarSkillExcelConfigData,
-		indexProudSkillExcelConfig:          RepositoryURL + ProudSkillExcelConfigData,
-		indexAvatarTalentExcelConfig:        RepositoryURL + AvatarTalentExcelConfigData,
-		indexTextMapCHSFile:                 RepositoryURL + TextMapDataCHS,
-		indexTextMapCHTFile:                 RepositoryURL + TextMapDataCHT,
-		indexTextMapENFile:                  RepositoryURL + TextMapDataEN,
-		indexTextMapJPFile:                  RepositoryURL + TextMapDataJP,
+		indexAvatarExcelConfig:              resURL + AvatarExcelConfigData,
+		indexAvatarCurveExcelConfig:         resURL + AvatarCurveExcelConfigData,
+		indexAvatarPromoteExcelConfig:       resURL + AvatarPromoteExcelConfigData,
+		indexWeaponExcelConfig:              resURL + WeaponExcelConfigData,
+		indexWeaponCurveExcelConfig:         resURL + WeaponCurveExcelConfigData,
+		indexWeaponPromoteExcelConfig:       resURL + WeaponPromoteExcelConfigData,
+		indexEquipAffixExcelConfig:          resURL + EquipAffixExcelConfigData,
+		indexReliquaryExcelConfigData:       resURL + ReliquaryExcelConfigData,
+		indexReliquaryAffixExcelConfig:      resURL + ReliquaryAffixExcelConfigData,
+		indexReliquaryLevelExcelConfig:      resURL + ReliquaryLevelExcelConfigData,
+		indexReliquarySetExcelConfig:        resURL + ReliquarySetExcelConfigData,
+		indexReliquaryCodexExcelConfig:      resURL + ReliquaryCodexExcelConfigData,
+		indexMonsterExcelConfig:             resURL + MonsterExcelConfigData,
+		indexMonsterDescribeExcelConfigData: resURL + MonsterDescribeExcelConfigData,
+		indexMonsterTitleExcelConfigData:    resURL + MonsterTitleExcelConfigData,
+		indexMonsterCurveExcelConfig:        resURL + MonsterCurveExcelConfigData,
+		indexAvatarSkillDepotExcelConfig:    resURL + AvatarSkillDepotExcelConfigData,
+		indexAvatarSkillExcelConfig:         resURL + AvatarSkillExcelConfigData,
+		indexProudSkillExcelConfig:          resURL + ProudSkillExcelConfigData,
+		indexAvatarTalentExcelConfig:        resURL + AvatarTalentExcelConfigData,
+		indexTextMapCHSFile:                 resURL + TextMapDataCHS,
+		indexTextMapCHTFile:                 resURL + TextMapDataCHT,
+		indexTextMapENFile:                  resURL + TextMapDataEN,
+		indexTextMapJPFile:                  resURL + TextMapDataJP,
 	}
 	//文件列表初始化
 	dataFileMap = map[string]FILEINFO{
@@ -238,13 +238,13 @@ func Generate(targetDir string, localResPath string) {
 	dataReliquaryMainMap = make(map[string]float64)
 
 	//初始化
-	err := initialize(localResPath)
+	err := initialize(localResPath, resURL)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
-func initialize(localResPath string) (err error) {
+func initialize(localResPath string, resURL string) (err error) {
 	//检查目录是否存在
 	for _, v := range dataFileMap {
 		if v.class == typeDir {
@@ -263,18 +263,18 @@ func initialize(localResPath string) (err error) {
 		return err
 	}
 
-	return getDataFromRepository(localResPath)
+	return getDataFromRepository(localResPath, resURL)
 }
 
 //更新
-func update(localResPath string) error {
+func update(localResPath string, resURL string) error {
 	//仓库JSON文件缓存
 	repositoryJSON := make(map[string]*bytes.Buffer)
 	for i, v := range dataJSONURLMap {
 		var temp *bytes.Buffer
 		var err error
 		if len(localResPath) > 0 {
-			temp, err = getLocalJSON(strings.Replace(v, RepositoryURL, localResPath, -1))
+			temp, err = getLocalJSON(strings.Replace(v, resURL, localResPath, -1))
 		} else {
 			temp, err = getJSON(v)
 		}
@@ -1003,8 +1003,8 @@ func saveResult() error {
 }
 
 //获取最新数据
-func getDataFromRepository(localResPath string) error {
-	err := update(localResPath)
+func getDataFromRepository(localResPath string, resURL string) error {
+	err := update(localResPath, resURL)
 	if err != nil {
 		return err
 	}

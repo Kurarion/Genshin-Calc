@@ -95,7 +95,6 @@ const (
 
 //文件信息
 const (
-	RepositoryURL = `https://raw.githubusercontent.com/Dimbreath/GenshinData/master`
 	//人物定义
 	AvatarExcelConfigData = "/ExcelBinOutput/AvatarExcelConfigData.json"
 	//人物基础升级提升值(对应)
