@@ -174,10 +174,10 @@ export class EnkaService {
       }
     }
 
-    this.characterService.setLevel(avatarId, level);
-    this.characterService.setNormalLevel(avatarId, normalLevelNumber.toString());
-    this.characterService.setSkillLevel(avatarId, skillLevelNumber.toString());
-    this.characterService.setElementalBurstLevel(avatarId, elementalBurstLevelNumber.toString());
+    this.characterService.setLevel(avatarId, level.padStart(2,"0"));
+    this.characterService.setNormalLevel(avatarId, normalLevelNumber.toString().padStart(2,"0"));
+    this.characterService.setSkillLevel(avatarId, skillLevelNumber.toString().padStart(2,"0"));
+    this.characterService.setElementalBurstLevel(avatarId, elementalBurstLevelNumber.toString().padStart(2,"0"));
     if(this.characterService.getExtraData(avatarId) == undefined){
       this.characterService.setDefaultExtraData(avatarId, true);
     }
