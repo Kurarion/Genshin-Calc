@@ -37,6 +37,8 @@ export class HeadComponent implements OnInit {
   progressValue!: Observable<number>;
   progressBufferValue!: Observable<number>;
 
+  installPop: any = null;
+
   constructor(
     private translate: TranslateService,
     private globalProgressService: GlobalProgressService,
@@ -45,6 +47,10 @@ export class HeadComponent implements OnInit {
     this.progressMode = this.globalProgressService.getMode();
     this.progressValue = this.globalProgressService.getValue();
     this.progressBufferValue = this.globalProgressService.getBufferValue();
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      this.installPop = e;
+    });
   }
 
   ngOnInit() {}
@@ -62,5 +68,17 @@ export class HeadComponent implements OnInit {
   onClickLang(selected: LangInfo) {
     this.langSelectEvent.emit(selected);
   }
-  
+
+  /**
+   * PWAインストール
+   */
+  async install(){
+    if (this.installPop !== null) {
+      this.installPop.prompt();
+      const { outcome } = await this.installPop.userChoice;
+      if (outcome === 'accepted') {
+          this.installPop = null;
+      }
+    }
+  }
 }

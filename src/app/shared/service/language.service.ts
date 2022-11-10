@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, Subject, switchMap, tap } from 'rxjs';
-import { Const, LangInfo, OcrService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { Const, LangInfo, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

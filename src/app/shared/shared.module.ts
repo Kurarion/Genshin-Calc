@@ -4,8 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CaptureHtmlComponent } from './component/capture-html/capture-html.component';
-import { PasteEventListenerComponent } from './component/paste-event-listener/paste-event-listener.component';
 import { ExtraDataComponent } from './component/extra-data/extra-data.component';
 import { EnkaComponent } from './component/enka/enka.component';
 import { MatFilteringSelectorComponent } from './component/mat-filtering-selector/mat-filtering-selector.component';
@@ -20,7 +18,6 @@ export { RatePipe } from './pipe/rate.pipe';
 export { TruncatePipe } from './pipe/truncate.pipe';
 
 export { GlobalProgressService } from './service/global-progress.service';
-export { OcrService } from './service/ocr.service';
 export { CharacterStorageInfo, CharacterService } from './service/genshin/character.service';
 export { WeaponStorageInfo, WeaponService } from './service/genshin/weapon.service';
 export { EnemyStorageInfo, EnemyService } from './service/genshin/enemy.service';
@@ -47,8 +44,6 @@ export * from './class/enka';
 export * from './class/expansionPanelCommon';
 
 let shardList: any[] = [
-  CaptureHtmlComponent,
-  PasteEventListenerComponent,
   ExtraDataComponent,
   EnkaComponent,
   MatFilteringSelectorComponent,

@@ -41,5 +41,9 @@
 } */
 
 .github {
-  transform: scale(0.9);
+  transform: scale(0.9) translateY(-1px);
+}
+
+.download {
+  transform: scale(1.16);
 }

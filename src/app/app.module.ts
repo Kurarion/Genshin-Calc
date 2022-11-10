@@ -8,7 +8,6 @@ import { AngularMaterialModule } from './angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { CookieService } from 'ngx-cookie-service';
 
 import { SharedModule, GenshinDataService } from 'src/app/shared/shared.module';
 
@@ -19,6 +18,7 @@ import { HeadComponent } from './root/head/head.component';
 import { FooterComponent } from './root/footer/footer.component';
 import { environment } from '../environments/environment';
 import { lastValueFrom, tap } from 'rxjs';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -117,6 +117,12 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
       },
     }),
     SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 15 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:15000'
+    }),
   ],
   declarations: [
     AppComponent,
@@ -125,7 +131,7 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
     HeadComponent,
     FooterComponent,
   ],
-  providers: [Title, CookieService,
+  providers: [Title,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeAppFactory,
