@@ -1,0 +1,135 @@
+{
+  "configVersion": 1,
+  "timestamp": 1668080169605,
+  "index": "/Genshin-Calc/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/Genshin-Calc/450.1dd1fd103bb82cd7.js",
+        "/Genshin-Calc/index.html",
+        "/Genshin-Calc/main.a68b52db64da96d7.js",
+        "/Genshin-Calc/manifest.webmanifest",
+        "/Genshin-Calc/polyfills.8f05805eff00e6f9.js",
+        "/Genshin-Calc/runtime.d5aa80129413fa46.js",
+        "/Genshin-Calc/styles.79b995a053c5847d.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/Genshin-Calc/assets/genshin/avatar_map.json",
+        "/Genshin-Calc/assets/genshin/monster_map.json",
+        "/Genshin-Calc/assets/genshin/reliquary_affix_map.json",
+        "/Genshin-Calc/assets/genshin/reliquary_main_map.json",
+        "/Genshin-Calc/assets/genshin/reliquary_set_map.json",
+        "/Genshin-Calc/assets/genshin/weapon_map.json",
+        "/Genshin-Calc/assets/i18n/cn_sim.json",
+        "/Genshin-Calc/assets/i18n/cn_tra.json",
+        "/Genshin-Calc/assets/i18n/en.json",
+        "/Genshin-Calc/assets/i18n/jp.json",
+        "/Genshin-Calc/assets/icons/icon-128x128.png",
+        "/Genshin-Calc/assets/icons/icon-144x144.png",
+        "/Genshin-Calc/assets/icons/icon-152x152.png",
+        "/Genshin-Calc/assets/icons/icon-192x192.png",
+        "/Genshin-Calc/assets/icons/icon-384x384.png",
+        "/Genshin-Calc/assets/icons/icon-512x512.png",
+        "/Genshin-Calc/assets/icons/icon-72x72.png",
+        "/Genshin-Calc/assets/icons/icon-96x96.png",
+        "/Genshin-Calc/assets/icons/shicon.woff",
+        "/Genshin-Calc/assets/init/chip.json",
+        "/Genshin-Calc/assets/init/data.json",
+        "/Genshin-Calc/assets/init/homePageBG-compress.png",
+        "/Genshin-Calc/assets/init/homePageBG.png",
+        "/Genshin-Calc/favicon.png",
+        "/Genshin-Calc/material-icons-outlined.78a93b2079680a08.woff",
+        "/Genshin-Calc/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "/Genshin-Calc/material-icons-round.92dc7ca2f4c591e7.woff",
+        "/Genshin-Calc/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "/Genshin-Calc/material-icons-sharp.3885863ee4746422.woff2",
+        "/Genshin-Calc/material-icons-sharp.a71cb2bf66c604de.woff",
+        "/Genshin-Calc/material-icons-two-tone.588d63134de807a7.woff",
+        "/Genshin-Calc/material-icons-two-tone.675bd578bd14533e.woff2",
+        "/Genshin-Calc/material-icons.4ad034d2c499d9b6.woff",
+        "/Genshin-Calc/material-icons.59322316b3fd6063.woff2",
+        "/Genshin-Calc/shicon.df0059da74258bd2.woff"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/Genshin-Calc/450.1dd1fd103bb82cd7.js": "cfae76dfcee391937114c4d202f09b3b6807a1b4",
+    "/Genshin-Calc/assets/genshin/avatar_map.json": "0732f846c3629420bb17cdaf94892825b942f465",
+    "/Genshin-Calc/assets/genshin/monster_map.json": "1d683a9467fb736c9355b9d88982cbc669b3859a",
+    "/Genshin-Calc/assets/genshin/reliquary_affix_map.json": "e34770f4b995275ca78836d5f0d0d3bb37a0d7f9",
+    "/Genshin-Calc/assets/genshin/reliquary_main_map.json": "ebf940e534d70b7949fef454f3bbc552216f9a64",
+    "/Genshin-Calc/assets/genshin/reliquary_set_map.json": "eadea5bacfb96a70080eb2ae8af473cd8d0a5bf8",
+    "/Genshin-Calc/assets/genshin/weapon_map.json": "ebd3eecd7ad4e6b88d810598978c3c77b361e371",
+    "/Genshin-Calc/assets/i18n/cn_sim.json": "3e425490c6e8db4c3a7f20fc30786daec66983aa",
+    "/Genshin-Calc/assets/i18n/cn_tra.json": "97b2f40d6d0346a131877c57913a27ad0c9fa96d",
+    "/Genshin-Calc/assets/i18n/en.json": "f1de98a25489c2d299c974cce95f4fa6b6f9cbd5",
+    "/Genshin-Calc/assets/i18n/jp.json": "c927971492e8ccd3fb33c4e6295c445623518626",
+    "/Genshin-Calc/assets/icons/icon-128x128.png": "edbcc8eb1ca6288569c312821af435d77f573697",
+    "/Genshin-Calc/assets/icons/icon-144x144.png": "1fbf44e42e71c7074f4c1174fcbb60ae5ae6ae4f",
+    "/Genshin-Calc/assets/icons/icon-152x152.png": "3976c5f1ee777bd31c1c738fea3d0f8a207d6a75",
+    "/Genshin-Calc/assets/icons/icon-192x192.png": "f67a2315d6e47c892b3cd66a87cb696da1e8d35c",
+    "/Genshin-Calc/assets/icons/icon-384x384.png": "9e8a4b14033619478fb1ed9bb713e6c3c9f7a87a",
+    "/Genshin-Calc/assets/icons/icon-512x512.png": "7524aae62a467fc25ddaeabded7276ed0d066e04",
+    "/Genshin-Calc/assets/icons/icon-72x72.png": "46da4a36418bf2b171980490700a905f63dcdbe7",
+    "/Genshin-Calc/assets/icons/icon-96x96.png": "276415944153b909bda94d31ffe23065e3e4c909",
+    "/Genshin-Calc/assets/icons/shicon.woff": "07e4bf302541a5d45ad7d9b4261b036c4cf3cb1c",
+    "/Genshin-Calc/assets/init/chip.json": "596c4bdd5e36be00985cec9a8d9e585ef883e486",
+    "/Genshin-Calc/assets/init/data.json": "754ba93c716f72d50e21ebbffe44bb03e7da9cad",
+    "/Genshin-Calc/assets/init/homePageBG-compress.png": "43c55584dff11233beb0e8fdf5ebdcc203eae1ba",
+    "/Genshin-Calc/assets/init/homePageBG.png": "f82ff2be29908c173dad62c452a367449f46aaec",
+    "/Genshin-Calc/favicon.png": "704c1520e560432a245ae718b41b6f4510aa79d4",
+    "/Genshin-Calc/index.html": "6f133ecdcea3924ba5b310cc62df34d29ccae586",
+    "/Genshin-Calc/main.a68b52db64da96d7.js": "cf636eaec63b36073e6da0210ca64dcbf43f5528",
+    "/Genshin-Calc/manifest.webmanifest": "ef7147618a724fbb7bd424db95941ede253b4004",
+    "/Genshin-Calc/material-icons-outlined.78a93b2079680a08.woff": "b52ccd8fca4199d257b2a9fe377db29862f2853e",
+    "/Genshin-Calc/material-icons-outlined.f86cb7b0aa53f0fe.woff2": "2f9e28ab559782402f27332633c843c40209d95a",
+    "/Genshin-Calc/material-icons-round.92dc7ca2f4c591e7.woff": "c41bfee3f01218e18d53f4f4cac00f385ac9fbb1",
+    "/Genshin-Calc/material-icons-round.b10ec9db5b7fbc74.woff2": "abe05e0641f1050fbe00ef0dbb10c5ea72c26cff",
+    "/Genshin-Calc/material-icons-sharp.3885863ee4746422.woff2": "cf1c7b4d066d18af44cf7bc664dd2e46652a3a30",
+    "/Genshin-Calc/material-icons-sharp.a71cb2bf66c604de.woff": "829cb48cb2dd17ae5e425b82dc186eb670694a10",
+    "/Genshin-Calc/material-icons-two-tone.588d63134de807a7.woff": "02225d888afe4eebc7312b7432878dc8aef1f50f",
+    "/Genshin-Calc/material-icons-two-tone.675bd578bd14533e.woff2": "296ff0bff395a77c2e33e7e31fffe73980bd93cf",
+    "/Genshin-Calc/material-icons.4ad034d2c499d9b6.woff": "e4bb7c1e40d3febee58df963db276b2bf68c117b",
+    "/Genshin-Calc/material-icons.59322316b3fd6063.woff2": "0bc0c675480d94ec7e8609dda6227f88c5d08d2c",
+    "/Genshin-Calc/polyfills.8f05805eff00e6f9.js": "435f6cdc658953fc2e93eddd20c009341996320b",
+    "/Genshin-Calc/runtime.d5aa80129413fa46.js": "e172507e24d548bac80c64c7c55db5ac7f568fa1",
+    "/Genshin-Calc/shicon.df0059da74258bd2.woff": "07e4bf302541a5d45ad7d9b4261b036c4cf3cb1c",
+    "/Genshin-Calc/styles.79b995a053c5847d.css": "04a52738deacb8574b7849a7998e4771b32ff298"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
