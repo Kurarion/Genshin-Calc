@@ -46,4 +46,5 @@
 
 .download {
   transform: scale(1.16);
+  overflow: hidden;
 }

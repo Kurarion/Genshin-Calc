@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   ElementRef,
@@ -17,6 +18,20 @@ import { environment } from 'src/environments/environment';
   selector: 'app-head',
   templateUrl: './head.component.html',
   styleUrls: ['./head.component.css'],
+  animations: [
+    trigger('download',[
+      state('hidden', style({
+        width: '0',
+        visibility: 'hidden',
+      })),
+      state('show', style({
+        visibility: 'visible',
+      })),
+      transition('hidden <=> show',[
+        animate('0.5s')
+      ])
+    ])
+  ]
 })
 export class HeadComponent implements OnInit {
   readonly githubRepository = environment.githubRepository;
@@ -37,7 +52,11 @@ export class HeadComponent implements OnInit {
   progressValue!: Observable<number>;
   progressBufferValue!: Observable<number>;
 
-  installPop: any = null;
+  showDownload!: boolean;
+  private getInstallPop = ()=>{
+    // @ts-ignore
+    return window.installPop;
+  }
 
   constructor(
     private translate: TranslateService,
@@ -48,12 +67,19 @@ export class HeadComponent implements OnInit {
     this.progressValue = this.globalProgressService.getValue();
     this.progressBufferValue = this.globalProgressService.getBufferValue();
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-      this.installPop = e;
-    });
+    // @ts-ignore
+    window.installPopCallBack = ()=>{
+      this.setShowDownload();
+    }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setShowDownload();
+  }
+
+  setShowDownload(){
+    this.showDownload = this.getInstallPop() !== null && this.getInstallPop() !== undefined;
+  }
 
   /**
    * メニューボタンクリックイベント
@@ -73,11 +99,11 @@ export class HeadComponent implements OnInit {
    * PWAインストール
    */
   async install(){
-    if (this.installPop !== null) {
-      this.installPop.prompt();
-      const { outcome } = await this.installPop.userChoice;
+    if (this.getInstallPop() !== null && this.showDownload !== false) {
+      this.getInstallPop().prompt();
+      const { outcome } = await this.getInstallPop().userChoice;
       if (outcome === 'accepted') {
-          this.installPop = null;
+        this.showDownload = false;
       }
     }
   }

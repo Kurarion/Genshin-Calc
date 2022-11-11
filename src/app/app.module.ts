@@ -121,7 +121,7 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 15 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:15000'
+      registrationStrategy: 'registerWhenStable:1000'
     }),
   ],
   declarations: [

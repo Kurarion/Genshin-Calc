@@ -25,7 +25,7 @@
       </button>
     </ng-container>
   </mat-menu>
-  <a *ngIf="installPop!=null" mat-icon-button class="download" (click)="install()">
+  <a [@download]="showDownload?'show':'hidden'" mat-icon-button class="download" (click)="install()">
     <mat-icon>download</mat-icon>
   </a>
   <a mat-icon-button [href]="githubRepository" target="_blank">
