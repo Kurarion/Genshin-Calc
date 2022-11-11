@@ -6,7 +6,6 @@ import { Observable, Subject } from 'rxjs';
 })
 export class RelayoutMsgService {
 
-  //使用中の言語
   private relayoutMsg: Subject<string> = new Subject<string>();
   private relayoutMsg$: Observable<string> = this.relayoutMsg.asObservable();
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, Subject, switchMap, tap } from 'rxjs';
-import { Const, LangInfo, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { Const, LangInfo, RelayoutMsgService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -23,7 +23,8 @@ export class LanguageService {
   constructor(private translateService: TranslateService,
     private storageService: StorageService,
     //private ocrService: OcrService,
-    private titleService: Title) {
+    private titleService: Title,
+    private relayoutMsgService: RelayoutMsgService) {
     //言語設定
     this.translateService.addLangs(LanguageService.langCodes);
     //言語変更監視
@@ -81,6 +82,8 @@ export class LanguageService {
           // );
           //ストレージに保存
           this.setStorageLang(langCode);
+          //レイアウト更新
+          this.relayoutMsgService.update("langChange");
 
           return langCode;
         })
