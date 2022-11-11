@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1668080169605,
+  "timestamp": 1668151207292,
   "index": "/Genshin-Calc/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/Genshin-Calc/450.1dd1fd103bb82cd7.js",
         "/Genshin-Calc/index.html",
-        "/Genshin-Calc/main.a68b52db64da96d7.js",
+        "/Genshin-Calc/main.1bc295acbf369ca6.js",
         "/Genshin-Calc/manifest.webmanifest",
         "/Genshin-Calc/polyfills.8f05805eff00e6f9.js",
         "/Genshin-Calc/runtime.d5aa80129413fa46.js",
@@ -23,7 +23,7 @@
     },
     {
       "name": "assets",
-      "installMode": "lazy",
+      "installMode": "prefetch",
       "updateMode": "prefetch",
       "cacheQueryOptions": {
         "ignoreVary": true
@@ -95,9 +95,9 @@
     "/Genshin-Calc/assets/init/homePageBG-compress.png": "43c55584dff11233beb0e8fdf5ebdcc203eae1ba",
     "/Genshin-Calc/assets/init/homePageBG.png": "f82ff2be29908c173dad62c452a367449f46aaec",
     "/Genshin-Calc/favicon.png": "704c1520e560432a245ae718b41b6f4510aa79d4",
-    "/Genshin-Calc/index.html": "6f133ecdcea3924ba5b310cc62df34d29ccae586",
-    "/Genshin-Calc/main.a68b52db64da96d7.js": "cf636eaec63b36073e6da0210ca64dcbf43f5528",
-    "/Genshin-Calc/manifest.webmanifest": "ef7147618a724fbb7bd424db95941ede253b4004",
+    "/Genshin-Calc/index.html": "5980def84f6bd81379784b75fce1b4cc402cd40a",
+    "/Genshin-Calc/main.1bc295acbf369ca6.js": "42294aca1ff9a3c675df86aef17e6618a1f242b9",
+    "/Genshin-Calc/manifest.webmanifest": "33f63823495a21d85795c526e0e4711fec2cc06d",
     "/Genshin-Calc/material-icons-outlined.78a93b2079680a08.woff": "b52ccd8fca4199d257b2a9fe377db29862f2853e",
     "/Genshin-Calc/material-icons-outlined.f86cb7b0aa53f0fe.woff2": "2f9e28ab559782402f27332633c843c40209d95a",
     "/Genshin-Calc/material-icons-round.92dc7ca2f4c591e7.woff": "c41bfee3f01218e18d53f4f4cac00f385ac9fbb1",
