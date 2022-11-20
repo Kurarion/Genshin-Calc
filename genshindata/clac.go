@@ -9,8 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-
-	gocc "github.com/liuzl/gocc"
+	// gocc "github.com/liuzl/gocc"
 )
 
 const (
@@ -31,7 +30,7 @@ const (
 
 var (
 	sysLanguage = []string{languageCHS, languageCHT, languageEN, languageJP}
-	t2s         *gocc.OpenCC
+	// t2s         *gocc.OpenCC
 )
 
 var (
@@ -257,11 +256,11 @@ func initialize(localResPath string, resURL string) (err error) {
 			}
 		}
 	}
-	//繁简转换初始化
-	t2s, err = gocc.New("t2s")
-	if err != nil {
-		return err
-	}
+	// //繁简转换初始化
+	// t2s, err = gocc.New("t2s")
+	// if err != nil {
+	// 	return err
+	// }
 
 	return getDataFromRepository(localResPath, resURL)
 }
@@ -1082,10 +1081,11 @@ func getRegxTextsFromHash(hashs []uint64, textMap map[string]map[uint64]string, 
 
 //繁体转换
 func tTos(in string) (out string) {
-	out, err := t2s.Convert(in)
-	if err != nil {
-		return ""
-	}
+	// out, err := t2s.Convert(in)
+	// if err != nil {
+	// 	return ""
+	// }
+	out = in
 	return
 }
 

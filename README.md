@@ -15,7 +15,7 @@
 + Genshin Impact damage calculation
 
 ## Try it
-+  <a href=" https://genshin-calc.sirokuma.cc/ " target="_ Blank ">Cloud Genshin Impact</a>
++  <a href="https://genshin-calc.sirokuma.cc/" target="_blank">Cloud Genshin Impact</a>
 
 ## Usage
 
