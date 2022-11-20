@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "serve": "http-server -p 8080 dist/gscal -o",
     "generateGenshinData": "go run GenshinData",
     "deployGitPage": "ng deploy --repo=https://github.com/Kurarion/Genshin-Calc.git --base-href=/Genshin-Calc/ --branch=website"
   },

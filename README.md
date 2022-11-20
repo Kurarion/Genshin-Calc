@@ -4,92 +4,93 @@
 <p>
 
 
-## 介绍
+<p align="center">
+    English | 
+    <a href="./README_CH_SIM.md">简体中文</a> | 
+    <a href="./README_CH_TRA.md">繁體中文</a> | 
+    <a href="./README_JP.md">日本語</a>
+<p>
 
-+ 原神伤害计算
+## Introduction
++ Genshin Impact damage calculation
 
-## 食用地址
+## Try it
++  <a href=" https://genshin-calc.sirokuma.cc/ " target="_ Blank ">Cloud Genshin Impact</a>
 
-+ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">云原神</a> 或者 <a href="https://kurarion.github.io/Genshin-Calc/" target="_blank">Github Page</a> 
-
-## 使用方法
+## Usage
 
 <details>
-    <summary>点击查看简单说明</summary>
-    <img src="./doc/example_ch_sim_1.png">
-    <br>
-    <img src="./doc/example_ch_sim_2.png">
-    <br>
-    <img src="./doc/example_ch_sim_3.png">
+<summary>Click to view a brief description</summary>
+<img src="./doc/example_en_1.png">
+<br>
+<img src="./doc/example_en_2.png">
+<br>
+<img src="./doc/example_en_3.png">
 </details>
 
-## 注意事项
+## Description
+■ About character
++ All talent BUFFs are closed by default
++ All constellation BUFFs are closed by default
 
-■关于角色 
+■ About weapon
++ Only weapons of 3 stars and above have been entered
++ The weapon effect BUFFs are closed by default
 
-+ 角色天赋可控制BUFF默认关闭状态
-+ 角色命座所有BUFF默认关闭状态
+■ About artifact
++ The artifact BUFFs are closed by default
++ Only support level 20 5-star artifact
++ There is no upper limit on the number of user-defined sets of artifact, but when importing data through Enka, if there are more than 10 sets, the last set will be automatically replaced as Enka data
 
-■关于武器
+■ About automatic calculation of artifact
++ A step is defined as the maximum value of each increase (for example, the critical rate is 3.9%)
++ Be sure to check whether the BUFF which can override element is on before calculating (if you are calculating the override element damage)
++ The calculation is under the current environment, when any attribute or BUFF related to target calculation other than the number of step changes, it needs to be recalculated (such as the switch of weapon smelting or related BUFF on/off)
++ The automatic calculation does not consider the increase of value (attack value, HP value, defense value)
 
-+ 仅录入了3星及其以上的武器
-+ 武器效果可控制BUFF默认关闭状态
+■ About artifact labels (growth/rarity)
++ The value of the growth/rarity tag can not evaluate the quality of a artifact very well, but simply evaluate the rarity of a artifact
++ Growth is non-linear, involving the difference between the growth value and growth times each increase, rather than the linear value of the final entry value. The larger the growth value and the more growth times, the higher the growth tag value, which means the closer to the King of XX (for example, the King of Defense)
++ The rarity is the sum of all growth, which means the difficulty of obtaining the artifact (the higher the value, the rarer), but it does not mean that the artifact are effective rare
 
-■关于圣遗物
+## Other
+■ About auto save
++ All user data uses the browser's LocalStorage technology, which temporarily does not support automatic cleaning
 
-+ 圣遗物四件套可控制BUFF默认关闭状态
-+ 圣遗物仅支持20级5星圣遗物
-+ 圣遗物用户自定义套装无数量上限，但通过Enka导入的数据时，如已超过10个则将自动替换最后一套设置为Enka数据
+■ About enemy
++ May contain duplicate enemies
 
-■关于圣遗物自动计算
+■ About weapon
++ May contain some weapons that cannot be obtained (such as trial weapon)
 
-+ 一个词条的定义为每次提升的最大值（如： 暴击率为3.9%）
-+ 计算前请务必检查附魔增益是否处于开启状态（如果计算为附魔后的伤害）
-+ 计算为当前环境下的计算，即当词条数变更以外的任何与目标计算相关的属性或增益发生变化时，需要重新计算（如： 武器精炼或相关增益的开关）
-+ 自动计算不考虑小数值词条（小攻击，小生命，小防御）
+## Running Locally
+■ Requirements
++ <a href="https://nodejs.org/en/download/" target="_blank">Node. js</a> (v16.15.0)
++ <a href="https://go.dev/dl/" target="_blank">Golang</a> (1.16.3)
 
-■关于圣遗物标签（成长/稀有）
-
-+ 成长/稀有标签值并不能很好地评价一个圣遗物的好坏与否，只是单纯评价一个圣遗物的稀有程度
-+ 成长是非线性，涉及每次的成长值与成长次数，而并非最终词条数值的线性值差，越大的成长值且越多的成长次数可以显著提升成长标签值，意味着越接近XX之王（例如：防御之王）
-+ 稀有度则是各成长度的总和，意味着圣遗物的获取难度（值越高越稀有），但并不意味着此圣遗物是有效的稀有
-
-## 其他
-
-■关于自动保存
-
-+ 所有用户数据使用浏览器的LocalStorage技术，暂时不支持自动清理
-
-■关于敌人
-
-+ 可能含有重复敌人
-
-■关于武器
-
-+ 可能含有部分无法获取武器（如活动试用武器）
-
-## 测试或搭建自己的计算器
-
-■环境需求
-
-+ <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a> (推荐v16.15.0)
-+ <a href="https://go.dev/dl/" target="_blank">Golang</a> (推荐1.16.3以上)
-
-■本地构建
-
+■ Download
 ```
 git clone https://github.com/Kurarion/Genshin-Calc.git
 cd Genshin-Calc
 npm install
-npm run generateGenshinData //游戏版本更新后需再执行以获取最新数据并需向src/assets/init/data.json中追加新增内容配置
+npm run generateGenshinData
 ```
+After the game version is updated, execute `npm run generateGenshinData` to obtain the latest data and append the updated content configuration to <a href="./src/assets/init/data.json" target="_blank">`src/assets/init/data.json`</a>
 
-■启动
+Interface reference: <a href="./src/app/shared/interface/interface.ts" target="_blank">`src/app/shared/interface/interfaces.ts`</a>
 
+Constant reference: <a href="./src/app/shared/const/const.ts#L108" target="_blank">`src/app/shared/const/const.ts`</a>
+
+■ Test
 ```
-npm run start //npm run build
+//use angular-cli
+npm run start
 ```
-
-## 感谢
-
-+ 特别感谢<a href="https://github.com/EnkaNetwork/API-docs/" target="_blank">Enka.Network</a>提供展示角色查询API
+■ Build
+```
+//use http-server after building
+npm run build
+npm run serve
+```
+## Thanks
++ <a href="https://github.com/EnkaNetwork/API-docs/" target="_blank ">Enka.Network API</a>
