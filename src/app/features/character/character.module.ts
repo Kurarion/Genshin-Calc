@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from 'src/app/angular-material.module';
 
 import { CharacterRoutingModule } from './character-routing.module';
@@ -26,7 +26,7 @@ import { ArtifactChipsComponent } from './component/artifact-chips/artifact-chip
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     AngularMaterialModule,
     CharacterRoutingModule,
     SharedModule,

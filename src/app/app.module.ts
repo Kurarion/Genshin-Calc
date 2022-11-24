@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -107,7 +107,7 @@ function initializeAppFactory(httpClient: HttpClient): () => Promise<any> {
     ReactiveFormsModule,
     AppRoutingModule,
     AngularMaterialModule,
-    FlexLayoutModule,
+    // FlexLayoutModule,
     TranslateModule.forRoot({
       defaultLanguage: environment.defaultLang,
       loader: {

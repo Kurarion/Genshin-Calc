@@ -1,6 +1,6 @@
 import { PercentPipe } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, GenshinDataService } from 'src/app/shared/shared.module';
@@ -209,16 +209,16 @@ export class ArtifactAutoComponent implements OnInit {
   //ミクスタイプ
   isMixRate: boolean = false;
 
-  userInput = new FormGroup({
-    damageRate: new FormControl(0, [Validators.min(0.01), Validators.required]),//ダメージ倍率
-    damageBase: new FormControl('', Validators.required),//ダメージベース
-    damageRateAttach: new FormControl(0, [Validators.min(0)]),//ダメージ倍率(追加)
-    damageBaseAttach: new FormControl(''),//ダメージベース(追加)
-    elementType: new FormControl('', Validators.required),//元素タイプ
-    attackType: new FormControl('', Validators.required),//攻撃タイプ
-    damageType: new FormControl('', Validators.required),//ダメージタイプ
-    damageTag: new FormControl(''),//タグ
-    maxCritRate: new FormControl(0, [Validators.min(this.minCritRate)]),//最大会心率
+  userInput = new UntypedFormGroup({
+    damageRate: new UntypedFormControl(0, [Validators.min(0.01), Validators.required]),//ダメージ倍率
+    damageBase: new UntypedFormControl('', Validators.required),//ダメージベース
+    damageRateAttach: new UntypedFormControl(0, [Validators.min(0)]),//ダメージ倍率(追加)
+    damageBaseAttach: new UntypedFormControl(''),//ダメージベース(追加)
+    elementType: new UntypedFormControl('', Validators.required),//元素タイプ
+    attackType: new UntypedFormControl('', Validators.required),//攻撃タイプ
+    damageType: new UntypedFormControl('', Validators.required),//ダメージタイプ
+    damageTag: new UntypedFormControl(''),//タグ
+    maxCritRate: new UntypedFormControl(0, [Validators.min(this.minCritRate)]),//最大会心率
   })
 
   userInputList: Record<string, string[]> = {
@@ -243,9 +243,9 @@ export class ArtifactAutoComponent implements OnInit {
   // damageTag!: string;
 
   //現在のポイント
-  currentPoint = new FormControl({value:0, disabled:true});
+  currentPoint = new UntypedFormControl({value:0, disabled:true});
   //現在のポイント/10
-  currentPointInput = new FormControl({value:0, disabled:true});
+  currentPointInput = new UntypedFormControl({value:0, disabled:true});
   //結果
   resultCurve!: string;
   //有効個数

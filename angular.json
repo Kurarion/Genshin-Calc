@@ -109,5 +109,7 @@
       }
     }
   },
-  "defaultProject": "GSCal"
+  "cli": {
+    "analytics": "576eaddd-c2bd-499e-acc3-f38732badcd0"
+  }
 }
