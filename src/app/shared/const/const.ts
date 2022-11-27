@@ -1,4 +1,4 @@
-import { LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
+import { ElementType, LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 export class Const {
@@ -1580,7 +1580,7 @@ export class Const {
   static readonly PLAYER_GIRL_HYDRO = "703";  //旅人さん（水）
   static readonly PLAYER_GIRL_DENDRO = "708";  //旅人さん（草）
 
-  static readonly ELEMENT_TYPE_MAP:  Map<number, string> = new Map([
+  static readonly ELEMENT_TYPE_MAP:  Map<ElementType, string> = new Map([
     [2, "PYRO"],
     [3, "HYDRO"],
     [4, "ANEMO"],

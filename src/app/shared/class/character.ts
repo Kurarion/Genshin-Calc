@@ -1,5 +1,5 @@
 import { TYPE_SYS_LANG } from "src/app/shared/shared.module";
-import { CharPromotoLevelType, CharQualityType, WeaponType } from "./type";
+import { CharPromotoLevelType, CharQualityType, ElementType, WeaponType } from "./type";
 
 //*********************************
 //            画像情報
@@ -22,7 +22,7 @@ export interface OhterInfo {
     detailText: Record<TYPE_SYS_LANG, string>;
     elementText: Record<TYPE_SYS_LANG, string>;
     assoc: string;
-    elementType: number;
+    elementType: ElementType;
 }
 
 //*********************************

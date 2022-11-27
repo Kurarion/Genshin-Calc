@@ -134,6 +134,8 @@ export interface ExtraSkillBuff {
   defaultEnable?: boolean;
   //限定武器タイプ
   weaponTypeLimit?: string[];
+  //限定自身元素タイプ
+  selfElementTypeLimit?: boolean;
   //マックススタックバフ（複数バフのみ適用）
   isMaximumStackBuff?: boolean;
 }

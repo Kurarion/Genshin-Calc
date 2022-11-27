@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
+import * as internal from 'stream';
 
 export interface CalResult{
   characterData?: character;
@@ -2561,6 +2562,7 @@ export class CalculatorService {
           result,
           specialResult,
           characterData.weaponType,
+          characterData.info.elementType,
           overrideElement,
         );
         if(!hasOverride && overrideElement != setBuffResult.overrideElement){
@@ -2578,6 +2580,7 @@ export class CalculatorService {
           result,
           specialResult,
           characterData.weaponType,
+          characterData.info.elementType,
           overrideElement,
         );
         if(!hasOverride && overrideElement != setBuffResult.overrideElement){
@@ -2595,6 +2598,7 @@ export class CalculatorService {
           result,
           specialResult,
           characterData.weaponType,
+          characterData.info.elementType,
           overrideElement,
         );
         if(!hasOverride && overrideElement != setBuffResult.overrideElement){
@@ -2617,6 +2621,7 @@ export class CalculatorService {
             result,
             specialResult,
             characterData.weaponType,
+            characterData.info.elementType,
             overrideElement,
           );
           if(!hasOverride && overrideElement != setBuffResult.overrideElement){
@@ -2639,6 +2644,7 @@ export class CalculatorService {
             result,
             specialResult,
             characterData.weaponType,
+            characterData.info.elementType,
             overrideElement,
           );
           if(!hasOverride && overrideElement != setBuffResult.overrideElement){
@@ -2679,6 +2685,7 @@ export class CalculatorService {
         result,
         specialResult,
         characterData.weaponType,
+        characterData.info.elementType,
         overrideElement,
       );
       if(overrideElement != setBuffResult.overrideElement){
@@ -2747,6 +2754,7 @@ export class CalculatorService {
         tempResult,
         tempSpecialResult,
         characterData.weaponType,
+        characterData.info.elementType,
         overrideElement,
       );
       if(overrideElement != setBuffResult.overrideElement){
@@ -2782,7 +2790,7 @@ export class CalculatorService {
   }
 
   //追加データ解析
-  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[], weaponType: WeaponType, crruentOverrideElement: string): SetBuffResult{
+  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[], weaponType: WeaponType, elementType: ElementType, crruentOverrideElement: string): SetBuffResult{
     let setBuffResult: SetBuffResult = {};
     if(skillData == undefined || buffs == undefined){
       return setBuffResult;
@@ -2808,13 +2816,17 @@ export class CalculatorService {
           if(buff.overrideElement == crruentOverrideElement){
             overrideElement = "";
           }
-          if(isEnableInSwitch){
-            //限定武器タイプチェック
-            if(buff?.weaponTypeLimit != undefined){
-              if(!buff.weaponTypeLimit.includes(weaponType)){
-                continue;
-              }
+          //限定武器タイプチェック
+          if(buff?.weaponTypeLimit != undefined){
+            if(!buff.weaponTypeLimit.includes(weaponType)){
+              continue;
             }
+          }
+          //限定自身元素タイプチェック準備
+          let checkSelfElementType = buff?.selfElementTypeLimit === true;
+          let selfElementType = Const.ELEMENT_TYPE_MAP.get(elementType)!;
+          
+          if(isEnableInSwitch){
             //元素付与
             if(buff.overrideElement != undefined){
               overrideElement = buff.overrideElement;
@@ -2872,6 +2884,12 @@ export class CalculatorService {
             let priority = buff?.priority ?? 0;
       
             let targets = buff?.target;
+            //自身元素タイプチェック
+            if(checkSelfElementType){
+              targets = targets.filter((v: string)=>{
+                return v.includes(selfElementType);
+              })
+            }
             let convertElement = buff?.convertElement;
       
             let isGlobal = buff?.isGlobal ?? false;
@@ -3003,6 +3021,12 @@ export class CalculatorService {
             let priority = buff?.priority ?? 0;
       
             let targets = buff?.target;
+            //自身元素タイプチェック
+            if(checkSelfElementType){
+              targets = targets.filter((v: string)=>{
+                return v.includes(selfElementType);
+              })
+            }
             let convertElement = buff?.convertElement;
       
             let isGlobal = buff?.isGlobal ?? false;
