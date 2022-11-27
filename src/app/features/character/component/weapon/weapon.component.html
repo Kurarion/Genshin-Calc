@@ -8,10 +8,12 @@
                     [title]="'WEAPON.NAME'"
                     [model]="selectedWeaponIndex"
                     (modelChange)="onSelectWeapon($event)"
-                    [OriginList]="weaponList"
-                    [OriginListFilterFunc]="listFilterFunc"
-                    [OptionValueProperty]="'index'"
-                    [OptionInnerTextProperty]="'names'"
+                    [originList]="weaponList"
+                    [originListFilterFunc]="listFilterFunc"
+                    [optionValueProperty]="'index'"
+                    [optionInnerTextProperty]="'names'"
+                    [selectedDispalyProperty]="'name'"
+                    [service]="weaponService"
                     [currentLanguage]="currentLanguage">
                 </app-mat-filtering-selector>
             </mat-card-title>

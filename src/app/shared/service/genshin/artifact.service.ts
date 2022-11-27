@@ -133,6 +133,10 @@ export class ArtifactService {
     return this.genshinDataService.getReliquarySet(index.toString());
   }
 
+  get(index: string | number): artifactSet {
+    return this.getSet(index);
+  }
+
   //適用中インデックス取得
   getStorageActiveIndex(charIndex: string | number){
     let keyStr = charIndex.toString();

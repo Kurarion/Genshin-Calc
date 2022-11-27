@@ -78,7 +78,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   selectedLevelProps!: Record<string, subProp>;
 
   constructor(private httpService: HttpService, 
-    private enemyService: EnemyService, 
+    public enemyService: EnemyService, 
     private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService,
     private relayoutMsgService: RelayoutMsgService,) { 
@@ -133,8 +133,8 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
     this.enemyService.setIndex(this.data.id, this.enemyData.id);
     //敵属性更新
     this.onChangeLevel(this.selectedLevel);
-    // //プロフィール画像初期化
-    // this.initializeBackGroundImage();
+    //プロフィール画像初期化
+    this.initializeBackGroundImage();
   }
 
   onChangeLevel(value: levelOption) {

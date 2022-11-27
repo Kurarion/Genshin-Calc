@@ -50,6 +50,8 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
   levelOptions: levelOption[] = [];
   //選択されたレベルリスト
   selectedLevels: Record<string, levelOption> = {};
+  //アイコンBGカラー
+  iconBGColor!: string;
 
   constructor(
     private characterService: CharacterService,
@@ -59,6 +61,11 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
     }
 
   ngOnInit(): void {
+    //BGカラー設定
+    this.iconBGColor = 
+    Const.SKILL_ICON_GRADIENT[0] + 
+    Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(this.data.info.elementType)!] +
+    Const.SKILL_ICON_GRADIENT[1];
     //レベル初期設定
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
       this.levelOptions.push({

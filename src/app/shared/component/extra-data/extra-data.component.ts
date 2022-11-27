@@ -13,14 +13,14 @@ import { environment } from 'src/environments/environment';
 export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   private readonly colorMap: Record<string, string> = {
-    "CRYO": "#cce7f3" + environment.elementColorAlpha,
-    "ANEMO": "#afe9d8" + environment.elementColorAlpha,
-    "PHYSICAL": "#fafafa" + environment.elementColorAlpha,
-    "ELECTRO": "#f2d4f3" + environment.elementColorAlpha,
-    "GEO": "#ffefc4" + environment.elementColorAlpha,
-    "PYRO": "#f3a5a5" + environment.elementColorAlpha,
-    "HYDRO": "#c9e4ff" + environment.elementColorAlpha,
-    "DENDRO": "#7cde8c" + environment.elementColorAlpha,
+    "CRYO": Const.ELEMENT_COLOR_MAP['CRYO'] + environment.elementColorAlpha,
+    "ANEMO": Const.ELEMENT_COLOR_MAP['ANEMO'] + environment.elementColorAlpha,
+    "PHYSICAL": Const.ELEMENT_COLOR_MAP['PHYSICAL'] + environment.elementColorAlpha,
+    "ELECTRO": Const.ELEMENT_COLOR_MAP['ELECTRO'] + environment.elementColorAlpha,
+    "GEO": Const.ELEMENT_COLOR_MAP['GEO'] + environment.elementColorAlpha,
+    "PYRO": Const.ELEMENT_COLOR_MAP['PYRO'] + environment.elementColorAlpha,
+    "HYDRO": Const.ELEMENT_COLOR_MAP['HYDRO'] + environment.elementColorAlpha,
+    "DENDRO": Const.ELEMENT_COLOR_MAP['DENDRO'] + environment.elementColorAlpha,
   }
 
   readonly dmgPropList: (keyof DamageResult)[] = [

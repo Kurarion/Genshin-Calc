@@ -1,5 +1,12 @@
 import { TYPE_SYS_LANG } from "src/app/shared/shared.module";
 
+//*********************************
+//            画像情報
+//*********************************
+export interface ArtifactImages {
+    icon: string;
+}
+
 export interface ArtifactSetAddProp {
     //名前
     propType: string;
@@ -32,6 +39,11 @@ export interface artifactSet {
     setName: Record<TYPE_SYS_LANG, string>;
     //セット効果
     setAffixs: ArtifactSetAffixs[];
+    //*********************************
+    //            リソース
+    //*********************************
+    //画像
+    images: ArtifactImages;
 }
 
 //*********************************

@@ -3,6 +3,7 @@ import { ArtifactService, ArtifactSetAffixs, CalculatorService, character, Const
 import { environment } from 'src/environments/environment';
 
 interface artifactSetOption {
+  index: string;
   setId: string;
   setName: Record<TYPE_SYS_LANG, string>;
   setAffixs: ArtifactSetAffixs[];
@@ -70,7 +71,7 @@ export class ArtifactComponent implements OnInit {
   setBuffRefreshFlg!: number;
 
   constructor(
-    private artifactService: ArtifactService,
+    public artifactService: ArtifactService,
     private calculatorService: CalculatorService) { 
       this.tabs = [];
       this.artifactSetList = [];
@@ -221,6 +222,7 @@ export class ArtifactComponent implements OnInit {
     let tempMap = this.artifactService.getSetMap();
     for (let key in tempMap) {
       this.artifactSetList.push({
+        index: key,
         setId: key,
         setName: tempMap[key].setName,
         setAffixs: tempMap[key].setAffixs,

@@ -10,11 +10,15 @@ export class MatFilteringSelectorComponent implements OnInit {
   @Input('model') model!: any;
   @Input('hasBlankOption') hasBlankOption: boolean = false;
   @Output('modelChange') modelChange = new EventEmitter<any>();
-  @Input('OriginList') OriginList!: any[];
-  @Input('OriginListFilterFunc') OriginListFilterFunc!: ((value:any) => boolean) | undefined;
-  @Input('OptionValueProperty') OptionValueProperty!: string;
-  @Input('OptionInnerTextProperty') OptionInnerTextProperty!: string;
+  @Input('originList') originList!: any[];
+  @Input('originListFilterFunc') originListFilterFunc!: ((value:any) => boolean) | undefined;
+  @Input('optionIndexProperty') optionIndexProperty: string = "index";
+  @Input('optionValueProperty') optionValueProperty!: string;
+  @Input('optionInnerTextProperty') optionInnerTextProperty!: string;
   @Input('currentLanguage') currentLanguage!: string;
+  @Input('service') service!: any;
+  @Input('selectedDispalyProperty') selectedDispalyProperty!: string;
+  @Input('dispalyIconWhenSelected') dispalyIconWhenSelected: boolean = false;
 
   filteringContent: string = "";
   displayList!: any[];
@@ -23,7 +27,7 @@ export class MatFilteringSelectorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.displayListBackUp = this.OriginList.filter(this.OriginListFilterFunc || (()=>true))
+    this.displayListBackUp = this.originList.filter(this.originListFilterFunc || (()=>true))
     this.filteringOptions();
   }
 
@@ -40,7 +44,7 @@ export class MatFilteringSelectorComponent implements OnInit {
   filteringOptions() {
     this.displayList = this.displayListBackUp?.filter(
       (item: any) => {
-        if(item[this.OptionInnerTextProperty][this.currentLanguage].includes(this.filteringContent) || this.model == item[this.OptionValueProperty]){
+        if(item[this.optionInnerTextProperty][this.currentLanguage].includes(this.filteringContent) || this.model == item[this.optionValueProperty]){
           return true;
         }
         return false;

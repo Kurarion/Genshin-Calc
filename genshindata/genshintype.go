@@ -302,3 +302,19 @@ type GenshinExtraAvatarMapData map[string]GenshinExtraAvatarData
 type GenshinExtraAvatarData struct {
 	BackgroundUrl string `json:"backgroundUrl"`
 }
+
+type GenshinFetterInfoDataList []GenshinFetterInfoData
+
+//其他信息
+type GenshinFetterInfoData struct {
+	InfoBirthMonth                      int    `json:"infoBirthMonth"`
+	InfoBirthDay                        int    `json:"infoBirthDay"`
+	AvatarNativeTextMapHash             uint64 `json:"avatarNativeTextMapHash"`
+	AvatarVisionBeforTextMapHash        uint64 `json:"avatarVisionBeforTextMapHash"`
+	AvatarConstellationBeforTextMapHash uint64 `json:"avatarConstellationBeforTextMapHash"`
+	AvatarTitleTextMapHash              uint64 `json:"avatarTitleTextMapHash"`
+	AvatarDetailTextMapHash             uint64 `json:"avatarDetailTextMapHash"`
+	AvatarAssocType                     string `json:"avatarAssocType"`
+	FetterId                            uint64 `json:"fetterId"`
+	AvatarId                            uint64 `json:"avatarId"`
+}

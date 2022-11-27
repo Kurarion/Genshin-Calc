@@ -30,12 +30,20 @@ export class ConstellationComponent extends ExpansionPanelCommon implements OnIn
   @Input('name') name!: string;
   //ドラッグイベント
   @Output('draged') draged = new EventEmitter<string>();
+  //アイコンBGカラー
+  iconBGColor!: string;
 
   constructor(private relayoutMsgService: RelayoutMsgService,) { 
     super(relayoutMsgService);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    //BGカラー設定
+    this.iconBGColor = 
+    Const.SKILL_ICON_GRADIENT[0] + 
+    Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(this.data.info.elementType)!] +
+    Const.SKILL_ICON_GRADIENT[1];
+  }
 
   //ドラッグ開始
   onDrag(){

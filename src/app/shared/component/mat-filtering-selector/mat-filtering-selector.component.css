@@ -3,6 +3,25 @@
     color: black;
 }
 
+.option {
+    padding-left: 1.5em !important;
+}
+
+.selected-icon {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 11%;
+    margin-bottom: 0.1em;
+    vertical-align: middle;
+}
+
+.icon {
+    width: 2.8em;
+    height: 2.8em;
+    border-radius: 11%;
+    vertical-align: middle;
+}
+
 ::ng-deep mat-optgroup.sticky .mat-form-field-flex > .mat-form-field-infix { 
     padding: 0.4em 0px !important;
     padding-bottom: 0.3em !important;

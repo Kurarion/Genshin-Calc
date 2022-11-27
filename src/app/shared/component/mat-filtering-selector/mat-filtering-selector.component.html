@@ -1,6 +1,10 @@
 <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always">
     <mat-label [innerText]="title | translate"></mat-label>
     <mat-select [ngModel]="model" (ngModelChange)="onModelChange($event)">
+        <mat-select-trigger *ngIf="service && dispalyIconWhenSelected && model">
+            <img class="selected-icon" [src]="this.service.get(model).images.icon" loading="lazy" alt="X">
+            <span>{{this.service.get(model)[selectedDispalyProperty][currentLanguage]}}</span>
+        </mat-select-trigger>
         <mat-optgroup class="sticky">
             <mat-form-field appearance="outline" class="select-filter">
                 <input matInput 
@@ -12,8 +16,10 @@
             <mat-option *ngIf="(hasBlankOption && filteringContent == '')|| this.displayList.length == 0" value="" [disabled]="!hasBlankOption"></mat-option>
             <ng-container *ngFor="let displayItem of displayList">
                 <mat-option 
-                    [value]="displayItem[OptionValueProperty]" 
-                    [innerText]="displayItem[OptionInnerTextProperty][currentLanguage]">
+                    class="option"
+                    [value]="displayItem[optionValueProperty]" >
+                    <img *ngIf="service" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" alt="X">
+                    {{displayItem[optionInnerTextProperty][currentLanguage]}}
                 </mat-option>
             </ng-container>
         </mat-optgroup>

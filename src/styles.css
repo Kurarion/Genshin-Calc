@@ -20,3 +20,12 @@ body {
 mat-progress-bar .mat-progress-bar-buffer {
   background: #e4e8eb;
 }
+
+.skill-icon {
+  width: 2.5em;
+  height: 2.5em;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  vertical-align: middle;
+  background-color: #cccccc;
+}

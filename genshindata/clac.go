@@ -21,11 +21,78 @@ const (
 
 //图片资源Host
 const (
-	imgHostAvatarFormat  = "https://upload-bbs.mihoyo.com/game_record/genshin/character_icon/%s.png"
-	imgHostEquipFormat   = "https://upload-bbs.mihoyo.com/game_record/genshin/equip/%s.png"
-	imgHostMonsterFormat = "https://res.cloudinary.com/genshin/image/upload/sprites/UI_MonsterIcon_%s.png"
+	imgHostAvatarFormat        = "https://upload-bbs.mihoyo.com/game_record/genshin/character_icon/%s.png"
+	imgHostEquipFormat         = "https://upload-bbs.mihoyo.com/game_record/genshin/equip/%s.png"
+	imgHostMonsterFormat       = "https://res.cloudinary.com/genshin/image/upload/sprites/%s.png"
+	imgHostConstellationFormat = "https://upload-bbs.mihoyo.com/game_record/genshin/constellation_icon/%s.png"
+	imgHostOhterFormat         = "https://enka.network/ui/%s.png"
 
-	imgAwakenSuffix = "_Awaken"
+	imgAwakenSuffix    = "_Awaken"
+	imgRelicIconPrefix = "UI_RelicIcon_"
+	imgRelicIconSuffix = "_4" //flower
+)
+
+//数据相关
+const (
+	assocTypePrefix = "ASSOC_TYPE_"
+)
+
+var (
+	elementTypeMap = map[string]int{
+		"无": 1,
+		"火": 2,
+		"水": 3,
+		"风": 4,
+		"冰": 5,
+		"岩": 6,
+		"雷": 7,
+		"草": 8,
+	}
+
+	elementMap = map[int](*map[string]string){
+		2: &map[string]string{
+			"cn_sim": "火",
+			"cn_tra": "火",
+			"en":     "Pyro",
+			"jp":     "炎",
+		},
+		3: &map[string]string{
+			"cn_sim": "水",
+			"cn_tra": "水",
+			"en":     "Hydro",
+			"jp":     "水",
+		},
+		4: &map[string]string{
+			"cn_sim": "风",
+			"cn_tra": "風",
+			"en":     "Anemo",
+			"jp":     "風",
+		},
+		5: &map[string]string{
+			"cn_sim": "岩",
+			"cn_tra": "岩",
+			"en":     "Geo",
+			"jp":     "岩",
+		},
+		6: &map[string]string{
+			"cn_sim": "雷",
+			"cn_tra": "雷",
+			"en":     "Electro",
+			"jp":     "雷",
+		},
+		7: &map[string]string{
+			"cn_sim": "冰",
+			"cn_tra": "冰",
+			"en":     "Cryo",
+			"jp":     "氷",
+		},
+		8: &map[string]string{
+			"cn_sim": "草",
+			"cn_tra": "草",
+			"en":     "Dendro",
+			"jp":     "草",
+		},
+	}
 )
 
 var (
@@ -128,6 +195,7 @@ const (
 	indexAvatarSkillExcelConfig         = "AvatarSkillExcelConfigData"
 	indexProudSkillExcelConfig          = "ProudSkillExcelConfigData"
 	indexAvatarTalentExcelConfig        = "AvatarTalentExcelConfigData"
+	indexFetterInfoExcelConfigData      = "FetterInfoExcelConfigData"
 	indexTextMapCHSFile                 = "TextMapDataCHS"
 	indexTextMapCHTFile                 = "TextMapDataCHT"
 	indexTextMapENFile                  = "TextMapDataEN"
@@ -195,6 +263,7 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		indexAvatarSkillExcelConfig:         resURL + AvatarSkillExcelConfigData,
 		indexProudSkillExcelConfig:          resURL + ProudSkillExcelConfigData,
 		indexAvatarTalentExcelConfig:        resURL + AvatarTalentExcelConfigData,
+		indexFetterInfoExcelConfigData:      resURL + FetterInfoExcelConfigData,
 		indexTextMapCHSFile:                 resURL + TextMapDataCHS,
 		indexTextMapCHTFile:                 resURL + TextMapDataCHT,
 		indexTextMapENFile:                  resURL + TextMapDataEN,
@@ -291,6 +360,7 @@ func update(localResPath string, resURL string) error {
 	avatarSkillDataList := make(GenshinAvatarSkillListData, 0)
 	avatarProudSkillDataList := make(GenshinAvatarProudSkillListData, 0)
 	avatarTalentDataList := make(GenshinAvatarTalentListData, 0)
+	fetterInfoDataList := make(GenshinFetterInfoDataList, 0)
 	//武器
 	weaponBaseDataList := make(GenshinWeaponBaseListData, 0)
 	weaponGrowCurvesDataList := make(GenshinGrowCurvesListData, 0)
@@ -377,6 +447,8 @@ func update(localResPath string, resURL string) error {
 			json.Unmarshal(v.Bytes(), &avatarProudSkillDataList)
 		case indexAvatarTalentExcelConfig:
 			json.Unmarshal(v.Bytes(), &avatarTalentDataList)
+		case indexFetterInfoExcelConfigData:
+			json.Unmarshal(v.Bytes(), &fetterInfoDataList)
 		case indexTextMapCHSFile:
 			json.Unmarshal(v.Bytes(), &textMapCHS)
 		case indexTextMapCHTFile:
@@ -525,6 +597,9 @@ func update(localResPath string, resURL string) error {
 			NameTextMapHash: reliquarySetAffixMap[equipAffixId][0].NameTextMapHash,
 			SetName:         reliquarySetAffixMap[equipAffixId][0].Name,
 			SetAffixs:       reliquarySetAffixMap[equipAffixId],
+			Images: RELIQUARYIMAGES{
+				Icon: fmt.Sprintf(imgHostEquipFormat, imgRelicIconPrefix+strconv.FormatUint(setId, 10)+imgRelicIconSuffix),
+			},
 		}
 	}
 	//怪物
@@ -553,6 +628,7 @@ func update(localResPath string, resURL string) error {
 	avatarSkillDataMap := make(map[uint64]*GenshinAvatarSkillData)
 	avatarProudSkillDataMap := make(map[uint64][]*GenshinAvatarProudSkillData)
 	avatarTalentDataMap := make(map[uint64]*GenshinAvatarTalentData)
+	fetterInfoDataMap := make(map[uint64]*GenshinFetterInfoData)
 	//处理用
 	avatarProudSkillParamDataMap := make(map[uint64]map[string][]float64)
 	//数据处理
@@ -599,6 +675,9 @@ func update(localResPath string, resURL string) error {
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(normalParamDescList),
 				ProudSkillGroupId:    avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId,
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, avatarSkillDataMap[temp.Skills[0]].SkillIcon),
+				},
 			},
 			Skill: AVATARSKILLINFO{
 				Id:                   avatarSkillDataMap[temp.Skills[1]].Id,
@@ -609,6 +688,9 @@ func update(localResPath string, resURL string) error {
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(skillParamDescList),
 				ProudSkillGroupId:    avatarSkillDataMap[temp.Skills[1]].ProudSkillGroupId,
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, avatarSkillDataMap[temp.Skills[1]].SkillIcon),
+				},
 			},
 			ElementalBurst: AVATARSKILLINFO{
 				Id:                   avatarSkillDataMap[temp.EnergySkill].Id,
@@ -619,6 +701,9 @@ func update(localResPath string, resURL string) error {
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(burstParamDescList),
 				ProudSkillGroupId:    avatarSkillDataMap[temp.EnergySkill].ProudSkillGroupId,
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, avatarSkillDataMap[temp.EnergySkill].SkillIcon),
+				},
 			},
 		}
 		if temp.Skills[2] != 0 {
@@ -630,6 +715,9 @@ func update(localResPath string, resURL string) error {
 				ParamDescList:        paramDescList,
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[2]].ProudSkillGroupId],
 				ParamDescSplitedList: calParamDesc(paramDescList),
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, avatarSkillDataMap[temp.Skills[2]].SkillIcon),
+				},
 			}
 		}
 		for ii := range temp.InherentProudSkillOpens {
@@ -643,6 +731,9 @@ func update(localResPath string, resURL string) error {
 				Icon:             avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
 				ParamMap:         avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
 				ParamValidIndexs: calCharacterNoLevelValidParamIndexs(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]),
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon),
+				},
 			})
 		}
 		for ii := range temp.Talents {
@@ -659,8 +750,14 @@ func update(localResPath string, resURL string) error {
 				Icon:             avatarTalentDataMap[temp2].Icon,
 				ParamMap:         tempParamMap,
 				ParamValidIndexs: calCharacterNoLevelValidParamIndexs(tempParamMap),
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, avatarTalentDataMap[temp2].Icon),
+				},
 			})
 		}
+	}
+	for i := range fetterInfoDataList {
+		fetterInfoDataMap[fetterInfoDataList[i].AvatarId] = &fetterInfoDataList[i]
 	}
 	//计算
 	//人物
@@ -671,6 +768,20 @@ func update(localResPath string, resURL string) error {
 		descText := getRegxTextFromHash(currentAvatarData.DescTextMapHash, textMap, false)
 		if descText[languageCHS] == "" {
 			continue
+		}
+		currentFetterInfo := fetterInfoDataMap[currentAvatarData.Id]
+		elementTypeTexts := getTextFromHash(currentFetterInfo.AvatarVisionBeforTextMapHash, textMap, false)
+		elementType := elementTypeMap[elementTypeTexts[languageCHS]]
+		fetterInfo := FETTERINFO{
+			BirthMonth:        currentFetterInfo.InfoBirthMonth,
+			BirthDay:          currentFetterInfo.InfoBirthDay,
+			BackgroundText:    getTextFromHash(currentFetterInfo.AvatarNativeTextMapHash, textMap, false),
+			ConstellationName: getTextFromHash(currentFetterInfo.AvatarConstellationBeforTextMapHash, textMap, false),
+			TiltleName:        getTextFromHash(currentFetterInfo.AvatarTitleTextMapHash, textMap, false),
+			DetailText:        getTextFromHash(currentFetterInfo.AvatarDetailTextMapHash, textMap, false),
+			Assoc:             strings.TrimPrefix(currentFetterInfo.AvatarAssocType, assocTypePrefix),
+			ElementText:       elementTypeTexts,
+			ElementType:       elementType,
 		}
 		//创建
 		dataAvatarMap[currentAvatarData.Id] = &AVATAR{
@@ -689,6 +800,7 @@ func update(localResPath string, resURL string) error {
 			SkillDepotId: currentAvatarData.SkillDepotId,
 			QualityType:  currentAvatarData.QualityType,
 			SideIconName: currentAvatarData.SideIconName,
+			Info:         fetterInfo,
 		}
 		//技能
 		if _, exit := dataAvatarSkillsMap[currentAvatarData.SkillDepotId]; exit {
@@ -765,6 +877,9 @@ func update(localResPath string, resURL string) error {
 				if err != nil {
 					continue
 				}
+				currentFetterInfo := fetterInfo
+				currentFetterInfo.ElementType = int(depotId) % 100
+				currentFetterInfo.ElementText = *elementMap[currentFetterInfo.ElementType]
 				dataAvatarMap[newId] = &AVATAR{
 					Id:              newId,
 					Name:            nameText,
@@ -781,6 +896,7 @@ func update(localResPath string, resURL string) error {
 					SkillDepotId: depotId,
 					QualityType:  currentAvatarData.QualityType,
 					SideIconName: currentAvatarData.SideIconName,
+					Info:         currentFetterInfo,
 				}
 				//技能
 				dataAvatarMap[newId].Skills = *dataAvatarSkillsMap[depotId]
@@ -890,8 +1006,10 @@ func update(localResPath string, resURL string) error {
 		}
 		var monsterText map[string]string
 		// var titleText map[string]string
-		if v, has := monsterDescribeDataMap[currentMonsterData.DescribeId]; has {
-			monsterText = getTextFromHash(v.NameTextMapHash, textMap, false)
+		var currentDescribeObj *GenshinMonsterDescribeData
+		var currentDescribeHas bool
+		if currentDescribeObj, currentDescribeHas = monsterDescribeDataMap[currentMonsterData.DescribeId]; currentDescribeHas {
+			monsterText = getTextFromHash(currentDescribeObj.NameTextMapHash, textMap, false)
 			// if vv, hasTitleId := monsterTitleDataMap[v.TitleID]; hasTitleId {
 			// 	titleText = getTextFromHash(vv.TitleNameTextMapHash, textMap, false)
 			// 	for ii := range monsterText {
@@ -939,7 +1057,7 @@ func update(localResPath string, resURL string) error {
 			MonsterName:     currentMonsterData.MonsterName,
 			Type:            currentMonsterData.Type,
 			Images: MONSTERIMAGES{
-				Icon: fmt.Sprintf(imgHostMonsterFormat, currentMonsterData.MonsterName),
+				Icon: fmt.Sprintf(imgHostMonsterFormat, currentDescribeObj.Icon),
 			},
 			LevelMap: make(map[string]*MONSTERPROPERTY),
 		}

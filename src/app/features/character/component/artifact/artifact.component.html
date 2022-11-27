@@ -15,9 +15,12 @@
                             [model]="selectedArtifactSetIndexs[0]"
                             (modelChange)="onSelectArtifactSet($event, 0)"
                             [hasBlankOption]="true"
-                            [OriginList]="artifactSetList"
-                            [OptionValueProperty]="'setId'"
-                            [OptionInnerTextProperty]="'setName'"
+                            [originList]="artifactSetList"
+                            [optionValueProperty]="'setId'"
+                            [optionInnerTextProperty]="'setName'"
+                            [selectedDispalyProperty]="'setName'"
+                            [service]="artifactService"
+                            [dispalyIconWhenSelected]="true"
                             [currentLanguage]="currentLanguage">
                         </app-mat-filtering-selector>
                         &nbsp;
@@ -29,9 +32,12 @@
                             [model]="selectedArtifactSetIndexs[1]"
                             (modelChange)="onSelectArtifactSet($event, 1)"
                             [hasBlankOption]="true"
-                            [OriginList]="artifactSetList"
-                            [OptionValueProperty]="'setId'"
-                            [OptionInnerTextProperty]="'setName'"
+                            [originList]="artifactSetList"
+                            [optionValueProperty]="'setId'"
+                            [optionInnerTextProperty]="'setName'"
+                            [selectedDispalyProperty]="'setName'"
+                            [service]="artifactService"
+                            [dispalyIconWhenSelected]="true"
                             [currentLanguage]="currentLanguage">
                         </app-mat-filtering-selector>
                         <ng-container *ngIf="selectedArtifactSetIndexs[0] && selectedArtifactSetIndexs[0] != ''">

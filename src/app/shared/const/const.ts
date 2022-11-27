@@ -101,6 +101,23 @@ export class Const {
   static readonly ELEMENT_DESTRUCTION = "DESTRUCTION";
   static readonly ELEMENT_SHIELD = "SHIELD";
 
+  static readonly ELEMENT_COLOR_MAP: Record<string, string> = {
+    "CRYO": "#96dfff",
+    "ANEMO": "#afe9d8",
+    "PHYSICAL": "#fafafa",
+    "ELECTRO": "#f6c2f7",
+    "GEO": "#ffe6a5",
+    "PYRO": "#ee8989",
+    "HYDRO": "#90c7ff",
+    "DENDRO": "#7cde8c",
+  }
+
+  static readonly ELEMENT_COLOR_NONE = "#cccccc";
+  static readonly SKILL_ICON_GRADIENT = [
+    'radial-gradient(circle, #5d5d5d 47%, ',
+    ' 90%)'
+  ]
+
   //*********************************
   //           　属性
   //*********************************
@@ -1562,6 +1579,16 @@ export class Const {
   static readonly PLAYER_GIRL_PYRO = "702";  //旅人さん（火）
   static readonly PLAYER_GIRL_HYDRO = "703";  //旅人さん（水）
   static readonly PLAYER_GIRL_DENDRO = "708";  //旅人さん（草）
+
+  static readonly ELEMENT_TYPE_MAP:  Map<number, string> = new Map([
+    [2, "PYRO"],
+    [3, "HYDRO"],
+    [4, "ANEMO"],
+    [5, "CRYO"],
+    [6, "GEO"],
+    [7, "ELECTRO"],
+    [8, "DENDRO"],
+  ])
 
   //*********************************
   //           连接符

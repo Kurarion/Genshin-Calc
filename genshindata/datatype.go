@@ -66,6 +66,7 @@ type AVATAR struct {
 	LevelMap        map[string]*PROPERTY `json:"levelMap"`
 	SkillDepotId    uint64               `json:"skillDepotId"`
 	Skills          AVATARSKILLS         `json:"skills"`
+	Info            FETTERINFO           `json:"info"`
 }
 
 //人物技能集
@@ -90,6 +91,7 @@ type AVATARSKILLINFO struct {
 	ParamDescSplitedList map[string][]AVATARSKILLSPLITEDDESCINFO `json:"paramDescSplitedList"`
 	ParamValidIndexs     []int                                   `json:"paramValidIndexs"`
 	ProudSkillGroupId    uint64                                  `json:"proudSkillGroupId"`
+	Images               SKILLIMAGES                             `json:"images"`
 }
 
 //人物技能详细
@@ -106,6 +108,24 @@ type AVATARSKILLSPLITEDDESCINFO struct {
 type AVATARIMAGES struct {
 	Icon       string `json:"icon"`
 	Background string `json:"background"`
+}
+
+//技能图片
+type SKILLIMAGES struct {
+	Icon string `json:"icon"`
+}
+
+//人物其他信息
+type FETTERINFO struct {
+	BirthMonth        int               `json:"birthMonth"`
+	BirthDay          int               `json:"birthDay"`
+	BackgroundText    map[string]string `json:"backgroundText"`
+	ConstellationName map[string]string `json:"constellationName"`
+	TiltleName        map[string]string `json:"tiltleName"`
+	DetailText        map[string]string `json:"detailText"`
+	ElementText       map[string]string `json:"elementText"`
+	Assoc             string            `json:"assoc"`
+	ElementType       int               `json:"elementType"`
 }
 
 //************************
@@ -160,7 +180,7 @@ type MONSTERPROPERTY struct {
 	DMG_ANTI
 }
 
-//武器图片
+//怪物图片
 type MONSTERIMAGES struct {
 	Icon string `json:"icon"`
 }
@@ -175,6 +195,12 @@ type RELIQUARY struct {
 	NameTextMapHash uint64            `json:"nameTextMapHash"`
 	SetName         map[string]string `json:"setName"`
 	SetAffixs       []*RELIQUARYAFFIX `json:"setAffixs"`
+	Images          RELIQUARYIMAGES   `json:"images"`
+}
+
+//圣遗物图片
+type RELIQUARYIMAGES struct {
+	Icon string `json:"icon"`
 }
 
 type RELIQUARYAFFIX struct {

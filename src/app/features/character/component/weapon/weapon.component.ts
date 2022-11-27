@@ -100,7 +100,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   listFilterFunc!: ((value:any) => boolean);
 
   constructor(private httpService: HttpService,
-    private weaponService: WeaponService,
+    public weaponService: WeaponService,
     private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService,
     private relayoutMsgService: RelayoutMsgService,) { 

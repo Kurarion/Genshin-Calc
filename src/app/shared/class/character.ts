@@ -9,6 +9,22 @@ export interface CharImages {
     icon: string;
 }
 
+export interface SkillImages {
+    icon: string;
+}
+
+export interface OhterInfo {
+    birthMonth: number;
+    birthDay: number;
+    backgroundText: Record<TYPE_SYS_LANG, string>;
+    constellationName: Record<TYPE_SYS_LANG, string>;
+    tiltleName: Record<TYPE_SYS_LANG, string>;
+    detailText: Record<TYPE_SYS_LANG, string>;
+    elementText: Record<TYPE_SYS_LANG, string>;
+    assoc: string;
+    elementType: number;
+}
+
 //*********************************
 //            属性情報
 //*********************************
@@ -104,6 +120,11 @@ export interface CharSkill {
     paramValidIndexs: number[];
     //スキルID
     proudSkillGroupId: number;
+    //*********************************
+    //            リソース
+    //*********************************
+    //画像
+    images: SkillImages;
 }
 
 export interface CharSkills {
@@ -141,6 +162,8 @@ export interface character {
     desc: Record<TYPE_SYS_LANG, string>;
     //武器タイプ
     weaponType: WeaponType;
+    //その他の情報
+    info: OhterInfo;
 
     //*********************************
     //            リソース

@@ -6,12 +6,14 @@
 }
 
 .avatar {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     background-size: cover;
     margin-top: 10px;
     margin-bottom: 5px;
-    border-radius: 0%;
+    margin-right: 5px;
+    margin-left: 4px;
+    border-radius: 11%;
 }
 
 .header-text {

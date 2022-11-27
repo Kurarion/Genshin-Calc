@@ -143,4 +143,6 @@ const (
 	ProudSkillExcelConfigData = "/ExcelBinOutput/ProudSkillExcelConfigData.json"
 	//人物命座
 	AvatarTalentExcelConfigData = "/ExcelBinOutput/AvatarTalentExcelConfigData.json"
+	//其他资料
+	FetterInfoExcelConfigData = "/ExcelBinOutput/FetterInfoExcelConfigData.json"
 )
