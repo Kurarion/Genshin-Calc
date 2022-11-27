@@ -114,8 +114,8 @@ export class Const {
 
   static readonly ELEMENT_COLOR_NONE = "#cccccc";
   static readonly SKILL_ICON_GRADIENT = [
-    'radial-gradient(circle, #5d5d5d 47%, ',
-    ' 90%)'
+    'radial-gradient(circle, #5d5d5d 50%, ',
+    ' 60%,  rgba(0,0,0,0.3) 65%)'
   ]
 
   //*********************************
