@@ -16,6 +16,7 @@ export interface MenuInfo {
   elementType?: string; //旅人さん専用（現在）
   sexType?: string; //旅人さん専用（現在）
   isEnkaData?: boolean;
+  iconImg?: string;
 }
 
 /** 言語インタフェース */

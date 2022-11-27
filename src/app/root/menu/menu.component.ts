@@ -52,6 +52,7 @@ export class MenuComponent implements OnInit {
           index: key,
         },
         isEnkaData: enkaList.includes(key),
+        iconImg: tempMap[key].images.icon,
       };
       //旅人さん
       if (key.includes(Const.PLAYER_BOY)){

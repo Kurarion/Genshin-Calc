@@ -11,7 +11,7 @@
 
 .menu-list > a {
   text-align: left;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   width: 190px;
 }
 
@@ -29,4 +29,17 @@
   content: "\e93a";
   font-family: shicon;
   font-size: 1.4em;
+}
+
+.icon {
+  height: 2.7rem;
+  width: 2.7rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.menu-a {
+  /* font-size: 1em; */
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
 }

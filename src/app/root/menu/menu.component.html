@@ -1,13 +1,13 @@
 <mat-nav-list class="menu-list">
   <ng-container *ngFor="let menu of menuList">
-    <a mat-list-item (click)="onClick(menu)">
+    <a class="menu-a" mat-list-item (click)="onClick(menu)">
+      <img class="icon" [src]="menu.iconImg" loading="lazy" alt="X">
       <ng-container *ngIf="menu.sexType; then player else character"></ng-container>
       <ng-template #player>
-        <span [innerText]="'PLAYER.' + menu.sexType | translate"></span>
-        <span *ngIf="menu.elementType" [innerText]="'(' + ('ELEMENT.' + menu.elementType | translate) + ')'"></span>
+        <span [innerText]="('PLAYER.' + menu.sexType | translate) + ' (' + ('ELEMENT.' + menu.elementType | translate) + ')'"></span>
       </ng-template>
       <ng-template #character>
-        {{ menu.names[currentLanguage] }}
+        <span [innerText]="menu.names[currentLanguage]"></span>
       </ng-template>
       <span class="spacer"></span>
       <figure *ngIf="menu.isEnkaData" class="shinshinmoe"></figure>
