@@ -53,6 +53,10 @@ export class MenuComponent implements OnInit {
         },
         isEnkaData: enkaList.includes(key),
         iconImg: tempMap[key].images.icon,
+        elementTypeNumber: tempMap[key].info.elementType,
+        elementType: Const.ELEMENT_TYPE_MAP.get(tempMap[key].info.elementType),
+        elementSvg: Const.ELEMENT_SVG_PATH.get(tempMap[key].info.elementType),
+        bgImg: Const[tempMap[key].qualityType+Const.QUALITY_BG_SUFFIX as keyof Const],
       };
       //旅人さん
       if (key.includes(Const.PLAYER_BOY)){

@@ -118,6 +118,21 @@ export class Const {
     ' 60%,  rgba(0,0,0,0.3) 65%)'
   ]
 
+  static readonly QUALITY_ORANGE_BG = "linear-gradient(145deg, rgba(149,106,67,1) 12%, rgba(222,147,81,1) 86%)"
+  static readonly QUALITY_ORANGE_SP_BG = "linear-gradient(145deg, rgba(172,80,84,1) 12%, rgba(219,76,86,1) 86%)"
+  static readonly QUALITY_PURPLE_BG = "linear-gradient(145deg, rgba(101,96,140,1) 12%, rgba(151,118,197,1) 86%)"
+
+  static readonly QUALITY_BG_SUFFIX = "_BG";
+
+  static readonly ELEMENT_SVG_PATH: Map<number, string> = new Map([
+    [2, "assets/icons/element/pyro.svg"],
+    [3, "assets/icons/element/hydro.svg"],
+    [4, "assets/icons/element/anemo.svg"],
+    [5, "assets/icons/element/cryo.svg"],
+    [6, "assets/icons/element/geo.svg"],
+    [7, "assets/icons/element/electro.svg"],
+    [8, "assets/icons/element/dendro.svg"],
+  ])
   //*********************************
   //           　属性
   //*********************************

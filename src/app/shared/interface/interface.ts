@@ -13,10 +13,13 @@ export interface MenuInfo {
   names: Record<TYPE_SYS_LANG, string>;
   routerLink: string;
   queryParams: CharacterQueryParam;
-  elementType?: string; //旅人さん専用（現在）
+  elementType?: string;
   sexType?: string; //旅人さん専用（現在）
   isEnkaData?: boolean;
   iconImg?: string;
+  elementTypeNumber?: number;
+  elementSvg?: string;
+  bgImg?: string;
 }
 
 /** 言語インタフェース */
