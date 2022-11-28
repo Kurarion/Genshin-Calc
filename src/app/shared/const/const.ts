@@ -133,6 +133,8 @@ export class Const {
     [7, "assets/icons/element/electro.svg"],
     [8, "assets/icons/element/dendro.svg"],
   ])
+
+  static readonly IMG_ON_ERROR = "assets/icons/UI_Temp.png";
   //*********************************
   //           　属性
   //*********************************

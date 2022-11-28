@@ -10,7 +10,7 @@
                     <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="isFirst" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                         <mat-expansion-panel-header matTooltipPosition="right">
                             <mat-panel-title>
-                                <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" alt="X">
+                                <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
                                 <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -42,7 +42,7 @@
                         <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                             <mat-expansion-panel-header matTooltipPosition="right">
                                 <mat-panel-title>
-                                    <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" alt="X">
+                                    <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
                                     <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -66,7 +66,7 @@
                             <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        <img class="skill-icon" [style.background-image]="iconBGColor" [src]="skill.images.icon" loading="lazy" alt="X">
+                                        <img class="skill-icon" [style.background-image]="iconBGColor" [src]="skill.images.icon" loading="lazy" appImgErrorHandle>
                                         <span [innerText]="skill.name[currentLanguage]"></span>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>

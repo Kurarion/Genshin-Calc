@@ -2,7 +2,7 @@
     <mat-label [innerText]="title | translate"></mat-label>
     <mat-select [ngModel]="model" (ngModelChange)="onModelChange($event)">
         <mat-select-trigger *ngIf="service && dispalyIconWhenSelected && model">
-            <img class="selected-icon" [src]="this.service.get(model).images.icon" loading="lazy" alt="X">
+            <img class="selected-icon" [src]="this.service.get(model).images.icon" loading="lazy" appImgErrorHandle>
             <span>{{this.service.get(model)[selectedDispalyProperty][currentLanguage]}}</span>
         </mat-select-trigger>
         <mat-optgroup class="sticky">
@@ -18,7 +18,7 @@
                 <mat-option 
                     class="option"
                     [value]="displayItem[optionValueProperty]" >
-                    <img *ngIf="service" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" alt="X">
+                    <img *ngIf="service" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" appImgErrorHandle>
                     {{displayItem[optionInnerTextProperty][currentLanguage]}}
                 </mat-option>
             </ng-container>
