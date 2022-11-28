@@ -9,6 +9,10 @@
   padding-top: 0 !important;
 }
 
+:host ::ng-deep .mat-list-item {
+  height: auto !important;
+}
+
 .menu-list > a {
   text-align: left;
   /* white-space: nowrap; */
@@ -37,6 +41,8 @@
   flex: none;
   position: relative;
   margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .icon-before {
@@ -68,8 +74,3 @@
   word-break: break-word;
 }
 
-.menu-a {
-  /* font-size: 1em; */
-  padding-top: 0.35rem !important;
-  padding-bottom: 0.35rem !important;
-}

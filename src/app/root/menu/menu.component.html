@@ -1,6 +1,6 @@
 <mat-nav-list class="menu-list">
   <ng-container *ngFor="let menu of menuList">
-    <a class="menu-a" mat-list-item (click)="onClick(menu)">
+    <a mat-list-item (click)="onClick(menu)">
       <div class="icon-div">
         <div class="icon-before"></div>
         <img class="icon" [style.background]="menu.bgImg" [src]="menu.iconImg" loading="lazy" appImgErrorHandle>
