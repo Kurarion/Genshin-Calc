@@ -94,7 +94,7 @@ npm run generateGenshinData
 
 接口参考: <a href="./src/app/shared/interface/interface.ts" target="_blank">`src/app/shared/interface/interface.ts`</a>
 
-常量参考: <a href="./src/app/shared/const/const.ts#L108" target="_blank">`src/app/shared/const/const.ts`</a>
+常量参考: <a href="./src/app/shared/const/const.ts" target="_blank">`src/app/shared/const/const.ts`</a>
 
 ■测试
 

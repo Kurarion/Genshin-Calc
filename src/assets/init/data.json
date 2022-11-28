@@ -1834,11 +1834,21 @@
                 "skill": [
                     {
                         "damage": {
-                            "indexs": [0,1],
+                            "indexs": [0],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_ELECTRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "FISCHL_OZ"
                         }
                     }
                 ],
@@ -1894,7 +1904,7 @@
                     {
                         "buffs":[{
                             "index":0,
-                            "target":["DMG_RATE_UP_SKILL"],
+                            "target":["DMG_RATE_UP_SKILL_FISCHL_OZ"],
                             "settingType":"switch",
                             "defaultEnable":false
                         }]

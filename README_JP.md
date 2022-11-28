@@ -80,7 +80,7 @@ npm run generateGenshinData
 
 インタフェース参照：<a href="./src/app/shared/interface/interface.ts" target="_blank">`src/app/shared/interface/interface.ts`</a>
 
-定数参照：<a href="./src/app/shared/const/const.ts#L108" target="_blank">`src/app/shared/const/const.ts`</a>
+定数参照：<a href="./src/app/shared/const/const.ts" target="_blank">`src/app/shared/const/const.ts`</a>
 
 ■テスト
 ```

@@ -8,6 +8,12 @@ export class Const {
   static readonly STORAGE_LANG = 'lang';
 
   //*********************************
+  //           连接符
+  //*********************************
+  //タグ
+  static readonly CONCATENATION_TAG = "_";
+
+  //*********************************
   //             言語
   //*********************************
   static readonly LAN_CHS = "cn_sim";
@@ -135,6 +141,62 @@ export class Const {
   ])
 
   static readonly IMG_ON_ERROR = "assets/icons/UI_Temp.png";
+
+  //*********************************
+  //           スキルタグ
+  //*********************************
+  static readonly PORP_TAG_RAIDEN_ITTOU = "RAIDEN_ITTOU";
+  static readonly PORP_TAG_RAIDEN_ISSHIN = "RAIDEN_ISSHIN";
+  static readonly PORP_TAG_EULA_KOUKEN = "EULA_KOUKEN";
+  static readonly PORP_TAG_CYNO_BOLT = "CYNO_BOLT";
+  static readonly PORP_TAG_CYNO_Q = "CYNO_Q";
+  static readonly PORP_TAG_NILOU_MOON = "NILOU_MOON";
+  static readonly PORP_TAG_NAHIDA_TRI_KARMA = "NAHIDA_TRI_KARMA";
+  static readonly PORP_TAG_LAYLA_SHOOTING_STAR = "LAYLA_SHOOTING_STAR";
+  static readonly PORP_TAG_FISCHL_OZ = "FISCHL_OZ";
+  
+  static readonly PROPS_TAG_LIST = [
+    Const.PORP_TAG_RAIDEN_ITTOU,
+    Const.PORP_TAG_RAIDEN_ISSHIN,
+    Const.PORP_TAG_EULA_KOUKEN,
+    Const.PORP_TAG_CYNO_BOLT,
+    Const.PORP_TAG_CYNO_Q,
+    Const.PORP_TAG_NILOU_MOON,
+    Const.PORP_TAG_NAHIDA_TRI_KARMA,
+    Const.PORP_TAG_LAYLA_SHOOTING_STAR,
+    Const.PORP_TAG_FISCHL_OZ,
+  ]
+
+  static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
+    ["10000052", [
+      Const.PORP_TAG_RAIDEN_ITTOU,
+      Const.PORP_TAG_RAIDEN_ISSHIN,
+    ]],
+    ["10000051", [
+      Const.PORP_TAG_EULA_KOUKEN,
+    ]],
+    ["10000070", [
+      Const.PORP_TAG_NILOU_MOON,
+    ]],
+    ["10000071", [
+      Const.PORP_TAG_CYNO_BOLT,
+      Const.PORP_TAG_CYNO_Q,
+    ]],
+    ["10000073", [
+      Const.PORP_TAG_NAHIDA_TRI_KARMA,
+    ]],
+    ["10000074", [
+      Const.PORP_TAG_LAYLA_SHOOTING_STAR,
+    ]],
+    ["10000031", [
+      Const.PORP_TAG_FISCHL_OZ,
+    ]],
+  ])
+
+  static readonly PROPS_HAS_MIX_RATE: Set<string> = new Set([
+    "10000073",
+  ]);
+
   //*********************************
   //           　属性
   //*********************************
@@ -297,6 +359,8 @@ export class Const {
   static readonly PROP_DMG_RATE_UP_PLUNGING = "DMG_RATE_UP_PLUNGING";
   //元素スキルダメージ倍率アップ値
   static readonly PROP_DMG_RATE_UP_SKILL = "DMG_RATE_UP_SKILL";
+  //元素スキルダメージ倍率アップ値(FISCHL)
+  static readonly PROP_DMG_RATE_UP_SKILL_FISCHL_OZ = "DMG_RATE_UP_SKILL" + Const.CONCATENATION_TAG + Const.PORP_TAG_FISCHL_OZ;
   //元素爆発ダメージ倍率アップ値
   static readonly PROP_DMG_RATE_UP_ELEMENTAL_BURST = "DMG_RATE_UP_ELEMENTAL_BURST";
   //元素爆発ダメージ倍率アップ値（夢想の一刀）
@@ -662,6 +726,7 @@ export class Const {
     Const.PROP_DMG_RATE_UP_CHARGED,
     Const.PROP_DMG_RATE_UP_PLUNGING,
     Const.PROP_DMG_RATE_UP_SKILL,
+    Const.PROP_DMG_RATE_UP_SKILL_FISCHL_OZ,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ISSHIN,
@@ -824,6 +889,7 @@ export class Const {
     Const.PROP_DMG_RATE_UP_CHARGED,
     Const.PROP_DMG_RATE_UP_PLUNGING,
     Const.PROP_DMG_RATE_UP_SKILL,
+    Const.PROP_DMG_RATE_UP_SKILL_FISCHL_OZ,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ISSHIN,
@@ -978,6 +1044,7 @@ export class Const {
     Const.PROP_DMG_RATE_UP_CHARGED,
     Const.PROP_DMG_RATE_UP_PLUNGING,
     Const.PROP_DMG_RATE_UP_SKILL,
+    Const.PROP_DMG_RATE_UP_SKILL_FISCHL_OZ,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU,
     Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ISSHIN,
@@ -1486,53 +1553,6 @@ export class Const {
     ]],
   ]);
 
-  static readonly PORP_TAG_RAIDEN_ITTOU = "RAIDEN_ITTOU";
-  static readonly PORP_TAG_RAIDEN_ISSHIN = "RAIDEN_ISSHIN";
-  static readonly PORP_TAG_EULA_KOUKEN = "EULA_KOUKEN";
-  static readonly PORP_TAG_CYNO_BOLT = "CYNO_BOLT";
-  static readonly PORP_TAG_CYNO_Q = "CYNO_Q";
-  static readonly PORP_TAG_NILOU_MOON = "NILOU_MOON";
-  static readonly PORP_TAG_NAHIDA_TRI_KARMA = "NAHIDA_TRI_KARMA";
-  static readonly PORP_TAG_LAYLA_SHOOTING_STAR = "LAYLA_SHOOTING_STAR";
-  
-  static readonly PROPS_TAG_LIST = [
-    Const.PORP_TAG_RAIDEN_ITTOU,
-    Const.PORP_TAG_RAIDEN_ISSHIN,
-    Const.PORP_TAG_EULA_KOUKEN,
-    Const.PORP_TAG_CYNO_BOLT,
-    Const.PORP_TAG_CYNO_Q,
-    Const.PORP_TAG_NILOU_MOON,
-    Const.PORP_TAG_NAHIDA_TRI_KARMA,
-    Const.PORP_TAG_LAYLA_SHOOTING_STAR,
-  ]
-
-  static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
-    ["10000052", [
-      Const.PORP_TAG_RAIDEN_ITTOU,
-      Const.PORP_TAG_RAIDEN_ISSHIN,
-    ]],
-    ["10000051", [
-      Const.PORP_TAG_EULA_KOUKEN,
-    ]],
-    ["10000070", [
-      Const.PORP_TAG_NILOU_MOON,
-    ]],
-    ["10000071", [
-      Const.PORP_TAG_CYNO_BOLT,
-      Const.PORP_TAG_CYNO_Q,
-    ]],
-    ["10000073", [
-      Const.PORP_TAG_NAHIDA_TRI_KARMA,
-    ]],
-    ["10000074", [
-      Const.PORP_TAG_LAYLA_SHOOTING_STAR,
-    ]],
-  ])
-
-  static readonly PROPS_HAS_MIX_RATE: Set<string> = new Set([
-    "10000073",
-  ]);
-
   //*********************************
   //           原神データ
   //*********************************
@@ -1606,12 +1626,6 @@ export class Const {
     [7, "ELECTRO"],
     [8, "DENDRO"],
   ])
-
-  //*********************************
-  //           连接符
-  //*********************************
-  //タグ
-  static readonly CONCATENATION_TAG = "_";
   
   //*********************************
   //           共通符

@@ -79,7 +79,7 @@ After the game version is updated, execute `npm run generateGenshinData` to obta
 
 Interface reference: <a href="./src/app/shared/interface/interface.ts" target="_blank">`src/app/shared/interface/interfaces.ts`</a>
 
-Constant reference: <a href="./src/app/shared/const/const.ts#L108" target="_blank">`src/app/shared/const/const.ts`</a>
+Constant reference: <a href="./src/app/shared/const/const.ts" target="_blank">`src/app/shared/const/const.ts`</a>
 
 ■ Test
 ```

@@ -131,6 +131,7 @@
     "DMG_RATE_UP_CHARGED": "重擊傷害倍率增加值",
     "DMG_RATE_UP_PLUNGING": "下落攻擊傷害倍率增加值",
     "DMG_RATE_UP_SKILL": "元素技能傷害倍率增加值",
+    "DMG_RATE_UP_SKILL_FISCHL_OZ": "元素技能傷害倍率增加值(召喚)",
     "DMG_RATE_UP_ELEMENTAL_BURST": "元素爆發傷害倍率增加值",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU": "元素爆發傷害倍率增加值(夢想一刀)",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ISSHIN": "元素爆發傷害倍率增加值(夢想一心)",
@@ -341,7 +342,8 @@
     "CYNO_Q": "啟途誓使(普通攻擊)",
     "NILOU_MOON": "水月",
     "NAHIDA_TRI_KARMA": "滅淨三業",
-    "LAYLA_SHOOTING_STAR": "飛星"
+    "LAYLA_SHOOTING_STAR": "飛星",
+    "FISCHL_OZ": "奧茲(召喚)"
   },
   "AUTO": {
     "CALC": "計算",

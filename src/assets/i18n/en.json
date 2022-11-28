@@ -131,6 +131,7 @@
     "DMG_RATE_UP_CHARGED": "Charged DMG Rate Increase",
     "DMG_RATE_UP_PLUNGING": "Plunging DMG Rate Increase",
     "DMG_RATE_UP_SKILL": "Skill DMG Rate Increase",
+    "DMG_RATE_UP_SKILL_FISCHL_OZ": "Skill DMG Rate Increase(Summoning)",
     "DMG_RATE_UP_ELEMENTAL_BURST": "Elemental Burst DMG Rate Increase",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU": "Elemental Burst DMG Rate Increase(Musou Hitotachi)",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ISSHIN": "Elemental Burst DMG Rate Increase(Musou Isshin)",
@@ -341,7 +342,8 @@
     "CYNO_Q": "Pactsworn Pathclearer (Normal)",
     "NILOU_MOON": "Watery Moon",
     "NAHIDA_TRI_KARMA": "Tri-Karma Purification",
-    "LAYLA_SHOOTING_STAR": "Shooting Star"
+    "LAYLA_SHOOTING_STAR": "Shooting Star",
+    "FISCHL_OZ": "Oz's (Summoning)"
   },
   "AUTO": {
     "CALC": "Calculate",
