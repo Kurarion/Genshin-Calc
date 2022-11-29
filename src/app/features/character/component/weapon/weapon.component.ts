@@ -225,7 +225,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     //表示用更新
     this.updateRecords();
     //プロフィール画像初期化
-    // this.initializeBackGroundImage();
+    this.initializeBackGroundImage();
     //武器設定
     this.weaponService.setIndex(this.data.id, this.weaponData.id);
   }

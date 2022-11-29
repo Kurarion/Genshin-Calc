@@ -19,6 +19,7 @@ export class MatFilteringSelectorComponent implements OnInit {
   @Input('service') service!: any;
   @Input('selectedDispalyProperty') selectedDispalyProperty!: string;
   @Input('dispalyIconWhenSelected') dispalyIconWhenSelected: boolean = false;
+  @Input('listenLoadEvent') listenLoadEvent: boolean = false;
 
   filteringContent: string = "";
   displayList!: any[];

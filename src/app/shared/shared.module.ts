@@ -13,6 +13,7 @@ import { NoStrongPipe } from './pipe/no-strong.pipe';
 import { RatePipe } from './pipe/rate.pipe';
 import { TruncatePipe } from './pipe/truncate.pipe';
 import { ImgErrorHandleDirective } from './directive/img-error-handle.directive';
+import { ImgLoadAndErrorHandleDirective } from './directive/img-load-and-error-handle.directive';
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { RatePipe } from './pipe/rate.pipe';
@@ -53,6 +54,7 @@ let shardList: any[] = [
   RatePipe,
   TruncatePipe,
   ImgErrorHandleDirective,
+  ImgLoadAndErrorHandleDirective,
 ];
 
 @NgModule({

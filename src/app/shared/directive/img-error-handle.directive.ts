@@ -22,7 +22,6 @@ export class ImgErrorHandleDirective {
   //     (this.el.nativeElement as HTMLImageElement).naturalHeight == Const.IMG_RES_404_HEIGHT &&
   //     (this.el.nativeElement as HTMLImageElement).naturalWidth == Const.IMG_RES_404_WIDTH){
   //     this.hasLoaded = true;
-  //     console.log("AAAA")
   //     this.onError();
   //   }
   // }

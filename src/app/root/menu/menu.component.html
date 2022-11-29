@@ -3,7 +3,7 @@
     <a mat-list-item (click)="onClick(menu)">
       <div class="icon-div">
         <div class="icon-before"></div>
-        <img class="icon" [style.background]="menu.bgImg" [src]="menu.iconImg" loading="lazy" appImgErrorHandle>
+        <img class="icon" [style.background]="menu.bgImg" [src]="menu.iconImg" loading="lazy" appImgLoadAndErrorHandle>
         <img class="icon-after" [src]="menu.elementSvg" loading="lazy" appImgErrorHandle>
       </div>
       <ng-container *ngIf="menu.sexType; then player else character"></ng-container>
