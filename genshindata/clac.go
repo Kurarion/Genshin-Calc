@@ -21,10 +21,13 @@ const (
 
 //图片资源Host
 const (
-	imgHostAvatarFormat        = "https://upload-bbs.mihoyo.com/game_record/genshin/character_icon/%s.png"
-	imgHostEquipFormat         = "https://upload-bbs.mihoyo.com/game_record/genshin/equip/%s.png"
+	// imgHostAvatarFormat        = "https://upload-bbs.mihoyo.com/game_record/genshin/character_icon/%s.png"
+	// imgHostEquipFormat         = "https://upload-bbs.mihoyo.com/game_record/genshin/equip/%s.png"
+	// imgHostConstellationFormat = "https://upload-bbs.mihoyo.com/game_record/genshin/constellation_icon/%s.png"
+	imgHostAvatarFormat        = "https://enka.network/ui/%s.png"
+	imgHostEquipFormat         = "https://enka.network/ui/%s.png"
+	imgHostConstellationFormat = "https://enka.network/ui/%s.png"
 	imgHostMonsterFormat       = "https://res.cloudinary.com/genshin/image/upload/sprites/%s.png"
-	imgHostConstellationFormat = "https://upload-bbs.mihoyo.com/game_record/genshin/constellation_icon/%s.png"
 	imgHostOhterFormat         = "https://enka.network/ui/%s.png"
 
 	imgAwakenSuffix    = "_Awaken"

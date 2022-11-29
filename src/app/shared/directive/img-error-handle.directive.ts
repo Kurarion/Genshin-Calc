@@ -6,7 +6,7 @@ import { Const } from '../const/const';
 })
 export class ImgErrorHandleDirective {
 
-  hasLoaded = false;
+  // hasLoaded = false;
 
   constructor(private el: ElementRef) { }
 
@@ -15,15 +15,16 @@ export class ImgErrorHandleDirective {
     this.el.nativeElement.src = Const.IMG_ON_ERROR;
   }
 
-  @HostListener("load")
-  private onLoad() {
-    if(
-      !this.hasLoaded &&
-      (this.el.nativeElement as HTMLImageElement).naturalHeight == Const.IMG_RES_404_HEIGHT &&
-      (this.el.nativeElement as HTMLImageElement).naturalWidth == Const.IMG_RES_404_WIDTH){
-      this.hasLoaded = true;
-      this.onError();
-    }
-  }
+  // @HostListener("load")
+  // private onLoad() {
+  //   if(
+  //     !this.hasLoaded &&
+  //     (this.el.nativeElement as HTMLImageElement).naturalHeight == Const.IMG_RES_404_HEIGHT &&
+  //     (this.el.nativeElement as HTMLImageElement).naturalWidth == Const.IMG_RES_404_WIDTH){
+  //     this.hasLoaded = true;
+  //     console.log("AAAA")
+  //     this.onError();
+  //   }
+  // }
 
 }

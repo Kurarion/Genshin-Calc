@@ -65,7 +65,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
 
   ngOnInit(): void {
     //プロフィール画像初期化
-    this.initializeBackGroundImage();
+    // this.initializeBackGroundImage();
     //レベルリスト初期化
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
       this.levelOptions.push({

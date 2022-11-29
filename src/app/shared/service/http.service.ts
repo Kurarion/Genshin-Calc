@@ -41,7 +41,11 @@ export class HttpService {
       .pipe(
         map(httpCallBack)
       )
-    );
+    ).catch((error)=>{
+      if(responseType == 'blob'){
+        return this.tempPicBody;
+      }
+    });
   }
 
   /**
@@ -58,22 +62,16 @@ export class HttpService {
           service.globalProgressService.setValue(0);
           break;
         case HttpEventType.ResponseHeader:
-          if(event.url == null || Const.IMG_RES_404_REG.test(event.url)){
-            is404Redirect = true;
+          if(event.url == null || Const.IMG_RES_404_REG.test(event.url) || !event.ok){
+            throw new Error('404');
           }
           toLoad = parseInt(event.headers.get("content-length") as string);
           break;
         case HttpEventType.DownloadProgress:
-          if(is404Redirect){
-            return service.tempPicBody;
-          }
           const percent = Math.round(event.loaded * 100 / toLoad);
           service.globalProgressService.setValue(percent);
           break;
         case HttpEventType.Response:
-          if(is404Redirect){
-            return service.tempPicBody;
-          }
           cache.set(originUrl, event.body);
           return event.body as T | null;
       }
