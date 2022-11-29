@@ -286,7 +286,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
     let url = this.weaponData.images.icon;
-    this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
+    this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
       if (v) {
         this.avatarURL = window.URL.createObjectURL(v);
         setTimeout(() => {

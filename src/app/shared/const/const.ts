@@ -142,6 +142,10 @@ export class Const {
 
   static readonly IMG_ON_ERROR = "assets/icons/UI_Temp.png";
 
+  static readonly IMG_RES_404_REG = /\/404.png$/;
+  static readonly IMG_RES_404_HEIGHT = 400;
+  static readonly IMG_RES_404_WIDTH = 400;
+
   //*********************************
   //           スキルタグ
   //*********************************

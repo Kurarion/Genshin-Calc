@@ -218,7 +218,7 @@ export class MainComponent implements OnInit, OnDestroy {
       // this.backgroundLoadFlg = false;
       let url = this.data.images.background;
       if (url) {
-        this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
+        this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
           if (v) {
             this.backgroundURL = window.URL.createObjectURL(v);
             setTimeout(() => {

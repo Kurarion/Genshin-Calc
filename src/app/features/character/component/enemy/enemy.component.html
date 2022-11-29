@@ -1,8 +1,9 @@
 <ng-container>
     <mat-card class="card" [style.width.px]="cardWidth">
         <mat-card-header>
-            <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
-            </div>
+            <!-- <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
+            </div> -->
+            <img mat-card-avatar class="avatar" [src]="enemyData.images.icon" loading="lazy" appImgErrorHandle>
             <mat-card-title class="header-text">
                 <app-mat-filtering-selector
                     [title]="'ENEMY.NAME'"

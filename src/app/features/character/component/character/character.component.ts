@@ -132,7 +132,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
     if (!this.avatarURL) {
       this.avatarLoadFlg = false;
       let url = this.data.images.icon;
-      this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
+      this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
         if (v) {
           this.avatarURL = window.URL.createObjectURL(v);
           setTimeout(() => {

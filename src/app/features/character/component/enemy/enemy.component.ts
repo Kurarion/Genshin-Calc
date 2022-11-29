@@ -134,7 +134,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
     //敵属性更新
     this.onChangeLevel(this.selectedLevel);
     //プロフィール画像初期化
-    this.initializeBackGroundImage();
+    // this.initializeBackGroundImage();
   }
 
   onChangeLevel(value: levelOption) {
@@ -173,7 +173,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
     let url = this.enemyData.images.icon;
-    this.httpService.get<Blob>(url, 'blob').then((v: Blob | null) => {
+    this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
       if (v) {
         this.avatarURL = window.URL.createObjectURL(v);
         setTimeout(() => {
