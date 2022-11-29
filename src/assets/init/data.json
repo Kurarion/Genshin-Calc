@@ -3543,6 +3543,16 @@
                                 "defaultEnable": false
                             }]
                         }
+                ],
+                "5": [
+                    {
+                        "buffs":[{
+                            "index": 3,
+                            "target": ["CRIT_RATE"],
+                            "settingType": "switch",
+                            "defaultEnable": false
+                        }]
+                    }
                 ]
             }
         },
