@@ -126,16 +126,6 @@
                 ],
                 "5": [
                         {
-                            "damage": {
-                                "originSkill": "normal",
-                                "originIndex": 7,
-                                "originRelation": "*",
-                                "customValues": [1],
-                                "base": "ATTACK",
-                                "canOverride": true,
-                                "elementBonusType": "DMG_BONUS_CRYO",
-                                "attackBonusType": "DMG_BONUS_CHARGED"
-                            },
                             "buffs":[{
                                 "index": 1,
                                 "target": ["DMG_BONUS_CHARGED"],
@@ -232,18 +222,6 @@
             },
             "constellation": {
                 "0": [
-                        {
-                            "damage": {
-                                "originSkill": "skill",
-                                "originIndex": 0,
-                                "originRelation": "*",
-                                "customValues": [1],
-                                "base": "ATTACK",
-                                "canOverride": false,
-                                "elementBonusType": "DMG_BONUS_ANEMO",
-                                "attackBonusType": "DMG_BONUS_SKILL"
-                            }
-                        },
                         {
                             "buffs":[{
                                 "index": 0,
