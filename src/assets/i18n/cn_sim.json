@@ -360,5 +360,8 @@
     "ATTACK_TYPE": "攻击类型加成",
     "DAMAGE_TYPE": "最优伤害类型",
     "DAMAGE_TAG": "伤害标签"
+  },
+  "SW":{
+    "READY": "数据更新完成!;;重新加载"
   }
 }

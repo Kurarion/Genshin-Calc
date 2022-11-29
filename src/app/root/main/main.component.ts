@@ -20,6 +20,8 @@ import {
   TYPE_SYS_LANG,
   RelayoutMsgService,
 } from 'src/app/shared/shared.module';
+import { SwUpdate } from '@angular/service-worker';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-main',
@@ -51,6 +53,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private storageService: StorageService,
     private relayoutMsgService: RelayoutMsgService,
+    private swUpdate: SwUpdate,
+    private matSnackBar: MatSnackBar,
   ) {
     this.menuMode = 'side';
     //言語リスト初期化
@@ -82,6 +86,19 @@ export class MainComponent implements OnInit, OnDestroy {
         this.menuMode = isLarge?'side':'over';
       }, flgDelay);
     });
+    //SW更新通知
+    this.swUpdate.versionUpdates.subscribe((event)=>{
+      switch (event.type) {
+        case 'VERSION_READY':
+          this.translateService.get('SW.READY').subscribe((res: string) => {
+            let infos = res.split(';;');
+            this.matSnackBar.open(infos[0], infos[1]).onAction().subscribe(()=>{
+              window.location.reload();
+            })
+          });
+        break;
+      }
+    })
   }
 
   ngOnInit() {

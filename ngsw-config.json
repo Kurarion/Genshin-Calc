@@ -26,41 +26,33 @@
           "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
-    }
-  ],
-  "dataGroups": [
+    },
     {
       "name": "game-data",
-      "version": 32,
-      "urls": [
-          "/assets/genshin/avatar_map.json",
-          "/assets/genshin/monster_map.json",
-          "/assets/genshin/reliquary_affix_map.json",
-          "/assets/genshin/reliquary_main_map.json",
-          "/assets/genshin/reliquary_set_map.json",
-          "/assets/genshin/weapon_map.json"
-      ],
-      "cacheConfig": {
-        "maxSize": 6,
-        "maxAge": "30d",
-        "strategy": "performance"
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+            "/assets/genshin/avatar_map.json",
+            "/assets/genshin/monster_map.json",
+            "/assets/genshin/reliquary_affix_map.json",
+            "/assets/genshin/reliquary_main_map.json",
+            "/assets/genshin/reliquary_set_map.json",
+            "/assets/genshin/weapon_map.json"
+        ]
       }
     },
     {
       "name": "setting-data",
-      "version": 3201,
-      "urls": [
-          "/assets/init/data.json",
-          "/assets/i18n/cn_sim.json",
-          "/assets/i18n/cn_tra.json",
-          "/assets/i18n/en.json",
-          "/assets/i18n/jp.json",
-          "/assets/init/chip.json"
-      ],
-      "cacheConfig": {
-        "maxSize": 6,
-        "maxAge": "30d",
-        "strategy": "performance"
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+            "/assets/init/data.json",
+            "/assets/i18n/cn_sim.json",
+            "/assets/i18n/cn_tra.json",
+            "/assets/i18n/en.json",
+            "/assets/i18n/jp.json",
+            "/assets/init/chip.json"
+        ]
       }
     }
   ]

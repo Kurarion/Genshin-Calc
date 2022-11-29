@@ -360,5 +360,8 @@
     "ATTACK_TYPE": "Attack Type Bonus",
     "DAMAGE_TYPE": "Target Damage Type",
     "DAMAGE_TAG": "Damage Tag"
+  },
+  "SW":{
+    "READY": "Data update completed!;;Reload"
   }
 }

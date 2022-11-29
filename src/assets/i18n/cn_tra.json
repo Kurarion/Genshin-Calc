@@ -360,5 +360,8 @@
     "ATTACK_TYPE": "攻擊類型加成",
     "DAMAGE_TYPE": "最優傷害類型",
     "DAMAGE_TAG": "傷害標簽"
+  },
+  "SW":{
+    "READY": "數據更新完成!;;重新加載"
   }
 }
