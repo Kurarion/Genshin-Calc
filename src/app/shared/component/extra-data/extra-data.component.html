@@ -7,7 +7,12 @@
             <!-- バフ -->
             <tr>
                 <td>
-                    <span [innerText]="'GENSHIN.OTHER.BUFF' | translate"></span>
+                    <span 
+                        [innerText]="info.title?info.title:'GENSHIN.OTHER.BUFF' | translate"
+                        [matTooltip]="info.desc?(info.desc | translate):undefined"
+                        matTooltipPosition='above'
+                    ></span>
+                    <mat-icon *ngIf="info.desc" class="icon material-icons-outlined">info</mat-icon>
                 </td>
                 <td>
                     <ng-container *ngIf="info.type == 'switch'">

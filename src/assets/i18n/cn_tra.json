@@ -363,5 +363,13 @@
   },
   "SW":{
     "READY": "數據更新完成!;;重新加載"
+  },
+  "DESC":{
+    "GOLDEN_MAJESTY":{
+      "WITH_SHIELD": "護盾情況下的加成（與上一個BUFF選擇其一設置）"
+    },
+    "TRAVELER":{
+      "PROUDSKILL_2": "吸收豐穰勾玉數額外的充能加成（單位：個）"
+    }
   }
 }

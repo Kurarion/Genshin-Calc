@@ -204,6 +204,8 @@ export class Const {
   //*********************************
   //           　属性
   //*********************************
+  //特殊BUFFに変えるための仮想属性（固定1）
+  static readonly PROP_FIX_NUMBER_1 = "FIX_NUMBER_1";
   //レベル
   static readonly PROP_LEVEL = "LEVEL";
   //生命力ベース

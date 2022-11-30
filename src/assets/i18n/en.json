@@ -363,5 +363,13 @@
   },
   "SW":{
     "READY": "Data update completed!;;Reload"
+  },
+  "DESC":{
+    "GOLDEN_MAJESTY":{
+      "WITH_SHIELD": "Bonus in case of shield (select one of the settings with the previous BUFF)"
+    },
+    "TRAVELER":{
+      "PROUDSKILL_2": "Additional recharge increase by the absorb the amount of Abundance Amulets (unit: piece)"
+    }
   }
 }

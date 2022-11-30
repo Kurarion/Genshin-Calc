@@ -126,6 +126,8 @@ export interface BuffResult {
   min?: number;
   max?: number;
   step?: number;
+  desc?: string;
+  title?: string;
 }
 
 export interface artifactSetInfo {
@@ -2304,6 +2306,8 @@ export class CalculatorService {
                     valueIndex: infoIndex,
                     type: 'switch',
                     switchValue: tempValue,
+                    desc: buffInfo.desc,
+                    title: buffInfo.title,
                   })
                   break;
                 case 'slider':
@@ -2321,6 +2325,8 @@ export class CalculatorService {
                     min: buffInfo.sliderMin ?? 0,
                     max: buffInfo.sliderMax ?? 1,
                     step: buffInfo.sliderStep ?? 1,
+                    desc: buffInfo.desc,
+                    title: buffInfo.title
                   })
                   break;
                 case 'resident':
@@ -2417,6 +2423,10 @@ export class CalculatorService {
     //スペシャル処理
     for(let buff of specialOrders){
       let baseValue = buff.base?result[buff.base]:0;
+      //特殊BUFFに変えるための仮想属性
+      if(buff.base == Const.PROP_FIX_NUMBER_1){
+        baseValue = 1;
+      }
       if(buff.base2 != undefined){
         baseValue *= result[buff.base2];
       }

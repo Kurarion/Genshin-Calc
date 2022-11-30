@@ -142,6 +142,9 @@ export interface ExtraSkillBuff {
   selfElementTypeLimit?: boolean;
   //マックススタックバフ（複数バフのみ適用）
   isMaximumStackBuff?: boolean;
+  //説明
+  desc?: string;
+  title?: string;
 }
 
 export interface ExtraSkillHealing {

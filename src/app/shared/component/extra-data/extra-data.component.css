@@ -49,3 +49,8 @@ tr td:nth-of-type(2) {
 .scroll-div {
     overflow-x: hidden;
 }
+
+.icon {
+    vertical-align: middle;
+    font-size: 14px;
+}

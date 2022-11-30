@@ -7343,7 +7343,8 @@
                             "settingType": "slider",
                             "sliderInitialValue": 0,
                             "sliderStep": 1,
-                            "sliderMax": 3
+                            "sliderMax": 3,
+                            "desc": "DESC.TRAVELER.PROUDSKILL_2"
                         }]
                     }]
                 ]
@@ -7792,7 +7793,8 @@
                             "settingType": "slider",
                             "sliderInitialValue": 0,
                             "sliderStep": 1,
-                            "sliderMax": 3
+                            "sliderMax": 3,
+                            "desc": "DESC.TRAVELER.PROUDSKILL_2"
                         }]
                     }]
                 ]
@@ -8361,7 +8363,8 @@
                         "settingType":"slider",
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
-                        "sliderMax": 5
+                        "sliderMax": 5,
+                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
                     }]
                 }
             ]
@@ -8804,7 +8807,8 @@
                         "settingType": "slider",
                         "sliderMax":5,
                         "sliderStep":1,
-                        "sliderInitialValue": 0
+                        "sliderInitialValue": 0,
+                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
                     }]
                 }
             ]
@@ -9124,7 +9128,8 @@
                         "settingType":"slider",
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
-                        "sliderMax": 5
+                        "sliderMax": 5,
+                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
                     }]
                 }
             ]
@@ -9553,7 +9558,8 @@
                         "settingType":"slider",
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
-                        "sliderMax": 5
+                        "sliderMax": 5,
+                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
                     }]
                 }
             ]
