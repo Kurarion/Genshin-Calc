@@ -7,12 +7,16 @@ import { Const } from '../const/const';
 export class ImgErrorHandleDirective {
 
   // hasLoaded = false;
+  hasErrored = false;
 
   constructor(private el: ElementRef) { }
 
   @HostListener("error")
   private onError() {
-    this.el.nativeElement.src = Const.IMG_ON_ERROR;
+    if(!this.hasErrored){
+      this.hasErrored = true;
+      this.el.nativeElement.src = Const.IMG_ON_ERROR;
+    }
   }
 
   // @HostListener("load")
