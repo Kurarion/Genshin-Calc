@@ -837,16 +837,6 @@
                 ],
                 "1": [
                         {
-                            "damage": {
-                                "customValues": [1],
-                                "originSkill": "skill",
-                                "originIndex": 1,
-                                "originRelation": "*",
-                                "base": "ATTACK",
-                                "canOverride": false,
-                                "elementBonusType": "DMG_BONUS_PYRO",
-                                "attackBonusType": "DMG_BONUS_SKILL"
-                            },
                             "buffs":[{
                                 "index": 0,
                                 "target": ["DMG_BONUS_SKILL"],
