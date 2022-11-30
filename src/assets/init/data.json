@@ -7309,7 +7309,17 @@
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ELECTRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
-                        }
+                        },
+                        "buffs":[{
+                            "index": 3,
+                            "base": "FIX_NUMBER_1",
+                            "target": ["ENERGY_RECHARGE"],
+                            "priority": 10,
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderStep": 1,
+                            "sliderMax": 3
+                        }]
                     }
                 ],
                 "elementalBurst": [
@@ -7325,7 +7335,17 @@
                 ],
                 "proudSkills": [
                     [],
-                    []
+                    [{
+                        "buffs":[{
+                            "index": 0,
+                            "base":"ENERGY_RECHARGE",
+                            "target":["ENERGY_RECHARGE"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderStep": 1,
+                            "sliderMax": 3
+                        }]
+                    }]
                 ]
             },
             "constellation": {
@@ -7738,7 +7758,17 @@
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ELECTRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
-                        }
+                        },
+                        "buffs":[{
+                            "index": 3,
+                            "base": "FIX_NUMBER_1",
+                            "target": ["ENERGY_RECHARGE"],
+                            "priority": 10,
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderStep": 1,
+                            "sliderMax": 3
+                        }]
                     }
                 ],
                 "elementalBurst": [
@@ -7754,7 +7784,17 @@
                 ],
                 "proudSkills": [
                     [],
-                    []
+                    [{
+                        "buffs":[{
+                            "index": 0,
+                            "base":"ENERGY_RECHARGE",
+                            "target":["ENERGY_RECHARGE"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderStep": 1,
+                            "sliderMax": 3
+                        }]
+                    }]
                 ]
             },
             "constellation": {
