@@ -103,8 +103,8 @@
                         },
                         {
                             "damage": {
-                                "originSkill": "normal",
-                                "originIndex": 6,
+                                "originSkill": "elementalBurst",
+                                "originIndex": 1,
                                 "originRelation": "*",
                                 "indexs": [0],
                                 "base": "ATTACK",
