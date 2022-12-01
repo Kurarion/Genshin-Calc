@@ -4413,7 +4413,7 @@
                         {
                             "buffs":[{
                                 "index": 0,
-                                "target": ["DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST"],
+                                "target": ["DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             }]
@@ -5155,7 +5155,7 @@
                         {
                             "buffs":[{
                                 "index": 0,
-                                "target": ["DMG_ENEMY_DEFENSE_DOWN_SKILL"],
+                                "target": ["DMG_ENEMY_DEFENSE_IGNORE_SKILL"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             }]

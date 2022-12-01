@@ -1172,24 +1172,55 @@ export class CalculatorService {
     //5.防御区域
     //--------------------
     let defenceSectionValue = 0;
+    let tempIgnoreValue = data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE] ?? 0;
     let tempDefenseValue = data[Const.PROP_DMG_ENEMY_DEFENSE];
     switch(attackBonusType){
       case Const.PROP_DMG_BONUS_NORMAL:
         tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_NORMAL];
+        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_NORMAL] ?? 0;
+        //特別処理
+        if(hasTag){
+          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_NORMAL + tag] ?? 0;
+        }
+        tempDefenseValue *= (1 - tempIgnoreValue);
         break;
       case Const.PROP_DMG_BONUS_CHARGED:
         tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_CHARGED];
+        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_CHARGED] ?? 0;
+        //特別処理
+        if(hasTag){
+          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_CHARGED + tag] ?? 0;
+        }
+        tempDefenseValue *= (1 - tempIgnoreValue);
         break;
       case Const.PROP_DMG_BONUS_PLUNGING:
         tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_PLUNGING];
+        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING] ?? 0;
+        //特別処理
+        if(hasTag){
+          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING + tag] ?? 0;
+        }
+        tempDefenseValue *= (1 - tempIgnoreValue);
         break;
       case Const.PROP_DMG_BONUS_SKILL:
         tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_SKILL];
+        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL] ?? 0;
+        //特別処理
+        if(hasTag){
+          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL + tag] ?? 0;
+        }
+        tempDefenseValue *= (1 - tempIgnoreValue);
         break;
       case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
         tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST];
+        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST] ?? 0;
+        //特別処理
+        if(hasTag){
+          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST + tag] ?? 0;
+        }
+        tempDefenseValue *= (1 - tempIgnoreValue);
         break;
-    }
+    }  
     defenceSectionValue = tempDefenseValue/(tempDefenseValue + data[Const.PROP_LEVEL]*5 + 500);
     //--------------------
     //6.元素反応区域
