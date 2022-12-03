@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType, TeamService } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
-import * as internal from 'stream';
+
+const name_normal = 'normal';
+const name_skill = 'skill';
+const name_other = 'other';
+const name_elementalBurst = 'elementalBurst';
+const name_proudSkills = 'proudSkills';
+const name_constellation = 'constellation';
+const name_effect = 'effect';
+const name_set = 'set';
 
 export interface CalResult{
   characterData?: character;
@@ -14,7 +22,15 @@ export interface CalResult{
   extraSpecialCharaResult?: SpecialBuff[];
   extraSpecialWeaponResult?: SpecialBuff[];
   extraSpecialArtifactSetResult?: SpecialBuff[];
+  selfTeamBuff?: SelfTeamBuff;
+  extraTeamSecondaryResult?: Record<string, number>;
+  extraTeamOnceResult?: Record<string, number>;
+  extraSpecialTeamResult?: SpecialBuff[];
+  extraSpecialSelfTeamCharaResult?: TeamBuff[];
+  extraSpecialSelfTeamWeaponResult?: TeamBuff[];
+  extraSpecialSelfTeamArtifactSetResult?: TeamBuff[];
   allData?: Record<string, number>;
+  buffTag?: Record<string, string[]>;
   isDirty?: boolean;
 }
 
@@ -27,6 +43,50 @@ export interface SpecialBuff {
   priority?: number;
   maxVal?: number;
   specialMaxVal?: SpecialBuffMaxVal;
+  tag?: string;
+}
+
+export interface SelfTeamBuff {
+  [name_normal]: TeamBuff[];
+  [name_skill]: TeamBuff[];
+  [name_other]: TeamBuff[];
+  [name_elementalBurst]: TeamBuff[];
+  [name_proudSkills]: TeamBuff[][];
+  [name_constellation]: Record<string, TeamBuff[]>;
+  [name_effect]: TeamBuff[];
+  [name_set]: TeamBuff[];
+}
+
+export interface TeamBuff {
+  path?: any[];
+
+  index?: number;
+
+  tag?: string;
+  target: string;
+  val?: number;
+
+  canSecondaryTrans?: boolean;
+  canOverlying?: boolean;
+  calByOrigin?: boolean;
+
+  isSlider?: boolean;
+  isSpecialSlider?: boolean;
+  specialSliderVals?: number[];
+  sliderVals?: number;
+  sliderStep?: number;
+  sliderMin?: number;
+  sliderMax?: number;
+
+  isSpecial?: boolean;
+  base?: string;
+  base2?: string;
+  baseModifyValue?: number;
+  multiValue?: number;
+  priority?: number;
+  maxVal?: number;
+  specialMaxVal?: SpecialBuffMaxVal;
+  buffTag?: string,
 }
 
 export interface SpecialBuffMaxVal {
@@ -1000,6 +1060,7 @@ export class CalculatorService {
     private enemyService: EnemyService,
     private artifactService: ArtifactService,
     private otherService: OtherService,
+    private teamService: TeamService,
   ) { }
 
   //更新フラグ設定
@@ -1023,6 +1084,33 @@ export class CalculatorService {
     return this.allDatahasChanged$;
   }
 
+  //初期化（チームバフ）
+  initTeamBuffData(indexStr: string, withSelfTeamBuff: boolean = true){
+    if(withSelfTeamBuff){
+      this.dataMap[indexStr].selfTeamBuff = {
+        [name_normal]: [],
+        [name_skill]: [],
+        [name_other]: [],
+        [name_elementalBurst]: [],
+        [name_proudSkills]: [],
+        [name_constellation]: {
+          [Const.NAME_CONSTELLATION_1]: [],
+          [Const.NAME_CONSTELLATION_2]: [],
+          [Const.NAME_CONSTELLATION_3]: [],
+          [Const.NAME_CONSTELLATION_4]: [],
+          [Const.NAME_CONSTELLATION_5]: [],
+          [Const.NAME_CONSTELLATION_6]: [],
+        },
+        [name_effect]: [],
+        [name_set]: [],
+      };
+    }
+    this.dataMap[indexStr].extraTeamSecondaryResult = {};
+    this.dataMap[indexStr].extraTeamOnceResult = {};
+    this.dataMap[indexStr].extraSpecialTeamResult = [];
+    this.dataMap[indexStr].buffTag = {};
+  }
+
   //初期化（キャラ）
   initCharacterData(index: string | number) {
     if(environment.outputLog){
@@ -1032,6 +1120,7 @@ export class CalculatorService {
     let indexStr = index.toString();
     if(!(indexStr in this.dataMap)){
       this.dataMap[indexStr] = {};
+      this.initTeamBuffData(indexStr);
     }
     this.dataMap[indexStr].characterData = this.characterService.get(indexStr);
     this.initExtraCharacterData(indexStr);
@@ -1047,6 +1136,7 @@ export class CalculatorService {
     let temps = this.getExtraCharacterData(indexStr, data);
     this.dataMap[indexStr].extraCharaResult = temps[0] as Record<string, number>;
     this.dataMap[indexStr].extraSpecialCharaResult = temps[1] as SpecialBuff[];
+    this.dataMap[indexStr].extraSpecialSelfTeamCharaResult = temps[2] as TeamBuff[];
     this.setDirty(indexStr, true);
   }
 
@@ -1060,6 +1150,7 @@ export class CalculatorService {
     let weaponIndexStr = weaponIndex.toString();
     if(!(indexStr in this.dataMap)){
       this.dataMap[indexStr] = {};
+      this.initTeamBuffData(indexStr);
     }
     this.dataMap[indexStr].weaponData = this.weaponService.get(weaponIndexStr);
     this.initExtraWeaponData(indexStr);
@@ -1075,6 +1166,7 @@ export class CalculatorService {
     let temps = this.getExtraWeaponData(indexStr, data);
     this.dataMap[indexStr].extraWeaponResult = temps[0] as Record<string, number>;
     this.dataMap[indexStr].extraSpecialWeaponResult = temps[1] as SpecialBuff[];
+    this.dataMap[indexStr].extraSpecialSelfTeamWeaponResult = temps[2] as TeamBuff[];
     this.setDirty(indexStr, true);
   }
 
@@ -1088,6 +1180,18 @@ export class CalculatorService {
     let temps = this.getExtraReliquarySetData(indexStr);
     this.dataMap[indexStr].extraArtifactSetResult = temps[0] as Record<string, number>;
     this.dataMap[indexStr].extraSpecialArtifactSetResult = temps[1] as SpecialBuff[];
+    this.dataMap[indexStr].extraSpecialSelfTeamArtifactSetResult = temps[2] as TeamBuff[];
+    this.setDirty(indexStr, true);
+  }
+
+  //初期化（チームバフ追加）
+  initExtraTeamBuffData(index: string | number) {
+    if(environment.outputLog){
+      //DEBUG
+      console.log("初期化（チームバフ追加）")
+    }
+    let indexStr = index.toString();
+    this.setExtraTeamData(indexStr);
     this.setDirty(indexStr, true);
   }
 
@@ -1118,6 +1222,58 @@ export class CalculatorService {
   getAllDataCache(index: string | number){
     let indexStr = index.toString();
     return this.dataMap[indexStr].allData;
+  }
+
+  //初期化（計算用情報合計）（チーム用）
+  initAllDataBackground(index: string | number){
+    let indexStr = index.toString();
+    if(this.dataMap.hasOwnProperty(indexStr)){
+
+      // let temp1 = this.getExtraCharacterData(indexStr);
+      // this.dataMap[indexStr].extraCharaResult = temp1[0] as Record<string, number>;
+      // this.dataMap[indexStr].extraSpecialCharaResult = temp1[1] as SpecialBuff[];
+
+      // let temp2 = this.getExtraWeaponData(indexStr);
+      // this.dataMap[indexStr].extraWeaponResult = temp2[0] as Record<string, number>;
+      // this.dataMap[indexStr].extraSpecialWeaponResult = temp2[1] as SpecialBuff[];
+
+      // let temp3 = this.getExtraReliquarySetData(indexStr);
+      // this.dataMap[indexStr].extraArtifactSetResult = temp3[0] as Record<string, number>;
+      // this.dataMap[indexStr].extraSpecialArtifactSetResult = temp3[1] as SpecialBuff[];
+
+      this.getAllData(indexStr, undefined, false);
+    }else{
+      //初期化
+      if(!this.characterService.getStorageInfo(indexStr)){
+        //キャラデータ存在しない
+        return;
+      }
+      if(!(indexStr in this.dataMap)){
+        this.dataMap[indexStr] = {};
+      }
+      this.dataMap[indexStr].characterData = this.characterService.get(indexStr);
+      this.initTeamBuffData(indexStr);
+
+      let temp1 = this.getExtraCharacterData(indexStr);
+      this.dataMap[indexStr].extraCharaResult = temp1[0] as Record<string, number>;
+      this.dataMap[indexStr].extraSpecialCharaResult = temp1[1] as SpecialBuff[];
+      this.dataMap[indexStr].extraSpecialSelfTeamCharaResult = temp1[2] as TeamBuff[];
+
+      let weaponIndexStr = this.weaponService.getIndex(indexStr)!;
+      this.dataMap[indexStr].weaponData = this.weaponService.get(weaponIndexStr);
+
+      let temp2 = this.getExtraWeaponData(indexStr);
+      this.dataMap[indexStr].extraWeaponResult = temp2[0] as Record<string, number>;
+      this.dataMap[indexStr].extraSpecialWeaponResult = temp2[1] as SpecialBuff[];
+      this.dataMap[indexStr].extraSpecialSelfTeamWeaponResult = temp2[2] as TeamBuff[];
+
+      let temp3 = this.getExtraReliquarySetData(indexStr);
+      this.dataMap[indexStr].extraArtifactSetResult = temp3[0] as Record<string, number>;
+      this.dataMap[indexStr].extraSpecialArtifactSetResult = temp3[1] as SpecialBuff[];
+      this.dataMap[indexStr].extraSpecialSelfTeamArtifactSetResult = temp3[2] as TeamBuff[];
+
+      this.getAllData(indexStr, undefined, false);
+    }
   }
 
   //ダメージ取得
@@ -2406,8 +2562,17 @@ export class CalculatorService {
   }
 
   //計算用情報合計取得
-  private getAllData(index: string | number, extraData?: Record<string, number>){
+  private getAllData(index: string | number, extraData?: Record<string, number>, withEnemyAnt: boolean = true){
     let result: Record<string, number> = {};
+    let indexStr = index.toString();
+    //その他バフ処理(二度転換可能)
+    let otherSecondaryData = this.getOtherData(indexStr, 'secondary') ?? {};
+    //その他バフ処理(一度)
+    let otherOnceData = this.getOtherData(indexStr, 'once') ?? {};
+    //チームバフ処理(二度転換可能)
+    let teamSecondaryData = this.dataMap[indexStr].extraTeamSecondaryResult ?? {};
+    //チームバフ処理(一度)
+    let teamOnceData = this.dataMap[indexStr].extraTeamOnceResult ?? {};
 
     for(let key of Const.PROPS_ALL_BASE){
       if(!(key in result)){
@@ -2415,6 +2580,24 @@ export class CalculatorService {
       }
       result[key] += this.getProperty(index, key);
     }
+    if(withEnemyAnt){
+      for(let key of Const.PROPS_ENEMY_ANTI.concat(Const.PROPS_ENEMY_DEFENSE)){
+        if(!(key in result)){
+          result[key] = 0;
+        }
+        result[key] += this.getPropertyEnemy(index, key);
+      }
+    }
+
+    //その他バフ処理(二度転換可能)
+    for(let target in otherSecondaryData){
+      result[target] += otherSecondaryData[target] ?? 0;
+    }
+    //チームバフ処理(二度転換可能)
+    for(let target in teamSecondaryData){
+      result[target] += teamSecondaryData[target] ?? 0;
+    }
+
     if(extraData != undefined){
       for(let key in extraData){
         result[key] += extraData[key];
@@ -2448,6 +2631,7 @@ export class CalculatorService {
       this.dataMap[index].extraSpecialCharaResult!,
       this.dataMap[index].extraSpecialWeaponResult!,
       this.dataMap[index].extraSpecialArtifactSetResult!,
+      this.dataMap[index].extraSpecialTeamResult!,
     );
     specialOrders.sort((x, y) => x.priority! - y.priority!);
 
@@ -2473,26 +2657,144 @@ export class CalculatorService {
       }
       result[buff.target!] += toAdd;
       //計算必要分再計算
-      switch(buff.target){
-        case Const.PROP_HP_UP:
-        case Const.PROP_VAL_HP:
-          result[Const.PROP_HP] = result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
-          break;
-        case Const.PROP_ATTACK_UP:
-        case Const.PROP_VAL_ATTACK:
-          result[Const.PROP_ATTACK] = result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) + result[Const.PROP_VAL_ATTACK];
-          break;
-        case Const.PROP_DEFENSE_UP:
-        case Const.PROP_VAL_DEFENSE:
-          result[Const.PROP_DEFENSE] = result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) + result[Const.PROP_VAL_DEFENSE];
-          break;
-        case Const.PROP_DMG_ENEMY_DEFENSE_DOWN:
-          result[Const.PROP_DMG_ENEMY_DEFENSE] = result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
-          break;
-      }
+      this.recalBaseProp(buff.target, result);
+    }
+
+    //チームバフ
+    let specialTeamSelfOrders: TeamBuff[] = [];
+    specialTeamSelfOrders = specialTeamSelfOrders.concat(
+      this.dataMap[index].extraSpecialSelfTeamCharaResult!,
+      this.dataMap[index].extraSpecialSelfTeamWeaponResult!,
+      this.dataMap[index].extraSpecialSelfTeamArtifactSetResult!,
+    );
+
+    //チーム特殊バフ計算
+    let resultSelfTeamBuff: SelfTeamBuff = this.dataMap[index].selfTeamBuff!;
+    //重複のリストを削除
+    let selfTeamBuff = this.dataMap[index].selfTeamBuff!;
+    for(let key of [
+      Const.NAME_SKILLS_NORMAL,
+      Const.NAME_SKILLS_SKILL,
+      Const.NAME_SKILLS_ELEMENTAL_BURST,
+      Const.NAME_SKILLS_OTHER,
+      // Const.NAME_SKILLS_PROUD,
+      // Const.NAME_CONSTELLATION,
+      Const.NAME_EFFECT,
+      Const.NAME_SET,
+    ]){
+      (selfTeamBuff[key as keyof SelfTeamBuff] as TeamBuff[]) = (selfTeamBuff[key as keyof SelfTeamBuff] as TeamBuff[]).filter((v:TeamBuff)=>(!v.path));
+    }
+    for(let [i,_] of selfTeamBuff.proudSkills.entries()){
+      selfTeamBuff.proudSkills[i] = selfTeamBuff.proudSkills[i].filter((v:TeamBuff)=>(!v.path));
+    }
+    for(let key of [
+      Const.NAME_CONSTELLATION_1,
+      Const.NAME_CONSTELLATION_2,
+      Const.NAME_CONSTELLATION_3,
+      Const.NAME_CONSTELLATION_4,
+      Const.NAME_CONSTELLATION_5,
+      Const.NAME_CONSTELLATION_6,
+    ]){
+      selfTeamBuff.constellation[key] = selfTeamBuff.constellation[key].filter((v:TeamBuff)=>(!v.path));
+    }
+    //再計算
+    this.calTeamSpecialBuff(specialTeamSelfOrders, result, resultSelfTeamBuff);
+    this.dataMap[index].selfTeamBuff = resultSelfTeamBuff;
+
+    //その他バフ処理(一度)
+    for(let target in otherOnceData){
+      result[target] += otherOnceData[target] ?? 0;
+      //計算必要分再計算
+      this.recalBaseProp(target, result);
+    }
+    //チームバフ処理(一度)
+    for(let target in teamOnceData){
+      result[target] += teamOnceData[target] ?? 0;
+      //計算必要分再計算
+      this.recalBaseProp(target, result);
     }
 
     return result;
+  }
+
+  private appendToExtraTeam(buffs: TeamBuff[], extraTeamOnceResult: Record<string, number>, extraTeamSecondaryResult: Record<string, number>, extraSpecialTeamResult: SpecialBuff[], buffTag: Record<string,string[]>){
+    for(let v of buffs){
+      if(v.calByOrigin && v.isSpecial){
+        extraSpecialTeamResult.push(v as SpecialBuff);
+      }else {
+        if(!v.canSecondaryTrans){
+          if(!extraTeamOnceResult.hasOwnProperty(v.target)){
+            extraTeamOnceResult[v.target] = 0;
+          }
+          if(this.checkAndSetBuffTag(v.buffTag,v.target,buffTag)){
+            extraTeamOnceResult[v.target] += v.val ?? 0;
+          }
+        }else{
+          if(!extraTeamSecondaryResult.hasOwnProperty(v.target)){
+            extraTeamSecondaryResult[v.target] = 0;
+          }
+          if(this.checkAndSetBuffTag(v.buffTag,v.target,buffTag)){
+            extraTeamSecondaryResult[v.target] += v.val ?? 0;
+          }
+        }
+      }
+    }
+  }
+
+  private calTeamSpecialBuff(buffs: TeamBuff[], props: Record<string,number>, resultSelfTeamBuff: SelfTeamBuff){
+    for(let buff of buffs){
+      let v = {...buff};
+      if(!v.calByOrigin && v.isSpecial){
+        v.isSpecial = false;
+        let baseValue = v.base?props[v.base]:0;
+        //特殊BUFFに変えるための仮想属性
+        if(v.base == Const.PROP_FIX_NUMBER_1){
+          baseValue = 1;
+        }
+        if(v.base2 != undefined){
+          baseValue *= props[v.base2];
+        }
+        let modifyValue = v.baseModifyValue?v.baseModifyValue:0;
+        let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * v.multiValue!;
+        if(v.maxVal && toAdd > v.maxVal){
+          toAdd = v.maxVal;
+        }else if(v.specialMaxVal != undefined){
+          let specialMaxVal = props[v.specialMaxVal.base!] * v.specialMaxVal.multiValue!;
+          if(toAdd > specialMaxVal){
+            toAdd = specialMaxVal;
+          }
+        }
+        v.val = toAdd;
+      }
+      if(v.path){
+        let temp: any = resultSelfTeamBuff;
+        for(let i of v.path){
+          temp = temp[i];
+        }
+        (temp as TeamBuff[]).push(v);
+      }
+    }
+  }
+
+  private recalBaseProp(traget: string | undefined, result: Record<string,number>){
+    //計算必要分再計算
+    switch(traget){
+      case Const.PROP_HP_UP:
+      case Const.PROP_VAL_HP:
+        result[Const.PROP_HP] = result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
+        break;
+      case Const.PROP_ATTACK_UP:
+      case Const.PROP_VAL_ATTACK:
+        result[Const.PROP_ATTACK] = result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) + result[Const.PROP_VAL_ATTACK];
+        break;
+      case Const.PROP_DEFENSE_UP:
+      case Const.PROP_VAL_DEFENSE:
+        result[Const.PROP_DEFENSE] = result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) + result[Const.PROP_VAL_DEFENSE];
+        break;
+      case Const.PROP_DMG_ENEMY_DEFENSE_DOWN:
+        result[Const.PROP_DMG_ENEMY_DEFENSE] = result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
+        break;
+    }
   }
 
   //全情報から属性取得（まとめ）
@@ -2558,12 +2860,22 @@ export class CalculatorService {
     if(extraArtifactSetResult[prop] != undefined){
       result += extraArtifactSetResult[prop];
     }
-    let otherData = this.getOtherData(indexStr);
-    if(otherData && otherData[prop] != undefined){
-      result += otherData[prop] ?? 0;
-    }
 
     return result;
+  }
+
+  //全情報から属性取得（敵）
+  private getPropertyEnemy(index: string | number, prop: string) {
+    let indexStr = index.toString();
+    let genshinDataProp = prop.toLowerCase();
+
+    if([Const.PROP_DMG_ENEMY_DEFENSE_BASE].includes(prop)){
+      switch(prop){
+        case Const.PROP_DMG_ENEMY_DEFENSE_BASE:
+          return this.getEnemyData(indexStr).defense;
+      }
+    }
+    return this.getEnemyData(indexStr)[genshinDataProp as keyof EnemyStatus] ?? 0;
   }
 
   //キャラ追加データ解析
@@ -2587,6 +2899,7 @@ export class CalculatorService {
     let setting = this.characterService.getExtraData(index)!;
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
+    let specialTeamSlefResult: TeamBuff[] = [];
     let hasOverride: boolean = false;
     
     if(skillLevel == undefined || elementalBurstLevel == undefined){
@@ -2602,6 +2915,10 @@ export class CalculatorService {
           setting.skills.skill!,
           result,
           specialResult,
+          specialTeamSlefResult,
+          [name_normal],
+          this.dataMap[index].selfTeamBuff!.skill,
+          this.dataMap[index].buffTag!,
           characterData.weaponType,
           characterData.info.elementType,
           overrideElement,
@@ -2620,6 +2937,10 @@ export class CalculatorService {
           setting.skills.elementalBurst!,
           result,
           specialResult,
+          specialTeamSlefResult,
+          [name_elementalBurst],
+          this.dataMap[index].selfTeamBuff!.elementalBurst,
+          this.dataMap[index].buffTag!,
           characterData.weaponType,
           characterData.info.elementType,
           overrideElement,
@@ -2638,6 +2959,10 @@ export class CalculatorService {
           setting.skills.other!,
           result,
           specialResult,
+          specialTeamSlefResult,
+          [name_other],
+          this.dataMap[index].selfTeamBuff!.other,
+          this.dataMap[index].buffTag!,
           characterData.weaponType,
           characterData.info.elementType,
           overrideElement,
@@ -2649,8 +2974,10 @@ export class CalculatorService {
         }
       }
       if(Const.NAME_SKILLS_PROUD in setting.skills){
+        this.dataMap[index].selfTeamBuff!.proudSkills.length = 0;
         for(let i = 0; i < setting.skills.proudSkills!.length; ++i){
           let obj = setting.skills.proudSkills![i];
+          this.dataMap[index].selfTeamBuff!.proudSkills.push([]);
           if(Object.keys(obj).length === 0){
             continue;
           }
@@ -2661,6 +2988,10 @@ export class CalculatorService {
             obj,
             result,
             specialResult,
+            specialTeamSlefResult,
+            [name_proudSkills, i],
+            this.dataMap[index].selfTeamBuff!.proudSkills[i],
+            this.dataMap[index].buffTag!,
             characterData.weaponType,
             characterData.info.elementType,
             overrideElement,
@@ -2684,6 +3015,10 @@ export class CalculatorService {
             setting.constellation![i],
             result,
             specialResult,
+            specialTeamSlefResult,
+            [name_constellation, i],
+            this.dataMap[index].selfTeamBuff!.constellation[i],
+            this.dataMap[index].buffTag!,
             characterData.weaponType,
             characterData.info.elementType,
             overrideElement,
@@ -2697,7 +3032,7 @@ export class CalculatorService {
       }
     }
 
-    return [result, specialResult];
+    return [result, specialResult, specialTeamSlefResult];
   }
 
   //武器追加データ解析
@@ -2716,6 +3051,7 @@ export class CalculatorService {
     let setting = this.weaponService.getExtraData(index)!;
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
+    let specialTeamSlefResult: TeamBuff[] = [];
 
     if("effect" in setting && setting.effect){
       let setBuffResult = this.setBuffDataToResult(
@@ -2725,6 +3061,10 @@ export class CalculatorService {
         setting.effect!,
         result,
         specialResult,
+        specialTeamSlefResult,
+        [name_effect],
+        this.dataMap[index].selfTeamBuff!.effect,
+        this.dataMap[index].buffTag!,
         characterData.weaponType,
         characterData.info.elementType,
         overrideElement,
@@ -2734,7 +3074,7 @@ export class CalculatorService {
       }
     }
 
-    return [result, specialResult];
+    return [result, specialResult, specialTeamSlefResult];
   }
 
   //聖遺物データ解析
@@ -2769,6 +3109,7 @@ export class CalculatorService {
     let overrideElement = this.characterService.getOverrideElement(index);
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
+    let specialTeamSlefResult: TeamBuff[] = [];
     let targetIndexInfos: artifactSetInfo[] = [];
     let ownedIndexs: string[] = [];
     for(let [i,setIndex] of artifactSetIndexs.entries()){
@@ -2784,6 +3125,7 @@ export class CalculatorService {
     for(let targetIndexInfo of targetIndexInfos){
       let tempResult: Record<string, number> = {};
       let tempSpecialResult: SpecialBuff[] = [];
+      let tempSpecialTeamSlefResult: TeamBuff[] = [];
       let artifactSetData = this.artifactService.getSet(targetIndexInfo.index);
       let extraArtifactData = this.extraDataService.getArtifactSet(targetIndexInfo.index);
       let setting = this.artifactService.getExtraData(index)!;
@@ -2794,6 +3136,10 @@ export class CalculatorService {
         setting[Const.NAME_SET + targetIndexInfo.setIndex as keyof ExtraArtifactSetData] ?? {},
         tempResult,
         tempSpecialResult,
+        tempSpecialTeamSlefResult,
+        [name_set],
+        this.dataMap[index].selfTeamBuff!.set,
+        this.dataMap[index].buffTag!,
         characterData.weaponType,
         characterData.info.elementType,
         overrideElement,
@@ -2809,15 +3155,70 @@ export class CalculatorService {
         }
       }
       specialResult.push(...tempSpecialResult);
+      specialTeamSlefResult.push(...tempSpecialTeamSlefResult);
     }
 
-    return [result, specialResult];
+    return [result, specialResult, specialTeamSlefResult];
+  }
+
+  //チームデータ解析
+  private setExtraTeamData(index: string){
+    this.initTeamBuffData(index, false);
+    let team: string[] = this.teamService.getOtherMembers(index);
+    for(let i = 0; i < team.length; ++i){
+      let subIndex = team[i];
+      this.initAllDataBackground(subIndex);
+
+      //チームバフ
+      let buffs = this.dataMap[subIndex].selfTeamBuff!;
+      for(let key of [
+        Const.NAME_SKILLS_NORMAL,
+        Const.NAME_SKILLS_SKILL,
+        Const.NAME_SKILLS_ELEMENTAL_BURST,
+        Const.NAME_SKILLS_OTHER,
+        Const.NAME_EFFECT,
+        Const.NAME_SET,
+      ]){
+        this.appendToExtraTeam(
+          buffs[key as keyof SelfTeamBuff] as TeamBuff[],
+          this.dataMap[index].extraTeamOnceResult!,
+          this.dataMap[index].extraTeamSecondaryResult!,
+          this.dataMap[index].extraSpecialTeamResult!,
+          this.dataMap[index].buffTag!,
+        );
+      }
+      for(let v of buffs.proudSkills){
+        this.appendToExtraTeam(
+          v,
+          this.dataMap[index].extraTeamOnceResult!,
+          this.dataMap[index].extraTeamSecondaryResult!,
+          this.dataMap[index].extraSpecialTeamResult!,
+          this.dataMap[index].buffTag!,
+        );
+      }
+      for(let key of [
+        Const.NAME_CONSTELLATION_1,
+        Const.NAME_CONSTELLATION_2,
+        Const.NAME_CONSTELLATION_3,
+        Const.NAME_CONSTELLATION_4,
+        Const.NAME_CONSTELLATION_5,
+        Const.NAME_CONSTELLATION_6,
+      ]){
+        this.appendToExtraTeam(
+          buffs.constellation[key],
+          this.dataMap[index].extraTeamOnceResult!,
+          this.dataMap[index].extraTeamSecondaryResult!,
+          this.dataMap[index].extraSpecialTeamResult!,
+          this.dataMap[index].buffTag!,
+        );
+      }
+    }
   }
 
   //その他データ解析
-  private getOtherData(index: string): Record<string, number> | undefined{
+  private getOtherData(index: string, filter: 'all'|'once'|'secondary'): Record<string, number> | undefined{
     let result: Record<string, number> = {};
-    let temps: OtherStorageInfo[] = this.otherService.getStorageInfos(index);
+    let temps: OtherStorageInfo[] = this.otherService.getStorageInfos(index, undefined, filter);
     for(let value of temps){
       if(value.enable && value.name != undefined && value.name != ''){
         if(!(value.name in result)){
@@ -2831,7 +3232,20 @@ export class CalculatorService {
   }
 
   //追加データ解析
-  private setBuffDataToResult(skillData: SkillParamInf, skillLevel: string, buffs: ExtraSkillInfo[], setting: ExtraStatus, result: Record<string, number>, specialResult: SpecialBuff[], weaponType: WeaponType, elementType: ElementType, crruentOverrideElement: string): SetBuffResult{
+  private setBuffDataToResult(
+    skillData: SkillParamInf, 
+    skillLevel: string, 
+    buffs: ExtraSkillInfo[], 
+    setting: ExtraStatus, 
+    result: Record<string, number>, 
+    specialResult: SpecialBuff[], 
+    specialTeamSlefResult: TeamBuff[], 
+    path: any[],
+    selfTeamBuffs: TeamBuff[],
+    buffTag: Record<string, string[]>,
+    weaponType: WeaponType, 
+    elementType: ElementType, 
+    crruentOverrideElement: string): SetBuffResult{
     let setBuffResult: SetBuffResult = {};
     if(skillData == undefined || buffs == undefined){
       return setBuffResult;
@@ -2840,9 +3254,13 @@ export class CalculatorService {
     let sliderNumMap = setting?.sliderNumMap ?? {};
     let overrideElement = crruentOverrideElement;
 
+    selfTeamBuffs.length = 0;
+
     for(let [buffIndex,buffInfo] of buffs.entries()){
       let subBuffs = buffInfo?.buffs || [];
       for(let buff of subBuffs){
+        let isAllTeam = buff.isAllTeam ?? false;
+        let isOnlyForOther = buff.isOnlyForOther ?? false;
         let isEnableInSwitch = true;
         let isEnableInSlider = true;
         if(!(buffIndex in switchOnSet) || switchOnSet[buffIndex] != true){
@@ -2931,10 +3349,6 @@ export class CalculatorService {
                 return v.includes(selfElementType);
               })
             }
-            let convertElement = buff?.convertElement;
-      
-            let isGlobal = buff?.isGlobal ?? false;
-            let unableSelf = buff?.unableSelf ?? false;
       
             let maxValIndexValue = 0;
             if(buff?.maxValIndex != undefined){
@@ -2956,11 +3370,6 @@ export class CalculatorService {
               maxValConstIndexValue = buff.maxValValue;
             }
       
-            if(unableSelf){
-              //TODO
-              continue;
-            }
-      
             if(base){
               //特殊バフ
               let temp: SpecialBuff = {};
@@ -2980,7 +3389,36 @@ export class CalculatorService {
                 temp.maxVal = maxValConstIndexValue;
               }
               for(let tar of targets){
-                specialResult.push({...temp, target: tar});
+                if(!isOnlyForOther){
+                  specialResult.push({...temp, target: tar, tag: buff.buffTag});
+                }
+                
+                if(isAllTeam || isOnlyForOther){
+                  if(!buff.calByOrigin){
+                    specialTeamSlefResult.push({
+                      ...temp,
+                      path,
+                      index: buff.index,
+                      tag: buff.buffTag,
+                      target: tar,
+                      isSpecial: true,
+                      canSecondaryTrans: buff.canSecondaryTrans,
+                      canOverlying: buff.canOverlying,
+                      calByOrigin: buff.calByOrigin,
+                    })
+                  }else{
+                    selfTeamBuffs.push({
+                      ...temp,
+                      index: buff.index,
+                      tag: buff.buffTag,
+                      target: tar,
+                      isSpecial: true,
+                      canSecondaryTrans: buff.canSecondaryTrans,
+                      canOverlying: buff.canOverlying,
+                      calByOrigin: buff.calByOrigin,
+                    })
+                  }
+                }
               }
             }else{
               //一般バフ
@@ -3000,10 +3438,26 @@ export class CalculatorService {
                   break;
               }
               for(let tar of targets){
-                if(!result[tar]){
-                  result[tar] = 0;
+                if(!isOnlyForOther){
+                  if(!result[tar]){
+                    result[tar] = 0;
+                  }
+                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                    result[tar] += value;
+                  }
                 }
-                result[tar] += value;
+                
+                if(isAllTeam || isOnlyForOther){
+                  selfTeamBuffs.push({
+                    index: buff.index,
+                    tag: buff.buffTag,
+                    target: tar,
+                    val: value,
+                    canSecondaryTrans: buff.canSecondaryTrans,
+                    canOverlying: buff.canOverlying,
+                    calByOrigin: buff.calByOrigin,
+                  })
+                }
               }
             }
           }else if(isEnableInSlider){
@@ -3068,19 +3522,10 @@ export class CalculatorService {
                 return v.includes(selfElementType);
               })
             }
-            let convertElement = buff?.convertElement;
-      
-            let isGlobal = buff?.isGlobal ?? false;
-            let unableSelf = buff?.unableSelf ?? false;
   
             let sliderMax = buff?.sliderMax;
             let sliderStep = buff?.sliderStep;
             let sliderStartIndex = buff?.sliderStartIndex;
-      
-            if(unableSelf){
-              //TODO
-              continue;
-            }
             
             if(base){
               //特殊バフ
@@ -3090,7 +3535,7 @@ export class CalculatorService {
               temp.baseModifyValue = baseModifyValue;
               if(isMaximumStackBuff){
                 temp.multiValue = 0;
-                if((buff?.sliderMax || 0) <= sliderNumMap[buffIndex]){
+                if((sliderMax || 0) <= sliderNumMap[buffIndex]){
                   temp.multiValue = indexValue;
                 }
               }else{
@@ -3111,7 +3556,126 @@ export class CalculatorService {
               temp.priority = priority;
   
               for(let tar of targets){
-                specialResult.push({...temp, target: tar});
+                if(!isOnlyForOther){
+                  specialResult.push({...temp, target: tar, tag: buff.buffTag});
+                }
+                if(isAllTeam || isOnlyForOther){
+                  if(isMaximumStackBuff){
+                    selfTeamBuffs.push({
+                      ...temp,
+                      index: buff.index,
+                      tag: buff.buffTag,
+                      target: tar,
+                      multiValue: indexValue,
+                      isSpecial: true,
+                      canSecondaryTrans: buff.canSecondaryTrans,
+                      canOverlying: buff.canOverlying,
+                      calByOrigin: buff.calByOrigin,
+                    })
+                  }else{
+                    //
+                    if(sliderStartIndex != undefined){
+                      let tempValue = 0;
+                      if(sliderNumMap[buffIndex] != 0){
+                        if(skillData.paramMap){
+                          tempValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                        }else if(skillData.paramList){
+                          tempValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                        }
+                      }
+                      if(!buff.calByOrigin){
+                        specialTeamSlefResult.push({
+                          ...temp,
+                          path,
+                          index: buff.index,
+                          tag: buff.buffTag,
+                          target: tar,
+                          multiValue: tempValue,
+                          isSpecial: true,
+                          canSecondaryTrans: buff.canSecondaryTrans,
+                          canOverlying: buff.canOverlying,
+                          calByOrigin: buff.calByOrigin,
+                        })
+                      }else{
+                        selfTeamBuffs.push({
+                          ...temp,
+                          index: buff.index,
+                          tag: buff.buffTag,
+                          target: tar,
+                          multiValue: tempValue,
+                          isSpecial: true,
+                          canSecondaryTrans: buff.canSecondaryTrans,
+                          canOverlying: buff.canOverlying,
+                          calByOrigin: buff.calByOrigin,
+                        })
+                      }
+                    }else{
+                      if(!buff.calByOrigin){
+                        specialTeamSlefResult.push({
+                          ...temp,
+                          path,
+                          index: buff.index,
+                          tag: buff.buffTag,
+                          target: tar,
+                          multiValue: indexValue * sliderNumMap[buffIndex],
+                          isSpecial: true,
+                          canSecondaryTrans: buff.canSecondaryTrans,
+                          canOverlying: buff.canOverlying,
+                          calByOrigin: buff.calByOrigin,
+                        })
+                      }else{
+                        selfTeamBuffs.push({
+                          ...temp,
+                          index: buff.index,
+                          tag: buff.buffTag,
+                          target: tar,
+                          multiValue: indexValue * sliderNumMap[buffIndex],
+                          isSpecial: true,
+                          canSecondaryTrans: buff.canSecondaryTrans,
+                          canOverlying: buff.canOverlying,
+                          calByOrigin: buff.calByOrigin,
+                        })
+                      }
+                    }
+                    //
+                    // if(sliderStartIndex != undefined){
+                    //   let specialVals = [0];
+                    //   if(skillData.paramMap){
+                    //     specialVals.push(...skillData.paramMap[skillLevel].slice(sliderStartIndex,sliderStartIndex+(buff?.sliderMax??0)+1));
+                    //   }else if(skillData.paramList){
+                    //     specialVals.push(...skillData.paramList.slice(sliderStartIndex,sliderStartIndex+(buff?.sliderMax??0)+1));
+                    //   }
+                    //   selfTeamBuffs.push({
+                    //     index: buff.index,
+                    //     tag: buff.buffTag,
+                    //     target: tar,
+                    //     isSlider: true,
+                    //     isSpecialSlider: true,
+                    //     specialSliderVals: specialVals,
+                    //     sliderMax: buff.sliderMax,
+                    //     sliderMin: buff.sliderMin,
+                    //     sliderStep: buff.sliderStep,
+                    //     canSecondaryTrans: buff.canSecondaryTrans,
+                    //     canOverlying: buff.canOverlying,
+                    //     calByOrigin: buff.calByOrigin,
+                    //   })
+                    // }else{
+                    //   selfTeamBuffs.push({
+                    //     index: buff.index,
+                    //     tag: buff.buffTag,
+                    //     target: tar,
+                    //     isSlider: true,
+                    //     isSpecial: true,
+                    //     sliderMax: buff.sliderMax,
+                    //     sliderMin: buff.sliderMin,
+                    //     sliderStep: buff.sliderStep,
+                    //     canSecondaryTrans: buff.canSecondaryTrans,
+                    //     canOverlying: buff.canOverlying,
+                    //     calByOrigin: buff.calByOrigin,
+                    //   })
+                    // }
+                  }
+                }
               }
             }else{
               //一般バフ
@@ -3131,31 +3695,78 @@ export class CalculatorService {
                   break;
               }
               for(let tar of targets){
-                if(result[tar] == undefined){
-                  result[tar] = 0;
-                }
-                let resultValue: number;
-                if(isMaximumStackBuff){
-                  resultValue = 0;
-                  if((buff?.sliderMax || 0) <= sliderNumMap[buffIndex]){
-                    resultValue = value;
+                if(!isOnlyForOther){
+                  if(result[tar] == undefined){
+                    result[tar] = 0;
                   }
-                }else{
-                  if(sliderStartIndex != undefined){
-                    if(sliderNumMap[buffIndex] == 0){
-                      resultValue = 0;
-                    }else{
-                      if(skillData.paramMap){
-                        resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
-                      }else if(skillData.paramList){
-                        resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
-                      }
+                  let resultValue: number;
+                  if(isMaximumStackBuff){
+                    resultValue = 0;
+                    if((buff?.sliderMax || 0) <= sliderNumMap[buffIndex]){
+                      resultValue = value;
                     }
                   }else{
-                    resultValue = value * sliderNumMap[buffIndex];
+                    if(sliderStartIndex != undefined){
+                      if(sliderNumMap[buffIndex] == 0){
+                        resultValue = 0;
+                      }else{
+                        if(skillData.paramMap){
+                          resultValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                        }else if(skillData.paramList){
+                          resultValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                        }
+                      }
+                    }else{
+                      resultValue = value * sliderNumMap[buffIndex];
+                    }
+                  }
+                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                    result[tar] += resultValue!;
                   }
                 }
-                result[tar] += resultValue!;
+                if(isAllTeam || isOnlyForOther){
+                  if(isMaximumStackBuff){
+                    selfTeamBuffs.push({
+                      index: buff.index,
+                      tag: buff.buffTag,
+                      target: tar,
+                      val: value,
+                      canSecondaryTrans: buff.canSecondaryTrans,
+                      canOverlying: buff.canOverlying,
+                      calByOrigin: buff.calByOrigin,
+                    })
+                  }else{
+                    if(sliderStartIndex != undefined){
+                      let tempValue = 0;
+                      if(sliderNumMap[buffIndex] != 0){
+                        if(skillData.paramMap){
+                          tempValue = skillData.paramMap[skillLevel][sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                        }else if(skillData.paramList){
+                          tempValue = skillData.paramList[sliderStartIndex + sliderNumMap[buffIndex] - 1];
+                        }
+                      }
+                      selfTeamBuffs.push({
+                        index: buff.index,
+                        tag: buff.buffTag,
+                        target: tar,
+                        val: tempValue,
+                        canSecondaryTrans: buff.canSecondaryTrans,
+                        canOverlying: buff.canOverlying,
+                        calByOrigin: buff.calByOrigin,
+                      })
+                    }else{
+                      selfTeamBuffs.push({
+                        index: buff.index,
+                        tag: buff.buffTag,
+                        target: tar,
+                        val: value * sliderNumMap[buffIndex],
+                        canSecondaryTrans: buff.canSecondaryTrans,
+                        canOverlying: buff.canOverlying,
+                        calByOrigin: buff.calByOrigin,
+                      })
+                    }
+                  }
+                }
               }
             }
           }
@@ -3167,6 +3778,19 @@ export class CalculatorService {
     setBuffResult.overrideElement = overrideElement;
 
     return setBuffResult;
+  }
+
+  private checkAndSetBuffTag(tag: string|undefined, target: string, buffTag: Record<string, string[]>){
+    if(tag){
+      if(buffTag.hasOwnProperty(tag) && buffTag[tag].includes(target)){
+        return false;
+      }
+      if(!buffTag[tag]){
+        buffTag[tag] = [];
+      }
+      buffTag[tag].push(target);  
+    }
+    return true;
   }
 
   private getCharacterData(index: string | number): CharStatus{

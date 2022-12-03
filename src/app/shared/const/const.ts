@@ -639,6 +639,10 @@ export class Const {
     Const.PROP_DMG_ANTI_HYDRO,
     Const.PROP_DMG_ANTI_DENDRO,
   ]
+  //敵防御
+  static readonly PROPS_ENEMY_DEFENSE = [
+    Const.PROP_DMG_ENEMY_DEFENSE_BASE,
+  ]
   //サブ属性リスト（敵）
   static readonly PROPS_ENEMY_SUB = Const.PROPS_CHARA_WEAPON_SUB.concat(
     Const.PROPS_ENEMY_ANTI,
@@ -714,14 +718,14 @@ export class Const {
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,
-    Const.PROP_DMG_ANTI_CRYO,
-    Const.PROP_DMG_ANTI_ANEMO,
-    Const.PROP_DMG_ANTI_PHYSICAL,
-    Const.PROP_DMG_ANTI_ELECTRO,
-    Const.PROP_DMG_ANTI_GEO,
-    Const.PROP_DMG_ANTI_PYRO,
-    Const.PROP_DMG_ANTI_HYDRO,
-    Const.PROP_DMG_ANTI_DENDRO,
+    // Const.PROP_DMG_ANTI_CRYO,
+    // Const.PROP_DMG_ANTI_ANEMO,
+    // Const.PROP_DMG_ANTI_PHYSICAL,
+    // Const.PROP_DMG_ANTI_ELECTRO,
+    // Const.PROP_DMG_ANTI_GEO,
+    // Const.PROP_DMG_ANTI_PYRO,
+    // Const.PROP_DMG_ANTI_HYDRO,
+    // Const.PROP_DMG_ANTI_DENDRO,
     Const.PROP_DMG_ANTI_CRYO_MINUS,
     Const.PROP_DMG_ANTI_ANEMO_MINUS,
     Const.PROP_DMG_ANTI_PHYSICAL_MINUS,
@@ -845,7 +849,7 @@ export class Const {
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST,
-    Const.PROP_DMG_ENEMY_DEFENSE_BASE,
+    // Const.PROP_DMG_ENEMY_DEFENSE_BASE,
   ];
   //計算後データ属性リスト
   static readonly PROPS_ALL_DATA = [
@@ -1164,7 +1168,11 @@ export class Const {
   ];
 
   //全属性リスト
-  static readonly PROPS_ALL = Const.PROPS_ALL_BASE.concat(Const.PROPS_TO_CAL);
+  static readonly PROPS_ALL = Const.PROPS_ALL_BASE.concat(
+    Const.PROPS_ENEMY_ANTI,
+    Const.PROPS_ENEMY_DEFENSE,
+    Const.PROPS_TO_CAL
+  );
 
   //聖遺物属性マップ
   static readonly MAP_ARTIFACE_PROP: Record<string, string> = {
@@ -1613,6 +1621,8 @@ export class Const {
   static readonly SAVE_OTHER = "SAVE_OTHER";
   //Enkaデータ
   static readonly SAVE_ENKA = "SAVE_ENKA";
+  //チームデータ
+  static readonly SAVE_TEAM = "SAVE_TEAM";
 
   //*********************************
   //           原神その他データ

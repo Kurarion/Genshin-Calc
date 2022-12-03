@@ -118,9 +118,13 @@ export interface ExtraSkillBuff {
   //目標
   target: string[];
   convertElement?: string;
-  //チームに有効可否
-  isGlobal?: boolean;
-  unableSelf?: boolean;
+  //チーム関連
+  isAllTeam?: boolean;
+  isOnlyForOther?: boolean;
+  canOverlying?: boolean;
+  calByOrigin?: boolean;
+  canSecondaryTrans?: boolean;
+  buffTag?: string;
   //上限
   maxValIndex?: number;
   maxValBase?: string;

@@ -5,6 +5,7 @@ export interface OtherStorageInfo {
   name?: string;
   value: number;
   enable?: boolean;
+  canSecondaryTrans?: boolean;
 }
 
 export interface OtherStorageData {
@@ -80,13 +81,32 @@ export class OtherService {
   }
 
   //全設定情報取得
-  getStorageInfos(charIndex: string | number, index?: number){
+  getStorageInfos(charIndex: string | number, index?: number, filter: 'all'|'once'|'secondary' = 'all'){
     let keyStr = charIndex.toString();
     if(index == undefined){
       index = this.dataMap[charIndex].selectedIndex;
     }
     this.initDefaultData(keyStr);
-    return this.dataMap[keyStr].info;
+    switch(filter){
+      case 'all':
+        return this.dataMap[keyStr].info;
+      case 'once':
+        return this.dataMap[keyStr].info.filter((item)=>{
+          if(item.canSecondaryTrans){
+            return false;
+          }
+          return true;
+        })
+      case 'secondary':
+        return this.dataMap[keyStr].info.filter((item)=>{
+          if(item.canSecondaryTrans){
+            return true;
+          }
+          return false;
+        })
+      default:
+        return this.dataMap[keyStr].info;
+    }
   }
 
   //設定情報取得

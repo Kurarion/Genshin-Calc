@@ -120,7 +120,8 @@
                                 "index": 0,
                                 "target": ["DMG_ENEMY_DEFENSE_DOWN"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -237,7 +238,8 @@
                                 "index": 0,
                                 "target": ["DMG_ANTI_ANEMO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -304,7 +306,8 @@
                                 "index": 0,
                                 "target": ["DMG_ENEMY_DEFENSE_DOWN"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -395,7 +398,8 @@
                                 "customValue": 0.15,
                                 "target": ["DMG_BONUS_HYDRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -701,7 +705,8 @@
                                 "customValue": 0.15,
                                 "target": ["DMG_ENEMY_DEFENSE_DOWN"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -851,7 +856,8 @@
                                 "index": 1,
                                 "target": ["ATTACK_UP"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -994,7 +1000,8 @@
                                 "customValue": 0.12,
                                 "target": ["DMG_ANTI_PHYSICAL_MINUS", "DMG_ANTI_ANEMO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         },
                         {
@@ -1002,7 +1009,8 @@
                                 "customValue": 0.12,
                                 "target": ["DMG_ANTI_PHYSICAL_MINUS", "DMG_ANTI_ANEMO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -1022,7 +1030,8 @@
                                 "customValue": 0.2,
                                 "target": ["DMG_ANTI_ANEMO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         },
                         {
@@ -1030,7 +1039,8 @@
                                 "customValue": 0.2,
                                 "target": ["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -1098,7 +1108,8 @@
                                 "index": 0,
                                 "target": ["ATTACK_UP"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -1111,7 +1122,8 @@
                                 "index": 0,
                                 "target": ["DMG_ANTI_PYRO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -1132,7 +1144,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_PYRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -1252,7 +1265,8 @@
                                 "index": 0,
                                 "target": ["DMG_ANTI_ELECTRO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -1340,7 +1354,8 @@
                                 "customValue": 0.15,
                                 "target": ["DMG_ANTI_HYDRO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -1530,7 +1545,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_GEO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -1626,7 +1642,8 @@
                             "customValue": 0.23,
                             "target": ["DMG_ENEMY_DEFENSE_DOWN"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -1639,6 +1656,17 @@
                             "elementBonusType": "DMG_BONUS_PYRO",
                             "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
                         }
+                    }
+                ],
+                "5":[
+                    {
+                        "buffs":[{
+                            "customValue": 0.1,
+                            "target": ["DMG_BONUS_PYRO"],
+                            "settingType":"switch",
+                            "defaultEnable":false,
+                            "isAllTeam": true
+                        }]
                     }
                 ]
             }
@@ -1706,7 +1734,8 @@
                             "indexMultiValue": 0.0166665916666667,
                             "target":["DMG_ANTI_ALL_MINUS"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -1730,7 +1759,8 @@
                                 "settingType":"slider",
                                 "sliderInitialValue":0,
                                 "sliderStep":1,
-                                "sliderMax":5
+                                "sliderMax":5,
+                                "isAllTeam": true
                             }]
                         }
                     ],
@@ -1967,7 +1997,8 @@
                             "base":"ATTACK_BASE",
                             "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam":true
                         }]
                     }
                 ],
@@ -1984,7 +2015,8 @@
                             "base":"ATTACK_BASE",
                             "target":["ATTACK_VAL_UP"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam":true
                         }]
                     }
                 ],
@@ -2031,7 +2063,8 @@
                             "overrideElement":"DMG_BONUS_PYRO",
                             "target":["DMG_BONUS_PYRO"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam":true
                         }]
                     }
                 ]
@@ -2343,7 +2376,8 @@
                                 "customValue": 0.2,
                                 "target":["REVERSE_HEALING_BONUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                     ],
@@ -2439,7 +2473,8 @@
                                 "indexMultiValue":-1,
                                 "target":["DMG_ANTI_CRYO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                     ]
@@ -2552,7 +2587,8 @@
                                 "index":0,
                                 "target":["DMG_BONUS_CRYO"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                     ]
@@ -2566,7 +2602,8 @@
                                 "indexMultiValue": -1,
                                 "target": ["DMG_ANTI_CRYO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -2578,7 +2615,8 @@
                                 "settingType": "slider",
                                 "sliderInitialValue":0,
                                 "sliderMax": 5,
-                                "sliderStep": 1
+                                "sliderStep": 1,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -2663,7 +2701,8 @@
                                 "index":0,
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                     ]
@@ -2689,7 +2728,8 @@
                                 "customValue": 0.3,
                                 "target": ["DMG_BONUS_PLUNGING"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -2699,7 +2739,8 @@
                                 "customValue": 0.17,
                                 "target": ["DMG_BONUS_ALL"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -2809,7 +2850,8 @@
                                 "index": 0,
                                 "target": ["HEALING_BONUS"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -2817,7 +2859,8 @@
                                 "index": 1,
                                 "target": ["ELEMENTAL_MASTERY"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -2879,7 +2922,8 @@
                             "index": 9,
                             "target":["DMG_BONUS_ALL"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam":true
                         }]
                     }
                 ],
@@ -2918,7 +2962,8 @@
                                 "index": 0,
                                 "target": ["DMG_ELEMENT_ELECTROCHARGED_UP", "DMG_ELEMENT_VAPORIZE_UP", "DMG_ELEMENT_SWIRL_UP"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -2929,7 +2974,8 @@
                                 "indexMultiValue": -1,
                                 "target": ["CRIT_RATE"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -3150,8 +3196,29 @@
                     }
                 ],
                 "proudSkills": [
-                    [],
-                    []
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["ELEMENTAL_MASTERY"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isOnlyForOther":true
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base": "ELEMENTAL_MASTERY",
+                                "target": ["ELEMENTAL_MASTERY"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isOnlyForOther":true
+                            }]
+                        }
+                    ]
                 ]
             },
             "constellation": { 
@@ -3161,7 +3228,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_CRYO","DMG_BONUS_ELECTRO","DMG_BONUS_PYRO","DMG_BONUS_HYDRO"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -3264,7 +3332,8 @@
                                 "index":0,
                                 "target":["DMG_BONUS_PHYSICAL"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -3288,7 +3357,8 @@
                                 "indexMultiValue":-1,
                                 "target": ["DMG_ANTI_PHYSICAL_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -3369,7 +3439,19 @@
                             }]
                         }
                     ],
-                    []
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"CRIT_RATE",
+                                "target":["CRIT_RATE"],
+                                "settingType":"switch",
+                                "maxValConstIndex": 2,
+                                "defaultEnable":false,
+                                "isOnlyForOther": true
+                            }]
+                        }
+                    ]
                 ]
             },
             "constellation": {
@@ -3389,7 +3471,8 @@
                                 "index": 0,
                                 "target": ["DMG_ANTI_PHYSICAL_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -3477,7 +3560,17 @@
                     }
                 ],
                 "proudSkills": [
-                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["CRIT_RATE"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isOnlyForOther": true
+                            }]
+                        }
+                    ],
                     [
                         {
                             "buffs":[{
@@ -3511,6 +3604,17 @@
                                 "defaultEnable": false
                             }]
                         }
+                ],
+                "3": [
+                    {
+                        "buffs":[{
+                            "index": 0,
+                            "target": ["CRIT_RATE"],
+                            "settingType": "switch",
+                            "defaultEnable": false,
+                            "isOnlyForOther": true
+                        }]
+                    }
                 ],
                 "5": [
                     {
@@ -3695,7 +3799,8 @@
                                 "base": "ELEMENTAL_MASTERY",
                                 "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ELECTRO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -3708,7 +3813,8 @@
                                 "index": 0,
                                 "target": ["ELEMENTAL_MASTERY"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -3960,7 +4066,27 @@
                             }]
                         }
                     ],
-                    []
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["ATTACK_UP"],
+                                "settingType":"switch",
+                                "isOnlyForOther": true
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target":["ATTACK_UP"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":10,
+                                "isOnlyForOther":true
+                            }]
+                        }
+                    ]
                 ]
             },
             "constellation": {
@@ -4159,7 +4285,8 @@
                                 "index": 0,
                                 "target":["DMG_BONUS_NORMAL","DMG_BONUS_CHARGED","DMG_BONUS_PLUNGING"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -4416,6 +4543,17 @@
                                 "target": ["DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST"],
                                 "settingType": "switch",
                                 "defaultEnable": false
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["ATTACK_UP"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isOnlyForOther": true
                             }]
                         }
                 ]
@@ -4796,7 +4934,8 @@
                             "index": 1,
                             "target":["DEFENSE_VAL_UP"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     },
                     {
@@ -4804,7 +4943,8 @@
                             "index": 2,
                             "target":["DMG_BONUS_GEO"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -4826,7 +4966,8 @@
                                 "index": 0,
                                 "target":["DEFENSE_UP"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                     ],
@@ -4870,7 +5011,8 @@
                                 "settingType":"slider",
                                 "sliderInitialValue":0,
                                 "sliderStep":1,
-                                "sliderMax":3
+                                "sliderMax":3,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -4929,7 +5071,8 @@
                             "index":1,
                             "target":["ATTACK_UP"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -4970,7 +5113,8 @@
                                 "index": 0,
                                 "target": ["DMG_CRIT_DMG_UP_ELECTRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ]
@@ -5056,7 +5200,8 @@
                                 "index": 0,
                                 "target":["ATTACK_UP","DEFENSE_UP"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -5147,7 +5292,8 @@
                                 "index": 0,
                                 "target":["DMG_BONUS_ELECTRO"],
                                 "settingType": "switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -5270,7 +5416,17 @@
                 ],
                 "proudSkills": [
                     [],
-                    []
+                    [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target":["ELEMENTAL_MASTERY"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isOnlyForOther": true
+                            }]
+                        }
+                    ]
                 ]
             },
             "constellation": {
@@ -5386,7 +5542,8 @@
                                 "settingType":"slider",
                                 "sliderInitialValue":0,
                                 "sliderStep":1,
-                                "sliderMax":50
+                                "sliderMax":50,
+                                "isAllTeam":true
                             }]
                         }
                     ]
@@ -5412,7 +5569,9 @@
                                 "settingType":"slider",
                                 "sliderInitialValue":0,
                                 "sliderStep":1,
-                                "sliderMax":4
+                                "sliderMax":4,
+                                "isAllTeam":true,
+                                "canSecondaryTrans":true
                             }]
                         }
                 ],
@@ -5513,6 +5672,10 @@
                                 "target":["ATTACK_UP"],
                                 "settingType":"switch",
                                 "defaultEnable":false
+                            },{
+                                "index":0,
+                                "target":["ATTACK_UP"],
+                                "isOnlyForOther":true
                             }]
                         }
                     ],
@@ -5579,7 +5742,8 @@
                             "base":"ATTACK",
                             "target":["DMG_VAL_UP_CRYO"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -5596,7 +5760,8 @@
                             "index":1,
                             "target":["DMG_ANTI_CRYO_MINUS"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -5607,7 +5772,8 @@
                                 "index":0,
                                 "target":["DMG_BONUS_CRYO"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                     ],
@@ -5617,7 +5783,8 @@
                                 "index":0,
                                 "target":["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         },
                         {
@@ -5625,7 +5792,8 @@
                                 "index":2,
                                 "target":["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -5638,7 +5806,8 @@
                                 "customValue": 0.15,
                                 "target":["DMG_CRIT_DMG_UP_CRYO"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -5726,7 +5895,8 @@
                             "base":"DEFENSE",
                             "target":["DMG_VAL_UP_NORMAL"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam": true
                         }]
                     }
                 ],
@@ -5741,7 +5911,8 @@
                                 "settingType":"slider",
                                 "sliderInitialValue":0,
                                 "sliderStep":1,
-                                "sliderMax":4
+                                "sliderMax":4,
+                                "isAllTeam": true
                             }]
                         }
                     ]
@@ -5754,7 +5925,8 @@
                                 "index":0,
                                 "target":["DMG_BONUS_NORMAL"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
@@ -5958,7 +6130,8 @@
                             "index":1,
                             "target":["DMG_BONUS_NORMAL"],
                             "settingType":"switch",
-                            "defaultEnable":false
+                            "defaultEnable":false,
+                            "isAllTeam":true
                         }]
                     }
                 ],
@@ -6100,6 +6273,17 @@
                             }
                         }
                 ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target":["ELEMENTAL_MASTERY"],
+                                "settingType":"switch",
+                                "defaultEnable":false,
+                                "isOnlyForOther":true
+                            }]
+                        }
+                ],
                 "5": [
                         {
                             "damage": {
@@ -6196,7 +6380,8 @@
                                 "index": 0,
                                 "target": ["REVERSE_HEALING_BONUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -6204,7 +6389,8 @@
                                 "index": 1,
                                 "target": ["ENERGY_RECHARGE"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -6340,7 +6526,8 @@
                                 "index":0,
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -6348,7 +6535,8 @@
                                 "index":0,
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -6435,7 +6623,8 @@
                                 "index":1,
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                     ],
@@ -6450,7 +6639,8 @@
                                 "base": "HP",
                                 "target": ["DMG_ELEMENT_RUPTURE_UP"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         }
                     ]
@@ -6473,7 +6663,8 @@
                                 "index":0,
                                 "target":["DMG_ANTI_HYDRO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -6481,7 +6672,8 @@
                                 "index":1,
                                 "target":["DMG_ANTI_DENDRO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -6713,7 +6905,8 @@
                             "target":["DMG_BONUS_NORMAL"],
                             "settingType":"switch",
                             "defaultEnable":false,
-                            "overrideElement":"DMG_BONUS_HYDRO"
+                            "overrideElement":"DMG_BONUS_HYDRO",
+                            "isAllTeam":true
                         }]
                     }
                 ],
@@ -6727,7 +6920,8 @@
                                 "base":"HP",
                                 "target":["DMG_BONUS_NORMAL"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                     ]
@@ -6835,6 +7029,17 @@
                                 "settingType":"switch",
                                 "defaultEnable":false
                             }]
+                        },
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"ELEMENTAL_MASTERY",
+                                "target":["ELEMENTAL_MASTERY"],
+                                "maxValConstIndex":1,
+                                "settingType":"switch",
+                                "defaultEnable":false,
+                                "isOnlyForOther":true
+                            }]
                         }
                     ],
                     [
@@ -6868,7 +7073,8 @@
                                 "index":1,
                                 "target":["DMG_ENEMY_DEFENSE_DOWN"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -7013,7 +7219,8 @@
                                 "base":"HP",
                                 "target":["DMG_VAL_UP_NORMAL","DMG_VAL_UP_CHARGED"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -7161,7 +7368,8 @@
                                 "customValue": 0.2,
                                 "target":["DMG_ANTI_ANEMO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -7169,7 +7377,8 @@
                                 "customValue": 0.2,
                                 "target":["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -7250,7 +7459,8 @@
                                 "customValue": 0.10,
                                 "target":["CRIT_RATE"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -7310,16 +7520,32 @@
                             "elementBonusType": "DMG_BONUS_ELECTRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
                         },
-                        "buffs":[{
-                            "index": 3,
-                            "base": "FIX_NUMBER_1",
-                            "target": ["ENERGY_RECHARGE"],
-                            "priority": 10,
-                            "settingType": "slider",
-                            "sliderInitialValue": 0,
-                            "sliderStep": 1,
-                            "sliderMax": 3
-                        }]
+                        "buffs":[
+                            {
+                                "index": 3,
+                                "base": "FIX_NUMBER_1",
+                                "target": ["ENERGY_RECHARGE"],
+                                "priority": 10,
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 3
+                            }
+                        ]
+                    },{
+                        "buffs":[
+                            {
+                                "index": 3,
+                                "base": "FIX_NUMBER_1",
+                                "target": ["ENERGY_RECHARGE"],
+                                "priority": 10,
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 3,
+                                "isOnlyForOther":true
+                            }
+                        ]
                     }
                 ],
                 "elementalBurst": [
@@ -7335,18 +7561,33 @@
                 ],
                 "proudSkills": [
                     [],
-                    [{
-                        "buffs":[{
-                            "index": 0,
-                            "base":"ENERGY_RECHARGE",
-                            "target":["ENERGY_RECHARGE"],
-                            "settingType": "slider",
-                            "sliderInitialValue": 0,
-                            "sliderStep": 1,
-                            "sliderMax": 3,
-                            "desc": "DESC.TRAVELER.PROUDSKILL_2"
-                        }]
-                    }]
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base":"ENERGY_RECHARGE",
+                                "target":["ENERGY_RECHARGE"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 3,
+                                "desc": "DESC.TRAVELER.PROUDSKILL_2"
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base":"ENERGY_RECHARGE",
+                                "target":["ENERGY_RECHARGE"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 3,
+                                "desc": "DESC.TRAVELER.PROUDSKILL_2",
+                                "isOnlyForOther": true
+                            }]
+                        }
+                    ]
                 ]
             },
             "constellation": {
@@ -7357,7 +7598,8 @@
                                 "indexMultiValue":-1,
                                 "target":["DMG_ANTI_ELECTRO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -7468,7 +7710,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_DENDRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -7476,7 +7719,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_ELECTRO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -7611,7 +7855,8 @@
                                 "customValue": 0.2,
                                 "target":["DMG_ANTI_ANEMO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -7619,7 +7864,8 @@
                                 "customValue": 0.2,
                                 "target":["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -7700,7 +7946,8 @@
                                 "customValue": 0.10,
                                 "target":["CRIT_RATE"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -7770,6 +8017,20 @@
                             "sliderStep": 1,
                             "sliderMax": 3
                         }]
+                    },{
+                        "buffs":[
+                            {
+                                "index": 3,
+                                "base": "FIX_NUMBER_1",
+                                "target": ["ENERGY_RECHARGE"],
+                                "priority": 10,
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 3,
+                                "isOnlyForOther":true
+                            }
+                        ]
                     }
                 ],
                 "elementalBurst": [
@@ -7796,6 +8057,19 @@
                             "sliderMax": 3,
                             "desc": "DESC.TRAVELER.PROUDSKILL_2"
                         }]
+                    },
+                    {
+                        "buffs":[{
+                            "index": 0,
+                            "base":"ENERGY_RECHARGE",
+                            "target":["ENERGY_RECHARGE"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderStep": 1,
+                            "sliderMax": 3,
+                            "desc": "DESC.TRAVELER.PROUDSKILL_2",
+                            "isOnlyForOther": true
+                        }]
                     }]
                 ]
             },
@@ -7807,7 +8081,8 @@
                                 "indexMultiValue":-1,
                                 "target":["DMG_ANTI_ELECTRO_MINUS"],
                                 "settingType":"switch",
-                                "defaultEnable":false
+                                "defaultEnable":false,
+                                "isAllTeam":true
                             }]
                         }
                 ],
@@ -7889,7 +8164,8 @@
                                 "settingType":"slider",
                                 "sliderInitialValue": 0,
                                 "sliderStep":1,
-                                "sliderMax":10
+                                "sliderMax":10,
+                                "isAllTeam":true
                             }]
                         }
                     ],
@@ -7918,7 +8194,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_DENDRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         },
                         {
@@ -7926,7 +8203,8 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_ELECTRO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam":true
                             }]
                         }
                 ]
@@ -8177,6 +8455,15 @@
                         "settingType": "switch",
                         "defaultEnable": false
                     }]
+                },
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "switch",
+                        "defaultEnable": false,
+                        "isOnlyForOther": true
+                    }]
                 }
             ]
         },
@@ -8189,6 +8476,13 @@
                         "base":"ELEMENTAL_MASTERY",
                         "target": ["ENERGY_RECHARGE"],
                         "settingType": "resident"
+                    },{
+                        "index": 1,
+                        "indexMultiValue":0.003,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ENERGY_RECHARGE"],
+                        "settingType": "resident",
+                        "isOnlyForOther":true
                     }]
                 },
                 {
@@ -8199,6 +8493,12 @@
                         "target": ["ENERGY_RECHARGE"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    },{
+                        "index": 1,
+                        "indexMultiValue":0.003,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ENERGY_RECHARGE"],
+                        "isOnlyForOther":true
                     }]
                 }
             ]
@@ -8327,11 +8627,15 @@
                         "index": 3,
                         "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true,
+                        "buffTag":"REBEL"
                     },
                     {
                         "index": 4,
-                        "target": ["ATTACK_UP"]
+                        "target": ["ATTACK_UP"],
+                        "isAllTeam":true,
+                        "buffTag":"REBEL"
                     }]
                 }
             ]
@@ -8456,7 +8760,8 @@
                         "base": "HP",
                         "target": ["ELEMENTAL_MASTERY"],
                         "sliderMax": 3,
-                        "isMaximumStackBuff": true
+                        "isMaximumStackBuff": true,
+                        "isAllTeam":true
                     }]
                 }
             ]
@@ -8682,6 +8987,13 @@
                         "base":"ELEMENTAL_MASTERY",
                         "target": ["ATTACK_VAL_UP"],
                         "settingType": "resident"
+                    },{
+                        "index": 1,
+                        "indexMultiValue": 0.3,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "settingType": "resident",
+                        "isOnlyForOther": true
                     }]
                 },
                 {
@@ -8691,6 +9003,11 @@
                         "target": ["ATTACK_VAL_UP"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    },{
+                        "index": 1,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "isOnlyForOther": true
                     }]
                 }
             ]
@@ -8718,6 +9035,15 @@
                         "target": ["ELEMENTAL_MASTERY"],
                         "settingType": "switch",
                         "defaultEnable":false
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "switch",
+                        "defaultEnable":false,
+                        "isOnlyForOther":true
                     }]
                 }
             ]
@@ -8756,7 +9082,8 @@
                         "index": 1,
                         "target": ["ATTACK_UP"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true
                     }]
                 }
             ]
@@ -8775,7 +9102,9 @@
                         "index": 4,
                         "target": ["ATTACK_UP"],
                         "settingType":"switch",
-                        "defaultEnable":false
+                        "defaultEnable":false,
+                        "isAllTeam":true,
+                        "buffTag":"REBEL"
                     }]
                 }
             ]
@@ -9234,6 +9563,19 @@
                 }
             ]
         },
+        "14302": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable": false,
+                        "isOnlyForOther":true
+                    }]
+                }
+            ]
+        },
         "14303": {
             "effect": [
                 {
@@ -9441,7 +9783,8 @@
                         "index": 0,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true
                     }]
                 }
             ]
@@ -9466,6 +9809,13 @@
                         "base":"ELEMENTAL_MASTERY",
                         "target": ["ATTACK_VAL_UP"],
                         "settingType": "resident"
+                    },{
+                        "index": 1,
+                        "indexMultiValue":0.3,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "settingType": "resident",
+                        "isOnlyForOther": true
                     }]
                 },
                 {
@@ -9475,6 +9825,12 @@
                         "target": ["ATTACK_VAL_UP"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    },{
+                        "index": 1,
+                        "indexMultiValue":0.3,
+                        "base":"ELEMENTAL_MASTERY",
+                        "target": ["ATTACK_VAL_UP"],
+                        "isOnlyForOther": true
                     }]
                 }
             ]
@@ -9624,6 +9980,13 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
+                    }]
+                },{
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType":"resident",
+                        "isOnlyForOther": true
                     }]
                 }
             ]
@@ -10008,11 +10371,15 @@
                         "index": 3,
                         "target": ["ELEMENTAL_MASTERY"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true,
+                        "buffTag":"REBEL"
                     },
                     {
                         "index": 4,
-                        "target": ["ATTACK_UP"]
+                        "target": ["ATTACK_UP"],
+                        "isAllTeam":true,
+                        "buffTag":"REBEL"
                     }]
                 }
             ]
@@ -10220,7 +10587,8 @@
                         "index": 1,
                         "target": ["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true
                     }]
                 }
             ]
@@ -10326,7 +10694,9 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true,
+                        "buffTag":"NOBLESSE"
                     }]
                 }
             ]
@@ -10368,7 +10738,9 @@
                         "index": 0,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ELECTRO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true,
+                        "buffTag":"ARCHAIC"
                     }]
                 }
             ]
@@ -10431,11 +10803,15 @@
                         "index": 0,
                         "target": ["ATTACK_UP"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true,
+                        "buffTag":"TENACITY"
                     },
                     {
                         "index": 1,
-                        "target": ["DMG_ELEMENT_SHIELD_UP"]
+                        "target": ["DMG_ELEMENT_SHIELD_UP"],
+                        "isAllTeam":true,
+                        "buffTag":"TENACITY"
                     }]
                 }
             ]
@@ -10618,7 +10994,9 @@
                         "index": 0,
                         "target": ["DMG_ANTI_DENDRO_MINUS"],
                         "settingType": "switch",
-                        "defaultEnable": false
+                        "defaultEnable": false,
+                        "isAllTeam":true,
+                        "buffTag":"DEEPWOOD"
                     }]
                 }
             ]

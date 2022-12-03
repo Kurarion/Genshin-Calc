@@ -24,6 +24,7 @@ export { CharacterStorageInfo, CharacterService } from './service/genshin/charac
 export { WeaponStorageInfo, WeaponService } from './service/genshin/weapon.service';
 export { EnemyStorageInfo, EnemyService } from './service/genshin/enemy.service';
 export { OtherStorageInfo, OtherStorageData, OtherService } from './service/genshin/other.service';
+export { TeamService } from './service/genshin/team.service';
 export { ArtifactStoragePartData, ArtifactStorageItemData, ArtifactStorageInfo, ArtifactService, ChipData } from './service/genshin/artifact.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';

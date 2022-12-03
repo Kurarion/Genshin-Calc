@@ -9,6 +9,7 @@
         <app-constellation [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_constellation]]" [name]="name_constellation" (draged)="onChildStartDrag($event)"></app-constellation>
         <app-enemy [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_enemy]]" [name]="name_enemy" (draged)="onChildStartDrag($event)"></app-enemy>
         <app-artifact [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_artifact]]" [name]="name_artifact" (draged)="onChildStartDrag($event)"></app-artifact>
+        <app-team [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_other]]" [name]="name_other" (draged)="onChildStartDrag($event)"></app-team>
         <app-other [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_other]]" [name]="name_other" (draged)="onChildStartDrag($event)"></app-other>
     </div>
 </div>
