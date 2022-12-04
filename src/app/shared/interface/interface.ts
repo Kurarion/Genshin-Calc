@@ -9,7 +9,8 @@ export interface CharacterQueryParam {
 }
 
 /** メニューインタフェース */
-export interface MenuInfo {
+export interface CharaInfo {
+  index: string;
   names: Record<TYPE_SYS_LANG, string>;
   routerLink: string;
   queryParams: CharacterQueryParam;

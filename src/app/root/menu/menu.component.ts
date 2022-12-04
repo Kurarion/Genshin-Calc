@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService, EnkaService } from 'src/app/shared/shared.module';
+import { CharaInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService, EnkaService } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-menu',
@@ -11,9 +11,9 @@ export class MenuComponent implements OnInit {
   //キャラリスト
   characterMap!: Map<string, character>;
   //メニューリスト
-  menuList: MenuInfo[] = [];
+  menuList: CharaInfo[] = [];
   //メニューボタン押下イベント
-  @Output('menuClickEvent') menuClickEvent = new EventEmitter<MenuInfo>();
+  @Output('menuClickEvent') menuClickEvent = new EventEmitter<CharaInfo>();
   //言語
   currentLanguage!: TYPE_SYS_LANG;
 
@@ -45,27 +45,8 @@ export class MenuComponent implements OnInit {
     //Enkaキャラリスト
     let enkaList = this.enkaService.getAvatarList() ?? [];
     for(let key in tempMap) {
-      let temp: MenuInfo = {
-        names: tempMap[key].name,
-        routerLink: Const.MENU_CHARACTER,
-        queryParams: {
-          index: key,
-        },
-        isEnkaData: enkaList.includes(key),
-        iconImg: tempMap[key].images.icon,
-        elementTypeNumber: tempMap[key].info.elementType,
-        elementType: Const.ELEMENT_TYPE_MAP.get(tempMap[key].info.elementType),
-        elementSvg: Const.ELEMENT_SVG_PATH.get(tempMap[key].info.elementType),
-        bgImg: Const[tempMap[key].qualityType+Const.QUALITY_BG_SUFFIX as keyof Const],
-      };
-      //旅人さん
-      if (key.includes(Const.PLAYER_BOY)){
-        temp.sexType = "BOY";
-        temp.elementType = Const.PLAYER_BOY_ELEMENT[key.replace(Const.PLAYER_BOY, '')]
-      }else if (key.includes(Const.PLAYER_GIRL)){
-        temp.sexType = "GIRL";
-        temp.elementType = Const.PLAYER_GIRL_ELEMENT[key.replace(Const.PLAYER_GIRL, '')]
-      }
+      let temp: CharaInfo = this.characterService.getCharaInfo(key);
+      temp.isEnkaData = enkaList.includes(key);
       this.menuList.push(temp);
     }
   }
@@ -73,7 +54,7 @@ export class MenuComponent implements OnInit {
   /**
    * メニューボタンクリック処理
    */
-  onClick(menu: MenuInfo) {
+  onClick(menu: CharaInfo) {
     this.menuClickEvent.emit(menu);
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([menu.routerLink], {queryParams: menu.queryParams, skipLocationChange: true}));

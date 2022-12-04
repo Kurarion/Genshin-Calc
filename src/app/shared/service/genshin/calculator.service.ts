@@ -3167,6 +3167,9 @@ export class CalculatorService {
     let team: string[] = this.teamService.getOtherMembers(index);
     for(let i = 0; i < team.length; ++i){
       let subIndex = team[i];
+      if(!subIndex || !(subIndex?.length>0)){
+        continue;
+      }
       this.initAllDataBackground(subIndex);
 
       //チームバフ

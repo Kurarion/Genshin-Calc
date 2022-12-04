@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AngularMaterialModule } from '../angular-material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ExtraDataComponent } from './component/extra-data/extra-data.component';
 import { EnkaComponent } from './component/enka/enka.component';
 import { MatFilteringSelectorComponent } from './component/mat-filtering-selector/mat-filtering-selector.component';
+import { CharaOptionComponent } from './component/chara-option/chara-option.component';
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -24,7 +26,7 @@ export { CharacterStorageInfo, CharacterService } from './service/genshin/charac
 export { WeaponStorageInfo, WeaponService } from './service/genshin/weapon.service';
 export { EnemyStorageInfo, EnemyService } from './service/genshin/enemy.service';
 export { OtherStorageInfo, OtherStorageData, OtherService } from './service/genshin/other.service';
-export { TeamService } from './service/genshin/team.service';
+export { TeamSetStorageInfo, MemberIndex, TeamService } from './service/genshin/team.service';
 export { ArtifactStoragePartData, ArtifactStorageItemData, ArtifactStorageInfo, ArtifactService, ChipData } from './service/genshin/artifact.service';
 export { StorageService } from './service/storage.service';
 export { HttpService } from './service/http.service';
@@ -50,6 +52,7 @@ let shardList: any[] = [
   ExtraDataComponent,
   EnkaComponent,
   MatFilteringSelectorComponent,
+  CharaOptionComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,
@@ -64,6 +67,7 @@ let shardList: any[] = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    ScrollingModule,
     AngularMaterialModule,
     TranslateModule.forChild({
       extend: true,

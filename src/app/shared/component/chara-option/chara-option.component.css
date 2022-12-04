@@ -1,0 +1,60 @@
+.block {
+    display: flex;
+    align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.shinshinmoe {
+  align-self: center;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.shinshinmoe:before {
+  content: "\e93a";
+  font-family: shicon;
+  font-size: 1.4em;
+}
+
+.icon-div {
+  height: 2.7rem;
+  width: 2.7rem;
+  flex: none;
+  position: relative;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.icon-before {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 11% 11% 5% 11%;
+  background-color: #e7e5d8;
+}
+
+.icon {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  border-radius: 11% 11% 30% 11%;
+}
+
+.icon-after {
+  position: absolute;
+  top: 0.05em;
+  left: 0.05em;
+  width: 0.8em;
+  height: 0.8em;
+}
+
+.name { 
+  word-break: break-word;
+}
+

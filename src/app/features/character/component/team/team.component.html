@@ -5,17 +5,27 @@
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
-            <app-mat-filtering-selector
-                [title]="'TEAM.MEMBER_NAME'"
-                [model]="selectedEnemyIndex"
-                (modelChange)="onSelectEnemy($event)"
-                [originList]="enemyList"
-                [optionValueProperty]="'index'"
-                [optionInnerTextProperty]="'names'"
-                [selectedDispalyProperty]="'name'"
-                [service]="characterService"
-                [currentLanguage]="currentLanguage">
-            </app-mat-filtering-selector>
+            <div class="teams" *ngFor="let i of listIndex">
+                <app-chara-option
+                    [charaIndex]="memberIndexes[i]!"
+                    [currentLanguage]="currentLanguage"
+                    [onlyPic]="true"
+                    [useIndex]="true"
+                    class="avater"
+                >
+                </app-chara-option>
+                <app-mat-filtering-selector
+                    [title]="'TEAM.MEMBER_NAME'"
+                    [model]="memberIndexes[i]!"
+                    (modelChange)="onSelectTeamMember($event, i)"
+                    [originList]="memberList"
+                    [optionValueProperty]="'index'"
+                    [isCharaInfo]="true"
+                    [optionInnerTextProperty]="'names'"
+                    [hasBlankOption]="true"
+                    [currentLanguage]="currentLanguage">
+                </app-mat-filtering-selector>
+            </div>
         </mat-card-content>
     </mat-card>
 </ng-container>

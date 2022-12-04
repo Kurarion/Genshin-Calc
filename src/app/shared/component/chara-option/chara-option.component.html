@@ -1,0 +1,36 @@
+<ng-container *ngIf="onlyPic; then pic else picAndContent"></ng-container>
+<ng-template #pic>
+    <ng-container *ngIf="charaInfo; then exit else temp"></ng-container>
+    <ng-template #exit>
+        <div class="icon-div">
+            <div class="icon-before"></div>
+            <img class="icon" [style.background]="charaInfo!.bgImg" [src]="charaInfo!.iconImg" loading="lazy" appImgLoadAndErrorHandle>
+            <img class="icon-after" [src]="charaInfo!.elementSvg" loading="lazy" appImgErrorHandle>
+        </div>
+    </ng-template>
+    <ng-template #temp>
+        <div class="icon-div">
+            <div class="icon-before"></div>
+            <img class="icon" [style.background]="tempQualityBG" [src]="tempPicUrl" loading="lazy">
+            <!-- <img class="icon-after" [src]="charaInfo.elementSvg" loading="lazy" appImgErrorHandle> -->
+        </div>
+    </ng-template>
+</ng-template>
+<ng-template #picAndContent>
+    <div class="block">
+      <div class="icon-div">
+        <div class="icon-before"></div>
+        <img class="icon" [style.background]="charaInfo!.bgImg" [src]="charaInfo!.iconImg" loading="lazy" appImgLoadAndErrorHandle>
+        <img class="icon-after" [src]="charaInfo!.elementSvg" loading="lazy" appImgErrorHandle>
+      </div>
+      <ng-container *ngIf="charaInfo!.sexType; then player else character"></ng-container>
+      <ng-template #player>
+        <span class="name" [innerText]="('PLAYER.' + charaInfo!.sexType | translate) + ' (' + ('ELEMENT.' + charaInfo!.elementType | translate) + ')'"></span>
+      </ng-template>
+      <ng-template #character>
+        <span class="name" [innerText]="charaInfo!.names[currentLanguage]"></span>
+      </ng-template>
+      <span class="spacer"></span>
+      <figure *ngIf="charaInfo!.isEnkaData" class="shinshinmoe"></figure>
+    </div>
+</ng-template>

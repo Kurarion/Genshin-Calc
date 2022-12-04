@@ -127,6 +127,7 @@ export class Const {
   static readonly QUALITY_ORANGE_BG = "linear-gradient(145deg, rgba(149,106,67,1) 12%, rgba(222,147,81,1) 86%)"
   static readonly QUALITY_ORANGE_SP_BG = "linear-gradient(145deg, rgba(172,80,84,1) 12%, rgba(219,76,86,1) 86%)"
   static readonly QUALITY_PURPLE_BG = "linear-gradient(145deg, rgba(101,96,140,1) 12%, rgba(151,118,197,1) 86%)"
+  static readonly QUALITY_TEMP_BG = "linear-gradient(145deg, rgba(74,74,74,1) 12%, rgba(130,130,130,1) 86%)"
 
   static readonly QUALITY_BG_SUFFIX = "_BG";
 

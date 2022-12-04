@@ -4,6 +4,7 @@
 
 ::ng-deep .mat-select-panel::-webkit-scrollbar {
     -webkit-appearance: none;
+    appearance: none;
 }
 
 ::ng-deep .mat-select-panel::-webkit-scrollbar:vertical {

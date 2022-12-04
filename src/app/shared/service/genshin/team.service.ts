@@ -15,7 +15,7 @@ export interface TeamSetStorageInfo {
 export const TEAM_MAX_INDEX=4;
 export const TEAM_MIN_INDEX=1;
 
-declare type MemberIndex = 1|2|3|4|'1'|'2'|'3'|'4';
+export declare type MemberIndex = 1|2|3|4|'1'|'2'|'3'|'4';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,7 @@ export class TeamService {
   }
 
   //チームメンバー追加
-  addTeamMemberStorageInfo(charIndex: string | number, subIndex: MemberIndex, subCharIndex: string | number){
+  addTeamMemberStorageInfo(charIndex: string | number, subIndex: MemberIndex, subCharIndex: string | number | undefined){
     this.setTeamMemberStorageInfo(charIndex, subIndex, subCharIndex);
   }
 

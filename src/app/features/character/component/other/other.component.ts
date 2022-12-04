@@ -136,7 +136,9 @@ export class OtherComponent implements OnInit, OnDestroy {
       value /= 100; 
     }
     this.infos[this.selectedIndex].value = value;
-    this.updateDirtyFlag();
+    if(this.infos[this.selectedIndex].enable){
+      this.updateDirtyFlag();
+    }
   }
 
   updateDirtyFlag(){

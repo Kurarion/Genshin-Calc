@@ -13,7 +13,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { routerAnimation } from 'src/animation';
 import {
   LangInfo,
-  MenuInfo,
+  CharaInfo,
   Const,
   LanguageService,
   StorageService,
@@ -122,7 +122,7 @@ export class MainComponent implements OnInit, OnDestroy {
   /**
    * メニューを閉じる（幅の狭いのみ）
    */
-  closeMenu(event: MenuInfo) {
+  closeMenu(event: CharaInfo) {
     // if (!this.isLargeFlg) {
     //   this.menuOpenStatus = false;
     // }

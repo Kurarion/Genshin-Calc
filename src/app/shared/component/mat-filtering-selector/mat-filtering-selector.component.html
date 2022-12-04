@@ -1,9 +1,18 @@
 <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always">
     <mat-label [innerText]="title | translate"></mat-label>
-    <mat-select [ngModel]="model" (ngModelChange)="onModelChange($event)">
-        <mat-select-trigger *ngIf="service && dispalyIconWhenSelected && model">
-            <img class="selected-icon" [src]="this.service.get(model).images.icon" loading="lazy" appImgErrorHandle>
-            <span>{{this.service.get(model)[selectedDispalyProperty][currentLanguage]}}</span>
+    <mat-select [(ngModel)]="selected" (ngModelChange)="onModelChange($event)" (openedChange)="openChange($event)">
+        <mat-select-trigger *ngIf="selectedDispalyIcon && (isCharaInfo || (service && dispalyIconWhenSelected)) && selected.split(INDEX_SPLIT)[0]">
+            <ng-container *ngIf="isCharaInfo; then characterSelected else otherSelected"></ng-container>
+            <ng-template #characterSelected>
+                <app-chara-option
+                    [charaIndex]="selected.split(INDEX_SPLIT)[0]"
+                    [currentLanguage]="currentLanguage"
+                ></app-chara-option>
+            </ng-template>
+            <ng-template #otherSelected>
+                <img class="selected-icon" [src]="this.service.get(selected.split(INDEX_SPLIT)[0]).images.icon" loading="lazy" appImgErrorHandle>
+                <span>{{this.service.get(selected.split(INDEX_SPLIT)[0])[selectedDispalyProperty][currentLanguage]}}</span>
+            </ng-template>
         </mat-select-trigger>
         <mat-optgroup class="sticky">
             <mat-form-field appearance="outline" class="select-filter">
@@ -13,16 +22,51 @@
                     [(ngModel)]="filteringContent"
                     (ngModelChange)="filteringOptions()">
             </mat-form-field>
-            <mat-option *ngIf="(hasBlankOption && filteringContent == '')|| this.displayList.length == 0" value="" [disabled]="!hasBlankOption"></mat-option>
-            <ng-container *ngFor="let displayItem of displayList">
+        </mat-optgroup>
+        <cdk-virtual-scroll-viewport itemSize="49" [style.height.px]=4.2*49 class="virtual-viewport">
+            <!-- <mat-option *ngIf="(hasBlankOption && filteringContent == '')|| this.displayList.length == 0" value="" [disabled]="!hasBlankOption"></mat-option> -->
+            <ng-container *cdkVirtualFor="let displayItem of displayList; let i = index; let ls = last; let fi = first">
                 <mat-option 
+                    *ngIf="fi && hasBlankOption && filteringContent == ''"
                     class="option"
-                    [value]="displayItem[optionValueProperty]" >
-                    <img *ngIf="service && !listenLoadEvent" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" appImgErrorHandle>
-                    <img *ngIf="service && listenLoadEvent" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" appImgLoadAndErrorHandle>
-                    {{displayItem[optionInnerTextProperty][currentLanguage]}}
+                    value="">
+                </mat-option>
+                <mat-option 
+                    *ngIf="displayItem"
+                    [class]="'option'"
+                    [value]="displayItem[optionValueProperty]+INDEX_SPLIT+i">
+                    <ng-container *ngIf="isCharaInfo; then character else other"></ng-container>
+                    <ng-template #character>
+                        <app-chara-option
+                            [charaInfo]="displayItem"
+                            [currentLanguage]="currentLanguage"
+                        ></app-chara-option>
+                    </ng-template>
+                    <ng-template #other>
+                        <img *ngIf="service && !listenLoadEvent" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" appImgErrorHandle>
+                        <img *ngIf="service && listenLoadEvent" class="icon" [src]="this.service.get(displayItem[optionIndexProperty]).images.icon" loading="lazy" appImgLoadAndErrorHandle>
+                        {{displayItem[optionInnerTextProperty][currentLanguage]}}
+                    </ng-template>
                 </mat-option>
             </ng-container>
-        </mat-optgroup>
+        </cdk-virtual-scroll-viewport>
+        <mat-option
+            *ngIf="model"
+            class="just-for-initial-value-show"
+            [value]="notShowInitIndex"
+        >
+            <ng-container *ngIf="isCharaInfo; then character else other"></ng-container>
+            <ng-template #character>
+                <app-chara-option
+                    [charaInfo]="notShowInitItem"
+                    [currentLanguage]="currentLanguage"
+                ></app-chara-option>
+            </ng-template>
+            <ng-template #other>
+                <img *ngIf="service && !listenLoadEvent" class="icon" [src]="this.service.get(notShowInitItem[optionIndexProperty]).images.icon" loading="lazy" appImgErrorHandle>
+                <img *ngIf="service && listenLoadEvent" class="icon" [src]="this.service.get(notShowInitItem[optionIndexProperty]).images.icon" loading="lazy" appImgLoadAndErrorHandle>
+                {{notShowInitItem[optionInnerTextProperty][currentLanguage]}}
+            </ng-template>
+        </mat-option>
     </mat-select>
 </mat-form-field>

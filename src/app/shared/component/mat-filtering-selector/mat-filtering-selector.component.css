@@ -41,3 +41,28 @@
     box-shadow: 1px -2px 10px 0px grey;
     border-radius: 2px;
 }
+
+.virtual-viewport {
+    overflow-x: hidden;
+}
+
+.virtual-viewport::-webkit-scrollbar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 9px;
+}
+
+.virtual-viewport::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: 1px solid white;
+    background-color: grey;
+}
+
+::ng-deep .mat-option {
+    height: 3.5em !important;
+}
+
+.just-for-initial-value-show {
+    visibility: hidden;
+    height: 0 !important;
+}

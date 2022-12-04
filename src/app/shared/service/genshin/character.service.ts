@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { character, Const, GenshinDataService, ExtraCharacterData, StorageService, ExtraDataService, ExtraStatus } from 'src/app/shared/shared.module';
+import { character, Const, GenshinDataService, ExtraCharacterData, StorageService, ExtraDataService, ExtraStatus, CharaInfo } from 'src/app/shared/shared.module';
 
 export interface CharacterStorageInfo {
   level?: string;
@@ -39,10 +39,40 @@ export class CharacterService {
     return this.genshinDataService.getCharacter(index.toString());
   }
 
+  getCharaInfo(index: string | number): CharaInfo {
+    let indexStr = index.toString();
+    let temp: CharaInfo = {
+      index: indexStr,
+      names: GenshinDataService.dataCharacter[indexStr].name,
+      routerLink: Const.MENU_CHARACTER,
+      queryParams: {
+        index: indexStr,
+      },
+      iconImg: GenshinDataService.dataCharacter[indexStr].images.icon,
+      elementTypeNumber: GenshinDataService.dataCharacter[indexStr].info.elementType,
+      elementType: Const.ELEMENT_TYPE_MAP.get(GenshinDataService.dataCharacter[indexStr].info.elementType),
+      elementSvg: Const.ELEMENT_SVG_PATH.get(GenshinDataService.dataCharacter[indexStr].info.elementType),
+      bgImg: Const[GenshinDataService.dataCharacter[indexStr].qualityType+Const.QUALITY_BG_SUFFIX as keyof Const],
+    };
+    //旅人さん
+    if (indexStr.includes(Const.PLAYER_BOY)){
+      temp.sexType = "BOY";
+      temp.elementType = Const.PLAYER_BOY_ELEMENT[indexStr.replace(Const.PLAYER_BOY, '')]
+    }else if (indexStr.includes(Const.PLAYER_GIRL)){
+      temp.sexType = "GIRL";
+      temp.elementType = Const.PLAYER_GIRL_ELEMENT[indexStr.replace(Const.PLAYER_GIRL, '')]
+    }
+    return temp;
+  }
+
   //設定取得
   getStorageInfo(charIndex: string | number){
     let keyStr = charIndex.toString();
     return this.dataMap[keyStr];
+  }
+
+  getStorageMapKeys(){
+    return Object.keys(this.dataMap);
   }
 
   getNormalLevel(index: string | number): string|undefined {
