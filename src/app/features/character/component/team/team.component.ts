@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactService, artifactSet, CalculatorService, character, CharacterService, CharaInfo, CharSkills, Const, MemberIndex, OtherService, OtherStorageInfo, SelfTeamBuff, TeamBuff, TeamService, TeamSetStorageInfo, TYPE_SYS_LANG, weapon, WeaponService } from 'src/app/shared/shared.module';
 
@@ -90,6 +91,7 @@ export class TeamComponent implements OnInit {
     private characterService: CharacterService,
     private weaponService: WeaponService,
     private artifactService: ArtifactService,
+    private router: Router, 
     ) { }
 
   ngOnInit(): void {
@@ -136,6 +138,16 @@ export class TeamComponent implements OnInit {
   //ドラッグ開始
   onDrag(){
     this.draged.emit(this.name);
+  }
+
+  /**
+   * クリック処理
+   */
+  onClick(index: string) {
+    if(index){
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+      this.router.navigate([Const.MENU_CHARACTER], {queryParams: {index: index}, skipLocationChange: true}));
+    }
   }
 
   /**

@@ -63,9 +63,13 @@ export class MatFilteringSelectorComponent implements OnInit {
         }
         if(this.model != ""){
           this.selected = this.model + this.INDEX_SPLIT + this.initIndex;
+          this.notShowInitIndex = this.selected;
+          this.notShowInitItem = this.displayList[this.initIndex];
+        }else{
+          this.selected = "/0";
+          this.notShowInitIndex = "";
+          this.notShowInitItem = this.displayList[0];
         }
-        this.notShowInitIndex = this.selected;
-        this.notShowInitItem = this.displayList[this.initIndex];
       }
     }
   }

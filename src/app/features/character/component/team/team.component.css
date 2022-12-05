@@ -53,3 +53,9 @@ table {
     text-align: right;
     border-bottom: 1px solid rgba(0,0,0,.12);
 }
+
+.go-page {
+    margin-bottom: 1em;
+    margin-left: 1.4em;
+    cursor: pointer;
+}

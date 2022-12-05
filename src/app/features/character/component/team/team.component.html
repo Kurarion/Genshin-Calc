@@ -26,6 +26,7 @@
                         [hasBlankOption]="true"
                         [currentLanguage]="currentLanguage">
                     </app-mat-filtering-selector>
+                    <mat-icon *ngIf="memberIndexes[i]" class="go-page" (click)="onClick(memberIndexes[i]!)">output</mat-icon>
                 </div>
                 <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
                     <mat-accordion>
