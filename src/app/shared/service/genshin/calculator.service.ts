@@ -3451,7 +3451,7 @@ export class CalculatorService {
                   if(!result[tar]){
                     result[tar] = 0;
                   }
-                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                  if(this.checkAndSetBuffTagForSelf(buff.buffTag, tar, buffTag)){
                     result[tar] += value;
                   }
                 }
@@ -3729,7 +3729,7 @@ export class CalculatorService {
                       resultValue = value * sliderNumMap[buffIndex];
                     }
                   }
-                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                  if(this.checkAndSetBuffTagForSelf(buff.buffTag, tar, buffTag)){
                     result[tar] += resultValue!;
                   }
                 }
@@ -3787,6 +3787,15 @@ export class CalculatorService {
     setBuffResult.overrideElement = overrideElement;
 
     return setBuffResult;
+  }
+
+  private checkAndSetBuffTagForSelf(tag: string|undefined, target: string, buffTag: Record<string, string[]>){
+    if(tag){
+      if(buffTag.hasOwnProperty(tag) && buffTag[tag].includes(target)){
+        return false;
+      }
+    }
+    return true;
   }
 
   private checkAndSetBuffTag(tag: string|undefined, target: string, buffTag: Record<string, string[]>){

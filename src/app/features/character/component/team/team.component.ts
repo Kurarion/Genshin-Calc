@@ -99,8 +99,7 @@ export class TeamComponent implements OnInit {
     //チームリスト初期化
     this.initializeMemberList();
     //更新
-    this.calculatorService.initExtraTeamBuffData(this.data.id);
-    this.updateMemberBuffAll();
+    this.updateDatas();
   }
   
   onSelectTeamMember(memberIndex: string, postion: MemberIndex) {
@@ -120,8 +119,7 @@ export class TeamComponent implements OnInit {
     }
     this.updateTeamMemberFromStorage();
     //更新
-    this.calculatorService.initExtraTeamBuffData(this.data.id);
-    this.updateMemberBuffAll();
+    this.updateDatas();
   }
 
   @HostListener('window:unload')
@@ -216,5 +214,14 @@ export class TeamComponent implements OnInit {
     }else{
       this.memberInfos[postion] = {};
     }
+  }
+
+  private updateDatas(){
+    //更新
+    this.calculatorService.initExtraTeamBuffData(this.data.id);
+    this.updateMemberBuffAll();
+    this.calculatorService.initExtraCharacterData(this.data.id);
+    this.calculatorService.initExtraWeaponData(this.data.id);
+    this.calculatorService.initExtraArtifactSetData(this.data.id);
   }
 }
