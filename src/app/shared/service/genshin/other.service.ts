@@ -82,6 +82,10 @@ export class OtherService {
 
   //全設定情報取得
   getStorageInfos(charIndex: string | number, index?: number, filter: 'all'|'once'|'secondary' = 'all'){
+    //初期化無しの場合対応（チームメンバー）
+    if(this.dataMap[charIndex] === undefined){
+      return [];
+    }
     let keyStr = charIndex.toString();
     if(index == undefined){
       index = this.dataMap[charIndex].selectedIndex;
