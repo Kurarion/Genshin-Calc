@@ -10589,7 +10589,8 @@
                         "target": ["DMG_ANTI_CRYO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_PYRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
                         "settingType": "switch",
                         "defaultEnable": false,
-                        "isAllTeam":true
+                        "isAllTeam":true,
+                        "buffTag":"VIRIDESCENT"
                     }]
                 }
             ]

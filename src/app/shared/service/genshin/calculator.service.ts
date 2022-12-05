@@ -3451,9 +3451,9 @@ export class CalculatorService {
                   if(!result[tar]){
                     result[tar] = 0;
                   }
-                  // if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
                     result[tar] += value;
-                  // }
+                  }
                 }
                 
                 if(isAllTeam || isOnlyForOther){
@@ -3729,9 +3729,9 @@ export class CalculatorService {
                       resultValue = value * sliderNumMap[buffIndex];
                     }
                   }
-                  // if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
                     result[tar] += resultValue!;
-                  // }
+                  }
                 }
                 if(isAllTeam || isOnlyForOther){
                   if(isMaximumStackBuff){
