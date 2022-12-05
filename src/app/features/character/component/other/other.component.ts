@@ -184,7 +184,7 @@ export class OtherComponent implements OnInit, OnDestroy {
       case 'pyro':
         this.addTab();
         this.infos[this.selectedIndex].name = Const.PROP_ATTACK_UP;
-        this.infos[this.selectedIndex].value = 0.2;
+        this.infos[this.selectedIndex].value = 0.25;
         this.infos[this.selectedIndex].enable = true;
         this.updateShowValue();
         this.updateDirtyFlag();
