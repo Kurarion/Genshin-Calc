@@ -370,6 +370,12 @@
   "SW":{
     "READY": "データ更新完了！;;リロード"
   },
+  "TEAM":{
+    "NAME": "チーム",
+    "MEMBER_NAME_2": "メンバー１",
+    "MEMBER_NAME_3": "メンバー２",
+    "MEMBER_NAME_4": "メンバー３"
+  },
   "DESC":{
     "GOLDEN_MAJESTY":{
       "WITH_SHIELD": "シールドの場合のバフ（前のバフとの間で1つを選択）"

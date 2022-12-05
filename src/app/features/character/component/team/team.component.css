@@ -17,13 +17,39 @@
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 0.6rem;
+    margin-right: 0.3rem;
+    margin-left: 0.5rem;
 }
 
 .teams {
     margin: 0.5em 1em;
     display: flex;
+    flex-direction: column;
+}
+
+.member-select {
+    display: flex;
     align-items: flex-end;
     justify-content: flex-start;
     align-content: center;
     flex-wrap: nowrap;
+}
+
+.member-buff {
+    border: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.content-left {
+    text-align: left;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.content-right {
+    text-align: right;
+    border-bottom: 1px solid rgba(0,0,0,.12);
 }

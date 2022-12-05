@@ -370,6 +370,12 @@
   "SW":{
     "READY": "数据更新完成!;;重新加载"
   },
+  "TEAM":{
+    "NAME": "队伍",
+    "MEMBER_NAME_2": "成员1",
+    "MEMBER_NAME_3": "成员2",
+    "MEMBER_NAME_4": "成员3"
+  },
   "DESC":{
     "GOLDEN_MAJESTY":{
       "WITH_SHIELD": "护盾情况下的加成（与上一个BUFF选择其一设置）"

@@ -15,6 +15,31 @@ interface propObj {
 export class OtherComponent implements OnInit, OnDestroy {
 
   readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
+  readonly pyroIconUrl = Const.ELEMENT_SVG_PATH.get(2);
+  readonly hydroIconUrl = Const.ELEMENT_SVG_PATH.get(3);
+  readonly anemoIconUrl = Const.ELEMENT_SVG_PATH.get(4);
+  readonly cryoIconUrl = Const.ELEMENT_SVG_PATH.get(5);
+  readonly geoIconUrl = Const.ELEMENT_SVG_PATH.get(6);
+  readonly electroIconUrl = Const.ELEMENT_SVG_PATH.get(7);
+  readonly dendroIconUrl = Const.ELEMENT_SVG_PATH.get(8);
+
+  readonly elementMap = {
+    'pyro': this.pyroIconUrl,
+    'hydro': this.hydroIconUrl,
+    'anemo': this.anemoIconUrl,
+    'cryo': this.cryoIconUrl,
+    'geo': this.geoIconUrl,
+    'electro': this.electroIconUrl,
+    'dendro': this.dendroIconUrl,
+  }
+
+  readonly loopElemnt = [
+    'pyro',
+    'hydro',
+    'cryo',
+    'geo',
+    'dendro',
+  ]
 
   tabs: string[] = [];
   //選択されたインデックス
@@ -122,6 +147,9 @@ export class OtherComponent implements OnInit, OnDestroy {
   onSelectProp(prop: string, index: number){
     this.infos[index].name = prop;
     this.infos[this.selectedIndex].value = 0;
+    if(prop == Const.PROP_HP_UP){
+      this.infos[this.selectedIndex].canSecondaryTrans = true;
+    }
     this.updateShowValue();
     this.updateDirtyFlag();
   }
@@ -149,6 +177,64 @@ export class OtherComponent implements OnInit, OnDestroy {
   //ドラッグ開始
   onDrag(){
     this.draged.emit(this.name);
+  }
+
+  onClickElementTemplate(elementType: string){
+    switch(elementType){
+      case 'pyro':
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_ATTACK_UP;
+        this.infos[this.selectedIndex].value = 0.2;
+        this.infos[this.selectedIndex].enable = true;
+        this.updateShowValue();
+        this.updateDirtyFlag();
+        break;
+      case 'hydro':
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_HP_UP;
+        this.infos[this.selectedIndex].value = 0.25;
+        this.infos[this.selectedIndex].enable = true;
+        this.infos[this.selectedIndex].canSecondaryTrans = true;
+        this.updateShowValue();
+        this.updateDirtyFlag();
+        break;
+      case 'cryo':
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_CRIT_RATE;
+        this.infos[this.selectedIndex].value = 0.15;
+        this.infos[this.selectedIndex].enable = true;
+        this.updateShowValue();
+        this.updateDirtyFlag();
+        break;
+      case 'geo':
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_DMG_BONUS_ALL;
+        this.infos[this.selectedIndex].value = 0.15;
+        this.infos[this.selectedIndex].enable = true;
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_DMG_ANTI_GEO_MINUS;
+        this.infos[this.selectedIndex].value = 0.20;
+        this.infos[this.selectedIndex].enable = true;
+        this.updateShowValue();
+        this.updateDirtyFlag();
+        break;
+      case 'dendro':
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_ELEMENTAL_MASTERY;
+        this.infos[this.selectedIndex].value = 50;
+        this.infos[this.selectedIndex].enable = true;
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_ELEMENTAL_MASTERY;
+        this.infos[this.selectedIndex].value = 30;
+        this.infos[this.selectedIndex].enable = true;
+        this.addTab();
+        this.infos[this.selectedIndex].name = Const.PROP_ELEMENTAL_MASTERY;
+        this.infos[this.selectedIndex].value = 20;
+        this.infos[this.selectedIndex].enable = true;
+        this.updateShowValue();
+        this.updateDirtyFlag();
+        break;
+    }
   }
 
   private localAddTab(){

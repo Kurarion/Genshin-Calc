@@ -73,6 +73,18 @@
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>
+            <mat-divider></mat-divider>
+            <div class="all-element">
+                <ng-container *ngFor="let element of loopElemnt">
+                    <div class="element-fix" (click)="onClickElementTemplate(element)">
+                        <img class="element-icon" [src]="$any(elementMap)[element]" loading="lazy" appImgErrorHandle>
+                        <span class="element-add">
+                            +
+                        </span>
+                        <img class="element-icon" [src]="$any(elementMap)[element]" loading="lazy" appImgErrorHandle>
+                    </div>
+                </ng-container>
+            </div>
         </mat-card-content>
     </mat-card>
 </ng-container>

@@ -28,3 +28,11 @@ mat-progress-bar .mat-progress-bar-buffer {
   border-radius: 50%;
   vertical-align: middle;
 }
+
+.other-icon {
+  width: 2.5em;
+  height: 2.5em;
+  margin-right: 0.5em;
+  border-radius: 12%;
+  vertical-align: middle;
+}

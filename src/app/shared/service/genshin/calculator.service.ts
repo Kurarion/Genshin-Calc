@@ -3,14 +3,14 @@ import { Observable, Subject } from 'rxjs';
 import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType, TeamService } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
-const name_normal = 'normal';
-const name_skill = 'skill';
-const name_other = 'other';
-const name_elementalBurst = 'elementalBurst';
-const name_proudSkills = 'proudSkills';
-const name_constellation = 'constellation';
-const name_effect = 'effect';
-const name_set = 'set';
+const name_normal = Const.NAME_SKILLS_NORMAL;
+const name_skill = Const.NAME_SKILLS_SKILL;
+const name_other = Const.NAME_SKILLS_OTHER;
+const name_elementalBurst = Const.NAME_SKILLS_ELEMENTAL_BURST;
+const name_proudSkills = Const.NAME_SKILLS_PROUD;
+const name_constellation = Const.NAME_CONSTELLATION;
+const name_effect = Const.NAME_EFFECT;
+const name_set = Const.NAME_SET;
 
 export interface CalResult{
   characterData?: character;
@@ -1222,6 +1222,12 @@ export class CalculatorService {
   getAllDataCache(index: string | number){
     let indexStr = index.toString();
     return this.dataMap[indexStr].allData;
+  }
+
+  //チームバフ取得
+  getSelfTeamBuff(index: string | number) {
+    let indexStr = index.toString();
+    return this.dataMap[indexStr].selfTeamBuff;
   }
 
   //初期化（計算用情報合計）（チーム用）
@@ -2726,14 +2732,14 @@ export class CalculatorService {
           if(!extraTeamOnceResult.hasOwnProperty(v.target)){
             extraTeamOnceResult[v.target] = 0;
           }
-          if(this.checkAndSetBuffTag(v.buffTag,v.target,buffTag)){
+          if(this.checkAndSetBuffTag(v.tag,v.target,buffTag)){
             extraTeamOnceResult[v.target] += v.val ?? 0;
           }
         }else{
           if(!extraTeamSecondaryResult.hasOwnProperty(v.target)){
             extraTeamSecondaryResult[v.target] = 0;
           }
-          if(this.checkAndSetBuffTag(v.buffTag,v.target,buffTag)){
+          if(this.checkAndSetBuffTag(v.tag,v.target,buffTag)){
             extraTeamSecondaryResult[v.target] += v.val ?? 0;
           }
         }
@@ -2916,7 +2922,7 @@ export class CalculatorService {
           result,
           specialResult,
           specialTeamSlefResult,
-          [name_normal],
+          [name_skill],
           this.dataMap[index].selfTeamBuff!.skill,
           this.dataMap[index].buffTag!,
           characterData.weaponType,
@@ -3445,9 +3451,9 @@ export class CalculatorService {
                   if(!result[tar]){
                     result[tar] = 0;
                   }
-                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                  // if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
                     result[tar] += value;
-                  }
+                  // }
                 }
                 
                 if(isAllTeam || isOnlyForOther){
@@ -3723,9 +3729,9 @@ export class CalculatorService {
                       resultValue = value * sliderNumMap[buffIndex];
                     }
                   }
-                  if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
+                  // if(this.checkAndSetBuffTag(buff.buffTag, tar, buffTag)){
                     result[tar] += resultValue!;
-                  }
+                  // }
                 }
                 if(isAllTeam || isOnlyForOther){
                   if(isMaximumStackBuff){

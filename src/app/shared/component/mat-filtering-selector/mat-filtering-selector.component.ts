@@ -61,7 +61,9 @@ export class MatFilteringSelectorComponent implements OnInit {
             this.initIndex = i;
           }
         }
-        this.selected = this.model + this.INDEX_SPLIT + this.initIndex;
+        if(this.model != ""){
+          this.selected = this.model + this.INDEX_SPLIT + this.initIndex;
+        }
         this.notShowInitIndex = this.selected;
         this.notShowInitItem = this.displayList[this.initIndex];
       }
@@ -73,6 +75,7 @@ export class MatFilteringSelectorComponent implements OnInit {
     this.modelChange.emit(vals[0]);
     this.notShowInitIndex = value;
     this.notShowInitItem = this.displayList[vals[1]];
+    this.selected = value;
   }
 
   filteringOptions(isInit: boolean = false) {
@@ -102,7 +105,11 @@ export class MatFilteringSelectorComponent implements OnInit {
 
   openChange($event: boolean) {
     if ($event) {
-      this.cdkVirtualScrollViewPort.scrollToIndex(+this.selected.split(this.INDEX_SPLIT)[1], "smooth");
+      let toIndex = 0;
+      if(this.selected != ""){
+        toIndex = +this.selected.split(this.INDEX_SPLIT)[1];
+      }
+      this.cdkVirtualScrollViewPort.scrollToIndex(toIndex, "smooth");
       this.cdkVirtualScrollViewPort.checkViewportSize();
     }
   }

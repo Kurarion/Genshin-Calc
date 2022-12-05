@@ -110,3 +110,34 @@ input[type=number] {
 .normal-fiedld {
     width: 13em;
 }
+
+.element-fix {
+    margin-top: 1rem;
+    display: table;
+    cursor: pointer;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 12%;
+    padding: 0.5rem;
+}
+
+.element-fix:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+    border: 1px solid rgba(128, 128, 128, 0.6);
+}
+
+.element-icon {
+    width: 30px;
+    height: 30px;
+    display: table-cell;
+}
+
+.element-add {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.all-element {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

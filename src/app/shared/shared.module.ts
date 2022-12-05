@@ -33,7 +33,7 @@ export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
 export { ExtraArtifactSetData, ExtraCharacterSkillsData, ExtraStatus, ExtraCharacterData, ExtraWeaponData, ExtraDataStorageInfo, ExtraDataService } from './service/genshin/extra-data.service';
 export { GenshinDataService } from './service/genshin/genshin-data.service';
-export { BuffResult, DamageParam, DamageResult, HealingResult, ShieldResult, ProductResult, CalculatorService } from './service/genshin/calculator.service';
+export { TeamBuff, SelfTeamBuff, BuffResult, DamageParam, DamageResult, HealingResult, ShieldResult, ProductResult, CalculatorService } from './service/genshin/calculator.service';
 export { RelayoutMsgService } from './service/relayout-msg.service';
 
 export { EnkaStorageData, EnkaService } from './service/other/enka.service';

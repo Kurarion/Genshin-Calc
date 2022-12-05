@@ -370,6 +370,12 @@
   "SW":{
     "READY": "Data update completed!;;Reload"
   },
+  "TEAM":{
+    "NAME": "Team",
+    "MEMBER_NAME_2": "Member 1",
+    "MEMBER_NAME_3": "Member 2",
+    "MEMBER_NAME_4": "Member 3"
+  },
   "DESC":{
     "GOLDEN_MAJESTY":{
       "WITH_SHIELD": "Bonus in case of shield (select one of the settings with the previous BUFF)"

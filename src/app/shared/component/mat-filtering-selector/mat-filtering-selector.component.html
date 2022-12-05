@@ -1,6 +1,6 @@
 <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always">
     <mat-label [innerText]="title | translate"></mat-label>
-    <mat-select [(ngModel)]="selected" (ngModelChange)="onModelChange($event)" (openedChange)="openChange($event)">
+    <mat-select [ngModel]="selected" (ngModelChange)="onModelChange($event)" (openedChange)="openChange($event)">
         <mat-select-trigger *ngIf="selectedDispalyIcon && (isCharaInfo || (service && dispalyIconWhenSelected)) && selected.split(INDEX_SPLIT)[0]">
             <ng-container *ngIf="isCharaInfo; then characterSelected else otherSelected"></ng-container>
             <ng-template #characterSelected>
