@@ -5,7 +5,7 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="content">
-            <mat-accordion>
+            <mat-accordion multi>
                 <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
                     <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="isFirst" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                         <mat-expansion-panel-header matTooltipPosition="right">

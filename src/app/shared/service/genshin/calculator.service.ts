@@ -2688,10 +2688,10 @@ export class CalculatorService {
       Const.NAME_EFFECT,
       Const.NAME_SET,
     ]){
-      (selfTeamBuff[key as keyof SelfTeamBuff] as TeamBuff[]) = (selfTeamBuff[key as keyof SelfTeamBuff] as TeamBuff[]).filter((v:TeamBuff)=>(!v.path));
+      (selfTeamBuff[key as keyof SelfTeamBuff] as TeamBuff[]) = (selfTeamBuff[key as keyof SelfTeamBuff] as TeamBuff[]).filter((v:TeamBuff)=>(!v.path && v.val!=0));
     }
     for(let [i,_] of selfTeamBuff.proudSkills.entries()){
-      selfTeamBuff.proudSkills[i] = selfTeamBuff.proudSkills[i].filter((v:TeamBuff)=>(!v.path));
+      selfTeamBuff.proudSkills[i] = selfTeamBuff.proudSkills[i].filter((v:TeamBuff)=>(!v.path && v.val!=0));
     }
     for(let key of [
       Const.NAME_CONSTELLATION_1,
@@ -2701,7 +2701,7 @@ export class CalculatorService {
       Const.NAME_CONSTELLATION_5,
       Const.NAME_CONSTELLATION_6,
     ]){
-      selfTeamBuff.constellation[key] = selfTeamBuff.constellation[key].filter((v:TeamBuff)=>(!v.path));
+      selfTeamBuff.constellation[key] = selfTeamBuff.constellation[key].filter((v:TeamBuff)=>(!v.path && v.val!=0));
     }
     //再計算
     this.calTeamSpecialBuff(specialTeamSelfOrders, result, resultSelfTeamBuff);
@@ -2772,7 +2772,7 @@ export class CalculatorService {
         }
         v.val = toAdd;
       }
-      if(v.path){
+      if(v.path && v.val != 0){
         let temp: any = resultSelfTeamBuff;
         for(let i of v.path){
           temp = temp[i];

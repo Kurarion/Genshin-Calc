@@ -29,10 +29,10 @@
                     <mat-icon *ngIf="memberIndexes[i]" class="go-page" (click)="onClick(memberIndexes[i]!)">output</mat-icon>
                 </div>
                 <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
-                    <mat-accordion>
+                    <mat-accordion multi>
                         <!-- skill -->
                         <ng-container *ngFor="let skill of skills">
-                            <mat-expansion-panel class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
+                            <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
@@ -69,7 +69,7 @@
                         <ng-container *ngFor="let skills of proudSkills">
                             <ng-container *ngIf="$any(memberInfos[i]?.buff)[skills]">
                                 <ng-container *ngFor="let skill of $any(memberInfos[i]?.buff)[skills]; index as proudIndex">
-                                    <mat-expansion-panel class="mat-elevation-z0 expand" *ngIf="skill.length > 0">
+                                    <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="skill.length > 0">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].images.icon" loading="lazy" appImgErrorHandle>
@@ -107,7 +107,7 @@
                         <!-- constellation -->
                         <ng-container *ngFor="let skills of constellation">
                             <ng-container *ngFor="let c of constellations">
-                                <mat-expansion-panel class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skills][c].length > 0">
+                                <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skills][c].length > 0">
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>
                                             <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills['talents'])[c].images.icon" loading="lazy" appImgErrorHandle>
@@ -143,7 +143,7 @@
                         </ng-container>
                         <!-- weapon -->
                         <ng-container *ngFor="let skill of weapon">
-                            <mat-expansion-panel class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
+                            <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="other-icon" [src]="$any(memberInfos[i]!.weapon).images.icon" loading="lazy" appImgErrorHandle>
@@ -178,7 +178,7 @@
                         </ng-container>
                         <!-- artifact -->
                         <ng-container *ngFor="let skill of artifact">
-                            <mat-expansion-panel class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
+                            <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="other-icon" [src]="$any(memberInfos[i]!.artifact).images.icon" loading="lazy" appImgErrorHandle>

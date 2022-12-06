@@ -5,7 +5,7 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="content">
-            <mat-accordion>
+            <mat-accordion multi>
                 <ng-container *ngFor="let talent of data.skills.talents; index as i">
                     <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
                         <mat-expansion-panel-header>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, artifactSet, CalculatorService, character, CharacterService, CharaInfo, CharSkills, Const, MemberIndex, OtherService, OtherStorageInfo, SelfTeamBuff, TeamBuff, TeamService, TeamSetStorageInfo, TYPE_SYS_LANG, weapon, WeaponService } from 'src/app/shared/shared.module';
+import { ArtifactService, artifactSet, CalculatorService, character, CharacterService, CharaInfo, CharSkills, Const, ExpansionPanelCommon, MemberIndex, OtherService, OtherStorageInfo, RelayoutMsgService, SelfTeamBuff, TeamBuff, TeamService, TeamSetStorageInfo, TYPE_SYS_LANG, weapon, WeaponService } from 'src/app/shared/shared.module';
 
 interface memberOption {
   index: string;
@@ -29,7 +29,7 @@ interface TeamSetBuffInfo {
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
-export class TeamComponent implements OnInit {
+export class TeamComponent extends ExpansionPanelCommon implements OnInit {
 
   //ループメンバーインデックス
   readonly listIndex: MemberIndex[] = [2,3,4];
@@ -92,7 +92,10 @@ export class TeamComponent implements OnInit {
     private weaponService: WeaponService,
     private artifactService: ArtifactService,
     private router: Router, 
-    ) { }
+    private relayoutMsgService: RelayoutMsgService,
+    ) { 
+      super(relayoutMsgService);
+    }
 
   ngOnInit(): void {
     //チーム初期化
