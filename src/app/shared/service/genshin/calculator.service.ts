@@ -1243,9 +1243,11 @@ export class CalculatorService {
       // this.dataMap[indexStr].extraWeaponResult = temp2[0] as Record<string, number>;
       // this.dataMap[indexStr].extraSpecialWeaponResult = temp2[1] as SpecialBuff[];
 
-      // let temp3 = this.getExtraReliquarySetData(indexStr);
-      // this.dataMap[indexStr].extraArtifactSetResult = temp3[0] as Record<string, number>;
-      // this.dataMap[indexStr].extraSpecialArtifactSetResult = temp3[1] as SpecialBuff[];
+      this.dataMap[indexStr].selfTeamBuff![name_set] = [];
+
+      let temp3 = this.getExtraReliquarySetData(indexStr);
+      this.dataMap[indexStr].extraArtifactSetResult = temp3[0] as Record<string, number>;
+      this.dataMap[indexStr].extraSpecialArtifactSetResult = temp3[1] as SpecialBuff[];
 
       this.getAllData(indexStr, undefined, false);
     }else{

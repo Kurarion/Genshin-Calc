@@ -8373,7 +8373,7 @@
                                 "index": 0,
                                 "target": ["DMG_BONUS_ELEMENTAL_BURST"],
                                 "settingType": "slider",
-                                "sliderMin": 0,
+                                "sliderInitialValue": 0,
                                 "sliderMax": 50,
                                 "sliderStep": 1
                             }]
@@ -11362,6 +11362,57 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
+                    }]
+                }
+            ]
+        },
+        "15027": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["DMG_BONUS_ANEMO"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_NORMAL","DMG_BONUS_CHARGED","DMG_BONUS_PLUNGING"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    }]
+                }
+            ]
+        },
+        "15028": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_ELEMENT_RUPTURE_UP","DMG_ELEMENT_BURGEON_UP","DMG_ELEMENT_HYPERBLOOM_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "customValue": 0.1,
+                        "target": ["DMG_ELEMENT_RUPTURE_UP","DMG_ELEMENT_BURGEON_UP","DMG_ELEMENT_HYPERBLOOM_UP"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 4
                     }]
                 }
             ]
