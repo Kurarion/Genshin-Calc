@@ -8210,6 +8210,336 @@
                         }
                 ]
             }
+        },
+        "10000075": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "originSkill":"normal",
+                            "originIndex": 0,
+                            "originRelation":"*",
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "originSkill":"normal",
+                            "originIndex": 1,
+                            "originRelation":"*",
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "originSkill":"normal",
+                            "originIndex": 2,
+                            "originRelation":"*",
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "originSkill":"normal",
+                            "originIndex": 3,
+                            "originRelation":"*",
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "originSkill":"normal",
+                            "originIndex": 4,
+                            "originRelation":"*",
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["ATTACK_UP"],
+                                "settingType":"switch",
+                                "defaultEnable": false
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "target":["CRIT_RATE"],
+                                "settingType":"switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "damage": {
+                                "indexs": [2],
+                                "base": "ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_OTHER"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["DMG_RATE_UP_OTHER"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                                "settingType": "slider",
+                                "sliderMin": 0,
+                                "sliderMax": 50,
+                                "sliderStep": 1
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "originSkill":"normal",
+                                "originIndex": 0,
+                                "originRelation":"*",
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        },
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "originSkill":"normal",
+                                "originIndex": 1,
+                                "originRelation":"*",
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        },
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "originSkill":"normal",
+                                "originIndex": 2,
+                                "originRelation":"*",
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        },
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "originSkill":"normal",
+                                "originIndex": 3,
+                                "originRelation":"*",
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ANEMO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000076": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ANEMO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "index": 1,
+                            "target":["DMG_BONUS_ANEMO"],
+                            "settingType":"switch",
+                            "defaultEnable": false,
+                            "isAllTeam":true
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "index": 3,
+                            "target":["DMG_ANTI_ANEMO_MINUS"],
+                            "settingType":"switch",
+                            "defaultEnable": false,
+                            "isAllTeam":true
+                        }]
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"ATTACK_BASE",
+                                "target":["DMG_VAL_UP_ANEMO"],
+                                "settingType":"switch",
+                                "defaultEnable":false,
+                                "isAllTeam":true
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_CRIT_DMG_UP_ANEMO"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ]
+            }
         }
     },
     "weapons": {
