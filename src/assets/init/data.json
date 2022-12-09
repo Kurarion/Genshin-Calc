@@ -8898,6 +8898,18 @@
                 }
             ]
         },
+        "11422": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType":"switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
         "11501": {
             "effect": [
                 {
@@ -10318,6 +10330,20 @@
                         "target": ["ELEMENTAL_MASTERY"],
                         "settingType":"resident",
                         "isOnlyForOther": true
+                    }]
+                }
+            ]
+        },
+        "14512": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 10
                     }]
                 }
             ]
