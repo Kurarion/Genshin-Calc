@@ -373,7 +373,7 @@ export class ArtifactService {
 
   private checkAndSetInfoData(info: ArtifactStorageInfo){
     if(info.setIndexs == undefined){
-      info.setIndexs = [];
+      info.setIndexs = ['', ''];
     }
     if(info.setFullIndex == undefined){
       info.setFullIndex = '';
