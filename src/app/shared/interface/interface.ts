@@ -100,6 +100,7 @@ export interface ExtraSkillBuff {
   indexAddValue?: number;
   calRelation?: TYPE_RELATION;
   priority?: number;
+  finallyCal?: boolean;
   //元素付与
   overrideElement?: string;
   //数値計算ベースインデックスリスト

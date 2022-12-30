@@ -3826,7 +3826,8 @@
                                 "overrideElement":"DMG_BONUS_ANEMO",
                                 "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "finallyCal": true
                             }]
                         }
                 ]

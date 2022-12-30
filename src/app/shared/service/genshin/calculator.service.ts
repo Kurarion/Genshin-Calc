@@ -44,6 +44,7 @@ export interface SpecialBuff {
   maxVal?: number;
   specialMaxVal?: SpecialBuffMaxVal;
   tag?: string;
+  finallyCal?: boolean;
 }
 
 export interface SelfTeamBuff {
@@ -188,6 +189,8 @@ export interface BuffResult {
   step?: number;
   desc?: string;
   title?: string;
+  isAllTeam?: boolean;
+  isOnlyForOther?: boolean;
 }
 
 export interface artifactSetInfo {
@@ -2503,6 +2506,8 @@ export class CalculatorService {
                     switchValue: tempValue,
                     desc: buffInfo.desc,
                     title: buffInfo.title,
+                    isAllTeam: buffInfo.isAllTeam,
+                    isOnlyForOther: buffInfo.isOnlyForOther,
                   })
                   break;
                 case 'slider':
@@ -2521,7 +2526,9 @@ export class CalculatorService {
                     max: buffInfo.sliderMax ?? 1,
                     step: buffInfo.sliderStep ?? 1,
                     desc: buffInfo.desc,
-                    title: buffInfo.title
+                    title: buffInfo.title,
+                    isAllTeam: buffInfo.isAllTeam,
+                    isOnlyForOther: buffInfo.isOnlyForOther,
                   })
                   break;
                 case 'resident':
@@ -2635,6 +2642,7 @@ export class CalculatorService {
 
     //スペシャルバフ
     let specialOrders: SpecialBuff[] = [];
+    let specialOrdersFinally: SpecialBuff[] = [];
     specialOrders = specialOrders.concat(
       this.dataMap[index].extraSpecialCharaResult!,
       this.dataMap[index].extraSpecialWeaponResult!,
@@ -2645,27 +2653,12 @@ export class CalculatorService {
 
     //スペシャル処理
     for(let buff of specialOrders){
-      let baseValue = buff.base?result[buff.base]:0;
-      //特殊BUFFに変えるための仮想属性
-      if(buff.base == Const.PROP_FIX_NUMBER_1){
-        baseValue = 1;
+      //最後に計算する場合
+      if(buff.finallyCal){
+        specialOrdersFinally.push(buff);
+        continue;
       }
-      if(buff.base2 != undefined){
-        baseValue *= result[buff.base2];
-      }
-      let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
-      let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * buff.multiValue!;
-      if(buff.maxVal && toAdd > buff.maxVal){
-        toAdd = buff.maxVal;
-      }else if(buff.specialMaxVal != undefined){
-        let specialMaxVal = result[buff.specialMaxVal.base!] * buff.specialMaxVal.multiValue!;
-        if(toAdd > specialMaxVal){
-          toAdd = specialMaxVal;
-        }
-      }
-      result[buff.target!] += toAdd;
-      //計算必要分再計算
-      this.recalBaseProp(buff.target, result);
+      this.calSpecialToResult(buff, result);
     }
 
     //チームバフ
@@ -2722,7 +2715,36 @@ export class CalculatorService {
       this.recalBaseProp(target, result);
     }
 
+    //スペシャル処理(ファイナリー)
+    for(let buff of specialOrdersFinally){
+      this.calSpecialToResult(buff, result);
+    }
+
     return result;
+  }
+
+  private calSpecialToResult(buff: SpecialBuff, result: Record<string,number>){
+    let baseValue = buff.base?result[buff.base]:0;
+    //特殊BUFFに変えるための仮想属性
+    if(buff.base == Const.PROP_FIX_NUMBER_1){
+      baseValue = 1;
+    }
+    if(buff.base2 != undefined){
+      baseValue *= result[buff.base2];
+    }
+    let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
+    let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * buff.multiValue!;
+    if(buff.maxVal && toAdd > buff.maxVal){
+      toAdd = buff.maxVal;
+    }else if(buff.specialMaxVal != undefined){
+      let specialMaxVal = result[buff.specialMaxVal.base!] * buff.specialMaxVal.multiValue!;
+      if(toAdd > specialMaxVal){
+        toAdd = specialMaxVal;
+      }
+    }
+    result[buff.target!] += toAdd;
+    //計算必要分再計算
+    this.recalBaseProp(buff.target, result);
   }
 
   private appendToExtraTeam(buffs: TeamBuff[], extraTeamOnceResult: Record<string, number>, extraTeamSecondaryResult: Record<string, number>, extraSpecialTeamResult: SpecialBuff[], buffTag: Record<string,string[]>){
@@ -3352,6 +3374,7 @@ export class CalculatorService {
               }
             }
             let priority = buff?.priority ?? 0;
+            let finallyCal = buff?.finallyCal ?? false;
       
             let targets = buff?.target;
             //自身元素タイプチェック
@@ -3389,6 +3412,7 @@ export class CalculatorService {
               temp.baseModifyValue = baseModifyValue;
               temp.multiValue = indexValue;
               temp.priority = priority;
+              temp.finallyCal = finallyCal;
               if(maxValBase){
                 //特殊上限
                 temp.specialMaxVal = {
@@ -3525,6 +3549,7 @@ export class CalculatorService {
               }
             }
             let priority = buff?.priority ?? 0;
+            let finallyCal = buff?.finallyCal ?? false;
       
             let targets = buff?.target;
             //自身元素タイプチェック
@@ -3565,6 +3590,7 @@ export class CalculatorService {
                 }
               }
               temp.priority = priority;
+              temp.finallyCal = finallyCal;
   
               for(let tar of targets){
                 if(!isOnlyForOther){
