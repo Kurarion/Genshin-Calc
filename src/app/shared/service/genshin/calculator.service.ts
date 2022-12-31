@@ -3598,17 +3598,34 @@ export class CalculatorService {
                 }
                 if(isAllTeam || isOnlyForOther){
                   if(isMaximumStackBuff){
-                    selfTeamBuffs.push({
-                      ...temp,
-                      index: buff.index,
-                      tag: buff.buffTag,
-                      target: tar,
-                      multiValue: indexValue,
-                      isSpecial: true,
-                      canSecondaryTrans: buff.canSecondaryTrans,
-                      canOverlying: buff.canOverlying,
-                      calByOrigin: buff.calByOrigin,
-                    })
+                    if((buff?.sliderMax || 0) <= sliderNumMap[buffIndex]){
+                      if(!buff.calByOrigin){
+                        specialTeamSlefResult.push({
+                          ...temp,
+                          path,
+                          index: buff.index,
+                          tag: buff.buffTag,
+                          target: tar,
+                          multiValue: indexValue,
+                          isSpecial: true,
+                          canSecondaryTrans: buff.canSecondaryTrans,
+                          canOverlying: buff.canOverlying,
+                          calByOrigin: buff.calByOrigin,
+                        })
+                      }else{
+                        selfTeamBuffs.push({
+                          ...temp,
+                          index: buff.index,
+                          tag: buff.buffTag,
+                          target: tar,
+                          multiValue: indexValue,
+                          isSpecial: true,
+                          canSecondaryTrans: buff.canSecondaryTrans,
+                          canOverlying: buff.canOverlying,
+                          calByOrigin: buff.calByOrigin,
+                        })
+                      }
+                    }
                   }else{
                     //
                     if(sliderStartIndex != undefined){
