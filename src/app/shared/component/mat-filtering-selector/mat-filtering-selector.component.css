@@ -58,7 +58,7 @@
     background-color: grey;
 }
 
-::ng-deep .mat-option {
+::ng-deep .virtual-viewport > .cdk-virtual-scroll-content-wrapper > .mat-option {
     height: 3.5em !important;
 }
 
