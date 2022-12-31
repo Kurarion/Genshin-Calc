@@ -181,6 +181,45 @@ export class ArtifactSubComponent implements OnInit {
     this.updateChips();
   }
 
+  onChangeSubValue(change: Event, key: string, prop: string){
+    let keyLow = key.toLowerCase();
+    if(this.data[keyLow] == undefined || !this.data[keyLow].name){
+      return;
+    }
+    let targe = (change.target as HTMLInputElement);
+    let value = parseFloat(targe.value);
+    let valueList = this.dataReliquaryAffix[this.data[keyLow].name!];
+    if(this.percent_props.includes(prop)){
+      value = value / 100;
+    }
+    let finalValue = value;
+    let minDiff = value + 1;
+    if(finalValue < 0){
+      finalValue = 0;
+    }else if(finalValue > valueList[valueList.length - 1]){
+      finalValue = valueList[valueList.length - 1];
+    }else{
+      for(let v of valueList){
+        let tempDiff = Math.abs(value - v);
+        if(tempDiff < minDiff){
+          minDiff = tempDiff;
+          finalValue = v;
+        }else{
+          break;
+        }
+      }
+    }
+    this.data[keyLow].value = finalValue;
+    if(this.percent_props.includes(key)){
+      targe.value = finalValue.toFixed(1).replace('\.0$', '');
+    }else{
+      targe.value = finalValue.toFixed(0);
+    }
+    //更新
+    this.calculatorService.setDirtyFlag(this.characterIndex);
+    this.updateChips();
+  }
+
   updateChips(){
     this.chipChanged += 1;
     this.chipChangedForParent.emit();

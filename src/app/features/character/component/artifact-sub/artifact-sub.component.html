@@ -30,7 +30,7 @@
                     </mat-select>
                 </mat-form-field>
             </td>
-            <td>
+            <td class="one-line-div">
                 <mat-slider
                     color="primary"
                     [thumbLabel]="true"
@@ -43,9 +43,23 @@
                     [step]="subStep"
                     tickInterval="auto">
                 </mat-slider>
-                <span class="sub-span"
+                <mat-form-field appearance="legacy" class="field-part-2"
+                    [matTooltip]="(data[sub.toLowerCase()].value ?? 0).toString()" matTooltipPosition="right"
+                >
+                    <input type="number" matInput
+                    title=""
+                    [max]="subMax"
+                    [min]="subMin"
+                    [disabled]="!data[sub.toLowerCase()].name"
+                    [step]="subStep"
+                    [value]="percent_props.includes(data[sub.toLowerCase()].name ?? '')?(((data[sub.toLowerCase()].value ?? 0) * 100).toFixed(1) | removeZeroSuffix):((data[sub.toLowerCase()].value ?? 0).toFixed(0))"
+                    (change)="onChangeSubValue($event, sub, data[sub.toLowerCase()].name!)">
+                    <span matSuffix *ngIf="percent_props.includes(data[sub.toLowerCase()].name??'')">%</span>
+                </mat-form-field>
+                <!-- <span class="sub-span"
                     [innerText]="percent_props.includes(data[sub.toLowerCase()].name ?? '')?(data[sub.toLowerCase()].value ?? 0 | percent: '1.0-1' | noComma):(data[sub.toLowerCase()].value ?? 0 | number: '1.0-0' | noComma)"
-                    [matTooltip]="(data[sub.toLowerCase()].value ?? 0).toString()" matTooltipPosition="right"></span>
+                    [matTooltip]="(data[sub.toLowerCase()].value ?? 0).toString()" matTooltipPosition="right">
+                </span> -->
             </td>
         </tr>
     </table>

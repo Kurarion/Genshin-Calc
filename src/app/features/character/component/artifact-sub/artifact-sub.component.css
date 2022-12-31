@@ -25,3 +25,30 @@ tr td:nth-of-type(2) {
     padding-top: 0.3em;
     padding-bottom: 0.3em;
 }
+
+.field-part-1 {
+    width: 10em;
+}
+
+.field-part-2 {
+    margin-left: 0.1em;
+    width: 3.2em;
+    text-align: center;
+}
+
+.one-line-div {
+    white-space: nowrap;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

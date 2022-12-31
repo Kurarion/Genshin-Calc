@@ -10,7 +10,7 @@
                 <div class="one-line-div">
                     <br>
                     <mat-slider
-                        class="fiedl-part-1"
+                        class="field-part-1"
                         color="primary"
                         [thumbLabel]="true"
                         [formControl]="currentPoint"
@@ -21,8 +21,9 @@
                         [step]="step"
                         tickInterval="auto">
                     </mat-slider>
-                    <mat-form-field appearance="legacy" class="fiedl-part-2">
+                    <mat-form-field appearance="legacy" class="field-part-2">
                         <input type="number" matInput 
+                        title=""
                         [max]="maxValidArray[effectNum - 1]/10"
                         [min]="minValid"
                         step="0.1"

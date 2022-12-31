@@ -14,12 +14,14 @@ import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
 import { RatePipe } from './pipe/rate.pipe';
 import { TruncatePipe } from './pipe/truncate.pipe';
+import { RemoveZeroSuffixPipe } from './pipe/remove-zero-suffix.pipe';
 import { ImgErrorHandleDirective } from './directive/img-error-handle.directive';
 import { ImgLoadAndErrorHandleDirective } from './directive/img-load-and-error-handle.directive';
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { RatePipe } from './pipe/rate.pipe';
 export { TruncatePipe } from './pipe/truncate.pipe';
+export { RemoveZeroSuffixPipe } from './pipe/remove-zero-suffix.pipe';
 
 export { GlobalProgressService } from './service/global-progress.service';
 export { CharacterStorageInfo, CharacterService } from './service/genshin/character.service';
@@ -57,6 +59,7 @@ let shardList: any[] = [
   NoStrongPipe,
   RatePipe,
   TruncatePipe,
+  RemoveZeroSuffixPipe,
   ImgErrorHandleDirective,
   ImgLoadAndErrorHandleDirective,
 ];
