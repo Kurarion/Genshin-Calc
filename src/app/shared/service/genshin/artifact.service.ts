@@ -226,7 +226,7 @@ export class ArtifactService {
     if(!(index in this.dataMap[keyStr].info)){
       this.dataMap[keyStr].info[index] = {};
     }
-    if(this.dataMap[keyStr].info[index].setIndexs == undefined){
+    if(this.dataMap[keyStr].info[index].setIndexs == undefined || this.dataMap[keyStr].info[index].setIndexs?.length != 2){
       this.dataMap[keyStr].info[index].setIndexs = ['', ''];
     }
     return this.dataMap[keyStr].info[index].setIndexs!;
