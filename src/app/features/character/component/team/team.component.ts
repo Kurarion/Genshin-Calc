@@ -109,6 +109,9 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     this.updateDatas();
     //計算後データ取得
     setTimeout(() => {
+      this.updateSelfBuff();
+    })
+    setTimeout(() => {
       this.calculatorService.allDataChanged().subscribe(()=>{
         this.updateSelfBuff();
       })
