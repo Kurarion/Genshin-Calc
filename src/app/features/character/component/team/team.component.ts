@@ -32,7 +32,9 @@ interface TeamSetBuffInfo {
 export class TeamComponent extends ExpansionPanelCommon implements OnInit {
 
   //ループメンバーインデックス
-  readonly listIndex: MemberIndex[] = [2,3,4];
+  readonly listIndex: MemberIndex[] = [1,2,3,4];
+  readonly selfIndex: MemberIndex[] = [1];
+  readonly ohterIndex: MemberIndex[] = [2,3,4];
   readonly skills: (keyof CharSkills)[] = [
     Const.NAME_SKILLS_NORMAL, 
     Const.NAME_SKILLS_SKILL, 
@@ -105,6 +107,12 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     this.initializeMemberList();
     //更新
     this.updateDatas();
+    //計算後データ取得
+    setTimeout(() => {
+      this.calculatorService.allDataChanged().subscribe(()=>{
+        this.updateSelfBuff();
+      })
+    })
   }
   
   onSelectTeamMember(memberIndex: string, postion: MemberIndex) {
@@ -174,6 +182,12 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
 
   private updateTeamMemberFromStorage() {
     this.memberIndexes = this.teamService.getTeamStorageInfo(this.data.id)!;
+  }
+
+  private updateSelfBuff(){
+    for(let key of this.selfIndex){
+      this.updateMemberBuff(key);
+    }
   }
 
   private updateMemberBuffAll(){

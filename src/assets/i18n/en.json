@@ -374,9 +374,10 @@
   },
   "TEAM":{
     "NAME": "Team",
-    "MEMBER_NAME_2": "Member 1",
-    "MEMBER_NAME_3": "Member 2",
-    "MEMBER_NAME_4": "Member 3"
+    "MEMBER_NAME_1": "Member 1",
+    "MEMBER_NAME_2": "Member 2",
+    "MEMBER_NAME_3": "Member 3",
+    "MEMBER_NAME_4": "Member 4"
   },
   "DESC":{
     "GOLDEN_MAJESTY":{

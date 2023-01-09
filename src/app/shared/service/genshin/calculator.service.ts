@@ -3305,9 +3305,9 @@ export class CalculatorService {
   
         if(buff){
           //元素付与リセット
-          if(buff.overrideElement == crruentOverrideElement){
-            overrideElement = "";
-          }
+          // if(buff.overrideElement == crruentOverrideElement){
+          //   overrideElement = "";
+          // }
           //限定武器タイプチェック
           if(buff?.weaponTypeLimit != undefined){
             if(!buff.weaponTypeLimit.includes(weaponType)){

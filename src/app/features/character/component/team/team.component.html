@@ -5,7 +5,7 @@
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
-            <div class="teams" *ngFor="let i of listIndex">
+            <div class="teams" *ngFor="let i of listIndex; first as isFirst">
                 <div class="member-select">
                     <app-chara-option
                         [charaIndex]="memberIndexes[i]!"
@@ -15,7 +15,14 @@
                         class="avater"
                     >
                     </app-chara-option>
+                    <mat-form-field *ngIf="isFirst" appearance="legacy" floatLabel="always" floatLabel="always">
+                        <mat-label [innerText]="'TEAM.MEMBER_NAME_'+i | translate"></mat-label>
+                        <mat-select value="self" disabled>
+                            <mat-option value="self">{{data.name[currentLanguage]}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                     <app-mat-filtering-selector
+                        *ngIf="!isFirst"
                         [title]="'TEAM.MEMBER_NAME_'+i"
                         [model]="memberIndexes[i]!"
                         (modelChange)="onSelectTeamMember($event, i)"
@@ -26,7 +33,7 @@
                         [hasBlankOption]="true"
                         [currentLanguage]="currentLanguage">
                     </app-mat-filtering-selector>
-                    <mat-icon *ngIf="memberIndexes[i]" class="go-page" (click)="onClick(memberIndexes[i]!)">output</mat-icon>
+                    <mat-icon *ngIf="memberIndexes[i] && !isFirst" class="go-page" (click)="onClick(memberIndexes[i]!)">output</mat-icon>
                 </div>
                 <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
                     <mat-accordion multi>

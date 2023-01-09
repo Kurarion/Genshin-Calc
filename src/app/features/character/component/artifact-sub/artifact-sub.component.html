@@ -48,8 +48,6 @@
                 >
                     <input type="number" matInput
                     title=""
-                    [max]="subMax"
-                    [min]="subMin"
                     [disabled]="!data[sub.toLowerCase()].name"
                     [step]="subStep"
                     [value]="percent_props.includes(data[sub.toLowerCase()].name ?? '')?(((data[sub.toLowerCase()].value ?? 0) * 100).toFixed(1) | removeZeroSuffix):((data[sub.toLowerCase()].value ?? 0).toFixed(0))"

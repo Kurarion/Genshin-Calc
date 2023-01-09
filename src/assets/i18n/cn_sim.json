@@ -374,9 +374,10 @@
   },
   "TEAM":{
     "NAME": "队伍",
-    "MEMBER_NAME_2": "成员1",
-    "MEMBER_NAME_3": "成员2",
-    "MEMBER_NAME_4": "成员3"
+    "MEMBER_NAME_1": "成员1",
+    "MEMBER_NAME_2": "成员2",
+    "MEMBER_NAME_3": "成员3",
+    "MEMBER_NAME_4": "成员4"
   },
   "DESC":{
     "GOLDEN_MAJESTY":{
