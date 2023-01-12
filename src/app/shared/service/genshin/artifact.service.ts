@@ -152,10 +152,12 @@ export class ArtifactService {
   }
 
   //適用中インデックス設定
-  setStorageActiveIndex(charIndex: string | number, index: number){
+  setStorageActiveIndex(charIndex: string | number, index: number): number{
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
+    let lastKeyIndex = this.dataMap[keyStr].activeIndex;
     this.dataMap[keyStr].activeIndex = index;
+    return lastKeyIndex;
   }
 
   //設定長さ取得
@@ -173,7 +175,7 @@ export class ArtifactService {
   }
 
   //聖遺物プッシュ
-  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo, withoutLimit = false){
+  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo, withoutLimit = false): number{
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     this.checkAndSetInfoData(info);
@@ -181,11 +183,11 @@ export class ArtifactService {
       this.dataMap[keyStr].info.pop();
     }
     this.dataMap[keyStr].info.push(info);
-    this.setStorageActiveIndex(keyStr, this.dataMap[keyStr].info.length - 1);
+    return this.setStorageActiveIndex(keyStr, this.dataMap[keyStr].info.length - 1);
   }
 
   //聖遺物セット設定
-  setStorageSetIndexsAll(charIndex: string | number, setIndexs: string[], index?: number){
+  setStorageSetIndexsAll(charIndex: string | number, setIndexs: string[], index?: number, lastIndex?: number){
     let keyStr = charIndex.toString();
     let infoIndex = this.dataMap[keyStr].activeIndex;
     if(index != undefined){
@@ -198,6 +200,14 @@ export class ArtifactService {
       info.setFullIndex = setIndexs[0];
     }else{
       info.setFullIndex = '';
+    }
+    //同じセットの場合、同じ設定にする（初期化なし）
+    if(lastIndex){
+      let lastInfo = this.dataMap[keyStr].info[lastIndex];
+      if(lastInfo.setFullIndex == info.setFullIndex){
+        info.extra = {...lastInfo.extra}
+        return
+      }
     }
     this.setDefaultExtraData(keyStr, info.setIndexs, info.setFullIndex);
   }

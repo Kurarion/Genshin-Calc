@@ -293,8 +293,8 @@ export class EnkaService {
       }
     }
 
-    this.artifactService.pushStorageInfo(avatarId, info);
-    this.artifactService.setStorageSetIndexsAll(avatarId, setIndexs);
+    let lastIndex = this.artifactService.pushStorageInfo(avatarId, info);
+    this.artifactService.setStorageSetIndexsAll(avatarId, setIndexs, undefined, lastIndex);
   }
 
   initWeapon(avatarId: string, weapon: EnkaEquip ){
