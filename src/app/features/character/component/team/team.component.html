@@ -17,9 +17,9 @@
                     </app-chara-option>
                     <mat-form-field *ngIf="isFirst" appearance="legacy" floatLabel="always" floatLabel="always">
                         <mat-label [innerText]="'TEAM.MEMBER_NAME_'+i | translate"></mat-label>
-                        <mat-select value="self" disabled>
-                            <mat-option value="self">{{data.name[currentLanguage]}}</mat-option>
-                        </mat-select>
+                        <select matNativeControl disabled>
+                            <option>{{data.name[currentLanguage]}}</option>
+                        </select>
                     </mat-form-field>
                     <app-mat-filtering-selector
                         *ngIf="!isFirst"
