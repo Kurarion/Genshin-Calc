@@ -54,6 +54,13 @@ export class Const {
     jp: 'Japanese',
   };
 
+  static readonly MAP_MANUAL_FILE: Record<TYPE_SYS_LANG, string> = {
+    cn_sim: 'manual/README_CH_SIM.md',
+    cn_tra: 'manual/README_CH_TRA.md',
+    en: 'manual/README.md',
+    jp: 'manual/README_JP.md',
+  };
+
   static DEFAULT_LANG: TYPE_SYS_LANG = environment.defaultLang as TYPE_SYS_LANG;
 
   //*********************************

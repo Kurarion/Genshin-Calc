@@ -13,8 +13,12 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="removeCurrentCache()" >
-                    <mat-icon>playlist_remove</mat-icon>
+                <button mat-menu-item class="align-v" (click)="openManual()" >
+                    <mat-icon class="align-icon material-icons-outlined">explore</mat-icon>
+                    <span>{{ 'MENU.MANUAL.TITLE' | translate }}</span>
+                </button>
+                <button mat-menu-item class="align-v" (click)="removeCurrentCache()" >
+                    <mat-icon class="align-icon">layers_clear</mat-icon>
                     <span>{{ 'MENU.DELETE_CACHE.TITLE' | translate }}</span>
                 </button>
             </mat-menu>

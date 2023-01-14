@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService } from 'src/app/shared/shared.module';
+import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -267,6 +267,15 @@ export class MainComponent implements OnInit, OnDestroy {
         this.router.navigate([Const.MENU_CHARACTER], {queryParams: {index: this.data.id}, skipLocationChange: true}));
       }
     })
+  }
+
+  //マニュアル
+  openManual() {
+    const currentFile = Const.MAP_MANUAL_FILE[this.currentLanguage];
+    const data: ManualDialogData = {
+      file: currentFile,
+    }
+    const dialogRef = this.matDialog.open(ManualDialogComponent, {data})
   }
 
   /**

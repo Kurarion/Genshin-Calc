@@ -21,14 +21,13 @@
 
 ## 使用方法
 
-<details>
-    <summary>點擊查看簡單說明</summary>
+<div>
     <img src="./doc/example_ch_tra_1.png">
     <br>
     <img src="./doc/example_ch_tra_2.png">
     <br>
     <img src="./doc/example_ch_tra_3.png">
-</details>
+</div>
 
 ## 注意事項
 

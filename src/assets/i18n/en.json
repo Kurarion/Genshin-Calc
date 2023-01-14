@@ -394,6 +394,10 @@
       "OK": "OK",
       "CANCEL": "Cancel",
       "SUCCESS": "The data of「{{NAME}}」has been reset!"
+    },
+    "MANUAL":{
+      "TITLE": "Guide",
+      "OK": "Confirm"
     }
   }
 }

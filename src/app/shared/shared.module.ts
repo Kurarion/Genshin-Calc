@@ -10,6 +10,7 @@ import { EnkaComponent } from './component/enka/enka.component';
 import { MatFilteringSelectorComponent } from './component/mat-filtering-selector/mat-filtering-selector.component';
 import { CharaOptionComponent } from './component/chara-option/chara-option.component';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
+import { ManualDialogComponent } from './component/manual-dialog/manual-dialog.component';
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -20,6 +21,7 @@ import { ImgErrorHandleDirective } from './directive/img-error-handle.directive'
 import { ImgLoadAndErrorHandleDirective } from './directive/img-load-and-error-handle.directive';
 
 export { ConfirmDialogComponent, ConfirmDialogData } from './component/confirm-dialog/confirm-dialog.component'
+export { ManualDialogComponent, ManualDialogData } from './component/manual-dialog/manual-dialog.component'
 
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -60,6 +62,7 @@ let shardList: any[] = [
   MatFilteringSelectorComponent,
   CharaOptionComponent,
   ConfirmDialogComponent,
+  ManualDialogComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,

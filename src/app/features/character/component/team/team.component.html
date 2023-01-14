@@ -33,7 +33,7 @@
                         [hasBlankOption]="true"
                         [currentLanguage]="currentLanguage">
                     </app-mat-filtering-selector>
-                    <mat-icon *ngIf="memberIndexes[i] && !isFirst" class="go-page" (click)="onClick(memberIndexes[i]!)">output</mat-icon>
+                    <mat-icon *ngIf="memberIndexes[i] && !isFirst" class="go-page" (click)="onClick(memberIndexes[i]!)">open_in_new</mat-icon>
                 </div>
                 <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
                     <mat-accordion multi>

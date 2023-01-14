@@ -26,6 +26,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "magic-grid": "^3.2.4",
+    "marked": "^4.2.12",
     "material-icons": "^1.10.9",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0"
@@ -35,6 +36,7 @@
     "@angular/cli": "^14.2.10",
     "@angular/compiler-cli": "^14.2.12",
     "@types/jasmine": "~3.10.0",
+    "@types/marked": "^4.0.8",
     "@types/node": "^12.20.50",
     "angular-cli-ghpages": "^1.0.0",
     "http-server": "^14.1.1",

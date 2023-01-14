@@ -19,14 +19,13 @@
 
 ## 使用方法
 
-<details>
-<summary>簡単な説明</summary>
-<img src="./doc/example_jp_1.png">
-<br>
-<img src="./doc/example_jp_2.png">
-<br>
-<img src="./doc/example_jp_3.png">
-</details>
+<div>
+    <img src="./doc/example_jp_1.png">
+    <br>
+    <img src="./doc/example_jp_2.png">
+    <br>
+    <img src="./doc/example_jp_3.png">
+</div>
 
 ## 注意事項
 ■キャラクターについて

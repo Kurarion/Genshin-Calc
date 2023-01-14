@@ -48,3 +48,12 @@
     background-color: #f5f5f5;
     color: black;
 }
+
+.align-v {
+    display: flex;
+    align-items: center;
+}
+
+.align-icon {
+    margin-top: -2px;
+}

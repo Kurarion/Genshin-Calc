@@ -25,7 +25,22 @@
             "assets": [
               "src/favicon.png",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              {
+                "glob": "*.md",
+                "input": "",
+                "output": "/manual/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./doc/",
+                "output": "/doc/"
+              },
+              {
+                "glob": "logo-readme.png",
+                "input": "",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.css"
@@ -95,7 +110,22 @@
             "assets": [
               "src/favicon.png",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              {
+                "glob": "*.md",
+                "input": "",
+                "output": "/manual/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./doc/",
+                "output": "/doc/"
+              },
+              {
+                "glob": "logo-readme.png",
+                "input": "",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.css"

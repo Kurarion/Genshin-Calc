@@ -19,14 +19,13 @@
 
 ## Usage
 
-<details>
-<summary>Click to view a brief description</summary>
-<img src="./doc/example_en_1.png">
-<br>
-<img src="./doc/example_en_2.png">
-<br>
-<img src="./doc/example_en_3.png">
-</details>
+<div>
+    <img src="./doc/example_en_1.png">
+    <br>
+    <img src="./doc/example_en_2.png">
+    <br>
+    <img src="./doc/example_en_3.png">
+</div>
 
 ## Description
 ■ About character
