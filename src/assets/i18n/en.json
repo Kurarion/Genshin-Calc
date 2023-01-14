@@ -386,5 +386,14 @@
     "TRAVELER":{
       "PROUDSKILL_2": "Additional recharge increase by the absorb the amount of Abundance Amulets (unit: piece)"
     }
+  },
+  "MENU":{
+    "DELETE_CACHE":{
+      "TITLE": "Clear Character data",
+      "WANRING": "Are you sure to clear all data of「{{NAME}}」?",
+      "OK": "OK",
+      "CANCEL": "Cancel",
+      "SUCCESS": "The data of「{{NAME}}」has been reset!"
+    }
   }
 }

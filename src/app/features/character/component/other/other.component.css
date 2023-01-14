@@ -118,6 +118,8 @@ input[type=number] {
     border: 1px solid rgba(128, 128, 128, 0.3);
     border-radius: 12%;
     padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .element-fix:hover {
@@ -137,7 +139,6 @@ input[type=number] {
 }
 
 .all-element {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }

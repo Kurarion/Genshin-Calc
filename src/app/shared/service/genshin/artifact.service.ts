@@ -98,6 +98,12 @@ export class ArtifactService {
     }
   }
 
+  //クリア
+  clearStorageInfo(index: string | number){
+    let indexStr = index.toString();
+    delete this.dataMap[indexStr];
+  }
+
   //聖遺物全ロールバック
   recoverAllData(index: string | number) {
     let indexStr = index.toString();

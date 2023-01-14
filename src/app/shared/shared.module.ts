@@ -9,6 +9,7 @@ import { ExtraDataComponent } from './component/extra-data/extra-data.component'
 import { EnkaComponent } from './component/enka/enka.component';
 import { MatFilteringSelectorComponent } from './component/mat-filtering-selector/mat-filtering-selector.component';
 import { CharaOptionComponent } from './component/chara-option/chara-option.component';
+import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -17,6 +18,9 @@ import { TruncatePipe } from './pipe/truncate.pipe';
 import { RemoveZeroSuffixPipe } from './pipe/remove-zero-suffix.pipe';
 import { ImgErrorHandleDirective } from './directive/img-error-handle.directive';
 import { ImgLoadAndErrorHandleDirective } from './directive/img-load-and-error-handle.directive';
+
+export { ConfirmDialogComponent, ConfirmDialogData } from './component/confirm-dialog/confirm-dialog.component'
+
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
 export { RatePipe } from './pipe/rate.pipe';
@@ -55,6 +59,7 @@ let shardList: any[] = [
   EnkaComponent,
   MatFilteringSelectorComponent,
   CharaOptionComponent,
+  ConfirmDialogComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,

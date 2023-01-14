@@ -386,5 +386,14 @@
     "TRAVELER":{
       "PROUDSKILL_2": "吸收豐穰勾玉數額外的充能加成（單位：個）"
     }
+  },
+  "MENU":{
+    "DELETE_CACHE":{
+      "TITLE": "角色數據清除",
+      "WANRING": "確定要清除角色「{{NAME}}」的全部數據麼？",
+      "OK": "確定",
+      "CANCEL": "取消",
+      "SUCCESS": "已重置「{{NAME}}」的數據！"
+    }
   }
 }

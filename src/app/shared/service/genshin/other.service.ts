@@ -30,6 +30,12 @@ export class OtherService {
     }
   }
 
+  //クリア
+  clearStorageInfo(index: string | number){
+    let indexStr = index.toString();
+    delete this.dataMap[indexStr];
+  }
+
   //ストレージに保存
   saveData(){
     this.storageService.setJSONItem(Const.SAVE_OTHER, this.dataMap);

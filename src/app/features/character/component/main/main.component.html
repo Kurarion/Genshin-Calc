@@ -1,6 +1,24 @@
-<div class="main">
+<div class="main" #main>
     <div class="background" [style.right]="scrollBarWidth+'px'" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'" [@imgLoad]="imgState">
         <div class="background"></div>
+    </div>
+    <div class="container-buttons">
+        <div>
+            <button (click)="scrollToTop()" matRipple mat-mini-fab matTooltip="To top" matTooltipPosition="left" class="icon-common mat-elevation-z2" aria-label="To top">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+        <div>
+            <button matRipple mat-mini-fab [matMenuTriggerFor]="menu" class="icon-common mat-elevation-z2" aria-label="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="removeCurrentCache()" >
+                    <mat-icon>playlist_remove</mat-icon>
+                    <span>{{ 'MENU.DELETE_CACHE.TITLE' | translate }}</span>
+                </button>
+            </mat-menu>
+        </div>
     </div>
     <div class="content" [@otherLoad]="otherState">
         <app-character [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_character]]" [name]="name_character" (draged)="onChildStartDrag($event)"></app-character>

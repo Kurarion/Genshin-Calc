@@ -31,6 +31,12 @@ export class CharacterService {
     }
   }
 
+  //クリア
+  clearStorageInfo(index: string | number){
+    let indexStr = index.toString();
+    delete this.dataMap[indexStr];
+  }
+
   getMap(): Record<string, character> {
     return GenshinDataService.dataCharacter;
   }

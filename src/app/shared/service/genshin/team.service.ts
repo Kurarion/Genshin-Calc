@@ -34,6 +34,12 @@ export class TeamService {
     }
   }
 
+  //クリア
+  clearStorageInfo(index: string | number){
+    let indexStr = index.toString();
+    delete this.dataMap[indexStr];
+  }
+
   //ストレージに保存
   saveData(){
     this.storageService.setJSONItem(Const.SAVE_TEAM, this.dataMap);

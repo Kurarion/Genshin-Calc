@@ -25,6 +25,12 @@ export class WeaponService {
     }
   }
 
+  //クリア
+  clearStorageInfo(index: string | number){
+    let indexStr = index.toString();
+    delete this.dataMap[indexStr];
+  }
+
   getMap(): Record<string, weapon> {
     return GenshinDataService.dataWeapon;
   }

@@ -1,10 +1,13 @@
-import { Component, HostListener, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, Const, GenshinDataService, HttpService, LanguageService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { map, takeUntil, Observable, Subject, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import MagicGrid from "magic-grid"
 
 const CSS_STATUS_BEFORE = "beforeLoad";
@@ -107,6 +110,8 @@ export class MainComponent implements OnInit, OnDestroy {
   subscriptions!: Subscription[];
   //z-index
   private zIndexs!: string[];
+  //コンテンツ
+  @ViewChild('main') main!: ElementRef;
 
   constructor(private httpService: HttpService,
     private route: ActivatedRoute, 
@@ -114,7 +119,16 @@ export class MainComponent implements OnInit, OnDestroy {
     private calculatorService: CalculatorService,
     private languageService: LanguageService,
     private breakpointObserver: BreakpointObserver,
-    private relayoutMsgService: RelayoutMsgService,) {
+    private relayoutMsgService: RelayoutMsgService,
+    private router: Router,
+    private translateService: TranslateService,
+    private weaponService: WeaponService,
+    private enemyService: EnemyService,
+    private artifactService: ArtifactService,
+    private otherService: OtherService,
+    private teamService: TeamService,
+    private matDialog: MatDialog,
+    private matSnackBar: MatSnackBar,) {
     this.subscriptions = [];
     this.subscriptions.push(this.relayoutMsgService.status().subscribe(()=>{
       setTimeout(()=>{
@@ -208,6 +222,51 @@ export class MainComponent implements OnInit, OnDestroy {
         sub.unsubscribe();
       }
     }
+  }
+
+  //トップへスクロール
+  scrollToTop() {
+    let parent = this.main.nativeElement.parentElement.parentElement.parentElement;
+    parent.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  //キャッシュ削除
+  removeCurrentCache() {
+    const currentName = this.data.name[this.currentLanguage];
+    const contentVal = {'NAME': currentName};
+    const data: ConfirmDialogData = {
+      title: 'MENU.DELETE_CACHE.TITLE',
+      content: 'MENU.DELETE_CACHE.WANRING',
+      contentVal: contentVal,
+      cancel: 'MENU.DELETE_CACHE.CANCEL',
+      ok: 'MENU.DELETE_CACHE.OK',
+    }
+    const dialogRef = this.matDialog.open(ConfirmDialogComponent, {data})
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if(result){
+        //削除
+        const indexStr = this.data.id.toString();
+        this.characterService.clearStorageInfo(indexStr);
+        this.weaponService.clearStorageInfo(indexStr);
+        this.enemyService.clearStorageInfo(indexStr);
+        this.artifactService.clearStorageInfo(indexStr);
+        this.otherService.clearStorageInfo(indexStr);
+        this.teamService.clearStorageInfo(indexStr);
+        //成功
+        this.translateService.get('MENU.DELETE_CACHE.SUCCESS', contentVal).subscribe((res: string) => {
+          this.matSnackBar.open(res, undefined, {
+            duration: 1500
+          })
+        });
+        //リフレッシュ
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+        this.router.navigate([Const.MENU_CHARACTER], {queryParams: {index: this.data.id}, skipLocationChange: true}));
+      }
+    })
   }
 
   /**
