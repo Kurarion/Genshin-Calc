@@ -166,6 +166,7 @@ export class Const {
   static readonly PORP_TAG_NAHIDA_TRI_KARMA = "NAHIDA_TRI_KARMA";
   static readonly PORP_TAG_LAYLA_SHOOTING_STAR = "LAYLA_SHOOTING_STAR";
   static readonly PORP_TAG_FISCHL_OZ = "FISCHL_OZ";
+  static readonly PORP_TAG_ALHAITHAM_MIRROR = "ALHAITHAM_MIRROR";
   
   static readonly PROPS_TAG_LIST = [
     Const.PORP_TAG_RAIDEN_ITTOU,
@@ -177,6 +178,7 @@ export class Const {
     Const.PORP_TAG_NAHIDA_TRI_KARMA,
     Const.PORP_TAG_LAYLA_SHOOTING_STAR,
     Const.PORP_TAG_FISCHL_OZ,
+    Const.PORP_TAG_ALHAITHAM_MIRROR,
   ]
 
   static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
@@ -203,10 +205,14 @@ export class Const {
     ["10000031", [
       Const.PORP_TAG_FISCHL_OZ,
     ]],
+    ["10000078", [
+      Const.PORP_TAG_ALHAITHAM_MIRROR,
+    ]],
   ])
 
   static readonly PROPS_HAS_MIX_RATE: Set<string> = new Set([
     "10000073",
+    "10000078",
   ]);
 
   //*********************************
@@ -284,6 +290,8 @@ export class Const {
   static readonly PROP_DMG_BONUS_SKILL_NAHIDA_TRI_KARMA = "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA";
   //元素スキルダメージ（LAYLA）
   static readonly PROP_DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR = "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR";
+  //元素スキルダメージ（ALHAITHAM）
+  static readonly PROP_DMG_BONUS_SKILL_ALHAITHAM_MIRROR = "DMG_BONUS_SKILL_ALHAITHAM_MIRROR";
   //元素爆発ダメージ
   static readonly PROP_DMG_BONUS_ELEMENTAL_BURST = "DMG_BONUS_ELEMENTAL_BURST";
   //武器ダメージ
@@ -723,6 +731,7 @@ export class Const {
     Const.PROP_DMG_BONUS_SKILL_NILOU_MOON,
     Const.PROP_DMG_BONUS_SKILL_NAHIDA_TRI_KARMA,
     Const.PROP_DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR,
+    Const.PROP_DMG_BONUS_SKILL_ALHAITHAM_MIRROR,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,
@@ -892,6 +901,7 @@ export class Const {
     Const.PROP_DMG_BONUS_SKILL_NILOU_MOON,
     Const.PROP_DMG_BONUS_SKILL_NAHIDA_TRI_KARMA,
     Const.PROP_DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR,
+    Const.PROP_DMG_BONUS_SKILL_ALHAITHAM_MIRROR,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,
@@ -1053,6 +1063,7 @@ export class Const {
     Const.PROP_DMG_BONUS_SKILL_NILOU_MOON,
     Const.PROP_DMG_BONUS_SKILL_NAHIDA_TRI_KARMA,
     Const.PROP_DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR,
+    Const.PROP_DMG_BONUS_SKILL_ALHAITHAM_MIRROR,
     Const.PROP_DMG_BONUS_ELEMENTAL_BURST,
     Const.PROP_DMG_BONUS_WEAPON,
     Const.PROP_DMG_BONUS_OTHER,

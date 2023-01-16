@@ -86,6 +86,7 @@
     "DMG_BONUS_SKILL": "Skill DMG Bonus",
     "DMG_BONUS_SKILL_NILOU_MOON": "Skill DMG Bonus (Watery Moon)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "Skill DMG Bonus (Tri-Karma Purification)",
+    "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "Skill DMG Bonus (Mirror)",
     "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "Skill DMG Bonus (Shooting Star)",
     "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst DMG Bonus",
     "DMG_ANTI_CRYO": "Cryo Resistance",
@@ -274,6 +275,7 @@
       "PRODUCT": "Production HP",
       "SHIELD": "Shield HP",
       "BUFF": "Buff (Only Self)",
+      "BUFF_MULT": "Buff (Multiple)",
       "TEAM_BUFF": "Buff (All Team)",
       "ONLY_OTHER_BUFF": "Buff (Only Teammate)",
       "OVERRIDE_ELEMENT": "Override Element",
@@ -351,7 +353,8 @@
     "NILOU_MOON": "Watery Moon",
     "NAHIDA_TRI_KARMA": "Tri-Karma Purification",
     "LAYLA_SHOOTING_STAR": "Shooting Star",
-    "FISCHL_OZ": "Oz's (Summoning)"
+    "FISCHL_OZ": "Oz's (Summoning)",
+    "ALHAITHAM_MIRROR": "Mirror"
   },
   "AUTO": {
     "CALC": "Calculate",

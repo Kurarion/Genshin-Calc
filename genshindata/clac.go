@@ -1259,6 +1259,9 @@ func calCharacterNoLevelValidParamIndexs(paramMap map[string][]float64) []int {
 	paramList := paramMap[fmt.Sprintf(configSkillLevelFormat, 1)]
 	for i, v := range paramList {
 		if v == 0 {
+			if i == 0 {
+				continue
+			}
 			break
 		}
 		results = append(results, i)
@@ -1272,6 +1275,9 @@ func calWeaponNoLevelValidParamIndexs(paramList []float64) []int {
 	results := make([]int, 0)
 	for i, v := range paramList {
 		if v == 0 {
+			if i == 0 {
+				continue
+			}
 			break
 		}
 		results = append(results, i)

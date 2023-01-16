@@ -8,7 +8,7 @@
             <tr>
                 <td>
                     <span 
-                        [innerText]="info.title?info.title:(info.isAllTeam?'GENSHIN.OTHER.TEAM_BUFF':(info.isOnlyForOther?'GENSHIN.OTHER.ONLY_OTHER_BUFF':'GENSHIN.OTHER.BUFF')) | translate"
+                        [innerText]="(info.title?info.title:(info.isAllTeam?'GENSHIN.OTHER.TEAM_BUFF':(info.isOnlyForOther?'GENSHIN.OTHER.ONLY_OTHER_BUFF':'GENSHIN.OTHER.BUFF'))) | translate"
                         [matTooltip]="info.desc?(info.desc | translate):undefined"
                         matTooltipPosition='above'
                     ></span>

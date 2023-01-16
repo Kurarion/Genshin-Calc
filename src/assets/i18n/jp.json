@@ -86,6 +86,7 @@
     "DMG_BONUS_SKILL": "元素スキルダメージ",
     "DMG_BONUS_SKILL_NILOU_MOON": "元素スキルダメージ(水月)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "元素スキルダメージ(滅淨三業)",
+    "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "元素スキルダメージ(光幕)",
     "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "元素スキルダメージ(飛星)",
     "DMG_BONUS_ELEMENTAL_BURST":"元素爆発ダメージ",
     "DMG_ANTI_CRYO": "氷元素耐性",
@@ -274,6 +275,7 @@
       "PRODUCT": "創造物HP",
       "SHIELD": "シールドHP",
       "BUFF": "バフ(自身のみ)",
+      "BUFF_MULT": "バフ(複数)",
       "TEAM_BUFF": "バフ(チーム全体)",
       "ONLY_OTHER_BUFF": "バフ(チームメンバーのみ)",
       "OVERRIDE_ELEMENT": "元素付与",
@@ -351,7 +353,8 @@
     "NILOU_MOON": "水月",
     "NAHIDA_TRI_KARMA": "滅浄三業",
     "LAYLA_SHOOTING_STAR": "飛星",
-    "FISCHL_OZ": "オズ(召喚)"
+    "FISCHL_OZ": "オズ(召喚)",
+    "ALHAITHAM_MIRROR": "光幕"
   },
   "AUTO": {
     "CALC": "計算",
@@ -389,7 +392,7 @@
   },
   "MENU":{
     "DELETE_CACHE":{
-      "TITLE": "キャラクタデータ消去",
+      "TITLE": "キャラクターデータ消去",
       "WANRING": "キャラクター「{{NAME}}」のすべてのデータをクリアしますか。",
       "OK": "OK",
       "CANCEL": "キャンセル",

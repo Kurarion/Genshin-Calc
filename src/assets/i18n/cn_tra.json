@@ -86,6 +86,7 @@
     "DMG_BONUS_SKILL": "元素技能傷害加成",
     "DMG_BONUS_SKILL_NILOU_MOON": "元素技能傷害加成(水月)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "元素技能傷害加成(滅淨三業)",
+    "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "元素技能傷害加成(光幕)",
     "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "元素技能傷害加成(飛星)",
     "DMG_BONUS_ELEMENTAL_BURST": "元素爆發傷害加成",
     "DMG_ANTI_CRYO": "冰元素抗性",
@@ -274,6 +275,7 @@
       "PRODUCT": "創造物生命值",
       "SHIELD": "盾量",
       "BUFF": "增益(僅自身)",
+      "BUFF_MULT": "增益(復數)",
       "TEAM_BUFF": "增益(全隊)",
       "ONLY_OTHER_BUFF": "增益(僅隊友)",
       "OVERRIDE_ELEMENT": "附魔",
@@ -351,7 +353,8 @@
     "NILOU_MOON": "水月",
     "NAHIDA_TRI_KARMA": "滅淨三業",
     "LAYLA_SHOOTING_STAR": "飛星",
-    "FISCHL_OZ": "奧茲(召喚)"
+    "FISCHL_OZ": "奧茲(召喚)",
+    "ALHAITHAM_MIRROR": "光幕"
   },
   "AUTO": {
     "CALC": "計算",
