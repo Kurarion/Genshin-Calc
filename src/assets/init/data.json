@@ -8771,11 +8771,17 @@
                                 "sliderStep": 1,
                                 "sliderInitialValue":0,
                                 "sliderMax": 3,
-                                "isOnlyForOther":true,
-                                "title": "GENSHIN.OTHER.BUFF_MULT"
-                            },{
+                                "isOnlyForOther":true
+                            }]
+                        },
+                        {
+                            "buffs":[{
                                 "index": 2,
-                                "target": ["DMG_BONUS_DENDRO"]
+                                "target": ["DMG_BONUS_DENDRO"],
+                                "settingType": "slider",
+                                "sliderStep": 1,
+                                "sliderInitialValue":0,
+                                "sliderMax": 3
                             }]
                         }
                 ],
