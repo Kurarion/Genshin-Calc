@@ -393,10 +393,13 @@
   "MENU":{
     "DELETE_CACHE":{
       "TITLE": "角色數據清除",
+      "ALL_TITLE": "數據清除",
       "WANRING": "確定要清除角色「{{NAME}}」的全部數據麼？",
+      "ALL_WANRING": "確定要清除全部數據麼？",
       "OK": "確定",
       "CANCEL": "取消",
-      "SUCCESS": "已重置「{{NAME}}」的數據！"
+      "SUCCESS": "已重置「{{NAME}}」的數據！",
+      "ALL_SUCCESS": "已重置全部數據！"
     },
     "MANUAL":{
       "TITLE": "使用指南",

@@ -393,10 +393,13 @@
   "MENU":{
     "DELETE_CACHE":{
       "TITLE": "Clear Character data",
+      "ALL_TITLE": "Clear All data",
       "WANRING": "Are you sure to clear all data of「{{NAME}}」?",
+      "ALL_WANRING": "Are you sure to clear all data?",
       "OK": "OK",
       "CANCEL": "Cancel",
-      "SUCCESS": "The data of「{{NAME}}」has been reset!"
+      "SUCCESS": "The data of「{{NAME}}」has been reset!",
+      "ALL_SUCCESS": "The data has been reset!"
     },
     "MANUAL":{
       "TITLE": "Guide",

@@ -2,4 +2,21 @@
     <div class="background" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'" [@imgLoad]="imgState">
         <div class="background"></div>
     </div>
+    <div class="container-buttons">
+        <div>
+            <button matRipple mat-mini-fab [matMenuTriggerFor]="menu" class="icon-common mat-elevation-z2" aria-label="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item class="align-v" (click)="openManual()" >
+                    <mat-icon class="align-icon material-icons-outlined">explore</mat-icon>
+                    <span>{{ 'MENU.MANUAL.TITLE' | translate }}</span>
+                </button>
+                <button mat-menu-item class="align-v" (click)="removeCurrentCache()" >
+                    <mat-icon class="align-icon">layers_clear</mat-icon>
+                    <span>{{ 'MENU.DELETE_CACHE.TITLE' | translate }}</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
 </div>

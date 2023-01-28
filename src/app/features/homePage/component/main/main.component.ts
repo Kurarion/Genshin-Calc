@@ -1,6 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpService, LanguageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ConfirmDialogComponent, ConfirmDialogData, Const, HttpService, LanguageService, ManualDialogComponent, ManualDialogData, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 const CSS_STATUS_BEFORE = "beforeLoad";
@@ -56,7 +60,11 @@ export class MainComponent implements OnInit, OnDestroy {
   currentLanguage!: TYPE_SYS_LANG;
 
   constructor(private httpService: HttpService,
-    private languageService: LanguageService) {
+    private languageService: LanguageService,
+    private router: Router,
+    private translateService: TranslateService,
+    private matDialog: MatDialog,
+    private matSnackBar: MatSnackBar,) {
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
     //言語変更検知
@@ -78,6 +86,42 @@ export class MainComponent implements OnInit, OnDestroy {
     this.backgroundLoadFlg = false;
     this.otherState = CSS_STATUS_BEFORE;
     this.imgState = CSS_STATUS_BEFORE;
+  }
+
+  //キャッシュ削除
+  removeCurrentCache() {
+    const data: ConfirmDialogData = {
+      title: 'MENU.DELETE_CACHE.ALL_TITLE',
+      content: 'MENU.DELETE_CACHE.ALL_WANRING',
+      cancel: 'MENU.DELETE_CACHE.CANCEL',
+      ok: 'MENU.DELETE_CACHE.OK',
+    }
+    const dialogRef = this.matDialog.open(ConfirmDialogComponent, {data})
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if(result){
+        //削除
+        localStorage.clear()
+        //成功
+        this.translateService.get('MENU.DELETE_CACHE.ALL_SUCCESS').subscribe((res: string) => {
+          this.matSnackBar.open(res, undefined, {
+            duration: 1500
+          })
+        });
+        //リフレッシュ
+        setTimeout(()=>{
+          window.location.reload();
+        }, 1000)
+      }
+    })
+  }
+
+  //マニュアル
+  openManual() {
+    const currentFile = Const.MAP_MANUAL_FILE[this.currentLanguage];
+    const data: ManualDialogData = {
+      file: currentFile,
+    }
+    const dialogRef = this.matDialog.open(ManualDialogComponent, {data})
   }
 
   /**
