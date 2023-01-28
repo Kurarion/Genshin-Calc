@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 import { UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, GenshinDataService } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, RelayoutMsgService } from 'src/app/shared/shared.module';
 
 interface InputItem {
   name: string,
@@ -25,7 +25,7 @@ interface InputItem {
   templateUrl: './artifact-auto.component.html',
   styleUrls: ['./artifact-auto.component.css']
 })
-export class ArtifactAutoComponent implements OnInit {
+export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnInit {
   readonly optimalStep = 10;
   readonly step = 1;
   readonly minValid = 0;
@@ -269,7 +269,9 @@ export class ArtifactAutoComponent implements OnInit {
     private calculatorService: CalculatorService,
     private percentPipe: PercentPipe,
     private matSnackBar: MatSnackBar, 
-    private translateService: TranslateService) { 
+    private translateService: TranslateService,
+    private relayoutMsgService: RelayoutMsgService,) {
+      super(relayoutMsgService);
       this.subsMap.forEach((v, k)=>{
         this.subsReverseMap.set(v.toString(), k);
       })
@@ -369,6 +371,7 @@ export class ArtifactAutoComponent implements OnInit {
     }else{
       this.userInputList['damageTypeList'] = [];
     }
+    this.onExpandStatusChanged();
   }
 
   setAttackType(value: string){

@@ -3320,7 +3320,7 @@ export class CalculatorService {
           
           if(isEnableInSwitch){
             //元素付与
-            if(buff.overrideElement != undefined){
+            if(buff.overrideElement != undefined && overrideElement == ""){
               overrideElement = buff.overrideElement;
             }
             let indexValue = 0;
