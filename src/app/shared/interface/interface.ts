@@ -73,9 +73,9 @@ export interface ExtraSkillInfo {
 /** 補足データ - 4階 */
 export interface ExtraSkillDamage {
   //連携スキル
-  originSkill?: TYPE_SKILL;
-  originIndex?: number;
-  originRelation?: TYPE_RELATION;
+  originSkills?: TYPE_SKILL[];
+  originIndexs?: number[];
+  originRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
   indexs?: number[];
   indexsAttach?: number[][];

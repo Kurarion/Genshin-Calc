@@ -91,9 +91,9 @@
                 "1": [
                         {
                             "damage": {
-                                "originSkill": "elementalBurst",
-                                "originIndex": 0,
-                                "originRelation": "*",
+                                "originSkills": ["elementalBurst"],
+                                "originIndexs": [0],
+                                "originRelations": ["*"],
                                 "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -103,9 +103,9 @@
                         },
                         {
                             "damage": {
-                                "originSkill": "elementalBurst",
-                                "originIndex": 1,
-                                "originRelation": "*",
+                                "originSkills": ["elementalBurst"],
+                                "originIndexs": [1],
+                                "originRelations": ["*"],
                                 "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -817,9 +817,9 @@
                 "0": [
                         {
                             "damage": {
-                                "originSkill": "normal",
-                                "originIndex": 5,
-                                "originRelation": "*",
+                                "originSkills": ["normal"],
+                                "originIndexs": [5],
+                                "originRelations": ["*"],
                                 "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -829,9 +829,9 @@
                         },
                         {
                             "damage": {
-                                "originSkill": "normal",
-                                "originIndex": 6,
-                                "originRelation": "*",
+                                "originSkills": ["normal"],
+                                "originIndexs": [6],
+                                "originRelations": ["*"],
                                 "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -971,9 +971,9 @@
                 "0": [
                         {
                             "damage": {
-                                "originSkill": "normal",
-                                "originIndex": 6,
-                                "originRelation": "*",
+                                "originSkills": ["normal"],
+                                "originIndexs": [6],
+                                "originRelations": ["*"],
                                 "customValues": [0.33],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -983,9 +983,9 @@
                         },
                         {
                             "damage": {
-                                "originSkill": "normal",
-                                "originIndex": 7,
-                                "originRelation": "*",
+                                "originSkills": ["normal"],
+                                "originIndexs": [7],
+                                "originRelations": ["*"],
                                 "customValues": [0.33],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -1363,9 +1363,9 @@
                         {
                             "damage": {
                                 "customValues": [1.5],
-                                "originSkill": "skill",
-                                "originIndex": 0,
-                                "originRelation": "*",
+                                "originSkills": ["skill"],
+                                "originIndexs": [0],
+                                "originRelations": ["*"],
                                 "base": "ATTACK",
                                 "canOverride": false,
                                 "elementBonusType": "DMG_BONUS_HYDRO",
@@ -1375,9 +1375,9 @@
                         {
                             "damage": {
                                 "customValues": [1.5],
-                                "originSkill": "skill",
-                                "originIndex": 1,
-                                "originRelation": "*",
+                                "originSkills": ["skill"],
+                                "originIndexs": [1],
+                                "originRelations": ["*"],
                                 "base": "ATTACK",
                                 "canOverride": false,
                                 "elementBonusType": "DMG_BONUS_HYDRO",
@@ -1625,9 +1625,9 @@
                 "0": [
                     {
                         "damage": {
-                            "originSkill": "elementalBurst",
-                            "originIndex": 0,
-                            "originRelation": "*",
+                            "originSkills": ["elementalBurst"],
+                            "originIndexs": [0],
+                            "originRelations": ["*"],
                             "customValues": [1.2],
                             "base": "ATTACK",
                             "canOverride": false,
@@ -2034,9 +2034,9 @@
                     {
                         "damage": {
                             "indexs": [0],
-                            "originSkill":"skill",
-                            "originIndex":3,
-                            "originRelation":"*",
+                            "originSkills":["skill"],
+                            "originIndexs":[3],
+                            "originRelations":["*"],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -2046,9 +2046,9 @@
                     {
                         "damage": {
                             "indexs": [0],
-                            "originSkill":"skill",
-                            "originIndex":4,
-                            "originRelation":"*",
+                            "originSkills":["skill"],
+                            "originIndexs":[4],
+                            "originRelations":["*"],
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -2932,9 +2932,9 @@
                         {
                             "damage": {
                                 "indexs":[2],
-                                "originSkill":"skill",
-                                "originIndex":1,
-                                "originRelation":"*",
+                                "originSkills":["skill"],
+                                "originIndexs":[1],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_HYDRO",
@@ -3588,9 +3588,9 @@
                         {
                             "damage": {
                                 "customValues": [1],
-                                "originSkill": "skill",
-                                "originIndex": 2,
-                                "originRelation": "*",
+                                "originSkills": ["skill"],
+                                "originIndexs": [2],
+                                "originRelations": ["*"],
                                 "base": "ATTACK",
                                 "canOverride": false,
                                 "elementBonusType": "DMG_BONUS_PYRO",
@@ -3722,9 +3722,9 @@
                         {
                             "damage": {
                                 "customValues": [1],
-                                "originSkill":"normal",
-                                "originIndex": 9,
-                                "originRelation":"*",
+                                "originSkills":["normal"],
+                                "originIndexs": [9],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",
@@ -3734,9 +3734,9 @@
                         {
                             "damage": {
                                 "customValues": [1],
-                                "originSkill":"normal",
-                                "originIndex": 10,
-                                "originRelation":"*",
+                                "originSkills":["normal"],
+                                "originIndexs": [10],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",
@@ -3746,9 +3746,9 @@
                         {
                             "damage": {
                                 "customValues": [1],
-                                "originSkill":"normal",
-                                "originIndex": 11,
-                                "originRelation":"*",
+                                "originSkills":["normal"],
+                                "originIndexs": [11],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",
@@ -3985,9 +3985,9 @@
                     {
                         "damage": {
                             "indexs": [3],
-                            "originSkill":"normal",
-                            "originIndex": 0,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [0],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -3997,9 +3997,9 @@
                     {
                         "damage": {
                             "indexs": [3],
-                            "originSkill":"normal",
-                            "originIndex": 1,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [1],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -4009,9 +4009,9 @@
                     {
                         "damage": {
                             "indexs": [3],
-                            "originSkill":"normal",
-                            "originIndex": 2,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [2],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -4021,9 +4021,9 @@
                     {
                         "damage": {
                             "indexs": [3],
-                            "originSkill":"normal",
-                            "originIndex": 3,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [3],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -4033,9 +4033,9 @@
                     {
                         "damage": {
                             "indexs": [3],
-                            "originSkill":"normal",
-                            "originIndex": 4,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [4],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_PYRO",
@@ -4115,9 +4115,9 @@
                         {
                             "damage": {
                                 "indexs": [1],
-                                "originSkill":"normal",
-                                "originIndex": 0,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [0, 3],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_PYRO",
@@ -4127,9 +4127,9 @@
                         {
                             "damage": {
                                 "indexs": [1],
-                                "originSkill":"normal",
-                                "originIndex": 1,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [1, 3],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_PYRO",
@@ -4139,9 +4139,9 @@
                         {
                             "damage": {
                                 "indexs": [1],
-                                "originSkill":"normal",
-                                "originIndex": 2,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [2, 3],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_PYRO",
@@ -4151,9 +4151,9 @@
                         {
                             "damage": {
                                 "indexs": [1],
-                                "originSkill":"normal",
-                                "originIndex": 3,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [3, 3],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_PYRO",
@@ -4163,9 +4163,9 @@
                         {
                             "damage": {
                                 "indexs": [1],
-                                "originSkill":"normal",
-                                "originIndex": 4,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [4, 3],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_PYRO",
@@ -4396,9 +4396,9 @@
                         {
                             "damage": {
                                 "indexs": [0],
-                                "originSkill":"elementalBurst",
-                                "originIndex": 1,
-                                "originRelation":"*",
+                                "originSkills":["elementalBurst"],
+                                "originIndexs": [1],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -5099,9 +5099,9 @@
                         {
                             "damage": {
                                 "indexs": [0],
-                                "originSkill":"skill",
-                                "originIndex":0,
-                                "originRelation":"*",
+                                "originSkills":["skill"],
+                                "originIndexs":[0],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ELECTRO",
@@ -5581,9 +5581,9 @@
                         {
                             "damage": {
                                 "indexs": [2],
-                                "originSkill":"normal",
-                                "originIndex": 6,
-                                "originRelation":"*",
+                                "originSkills":["normal"],
+                                "originIndexs": [6],
+                                "originRelations":["*"],
                                 "canOverride": false,
                                 "base": "HP",
                                 "elementBonusType": "DMG_BONUS_HYDRO",
@@ -7469,9 +7469,9 @@
                 "1": [
                         {
                             "damage": {
-                                "originSkill": "skill",
-                                "originIndex": 0,
-                                "originRelation": "*",
+                                "originSkills": ["skill"],
+                                "originIndexs": [0],
+                                "originRelations": ["*"],
                                 "customValues": [1],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -7608,9 +7608,9 @@
                 "5": [
                         {
                             "damage": {
-                                "originSkill":"elementalBurst",
-                                "originIndex": 1,
-                                "originRelation": "*",
+                                "originSkills":["elementalBurst"],
+                                "originIndexs": [1],
+                                "originRelations": ["*"],
                                 "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -7956,9 +7956,9 @@
                 "1": [
                         {
                             "damage": {
-                                "originSkill": "skill",
-                                "originIndex": 0,
-                                "originRelation": "*",
+                                "originSkills": ["skill"],
+                                "originIndexs": [0],
+                                "originRelations": ["*"],
                                 "customValues": [1],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -8091,9 +8091,9 @@
                 "5": [
                         {
                             "damage": {
-                                "originSkill":"elementalBurst",
-                                "originIndex": 1,
-                                "originRelation": "*",
+                                "originSkills":["elementalBurst"],
+                                "originIndexs": [1],
+                                "originRelations": ["*"],
                                 "indexs": [0],
                                 "base": "ATTACK",
                                 "canOverride": false,
@@ -8256,9 +8256,9 @@
                     {
                         "damage": {
                             "indexs": [1],
-                            "originSkill":"normal",
-                            "originIndex": 0,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [0],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8268,9 +8268,9 @@
                     {
                         "damage": {
                             "indexs": [1],
-                            "originSkill":"normal",
-                            "originIndex": 1,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [1],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8280,9 +8280,9 @@
                     {
                         "damage": {
                             "indexs": [1],
-                            "originSkill":"normal",
-                            "originIndex": 2,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [2],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8292,9 +8292,9 @@
                     {
                         "damage": {
                             "indexs": [1],
-                            "originSkill":"normal",
-                            "originIndex": 3,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [3],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8304,9 +8304,9 @@
                     {
                         "damage": {
                             "indexs": [2],
-                            "originSkill":"normal",
-                            "originIndex": 4,
-                            "originRelation":"*",
+                            "originSkills":["normal"],
+                            "originIndexs": [4],
+                            "originRelations":["*"],
                             "canOverride": false,
                             "base": "ATTACK",
                             "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8384,9 +8384,9 @@
                         {
                             "damage": {
                                 "indexs": [0],
-                                "originSkill":"normal",
-                                "originIndex": 0,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [0, 1],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8396,9 +8396,9 @@
                         {
                             "damage": {
                                 "indexs": [0],
-                                "originSkill":"normal",
-                                "originIndex": 1,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [1, 1],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8408,9 +8408,9 @@
                         {
                             "damage": {
                                 "indexs": [0],
-                                "originSkill":"normal",
-                                "originIndex": 2,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [2, 1],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",
@@ -8420,9 +8420,9 @@
                         {
                             "damage": {
                                 "indexs": [0],
-                                "originSkill":"normal",
-                                "originIndex": 3,
-                                "originRelation":"*",
+                                "originSkills":["normal", "skill"],
+                                "originIndexs": [3, 1],
+                                "originRelations":["*", "*"],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_ANEMO",

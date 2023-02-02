@@ -2023,23 +2023,25 @@ export class CalculatorService {
             let attackBonusType = damageInfo.attackBonusType!;
             let elementBonusType = damageInfo.elementBonusType!;
             let rate = value;
-            if(damageInfo.originSkill){
-              let originRateInfo = characterData!.skills![damageInfo.originSkill as keyof CharSkills] as CharSkill;
-              let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkill);
-              let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndex!]
-              switch(damageInfo.originRelation){
-                case "*":
-                  rate *= originRate
-                  break;
-                case "+":
-                  rate += originRate
-                  break;
-                case "-":
-                  rate -= originRate
-                  break;
-                case "/":
-                  rate /= originRate
-                  break;
+            if(damageInfo.originSkills){
+              for(let i = 0; i < damageInfo.originSkills.length; ++i){
+                let originRateInfo = characterData!.skills![damageInfo.originSkills[i] as keyof CharSkills] as CharSkill;
+                let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkills[i]);
+                let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexs![i]]
+                switch(damageInfo.originRelations![i]){
+                  case "*":
+                    rate *= originRate
+                    break;
+                  case "+":
+                    rate += originRate
+                    break;
+                  case "-":
+                    rate -= originRate
+                    break;
+                  case "/":
+                    rate /= originRate
+                    break;
+                }
               }
             }
             params.push({
@@ -2074,23 +2076,25 @@ export class CalculatorService {
                 rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
               }
-              if(damageInfo.originSkill){
-                let originRateInfo = characterData!.skills![damageInfo.originSkill as keyof CharSkills] as CharSkill;
-                let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkill);
-                let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndex!]
-                switch(damageInfo.originRelation){
-                  case "*":
-                    rate *= originRate
-                    break;
-                  case "+":
-                    rate += originRate
-                    break;
-                  case "-":
-                    rate -= originRate
-                    break;
-                  case "/":
-                    rate /= originRate
-                    break;
+              if(damageInfo.originSkills){
+                for(let i = 0; i < damageInfo.originSkills.length; ++i){
+                  let originRateInfo = characterData!.skills![damageInfo.originSkills[i] as keyof CharSkills] as CharSkill;
+                  let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkills[i]);
+                  let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexs![i]]
+                  switch(damageInfo.originRelations![i]){
+                    case "*":
+                      rate *= originRate
+                      break;
+                    case "+":
+                      rate += originRate
+                      break;
+                    case "-":
+                      rate -= originRate
+                      break;
+                    case "/":
+                      rate /= originRate
+                      break;
+                  }
                 }
               }
               let base = damageInfo.base!;
