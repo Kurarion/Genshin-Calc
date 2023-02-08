@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ArtifactService, ArtifactSetAffixs, CalculatorService, character, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactSetAffixs, CalculatorService, character, Const, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 interface artifactSetOption {
@@ -15,7 +15,7 @@ interface artifactSetOption {
   styleUrls: ['./artifact.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArtifactComponent implements OnInit {
+export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   private readonly no_desc: Record<TYPE_SYS_LANG, string> = {
     cn_sim: '',
     cn_tra: '',
@@ -72,7 +72,9 @@ export class ArtifactComponent implements OnInit {
 
   constructor(
     public artifactService: ArtifactService,
-    private calculatorService: CalculatorService) { 
+    private calculatorService: CalculatorService,
+    private relayoutMsgService: RelayoutMsgService,) { 
+      super(relayoutMsgService);
       this.tabs = [];
       this.artifactSetList = [];
       this.isSelectedIndexAuto = false;
@@ -162,6 +164,8 @@ export class ArtifactComponent implements OnInit {
     this.calculatorService.setDirtyFlag(this.data.id);
     //Autoフラグ
     this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
+    //レイアウト更新
+    super.onExpandStatusChanged()
   }
 
   /**

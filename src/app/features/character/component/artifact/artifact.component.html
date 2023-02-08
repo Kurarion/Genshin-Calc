@@ -74,7 +74,7 @@
                             ></app-artifact-chips>
                         </div>
                     </div>
-                    <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs [(selectedIndex)]="partIndex">
+                    <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs (selectedIndexChange)="onExpandStatusChanged()" [(selectedIndex)]="partIndex">
                         <ng-container *ngFor="let type of artifactList">
                             <mat-tab [label]="'ARTIFACT.' + type | translate">
                                 <div class="artifact-sub">
