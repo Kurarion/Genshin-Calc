@@ -16,7 +16,7 @@
 .background {
     position: fixed;
     bottom: 0;
-    background-position: right top;
+    background-position: top 0% right -100%;
     background-size: cover;
     /* background-attachment: fixed; */
     z-index: -10;
