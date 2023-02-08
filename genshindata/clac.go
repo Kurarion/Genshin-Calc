@@ -49,48 +49,63 @@ var (
 		"草": 8,
 	}
 
+	playerNameMap = map[uint64](*map[string]string){
+		10000005: &map[string]string{
+			languageCHS: "空",
+			languageCHT: "空",
+			languageEN:  "Aether",
+			languageJP:  "空",
+		},
+		10000007: &map[string]string{
+			languageCHS: "荧",
+			languageCHT: "熒",
+			languageEN:  "Lumine",
+			languageJP:  "蛍",
+		},
+	}
+
 	elementMap = map[int](*map[string]string){
 		2: &map[string]string{
-			"cn_sim": "火",
-			"cn_tra": "火",
-			"en":     "Pyro",
-			"jp":     "炎",
+			languageCHS: "火",
+			languageCHT: "火",
+			languageEN:  "Pyro",
+			languageJP:  "炎",
 		},
 		3: &map[string]string{
-			"cn_sim": "水",
-			"cn_tra": "水",
-			"en":     "Hydro",
-			"jp":     "水",
+			languageCHS: "水",
+			languageCHT: "水",
+			languageEN:  "Hydro",
+			languageJP:  "水",
 		},
 		4: &map[string]string{
-			"cn_sim": "风",
-			"cn_tra": "風",
-			"en":     "Anemo",
-			"jp":     "風",
+			languageCHS: "风",
+			languageCHT: "風",
+			languageEN:  "Anemo",
+			languageJP:  "風",
 		},
 		5: &map[string]string{
-			"cn_sim": "岩",
-			"cn_tra": "岩",
-			"en":     "Geo",
-			"jp":     "岩",
+			languageCHS: "冰",
+			languageCHT: "冰",
+			languageEN:  "Cryo",
+			languageJP:  "氷",
 		},
 		6: &map[string]string{
-			"cn_sim": "雷",
-			"cn_tra": "雷",
-			"en":     "Electro",
-			"jp":     "雷",
+			languageCHS: "岩",
+			languageCHT: "岩",
+			languageEN:  "Geo",
+			languageJP:  "岩",
 		},
 		7: &map[string]string{
-			"cn_sim": "冰",
-			"cn_tra": "冰",
-			"en":     "Cryo",
-			"jp":     "氷",
+			languageCHS: "雷",
+			languageCHT: "雷",
+			languageEN:  "Electro",
+			languageJP:  "雷",
 		},
 		8: &map[string]string{
-			"cn_sim": "草",
-			"cn_tra": "草",
-			"en":     "Dendro",
-			"jp":     "草",
+			languageCHS: "草",
+			languageCHT: "草",
+			languageEN:  "Dendro",
+			languageJP:  "草",
 		},
 	}
 )
@@ -882,7 +897,7 @@ func update(localResPath string, resURL string) error {
 				currentFetterInfo.ElementText = *elementMap[currentFetterInfo.ElementType]
 				dataAvatarMap[newId] = &AVATAR{
 					Id:              newId,
-					Name:            nameText,
+					Name:            getPlayerName(currentAvatarData.Id, *elementMap[currentFetterInfo.ElementType]),
 					NameTextMapHash: currentAvatarData.NameTextMapHash,
 					Desc:            descText,
 					DescTextMapHash: currentAvatarData.DescTextMapHash,
@@ -1283,5 +1298,21 @@ func calWeaponNoLevelValidParamIndexs(paramList []float64) []int {
 		results = append(results, i)
 	}
 
+	return results
+}
+
+//旅行者名字取得
+func getPlayerName(id uint64, elementTexts map[string]string) map[string]string {
+	results := make(map[string]string)
+	v, has := playerNameMap[id]
+	if has {
+		for _, vv := range sysLanguage {
+			results[vv] = (*v)[vv] + fmt.Sprintf(" (%s)", elementTexts[vv])
+		}
+	} else {
+		for _, vv := range sysLanguage {
+			results[vv] = ""
+		}
+	}
 	return results
 }

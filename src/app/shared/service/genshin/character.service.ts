@@ -60,14 +60,6 @@ export class CharacterService {
       elementSvg: Const.ELEMENT_SVG_PATH.get(GenshinDataService.dataCharacter[indexStr].info.elementType),
       bgImg: Const[GenshinDataService.dataCharacter[indexStr].qualityType+Const.QUALITY_BG_SUFFIX as keyof Const],
     };
-    //旅人さん
-    if (indexStr.includes(Const.PLAYER_BOY)){
-      temp.sexType = "BOY";
-      temp.elementType = Const.PLAYER_BOY_ELEMENT[indexStr.replace(Const.PLAYER_BOY, '')]
-    }else if (indexStr.includes(Const.PLAYER_GIRL)){
-      temp.sexType = "GIRL";
-      temp.elementType = Const.PLAYER_GIRL_ELEMENT[indexStr.replace(Const.PLAYER_GIRL, '')]
-    }
     return temp;
   }
 

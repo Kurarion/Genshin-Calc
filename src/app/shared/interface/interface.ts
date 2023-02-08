@@ -15,7 +15,6 @@ export interface CharaInfo {
   routerLink: string;
   queryParams: CharacterQueryParam;
   elementType?: string;
-  sexType?: string; //旅人さん専用（現在）
   isEnkaData?: boolean;
   iconImg?: string;
   elementTypeNumber?: number;

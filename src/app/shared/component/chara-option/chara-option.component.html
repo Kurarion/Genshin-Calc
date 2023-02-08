@@ -23,13 +23,7 @@
         <img class="icon" [style.background]="charaInfo!.bgImg" [src]="charaInfo!.iconImg" loading="lazy" appImgLoadAndErrorHandle>
         <img class="icon-after" [src]="charaInfo!.elementSvg" loading="lazy" appImgErrorHandle>
       </div>
-      <ng-container *ngIf="charaInfo!.sexType; then player else character"></ng-container>
-      <ng-template #player>
-        <span class="name" [innerText]="('PLAYER.' + charaInfo!.sexType | translate) + ' (' + ('ELEMENT.' + charaInfo!.elementType | translate) + ')'"></span>
-      </ng-template>
-      <ng-template #character>
-        <span class="name" [innerText]="charaInfo!.names[currentLanguage]"></span>
-      </ng-template>
+      <span class="name" [innerText]="charaInfo!.names[currentLanguage]"></span>
       <span class="spacer"></span>
       <figure *ngIf="charaInfo!.isEnkaData" class="shinshinmoe"></figure>
     </div>
