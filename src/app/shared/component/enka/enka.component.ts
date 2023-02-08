@@ -31,18 +31,22 @@ export class EnkaComponent implements OnInit {
     }else{
       this.uid.setErrors(null);
       this.router.navigate(['/']);
-      this.enkaService.initEnkaData(this.uid.value).then(()=>{
+      this.enkaService.initEnkaData(this.uid.value).then((addedNum: number)=>{
         //完了
-        this.translateService.get('ENKA.DONE').subscribe((res: string) => {
+        let messageId = 'ENKA.DONE'
+        if (addedNum === 0) {
+          messageId = 'ENKA.DONE_ZERO'
+        }
+        this.translateService.get(messageId).subscribe((res: string) => {
           this.matSnackBar.open(res, undefined, {
-            duration: 1000
+            duration: 2000
           })
         });
       }).catch(()=>{
         //失敗
         this.translateService.get('ENKA.FAILED').subscribe((res: string) => {
           this.matSnackBar.open(res, undefined, {
-            duration: 1000
+            duration: 2000
           })
         });
       })

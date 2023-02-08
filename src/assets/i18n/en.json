@@ -292,6 +292,7 @@
   },
   "ENKA": {
     "DONE": "Data processing completed!",
+    "DONE_ZERO": "No character in public display.",
     "FAILED": "Processing failed."
   },
   "CHIP": {

@@ -11,8 +11,8 @@ export interface EnkaStorageData {
 
 const API_URL = [
   //CORSのため、一時処理
-  environment.apiProxyServer + "https://enka.network/u/",
-  "/__data.json",
+  environment.apiProxyServer + "https://enka.network/api/uid/",
+  "",
 ]
 const characterAscendLevels = [20, 40, 50, 60, 70, 80, 90];
 const weaponAscendLevels = [20, 40, 50, 60, 70, 80, 90];
@@ -85,36 +85,45 @@ export class EnkaService {
 
   //データセット
   async initEnkaData(uid: number|string){
-    let uidStr = uid.toString();
-    //ID保存
-    this.data.uid = uidStr;
-    this.data.name = "";
-    this.data.avatars = [];
-    //API送信
-    this.globalProgressService.setMode("buffer");
-    let enka = await this.getUIDInfos(uidStr).finally(()=>{
-      this.globalProgressService.setMode("determinate");
-      this.globalProgressService.setValue(100)
-    });
-    //データ処理
-    if(enka != null){
-      this.initPlayer(enka.playerInfo);
-      //プログレス更新
-      this.globalProgressService.setValue(0);
-      if(enka.avatarInfoList != undefined){
-        let length = enka.avatarInfoList.length;
-        for(let [i,info] of enka.avatarInfoList.entries()){
-          let addedId = this.initAvatar(info, 100/length * i, 100/length * (i + 1));
-          if(addedId){
-            this.data.avatars.push(addedId);
+    return new Promise<number>(async (resolve, reject) => {
+      let uidStr = uid.toString();
+      //ID保存
+      this.data.uid = uidStr;
+      this.data.name = "";
+      this.data.avatars = [];
+      //API送信
+      this.globalProgressService.setMode("buffer");
+      let enka = await this.getUIDInfos(uidStr).finally(()=>{
+        this.globalProgressService.setMode("determinate");
+        this.globalProgressService.setValue(100)
+      });
+      //データ処理
+      if(enka){
+        let addedNum = 0;
+        this.initPlayer(enka.playerInfo);
+        //プログレス更新
+        this.globalProgressService.setValue(0);
+        if(enka.avatarInfoList != undefined){
+          let length = enka.avatarInfoList.length;
+          for(let [i,info] of enka.avatarInfoList.entries()){
+            let addedId = this.initAvatar(info, 100/length * i, 100/length * (i + 1));
+            if(addedId){
+              this.data.avatars.push(addedId);
+            }
+            ++addedNum
           }
         }
+        //ストレージに保存
+        this.saveData();
+        //状態更新
+        this.enkaUpdate.next();
+        //終了する
+        resolve(addedNum)
+      } else {
+        //サーバーダウン
+        reject()
       }
-    }
-    //ストレージに保存
-    this.saveData();
-    //状態更新
-    this.enkaUpdate.next();
+    })
   }
 
   //プレイヤーセット
