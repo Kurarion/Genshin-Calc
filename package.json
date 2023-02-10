@@ -28,6 +28,7 @@
     "magic-grid": "^3.2.4",
     "marked": "^4.2.12",
     "material-icons": "^1.10.9",
+    "ngx-echarts": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0"
   },

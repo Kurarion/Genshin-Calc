@@ -5,7 +5,7 @@
         </mat-card-header>
         <mat-card-content class="content">
             <mat-divider></mat-divider>
-            <mat-tab-group [(selectedIndex)]="selectedIndex" (selectedIndexChange)="setActiveIndex()" animationDuration="0">
+            <mat-tab-group class="overflow-x-show-tab-group" [(selectedIndex)]="selectedIndex" (selectedIndexChange)="setActiveIndex()" animationDuration="0">
                 <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
                     <div class="artifact-set">
                         <!-- 聖遺物詳細 -->
@@ -74,7 +74,7 @@
                             ></app-artifact-chips>
                         </div>
                     </div>
-                    <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs (selectedIndexChange)="onExpandStatusChanged()" [(selectedIndex)]="partIndex">
+                    <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs (selectedIndexChange)="onExpandStatusChanged()" [(selectedIndex)]="partIndex" animationDuration="0">
                         <ng-container *ngFor="let type of artifactList">
                             <mat-tab [label]="'ARTIFACT.' + type | translate">
                                 <div class="artifact-sub">

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AngularMaterialModule } from '../angular-material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ExtraDataComponent } from './component/extra-data/extra-data.component';
 import { EnkaComponent } from './component/enka/enka.component';
@@ -83,8 +84,11 @@ let shardList: any[] = [
     TranslateModule.forChild({
       extend: true,
     }),
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
   ],
   providers: [Const],
-  exports: shardList.concat([TranslateModule, FormsModule]),
+  exports: shardList.concat([TranslateModule, FormsModule, NgxEchartsModule]),
 })
 export class SharedModule { }

@@ -89,10 +89,20 @@ table tr:first-child .content-right {
     width: 96%;
     height: 99%;
     overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-x: visible;
 }
 
 .chip-div {
     padding-top: 0.5em;
     padding-bottom: 0.1em;
+}
+
+:host ::ng-deep .overflow-x-show-tab-group .mat-tab-body-wrapper {
+    overflow: visible;
+}
+:host ::ng-deep .overflow-x-show-tab-group .mat-tab-body-wrapper .mat-tab-body-active {
+    overflow: visible;
+}
+:host ::ng-deep .overflow-x-show-tab-group .mat-tab-body-wrapper .mat-tab-body-active .mat-tab-body-content {
+    overflow: visible;
 }

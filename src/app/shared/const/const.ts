@@ -1509,6 +1509,9 @@ export class Const {
     Const.PROP_DEFENSE_UP,
     Const.PROP_ELEMENTAL_MASTERY,
     Const.PROP_ENERGY_RECHARGE,
+    Const.PROP_ATTACK,
+    Const.PROP_HP,
+    Const.PROP_DEFENSE,
   ]
 
   //最適化用ダメージベースリスト

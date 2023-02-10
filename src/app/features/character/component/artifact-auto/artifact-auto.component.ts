@@ -3,7 +3,9 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 import { UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, RelayoutMsgService } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, LanguageService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import type { EChartsOption } from 'echarts';
+import { lastValueFrom, Subscription } from 'rxjs';
 
 interface InputItem {
   name: string,
@@ -84,6 +86,9 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     [Const.PROP_DEFENSE_UP, 5],
     [Const.PROP_ELEMENTAL_MASTERY, 6],
     [Const.PROP_ENERGY_RECHARGE, 7],
+    [Const.PROP_ATTACK, 8],
+    [Const.PROP_HP, 9],
+    [Const.PROP_DEFENSE, 0],
   ]);
   readonly subsSlotMap: Map<string, string[]> = new Map([
     [Const.PROP_CRIT_RATE, [Const.ARTIFACT_FLOWER.toLowerCase(), Const.ARTIFACT_SUB1.toLowerCase(),]],
@@ -93,6 +98,9 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     [Const.PROP_DEFENSE_UP, [Const.ARTIFACT_PLUME.toLowerCase(), Const.ARTIFACT_SUB1.toLowerCase(),]],
     [Const.PROP_ELEMENTAL_MASTERY, [Const.ARTIFACT_PLUME.toLowerCase(), Const.ARTIFACT_SUB2.toLowerCase(),]],
     [Const.PROP_ENERGY_RECHARGE, [Const.ARTIFACT_PLUME.toLowerCase(), Const.ARTIFACT_SUB3.toLowerCase(),]],
+    [Const.PROP_ATTACK, [Const.ARTIFACT_PLUME.toLowerCase(), Const.ARTIFACT_SUB4.toLowerCase(),]],
+    [Const.PROP_HP, [Const.ARTIFACT_SANDS.toLowerCase(), Const.ARTIFACT_SUB1.toLowerCase(),]],
+    [Const.PROP_DEFENSE, [Const.ARTIFACT_SANDS.toLowerCase(), Const.ARTIFACT_SUB2.toLowerCase(),]],
   ]);
   readonly defaultPoint: number = 250;
 
@@ -263,6 +271,30 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
 
   //表示メソッド
   displayWith!: (value: number) => string | number;
+  //Echarts
+  echartsOption: EChartsOption = {
+    tooltip: {
+      trigger: 'item',
+      formatter: '{c} ({d}%)'
+    },
+    legend: {
+      align: 'auto',
+      bottom: 10,
+      data: []
+    },
+    dataset: {
+      source: []
+    },
+    series: [
+      {
+        type: 'pie',
+        radius: [8, 75],
+        roseType: 'radius',
+        encode: {itemName: 0, value: 1}
+      }
+    ]
+  };
+  langChange!: Subscription
 
   constructor(private artifactService: ArtifactService,
     private genshinDataService: GenshinDataService,
@@ -270,13 +302,17 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     private percentPipe: PercentPipe,
     private matSnackBar: MatSnackBar, 
     private translateService: TranslateService,
-    private relayoutMsgService: RelayoutMsgService,) {
+    private relayoutMsgService: RelayoutMsgService,
+    private languageService: LanguageService,) {
       super(relayoutMsgService);
       this.subsMap.forEach((v, k)=>{
         this.subsReverseMap.set(v.toString(), k);
       })
       this.effectNum = 1;
       this.setDisplayWith();
+      this.langChange = this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
+        this.getAllPropsData();
+      })
     }
 
   setDisplayWith(){
@@ -297,6 +333,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   ngOnDestroy(): void {
     //データ保存
     this.artifactService.saveData();
+    this.langChange.unsubscribe();
   }
 
   initData() {
@@ -452,6 +489,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.calculatorService.setDirtyFlag(this.characterIndex);
     this.updateChips();
     this.setDisplayWith();
+    this.getAllPropsData();
   }
 
   onChangeCurrentPointSlider(){
@@ -473,6 +511,56 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
 
   updateChips(){
     this.chipChangedForParent.emit();
+  }
+
+  async getAllPropsData() {
+    //リフレッシュ
+    this.echartsOption = {...this.echartsOption}
+    //計算
+    const curve = this.data.autoPropCurve ?? '';
+    const resultArray: number[] = new Array(this.subs.length).fill(0);
+    let items = [];
+    const itemData = [];
+    //データ
+    for(let i = 0; i < curve.length && i < this.currentPoint.value; ++i) {
+      resultArray[parseInt(curve[i])] += 0.1;
+    }
+    for(let i = 0; i < this.subs.length; ++i) {
+      const value = resultArray[this.subsMap.get(this.subs[i])!]
+      if(value > 0) {
+        itemData.push([
+          this.subs[i],
+          Math.floor(resultArray[this.subsMap.get(this.subs[i])!] * 100) / 100,
+        ])
+      }
+    }
+    //ソート
+    itemData.sort((a: any, b: any) => { 
+      return a[1] - b[1]
+    })
+    //タイトル
+    const awaitArray = []
+    for(let i = 0; i < itemData.length; ++i) {
+      awaitArray.push(lastValueFrom(this.translateService.get(`PROPS.${itemData[i][0]}`)))
+    }
+    items = await Promise.all(awaitArray)
+    //タイトル更新
+    for(let i = 0; i < itemData.length; ++i) {
+      itemData[i][0] = items[i]
+    }
+    //値を反映
+    const temp = this.echartsOption.dataset;
+    const temp2 = this.echartsOption.legend;
+    if(!Array.isArray(temp)){
+      const array = (temp!.source as any[])
+      array.splice(0);
+      array.push(...itemData)
+    }
+    if(!Array.isArray(temp2)){
+      const array = (temp2!.data as any[])
+      array.splice(0);
+      array.push(...items)
+    }
   }
 
   async optimize(){
@@ -557,6 +645,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         this.setPropCurve(this.resultCurve);
         this.setPropCurrentPoint(this.currentPoint.value);
         this.willNeedUpdate(false);
+        this.getAllPropsData()
         resolve();
       })
     });

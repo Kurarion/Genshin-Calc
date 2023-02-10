@@ -1,3 +1,7 @@
+:host ::ng-deep .chip-list .mat-chip-list-wrapper{
+    margin: 0;
+}
+
 .none-display {
     display: none;
 }

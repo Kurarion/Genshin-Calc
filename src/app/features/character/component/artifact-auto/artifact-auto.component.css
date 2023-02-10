@@ -2,7 +2,7 @@
     width: 95%;
     padding-left: 2%;
     padding-right: 3%;
-    overflow-x: hidden;
+    overflow-x: visible;
 }
 
 .button-div{
@@ -22,7 +22,7 @@ table {
     text-align: left;
 }
 
-.normal-fiedld {
+.normal-field {
     width: 13em;
 }
 
@@ -63,4 +63,9 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.echarts-div {
+    overflow: visible;
+    height: 270px;
 }
