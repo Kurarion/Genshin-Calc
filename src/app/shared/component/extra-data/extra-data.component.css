@@ -37,6 +37,18 @@ tr td:nth-of-type(2) {
     overflow-y: scroll;
 }
 
+.damage table td:first-child span {
+    cursor: pointer !important;
+}
+
+.no-scroll-div table td:first-child span {
+    cursor: default;
+}
+
+.scroll-div table td:first-child span {
+    cursor: default;
+}
+
 .scroll-div::-webkit-scrollbar {
     width: 5px;
 }
@@ -53,4 +65,9 @@ tr td:nth-of-type(2) {
 .icon {
     vertical-align: middle;
     font-size: 14px;
+}
+
+.dmg-echarts {
+    padding-top: 6px;
+    height: 400px;
 }

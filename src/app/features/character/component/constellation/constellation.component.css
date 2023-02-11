@@ -16,6 +16,10 @@
     padding-top: 2px;
 }
 
+:host ::ng-deep .content .mat-expansion-panel{
+    overflow: visible;
+}
+
 .expand {
     margin-top: 1px;
 }

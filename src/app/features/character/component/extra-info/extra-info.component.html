@@ -14,14 +14,14 @@
         </mat-form-field>
     </ng-container>
     <table>
-        <ng-container *ngFor="let paramDesc of skillDescDatas; index as i">
+        <ng-container *ngFor="let temp of tempDataList; index as i">
             <tr>
                 <td colspan="2">
                     <div class="placeholder"></div>
                 </td>
             </tr>
             <tr>
-                <td [innerText]="paramDesc.desc"></td>
+                <td [innerText]="skillDescDatas[i].desc"></td>
                 <td>
                     <span 
                         [innerText]="showValues[i]"
@@ -34,7 +34,7 @@
                     <app-extra-data
                         [characterIndex]="data.id"
                         [skill]="skill"
-                        [valueIndexs]="paramDesc.valuePropIndexs"
+                        [valueIndexs]="skillDescDatas[i].valuePropIndexs"
                         [overrideElement]="overrideElement">
                     </app-extra-data>
                 </td>

@@ -335,7 +335,10 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   ngOnDestroy(): void {
     //データ保存
     this.artifactService.saveData();
-    this.langChange.unsubscribe();
+    //言語検知取り消し
+    if(this.langChange && !this.langChange.closed){
+      this.langChange.unsubscribe();
+    }
   }
 
   initData() {
@@ -518,50 +521,45 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   async getAllPropsData() {
     //リフレッシュ
     this.echartsOption = {...this.echartsOption}
-    //計算
+    //データ準備
     const curve = this.data.autoPropCurve ?? '';
     const resultArray: number[] = new Array(this.subs.length).fill(0);
-    let items = [];
-    const itemData = [];
-    //データ
+    const dataSetitems = [];
+    //計算
     for(let i = 0; i < curve.length && i < this.currentPoint.value; ++i) {
       resultArray[parseInt(curve[i])] += 0.1;
     }
     for(let i = 0; i < this.subs.length; ++i) {
       const value = resultArray[this.subsMap.get(this.subs[i])!]
       if(value > 0) {
-        itemData.push([
+        dataSetitems.push([
           this.subs[i],
           Math.floor(resultArray[this.subsMap.get(this.subs[i])!] * 100) / 100,
         ])
       }
     }
     //ソート
-    itemData.sort((a: any, b: any) => { 
+    dataSetitems.sort((a: any, b: any) => { 
       return a[1] - b[1]
     })
-    //タイトル
+    //タイトル設定
     const awaitArray = []
-    for(let i = 0; i < itemData.length; ++i) {
-      awaitArray.push(lastValueFrom(this.translateService.get(`PROPS.${itemData[i][0]}`)))
+    for(let i = 0; i < dataSetitems.length; ++i) {
+      awaitArray.push(lastValueFrom(this.translateService.get(`PROPS.${dataSetitems[i][0]}`)))
     }
-    items = await Promise.all(awaitArray)
+    const legendItems = await Promise.all(awaitArray)
     //タイトル更新
-    for(let i = 0; i < itemData.length; ++i) {
-      itemData[i][0] = items[i]
+    for(let i = 0; i < dataSetitems.length; ++i) {
+      dataSetitems[i][0] = legendItems[i]
     }
     //値を反映
-    const temp = this.echartsOption.dataset;
+    const temp1 = this.echartsOption.dataset;
     const temp2 = this.echartsOption.legend;
-    if(!Array.isArray(temp)){
-      const array = (temp!.source as any[])
-      array.splice(0);
-      array.push(...itemData)
+    if(!Array.isArray(temp1)){
+      (temp1!.source as any[]) = dataSetitems;
     }
     if(!Array.isArray(temp2)){
-      const array = (temp2!.data as any[])
-      array.splice(0);
-      array.push(...items)
+      (temp2!.data as any[]) = legendItems;
     }
   }
 

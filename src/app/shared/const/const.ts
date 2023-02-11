@@ -1514,6 +1514,20 @@ export class Const {
     // Const.PROP_DEFENSE,
   ]
 
+  //最適化用サブ属性リスト（固定値含め）
+  static readonly PROPS_OPTIMAL_ARTIFACT_ALL_SUB = [
+    Const.PROP_CRIT_RATE,
+    Const.PROP_CRIT_DMG,
+    Const.PROP_ATTACK_UP,
+    Const.PROP_HP_UP,
+    Const.PROP_DEFENSE_UP,
+    Const.PROP_ELEMENTAL_MASTERY,
+    Const.PROP_ENERGY_RECHARGE,
+    Const.PROP_ATTACK,
+    Const.PROP_HP,
+    Const.PROP_DEFENSE,
+  ]
+
   //最適化用ダメージベースリスト
   static readonly PROPS_OPTIMAL_DAMAGE_BASE_LIST = [
     Const.PROP_HP,

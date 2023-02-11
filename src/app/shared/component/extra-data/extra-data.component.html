@@ -1,37 +1,37 @@
 <ng-container *ngIf="buffDatas.length != 0 || dmgDatas.length != 0 || healingDatas.length != 0 || shieldDatas.length != 0 || productDatas.length != 0">
     <ng-content></ng-content>
 </ng-container>
-<ng-container *ngFor="let info of buffDatas; index as i; first as isFirst">
+<ng-container *ngFor="let temp of buffTempDataList; index as i; first as isFirst">
     <div class="no-scroll-div">
         <table>
             <!-- バフ -->
             <tr>
                 <td>
                     <span 
-                        [innerText]="(info.title?info.title:(info.isAllTeam?'GENSHIN.OTHER.TEAM_BUFF':(info.isOnlyForOther?'GENSHIN.OTHER.ONLY_OTHER_BUFF':'GENSHIN.OTHER.BUFF'))) | translate"
-                        [matTooltip]="info.desc?(info.desc | translate):undefined"
+                        [innerText]="(buffDatas[i].title!?buffDatas[i].title!:(buffDatas[i].isAllTeam!?'GENSHIN.OTHER.TEAM_BUFF':(buffDatas[i].isOnlyForOther!?'GENSHIN.OTHER.ONLY_OTHER_BUFF':'GENSHIN.OTHER.BUFF'))) | translate"
+                        [matTooltip]="buffDatas[i].desc!?(buffDatas[i].desc! | translate):undefined"
                         matTooltipPosition='above'
                     ></span>
-                    <mat-icon *ngIf="info.desc" class="icon material-icons-outlined">info</mat-icon>
+                    <mat-icon *ngIf="buffDatas[i].desc!" class="icon material-icons-outlined">info</mat-icon>
                 </td>
                 <td>
-                    <ng-container *ngIf="info.type == 'switch'">
+                    <ng-container *ngIf="buffDatas[i].type! == 'switch'">
                         <mat-slide-toggle
                             color="primary"
-                            [checked]="info.switchValue"
-                            (change)="onChangeSwitch($event, info.valueIndex)">
+                            [checked]="buffDatas[i].switchValue!"
+                            (change)="onChangeSwitch($event, buffDatas[i].valueIndex!)">
                         </mat-slide-toggle>
                     </ng-container>
-                    <ng-container *ngIf="info.type == 'slider'">
+                    <ng-container *ngIf="buffDatas[i].type! == 'slider'">
                         <mat-slider
                             color="primary"
-                            [min]="info.min"
-                            [max]="info.max"
-                            [step]="info.step"
+                            [min]="buffDatas[i].min!"
+                            [max]="buffDatas[i].max!"
+                            [step]="buffDatas[i].step!"
                             [thumbLabel]="true"
                             tickInterval="auto"
-                            [value]="info.sliderValue"
-                            (change)="onChangeSlider($event, info.valueIndex)">
+                            [value]="buffDatas[i].sliderValue!"
+                            (change)="onChangeSlider($event, buffDatas[i].valueIndex!)">
                         </mat-slider>
                     </ng-container>
                 </td>
@@ -39,17 +39,18 @@
         </table>
     </div>
 </ng-container>
-<ng-container *ngFor="let info of dmgDatas; index as i">
-    <div class="scroll-div">
+<ng-container *ngFor="let temp of dmgTempDataList; index as i">
+    <div echarts *ngIf="showDamageEchartsFlag && currentDamageIndex == i" [options]="damageEchartsOption" [loading]="damageEchartsLoading" class="dmg-echarts"></div>
+    <div class="scroll-div damage">
         <table>
             <!-- ダメージ -->
             <ng-container *ngFor="let prop of dmgPropList">
-                <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]">
+                <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]">
                     <td>
-                        <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
+                        <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate" (click)="showDamageEcharts(prop, i)"></span>
                     </td>
                     <td>
-                        <span [innerText]="info[prop] | truncate" [matTooltip]="info[prop] + ''" matTooltipPosition="right"></span>
+                        <span [innerText]="dmgDatas[i][prop] | truncate" [matTooltip]="dmgDatas[i][prop] + ''" matTooltipPosition="right"></span>
                         <br>
                     </td>
                 </tr>
@@ -57,17 +58,17 @@
         </table>
     </div>
 </ng-container>
-<ng-container *ngFor="let info of healingDatas; index as i">
+<ng-container *ngFor="let temp of healingTempDataList; index as i">
     <div class="no-scroll-div">
         <table>
             <!-- 治療 -->
             <ng-container *ngFor="let prop of healingPropList">
-                <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop]">
+                <tr *ngIf="healingDatas[i][prop]" [style.background]="specialColorMap[prop]">
                     <td>
                         <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                     </td>
                     <td>
-                        <span [innerText]="info[prop] | truncate" [matTooltip]="info[prop] + ''" matTooltipPosition="right"></span>
+                        <span [innerText]="healingDatas[i][prop] | truncate" [matTooltip]="healingDatas[i][prop] + ''" matTooltipPosition="right"></span>
                         <br>
                     </td>
                 </tr>
@@ -75,17 +76,17 @@
         </table>
     </div>
 </ng-container>
-<ng-container *ngFor="let info of productDatas; index as i">
+<ng-container *ngFor="let temp of productTempDataList; index as i">
     <div class="no-scroll-div">
         <table>
             <!-- 生成物 -->
             <ng-container *ngFor="let prop of productPropList">
-                <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop]">
+                <tr *ngIf="productDatas[i][prop]" [style.background]="specialColorMap[prop]">
                     <td>
                         <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                     </td>
                     <td>
-                        <span [innerText]="info[prop] | truncate" [matTooltip]="info[prop] + ''" matTooltipPosition="right"></span>
+                        <span [innerText]="productDatas[i][prop] | truncate" [matTooltip]="productDatas[i][prop] + ''" matTooltipPosition="right"></span>
                         <br>
                     </td>
                 </tr>
@@ -93,17 +94,17 @@
         </table>
     </div>
 </ng-container>
-<ng-container *ngFor="let info of shieldDatas; index as i">
+<ng-container *ngFor="let temp of shieldTempDataList; index as i">
     <div class="no-scroll-div">
         <table>
             <!-- バリア -->
             <ng-container *ngFor="let prop of shieldPropList">
-                <tr *ngIf="info[prop]" [style.background]="specialColorMap[prop]">
+                <tr *ngIf="shieldDatas[i][prop]" [style.background]="specialColorMap[prop]">
                     <td>
                         <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                     </td>
                     <td>
-                        <span [innerText]="info[prop] | truncate" [matTooltip]="info[prop] + ''" matTooltipPosition="right"></span>
+                        <span [innerText]="shieldDatas[i][prop] | truncate" [matTooltip]="shieldDatas[i][prop] + ''" matTooltipPosition="right"></span>
                         <br>
                     </td>
                 </tr>

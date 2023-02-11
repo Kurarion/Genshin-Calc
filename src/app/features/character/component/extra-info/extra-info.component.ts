@@ -36,6 +36,9 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
   //元素付与変更検知
   elementChangedSub!: Subscription;
 
+  //ループ用リスト
+  tempDataList: number[] = [];
+
   constructor(private percentPipe: PercentPipe, 
     private decimalPipe: DecimalPipe, 
     private noCommaPipe: NoCommaPipe,
@@ -72,6 +75,9 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
 
   private initDatas(){
     this.skillDescDatas = this.getCharSkillDescObject(this.skill, this.currentLanguage);
+    if(this.tempDataList.length != this.skillDescDatas.length) {
+      this.tempDataList = new Array(this.skillDescDatas.length).fill(0);
+    }
     this.showValues = [];
     this.tipValues = [];
     for(let skillDescData of this.skillDescDatas){

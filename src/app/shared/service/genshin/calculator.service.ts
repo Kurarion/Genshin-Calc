@@ -1914,7 +1914,7 @@ export class CalculatorService {
     return result;
   }
 
-  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[], overrideElement?: string, skillIndex?: number | string){
+  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[], overrideElement?: string, skillIndex?: number | string): [DamageResult[], DamageParam[]]{
     let indexStr = index.toString();
     let params: DamageParam[] = [];
     let results: DamageResult[] = []
@@ -2123,7 +2123,7 @@ export class CalculatorService {
       results.push(this.getDamage(indexStr, param));
     }
 
-    return results;
+    return [results, params];
   }
 
   getSkillHealingValue(index: string | number, skill: string, valueIndexs: number[], skillIndex?: number | string){
@@ -2619,7 +2619,21 @@ export class CalculatorService {
 
     if(extraData != undefined){
       for(let key in extraData){
-        result[key] += extraData[key];
+        if([Const.PROP_HP, Const.PROP_ATTACK, Const.PROP_DEFENSE].includes(key)){
+          switch(key){
+            case Const.PROP_HP:
+              result[Const.PROP_VAL_HP] += extraData[key];
+              break;
+            case Const.PROP_ATTACK:
+              result[Const.PROP_VAL_ATTACK] += extraData[key];
+              break;
+            case Const.PROP_DEFENSE:
+              result[Const.PROP_VAL_DEFENSE] += extraData[key];
+              break;
+          }
+        }else{
+          result[key] += extraData[key];
+        }
       }
     }
     for(let key of Const.PROPS_TO_CAL){
