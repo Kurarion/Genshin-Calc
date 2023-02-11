@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 import { UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, LanguageService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import type { EChartsOption } from 'echarts';
 import { lastValueFrom, Subscription } from 'rxjs';
 
@@ -295,6 +295,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     ]
   };
   langChange!: Subscription
+  hasClickCal: boolean = false
 
   constructor(private artifactService: ArtifactService,
     private genshinDataService: GenshinDataService,
@@ -303,7 +304,8 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     private matSnackBar: MatSnackBar, 
     private translateService: TranslateService,
     private relayoutMsgService: RelayoutMsgService,
-    private languageService: LanguageService,) {
+    private languageService: LanguageService,
+    private globalProgressService: GlobalProgressService) {
       super(relayoutMsgService);
       this.subsMap.forEach((v, k)=>{
         this.subsReverseMap.set(v.toString(), k);
@@ -564,6 +566,12 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   }
 
   async optimize(){
+    if(this.hasClickCal){
+      return
+    }
+    this.globalProgressService.setMode("buffer");
+    this.globalProgressService.setValue(0);
+    this.hasClickCal = true;
     let result = new Promise<void>((resolve) => {
       //チェック
       let hasError = false;
@@ -647,7 +655,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         this.willNeedUpdate(false);
         this.getAllPropsData()
         resolve();
-      })
+      }, 100)
     });
 
     return result.then(()=>{
@@ -664,6 +672,10 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
           duration: 1000
         })
       });
+    }).finally(()=>{
+      this.globalProgressService.setMode("determinate");
+      this.globalProgressService.setValue(100);
+      this.hasClickCal = false;
     })
   }
 
