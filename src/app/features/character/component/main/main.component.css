@@ -57,3 +57,7 @@
 .align-icon {
     margin-top: -2px;
 }
+
+.use-visible {
+    z-index: 2;
+}
