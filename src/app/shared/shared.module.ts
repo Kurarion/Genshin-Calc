@@ -38,6 +38,7 @@ export { OtherStorageInfo, OtherStorageData, OtherService } from './service/gens
 export { TeamSetStorageInfo, MemberIndex, TeamService } from './service/genshin/team.service';
 export { ArtifactStoragePartData, ArtifactStorageItemData, ArtifactStorageInfo, ArtifactService, ChipData } from './service/genshin/artifact.service';
 export { StorageService } from './service/storage.service';
+export { SettingService, MenuSetting, SysSetting } from './service/setting.service';
 export { HttpService } from './service/http.service';
 export { LanguageService } from './service/language.service';
 export { ExtraArtifactSetData, ExtraCharacterSkillsData, ExtraStatus, ExtraCharacterData, ExtraWeaponData, ExtraDataStorageInfo, ExtraDataService } from './service/genshin/extra-data.service';

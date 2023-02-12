@@ -1,3 +1,5 @@
+import { ElementType, WeaponType } from "../shared.module";
+
 export declare type TYPE_SYS_LANG = 'cn_sim' | 'cn_tra' | 'en' | 'jp';
 export declare type TYPE_TESSERACT_LANG = 'chi_sim' | 'chi_tra' | 'eng' | 'jpn';
 export declare type TYPE_GENSHINDB_LANG = 'ChineseSimplified' | 'ChineseTraditional' | 'English' | 'Japanese';
@@ -17,9 +19,10 @@ export interface CharaInfo {
   elementType?: string;
   isEnkaData?: boolean;
   iconImg?: string;
-  elementTypeNumber?: number;
+  elementTypeNumber?: ElementType;
   elementSvg?: string;
   bgImg?: string;
+  weaponType?: WeaponType;
 }
 
 /** 言語インタフェース */

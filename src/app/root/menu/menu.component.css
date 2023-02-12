@@ -23,3 +23,130 @@
   width: 100%;
 }
 
+.filter-div {
+  z-index: 7;
+  top: 0;
+  position: sticky;
+  padding: 3px;
+  margin-right: -1px;
+  background: white;
+}
+
+.menu-list .select-filter {
+  width: 190px;
+  color: black;
+}
+
+:host ::ng-deep .menu-list .select-filter .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+:host ::ng-deep .menu-list .select-filter .mat-form-field-infix {
+  border-top: .44em solid rgba(0,0,0,0);
+  padding: 0.5em 0 0.5em 0;
+  width: 100%;
+}
+
+.element-filter-div {
+  margin-top: 5px;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+.button {
+  cursor: pointer;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2px;
+  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+}
+
+.button:hover {
+  background-color: rgba(128, 128, 128, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.element-icon {
+  width: 20px;
+  height: 20px;
+  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+}
+
+.button-element-on {
+  filter: grayscale(0%);
+}
+
+.button-element-off {
+  filter: grayscale(100%);
+}
+
+.other-filter-div {
+  margin-top: 5px;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+.shinshinmoe {
+  line-height: 0;
+  width: 1em;
+  margin: 1.05em 1rem 0;
+  height: 0;
+  align-self: center;
+  position: absolute;
+  top: 0.9em;
+  font-size: 0.8em;
+}
+
+.shinshinmoe:before {
+  content: "\e93a";
+  font-family: shicon;
+  font-size: 1.91em;
+}
+
+.button-other-on {
+  filter: blur(0);
+}
+
+.button-other-off {
+  filter: blur(0.8px);
+  opacity: 0.1;
+}
+
+.other-content {
+  width: 24px;
+  height: 24px;
+  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+}
+
+.weapon-filter-div {
+  margin-top: 5px;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+.button-on {
+  border-color: grey;
+}
+
+.weapon-icon{
+  width: 25px;
+  height: 25px;
+  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+}
+
+.button-weapon-on {
+  opacity: 1;
+}
+
+.button-weapon-off {
+  opacity: 0.3;
+}

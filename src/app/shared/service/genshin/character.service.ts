@@ -55,6 +55,7 @@ export class CharacterService {
         index: indexStr,
       },
       iconImg: GenshinDataService.dataCharacter[indexStr].images.icon,
+      weaponType: GenshinDataService.dataCharacter[indexStr].weaponType,
       elementTypeNumber: GenshinDataService.dataCharacter[indexStr].info.elementType,
       elementType: Const.ELEMENT_TYPE_MAP.get(GenshinDataService.dataCharacter[indexStr].info.elementType),
       elementSvg: Const.ELEMENT_SVG_PATH.get(GenshinDataService.dataCharacter[indexStr].info.elementType),

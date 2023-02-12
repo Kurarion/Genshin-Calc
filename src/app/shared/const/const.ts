@@ -1,4 +1,4 @@
-import { ElementType, LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG } from 'src/app/shared/shared.module';
+import { ElementType, LangInfo, TYPE_GENSHINDB_LANG, TYPE_SYS_LANG, TYPE_TESSERACT_LANG, WeaponType } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 export class Const {
@@ -138,7 +138,8 @@ export class Const {
 
   static readonly QUALITY_BG_SUFFIX = "_BG";
 
-  static readonly ELEMENT_SVG_PATH: Map<number, string> = new Map([
+  static readonly ELEMENT_LIST: ElementType[] = [2,3,4,5,6,7,8];
+  static readonly ELEMENT_SVG_PATH: Map<ElementType, string> = new Map([
     [2, "assets/icons/element/pyro.svg"],
     [3, "assets/icons/element/hydro.svg"],
     [4, "assets/icons/element/anemo.svg"],
@@ -146,6 +147,15 @@ export class Const {
     [6, "assets/icons/element/geo.svg"],
     [7, "assets/icons/element/electro.svg"],
     [8, "assets/icons/element/dendro.svg"],
+  ])
+
+  static readonly WEAPON_TYPE_LIST: WeaponType[] = ["WEAPON_SWORD_ONE_HAND", "WEAPON_CATALYST", "WEAPON_CLAYMORE", "WEAPON_BOW", "WEAPON_POLE"];
+  static readonly WEAPON_TYPE_SVG_PATH: Map<WeaponType, string> = new Map([
+    ["WEAPON_SWORD_ONE_HAND", "assets/icons/weapon/WEAPON_SWORD_ONE_HAND.png"],
+    ["WEAPON_CATALYST", "assets/icons/weapon/WEAPON_CATALYST.png"],
+    ["WEAPON_CLAYMORE", "assets/icons/weapon/WEAPON_CLAYMORE.png"],
+    ["WEAPON_BOW", "assets/icons/weapon/WEAPON_BOW.png"],
+    ["WEAPON_POLE", "assets/icons/weapon/WEAPON_POLE.png"],
   ])
 
   static readonly IMG_ON_ERROR = "assets/icons/UI_Temp.png";
@@ -1659,6 +1669,8 @@ export class Const {
   static readonly SAVE_ENKA = "SAVE_ENKA";
   //チームデータ
   static readonly SAVE_TEAM = "SAVE_TEAM";
+  //システム設定データ
+  static readonly SAVE_SYS_SETTING = "SAVE_SYS_SETTING";
 
   //*********************************
   //           原神その他データ

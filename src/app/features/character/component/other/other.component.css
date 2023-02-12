@@ -120,10 +120,11 @@ input[type=number] {
     padding: 0.5rem;
     margin-left: auto;
     margin-right: auto;
+    transition: border 0.5s, background-color 0.5s, filter 0.4s;
 }
 
 .element-fix:hover {
-    background-color: rgba(128, 128, 128, 0.2);
+    background-color: rgba(128, 128, 128, 0.15);
     border: 1px solid rgba(128, 128, 128, 0.6);
 }
 

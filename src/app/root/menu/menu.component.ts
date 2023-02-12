@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { CharaInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService, EnkaService } from 'src/app/shared/shared.module';
+import { CharaInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService, EnkaService, SettingService, MenuSetting, ElementType, WeaponType } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-menu',
@@ -8,16 +8,32 @@ import { CharaInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageS
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
+
+  readonly elementList = Const.ELEMENT_LIST
+  readonly elementSvgPath = Const.ELEMENT_SVG_PATH
+  readonly weaponTypeList = Const.WEAPON_TYPE_LIST
+  readonly weaponTypeSvgPath = Const.WEAPON_TYPE_SVG_PATH
+
   //キャラリスト
   characterMap!: Map<string, character>;
   //メニューリスト
   menuList: CharaInfo[] = [];
+  //メニュー設定データ
+  menuSetting!: MenuSetting;
+  //フィルタリングメニューリスト
+  filteringMenuList: CharaInfo[] = [];
   //メニューボタン押下イベント
   @Output('menuClickEvent') menuClickEvent = new EventEmitter<CharaInfo>();
   //言語
   currentLanguage!: TYPE_SYS_LANG;
 
-  constructor(private characterService: CharacterService, private router: Router, private languageService: LanguageService, private enkaService: EnkaService) {
+  constructor(private characterService: CharacterService,
+    private router: Router,
+    private languageService: LanguageService,
+    private settingService: SettingService,
+    private enkaService: EnkaService) {
+    //設定データ取得
+    this.menuSetting = this.settingService.getMenuSetting();
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
     //戻る防止
@@ -28,6 +44,8 @@ export class MenuComponent implements OnInit {
     //言語変更検知
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG)=>{
       this.currentLanguage = lang;
+      //表示用メニューを更新
+      this.filterMenuList();
     })
     //enkaデータ変更検知
     this.enkaService.getEnkaUpdate().subscribe(()=>{
@@ -36,6 +54,8 @@ export class MenuComponent implements OnInit {
       for(let i = 0; i < this.menuList.length; ++ i){
         this.menuList[i].isEnkaData = enkaList.includes(this.menuList[i].queryParams.index as string);
       };
+      //表示用メニューを更新
+      this.filterMenuList();
     })
   }
 
@@ -49,6 +69,45 @@ export class MenuComponent implements OnInit {
       temp.isEnkaData = enkaList.includes(key);
       this.menuList.push(temp);
     }
+    //表示用メニューを更新
+    this.filterMenuList();
+  }
+
+  @HostListener('window:unload')
+  ngOnDestroy(): void {
+    //データ保存
+    this.settingService.saveData();
+  }
+
+  //メニューリストをフィルター
+  filterMenuList() {
+    this.filteringMenuList = this.menuList.filter((info: CharaInfo)=>{
+      return (this.settingService.getMenuFilterEnka()?info.isEnkaData:true) &&
+      (this.settingService.getMenuFilterData()?(this.characterService.getStorageInfo(info.index) != undefined?true:false):true) &&
+      (this.settingService.getMenuFilterContent()?info.names[this.currentLanguage].includes(this.menuSetting.filterContent):true) &&
+      (this.settingService.getMenuFilterElementType()[info.elementTypeNumber!]) &&
+      (this.settingService.getMenuFilterWeaponType()[info.weaponType!]);
+    })
+  }
+
+  clickElement(element: ElementType) {
+    this.menuSetting.filterElementType[element] = !this.menuSetting.filterElementType[element];
+    this.filterMenuList();
+  }
+
+  clickWeapon(weaponType: WeaponType) {
+    this.menuSetting.filterWeaponType[weaponType] = !this.menuSetting.filterWeaponType[weaponType];
+    this.filterMenuList();
+  }
+
+  clickEnka() {
+    this.menuSetting.filterEnka = !this.menuSetting.filterEnka;
+    this.filterMenuList();
+  }
+
+  clickData() {
+    this.menuSetting.filterData = !this.menuSetting.filterData;
+    this.filterMenuList();
   }
 
   /**

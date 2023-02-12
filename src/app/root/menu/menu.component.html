@@ -1,5 +1,94 @@
 <mat-nav-list class="menu-list">
-  <ng-container *ngFor="let menu of menuList">
+  <div class="filter-div">
+    <!-- その他 -->
+    <div class="other-filter-div">
+      <div
+        class="button"
+        (click)="clickEnka()"
+        [ngClass]="{
+          'button-on': this.menuSetting.filterEnka,
+          'button-off': !this.menuSetting.filterEnka
+        }"
+        >
+        <figure
+          class="shinshinmoe other-content" 
+          [ngClass]="{
+            'button-other-on': this.menuSetting.filterEnka,
+            'button-other-off': !this.menuSetting.filterEnka
+          }"
+        ></figure>
+      </div>
+      <div
+        class="button"
+        (click)="clickData()"
+        [ngClass]="{
+          'button-on': this.menuSetting.filterData,
+          'button-off': !this.menuSetting.filterData
+        }"
+        >
+        <span
+          class="other-content"
+          [ngClass]="{
+            'button-other-on': this.menuSetting.filterData,
+            'button-other-off': !this.menuSetting.filterData
+          }"
+        >
+          <mat-icon>cloud_done</mat-icon>
+        </span>
+      </div>
+    </div>
+    <!-- 武器タイプ -->
+    <div class="weapon-filter-div">
+      <div *ngFor="let weaponType of weaponTypeList"
+        class="button element-button"
+        (click)="clickWeapon(weaponType)"
+        [ngClass]="{
+          'button-on': menuSetting.filterWeaponType[weaponType],
+          'button-off': !menuSetting.filterWeaponType[weaponType]
+        }"
+        >
+        <img 
+          class="weapon-icon"
+          [src]="weaponTypeSvgPath.get(weaponType)" 
+          loading="lazy"
+          [ngClass]="{
+            'button-weapon-on': menuSetting.filterWeaponType[weaponType],
+            'button-weapon-off': !menuSetting.filterWeaponType[weaponType]
+          }"
+          appImgErrorHandle>
+      </div>
+    </div>
+    <!-- 元素タイプ -->
+    <div class="element-filter-div">
+      <div *ngFor="let element of elementList"
+        class="button element-button"
+        (click)="clickElement(element)"
+        [ngClass]="{
+          'button-on': menuSetting.filterElementType[element],
+          'button-off': !menuSetting.filterElementType[element]
+        }"
+        >
+        <img 
+          class="element-icon"
+          [ngClass]="{
+            'button-element-on': menuSetting.filterElementType[element],
+            'button-element-off': !menuSetting.filterElementType[element]
+          }"
+          [src]="elementSvgPath.get(element)" 
+          loading="lazy" 
+          appImgErrorHandle>
+      </div>
+    </div>
+    <!-- キャラ名 -->
+    <mat-form-field appearance="outline" class="select-filter">
+      <input matInput 
+        type="text"
+        placeholder="Filter"
+        [(ngModel)]="this.menuSetting.filterContent"
+        (ngModelChange)="filterMenuList()">
+    </mat-form-field>
+  </div>
+  <ng-container *ngFor="let menu of filteringMenuList">
     <a mat-list-item (click)="onClick(menu)">
       <app-chara-option
         [charaInfo]="menu"
