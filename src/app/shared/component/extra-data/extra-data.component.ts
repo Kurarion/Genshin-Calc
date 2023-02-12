@@ -190,6 +190,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     },
     tooltip: {
       trigger: 'axis',
+      valueFormatter: (value) => value.toString(),
       axisPointer: {
         type: 'cross',
         label: {
@@ -219,7 +220,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       {
         type: 'value',
         alignTicks: true,
-        scale: true
+        scale: true,
+        axisLabel: {
+          formatter: (value: number) => value.toString(),
+        }
       }
     ],
     dataset: {
@@ -250,7 +254,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       });
       //言語変更検知
       this.langChange = this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
-        this.calDamageEchartsDatas();
+        this.calDamageEchartsDatas(false);
       })
     }
 
@@ -360,7 +364,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   //Echartsを表示
   showDamageEcharts(prop: string, index: number) {
-    if(this.currentDamageProp !== prop || this.currentDamageIndex !== index) {
+    const indexChanged = this.currentDamageIndex !== index
+    if(this.currentDamageProp !== prop || indexChanged) {
       this.currentDamageProp = prop;
       this.currentDamageIndex = index;
       this.showDamageEchartsFlag = true;
@@ -368,7 +373,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       this.showDamageEchartsFlag = !this.showDamageEchartsFlag;
     }
     //再計算
-    this.calDamageEchartsDatas().finally(()=>{
+    this.calDamageEchartsDatas(indexChanged).finally(()=>{
       setTimeout(()=>{
         this.relayoutMsgService.update("echarts")
       }, 50);
@@ -376,7 +381,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   //Echarts設定を計算
-  async calDamageEchartsDatas(){
+  async calDamageEchartsDatas(reCalc: boolean = true){
     this.damageEchartsLoading = true;
     if(!this.showDamageEchartsFlag){
       return
@@ -392,22 +397,24 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       extraData[key] = 0;
     }
     //計算
-    this.lastDamgeCalcResults.splice(0);
-    const currentClacResult: DamageResult = this.dmgDatas[this.currentDamageIndex];
-    const startIndex = -Math.floor(this.stepRange/2);
-    const endIndex = this.stepRange + startIndex;
-    for(let i = startIndex; i < endIndex; ++i) {
-      const calcResults: DamageResult[] = [];
-      if(i === 0){
-        calcResults.push(...new Array(this.subs.length).fill(currentClacResult))
-      }else{
-        for(let key of this.subs){
-          const extraData: Record<string, number> = {};
-          extraData[key] = this.genshinDataService.getOptimalReliquaryAffixStep(key) * 10 * i;
-          calcResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData));
+    if(reCalc || this.lastDamgeCalcResults.length === 0){
+      this.lastDamgeCalcResults.splice(0);
+      const currentClacResult: DamageResult = this.dmgDatas[this.currentDamageIndex];
+      const startIndex = -Math.floor(this.stepRange/2);
+      const endIndex = this.stepRange + startIndex;
+      for(let i = startIndex; i < endIndex; ++i) {
+        const calcResults: DamageResult[] = [];
+        if(i === 0){
+          calcResults.push(...new Array(this.subs.length).fill(currentClacResult))
+        }else{
+          for(let key of this.subs){
+            const extraData: Record<string, number> = {};
+            extraData[key] = this.genshinDataService.getOptimalReliquaryAffixStep(key) * 10 * i;
+            calcResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData));
+          }
         }
+        this.lastDamgeCalcResults.push([i, calcResults]);
       }
-      this.lastDamgeCalcResults.push([i, calcResults]);
     }
     //dataSet設定更新とxAxis設定更新
     const dataSetItems = [];

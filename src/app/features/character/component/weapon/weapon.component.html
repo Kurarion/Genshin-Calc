@@ -72,7 +72,7 @@
 
             <ng-container *ngIf="this.weaponData.skillAffixMap">
                 <mat-divider></mat-divider>
-                <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
+                <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true" [ngClass]="{'expand-over': expandOverStatus[0]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(0, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(0, true)">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <span [innerText]="'WEAPON.SMELTING' | translate"></span>

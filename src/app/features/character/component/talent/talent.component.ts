@@ -57,7 +57,7 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
     private relayoutMsgService: RelayoutMsgService,) { 
-      super(relayoutMsgService);
+      super(relayoutMsgService, 30);
     }
 
   ngOnInit(): void {

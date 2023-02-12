@@ -104,7 +104,8 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService,
     private relayoutMsgService: RelayoutMsgService,) { 
-      super(relayoutMsgService);
+      super(relayoutMsgService, 1);
+      this.setExpandStatus(0, true);
     }
 
   ngOnInit(): void {

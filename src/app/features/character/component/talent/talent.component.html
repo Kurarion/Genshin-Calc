@@ -7,7 +7,7 @@
         <mat-card-content class="content">
             <mat-accordion multi>
                 <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
-                    <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
+                    <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(i, true)">
                         <mat-expansion-panel-header matTooltipPosition="right">
                             <mat-panel-title>
                                 <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
@@ -39,7 +39,7 @@
                 </ng-container>
                 <ng-container *ngFor="let skill of otherSkills; index as i">
                     <ng-container *ngIf="$any(this.data.skills[skill]).name">
-                        <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
+                        <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[10+i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(10+i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(10+i, true)">
                             <mat-expansion-panel-header matTooltipPosition="right">
                                 <mat-panel-title>
                                     <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
@@ -63,7 +63,7 @@
                 <ng-container *ngFor="let skills of proudSkills">
                     <ng-container *ngIf="$any(this.data.skills[skills])">
                         <ng-container *ngFor="let skill of $any(this.data.skills[skills]); index as i">
-                            <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
+                            <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[20+i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(20+i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(20+i, true)">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <img class="skill-icon" [style.background-image]="iconBGColor" [src]="skill.images.icon" loading="lazy" appImgErrorHandle>

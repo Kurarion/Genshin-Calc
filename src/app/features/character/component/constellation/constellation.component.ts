@@ -34,7 +34,7 @@ export class ConstellationComponent extends ExpansionPanelCommon implements OnIn
   iconBGColor!: string;
 
   constructor(private relayoutMsgService: RelayoutMsgService,) { 
-    super(relayoutMsgService);
+    super(relayoutMsgService, 10);
   }
 
   ngOnInit(): void { 

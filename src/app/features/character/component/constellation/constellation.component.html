@@ -7,7 +7,7 @@
         <mat-card-content class="content">
             <mat-accordion multi>
                 <ng-container *ngFor="let talent of data.skills.talents; index as i">
-                    <mat-expansion-panel class="mat-elevation-z0 expand" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
+                    <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(i, true)">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <img class="skill-icon" [style.background-image]="iconBGColor" [src]="talent.images.icon" loading="lazy" appImgErrorHandle>
