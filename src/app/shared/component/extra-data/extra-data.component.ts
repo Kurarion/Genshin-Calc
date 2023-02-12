@@ -233,6 +233,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   };
   //言語検知結果
   langChange!: Subscription
+  //元素付与変更検知結果
+  overrideElementChange!: Subscription
 
   constructor(private calculatorService: CalculatorService, 
     private characterService: CharacterService,
@@ -255,6 +257,12 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       //言語変更検知
       this.langChange = this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
         this.calDamageEchartsDatas(false);
+      })
+      //元素付与変更検知
+      this.overrideElementChange = this.characterService.getOverrideElementChanged().subscribe(() => {
+        setTimeout(()=>{
+          this.calDamageEchartsDatas(false);
+        }, 1)
       })
     }
 
@@ -290,6 +298,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
     if(this.langChange && !this.langChange.closed){
       this.langChange.unsubscribe();
+    }
+    if(this.overrideElementChange && !this.overrideElementChange.closed){
+      this.overrideElementChange.unsubscribe();
     }
   }
 
