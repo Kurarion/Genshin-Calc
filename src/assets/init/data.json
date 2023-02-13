@@ -2702,6 +2702,7 @@
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
                                 "defaultEnable":false,
+                                "canSecondaryTrans": true,
                                 "isAllTeam":true
                             }]
                         }
@@ -3203,6 +3204,7 @@
                                 "target": ["ELEMENTAL_MASTERY"],
                                 "settingType": "switch",
                                 "defaultEnable":false,
+                                "canSecondaryTrans": true,
                                 "isOnlyForOther":true
                             }]
                         }
@@ -3814,6 +3816,7 @@
                                 "target": ["ELEMENTAL_MASTERY"],
                                 "settingType": "switch",
                                 "defaultEnable": false,
+                                "canSecondaryTrans": true,
                                 "isAllTeam": true
                             }]
                         }
@@ -5425,6 +5428,7 @@
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType": "switch",
                                 "defaultEnable":false,
+                                "canSecondaryTrans":true,
                                 "isOnlyForOther": true
                             }]
                         }
@@ -6483,6 +6487,7 @@
                                 "index":0,
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
+                                "canSecondaryTrans":true,
                                 "defaultEnable":false
                             }]
                         }
@@ -6529,6 +6534,7 @@
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
                                 "defaultEnable":false,
+                                "canSecondaryTrans":true,
                                 "isAllTeam":true
                             }]
                         },
@@ -6538,6 +6544,7 @@
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"switch",
                                 "defaultEnable":false,
+                                "canSecondaryTrans":true,
                                 "isAllTeam":true
                             }]
                         }
@@ -7086,6 +7093,7 @@
                                 "index":0,
                                 "target":["ELEMENTAL_MASTERY"],
                                 "settingType":"slider",
+                                "canSecondaryTrans":true,
                                 "sliderStartIndex": 0,
                                 "sliderInitialValue": 0,
                                 "sliderStep": 1,
@@ -8771,6 +8779,7 @@
                                 "sliderStep": 1,
                                 "sliderInitialValue":0,
                                 "sliderMax": 3,
+                                "canSecondaryTrans":true,
                                 "isOnlyForOther":true
                             }]
                         },
@@ -10136,6 +10145,7 @@
                         "baseModifyRelation": "-",
                         "maxValConstIndex": 1,
                         "target": ["ATTACK_UP"],
+                        "canSecondaryTrans": true,
                         "settingType": "resident",
                         "defaultEnable": false
                     }]
@@ -10608,6 +10618,7 @@
                         "index": 2,
                         "target": ["ELEMENTAL_MASTERY"],
                         "settingType":"resident",
+                        "canSecondaryTrans":true,
                         "isOnlyForOther": true
                     }]
                 }
@@ -11008,6 +11019,7 @@
                         "target": ["ELEMENTAL_MASTERY"],
                         "settingType": "switch",
                         "defaultEnable": false,
+                        "canSecondaryTrans": true,
                         "isAllTeam":true,
                         "buffTag":"REBEL"
                     },

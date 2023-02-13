@@ -126,7 +126,10 @@ export class ArtifactChipsComponent implements OnInit {
           continue; 
         }
         if(key.includes(Const.SUFFIX_ACTUAL_KEY)){
-          allData[key] = (allData[key] as number) / this.parts.length;
+          let divider = this.parts.length;
+          const propName = key.replace(new RegExp(`${Const.SUFFIX_ACTUAL_KEY}$`), '');
+          divider -= allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + propName] as number ?? 0;
+          allData[key] = (allData[key] as number) / divider;
           continue;
         }
         allData[key] = +((allData[key] as number) / this.parts.length).toFixed(this.fixNum);
