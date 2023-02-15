@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { lastValueFrom, Subscription } from 'rxjs';
-import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService } from 'src/app/shared/shared.module';
+import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import type { EChartsOption } from 'echarts';
 import { TranslateService } from '@ngx-translate/core';
+import { DecimalPipe, PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'app-extra-data',
@@ -190,6 +191,37 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     },
     tooltip: {
       trigger: 'axis',
+      formatter: (param: any) => {
+        (param as any[]).sort((item2, item1) => {
+          return item1.value[item1.seriesIndex + 1] - item2.value[item2.seriesIndex + 1]
+        })
+        let result = ""
+        param.forEach((v: any) => {
+          const prop = this.subs[v.seriesIndex]
+          const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * parseInt(v.name)
+          let sign = '';
+          let valStr = '';
+          if(v.name != 0){
+            if ([Const.PROP_ELEMENTAL_MASTERY,
+                Const.PROP_ATTACK,
+                Const.PROP_HP,
+                Const.PROP_DEFENSE,].includes(prop)) {
+              valStr = this.noCommaPipe.transform(this.decimalPipe.transform(addVal, '1.0-1') as string);
+            } else {
+              valStr = this.percentPipe.transform(addVal, '1.0-1') as string;
+            }
+            sign = addVal > 0 ? "+" : "";
+          }
+          result += `<div style="margin: 0px 0 0;line-height:1;">
+          <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${v.color};"></span>
+          <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${v.seriesName}</span>
+          <span style="float:right;font-size:12px;${addVal<0?'color:#91cc75;':'color:#fc8452;'}font-weight:700;margin-left:0px">${sign}${valStr}</span>
+          <br/>
+          <span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">${v.value[v.seriesIndex + 1].toFixed(1)}</span>
+          <div style="clear:both"></div></div> `
+        })
+        return result;
+      },
       valueFormatter: (value) => value.toString(),
       axisPointer: {
         type: 'cross',
@@ -241,7 +273,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     private relayoutMsgService: RelayoutMsgService,
     private genshinDataService: GenshinDataService,
     private languageService: LanguageService,
-    private translateService: TranslateService,) { 
+    private translateService: TranslateService,
+    private percentPipe: PercentPipe, 
+    private decimalPipe: DecimalPipe, 
+    private noCommaPipe: NoCommaPipe,) { 
       //変更検知
       this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
         if(v){
