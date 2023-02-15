@@ -197,10 +197,14 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         })
         let result = ""
         param.forEach((v: any) => {
-          const prop = this.subs[v.seriesIndex]
-          const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * parseInt(v.name)
+          const zeroVal = v.value[v.value.length - 1];
+          const currentVal = v.value[v.seriesIndex + 1];
+          const diffVal = currentVal - zeroVal;
+          const prop = this.subs[v.seriesIndex];
+          const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * parseInt(v.name);
           let sign = '';
           let valStr = '';
+          let diff = '';
           if(v.name != 0){
             if ([Const.PROP_ELEMENTAL_MASTERY,
                 Const.PROP_ATTACK,
@@ -211,12 +215,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
               valStr = this.percentPipe.transform(addVal, '1.0-1') as string;
             }
             sign = addVal > 0 ? "+" : "";
+            diff = (diffVal / zeroVal * 100).toFixed(1)+'%';
           }
           result += `<div style="margin: 0px 0 0;line-height:1;">
           <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${v.color};"></span>
           <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${v.seriesName}</span>
           <span style="float:right;font-size:12px;${addVal<0?'color:#91cc75;':'color:#fc8452;'}font-weight:700;margin-left:0px">${sign}${valStr}</span>
-          <br/>
+          ${v.name != 0?`<br/><span style="font-size:14px;${diffVal<0?'color:#91cc75;':(diffVal !== 0?'color:#fc8452;':'color:#666;')};font-weight:700;margin-left:20px;margin-right:2px">(${diff})</span>`:''}
           <span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">${v.value[v.seriesIndex + 1].toFixed(1)}</span>
           <div style="clear:both"></div></div> `
         })
@@ -459,6 +464,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
             calcResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData));
           }
         }
+        calcResults.push(currentClacResult);
         this.lastDamgeCalcResults.push([i, calcResults]);
       }
     }
