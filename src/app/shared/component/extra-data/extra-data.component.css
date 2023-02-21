@@ -37,16 +37,17 @@ tr td:nth-of-type(2) {
     overflow-y: scroll;
 }
 
-.damage table td:first-child span {
-    cursor: pointer !important;
-}
-
 .no-scroll-div table td:first-child span {
     cursor: default;
 }
 
 .scroll-div table td:first-child span {
     cursor: default;
+}
+
+.damage table tr,
+.damage table tr span{
+    cursor: pointer !important;
 }
 
 .scroll-div::-webkit-scrollbar {

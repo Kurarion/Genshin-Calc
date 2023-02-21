@@ -45,9 +45,9 @@
         <table>
             <!-- ダメージ -->
             <ng-container *ngFor="let prop of dmgPropList">
-                <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]">
+                <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]" (click)="showDamageEcharts(prop, i)">
                     <td>
-                        <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate" (click)="showDamageEcharts(prop, i)"></span>
+                        <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
                     </td>
                     <td>
                         <span [innerText]="dmgDatas[i][prop] | truncate" [matTooltip]="dmgDatas[i][prop] + ''" matTooltipPosition="right"></span>
