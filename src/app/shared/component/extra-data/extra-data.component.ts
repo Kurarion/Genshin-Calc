@@ -197,33 +197,42 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         })
         let result = ""
         param.forEach((v: any) => {
+          const isOtherProp = v.seriesIndex >= this.subs.length
           const zeroVal = v.value[v.value.length - 1];
           const currentVal = v.value[v.seriesIndex + 1];
           const diffVal = currentVal - zeroVal;
-          const prop = this.subs[v.seriesIndex];
-          const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * parseInt(v.name);
-          let sign = '';
-          let valStr = '';
-          let diff = '';
-          if(v.name != 0){
-            if ([Const.PROP_ELEMENTAL_MASTERY,
-                Const.PROP_ATTACK,
-                Const.PROP_HP,
-                Const.PROP_DEFENSE,].includes(prop)) {
-              valStr = this.noCommaPipe.transform(this.decimalPipe.transform(addVal, '1.0-1') as string);
-            } else {
-              valStr = this.percentPipe.transform(addVal, '1.0-1') as string;
+          const diff = (diffVal / zeroVal * 100).toFixed(1)+'%';
+          if(!isOtherProp){
+            const prop = this.subs[v.seriesIndex];
+            const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * parseInt(v.name);
+            let sign = '';
+            let valStr = '';
+            if(v.name != 0){
+              if ([Const.PROP_ELEMENTAL_MASTERY,
+                  Const.PROP_ATTACK,
+                  Const.PROP_HP,
+                  Const.PROP_DEFENSE,].includes(prop)) {
+                valStr = this.noCommaPipe.transform(this.decimalPipe.transform(addVal, '1.0-1') as string);
+              } else {
+                valStr = this.percentPipe.transform(addVal, '1.0-1') as string;
+              }
+              sign = addVal > 0 ? "+" : "";
             }
-            sign = addVal > 0 ? "+" : "";
-            diff = (diffVal / zeroVal * 100).toFixed(1)+'%';
+            result += `<div style="margin: 0px 0 0;line-height:1;">
+            <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${v.color};"></span>
+            <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${v.seriesName}</span>
+            <span style="float:right;font-size:12px;${addVal<0?'color:#91cc75;':'color:#fc8452;'}font-weight:700;margin-left:0px">${sign}${valStr}</span>
+            ${v.name != 0?`<br/><span style="font-size:14px;${diffVal<0?'color:#91cc75;':(diffVal !== 0?'color:#fc8452;':'color:#666;')};font-weight:700;margin-left:20px;margin-right:2px">(${diff})</span>`:''}
+            <span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">${v.value[v.seriesIndex + 1].toFixed(1)}</span>
+            <div style="clear:both"></div></div> `
+          }else{
+            result += `<div style="margin: 0px 0 0;line-height:1;">
+            <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${v.color};"></span>
+            <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${v.seriesName}</span>
+            <br/><span style="font-size:14px;${diffVal<0?'color:#91cc75;':(diffVal !== 0?'color:#fc8452;':'color:#666;')};font-weight:700;margin-left:20px;margin-right:2px">(${diff})</span>
+            <span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">${v.value[v.seriesIndex + 1].toFixed(1)}</span>
+            <div style="clear:both"></div></div> `
           }
-          result += `<div style="margin: 0px 0 0;line-height:1;">
-          <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${v.color};"></span>
-          <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${v.seriesName}</span>
-          <span style="float:right;font-size:12px;${addVal<0?'color:#91cc75;':'color:#fc8452;'}font-weight:700;margin-left:0px">${sign}${valStr}</span>
-          ${v.name != 0?`<br/><span style="font-size:14px;${diffVal<0?'color:#91cc75;':(diffVal !== 0?'color:#fc8452;':'color:#666;')};font-weight:700;margin-left:20px;margin-right:2px">(${diff})</span>`:''}
-          <span style="float:right;margin-left:20px;font-size:14px;color:#666;font-weight:900">${v.value[v.seriesIndex + 1].toFixed(1)}</span>
-          <div style="clear:both"></div></div> `
         })
         return result;
       },
@@ -240,7 +249,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       data: []
     },
     grid: {
-      top: '32%',
+      top: '31%',
       left: '0%',
       right: '4%',
       bottom: '3%',
@@ -275,6 +284,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(private calculatorService: CalculatorService, 
     private characterService: CharacterService,
+    private weaponService: WeaponService,
     private relayoutMsgService: RelayoutMsgService,
     private genshinDataService: GenshinDataService,
     private languageService: LanguageService,
@@ -447,10 +457,37 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     for(let key of this.subs){
       extraData[key] = 0;
     }
+    //現在武器精錬レベル
+    const currentSmeltingLevel = parseInt(this.weaponService.getStorageInfo(this.characterIndex).smeltingLevel!);
+    const smeltingPlusTimes = 5 - currentSmeltingLevel;
+    let currentGridTop = '';
+    switch(smeltingPlusTimes){
+      case 0:
+      case 1:
+        currentGridTop = '26%';
+        break;
+      case 2:
+        currentGridTop = '28%';
+        break;
+      case 3:
+        currentGridTop = '31%';
+        break;
+      case 4:
+        currentGridTop = '31%';
+        break;
+      default:
+        currentGridTop = '31%';
+        break;
+    }
+    (this.damageEchartsOption!.grid! as any).top = currentGridTop;
     //計算
     if(reCalc || this.lastDamgeCalcResults.length === 0){
       this.lastDamgeCalcResults.splice(0);
       const currentClacResult: DamageResult = this.dmgDatas[this.currentDamageIndex];
+      const weaponSmeltingAddOneResults: DamageResult[] = [];
+      for(let [i] of new Array(smeltingPlusTimes).entries()) {
+        weaponSmeltingAddOneResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData, i+1));
+      }
       const startIndex = -Math.floor(this.stepRange/2);
       const endIndex = this.stepRange + startIndex;
       for(let i = startIndex; i < endIndex; ++i) {
@@ -464,6 +501,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
             calcResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData));
           }
         }
+        //精錬プラス
+        calcResults.push(...weaponSmeltingAddOneResults);
+        //参照用のため
         calcResults.push(currentClacResult);
         this.lastDamgeCalcResults.push([i, calcResults]);
       }
@@ -484,6 +524,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     awaitArray.push(lastValueFrom(this.translateService.get(`GENSHIN.DMG.${this.propNameMap[this.currentDamageProp]}`)));
     for(let i = 0; i < this.subs.length; ++i) {
       awaitArray.push(lastValueFrom(this.translateService.get(`PROPS.${this.subs[i]}`)));
+    }
+    //精錬プラス
+    for(let [i] of new Array(smeltingPlusTimes).entries()) {
+      awaitArray.push(lastValueFrom(this.translateService.get(`OTHER.WEAPON_SMELTING_PLUS_`+ (i+1))));
     }
     const [dmgTitle, ...legendItems] = await Promise.all(awaitArray);
     //series設定更新

@@ -25,7 +25,7 @@
   "WEAPON": {
     "NAME": "Weapon Name",
     "PROPS": "Weapon Attributes",
-    "SMELTING":"Smelting"
+    "SMELTING":"Refine"
   },
   "ENEMY": {
     "NAME": "Enemy Name",
@@ -50,7 +50,11 @@
   "OTHER": {
     "NAME": "Other",
     "TARGET": "Target Attribute",
-    "TARGETVALUE": "Target Value"
+    "TARGETVALUE": "Target Value",
+    "WEAPON_SMELTING_PLUS_1": "Refine+1",
+    "WEAPON_SMELTING_PLUS_2": "Refine+2",
+    "WEAPON_SMELTING_PLUS_3": "Refine+3",
+    "WEAPON_SMELTING_PLUS_4": "Refine+4"
   },
   "SYS": {
     "DELETE": "Delete",

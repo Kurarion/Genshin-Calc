@@ -1252,7 +1252,7 @@ export class CalculatorService {
       this.dataMap[indexStr].extraArtifactSetResult = temp3[0] as Record<string, number>;
       this.dataMap[indexStr].extraSpecialArtifactSetResult = temp3[1] as SpecialBuff[];
 
-      this.getAllData(indexStr, undefined, false);
+      this.getAllData(indexStr, undefined, undefined, false);
     }else{
       //初期化
       if(!this.characterService.getStorageInfo(indexStr)){
@@ -1283,12 +1283,12 @@ export class CalculatorService {
       this.dataMap[indexStr].extraSpecialArtifactSetResult = temp3[1] as SpecialBuff[];
       this.dataMap[indexStr].extraSpecialSelfTeamArtifactSetResult = temp3[2] as TeamBuff[];
 
-      this.getAllData(indexStr, undefined, false);
+      this.getAllData(indexStr, undefined, undefined, false);
     }
   }
 
   //ダメージ取得
-  getDamage(index: string | number, param: DamageParam, extraData?: Record<string, number>){
+  getDamage(index: string | number, param: DamageParam, extraData?: Record<string, number>, toAddWeaponSmelting?: number){
     let indexStr = index.toString();
     if(this.isDirty(indexStr) && extraData == undefined){
       this.initAllData(indexStr);
@@ -1296,7 +1296,7 @@ export class CalculatorService {
     let result: DamageResult;
     let data = this.dataMap[indexStr].allData!;
     if(extraData != undefined){
-      data = this.getAllData(indexStr, extraData);
+      data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
     }
     let rate = param.rate;
     let base = param.base;
@@ -2581,7 +2581,7 @@ export class CalculatorService {
   }
 
   //計算用情報合計取得
-  private getAllData(index: string | number, extraData?: Record<string, number>, withEnemyAnt: boolean = true){
+  private getAllData(index: string | number, extraData?: Record<string, number>, toAddWeaponSmelting: number = 0, withEnemyAnt: boolean = true){
     let result: Record<string, number> = {};
     let indexStr = index.toString();
     //その他バフ処理(二度転換可能)
@@ -2592,12 +2592,16 @@ export class CalculatorService {
     let teamSecondaryData = this.dataMap[indexStr].extraTeamSecondaryResult ?? {};
     //チームバフ処理(一度)
     let teamOnceData = this.dataMap[indexStr].extraTeamOnceResult ?? {};
+    //一時武器データ
+    let tempWeaponData: [Record<string, number>, SpecialBuff[], TeamBuff[]]|null = null;
+    //カスタム武器精錬
+    let useCustomWeaponSmelting = toAddWeaponSmelting !== 0;
 
     for(let key of Const.PROPS_ALL_BASE){
       if(!(key in result)){
         result[key] = 0;
       }
-      result[key] += this.getProperty(index, key);
+      result[key] += this.getProperty(index, key, useCustomWeaponSmelting);
     }
     if(withEnemyAnt){
       for(let key of Const.PROPS_ENEMY_ANTI.concat(Const.PROPS_ENEMY_DEFENSE)){
@@ -2605,6 +2609,17 @@ export class CalculatorService {
           result[key] = 0;
         }
         result[key] += this.getPropertyEnemy(index, key);
+      }
+    }
+    if(useCustomWeaponSmelting) {
+      let weaponStorageData = this.weaponService.getStorageInfo(index);
+      let smeltingLevel = (parseInt(weaponStorageData.smeltingLevel!) + toAddWeaponSmelting).toString();
+      smeltingLevel = smeltingLevel > Const.MAX_WEAPON_SMELTING ? Const.MAX_WEAPON_SMELTING : smeltingLevel.toString();
+      tempWeaponData = this.getExtraWeaponData(indexStr, {smeltingLevel});
+    }
+    if(tempWeaponData) {
+      for(let key of Object.keys(tempWeaponData[0])) {
+        result[key] += tempWeaponData[0][key];
       }
     }
 
@@ -2663,10 +2678,14 @@ export class CalculatorService {
     let specialOrdersFinally: SpecialBuff[] = [];
     specialOrders = specialOrders.concat(
       this.dataMap[index].extraSpecialCharaResult!,
-      this.dataMap[index].extraSpecialWeaponResult!,
       this.dataMap[index].extraSpecialArtifactSetResult!,
       this.dataMap[index].extraSpecialTeamResult!,
     );
+    if(tempWeaponData){
+      specialOrders = specialOrders.concat(tempWeaponData[1])
+    }else{
+      specialOrders = specialOrders.concat(this.dataMap[index].extraSpecialWeaponResult!)
+    }
     specialOrders.sort((x, y) => x.priority! - y.priority!);
 
     //スペシャル処理
@@ -2846,7 +2865,7 @@ export class CalculatorService {
   }
 
   //全情報から属性取得（まとめ）
-  private getProperty(index: string | number, prop: string) {
+  private getProperty(index: string | number, prop: string, withoutWeaponExtra: boolean = false) {
     let result = 0;
     let indexStr = index.toString();
     let genshinDataProp = prop;
@@ -2884,9 +2903,11 @@ export class CalculatorService {
     if(extraCharaResult[prop] != undefined){
       result += extraCharaResult[prop];
     }
-    let extraWeaponResult = this.dataMap[indexStr].extraWeaponResult!;
-    if(extraWeaponResult[prop] != undefined){
-      result += extraWeaponResult[prop];
+    if(!withoutWeaponExtra){
+      let extraWeaponResult = this.dataMap[indexStr].extraWeaponResult!;
+      if(extraWeaponResult[prop] != undefined){
+        result += extraWeaponResult[prop];
+      }
     }
 
     if([Const.PROP_VAL_HP, Const.PROP_VAL_ATTACK, Const.PROP_VAL_DEFENSE].includes(prop)){
@@ -2927,7 +2948,7 @@ export class CalculatorService {
   }
 
   //キャラ追加データ解析
-  private getExtraCharacterData(index: string | number, data?: CharLevelConfig){
+  private getExtraCharacterData(index: string | number, data?: CharLevelConfig): [Record<string, number>, SpecialBuff[], TeamBuff[]]{
     let characterData = this.dataMap[index]!.characterData!;
     let skillLevel;
     let elementalBurstLevel;
@@ -2951,7 +2972,7 @@ export class CalculatorService {
     let hasOverride: boolean = false;
     
     if(skillLevel == undefined || elementalBurstLevel == undefined){
-      return [result, specialResult];
+      return [result, specialResult, specialTeamSlefResult];
     }
 
     if(Const.NAME_SKILLS in setting && setting.skills){
@@ -3084,7 +3105,7 @@ export class CalculatorService {
   }
 
   //武器追加データ解析
-  private getExtraWeaponData(index: string | number, data?: WeaponLevelConfig){
+  private getExtraWeaponData(index: string | number, data?: WeaponLevelConfig): [Record<string, number>, SpecialBuff[], TeamBuff[]]{
     let weaponData = this.dataMap[index]!.weaponData!;
     let characterData = this.dataMap[index]!.characterData!;
     let smeltingLevel;
@@ -3103,7 +3124,7 @@ export class CalculatorService {
 
     if("effect" in setting && setting.effect){
       let setBuffResult = this.setBuffDataToResult(
-        weaponData.skillAffixMap[smeltingLevel], 
+        weaponData.skillAffixMap[smeltingLevel] ?? weaponData.skillAffixMap[Const.MIN_WEAPON_SMELTING], 
         Const.NAME_NO_LEVEL, 
         extraWeaponData.effect!,
         setting.effect!,
@@ -3151,7 +3172,7 @@ export class CalculatorService {
   }
 
   //聖遺物セットデータ解析
-  private getExtraReliquarySetData(index: string){
+  private getExtraReliquarySetData(index: string): [Record<string, number>, SpecialBuff[], TeamBuff[]]{
     let characterData = this.dataMap[index]!.characterData!;
     let artifactSetIndexs = this.artifactService.getStorageSetIndexs(index);
     let overrideElement = this.characterService.getOverrideElement(index);

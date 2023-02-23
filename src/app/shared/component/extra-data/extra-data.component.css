@@ -37,11 +37,11 @@ tr td:nth-of-type(2) {
     overflow-y: scroll;
 }
 
-.no-scroll-div table td:first-child span {
+.no-scroll-div table tr span {
     cursor: default;
 }
 
-.scroll-div table td:first-child span {
+.scroll-div table tr span {
     cursor: default;
 }
 
@@ -70,5 +70,5 @@ tr td:nth-of-type(2) {
 
 .dmg-echarts {
     padding-top: 6px;
-    height: 400px;
+    height: 500px;
 }

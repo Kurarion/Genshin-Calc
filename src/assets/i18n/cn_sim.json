@@ -50,7 +50,11 @@
   "OTHER": {
     "NAME": "其他",
     "TARGET": "目标属性",
-    "TARGETVALUE": "目标值"
+    "TARGETVALUE": "目标值",
+    "WEAPON_SMELTING_PLUS_1": "武器精炼+1",
+    "WEAPON_SMELTING_PLUS_2": "武器精炼+2",
+    "WEAPON_SMELTING_PLUS_3": "武器精炼+3",
+    "WEAPON_SMELTING_PLUS_4": "武器精炼+4"
   },
   "SYS": {
     "DELETE": "删除",

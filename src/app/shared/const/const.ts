@@ -164,6 +164,9 @@ export class Const {
   static readonly IMG_RES_404_HEIGHT = 400;
   static readonly IMG_RES_404_WIDTH = 400;
 
+  static readonly MIN_WEAPON_SMELTING = "1";
+  static readonly MAX_WEAPON_SMELTING = "5";
+
   //*********************************
   //           スキルタグ
   //*********************************
