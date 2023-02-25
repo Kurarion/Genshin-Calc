@@ -1,7 +1,7 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, NoCommaPipe, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, NoCommaPipe, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-extra-info',
@@ -43,7 +43,8 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
     private decimalPipe: DecimalPipe, 
     private noCommaPipe: NoCommaPipe,
     private calculatorService: CalculatorService,
-    private characterService: CharacterService,) { }
+    private characterService: CharacterService,
+    private relayoutMsgService: RelayoutMsgService,) { }
 
   ngOnInit(): void {
     this.isNormal = this.skill == 'normal';
@@ -71,6 +72,7 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
   onChangeElement(value: string){
     this.overrideElement = value;
     this.characterService.setOverrideElement(this.data.id, value);
+    this.relayoutMsgService.update("changeOverrideElement");
   }
 
   private initDatas(){
