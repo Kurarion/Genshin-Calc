@@ -21,7 +21,7 @@ const HOMEPAGE_BG = "assets/init/homePageBG-compress.png";
         opacity: 0.01,
       })),
       state(CSS_STATUS_FIN, style({
-        opacity: 0.17,
+        opacity: 0.4,
       })),
       transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
         animate('1s')

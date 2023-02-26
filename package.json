@@ -1,12 +1,12 @@
 {
-  "name": "gscal",
-  "version": "1.0.1",
+  "name": "inteyvat",
+  "version": "1.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "serve": "http-server -p 8080 dist/gscal -o",
+    "serve": "http-server -p 8080 dist/Inteyvat -o",
     "generateGenshinData": "go run GenshinData",
     "deployGitPage": "ng deploy --repo=https://github.com/Kurarion/Genshin-Calc.git --base-href=/Genshin-Calc/ --branch=website"
   },

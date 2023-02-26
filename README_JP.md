@@ -1,13 +1,15 @@
 
 <p align="center">
     <img src="./logo-readme.png" height="120">
+    <br>
+    インテイワット
 <p>
 
 
 <p align="center">
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README.md">English</a> | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_SIM.md">简体中文</a> | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_TRA.md">繁體中文</a> | 
+    <a href="./README.md">English</a> | 
+    <a href="./README_CH_SIM.md">简体中文</a> | 
+    <a href="./README_CH_TRA.md">繁體中文</a> | 
     日本語
 <p>
 
@@ -39,7 +41,7 @@
 
 ## アクセス
 
-+ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">「クラウド」原神</a>
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">インテイワット</a>
 
 ## 使用例
 + 申し訳ないです。現在は中国語版の例しか対応していないです。流れは変わらないので、ご参照ください。

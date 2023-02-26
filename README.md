@@ -1,14 +1,16 @@
 
 <p align="center">
     <img src="./logo-readme.png" height="120">
+    <br>
+    Inteyvat
 <p>
 
 
 <p align="center">
     English | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_SIM.md">简体中文</a> | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_TRA.md">繁體中文</a> | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_JP.md">日本語</a>
+    <a href="./README_CH_SIM.md">简体中文</a> | 
+    <a href="./README_CH_TRA.md">繁體中文</a> | 
+    <a href="./README_JP.md">日本語</a>
 <p>
 
 ## Application Feature
@@ -41,7 +43,7 @@
 
 ## Try It
 
-+ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">"Cloud" Genshin Impact</a>
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">Inteyvat</a>
 
 ## Use Case
 

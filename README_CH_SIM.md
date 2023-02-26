@@ -1,14 +1,16 @@
 
 <p align="center">
     <img src="./logo-readme.png" height="120">
+    <br>
+    因提瓦特
 <p>
 
 
 <p align="center">
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README.md">English</a> | 
+    <a href="./README.md">English</a> | 
     简体中文 | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_TRA.md">繁體中文</a> | 
-    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_JP.md">日本語</a>
+    <a href="./README_CH_TRA.md">繁體中文</a> | 
+    <a href="./README_JP.md">日本語</a>
 <p>
 
 ## 应用特色
@@ -39,7 +41,7 @@
 
 ## 食用地址
 
-+ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">"云"原神</a>
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">因提瓦特</a>
 
 ## 使用用例
 <div>

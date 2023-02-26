@@ -1,7 +1,7 @@
 {
-  "name": "Cloud Genshin Impact",
-  "short_name": "Genshin Calc",
-  "description": "A Genshin Impact Damage Calculator For All Characters",
+  "name": "Inteyvat",
+  "short_name": "Inteyvat",
+  "description": "Genshin Impact Calculator",
   "theme_color": "#fafafa",
   "background_color": "#fafafa",
   "display": "fullscreen",
