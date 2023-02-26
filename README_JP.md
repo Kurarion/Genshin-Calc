@@ -2,7 +2,7 @@
 <p align="center">
     <img src="./logo-readme.png" height="120">
     <br>
-    インテイワット
+    <strong>インテイワット</strong>
 <p>
 
 

@@ -2,7 +2,7 @@
 <p align="center">
     <img src="./logo-readme.png" height="120">
     <br>
-    因提瓦特
+    <strong>因提瓦特</strong>
 <p>
 
 
