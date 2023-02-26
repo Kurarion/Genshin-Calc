@@ -6,79 +6,142 @@
 
 <p align="center">
     English | 
-    <a href="./README_CH_SIM.md">简体中文</a> | 
-    <a href="./README_CH_TRA.md">繁體中文</a> | 
-    <a href="./README_JP.md">日本語</a>
+    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_SIM.md">简体中文</a> | 
+    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_CH_TRA.md">繁體中文</a> | 
+    <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/README_JP.md">日本語</a>
 <p>
 
-## Introduction
-+ Genshin Impact damage calculation
+## Application Feature
 
-## Try it
-+  <a href="https://genshin-calc.sirokuma.cc/" target="_blank">Cloud Genshin Impact</a>
++ Support all characters, weapons of more than 3 stars, **5 stars and level 20 artifact** calculations
 
-## Usage
++ Support Enka.API (a public third-party game display panel character data query API) to import the game display panel character data (the panel character information needs to be pubic in the game)
 
++ Real-time data calculation and local automatic data save
+
++ Full skill damage (including reaction) broken line of damage value increase under each refining change of weapon and artifact property promotion
+
++ Team Buff that calculated based on the actual data of auxiliary characters (data of auxiliary characters need to be initialized or imported firstly)
+
++ Rich custom Buff
+
++ artifact growth label
+
++ The optimization calculation of the artifact property (specific skill information with the limition of maximum critical rate):
+
+1. The specific damage can be optimized under the limited number of step by closing the proportion of actual artifact property to the optimal calculation result
+
+(Note: because the actual number of entries of each artifact is not necessarily completely realistic, it is only for reference in the main direction of ascension)
+
+2. When want to know the strength of a character (specific weapon, specific Buff, specific teammate, etc.), if there is no specific information of artifact or the selection of artifact, you can use this to quickly estimate the relative strength of each character under the same number of step under the condition that only the main property of artifact is limited
+
+(Note: At present, this project only provides the damage value of each skill, excluding the DPS calculation. The manipulation and operation axis need to be calculated by other ways)
+
++ This project is a PWA, which can be installed locally and used offline (Note: local installation also require net for Enka.API and image resources)
+
+## Try It
+
++ <a href="https://genshin-calc.sirokuma.cc/" target="_blank">"Cloud" Genshin Impact</a>
+
+## Use Case
+
++ Sorry, there are only examples in Chinese at present.
 <div>
-    <img src="./doc/example_en_1.png">
+    <img src="./doc/new/anime_cn_sim_1.webp">
     <br>
-    <img src="./doc/example_en_2.png">
+    <img src="./doc/new/anime_cn_sim_2.webp">
     <br>
-    <img src="./doc/example_en_3.png">
+    <img src="./doc/new/anime_cn_sim_3.webp">
 </div>
 
 ## Description
-■ About character
-+ All talent BUFFs are closed by default
-+ All constellation BUFFs are closed by default
 
-■ About weapon
-+ Only weapons of 3 stars and above have been entered
-+ The weapon effect BUFFs are closed by default
+■ Characters
 
-■ About artifact
-+ The artifact BUFFs are closed by default
++ All talent Buffs are off by default
+
++ All constellation Buffs are off by default
+
+■ Weapons
+
++ All effect Buffs are off by default
+
++ Only weapons of 3 stars and above
+
+■ Artifact
+
++ The artifact Buffs are off by default
+
 + Only support level 20 5-star artifact
+
 + There is no upper limit on the number of user-defined sets of artifact, but when importing data through Enka, if there are more than 10 sets, the last set will be automatically replaced as Enka data
 
-■ About automatic calculation of artifact
-+ A step is defined as the maximum value of each increase (for example, the critical rate is 3.9%)
-+ Be sure to check whether the BUFF which can override element is on before calculating (if you are calculating the override element damage)
-+ The calculation is under the current environment, when any attribute or BUFF related to target calculation other than the number of step changes, it needs to be recalculated (such as the switch of weapon smelting or related BUFF on/off)
-+ The automatic calculation does not consider the increase of value (attack value, HP value, defense value)
+■ Automatic calculation of artifact
 
-■ About artifact labels (growth/rarity)
-+ The value of the growth/rarity tag can not evaluate the quality of a artifact very well, but simply evaluate the rarity of a artifact
-+ Growth is non-linear, involving the difference between the growth value and growth times each increase, rather than the linear value of the final entry value. The larger the growth value and the more growth times, the higher the growth tag value, which means the closer to the King of XX (for example, the King of Defense)
-+ The rarity is the sum of all growth, which means the difficulty of obtaining the artifact (the higher the value, the rarer), but it does not mean that the artifact are effective rare
++ The definition of a step is the maximum value of each increase (for example, the critical rate is 3.9%), which can be specified to one decimal place (for example, 0.1 step corresponds to the critical rate of 0.39%, 2.7% corresponds to 0.7 step)
+
++ If the calculation target is the normal attack damage after enchantment, please check whether the enchantment in the normal attack is in the corresponding enchantment state before calculation
+
++ This calculation is under the current context, that is, when any attribute or Buff related to the target calculation other than the number of step in this function area changed, it needs to be recalculated (such as the switch of weapon refining or related Buff)
+
++ In order to reduce the resource cost of automatic calculation, the value property steps are not included in the calculation scope (small attack value, small HP value, small defense value)
+
+■ Artifact labels (growth/rarity)
+
++ The growth/rarity tag value can't evaluate the quality of a artifact very well, but simply evaluate the rarity of a artifact (that is, the value range of the initial value and each increase after+4)
+
++ Growth is non-linear, involving the difference between the growth value and growth times each increase, rather than the linear value of the final step value. The larger the growth value and the more growth times, the higher the growth tag value, which means the closer to the King of XX (for example, the King of Defense with a 35.7% defense or more)
+
++ The rarity is the sum of all growth, which means the difficulty of obtaining the artifact (the higher the value, the rarer it is). At the same time, please note that it does not mean that the artifact are effective rare, but I think you should not use a artifact with a rarity of more than 100% as dog food at any time ٩ ( ˊ ᗜ ˋ*)و
 
 ## Other
-■ About auto save
-+ All user data uses the browser's LocalStorage technology, which temporarily does not support automatic cleaning
 
-■ About enemy
-+ May contain duplicate enemies
+■ Auto save
 
-■ About weapon
-+ May contain some weapons that cannot be obtained (such as trial weapon)
++ All user data use the browser's LocalStorage, and can be reset through"Data Clear" in the [...] menu in the lower right corner
 
 ## Running Locally
+
+This project is a noBackend web application developed with `Angular`, which can be built locally only by this project. The steps are as follows
+
 ■ Requirements
-+ <a href="https://nodejs.org/en/download/" target="_blank">Node. js</a> (v16.15.0)
-+ <a href="https://go.dev/dl/" target="_blank">Golang</a> (1.16.3)
+
++ <a href="https://nodejs.org/en/download/" target="_blank">Node. js</a> (v16.15.0 is recommended)
+
++ <a href="https://go.dev/dl/" target="_blank">Golang</a> (above 1.16.3 is recommended)
 
 ■ Download
+
 ```
 git clone https://github.com/Kurarion/Genshin-Calc.git
 cd Genshin-Calc
 npm install
+```
+■ Game data initialize
+
+The following code cannot be used currently because Dimbreath's GenshinData repository was sanctioned
+
+```
 npm run generateGenshinData
 ```
-After the game version is updated, execute `npm run generateGenshinData` to obtain the latest data and append the updated content configuration to <a href="./src/assets/init/data.json" target="_blank">`src/assets/init/data.json`</a>
 
-Interface reference: <a href="./src/app/shared/interface/interface.ts" target="_blank">`src/app/shared/interface/interfaces.ts`</a>
+Maybe you should use the data of other Genshin Impact data Raw Url or local file
 
-Constant reference: <a href="./src/app/shared/const/const.ts" target="_blank">`src/app/shared/const/const.ts`</a>
++ Raw Url, a repository of Genshin Impact Data, such as Grasscutter Resources
+```
+go run GenshinData -resUrl=https://gitlab.com/????/GC-Resources/-/raw/3.?/Resources/
+```
+
++ Use local file
+```
+go run GenshinData -localResPath=./GenshinData
+```
+
+After the game version is updated or when the test and custom data need to be used, the `Game data initialize` needs to be executed again to generate the latest data for the project, and the configuration of the updated content needs to be added to <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/src/assets/init/data.json" target="_blank">`src/assets/init/data.json`</a>
+
+Interface reference: <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/src/app/shared/interface/interface.ts" target="_blank">`src/app/shared/interface/interfaces.ts`</a>
+
+Constant reference: <a href="https://github.com/Kurarion/Genshin-Calc/tree/main/src/app/shared/const/const.ts" target="_blank">`src/app/shared/const/const.ts`</a>
 
 ■ Test
 ```
@@ -91,5 +154,6 @@ npm run start
 npm run build
 npm run serve
 ```
+
 ## Thanks
-+ <a href="https://github.com/EnkaNetwork/API-docs/" target="_blank ">Enka.Network API</a>
++ <a href="https://github.com/EnkaNetwork/API-docs/" target="_blank">Enka.Network API</a>
