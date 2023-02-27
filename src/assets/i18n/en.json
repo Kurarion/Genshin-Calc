@@ -91,6 +91,7 @@
     "DMG_BONUS_SKILL_NILOU_MOON": "Skill DMG Bonus (Watery Moon)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "Skill DMG Bonus (Tri-Karma Purification)",
     "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "Skill DMG Bonus (Mirror)",
+    "DMG_BONUS_SKILL_DEHYA_FIELD": "Skill DMG Bonus (Fiery Sanctum)",
     "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "Skill DMG Bonus (Shooting Star)",
     "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst DMG Bonus",
     "DMG_ANTI_CRYO": "Cryo Resistance",
@@ -359,7 +360,8 @@
     "NAHIDA_TRI_KARMA": "Tri-Karma Purification",
     "LAYLA_SHOOTING_STAR": "Shooting Star",
     "FISCHL_OZ": "Oz's (Summoning)",
-    "ALHAITHAM_MIRROR": "Mirror"
+    "ALHAITHAM_MIRROR": "Mirror",
+    "DEHYA_FIELD": "Fiery Sanctum"
   },
   "AUTO": {
     "CALC": "Calculate",

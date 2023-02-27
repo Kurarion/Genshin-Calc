@@ -8808,6 +8808,256 @@
                         }
                 ]
             }
+        },
+        "10000079": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "indexsAttach": [[3]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["HP"],
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "DEHYA_FIELD"
+                        }
+                    },
+                    {
+                        "product": {
+                            "index": 5,
+                            "base":"HP"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "indexsAttach": [[1]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["HP"],
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "indexsAttach": [[3]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["HP"],
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "healing": {
+                                "index":1,
+                                "base":"HP"
+                            }
+                        },
+                        {
+                            "healing": {
+                                "index":2,
+                                "base":"HP"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["HP_UP"],
+                                "settingType":"switch",
+                                "defaultEnable": false
+                            },{
+                                "index": 1,
+                                "base":"HP",
+                                "target": ["DMG_VAL_UP_SKILL"]
+                            },{
+                                "index": 2,
+                                "base":"HP",
+                                "target": ["DMG_VAL_UP_ELEMENTAL_BURST"]
+                            }]
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["DMG_BONUS_SKILL_DEHYA_FIELD"],
+                                "settingType":"switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "healing": {
+                                "index":1,
+                                "base":"HP"
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
+                                "settingType": "switch",
+                                "defaultEnable":false
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["DMG_CRIT_DMG_UP_ELEMENTAL_BURST"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":4
+                            }]
+                        }
+                ]
+            }
+        },
+        "10000080": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "healing": {
+                            "index":1,
+                            "base":"HP",
+                            "constIndex":0
+                        }
+                    },
+                    {
+                        "healing": {
+                            "index":3,
+                            "base":"HP",
+                            "constIndex":2
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_BONUS_PHYSICAL"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":4,
+                                "isAllTeam":true
+                            }]
+                        }
+                    ],
+                    []
+                ]
+            },
+            "constellation": {
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_CRIT_DMG_UP_PHYSICAL"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ]
+            }
         }
     },
     "weapons": {
@@ -9679,6 +9929,21 @@
                 }
             ]
         },
+        "12418": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    },{
+                        "index": 2,
+                        "target": ["ELEMENTAL_MASTERY"]
+                    }]
+                }
+            ]
+        },
         "12501": {
             "effect": [
                 {
@@ -9788,6 +10053,34 @@
                         "base": "DEFENSE",
                         "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED"],
                         "settingType": "resident"
+                    }]
+                }
+            ]
+        },
+        "12511": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 4,
+                        "target": ["HP_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
                     }]
                 }
             ]

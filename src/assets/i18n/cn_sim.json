@@ -91,6 +91,7 @@
     "DMG_BONUS_SKILL_NILOU_MOON": "元素技能伤害加成(水月)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "元素技能伤害加成(灭净三业)",
     "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "元素技能伤害加成(光幕)",
+    "DMG_BONUS_SKILL_DEHYA_FIELD": "元素技能伤害加成(净焰剑狱领域)",
     "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "元素技能伤害加成(飞星)",
     "DMG_BONUS_ELEMENTAL_BURST": "元素爆发伤害加成",
     "DMG_ANTI_CRYO": "冰元素抗性",
@@ -359,7 +360,8 @@
     "NAHIDA_TRI_KARMA": "灭净三业",
     "LAYLA_SHOOTING_STAR": "飞星",
     "FISCHL_OZ": "奥兹(召唤)",
-    "ALHAITHAM_MIRROR": "光幕"
+    "ALHAITHAM_MIRROR": "光幕",
+    "DEHYA_FIELD": "净焰剑狱领域"
   },
   "AUTO": {
     "CALC": "计算",
