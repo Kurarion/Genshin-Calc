@@ -218,28 +218,20 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
         Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(data.info.elementType)!] +
         Const.SKILL_ICON_GRADIENT[1];
       if(buff){
+        const checkList: TeamBuff[] = [];
         for(let key of this.skillsBuff.concat(this.weapon).concat(this.artifact)){
-          for(let i of buff[key as keyof SelfTeamBuff] as TeamBuff[]){
-            if(i.val && i.val != 0){
-              hasBuff = true;
-              break;
-            }
-          }
+          checkList.push(...buff[key as keyof SelfTeamBuff] as TeamBuff[])
         }
         for(let v of buff[Const.NAME_SKILLS_PROUD]){
-          for(let i of v){
-            if(i.val && i.val != 0){
-              hasBuff = true;
-              break;
-            }
-          }
+          checkList.push(...v);
         }
         for(let k of this.constellations){
-          for(let i of buff[Const.NAME_CONSTELLATION][k]){
-            if(i.val && i.val != 0){
-              hasBuff = true;
-              break;
-            }
+          checkList.push(...buff[Const.NAME_CONSTELLATION][k]);
+        }
+        for(let i of checkList){
+          if(i.val && i.val != 0 || i.calByOrigin){
+            hasBuff = true;
+            break;
           }
         }
       }

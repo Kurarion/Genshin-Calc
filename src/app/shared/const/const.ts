@@ -247,6 +247,8 @@ export class Const {
   static readonly PROP_ATTACK_BASE = "ATTACK_BASE";
   //防御力ベース
   static readonly PROP_DEFENSE_BASE = "DEFENSE_BASE";
+  //元素爆発エネルギー
+  static readonly PROP_ELEMENTAL_BURST_ENERGY = "ELEMENTAL_BURST_ENERGY";
   //生命力
   static readonly PROP_HP = "HP";
   //攻撃力
@@ -721,6 +723,7 @@ export class Const {
     Const.PROP_HP_BASE,
     Const.PROP_ATTACK_BASE,
     Const.PROP_DEFENSE_BASE,
+    Const.PROP_ELEMENTAL_BURST_ENERGY,
     // Const.PROP_HP,
     // Const.PROP_ATTACK,
     // Const.PROP_DEFENSE,

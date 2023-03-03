@@ -110,6 +110,12 @@ export interface CharSkill {
     desc: Record<TYPE_SYS_LANG, string>;
     //アイコン
     icon: string;
+    //クールタイム
+    cdTime: number;
+    //元素エネルギータイプ
+    costElemType: string;
+    //元素エネルギー
+    costElemVal: number;
     //記述パラメータ
     paramDescList: Record<TYPE_SYS_LANG, string[]>;
     //パラメータ

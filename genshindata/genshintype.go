@@ -261,6 +261,8 @@ type GenshinAvatarSkillData struct {
 	NameTextMapHash   uint64  `json:"nameTextMapHash"`
 	DescTextMapHash   uint64  `json:"descTextMapHash"`
 	CdTime            float64 `json:"cdTime"`
+	CostElemVal       float64 `json:"costElemVal"`
+	CostElemType      string  `json:"costElemType"`
 	SkillIcon         string  `json:"skillIcon"`
 	ProudSkillGroupId uint64  `json:"proudSkillGroupId"`
 }

@@ -92,6 +92,9 @@ type AVATARSKILLINFO struct {
 	ParamValidIndexs     []int                                   `json:"paramValidIndexs"`
 	ProudSkillGroupId    uint64                                  `json:"proudSkillGroupId"`
 	Images               SKILLIMAGES                             `json:"images"`
+	CdTime               float64                                 `json:"cdTime"`
+	CostElemVal          float64                                 `json:"costElemVal"`
+	CostElemType         string                                  `json:"costElemType"`
 }
 
 //人物技能详细

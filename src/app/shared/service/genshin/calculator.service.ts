@@ -2870,10 +2870,20 @@ export class CalculatorService {
     let indexStr = index.toString();
     let genshinDataProp = prop;
     let genshinArtifactDataProp = prop;
-    if([Const.PROP_LEVEL, Const.PROP_DMG_ENEMY_DEFENSE_BASE, Const.PROP_HP_BASE, Const.PROP_ATTACK_BASE, Const.PROP_DEFENSE_BASE].includes(prop)){
+    if([Const.PROP_LEVEL,
+      Const.PROP_ELEMENTAL_BURST_ENERGY,
+      Const.PROP_DMG_ENEMY_DEFENSE_BASE,
+      Const.PROP_HP_BASE,
+      Const.PROP_ATTACK_BASE,
+      Const.PROP_DEFENSE_BASE,
+    ].includes(prop)){
       switch(prop){
         case Const.PROP_LEVEL:
           result = this.getCharacterData(indexStr).level;
+          return result;
+          //break;
+        case Const.PROP_ELEMENTAL_BURST_ENERGY:
+          result = this.characterService.get(indexStr).skills.elementalBurst.costElemVal;
           return result;
           //break;
         case Const.PROP_DMG_ENEMY_DEFENSE_BASE:

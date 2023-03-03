@@ -4479,10 +4479,12 @@
                     {
                         "buffs":[{
                             "index": 3,
-                            "indexMultiValue": 90,
+                            "base": "ELEMENTAL_BURST_ENERGY",
                             "target": ["DMG_BONUS_ELEMENTAL_BURST"],
                             "settingType": "switch",
-                            "defaultEnable": false
+                            "defaultEnable": false,
+                            "isAllTeam": true,
+                            "calByOrigin": true
                         }]
                     }
                 ],
