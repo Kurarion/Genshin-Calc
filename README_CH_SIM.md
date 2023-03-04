@@ -3,8 +3,8 @@
     <img src="./logo-readme.png" height="120">
     <br>
     <strong>因提瓦特</strong>
-    <br>
-    <br>
+<p>
+<div align="center" style="display: flex;align-items: center;justify-content: center;gap: 0 5px;">
     <a href="https://discord.com/invite/GXjtmmFcYT">
         <img alt="Discord" src="https://img.shields.io/discord/1081186577570598914?color=blue&label=Discord&logo=Discord&style=flat-square">
     </a>
@@ -14,9 +14,7 @@
     <a href="https://github.com/Kurarion/Genshin-Calc">
         <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Kurarion/Genshin-calc?color=yellow&label=Stars&logo=GitHub&style=flat-square">
     </a>
-<p>
-
-
+</div>
 <p align="center">
     <a href="./README.md">English</a> | 
     简体中文 | 
