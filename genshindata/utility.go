@@ -15,8 +15,10 @@ const regexColorToFrontSalsh = `</color`
 const regexColorToFrontSalshReplaced = `</font`
 const regexNToBR = `\\n`
 const regexNToBRReplaced = `<br>`
-const regexLayout = `#(.*?)\{LA.*#(\w*?)\}`
-const regexLayoutReplaced = `$1$2`
+const regexLayout1 = `^#`
+const regexLayout1Replaced = ``
+const regexLayout2 = `\{LA.*?_PS#(\w*?)\}`
+const regexLayout2Replaced = `$1`
 const regexColorCode1 = `#99FFFFFF`
 const regexColorCode1Replaced = `#FF6600`
 const regexColorCode2 = `#FFD780FF`
@@ -39,7 +41,8 @@ var regxList = []*regexp.Regexp{
 	regexp.MustCompile(regexColorToFront),
 	regexp.MustCompile(regexColorToFrontSalsh),
 	regexp.MustCompile(regexNToBR),
-	regexp.MustCompile(regexLayout),
+	regexp.MustCompile(regexLayout1),
+	regexp.MustCompile(regexLayout2),
 	regexp.MustCompile(regexColorCode1),
 	regexp.MustCompile(regexColorCode2),
 	regexp.MustCompile(regexColorCode3),
@@ -53,7 +56,8 @@ var regxReplaceList = []string{
 	regexColorToFrontReplaced,
 	regexColorToFrontSalshReplaced,
 	regexNToBRReplaced,
-	regexLayoutReplaced,
+	regexLayout1Replaced,
+	regexLayout2Replaced,
 	regexColorCode1Replaced,
 	regexColorCode2Replaced,
 	regexColorCode3Replaced,
