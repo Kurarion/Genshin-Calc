@@ -3,6 +3,17 @@
     <img src="./logo-readme.png" height="120">
     <br>
     <strong>インテイワット</strong>
+    <br>
+    <br>
+    <a href="https://discord.com/invite/GXjtmmFcYT">
+        <img alt="Discord" src="https://img.shields.io/discord/1081186577570598914?color=blue&label=Discord&logo=Discord&style=flat-square">
+    </a>
+    <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=bi_PmMZ3t762gUCQ2CP1tOOzWbt7W1wx&jump_from=webapi&authKey=UPbPdmCHGuPomLNVj6uajaBwwk6G28u4mXCVr1ra5IRAtgJMy9TGDp+uFvGxJiHy">
+        <img alt="Discord" src="https://img.shields.io/badge/QQ%20Group-635139720-green?logo=Tencent QQ&style=flat-square">
+    </a>
+    <a href="https://github.com/Kurarion/Genshin-Calc">
+        <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Kurarion/Genshin-calc?color=yellow&label=Stars&logo=GitHub&style=flat-square">
+    </a>
 <p>
 
 
