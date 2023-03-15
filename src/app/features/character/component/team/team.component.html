@@ -185,7 +185,11 @@
                         </ng-container>
                         <!-- artifact -->
                         <ng-container *ngFor="let skill of artifact">
-                            <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
+                            <mat-expansion-panel 
+                                (afterCollapse)="onExpandStatusChanged()" 
+                                (afterExpand)="onExpandStatusChanged()" 
+                                class="mat-elevation-z0 expand" 
+                                *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0 && $any(memberInfos[i]!.artifact)?.images?.icon">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="other-icon" [src]="$any(memberInfos[i]!.artifact).images.icon" loading="lazy" appImgErrorHandle>

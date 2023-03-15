@@ -137,6 +137,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   @Input('overrideElement') overrideElement!: string;
   //更新フラグ
   @Input('refreshFlg') refreshFlg!: number;
+  //Buffによる変更検知フラグ
+  @Input('refreshBuffOnChangeFlg') refreshBuffOnChangeFlg: boolean = false;
 
   //ダメージデータ
   dmgDatas!: DamageResult[];
@@ -300,8 +302,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
           this.initHealingDatas();
           this.initShieldDatas();
           this.initProducDatas();
-          //ユーザースライド操作のため更新しないように
-          // this.initBuffDatas();
+          if(this.refreshBuffOnChangeFlg){
+            this.initBuffDatas();
+          }
         }
       });
       //言語変更検知

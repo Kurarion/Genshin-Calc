@@ -208,7 +208,7 @@ export class ArtifactService {
       info.setFullIndex = '';
     }
     //同じセットの場合、同じ設定にする（初期化なし）
-    if(lastIndex){
+    if(lastIndex && lastIndex > -1 && lastIndex < this.dataMap[keyStr].info.length){
       let lastInfo = this.dataMap[keyStr].info[lastIndex];
       if(lastInfo.setFullIndex == info.setFullIndex){
         info.extra = {...lastInfo.extra}

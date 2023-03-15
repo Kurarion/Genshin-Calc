@@ -34,6 +34,8 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   tabs!: string[];
   //選択されたインデックス
   selectedIndex!: number;
+  //ラスト選択されたインデックス
+  lastSelectedIndex!: number;
   //選択された聖遺物Autoフラグ
   isSelectedIndexAuto!: boolean;
   //聖遺物セットリスト
@@ -78,6 +80,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
       this.tabs = [];
       this.artifactSetList = [];
       this.isSelectedIndexAuto = false;
+      this.lastSelectedIndex = -1;
       this.selectedFullArtifactSetIndex = '';
       this.effectContent1 = '';
       this.effectContent2 = '';
@@ -98,6 +101,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
     //選択中インデックス
     this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
+    this.resetLastSelectedIndex();
     //Autoフラグ
     this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
     //選択された聖遺物セット初期化
@@ -119,14 +123,12 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   addTab() {
     this.tabs.push((this.tabs.length + 1).toString());
     this.selectedIndex = this.tabs.length - 1;
-    this.setActiveIndex();
   }
 
   addAutoTab() {
     this.tabs.push((this.tabs.length + 1).toString());
     this.selectedIndex = this.tabs.length - 1;
     this.artifactService.pushStorageInfo(this.data.id, {isAuto: true})
-    this.setActiveIndex();
   }
 
   copyTab() {
@@ -140,10 +142,8 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     if(this.selectedIndex >= index){
       let toSetIndex = this.tabs.length - 1
       this.selectedIndex = toSetIndex > 0?toSetIndex:0;
-      this.setActiveIndex();
     }else{
       this.selectedIndex = 0;
-      this.setActiveIndex();
     }
   }
 
@@ -160,6 +160,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.artifactService.setStorageActiveIndex(this.data.id, this.selectedIndex);
     //選択された聖遺物セット初期化
     this.initSelectedArtifactSetIndexs();
+    this.resetLastSelectedIndex();
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
     //Autoフラグ
@@ -239,7 +240,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.initSelectedFullArtifactSetIndex(isInit);
     this.initEffectContents();
     if(!isInit){
-      this.setDefaultExtraData();
+      this.artifactService.setStorageSetIndexsAll(this.data.id, this.selectedArtifactSetIndexs, undefined, this.lastSelectedIndex)
     }
     //更新
     this.calculatorService.initExtraArtifactSetData(this.data.id);
@@ -261,5 +262,9 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   private setDefaultExtraData(){
     //追加データ更新
     this.artifactService.setDefaultExtraData(this.data.id, this.selectedArtifactSetIndexs, this.selectedFullArtifactSetIndex);
+  }
+
+  private resetLastSelectedIndex() {
+    this.lastSelectedIndex = this.selectedIndex
   }
 }
