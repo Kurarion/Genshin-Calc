@@ -9039,7 +9039,7 @@
                                 "settingType":"slider",
                                 "sliderInitialValue":0,
                                 "sliderStep":1,
-                                "sliderMax":4,
+                                "sliderMax":5,
                                 "isAllTeam":true
                             }]
                         }
