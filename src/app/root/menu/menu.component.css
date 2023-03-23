@@ -30,6 +30,7 @@
   padding: 3px;
   margin-right: -1px;
   background: white;
+  user-select: none;
 }
 
 .menu-list .select-filter {
@@ -64,6 +65,7 @@
   justify-content: space-around;
   padding: 2px;
   transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+  cursor: default;
 }
 
 .button:hover {

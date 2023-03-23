@@ -26,6 +26,8 @@ export class MenuComponent implements OnInit {
   @Output('menuClickEvent') menuClickEvent = new EventEmitter<CharaInfo>();
   //言語
   currentLanguage!: TYPE_SYS_LANG;
+  //マウス押下状態
+  mouseDownState: boolean = false;
 
   constructor(private characterService: CharacterService,
     private router: Router,
@@ -90,24 +92,44 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  clickElement(element: ElementType) {
+  clickElement(element: ElementType, focus: boolean = false) {
+    if(!this.mouseDownState && !focus){
+      return
+    }
     this.menuSetting.filterElementType[element] = !this.menuSetting.filterElementType[element];
     this.filterMenuList();
   }
 
-  clickWeapon(weaponType: WeaponType) {
+  clickWeapon(weaponType: WeaponType, focus: boolean = false) {
+    if(!this.mouseDownState && !focus){
+      return
+    }
     this.menuSetting.filterWeaponType[weaponType] = !this.menuSetting.filterWeaponType[weaponType];
     this.filterMenuList();
   }
 
-  clickEnka() {
+  clickEnka(focus: boolean = false) {
+    if(!this.mouseDownState && !focus){
+      return
+    }
     this.menuSetting.filterEnka = !this.menuSetting.filterEnka;
     this.filterMenuList();
   }
 
-  clickData() {
+  clickData(focus: boolean = false) {
+    if(!this.mouseDownState && !focus){
+      return
+    }
     this.menuSetting.filterData = !this.menuSetting.filterData;
     this.filterMenuList();
+  }
+
+  mouseDown() {
+    this.mouseDownState = true
+  }
+
+  mouseUp() {
+    this.mouseDownState = false
   }
 
   /**

@@ -1,10 +1,15 @@
 <mat-nav-list class="menu-list">
-  <div class="filter-div">
+  <div
+    class="filter-div"
+    (mousedown)="mouseDown()"
+    (mouseup)="mouseUp()"
+  >
     <!-- その他 -->
     <div class="other-filter-div">
       <div
         class="button"
-        (click)="clickEnka()"
+        (mousedown)="clickEnka(true)"
+        (mouseenter)="clickEnka()"
         [ngClass]="{
           'button-on': this.menuSetting.filterEnka,
           'button-off': !this.menuSetting.filterEnka
@@ -20,7 +25,8 @@
       </div>
       <div
         class="button"
-        (click)="clickData()"
+        (mousedown)="clickData(true)"
+        (mouseenter)="clickData()"
         [ngClass]="{
           'button-on': this.menuSetting.filterData,
           'button-off': !this.menuSetting.filterData
@@ -41,7 +47,8 @@
     <div class="weapon-filter-div">
       <div *ngFor="let weaponType of weaponTypeList"
         class="button element-button"
-        (click)="clickWeapon(weaponType)"
+        (mousedown)="clickWeapon(weaponType, true)"
+        (mouseenter)="clickWeapon(weaponType)"
         [ngClass]="{
           'button-on': menuSetting.filterWeaponType[weaponType],
           'button-off': !menuSetting.filterWeaponType[weaponType]
@@ -49,6 +56,7 @@
         >
         <img 
           class="weapon-icon"
+          draggable="false"
           [src]="weaponTypeSvgPath.get(weaponType)" 
           loading="lazy"
           [ngClass]="{
@@ -62,7 +70,8 @@
     <div class="element-filter-div">
       <div *ngFor="let element of elementList"
         class="button element-button"
-        (click)="clickElement(element)"
+        (mousedown)="clickElement(element, true)"
+        (mouseenter)="clickElement(element)"
         [ngClass]="{
           'button-on': menuSetting.filterElementType[element],
           'button-off': !menuSetting.filterElementType[element]
@@ -70,6 +79,7 @@
         >
         <img 
           class="element-icon"
+          draggable="false"
           [ngClass]="{
             'button-element-on': menuSetting.filterElementType[element],
             'button-element-off': !menuSetting.filterElementType[element]
