@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { keysEqual } from 'src/app/shared/class/util';
 import { artifactSet, Const, ExtraArtifactSetData, ExtraDataService, ExtraStatus, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
 
 export interface ArtifactStorageItemData {
@@ -364,6 +365,47 @@ export class ArtifactService {
       return skillStatus['sliderNumMap'][buffIndex.toString()];
     }
     return 0;
+  }
+
+  checkAndFixExtraData(charIndex: string | number, selectedIndex: number){
+    const charKeyStr = charIndex.toString();
+    if(selectedIndex < 0 || selectedIndex >= this.dataMap[charKeyStr].info.length){
+      return
+    }
+    const indexs = this.dataMap[charKeyStr].info[selectedIndex].setIndexs;
+    const fullIndex = this.dataMap[charKeyStr].info[selectedIndex].setFullIndex;
+    if(!Array.isArray(indexs) || indexs.length !== 2) {
+      this.dataMap[charKeyStr].info[selectedIndex].setIndexs = ['', '']
+      return
+    }
+    if(!fullIndex){
+      return
+    }
+    if(!indexs.every((v: string) => v === fullIndex)){
+      this.dataMap[charKeyStr].info[selectedIndex].extra = {};
+      this.dataMap[charKeyStr].info[selectedIndex].setFullIndex = "";
+      return
+    }
+    const target = this.extraDataService.getArtifactSetDefaultSetting(indexs, fullIndex);
+    const handler = {
+      set: function(obj: any, prop: string, value: any) {
+        obj[prop] = value;
+        return true;
+      },
+      get: function(obj: any, prop: string) {
+        return obj[prop];
+      }
+    }
+    const extraInfoProxy = new Proxy(this.dataMap[charKeyStr].info[selectedIndex], handler);
+    if(Object.keys(extraInfoProxy.extra ?? {}).length === 0){
+      extraInfoProxy.extra = target;
+    }else{
+      let origin = extraInfoProxy.extra;
+      if(!keysEqual(origin?.set1, target?.set1)
+      ||!keysEqual(origin?.set2, target?.set2)){
+        extraInfoProxy.extra = target;
+      }
+    }
   }
 
   private getExtraSkillData(index: string | number, skill: string, skillIndex?: number | string){

@@ -239,6 +239,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.selectedArtifactSetIndexs = this.artifactService.getStorageSetIndexs(this.data.id, this.selectedIndex);
     this.initSelectedFullArtifactSetIndex(isInit);
     this.initEffectContents();
+    this.artifactService.checkAndFixExtraData(this.data.id, this.selectedIndex);
     if(!isInit){
       this.artifactService.setStorageSetIndexsAll(this.data.id, this.selectedArtifactSetIndexs, undefined, this.lastSelectedIndex)
     }

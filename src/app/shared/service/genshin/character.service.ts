@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { keysEqual } from 'src/app/shared/class/util';
 import { character, Const, GenshinDataService, ExtraCharacterData, StorageService, ExtraDataService, ExtraStatus, CharaInfo } from 'src/app/shared/shared.module';
 
 export interface CharacterStorageInfo {
@@ -253,58 +254,22 @@ export class CharacterService {
       this.dataMap[index].extra = target;
     }else{
       let origin = this.dataMap[index].extra;
-      if(!this.keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[0]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[0]:undefined)
-        ||!this.keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[1]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[1]:undefined)
-        ||!this.keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[2]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[3]:undefined)
-        ||!this.keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[4]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[4]:undefined)
-        ||!this.keysEqual(origin?.constellation?origin?.constellation[0]:undefined, target?.constellation?target?.constellation[0]:undefined)
-        ||!this.keysEqual(origin?.constellation?origin?.constellation[1]:undefined, target?.constellation?target?.constellation[1]:undefined)
-        ||!this.keysEqual(origin?.constellation?origin?.constellation[2]:undefined, target?.constellation?target?.constellation[2]:undefined)
-        ||!this.keysEqual(origin?.constellation?origin?.constellation[3]:undefined, target?.constellation?target?.constellation[3]:undefined)
-        ||!this.keysEqual(origin?.constellation?origin?.constellation[4]:undefined, target?.constellation?target?.constellation[4]:undefined)
-        ||!this.keysEqual(origin?.constellation?origin?.constellation[5]:undefined, target?.constellation?target?.constellation[5]:undefined)
-        ||!this.keysEqual(origin?.skills?.skill, target.skills?.skill)
-        ||!this.keysEqual(origin?.skills?.other, target.skills?.other)
-        ||!this.keysEqual(origin?.skills?.elementalBurst, target.skills?.elementalBurst)
+      if(!keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[0]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[0]:undefined)
+        ||!keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[1]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[1]:undefined)
+        ||!keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[2]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[3]:undefined)
+        ||!keysEqual(origin?.skills?.proudSkills?origin?.skills?.proudSkills[4]:undefined, target.skills?.proudSkills?target.skills?.proudSkills[4]:undefined)
+        ||!keysEqual(origin?.constellation?origin?.constellation[0]:undefined, target?.constellation?target?.constellation[0]:undefined)
+        ||!keysEqual(origin?.constellation?origin?.constellation[1]:undefined, target?.constellation?target?.constellation[1]:undefined)
+        ||!keysEqual(origin?.constellation?origin?.constellation[2]:undefined, target?.constellation?target?.constellation[2]:undefined)
+        ||!keysEqual(origin?.constellation?origin?.constellation[3]:undefined, target?.constellation?target?.constellation[3]:undefined)
+        ||!keysEqual(origin?.constellation?origin?.constellation[4]:undefined, target?.constellation?target?.constellation[4]:undefined)
+        ||!keysEqual(origin?.constellation?origin?.constellation[5]:undefined, target?.constellation?target?.constellation[5]:undefined)
+        ||!keysEqual(origin?.skills?.skill, target.skills?.skill)
+        ||!keysEqual(origin?.skills?.other, target.skills?.other)
+        ||!keysEqual(origin?.skills?.elementalBurst, target.skills?.elementalBurst)
       ){
         this.dataMap[index].extra = target;
       } 
     }
-  }
-
-  private keysEqual(origin: any, target: any){
-    if(origin == undefined && target != undefined || origin != undefined && target == undefined){
-      return false;
-    }
-    if(origin == undefined && target == undefined){
-      return true;
-    }
-    let result = true;
-    for(let i of ['switchOnSet', 'sliderNumMap']){
-      if(origin[i] == undefined && target[i] != undefined || origin[i] != undefined && target[i] == undefined){
-        result = false;
-        continue;
-      }
-      if(origin[i] == undefined && target[i] == undefined){
-        continue;
-      }
-      const keys1 = Object.keys(origin[i]), keys2 = Object.keys(target[i]);
-      if(result && keys1.length != keys2.length){
-        result = false;
-      }
-      if(result && keys1.every(key => !keys2.includes(key))){
-        result = false;
-      }
-      if(i == 'switchOnSet' && result && keys2.every(key => {
-        if(target[i][key] === true && origin[i][key] === false){
-          return true;
-        }
-        return false;
-      })){
-        result = false;
-      }
-    }
-    
-    return result;
   }
 }
