@@ -387,7 +387,22 @@
     "MEMBER_NAME_1": "成员1",
     "MEMBER_NAME_2": "成员2",
     "MEMBER_NAME_3": "成员3",
-    "MEMBER_NAME_4": "成员4"
+    "MEMBER_NAME_4": "成员4",
+    "SKILL_A_NAME": "[普通攻击]",
+    "SKILL_E_NAME": "[元素战技]",
+    "SKILL_Q_NAME": "[元素爆发]",
+    "SKILL_X_NAME": "[其他技能]",
+    "PROUND_1_NAME": "[天赋1]",
+    "PROUND_2_NAME": "[天赋2]",
+    "PROUND_3_NAME": "[天赋3]",
+    "CONSTELLATION_1_NAME": "[命座1]",
+    "CONSTELLATION_2_NAME": "[命座2]",
+    "CONSTELLATION_3_NAME": "[命座3]",
+    "CONSTELLATION_4_NAME": "[命座4]",
+    "CONSTELLATION_5_NAME": "[命座5]",
+    "CONSTELLATION_6_NAME": "[命座6]",
+    "WEAPON_NAME": "[武器]",
+    "ARTIFACT_NAME": "[圣遗物]"
   },
   "DESC":{
     "GOLDEN_MAJESTY":{

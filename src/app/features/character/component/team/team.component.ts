@@ -66,6 +66,24 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
 
   readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
 
+  readonly buffFromName: Record<string, string> = {
+    "Skill0": "SKILL_A_NAME",
+    "Skill1": "SKILL_E_NAME",
+    "Skill2": "SKILL_Q_NAME",
+    "Skill3": "SKILL_X_NAME",
+    "Pround0": "PROUND_1_NAME",
+    "Pround1": "PROUND_2_NAME",
+    "Pround2": "PROUND_3_NAME",
+    "Constellation0": "CONSTELLATION_1_NAME",
+    "Constellation1": "CONSTELLATION_2_NAME",
+    "Constellation2": "CONSTELLATION_3_NAME",
+    "Constellation3": "CONSTELLATION_4_NAME",
+    "Constellation4": "CONSTELLATION_5_NAME",
+    "Constellation5": "CONSTELLATION_6_NAME",
+    "Weapon": "WEAPON_NAME",
+    "Artifact": "ARTIFACT_NAME",
+  }
+
   //キャラデータ
   @Input('data') data!: character;
   //言語

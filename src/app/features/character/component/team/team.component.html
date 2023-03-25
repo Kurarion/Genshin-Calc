@@ -38,11 +38,12 @@
                 <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
                     <mat-accordion multi>
                         <!-- skill -->
-                        <ng-container *ngFor="let skill of skills">
+                        <ng-container *ngFor="let skill of skills; index as num">
                             <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
+                                    <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Skill' + num] | translate)"></span>
                                     <span [innerText]="$any(memberInfos[i]!.data!.skills[skill]).name[currentLanguage]"></span>
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
@@ -80,6 +81,7 @@
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].images.icon" loading="lazy" appImgErrorHandle>
+                                                <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Pround' + proudIndex] | translate)"></span>
                                                 <span [innerText]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].name[currentLanguage]"></span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
@@ -113,11 +115,12 @@
                         </ng-container>
                         <!-- constellation -->
                         <ng-container *ngFor="let skills of constellation">
-                            <ng-container *ngFor="let c of constellations">
+                            <ng-container *ngFor="let c of constellations; index as num">
                                 <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skills][c].length > 0">
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>
                                             <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills['talents'])[c].images.icon" loading="lazy" appImgErrorHandle>
+                                            <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Constellation' + num] | translate)"></span>
                                             <span [innerText]="$any(memberInfos[i]!.data!.skills['talents'])[c].name[currentLanguage]"></span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -154,6 +157,7 @@
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="other-icon" [src]="$any(memberInfos[i]!.weapon).images.icon" loading="lazy" appImgErrorHandle>
+                                    <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Weapon'] | translate)"></span>
                                     <span [innerText]="$any(memberInfos[i]!.weapon).name[currentLanguage]"></span>
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
@@ -193,6 +197,7 @@
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <img class="other-icon" [src]="$any(memberInfos[i]!.artifact).images.icon" loading="lazy" appImgErrorHandle>
+                                    <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Artifact'] | translate)"></span>
                                     <span [innerText]="$any(memberInfos[i]!.artifact).setName[currentLanguage]"></span>
                                 </mat-panel-title>
                               </mat-expansion-panel-header>

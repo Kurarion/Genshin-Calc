@@ -384,10 +384,25 @@
   },
   "TEAM":{
     "NAME": "チーム",
-    "MEMBER_NAME_1": "メンバー１",
-    "MEMBER_NAME_2": "メンバー２",
-    "MEMBER_NAME_3": "メンバー３",
-    "MEMBER_NAME_4": "メンバー４"
+    "MEMBER_NAME_1": "メンバー1",
+    "MEMBER_NAME_2": "メンバー2",
+    "MEMBER_NAME_3": "メンバー3",
+    "MEMBER_NAME_4": "メンバー4",
+    "SKILL_A_NAME": "[通常攻撃]",
+    "SKILL_E_NAME": "[元素スキル]",
+    "SKILL_Q_NAME": "[元素爆発]",
+    "SKILL_X_NAME": "[その他のスキル]",
+    "PROUND_1_NAME": "[天賦1]",
+    "PROUND_2_NAME": "[天賦2]",
+    "PROUND_3_NAME": "[天賦3]",
+    "CONSTELLATION_1_NAME": "[1凸]",
+    "CONSTELLATION_2_NAME": "[2凸]",
+    "CONSTELLATION_3_NAME": "[3凸]",
+    "CONSTELLATION_4_NAME": "[4凸]",
+    "CONSTELLATION_5_NAME": "[5凸]",
+    "CONSTELLATION_6_NAME": "[6凸]",
+    "WEAPON_NAME": "[武器]",
+    "ARTIFACT_NAME": "[聖遺物]"
   },
   "DESC":{
     "GOLDEN_MAJESTY":{

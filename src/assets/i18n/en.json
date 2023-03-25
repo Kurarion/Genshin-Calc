@@ -387,7 +387,22 @@
     "MEMBER_NAME_1": "Member 1",
     "MEMBER_NAME_2": "Member 2",
     "MEMBER_NAME_3": "Member 3",
-    "MEMBER_NAME_4": "Member 4"
+    "MEMBER_NAME_4": "Member 4",
+    "SKILL_A_NAME": "[Normal]",
+    "SKILL_E_NAME": "[Skill]",
+    "SKILL_Q_NAME": "[Elemental Burst]",
+    "SKILL_X_NAME": "[Other Skill]",
+    "PROUND_1_NAME": "[Talent 1]",
+    "PROUND_2_NAME": "[Talent 2]",
+    "PROUND_3_NAME": "[Talent 3]",
+    "CONSTELLATION_1_NAME": "[C1]",
+    "CONSTELLATION_2_NAME": "[C2]",
+    "CONSTELLATION_3_NAME": "[C3]",
+    "CONSTELLATION_4_NAME": "[C4]",
+    "CONSTELLATION_5_NAME": "[C5]",
+    "CONSTELLATION_6_NAME": "[C6]",
+    "WEAPON_NAME": "[Weapon]",
+    "ARTIFACT_NAME": "[Artifact]"
   },
   "DESC":{
     "GOLDEN_MAJESTY":{
