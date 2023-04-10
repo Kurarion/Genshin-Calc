@@ -156,6 +156,13 @@ export interface ExtraSkillBuff {
 }
 
 export interface ExtraSkillHealing {
+  //連携スキル
+  originSkills?: TYPE_SKILL[];
+  originIndexs?: number[];
+  originRelations?: TYPE_RELATION[];
+  originConstIndexs?: number[];
+  originConstRelations?: TYPE_RELATION[];
+  originInnerRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
   index?: number;
   constIndex?: number;

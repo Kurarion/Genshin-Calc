@@ -8901,13 +8901,15 @@
                         {
                             "healing": {
                                 "index":1,
-                                "base":"HP"
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
                             }
                         },
                         {
                             "healing": {
                                 "index":2,
-                                "base":"HP"
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
                             }
                         }
                     ]
@@ -8946,7 +8948,8 @@
                         {
                             "healing": {
                                 "index":1,
-                                "base":"HP"
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
                             }
                         }
                 ],
@@ -9019,14 +9022,16 @@
                         "healing": {
                             "index":1,
                             "base":"HP",
-                            "constIndex":0
+                            "constIndex":0,
+                            "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
                         }
                     },
                     {
                         "healing": {
                             "index":3,
                             "base":"HP",
-                            "constIndex":2
+                            "constIndex":2,
+                            "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
                         }
                     }
                 ],
@@ -9056,6 +9061,298 @@
                                 "settingType": "switch",
                                 "defaultEnable":false,
                                 "isAllTeam":true
+                            }]
+                        }
+                ]
+            }
+        },
+        "10000081": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "index": 2,
+                            "target": ["DMG_ELEMENT_RUPTURE_UP"],
+                            "settingType":"switch",
+                            "defaultEnable": false,
+                            "overrideElement":"DMG_BONUS_DENDRO",
+                            "isAllTeam":true
+                        }]
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "healing": {
+                                "index":1,
+                                "base":"ELEMENTAL_MASTERY",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["ELEMENTAL_MASTERY"],
+                                "settingType": "slider",
+                                "sliderInitialValue":0,
+                                "sliderStep":1,
+                                "sliderMax":4
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "target": ["REVERSE_HEALING_BONUS"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_ELEMENT_RUPTURE_UP"],
+                                "settingType": "switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "indexs": [0],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_DENDRO",
+                                "attackBonusType": "DMG_BONUS_OTHER"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000082": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        },
+                        "healing": {
+                            "index":1,
+                            "base":"HP",
+                            "constIndex":2,
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "shield": {
+                            "index": 0,
+                            "constIndex": 1,
+                            "constCalRelation": "+",
+                            "base": "HP",
+                            "shieldBonusType": "SHIELD_BONUS_ELEMENTAL_BURST"
+                        },
+                        "healing": {
+                            "index":4,
+                            "base":"HP",
+                            "constIndex":5,
+                            "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
+                        },
+                        "damage": {
+                            "indexs": [6],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["HEALING_BONUS"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "target": ["DMG_BONUS_DENDRO"],
+                                "settingType": "switch",
+                                "defaultEnable": true
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":1,
+                                "indexMultiValue": 0.001,
+                                "maxValValue": 1,
+                                "base": "HP",
+                                "target": ["DMG_ELEMENT_BURNING_UP", "DMG_ELEMENT_RUPTURE_UP", "DMG_ELEMENT_HYPERBLOOM_UP", "DMG_ELEMENT_BURGEON_UP"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isAllTeam":true
+                            },{
+                                "index":2,
+                                "indexMultiValue": 0.001,
+                                "maxValValue": 0.4,
+                                "base": "HP",
+                                "target": ["DMG_ELEMENT_AGGRAVATE_UP", "DMG_ELEMENT_SPREAD_UP"],
+                                "isAllTeam":true
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "healing": {
+                                "index":0,
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
+                            }
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "healing": {
+                                "originSkills": ["skill"],
+                                "originIndexs": [1],
+                                "originRelations": ["*"],
+                                "originConstIndexs": [2],
+                                "originConstRelations": ["*"],
+                                "originInnerRelations": ["+"],
+                                "index":2,
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_SKILL"
+                            },
+                            "damage": {
+                                "indexs": [1],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_DENDRO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["ELEMENTAL_MASTERY"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "base":"HP",
+                                "target": ["DMG_VAL_UP_ELEMENTAL_BURST"],
+                                "settingType": "switch",
+                                "defaultEnable":false
                             }]
                         }
                 ]
@@ -10847,6 +11144,21 @@
                 }
             ]
         },
+        "14505": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "indexMultiValue":0.001,
+                        "base": "HP",
+                        "maxValConstIndex": 1,
+                        "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
+                        "selfElementTypeLimit": true,
+                        "settingType": "resident"
+                    }]
+                }
+            ]
+        },
         "14506": {
             "effect": [
                 {
@@ -12025,6 +12337,66 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 4
+                    }]
+                }
+            ]
+        },
+        "15029": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["DMG_BONUS_HYDRO"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "sliderStartIndex": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    },{
+                        "sliderStartIndex": 4,
+                        "target": ["DMG_BONUS_HYDRO"],
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }]
+                }
+            ]
+        },
+        "15030": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["HP_UP"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "indexMultiValue": 0.1,
+                        "target": ["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 5
                     }]
                 }
             ]
