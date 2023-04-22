@@ -302,9 +302,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
           this.initHealingDatas();
           this.initShieldDatas();
           this.initProducDatas();
-          if(this.refreshBuffOnChangeFlg){
-            this.initBuffDatas();
-          }
+          // if(this.refreshBuffOnChangeFlg){
+          this.initBuffDatas();
+          // }
         }
       });
       //言語変更検知
