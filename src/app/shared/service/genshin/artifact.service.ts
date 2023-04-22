@@ -80,8 +80,6 @@ export interface chipSvgPath {
   d?: string;
 }
 
-const MAX_ARTIFACE_PUSH_LENGTH = 10;
-
 @Injectable({
   providedIn: 'root'
 })
@@ -182,13 +180,10 @@ export class ArtifactService {
   }
 
   //聖遺物プッシュ
-  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo, withoutLimit = false): number{
+  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo): number{
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     this.checkAndSetInfoData(info);
-    if(withoutLimit || this.dataMap[keyStr].info.length >= MAX_ARTIFACE_PUSH_LENGTH){
-      this.dataMap[keyStr].info.pop();
-    }
     this.dataMap[keyStr].info.push(info);
     return this.setStorageActiveIndex(keyStr, this.dataMap[keyStr].info.length - 1);
   }

@@ -85,8 +85,6 @@
 
 + Only support level 20 5-star artifact
 
-+ There is no upper limit on the number of user-defined sets of artifact, but when importing data through Enka, if there are more than 10 sets, the last set will be automatically replaced as Enka data
-
 ■ Automatic calculation of artifact
 
 + The definition of a step is the maximum value of each increase (for example, the critical rate is 3.9%), which can be specified to one decimal place (for example, 0.1 step corresponds to the critical rate of 0.39%, 2.7% corresponds to 0.7 step)
