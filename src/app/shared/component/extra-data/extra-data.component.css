@@ -10,11 +10,11 @@ table {
 }
 
 table tr:first-child td {
-    border-top: 2px solid rgba(0,0,0,.12);
+    border-top: 1px solid rgba(0,0,0,.12);
 }
 
 table tr:last-child td {
-    border-bottom: 2px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
 tr td:nth-of-type(1) {
@@ -50,6 +50,15 @@ tr td:nth-of-type(2) {
     cursor: pointer !important;
 }
 
+table {
+    margin-bottom: 2px;
+}
+
+.damage-type-container {
+    display: flex;
+    align-items: center;
+}
+
 .scroll-div::-webkit-scrollbar {
     width: 5px;
 }
@@ -71,4 +80,12 @@ tr td:nth-of-type(2) {
 .dmg-echarts {
     padding-top: 6px;
     height: 500px;
+}
+
+.float-add {
+    float: right;
+}
+
+.dps-add-icon {
+    padding-right: 4px;
 }

@@ -20,6 +20,7 @@ import { ArtifactSubComponent } from './component/artifact-sub/artifact-sub.comp
 import { ArtifactAutoComponent } from './component/artifact-auto/artifact-auto.component';
 import { ArtifactChipsComponent } from './component/artifact-chips/artifact-chips.component';
 import { TeamComponent } from './component/team/team.component';
+import { DpsComponent } from './component/dps/dps.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { TeamComponent } from './component/team/team.component';
     ArtifactAutoComponent,
     ArtifactChipsComponent,
     TeamComponent,
+    DpsComponent,
   ],
   providers: [
     PercentPipe,

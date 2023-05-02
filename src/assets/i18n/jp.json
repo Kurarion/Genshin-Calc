@@ -9,11 +9,11 @@
     "CONSTELLATION": "命ノ星座",
     "ALLPROPS": "全属性"
   },
-  "PLAYER":{
+  "PLAYER": {
     "BOY": "空",
     "GIRL": "蛍"
   },
-  "ELEMENT":{
+  "ELEMENT": {
     "CRYO": "氷",
     "ANEMO": "風",
     "ELECTRO": "雷",
@@ -25,7 +25,7 @@
   "WEAPON": {
     "NAME": "武器",
     "PROPS": "武器属性",
-    "SMELTING":"精錬"
+    "SMELTING": "精錬"
   },
   "ENEMY": {
     "NAME": "敵",
@@ -93,7 +93,7 @@
     "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "元素スキルダメージ(光幕)",
     "DMG_BONUS_SKILL_DEHYA_FIELD": "元素スキルダメージ(浄焔剣獄領域)",
     "DMG_BONUS_SKILL_LAYLA_SHOOTING_STAR": "元素スキルダメージ(飛星)",
-    "DMG_BONUS_ELEMENTAL_BURST":"元素爆発ダメージ",
+    "DMG_BONUS_ELEMENTAL_BURST": "元素爆発ダメージ",
     "DMG_ANTI_CRYO": "氷元素耐性",
     "DMG_ANTI_ANEMO": "風元素耐性",
     "DMG_ANTI_PHYSICAL": "物理耐性",
@@ -110,11 +110,13 @@
     "DEFENSE_VAL_UP": "防御力数値アップ",
     "DMG_BONUS_WEAPON": "武器ダメージ",
     "DMG_BONUS_OTHER": "その他ダメージ",
+    "DMG_BONUS_SET": "聖遺物ダメージ",
     "HEALING_BONUS_NORMAL": "基本治療",
     "HEALING_BONUS_SKILL": "元素スキル治療",
     "HEALING_BONUS_ELEMENTAL_BURST": "元素爆発治療",
     "HEALING_BONUS_WEAPON": "武器治療",
     "HEALING_BONUS_OTHER": "その他治療",
+    "HEALING_BONUS_SET": "聖遺物治療",
     "DMG_ANTI_CRYO_MINUS": "氷元素耐性マイナス",
     "DMG_ANTI_ANEMO_MINUS": "風元素耐性マイナス",
     "DMG_ANTI_PHYSICAL_MINUS": "物理耐性マイナス",
@@ -144,6 +146,7 @@
     "DMG_RATE_UP_ELEMENTAL_BURST_EULA_KOUKEN": "元素爆発ダメージ倍率アップ値(光臨の剣)",
     "DMG_RATE_UP_WEAPON": "武器ダメージ倍率アップ値",
     "DMG_RATE_UP_OTHER": "その他ダメージ倍率アップ値",
+    "DMG_RATE_UP_SET": "聖遺物ダメージ倍率アップ値",
     "HEALING_RATE_UP_SKILL": "元素スキル治療倍率アップ値",
     "HEALING_RATE_UP_ELEMENTAL_BURST": "元素爆発治療倍率アップ値",
     "DMG_VAL_UP_CRYO": "氷元素ダメージアップ値",
@@ -165,6 +168,7 @@
     "DMG_VAL_UP_ELEMENTAL_BURST": "元素爆発ダメージアップ値",
     "DMG_VAL_UP_WEAPON": "武器ダメージアップ値",
     "DMG_VAL_UP_OTHER": "その他ダメージアップ値",
+    "DMG_VAL_UP_SET": "聖遺物ダメージアップ値",
     "HEALING_VAL_UP_SKILL": "元素スキル治療アップ値",
     "HEALING_VAL_UP_ELEMENTAL_BURST": "元素爆発治療アップ値",
     "DMG_CRIT_RATE_UP_CRYO": "氷元素ダメージ会心率アップ値",
@@ -184,6 +188,7 @@
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "元素爆発ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_WEAPON": "武器ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_OTHER": "その他ダメージ会心率アップ値",
+    "DMG_CRIT_RATE_UP_SET": "聖遺物ダメージ会心率アップ値",
     "DMG_CRIT_DMG_UP_CRYO": "氷元素ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_ANEMO": "風元素ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_PHYSICAL": "物理ダメージ会心ダメージアップ値",
@@ -200,6 +205,7 @@
     "DMG_CRIT_DMG_UP_ELEMENTAL_BURST": "元素爆発ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_WEAPON": "武器ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_OTHER": "その他ダメージ会心ダメージアップ値",
+    "DMG_CRIT_DMG_UP_SET": "聖遺物ダメージ会心ダメージアップ値",
     "DMG_ELEMENT_UP": "元素(増幅)(全)",
     "DMG_ELEMENT_VAPORIZE_UP": "元素(増幅)(蒸発)",
     "DMG_ELEMENT_MELT_UP": "元素(増幅)(溶解)",
@@ -233,10 +239,11 @@
     "SHIELD_BONUS_SKILL": "元素スキルシールド",
     "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆発シールド",
     "SHIELD_BONUS_WEAPON": "武器シールド",
-    "SHIELD_BONUS_OTHER": "その他シールド"
+    "SHIELD_BONUS_OTHER": "その他シールド",
+    "SHIELD_BONUS_SET": "聖遺物シールド"
   },
   "GENSHIN": {
-    "DMG":{
+    "DMG": {
       "ORIGIN": "通常ダメージ",
       "CRIT": "クリティカルヒット",
       "EXPECT": "期待ダメージ",
@@ -379,10 +386,10 @@
     "DAMAGE_TYPE": "最適するタイプ",
     "DAMAGE_TAG": "ダメージタグ"
   },
-  "SW":{
+  "SW": {
     "READY": "データ更新完了！;;リロード"
   },
-  "TEAM":{
+  "TEAM": {
     "NAME": "チーム",
     "MEMBER_NAME_1": "メンバー1",
     "MEMBER_NAME_2": "メンバー2",
@@ -404,16 +411,16 @@
     "WEAPON_NAME": "[武器]",
     "ARTIFACT_NAME": "[聖遺物]"
   },
-  "DESC":{
-    "GOLDEN_MAJESTY":{
+  "DESC": {
+    "GOLDEN_MAJESTY": {
       "WITH_SHIELD": "シールドの場合のバフ（前のバフとの間で1つを選択）"
     },
-    "TRAVELER":{
+    "TRAVELER": {
       "PROUDSKILL_2": "豊穰の勾玉（単位：枚）の数を吸収することで元素チャージ効率の追加分"
     }
   },
-  "MENU":{
-    "DELETE_CACHE":{
+  "MENU": {
+    "DELETE_CACHE": {
       "TITLE": "キャラクターデータ消去",
       "ALL_TITLE": "データ消去",
       "WANRING": "キャラクター「{{NAME}}」のすべてのデータをクリアしてよろしいですか。",
@@ -423,9 +430,45 @@
       "SUCCESS": "「{{NAME}}」のデータがリセットされました。",
       "ALL_SUCCESS": "すべてのデータがリセットされました。"
     },
-    "MANUAL":{
+    "MANUAL": {
       "TITLE": "利用ガイド",
       "OK": "確認"
     }
+  },
+  "COMMON": {
+    "ELEMENT_TYPE": {
+      "DMG_BONUS_CRYO": "氷元素",
+      "DMG_BONUS_ANEMO": "風元素",
+      "DMG_BONUS_PHYSICAL": "物理",
+      "DMG_BONUS_ELECTRO": "雷元素",
+      "DMG_BONUS_GEO": "岩元素",
+      "DMG_BONUS_PYRO": "火元素",
+      "DMG_BONUS_HYDRO": "水元素",
+      "DMG_BONUS_DENDRO": "草元素"
+    },
+    "ATTACK_TYPE": {
+      "DMG_BONUS_NORMAL": "通常攻撃",
+      "DMG_BONUS_CHARGED": "重撃",
+      "DMG_BONUS_PLUNGING": "落下攻撃",
+      "DMG_BONUS_SKILL": "元素スキル",
+      "DMG_BONUS_ELEMENTAL_BURST": "元素爆発",
+      "DMG_BONUS_WEAPON": "武器",
+      "DMG_BONUS_OTHER": "その他",
+      "DMG_BONUS_SET": "聖遺物"
+    }
+  },
+  "DPS": {
+    "NAME": "DPS",
+    "DURATION": "時間軸",
+    "SECONDS": "s",
+    "ELEMENT_TYPE": "元素タイプ",
+    "ATTACK_TYPE": "攻撃タイプ",
+    "DMG_TYPE": "ダメージタイプ",
+    "DELIMITER": "・",
+    "HIT": "-Hit",
+    "DPS_LABEL": "DPS",
+    "DMG_VAL_LABEL": "[ダメージ]",
+    "APPENDED": "DPS: ダメージ情報を追加しました。",
+    "TIPS": "ヒント: DPSリストにダメージ情報を追加するには、ダメージタイプの左側の[+]ボタンをクリックしてください。"
   }
 }

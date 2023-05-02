@@ -36,7 +36,7 @@
 
 :host ::ng-deep .menu-sidenav > div:first-child::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.6);
 }
 
 :host ::ng-deep .menu-sidenav > div:first-child {

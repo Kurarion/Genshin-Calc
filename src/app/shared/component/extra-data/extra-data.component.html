@@ -47,11 +47,13 @@
             <ng-container *ngFor="let prop of dmgPropList">
                 <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]" (click)="showDamageEcharts(prop, i)">
                     <td>
-                        <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
+                        <div class="damage-type-container">
+                            <mat-icon class="dps-add-icon material-icons-outlined" (click)="addToDPS(prop, i);$event.stopPropagation()">playlist_add</mat-icon>
+                            <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
+                        </div>
                     </td>
                     <td>
                         <span [innerText]="dmgDatas[i][prop] | truncate" [matTooltip]="dmgDatas[i][prop] + ''" matTooltipPosition="right"></span>
-                        <br>
                     </td>
                 </tr>
             </ng-container>

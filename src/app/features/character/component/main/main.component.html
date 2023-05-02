@@ -32,6 +32,7 @@
         <app-enemy [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_enemy]]" [name]="name_enemy" (draged)="onChildStartDrag($event)"></app-enemy>
         <app-artifact [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_artifact]]" [name]="name_artifact" (draged)="onChildStartDrag($event)"></app-artifact>
         <app-team [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_other]]" [name]="name_other" (draged)="onChildStartDrag($event)"></app-team>
-        <app-other [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_other]]" [name]="name_other" (draged)="onChildStartDrag($event)"></app-other>
+        <app-other [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_team]]" [name]="name_team" (draged)="onChildStartDrag($event)"></app-other>
+        <app-dps [data]="data" [language]="currentLanguage" [cardWidth]="setCardWidth" [zIndex]="childZIndexs[childNameMap[name_dps]]" [name]="name_dps" (draged)="onChildStartDrag($event)"></app-dps>
     </div>
 </div>

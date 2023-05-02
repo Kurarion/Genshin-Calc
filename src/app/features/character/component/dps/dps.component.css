@@ -1,0 +1,228 @@
+.card {
+    max-width: 350px;
+    min-width: 290px;
+    margin: 12px;
+    transition: box-shadow 500ms;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 0%;
+}
+
+.header-text {
+    font-size: inherit;
+}
+
+.content {
+    padding-top: 2px;
+}
+
+.expand {
+    margin-top: 1px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr:first-child .content-left {
+    border-top: 1px solid rgba(0, 0, 0, .12);
+}
+
+table tr:first-child .content-right {
+    border-top: 1px solid rgba(0, 0, 0, .12);
+}
+
+.content-left {
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.content-right {
+    text-align: right;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.content-right-button {
+    text-align: center;
+    border-bottom: none;
+}
+
+.drap-handle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ccc;
+    cursor: move;
+    width: 24px;
+    height: 24px;
+}
+
+::ng-deep.mat-tab-label,
+::ng-deep.mat-tab-label-active {
+    min-width: 0 !important;
+    padding: 3px !important;
+    margin: 3px !important;
+}
+
+.add-button {
+    width: 30px;
+}
+
+.menu-div {
+    float: right;
+}
+
+.switch {
+    transform: translate(68px, 5px);
+}
+
+.tab {
+    height: 100%;
+    margin-left: 2%;
+    width: 96%;
+    position: relative;
+}
+
+:host ::ng-deep .prop-field mat-form-field {
+    width: 280px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.normal-field {
+    width: 13em;
+}
+
+.element-fix {
+    margin-top: 1rem;
+    display: table;
+    cursor: pointer;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    transition: border 0.5s, background-color 0.5s, filter 0.4s;
+}
+
+.element-fix:hover {
+    background-color: rgba(128, 128, 128, 0.15);
+    border: 1px solid rgba(128, 128, 128, 0.6);
+}
+
+.element-icon {
+    width: 30px;
+    height: 30px;
+    display: table-cell;
+}
+
+.element-add {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.list-container {
+    max-height: 400px;
+    overflow: overlay;
+    border: 1px solid rgba(128, 128, 128, 0.565);
+}
+
+.list-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: rgba(128, 128, 128, 0.4);
+}
+
+.dmg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 1% 2%;
+}
+
+.dmg-item {
+    padding: 5px;
+    margin: 1% 0;
+    border: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+.skill-prefix-name {
+    font-size: 1em;
+    /* padding-right: 0.4em; */
+    font-weight: 700;
+}
+
+.one-line {
+    display: flex;
+    align-items: center;
+    gap: 0 0.2em;
+}
+
+.last-right {
+    text-align: right;
+    flex: 1 0 auto;
+}
+
+.close-icon {
+    cursor: pointer;
+}
+
+.white {
+    flex: 1 1 auto;
+}
+
+.dps-container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid rgba(128, 128, 128, 0.565);
+}
+
+.dps-label {
+    font-size: 1.1em;
+    font-weight: 700;
+    padding: 6px;
+    background-color: rgba(128, 128, 128, 0.303);
+    border-right: 1px solid rgba(128, 128, 128, 0.565);
+}
+
+.dps-val {
+    font-size: 1.1em;
+    padding: 4px;
+}
+
+::ng-deep .align-select-expand-icon .mat-select-arrow-wrapper {
+    transform: translate(4.5px, 0);
+}
+
+::ng-deep .diabled-black-color .mat-input-element:disabled {
+    color: black;
+}
+
+.no-item-tip {
+    padding: 8% 2%;
+    color: rgba(0, 0, 0, 0.536);
+}

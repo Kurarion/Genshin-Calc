@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData } from 'src/app/shared/shared.module';
+import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData, DPSService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -57,6 +57,8 @@ export class MainComponent implements OnInit, OnDestroy {
   readonly name_talent = 'talent';
   readonly name_constellation = 'constellation';
   readonly name_other = 'other';
+  readonly name_team = 'team';
+  readonly name_dps = 'dps';
 
   readonly childNameMap: Record<string,string> = {
     'character': '0',
@@ -66,6 +68,8 @@ export class MainComponent implements OnInit, OnDestroy {
     'talent': '4',
     'constellation': '5',
     'other': '6',
+    'team': '7',
+    'dps': '8',
   };
 
   readonly childNames = [
@@ -76,6 +80,8 @@ export class MainComponent implements OnInit, OnDestroy {
     '4',//'talent',
     '5',//'constellation',
     '6',//'other',
+    '7',//'team',
+    '8',//'dps',
   ];
 
   //背景画像URL
@@ -127,6 +133,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private artifactService: ArtifactService,
     private otherService: OtherService,
     private teamService: TeamService,
+    private DPSService: DPSService,
     private matDialog: MatDialog,
     private matSnackBar: MatSnackBar,) {
     this.subscriptions = [];
@@ -256,6 +263,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.artifactService.clearStorageInfo(indexStr);
         this.otherService.clearStorageInfo(indexStr);
         this.teamService.clearStorageInfo(indexStr);
+        this.DPSService.clearStorageInfo(indexStr);
         //成功
         this.translateService.get('MENU.DELETE_CACHE.SUCCESS', contentVal).subscribe((res: string) => {
           this.matSnackBar.open(res, undefined, {

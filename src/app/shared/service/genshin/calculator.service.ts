@@ -1604,6 +1604,23 @@ export class CalculatorService {
           dmgUpSectionValue += data[Const.PROP_DMG_BONUS_OTHER + tag] ?? 0;
         }
         break;
+      case Const.PROP_DMG_BONUS_SET:
+        finalRate += data[Const.PROP_DMG_RATE_UP_SET];
+        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_BONUS_SET]));
+        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SET];
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SET];
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SET];
+        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SET];
+        //特別処理
+        if(hasTag){
+          finalRate += data[Const.PROP_DMG_RATE_UP_SET + tag] ?? 0;
+          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_BONUS_SET + tag] ?? 0));
+          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SET + tag] ?? 0;
+          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SET + tag] ?? 0;
+          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SET + tag] ?? 0;
+          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SET + tag] ?? 0;
+        }
+        break;
     }
     //ダメージ値区域残り
     switch(base){
@@ -1823,6 +1840,7 @@ export class CalculatorService {
           break;
         case Const.PROP_HEALING_BONUS_WEAPON:
         case Const.PROP_HEALING_BONUS_OTHER:
+        case Const.PROP_HEALING_BONUS_SET:
           break;
       }
     }
@@ -1877,6 +1895,9 @@ export class CalculatorService {
           break;
         case Const.PROP_SHIELD_BONUS_OTHER:
           shield *= 1 + (data[Const.PROP_SHIELD_BONUS_OTHER] ?? 0);
+          break;
+        case Const.PROP_SHIELD_BONUS_SET:
+          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_SET] ?? 0);
           break;
       }
     }

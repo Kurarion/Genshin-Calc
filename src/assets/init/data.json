@@ -8719,8 +8719,32 @@
                     },
                     {
                         "damage": {
-                            "indexs": [3,5,7],
-                            "indexsAttach": [[4,6,8]],
+                            "indexs": [3],
+                            "indexsAttach": [[4]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["ELEMENTAL_MASTERY"],
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag":"ALHAITHAM_MIRROR"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "indexsAttach": [[6]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["ELEMENTAL_MASTERY"],
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag":"ALHAITHAM_MIRROR"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [7],
+                            "indexsAttach": [[8]],
                             "canOverride": false,
                             "base": "ATTACK",
                             "baseAttach": ["ELEMENTAL_MASTERY"],

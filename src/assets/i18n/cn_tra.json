@@ -9,11 +9,11 @@
     "CONSTELLATION": "命座",
     "ALLPROPS": "全屬性"
   },
-  "PLAYER":{
+  "PLAYER": {
     "BOY": "空",
     "GIRL": "熒"
   },
-  "ELEMENT":{
+  "ELEMENT": {
     "CRYO": "冰",
     "ANEMO": "風",
     "ELECTRO": "雷",
@@ -25,7 +25,7 @@
   "WEAPON": {
     "NAME": "武器名",
     "PROPS": "武器屬性",
-    "SMELTING":"精煉"
+    "SMELTING": "精煉"
   },
   "ENEMY": {
     "NAME": "敵人名",
@@ -110,11 +110,13 @@
     "DEFENSE_VAL_UP": "防禦力增加值",
     "DMG_BONUS_WEAPON": "武器增傷",
     "DMG_BONUS_OTHER": "其他增傷",
+    "DMG_BONUS_SET": "聖遺物增傷",
     "HEALING_BONUS_NORMAL": "普攻治療提升",
     "HEALING_BONUS_SKILL": "元素技能治療提升",
     "HEALING_BONUS_ELEMENTAL_BURST": "元素爆發治療提升",
     "HEALING_BONUS_WEAPON": "武器治療提升",
     "HEALING_BONUS_OTHER": "其他治療提升",
+    "HEALING_BONUS_SET": "聖遺物治療提升",
     "DMG_ANTI_CRYO_MINUS": "冰元素耐性減少",
     "DMG_ANTI_ANEMO_MINUS": "風元素耐性減少",
     "DMG_ANTI_PHYSICAL_MINUS": "物理耐性減少",
@@ -144,6 +146,7 @@
     "DMG_RATE_UP_ELEMENTAL_BURST_EULA_KOUKEN": "元素爆發傷害倍率增加值(光降之劍)",
     "DMG_RATE_UP_WEAPON": "武器傷害倍率增加值",
     "DMG_RATE_UP_OTHER": "其他傷害倍率增加值",
+    "DMG_RATE_UP_SET": "聖遺物傷害倍率增加值",
     "HEALING_RATE_UP_SKILL": "元素技能治療倍率增加值",
     "HEALING_RATE_UP_ELEMENTAL_BURST": "元素爆發治療倍率增加值",
     "DMG_VAL_UP_CRYO": "冰元素傷害增加值",
@@ -165,6 +168,7 @@
     "DMG_VAL_UP_ELEMENTAL_BURST": "元素爆發傷害增加值",
     "DMG_VAL_UP_WEAPON": "武器傷害增加值",
     "DMG_VAL_UP_OTHER": "其他傷害增加值",
+    "DMG_VAL_UP_SET": "聖遺物傷害增加值",
     "HEALING_VAL_UP_SKILL": "元素技能治療增加值",
     "HEALING_VAL_UP_ELEMENTAL_BURST": "元素爆發治療增加值",
     "DMG_CRIT_RATE_UP_CRYO": "冰元素傷害暴擊率增加值",
@@ -184,6 +188,7 @@
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "元素爆發傷害暴擊率增加值",
     "DMG_CRIT_RATE_UP_WEAPON": "武器傷害暴擊率增加值",
     "DMG_CRIT_RATE_UP_OTHER": "其他傷害暴擊率增加值",
+    "DMG_CRIT_RATE_UP_SET": "聖遺物傷害暴擊率增加值",
     "DMG_CRIT_DMG_UP_CRYO": "冰元素傷害暴擊傷害增加值",
     "DMG_CRIT_DMG_UP_ANEMO": "風元素傷害暴擊傷害增加值",
     "DMG_CRIT_DMG_UP_PHYSICAL": "物理傷害暴擊傷害增加值",
@@ -200,6 +205,7 @@
     "DMG_CRIT_DMG_UP_ELEMENTAL_BURST": "元素爆發傷害暴擊傷害增加值",
     "DMG_CRIT_DMG_UP_WEAPON": "武器傷害暴擊傷害增加值",
     "DMG_CRIT_DMG_UP_OTHER": "其他傷害暴擊傷害增加值",
+    "DMG_CRIT_DMG_UP_SET": "聖遺物傷害暴擊傷害增加值",
     "DMG_ELEMENT_UP": "元素増幅(全)",
     "DMG_ELEMENT_VAPORIZE_UP": "元素増幅(蒸發)",
     "DMG_ELEMENT_MELT_UP": "元素増幅(融化)",
@@ -233,10 +239,11 @@
     "SHIELD_BONUS_SKILL": "元素技能盾量加成",
     "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆發盾量加成",
     "SHIELD_BONUS_WEAPON": "武器盾量加成",
-    "SHIELD_BONUS_OTHER": "其他盾量加成"
+    "SHIELD_BONUS_OTHER": "其他盾量加成",
+    "SHIELD_BONUS_SET": "聖遺物盾量加成"
   },
   "GENSHIN": {
-    "DMG":{
+    "DMG": {
       "ORIGIN": "不暴擊傷害",
       "CRIT": "暴擊傷害",
       "EXPECT": "期望傷害",
@@ -379,17 +386,17 @@
     "DAMAGE_TYPE": "最優傷害類型",
     "DAMAGE_TAG": "傷害標簽"
   },
-  "SW":{
+  "SW": {
     "READY": "數據更新完成!;;重新加載"
   },
-  "TEAM":{
+  "TEAM": {
     "NAME": "隊伍",
     "MEMBER_NAME_1": "成員1",
     "MEMBER_NAME_2": "成員2",
     "MEMBER_NAME_3": "成員3",
     "MEMBER_NAME_4": "成員4",
     "SKILL_A_NAME": "[普通攻擊]",
-    "SKILL_E_NAME": "[元素戰技]",
+    "SKILL_E_NAME": "[元素技能]",
     "SKILL_Q_NAME": "[元素爆發]",
     "SKILL_X_NAME": "[其他技能]",
     "PROUND_1_NAME": "[天賦1]",
@@ -404,16 +411,16 @@
     "WEAPON_NAME": "[武器]",
     "ARTIFACT_NAME": "[聖遺物]"
   },
-  "DESC":{
-    "GOLDEN_MAJESTY":{
+  "DESC": {
+    "GOLDEN_MAJESTY": {
       "WITH_SHIELD": "護盾情況下的加成（與上一個BUFF選擇其一設置）"
     },
-    "TRAVELER":{
+    "TRAVELER": {
       "PROUDSKILL_2": "吸收豐穰勾玉數額外的充能加成（單位：個）"
     }
   },
-  "MENU":{
-    "DELETE_CACHE":{
+  "MENU": {
+    "DELETE_CACHE": {
       "TITLE": "角色數據清除",
       "ALL_TITLE": "數據清除",
       "WANRING": "確定要清除角色「{{NAME}}」的全部數據麼？",
@@ -423,9 +430,45 @@
       "SUCCESS": "已重置「{{NAME}}」的數據！",
       "ALL_SUCCESS": "已重置全部數據！"
     },
-    "MANUAL":{
+    "MANUAL": {
       "TITLE": "使用指南",
       "OK": "確認"
     }
+  },
+  "COMMON": {
+    "ELEMENT_TYPE": {
+      "DMG_BONUS_CRYO": "冰元素",
+      "DMG_BONUS_ANEMO": "風元素",
+      "DMG_BONUS_PHYSICAL": "物理",
+      "DMG_BONUS_ELECTRO": "雷元素",
+      "DMG_BONUS_GEO": "岩元素",
+      "DMG_BONUS_PYRO": "火元素",
+      "DMG_BONUS_HYDRO": "水元素",
+      "DMG_BONUS_DENDRO": "草元素"
+    },
+    "ATTACK_TYPE": {
+      "DMG_BONUS_NORMAL": "普通攻擊",
+      "DMG_BONUS_CHARGED": "重擊",
+      "DMG_BONUS_PLUNGING": "下落攻擊",
+      "DMG_BONUS_SKILL": "元素技能",
+      "DMG_BONUS_ELEMENTAL_BURST": "元素爆發",
+      "DMG_BONUS_WEAPON": "武器",
+      "DMG_BONUS_OTHER": "其它",
+      "DMG_BONUS_SET": "聖遺物"
+    }
+  },
+  "DPS": {
+    "NAME": "DPS",
+    "DURATION": "時間軸",
+    "SECONDS": "秒",
+    "ELEMENT_TYPE": "元素類型",
+    "ATTACK_TYPE": "攻擊類型",
+    "DMG_TYPE": "傷害類型",
+    "DELIMITER": "・",
+    "HIT": "段",
+    "DPS_LABEL": "DPS",
+    "DMG_VAL_LABEL": "[傷害值]",
+    "APPENDED": "DPS: 傷害信息追加成功",
+    "TIPS": "提示: 點擊傷害類型左側的[+]按鈕以向DPS列表中追加傷害信息。"
   }
 }

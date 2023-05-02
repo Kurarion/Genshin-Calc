@@ -110,11 +110,13 @@
     "DEFENSE_VAL_UP": "防御力增加值",
     "DMG_BONUS_WEAPON": "武器增伤",
     "DMG_BONUS_OTHER": "其他增伤",
+    "DMG_BONUS_SET": "圣遗物增伤",
     "HEALING_BONUS_NORMAL": "普攻治疗提升",
     "HEALING_BONUS_SKILL": "元素技能治疗提升",
     "HEALING_BONUS_ELEMENTAL_BURST": "元素爆发治疗提升",
     "HEALING_BONUS_WEAPON": "武器治疗提升",
     "HEALING_BONUS_OTHER": "其他治疗提升",
+    "HEALING_BONUS_SET": "圣遗物治疗提升",
     "DMG_ANTI_CRYO_MINUS": "冰元素耐性减少",
     "DMG_ANTI_ANEMO_MINUS": "风元素耐性减少",
     "DMG_ANTI_PHYSICAL_MINUS": "物理耐性减少",
@@ -144,6 +146,7 @@
     "DMG_RATE_UP_ELEMENTAL_BURST_EULA_KOUKEN": "元素爆发伤害倍率增加值(光降之剑)",
     "DMG_RATE_UP_WEAPON": "武器伤害倍率增加值",
     "DMG_RATE_UP_OTHER": "其他伤害倍率增加值",
+    "DMG_RATE_UP_SET": "圣遗物伤害倍率增加值",
     "HEALING_RATE_UP_SKILL": "元素技能治疗倍率增加值",
     "HEALING_RATE_UP_ELEMENTAL_BURST": "元素爆发治疗倍率增加值",
     "DMG_VAL_UP_CRYO": "冰元素伤害增加值",
@@ -165,6 +168,7 @@
     "DMG_VAL_UP_ELEMENTAL_BURST": "元素爆发伤害增加值",
     "DMG_VAL_UP_WEAPON": "武器伤害增加值",
     "DMG_VAL_UP_OTHER": "其他伤害增加值",
+    "DMG_VAL_UP_SET": "圣遗物伤害增加值",
     "HEALING_VAL_UP_SKILL": "元素技能治疗增加值",
     "HEALING_VAL_UP_ELEMENTAL_BURST": "元素爆发治疗增加值",
     "DMG_CRIT_RATE_UP_CRYO": "冰元素伤害暴击率增加值",
@@ -184,6 +188,7 @@
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "元素爆发伤害暴击率增加值",
     "DMG_CRIT_RATE_UP_WEAPON": "武器伤害暴击率增加值",
     "DMG_CRIT_RATE_UP_OTHER": "其他伤害暴击率增加值",
+    "DMG_CRIT_RATE_UP_SET": "圣遗物伤害暴击率增加值",
     "DMG_CRIT_DMG_UP_CRYO": "冰元素伤害暴击伤害增加值",
     "DMG_CRIT_DMG_UP_ANEMO": "风元素伤害暴击伤害增加值",
     "DMG_CRIT_DMG_UP_PHYSICAL": "物理伤害暴击伤害增加值",
@@ -200,6 +205,7 @@
     "DMG_CRIT_DMG_UP_ELEMENTAL_BURST": "元素爆发伤害暴击伤害增加值",
     "DMG_CRIT_DMG_UP_WEAPON": "武器伤害暴击伤害增加值",
     "DMG_CRIT_DMG_UP_OTHER": "其他伤害暴击伤害增加值",
+    "DMG_CRIT_DMG_UP_SET": "圣遗物伤害暴击伤害增加值",
     "DMG_ELEMENT_UP": "元素増幅(全)",
     "DMG_ELEMENT_VAPORIZE_UP": "元素増幅(蒸发)",
     "DMG_ELEMENT_MELT_UP": "元素増幅(融化)",
@@ -233,7 +239,8 @@
     "SHIELD_BONUS_SKILL": "元素技能盾量加成",
     "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆发盾量加成",
     "SHIELD_BONUS_WEAPON": "武器盾量加成",
-    "SHIELD_BONUS_OTHER": "其他盾量加成"
+    "SHIELD_BONUS_OTHER": "其他盾量加成",
+    "SHIELD_BONUS_SET": "圣遗物盾量加成"
   },
   "GENSHIN": {
     "DMG":{
@@ -389,7 +396,7 @@
     "MEMBER_NAME_3": "成员3",
     "MEMBER_NAME_4": "成员4",
     "SKILL_A_NAME": "[普通攻击]",
-    "SKILL_E_NAME": "[元素战技]",
+    "SKILL_E_NAME": "[元素技能]",
     "SKILL_Q_NAME": "[元素爆发]",
     "SKILL_X_NAME": "[其他技能]",
     "PROUND_1_NAME": "[天赋1]",
@@ -427,5 +434,41 @@
       "TITLE": "使用指南",
       "OK": "确认"
     }
+  },
+  "COMMON":{
+    "ELEMENT_TYPE": {
+      "DMG_BONUS_CRYO": "冰元素",
+      "DMG_BONUS_ANEMO": "风元素",
+      "DMG_BONUS_PHYSICAL": "物理",
+      "DMG_BONUS_ELECTRO": "雷元素",
+      "DMG_BONUS_GEO": "岩元素",
+      "DMG_BONUS_PYRO": "火元素",
+      "DMG_BONUS_HYDRO": "水元素",
+      "DMG_BONUS_DENDRO": "草元素"
+    },
+    "ATTACK_TYPE": {
+      "DMG_BONUS_NORMAL": "普通攻击",
+      "DMG_BONUS_CHARGED": "重击",
+      "DMG_BONUS_PLUNGING": "下落攻击",
+      "DMG_BONUS_SKILL": "元素技能",
+      "DMG_BONUS_ELEMENTAL_BURST": "元素爆发",
+      "DMG_BONUS_WEAPON": "武器",
+      "DMG_BONUS_OTHER": "其它",
+      "DMG_BONUS_SET": "圣遗物"
+    }
+  },
+  "DPS": {
+    "NAME": "DPS",
+    "DURATION": "时间轴",
+    "SECONDS": "秒",
+    "ELEMENT_TYPE": "元素类型",
+    "ATTACK_TYPE": "攻击类型",
+    "DMG_TYPE": "伤害类型",
+    "DELIMITER": "・",
+    "HIT": "段",
+    "DPS_LABEL": "DPS",
+    "DMG_VAL_LABEL": "[伤害值]",
+    "APPENDED": "DPS: 伤害信息追加成功",
+    "TIPS": "提示：点击伤害类型左侧的[+]按钮以向DPS列表中追加伤害信息。"
   }
 }

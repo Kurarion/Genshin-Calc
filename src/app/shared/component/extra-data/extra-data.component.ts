@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { lastValueFrom, Subscription } from 'rxjs';
-import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe } from 'src/app/shared/shared.module';
+import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe, DPSService, DmgInfo } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import type { EChartsOption } from 'echarts';
 import { TranslateService } from '@ngx-translate/core';
 import { DecimalPipe, PercentPipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-extra-data',
@@ -293,7 +294,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     private translateService: TranslateService,
     private percentPipe: PercentPipe, 
     private decimalPipe: DecimalPipe, 
-    private noCommaPipe: NoCommaPipe,) { 
+    private noCommaPipe: NoCommaPipe,
+    private DPSService: DPSService,
+    private matSnackBar: MatSnackBar,) { 
       //変更検知
       this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
         if(v){
@@ -302,9 +305,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
           this.initHealingDatas();
           this.initShieldDatas();
           this.initProducDatas();
-          // if(this.refreshBuffOnChangeFlg){
-          this.initBuffDatas();
-          // }
+          if(this.refreshBuffOnChangeFlg){
+            this.initBuffDatas();
+          }
         }
       });
       //言語変更検知
@@ -442,6 +445,23 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         this.relayoutMsgService.update("echarts")
       }, 50);
     })
+  }
+
+  //DPSリストに追加
+  addToDPS(prop: string, index: number) {
+    const dmgInfo: DmgInfo = {
+      skill: this.skill,
+      valueIndexs: this.valueIndexs,
+      resultIndex: index,
+      skillIndex: this.skillIndex,
+      damageProp: prop as keyof DamageResult,
+    };
+    this.DPSService.appendDmg(this.characterIndex, dmgInfo);
+    this.translateService.get('DPS.APPENDED').subscribe((res: string) => {
+      this.matSnackBar.open(res, undefined, {
+        duration: 500
+      })
+    });
   }
 
   //Echarts設定を計算

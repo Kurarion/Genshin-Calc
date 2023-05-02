@@ -46,7 +46,7 @@
 
 2. When want to know the strength of a character (specific weapon, specific Buff, specific teammate, etc.), if there is no specific information of artifact or the selection of artifact, you can use this to quickly estimate the relative strength of each character under the same number of step under the condition that only the main property of artifact is limited
 
-(Note: At present, this project only provides the damage value of each skill, excluding the DPS calculation. The manipulation and operation axis need to be calculated by other ways)
+~~(Note: At present, this project only provides the damage value of each skill, excluding the DPS calculation. The manipulation and operation axis need to be calculated by other ways)~~
 
 + This project is a PWA, which can be installed locally and used offline (Note: local installation also require net for Enka.API and image resources)
 

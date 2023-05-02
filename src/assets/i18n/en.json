@@ -9,11 +9,11 @@
     "CONSTELLATION": "Constellation",
     "ALLPROPS": "All Attributes"
   },
-  "PLAYER":{
+  "PLAYER": {
     "BOY": "Aether",
     "GIRL": "Lumine"
   },
-  "ELEMENT":{
+  "ELEMENT": {
     "CRYO": "Cryo",
     "ANEMO": "Anemo",
     "ELECTRO": "Electro",
@@ -25,7 +25,7 @@
   "WEAPON": {
     "NAME": "Weapon Name",
     "PROPS": "Weapon Attributes",
-    "SMELTING":"Refine"
+    "SMELTING": "Refine"
   },
   "ENEMY": {
     "NAME": "Enemy Name",
@@ -110,11 +110,13 @@
     "DEFENSE_VAL_UP": "Defense Increase",
     "DMG_BONUS_WEAPON": "Weapon DMG Increase",
     "DMG_BONUS_OTHER": "Other DMG Increase",
+    "DMG_BONUS_SET": "Artifact DMG Increase",
     "HEALING_BONUS_NORMAL": "General Attack Treatment Improvement",
     "HEALING_BONUS_SKILL": "Skill Treatment Improvement",
     "HEALING_BONUS_ELEMENTAL_BURST": "Elemental Burst Treatment Improvement",
     "HEALING_BONUS_WEAPON": "Weapon Treatment Improvement",
     "HEALING_BONUS_OTHER": "Other Treatment Improvement",
+    "HEALING_BONUS_SET": "Artifact Treatment Improvement",
     "DMG_ANTI_CRYO_MINUS": "Cryo Tolerance Reduce",
     "DMG_ANTI_ANEMO_MINUS": "Anemo Tolerance Reduce",
     "DMG_ANTI_PHYSICAL_MINUS": "Physical Tolerance Reduce",
@@ -144,6 +146,7 @@
     "DMG_RATE_UP_ELEMENTAL_BURST_EULA_KOUKEN": "Elemental Burst DMG Rate Increase(Lightfall Sword)",
     "DMG_RATE_UP_WEAPON": "Weapon DMG Rate Increase",
     "DMG_RATE_UP_OTHER": "Other DMG Rate Increase",
+    "DMG_RATE_UP_SET": "Artifact DMG Rate Increase",
     "HEALING_RATE_UP_SKILL": "Skill Healing Rate Increase",
     "HEALING_RATE_UP_ELEMENTAL_BURST": "Elemental Burst Healing Rate Increase",
     "DMG_VAL_UP_CRYO": "Cryo DMG Increase",
@@ -165,6 +168,7 @@
     "DMG_VAL_UP_ELEMENTAL_BURST": "Elemental Burst DMG Increase",
     "DMG_VAL_UP_WEAPON": "Weapon DMG Increase",
     "DMG_VAL_UP_OTHER": "Other DMG Increase",
+    "DMG_VAL_UP_SET": "Artifact DMG Increase",
     "HEALING_VAL_UP_SKILL": "Skill Healing Increase",
     "HEALING_VAL_UP_ELEMENTAL_BURST": "Elemental Burst Healing Increase",
     "DMG_CRIT_RATE_UP_CRYO": "Cryo DMG CRIT Rate Increase",
@@ -184,6 +188,7 @@
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "Elemental Burst DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_WEAPON": "Weapon DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_OTHER": "Other DMG CRIT Rate Increase",
+    "DMG_CRIT_RATE_UP_SET": "Artifact DMG CRIT Rate Increase",
     "DMG_CRIT_DMG_UP_CRYO": "Cryo DMG CRIT DMG Increase",
     "DMG_CRIT_DMG_UP_ANEMO": "Anemo DMG CRIT DMG Increase",
     "DMG_CRIT_DMG_UP_PHYSICAL": "Physical DMG CRIT DMG Increase",
@@ -200,6 +205,7 @@
     "DMG_CRIT_DMG_UP_ELEMENTAL_BURST": "Elemental Burst DMG CRIT DMG Increase",
     "DMG_CRIT_DMG_UP_WEAPON": "Weapon DMG CRIT DMG Increase",
     "DMG_CRIT_DMG_UP_OTHER": "Other DMG CRIT DMG Increase",
+    "DMG_CRIT_DMG_UP_SET": "Artifact DMG CRIT DMG Increase",
     "DMG_ELEMENT_UP": "Element Improvement (All)",
     "DMG_ELEMENT_VAPORIZE_UP": "Element Improvement (Vaporize)",
     "DMG_ELEMENT_MELT_UP": "Element Improvement (Melt)",
@@ -233,10 +239,11 @@
     "SHIELD_BONUS_SKILL": "Normal Shield Bonus",
     "SHIELD_BONUS_ELEMENTAL_BURST": "Elemental Burst Shield Bonus",
     "SHIELD_BONUS_WEAPON": "Weapon Shield Bonus",
-    "SHIELD_BONUS_OTHER": "Other Shield Bonus"
+    "SHIELD_BONUS_OTHER": "Other Shield Bonus",
+    "SHIELD_BONUS_SET": "Artifact Shield Bonus"
   },
   "GENSHIN": {
-    "DMG":{
+    "DMG": {
       "ORIGIN": "No Critical Damage",
       "CRIT": "Critical Damage",
       "EXPECT": "Expected Damage",
@@ -379,10 +386,10 @@
     "DAMAGE_TYPE": "Target Damage Type",
     "DAMAGE_TAG": "Damage Tag"
   },
-  "SW":{
+  "SW": {
     "READY": "Data update completed!;;Reload"
   },
-  "TEAM":{
+  "TEAM": {
     "NAME": "Team",
     "MEMBER_NAME_1": "Member 1",
     "MEMBER_NAME_2": "Member 2",
@@ -404,16 +411,16 @@
     "WEAPON_NAME": "[Weapon]",
     "ARTIFACT_NAME": "[Artifact]"
   },
-  "DESC":{
-    "GOLDEN_MAJESTY":{
+  "DESC": {
+    "GOLDEN_MAJESTY": {
       "WITH_SHIELD": "Bonus in case of shield (select one of the settings with the previous BUFF)"
     },
-    "TRAVELER":{
+    "TRAVELER": {
       "PROUDSKILL_2": "Additional recharge increase by the absorb the amount of Abundance Amulets (unit: piece)"
     }
   },
-  "MENU":{
-    "DELETE_CACHE":{
+  "MENU": {
+    "DELETE_CACHE": {
       "TITLE": "Clear Character data",
       "ALL_TITLE": "Clear All data",
       "WANRING": "Are you sure to clear all data of「{{NAME}}」?",
@@ -423,9 +430,45 @@
       "SUCCESS": "The data of「{{NAME}}」has been reset!",
       "ALL_SUCCESS": "The data has been reset!"
     },
-    "MANUAL":{
+    "MANUAL": {
       "TITLE": "Guide",
       "OK": "Confirm"
     }
+  },
+  "COMMON": {
+    "ELEMENT_TYPE": {
+      "DMG_BONUS_CRYO": "Cryo",
+      "DMG_BONUS_ANEMO": "Anemo",
+      "DMG_BONUS_PHYSICAL": "Physical",
+      "DMG_BONUS_ELECTRO": "Electro",
+      "DMG_BONUS_GEO": "Geo",
+      "DMG_BONUS_PYRO": "Pyro",
+      "DMG_BONUS_HYDRO": "Hydro",
+      "DMG_BONUS_DENDRO": "Dendro"
+    },
+    "ATTACK_TYPE": {
+      "DMG_BONUS_NORMAL": "Normal Attack",
+      "DMG_BONUS_CHARGED": "Charged Attack",
+      "DMG_BONUS_PLUNGING": "Plunging Attack",
+      "DMG_BONUS_SKILL": "Skill",
+      "DMG_BONUS_ELEMENTAL_BURST": "Elemental Burst",
+      "DMG_BONUS_WEAPON": "Weapon",
+      "DMG_BONUS_OTHER": "Other",
+      "DMG_BONUS_SET": "Artifact"
+    }
+  },
+  "DPS": {
+    "NAME": "DPS",
+    "DURATION": "Time Axis",
+    "SECONDS": "s",
+    "ELEMENT_TYPE": "Element Type",
+    "ATTACK_TYPE": "Attack Type",
+    "DMG_TYPE": "Damage Type",
+    "DELIMITER": "・",
+    "HIT": "-Hit",
+    "DPS_LABEL": "DPS",
+    "DMG_VAL_LABEL": "[Damage]",
+    "APPENDED": "DPS: Damage information added successfully",
+    "TIPS": "Tips: Click the [+] button on the left side of the Damage Type to add damage information to the DPS list."
   }
 }
