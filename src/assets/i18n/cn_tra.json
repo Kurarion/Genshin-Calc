@@ -464,6 +464,7 @@
     "ELEMENT_TYPE": "元素類型",
     "ATTACK_TYPE": "攻擊類型",
     "DMG_TYPE": "傷害類型",
+    "TIMES": "次數",
     "DELIMITER": "・",
     "HIT": "段",
     "DPS_LABEL": "DPS",

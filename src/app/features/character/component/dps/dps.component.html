@@ -26,8 +26,8 @@
                             <input matInput 
                                 type="number"
                                 step="0.01"
-                                [(ngModel)]="showValue"
-                                (keyup)="onValueKeyup($event)"
+                                [(ngModel)]="showDurationValue"
+                                (keyup)="onDurationValueKeyup($event)"
                             >
                             <span matSuffix><span  [innerText]="('DPS.SECONDS' | translate) + '&nbsp;'"></span></span>
                         </mat-form-field>
@@ -91,6 +91,15 @@
                                         </mat-option>
                                     </ng-container>
                                 </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon">
+                                <mat-label [innerText]="'DPS.TIMES' | translate"></mat-label>
+                                <input matInput 
+                                    type="number"
+                                    step="1"
+                                    [(ngModel)]="dmg.times"
+                                    (keyup)="onTimesValueKeyup(i, $event)"
+                                >
                             </mat-form-field>
                         </div>
                     </ng-container>

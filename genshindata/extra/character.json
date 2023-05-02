@@ -190,5 +190,11 @@
     },
     "米卡": {
         "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2023/02/06/df329c62acad08953832134777166e57_5667154156652123154.png"
+    },
+    "白术": {
+        "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2023/03/22/7e0096b8907484d2c530a57a0d0bda80_5668751415157436691.png"
+    },
+    "卡维": {
+        "backgroundUrl": "https://webstatic.mihoyo.com/upload/contentweb/2023/03/15/4f486ee9943936bb8d8a8ebc9c9df9b2_964302051434856950.png"
     }
 }

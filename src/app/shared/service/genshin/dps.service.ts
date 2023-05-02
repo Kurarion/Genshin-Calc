@@ -13,6 +13,7 @@ export interface DmgInfo {
   resultIndex: number;
   skillIndex?: number;
   damageProp: keyof DamageResult;
+  times?: number;
 }
 
 export interface DPSStorageData {

@@ -464,6 +464,7 @@
     "ELEMENT_TYPE": "Element Type",
     "ATTACK_TYPE": "Attack Type",
     "DMG_TYPE": "Damage Type",
+    "TIMES": "Times",
     "DELIMITER": "・",
     "HIT": "-Hit",
     "DPS_LABEL": "DPS",

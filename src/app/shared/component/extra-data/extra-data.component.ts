@@ -455,6 +455,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       resultIndex: index,
       skillIndex: this.skillIndex,
       damageProp: prop as keyof DamageResult,
+      times: 1,
     };
     this.DPSService.appendDmg(this.characterIndex, dmgInfo);
     this.translateService.get('DPS.APPENDED').subscribe((res: string) => {

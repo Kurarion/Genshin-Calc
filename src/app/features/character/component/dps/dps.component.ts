@@ -13,6 +13,7 @@ interface DamageInfo {
   attackType: string;
   resultProp: keyof DamageResult;
   results: DamageResult;
+  times: number;
 }
 @Component({
   selector: 'app-dps',
@@ -135,7 +136,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
   //データ追加検知
   dataAppendChangedSub!: Subscription;
   //DPSタイム
-  showValue!: number;
+  showDurationValue!: number;
   //元素付与
   overrideElement!: string;
   //DPS
@@ -258,14 +259,24 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     this.draged.emit(this.name);
   }
 
-  onValueKeyup(event: KeyboardEvent){
+  onDurationValueKeyup(event: KeyboardEvent){
     let originValue = (event.target as HTMLInputElement).value;
     let value = parseFloat(originValue);
     if(isNaN(value)){
       value = 1;
     }
     this.infos[this.selectedIndex].duration = value;
-    this.updateDatas();
+    this.calcDPS();
+  }
+
+  onTimesValueKeyup(index: number, event: KeyboardEvent){
+    let originValue = (event.target as HTMLInputElement).value;
+    let value = parseInt(originValue);
+    if(isNaN(value) || value < 0){
+      value = 0;
+    }
+    this.infos[this.selectedIndex].dmgs[index].times = value;
+    this.calcDPS();
   }
 
   private localAddTab(){
@@ -274,8 +285,8 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
   }
 
   private updateShowValue(){
-    let value = this.infos[this.selectedIndex].duration
-    this.showValue = parseFloat(value.toFixed(8));
+    let durationValue = this.infos[this.selectedIndex].duration;
+    this.showDurationValue = parseFloat(durationValue.toFixed(8));
   }
 
   private initInfos(){
@@ -284,11 +295,13 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
 
   private updateDatas(){
     this.damageInfos = [];
-    for(let dmg of this.infos[this.selectedIndex].dmgs) {
+    const badDmgInfoIndexs = [];
+    for(let [i, dmg] of this.infos[this.selectedIndex].dmgs.entries()) {
       const skill = dmg.skill;
       const valueIndexs = dmg.valueIndexs;
       const resultIndex = dmg.resultIndex;
       const skillIndex = dmg.skillIndex;
+      const times = dmg.times ?? 1;
       let overrideElement = "";
       if (skill === Const.NAME_SKILLS_NORMAL){
         overrideElement = this.overrideElement;
@@ -298,6 +311,10 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
       const dmgParam = dmgValues[1][resultIndex];
       const hasHiddenResult = dmgValues[0].length > 1;
       const damageProp = dmg.damageProp;
+      if (dmgResult === undefined || dmgParam === undefined) {
+        badDmgInfoIndexs.push(i);
+        continue;
+      }
       this.damageInfos.push({
         name: skill,
         skillIndex: skillIndex,
@@ -311,14 +328,22 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
         attackType: dmgParam.attackBonusType,
         resultProp: damageProp,
         results: dmgResult,
+        times: times
       })
     }
+    badDmgInfoIndexs.reverse().forEach((value: number) => {
+      this.infos[this.selectedIndex].dmgs.splice(value, 1);
+    });
     this.calcDPS();
   }
 
   private calcDPS() {
     this.dps = (this.damageInfos.reduce((pre: number, cur: DamageInfo) => {
-      return pre + (cur.results[cur.resultProp] as number) ?? 0
+      let tempVal = cur.results[cur.resultProp] as number;
+      if (isNaN(tempVal)) {
+        tempVal = 0;
+      }
+      return pre + tempVal * cur.times;
     }, 0) / this.infos[this.selectedIndex].duration).toFixed(2);
     
     this.onExpandStatusChanged();
