@@ -271,7 +271,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
 
   onTimesValueKeyup(index: number, event: KeyboardEvent){
     let originValue = (event.target as HTMLInputElement).value;
-    let value = parseInt(originValue);
+    let value = parseFloat(originValue);
     if(isNaN(value) || value < 0){
       value = 0;
     }
