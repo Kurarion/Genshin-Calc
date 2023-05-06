@@ -276,8 +276,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     tooltip: {
       trigger: 'item',
       formatter: (param: any) => {
-        console.dir(param)
-
         const prop = this.subs[param.value[2]];
         const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * param.value[1];
         let sign = '';
@@ -293,13 +291,11 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
           }
           sign = addVal > 0 ? "+" : "";
         }
-
-        
         return `<div style="margin: 0px 0 0;line-height:1;">
         <span style="display:inline-block;margin-right:2px;border-radius:10px;width:10px;height:10px;background-color:${param.color};"></span>
         <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${param.name}<span style="font-size:9px;color:#666;font-weight:700;margin-left:2px;">(${param.percent + "%"})</span></span>
         <span style="float:right;font-size:12px;${addVal<0?'color:#91cc75;':'color:#fc8452;'}font-weight:700;margin-left:0px">${sign}${valStr}</span>
-        <div style="clear:both"></div></div> `
+        <div style="clear:both"></div></div> `;
       }
     },
     legend: {
@@ -389,7 +385,10 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       this.currentPointInput.enable();
     }
     this.setElementType(this.userInput.get('elementType')?.value);
-    this.calcActualProp();
+    // this.calcActualProp();
+    this.updateChips();
+    this.setDisplayWith();
+    this.getAllPropsData();
   }
 
   initList(){
@@ -614,7 +613,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       }
       
       setTimeout(()=>{
-
         //リセット
         this.currentPoint.setValue(0);
         this.currentPointInput.setValue(this.getDisplayValue(this.currentPoint.value));
