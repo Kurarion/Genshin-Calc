@@ -1,9 +1,9 @@
-import { PercentPipe } from '@angular/common';
+import { DecimalPipe, PercentPipe } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, NoCommaPipe, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import type { EChartsOption } from 'echarts';
 import { lastValueFrom, Subscription } from 'rxjs';
 
@@ -275,7 +275,32 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   echartsOption: EChartsOption = {
     tooltip: {
       trigger: 'item',
-      formatter: '{c} ({d}%)'
+      formatter: (param: any) => {
+        console.dir(param)
+
+        const prop = this.subs[param.value[2]];
+        const addVal = this.genshinDataService.getOptimalReliquaryAffixStep(prop) * 10 * param.value[1];
+        let sign = '';
+        let valStr = '';
+        if(param.name != 0){
+          if ([Const.PROP_ELEMENTAL_MASTERY,
+              Const.PROP_ATTACK,
+              Const.PROP_HP,
+              Const.PROP_DEFENSE,].includes(prop)) {
+            valStr = this.noCommaPipe.transform(this.decimalPipe.transform(addVal, '1.0-1') as string);
+          } else {
+            valStr = this.percentPipe.transform(addVal, '1.0-1') as string;
+          }
+          sign = addVal > 0 ? "+" : "";
+        }
+
+        
+        return `<div style="margin: 0px 0 0;line-height:1;">
+        <span style="display:inline-block;margin-right:2px;border-radius:10px;width:10px;height:10px;background-color:${param.color};"></span>
+        <span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px">${param.name}<span style="font-size:9px;color:#666;font-weight:700;margin-left:2px;">(${param.percent + "%"})</span></span>
+        <span style="float:right;font-size:12px;${addVal<0?'color:#91cc75;':'color:#fc8452;'}font-weight:700;margin-left:0px">${sign}${valStr}</span>
+        <div style="clear:both"></div></div> `
+      }
     },
     legend: {
       align: 'auto',
@@ -290,7 +315,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         type: 'pie',
         radius: [8, 75],
         roseType: 'radius',
-        encode: {itemName: 0, value: 1}
+        encode: {itemName: 0, value: 1, propIndex: 2}
       }
     ]
   };
@@ -300,7 +325,9 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   constructor(private artifactService: ArtifactService,
     private genshinDataService: GenshinDataService,
     private calculatorService: CalculatorService,
-    private percentPipe: PercentPipe,
+    private percentPipe: PercentPipe, 
+    private decimalPipe: DecimalPipe,
+    private noCommaPipe: NoCommaPipe,
     private matSnackBar: MatSnackBar, 
     private translateService: TranslateService,
     private relayoutMsgService: RelayoutMsgService,
@@ -535,6 +562,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         dataSetitems.push([
           this.subs[i],
           Math.floor(resultArray[this.subsMap.get(this.subs[i])!] * 100) / 100,
+          i,
         ])
       }
     }
