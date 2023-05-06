@@ -90,7 +90,7 @@ export class ArtifactChipsComponent implements OnInit {
             allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] = (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number ?? 0) + tempData.value!;
             indexValue = this.dataReliquaryAffix[tempData.name].indexOf((allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number));
           }else{
-            allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] = (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number ?? 0) + tempData.value!/this.parts.length;
+            allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] = (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number ?? 0) + tempData.value!;
             indexValue = this.floorIndexByDichotomy(this.dataReliquaryAffix[tempData.name], (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number));
           }
           allData[tempData.name] = ((allData[tempData.name] as number) ?? 0) + +(indexValue * 100/this.subMax).toFixed(this.fixNum);
@@ -120,7 +120,7 @@ export class ArtifactChipsComponent implements OnInit {
       }
     }
     allData[Const.ALL_PROPS_KEY] = +(allData[Const.ALL_PROPS_KEY] as number).toFixed(this.fixNum);
-    if(isFull && !isAuto){
+    if(isFull){
       for(let key in allData){
         if(key.includes(Const.ARTIFACT_MAIN)){
           continue; 
@@ -173,10 +173,10 @@ export class ArtifactChipsComponent implements OnInit {
             if(subRule.propName != undefined && subRule.propName in allData){
               let isMatch = true;
               if(subRule.expectGEValue != undefined){
-                isMatch = isMatch && allData[subRule.propName] >= subRule.expectGEValue;
+                isMatch = isMatch && allData[subRule.propName] as number >= subRule.expectGEValue;
               }
               if(subRule.expectLEValue != undefined){
-                isMatch = isMatch && allData[subRule.propName] <= subRule.expectLEValue;
+                isMatch = isMatch && allData[subRule.propName] as number <= subRule.expectLEValue;
               }
               subResBool = isMatch;
               if(subResBool){
