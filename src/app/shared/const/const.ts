@@ -239,6 +239,8 @@ export class Const {
   //*********************************
   //特殊BUFFに変えるための仮想属性（固定1）
   static readonly PROP_FIX_NUMBER_1 = "FIX_NUMBER_1";
+  //聖遺物海染硨磲治療量
+  static readonly PROP_OTHER_OCEAN_HUED_HEALING = "OCEAN_HUED_HEALING";
   //レベル
   static readonly PROP_LEVEL = "LEVEL";
   //生命力ベース
@@ -914,6 +916,7 @@ export class Const {
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST,
+    Const.PROP_OTHER_OCEAN_HUED_HEALING,
     // Const.PROP_DMG_ENEMY_DEFENSE_BASE,
   ];
   //計算後データ属性リスト
@@ -1092,6 +1095,7 @@ export class Const {
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST,
+    Const.PROP_OTHER_OCEAN_HUED_HEALING,
   ]
   //計算後データ属性リスト（パーセント）
   static readonly PROPS_ALL_DATA_PERCENT = [
@@ -1705,6 +1709,52 @@ export class Const {
       "originSpreadDmg",
       "cirtSpreadDmg",
       "expectSpreadDmg",
+      "burningDmg",
+      "ruptureDmg",
+    ]],
+  ]);
+  //ダメージタイプ（絶対値）リストマップ
+  static readonly PROPS_OPTIMAL_DAMAGE_TYPE_LIST_ABS_MAP: Map<string, string[]> = new Map([
+    [Const.PROP_DMG_BONUS_CRYO, [
+      "originDmg",
+      "superconductDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_ANEMO, [
+      "originDmg",
+      "swirlCryoDmg",
+      "swirlElectroDmg",
+      "swirlElectroAggravateDmg",
+      "swirlPyroDmg",
+      "swirlHydroDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_PHYSICAL, [
+      "originDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_ELECTRO, [
+      "originDmg",
+      "critDmg",
+      "expectDmg",
+      "overloadedDmg",
+      "electroChargedDmg",
+      "superconductDmg",
+      "hyperbloomDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_GEO, [
+      "originDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_PYRO, [
+      "originDmg",
+      "overloadedDmg",
+      "burningDmg",
+      "burgeonDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_HYDRO, [
+      "originDmg",
+      "electroChargedDmg",
+      "ruptureDmg",
+    ]],
+    [Const.PROP_DMG_BONUS_DENDRO, [
+      "originDmg",
       "burningDmg",
       "ruptureDmg",
     ]],

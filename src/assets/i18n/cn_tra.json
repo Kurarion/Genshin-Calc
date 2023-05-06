@@ -240,7 +240,8 @@
     "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆發盾量加成",
     "SHIELD_BONUS_WEAPON": "武器盾量加成",
     "SHIELD_BONUS_OTHER": "其他盾量加成",
-    "SHIELD_BONUS_SET": "聖遺物盾量加成"
+    "SHIELD_BONUS_SET": "聖遺物盾量加成",
+    "OCEAN_HUED_HEALING": "海染-治療量"
   },
   "GENSHIN": {
     "DMG": {

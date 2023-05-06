@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { keysEqual } from 'src/app/shared/class/util';
 import { artifactSet, Const, ExtraArtifactSetData, ExtraDataService, ExtraStatus, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
 
@@ -89,6 +90,8 @@ export class ArtifactService {
 
   //データマップ
   dataMap!: Record<string, ArtifactStorageData>;
+  private changedSubject: Subject<void> = new Subject<void>();
+  private changedSubject$: Observable<void> = this.changedSubject.asObservable();
 
   constructor(private genshinDataService: GenshinDataService, private storageService: StorageService, private extraDataService: ExtraDataService) {
     let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
@@ -97,6 +100,14 @@ export class ArtifactService {
     }else{
       this.dataMap = {};
     }
+  }
+
+  changed() {
+    return this.changedSubject$;
+  }
+
+  next() {
+    this.changedSubject.next();
   }
 
   //クリア

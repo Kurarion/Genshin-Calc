@@ -103,6 +103,7 @@ export interface DamageParam {
   elementBonusType: string; //元素タイプ
   attackBonusType: string; //攻撃タイプ
   tag?: string; //タグ
+  isAbsoluteDmg?: boolean; //絶対ダメージ
 }
 
 export interface DamageResult {
@@ -110,10 +111,11 @@ export interface DamageResult {
   finalCritRate: number;
   displayCritRate: number;
   tempAllDate: any;
+  isAbsoluteDmg?: boolean;
 
-  originDmg: number;
-  critDmg: number;
-  expectDmg: number;
+  originDmg?: number;
+  critDmg?: number;
+  expectDmg?: number;
 
   originVaporizeDmg?: number;//蒸発 1.5
   cirtVaporizeDmg?: number;//蒸発 1.5
@@ -1314,6 +1316,7 @@ export class CalculatorService {
     let elementBonusType = param.elementBonusType;
     let hasTag = param.tag != undefined;
     let tag = Const.CONCATENATION_TAG + param.tag;
+    const isAbsoluteDmg = param.isAbsoluteDmg;
 
     //計算
     //--------------------
@@ -1344,7 +1347,9 @@ export class CalculatorService {
     //4.耐性区域
     //--------------------
     let dmgAntiSectionValue = 0;
-    dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];    
+    let dmgAntiSectionMinusOnlyValue = 0;
+    dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];
+    dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];
     //--------------------
     //5.防御区域
     //--------------------
@@ -1422,6 +1427,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CRYO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_CRYO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_CRYO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_CRYO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_ANEMO:
         finalRate += data[Const.PROP_DMG_RATE_UP_ANEMO];
@@ -1432,6 +1438,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ANEMO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_ANEMO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ANEMO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ANEMO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_PHYSICAL:
         finalRate += data[Const.PROP_DMG_RATE_UP_PHYSICAL];
@@ -1442,6 +1449,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PHYSICAL];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_PHYSICAL];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_PHYSICAL_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_PHYSICAL_MINUS];
         break;
       case Const.PROP_DMG_BONUS_ELECTRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_ELECTRO];
@@ -1452,6 +1460,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELECTRO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_ELECTRO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ELECTRO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ELECTRO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_GEO:
         finalRate += data[Const.PROP_DMG_RATE_UP_GEO];
@@ -1462,6 +1471,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_GEO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_GEO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_GEO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_GEO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_PYRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_PYRO];
@@ -1472,6 +1482,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PYRO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_PYRO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_PYRO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_PYRO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_HYDRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_HYDRO];
@@ -1482,6 +1493,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_HYDRO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_HYDRO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_HYDRO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_HYDRO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_DENDRO:
         finalRate += data[Const.PROP_DMG_RATE_UP_DENDRO];
@@ -1492,6 +1504,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_DENDRO];
         dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_DENDRO];
         dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_DENDRO_MINUS];
+        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_DENDRO_MINUS];
         break;
     }
     switch(attackBonusType){
@@ -1633,20 +1646,7 @@ export class CalculatorService {
         break;
     }
     //ダメージ値区域残り
-    switch(base){
-      case Const.PROP_ATTACK:
-        dmgSectionValue += finalRate * data[Const.PROP_ATTACK];
-        break;
-      case Const.PROP_HP:
-        dmgSectionValue += finalRate * data[Const.PROP_HP];
-        break;
-      case Const.PROP_DEFENSE:
-        dmgSectionValue += finalRate * data[Const.PROP_DEFENSE];
-        break;
-      case Const.PROP_ELEMENTAL_MASTERY:
-        dmgSectionValue += finalRate * data[Const.PROP_ELEMENTAL_MASTERY];
-        break;
-    }
+    dmgSectionValue += finalRate * (data[base] ?? 0);
     for(let i = 0; i < rateAttach.length; ++i){
       switch(baseAttach[i]){
         case Const.PROP_ATTACK:
@@ -1675,6 +1675,9 @@ export class CalculatorService {
     if(dmgAntiSectionValue < 0){
       dmgAntiSectionValue = dmgAntiSectionValue/2;
     }
+    if(dmgAntiSectionMinusOnlyValue < 0){
+      dmgAntiSectionMinusOnlyValue = dmgAntiSectionMinusOnlyValue/2;
+    }
     //会心区域残り
     if(finalCritRate < 0){
       finalCritRate = 0;
@@ -1683,9 +1686,9 @@ export class CalculatorService {
     }
 
     //結果まとめ
-    let originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
-    let critDmg = originDmg * (1 + finalCritDmg);
-    let expectDmg = originDmg * (1 - finalCritRate) + critDmg * finalCritRate;
+    let originDmg;
+    let critDmg;
+    let expectDmg;
     let originVaporizeDmg;
     let cirtVaporizeDmg;
     let expectVaporizeDmg;
@@ -1712,85 +1715,94 @@ export class CalculatorService {
     let destructionDmg;
     let overloadedDmg;
     let shieldHp;
-    if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_HYDRO].includes(elementBonusType)){
-      let reactionRate = REACTION_RATE_2_0;
-      if(elementBonusType == Const.PROP_DMG_BONUS_PYRO){
-        reactionRate = REACTION_RATE_1_5;
-      }
-      originVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * originDmg;
-      cirtVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * critDmg;
-      expectVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * expectDmg;
-    }
-    if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_CRYO].includes(elementBonusType)){
-      let reactionRate = REACTION_RATE_2_0;
-      if(elementBonusType == Const.PROP_DMG_BONUS_CRYO){
-        reactionRate = REACTION_RATE_1_5;
-      }
-      originMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * originDmg;
-      cirtMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * critDmg;
-      expectMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * expectDmg;
-    }
-    if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-      burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
-      superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_ANEMO].includes(elementBonusType)){
-      let tempCryoDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
-      let tempElectroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
-      let tempPyroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-      let tempHydroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_HYDRO);
-      let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP] + elementCataclysmRate);
-      swirlCryoDmg = swirlBaseDmg * (1 - tempCryoDmgAntiSectionValue);
-      swirlElectroDmg = swirlBaseDmg * (1 - tempElectroDmgAntiSectionValue);
-      swirlPyroDmg = swirlBaseDmg * (1 - tempPyroDmgAntiSectionValue);
-      swirlHydroDmg = swirlBaseDmg * (1 - tempHydroDmgAntiSectionValue);
-      swirlElectroAggravateDmg = BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_15 * (1 + elementSpread) * (1 - tempElectroDmgAntiSectionValue) + swirlElectroDmg;
-    }
-    if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
-      electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_PHYSICAL].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PHYSICAL);
-      destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-      overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType)){
-      shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP] + elementShieldRate);
-    }
-    if([Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
-      originAggravateDmg = (dmgSectionValue + BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_15 * (1 + data[Const.PROP_DMG_ELEMENT_AGGRAVATE_UP] + elementSpread)) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
-      cirtAggravateDmg = originAggravateDmg * (1 + finalCritDmg);
-      expectAggravateDmg = originAggravateDmg * (1 - finalCritRate) + cirtAggravateDmg * finalCritRate;
+    if(!isAbsoluteDmg){
+      originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
+      critDmg = originDmg * (1 + finalCritDmg);
+      expectDmg = originDmg * (1 - finalCritRate) + critDmg * finalCritRate;
 
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
-      hyperbloomDmg = BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
-      originSpreadDmg = (dmgSectionValue + BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_25 * (1 + data[Const.PROP_DMG_ELEMENT_SPREAD_UP] + elementSpread)) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
-      cirtSpreadDmg = originSpreadDmg * (1 + finalCritDmg);
-      expectSpreadDmg = originSpreadDmg * (1 - finalCritRate) + cirtSpreadDmg * finalCritRate;
-    }
-    if([Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
-      burgeonDmg = BASE_BURGEON[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURGEON_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
-    }
-    if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
-      let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
-      ruptureDmg = BASE_RUPTURE[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_RUPTURE_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_HYDRO].includes(elementBonusType)){
+        let reactionRate = REACTION_RATE_2_0;
+        if(elementBonusType == Const.PROP_DMG_BONUS_PYRO){
+          reactionRate = REACTION_RATE_1_5;
+        }
+        originVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * originDmg;
+        cirtVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * critDmg;
+        expectVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * expectDmg;
+      }
+      if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_CRYO].includes(elementBonusType)){
+        let reactionRate = REACTION_RATE_2_0;
+        if(elementBonusType == Const.PROP_DMG_BONUS_CRYO){
+          reactionRate = REACTION_RATE_1_5;
+        }
+        originMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * originDmg;
+        cirtMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * critDmg;
+        expectMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * expectDmg;
+      }
+      if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
+        superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_ANEMO].includes(elementBonusType)){
+        let tempCryoDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
+        let tempElectroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
+        let tempPyroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        let tempHydroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_HYDRO);
+        let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP] + elementCataclysmRate);
+        swirlCryoDmg = swirlBaseDmg * (1 - tempCryoDmgAntiSectionValue);
+        swirlElectroDmg = swirlBaseDmg * (1 - tempElectroDmgAntiSectionValue);
+        swirlPyroDmg = swirlBaseDmg * (1 - tempPyroDmgAntiSectionValue);
+        swirlHydroDmg = swirlBaseDmg * (1 - tempHydroDmgAntiSectionValue);
+        swirlElectroAggravateDmg = BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_15 * (1 + elementSpread) * (1 - tempElectroDmgAntiSectionValue) + swirlElectroDmg;
+      }
+      if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
+        electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_PHYSICAL].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PHYSICAL);
+        destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType)){
+        shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP] + elementShieldRate);
+      }
+      if([Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
+        originAggravateDmg = (dmgSectionValue + BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_15 * (1 + data[Const.PROP_DMG_ELEMENT_AGGRAVATE_UP] + elementSpread)) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
+        cirtAggravateDmg = originAggravateDmg * (1 + finalCritDmg);
+        expectAggravateDmg = originAggravateDmg * (1 - finalCritRate) + cirtAggravateDmg * finalCritRate;
+
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        hyperbloomDmg = BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
+        originSpreadDmg = (dmgSectionValue + BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_25 * (1 + data[Const.PROP_DMG_ELEMENT_SPREAD_UP] + elementSpread)) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
+        cirtSpreadDmg = originSpreadDmg * (1 + finalCritDmg);
+        expectSpreadDmg = originSpreadDmg * (1 - finalCritRate) + cirtSpreadDmg * finalCritRate;
+      }
+      if([Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        burgeonDmg = BASE_BURGEON[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURGEON_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+      if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
+        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        ruptureDmg = BASE_RUPTURE[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_RUPTURE_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+      }
+    }else{
+      originDmg = rate * (data[base] ?? 0) * (1 - dmgAntiSectionMinusOnlyValue);
     }
     result = {
       elementBonusType: elementBonusType,
       finalCritRate: finalCritRate,
       displayCritRate: displayCritRate,
       tempAllDate: tempAllDate,
+      isAbsoluteDmg: isAbsoluteDmg,
       originDmg: originDmg,
       critDmg: critDmg,
       expectDmg: expectDmg,
@@ -2085,6 +2097,7 @@ export class CalculatorService {
               attackBonusType: attackBonusType,
               elementBonusType: elementBonusType,
               tag: damageInfo.tag,
+              isAbsoluteDmg: damageInfo.isAbsoluteDmg,
             });
           }
         }else{
@@ -2145,6 +2158,7 @@ export class CalculatorService {
                 attackBonusType: attackBonusType,
                 elementBonusType: elementBonusType,
                 tag: damageInfo.tag,
+                isAbsoluteDmg: damageInfo.isAbsoluteDmg,
               });
             }
           }

@@ -14,6 +14,8 @@ interface DamageInfo {
   resultProp: keyof DamageResult;
   results: DamageResult;
   times: number;
+  tag?: string;
+  isAbsoluteDmg?: boolean;
 }
 @Component({
   selector: 'app-dps',
@@ -55,6 +57,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
   };
 
   readonly damageTypeMap: Map<string, string[]> = Const.PROPS_OPTIMAL_DAMAGE_TYPE_LIST_MAP;
+  readonly damageTypeAbsMap: Map<string, string[]> = Const.PROPS_OPTIMAL_DAMAGE_TYPE_LIST_ABS_MAP;
 
   readonly damageTypeNameMap: Record<string, string> = {
     'originDmg': 'ORIGIN',
@@ -107,7 +110,8 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     [Const.NAME_CONSTELLATION + '4']: "CONSTELLATION_5_NAME",
     [Const.NAME_CONSTELLATION + '5']: "CONSTELLATION_6_NAME",
     [Const.NAME_EFFECT]: "WEAPON_NAME",
-    [Const.NAME_SET]: "ARTIFACT_NAME",
+    [Const.NAME_SET + '1']: "ARTIFACT_NAME",
+    [Const.NAME_SET + '2']: "ARTIFACT_NAME",
   }
 
   //キャラデータ
@@ -327,7 +331,9 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
         attackType: dmgParam.attackBonusType,
         resultProp: damageProp,
         results: dmgResult,
-        times: times
+        times: times,
+        tag: dmgParam.tag,
+        isAbsoluteDmg: dmgParam.isAbsoluteDmg,
       })
     }
     badDmgInfoIndexs.reverse().forEach((value: number) => {

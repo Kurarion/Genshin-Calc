@@ -71,7 +71,6 @@
                                 [index]="index"
                                 [isFull]="true"
                                 [isAuto]="isSelectedIndexAuto"
-                                [changed]="chipChanged"
                             ></app-artifact-chips>
                         </div>
                     </div>
@@ -86,7 +85,6 @@
                                         [artifactType]="type"
                                         [changed]="subChanged"
                                         [isAuto]="isSelectedIndexAuto"
-                                        (chipChanged)="updateChips()"
                                     >
                                     </app-artifact-sub>
                                 </div>
@@ -116,7 +114,6 @@
                             *ngIf="isSelectedIndexAuto"
                             [characterIndex]="data.id"
                             [index]="index"
-                            (chipChanged)="updateChips()"
                         ></app-artifact-auto>
                     </ng-container>
                 </mat-tab>

@@ -240,7 +240,8 @@
     "SHIELD_BONUS_ELEMENTAL_BURST": "Elemental Burst Shield Bonus",
     "SHIELD_BONUS_WEAPON": "Weapon Shield Bonus",
     "SHIELD_BONUS_OTHER": "Other Shield Bonus",
-    "SHIELD_BONUS_SET": "Artifact Shield Bonus"
+    "SHIELD_BONUS_SET": "Artifact Shield Bonus",
+    "OCEAN_HUED_HEALING": "Ocean-Healing"
   },
   "GENSHIN": {
     "DMG": {

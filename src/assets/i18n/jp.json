@@ -240,7 +240,8 @@
     "SHIELD_BONUS_ELEMENTAL_BURST": "元素爆発シールド",
     "SHIELD_BONUS_WEAPON": "武器シールド",
     "SHIELD_BONUS_OTHER": "その他シールド",
-    "SHIELD_BONUS_SET": "聖遺物シールド"
+    "SHIELD_BONUS_SET": "聖遺物シールド",
+    "OCEAN_HUED_HEALING": "海染-回復量"
   },
   "GENSHIN": {
     "DMG": {

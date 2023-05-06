@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ArtifactService, ArtifactSetAffixs, CalculatorService, character, Const, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
@@ -13,7 +13,6 @@ interface artifactSetOption {
   selector: 'app-artifact',
   templateUrl: './artifact.component.html',
   styleUrls: ['./artifact.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   private readonly no_desc: Record<TYPE_SYS_LANG, string> = {
@@ -67,8 +66,6 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
 
   //子コンポーネント変更フラグ
   subChanged!: number;
-  //チップ変更
-  chipChanged!: number;
   //セットバフ更新
   setBuffRefreshFlg!: number;
 
@@ -86,7 +83,6 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
       this.effectContent2 = '';
       this.partIndex = 0;
       this.subChanged = 0;
-      this.chipChanged = 0;
       this.setBuffRefreshFlg = 0;
     }
 
@@ -167,7 +163,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     //Autoフラグ
     this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
     //レイアウト更新
-    super.onExpandStatusChanged()
+    super.onExpandStatusChanged();
   }
 
   /**
@@ -209,10 +205,6 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
       setAffixIndex = 1;
     }
     return this.artifactService.getSetData(artifactIndex)?.setAffixs[setAffixIndex].desc ?? this.no_desc;
-  }
-
-  updateChips(){
-    this.chipChanged += 1;
   }
 
   //ドラッグ開始

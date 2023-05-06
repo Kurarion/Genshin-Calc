@@ -12202,7 +12202,27 @@
                     }]
                 }
             ],
-            "set2": []
+            "set2": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "OCEAN_HUED_HEALING",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_SET",
+                        "isAbsoluteDmg": true
+                    },
+                    "buffs":[{
+                        "customValue": 33333,
+                        "target": ["OCEAN_HUED_HEALING"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 0.01,
+                        "sliderMax": 1,
+                        "title": "PROPS.OCEAN_HUED_HEALING"
+                    }]
+                }
+            ]
         },
         "15023": {
             "set1": [

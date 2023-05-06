@@ -242,8 +242,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   @Input('characterIndex') characterIndex!: number;
   //聖遺物セットインデックス
   @Input('index') index!: number;
-  //チップ変更通知
-  @Output('chipChanged') chipChangedForParent = new EventEmitter<void>();
   //データ
   data!: ArtifactStorageInfo;
   //ミクスタイプ
@@ -431,7 +429,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.setElementType(this.userInput.get('elementType')?.value);
     this.setUseDPS(this.userInput.get('useDPS')?.value);
     //初期化処理
-    this.updateChips();
     this.setDisplayWith();
     this.getAllPropsData();
   }
@@ -592,7 +589,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     }
     //更新
     this.calculatorService.setDirtyFlag(this.characterIndex);
-    this.updateChips();
+    this.artifactService.next();
     this.setDisplayWith();
     this.getAllPropsData();
   }
@@ -612,10 +609,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.currentPointInput.setValue(parseFloat((Math.floor(this.currentPointInput.value*10)/10).toFixed(1)));
     this.currentPoint.setValue(this.getRowValue(this.currentPointInput.value));
     this.onChangeCurrentPointSlider()
-  }
-
-  updateChips(){
-    this.chipChangedForParent.emit();
   }
 
   async getAllPropsData() {
@@ -671,7 +664,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.globalProgressService.setMode("buffer");
     this.globalProgressService.setValue(0);
     this.hasClickCal = true;
-    let result = new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       //チェック
       let hasError = false;
       for(let key in this.userInput.controls){
@@ -790,11 +783,11 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         for(let key of this.subs){
           extraData[key] = 0;
         }
-
+        let lastLoopMaxValue = 0;
         for(let i = this.minValid; i <= this.maxValid; ++i){
           let tempExtraData = {...extraData};
           let currentLoopMaxProp = "";
-          let currentLoopMaxValue = 0;
+          let currentLoopMaxValue = lastLoopMaxValue;
           for(let key of this.subs){
             let oldValue = tempExtraData[key];
             let finalDamageVal = 0;
@@ -822,7 +815,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
             tempExtraData[key] = oldValue;
           }
           //無効なる計算
-          if(currentLoopMaxValue == 0){
+          if(currentLoopMaxValue == 0 || currentLoopMaxValue == lastLoopMaxValue){
             this.resultCurve = '';
             this.currentPoint.disable();
             this.currentPointInput.disable();
@@ -836,6 +829,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
           }
           actualEffectSet.add(currentLoopMaxProp);
           extraData[currentLoopMaxProp] += this.genshinDataService.getOptimalReliquaryAffixStep(currentLoopMaxProp);
+          lastLoopMaxValue = currentLoopMaxValue;
         }
 
         actualEffectNum = actualEffectSet.size;
@@ -853,9 +847,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         this.getAllPropsData();
         resolve();
       }, 100)
-    });
-
-    return result.then(()=>{
+    }).then(()=>{
       //完了
       this.translateService.get('AUTO.DONE').subscribe((res: string) => {
         this.matSnackBar.open(res, undefined, {

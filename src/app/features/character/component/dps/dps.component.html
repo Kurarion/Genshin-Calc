@@ -85,7 +85,7 @@
                             <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon">
                                 <mat-label [innerText]="'DPS.DMG_TYPE' | translate"></mat-label>
                                 <mat-select [value]="dmg.resultProp" (selectionChange)="changeProp(i, $event.value)">
-                                    <ng-container *ngFor="let dmgType of damageTypeMap.get(dmg.elementType) ?? []">
+                                    <ng-container *ngFor="let dmgType of dmg.isAbsoluteDmg?damageTypeAbsMap.get(dmg.elementType):damageTypeMap.get(dmg.elementType)">
                                         <mat-option [value]="dmgType">
                                             <span [innerText]="'GENSHIN.DMG.' + damageTypeNameMap[dmgType].toUpperCase() | translate"></span>
                                         </mat-option>

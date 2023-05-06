@@ -93,6 +93,8 @@ export interface ExtraSkillDamage {
   attackBonusType?: string; //攻撃タイプ
   //タグ
   tag?: string; //タグ
+  //絶対ダメージ
+  isAbsoluteDmg?: boolean;
 }
 
 export interface ExtraSkillBuff {

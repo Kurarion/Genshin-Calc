@@ -1,12 +1,12 @@
 import { PercentPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, ChipData, Const, GenshinDataService, NoCommaPipe } from 'src/app/shared/shared.module';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ArtifactService, ArtifactStoragePartData, ChipData, Const, GenshinDataService, NoCommaPipe } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-artifact-chips',
   templateUrl: './artifact-chips.component.html',
-  styleUrls: ['./artifact-chips.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./artifact-chips.component.css']
 })
 export class ArtifactChipsComponent implements OnInit {
 
@@ -36,14 +36,14 @@ export class ArtifactChipsComponent implements OnInit {
   @Input('isAuto') isAuto!: boolean;
   //パート名
   @Input('part') partName!: string;
-  //アップデータフラグ
-  @Input('changed') changed!: number;
   //サブ属性
   dataReliquaryAffix = GenshinDataService.dataReliquaryAffix;
   //チップ
   chips!: ChipData[];
   //キャラ名（Zh）
   nameZh!: string;
+  //変更検知
+  subscription!: Subscription;
 
   constructor(private genshinDataService: GenshinDataService,
     private artifactService: ArtifactService,
@@ -54,11 +54,14 @@ export class ArtifactChipsComponent implements OnInit {
   ngOnInit(): void {
     this.nameZh = this.genshinDataService.getCharacter(this.characterIndex.toString()).name.cn_sim;
     this.updateChips();
+    this.subscription = this.artifactService.changed().subscribe(()=>{
+      this.updateChips();
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['changed']) {
-      this.updateChips();
+  ngOnDestroy(): void {
+    if(this.subscription && !this.subscription.closed){
+      this.subscription.unsubscribe();
     }
   }
 
