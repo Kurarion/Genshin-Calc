@@ -137,16 +137,15 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   }
 
   removeTab(index: number) {
+    this.tabs.splice(index, 1);
+    this.artifactService.deleteStorageInfo(this.data.id, index);
     if(this.selectedIndex >= index){
-      let toSetIndex = this.tabs.length - 2
+      let toSetIndex = this.tabs.length - 1
       this.selectedIndex = toSetIndex > 0?toSetIndex:0;
     }else{
       this.selectedIndex = 0;
     }
-    setTimeout(()=>{
-      this.tabs.splice(index, 1);
-      this.artifactService.deleteStorageInfo(this.data.id, index);
-    })
+    this.setActiveIndex();
   }
 
   rollback(index: number) {

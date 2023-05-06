@@ -384,7 +384,12 @@
     "ELEMENT_TYPE": "元素タイプボーナス",
     "ATTACK_TYPE": "攻撃タイプボーナス",
     "DAMAGE_TYPE": "最適するタイプ",
-    "DAMAGE_TAG": "ダメージタグ"
+    "DAMAGE_TAG": "ダメージタグ",
+    "USE_DPS": "DPS最適計算",
+    "USED_DPS_INDEX": "DPSインデックス",
+    "NOT_EXIT_DPS_INDEX": "指定されたDPSが存在しないです。", 
+    "BLANK_DPS_LIST": "指定されたDPSリストは空です。",
+    "NO_RESULT": "無効な計算です。"
   },
   "SW": {
     "READY": "データ更新完了！;;リロード"

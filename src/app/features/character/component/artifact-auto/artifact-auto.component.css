@@ -26,6 +26,10 @@ table {
     width: 13em;
 }
 
+.dps-toggle {
+    height: 4em;
+}
+
 .one-line-div {
     overflow: hidden;
     white-space: nowrap;

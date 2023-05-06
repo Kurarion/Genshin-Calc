@@ -34,8 +34,8 @@
                 </div>
             </td>
         </tr>
-        <ng-container *ngFor="let item of (isMixRate?inputItemsMix:inputItems)">
-            <tr *ngIf="item.isSelect?(userInputList[item.selectListName!].length > 0):true">
+        <ng-container *ngFor="let item of inputItems">
+            <tr *ngIf="!userInputHiddenStatus.get(item.name) && (item.isSelect?(userInputList[item.selectListName!].length > 0):true)">
                 <td class="left">
                     <span [innerText]="'AUTO.' + item.name | translate"></span>
                 </td>
@@ -57,11 +57,22 @@
                             (ngModelChange)="item.onChange($event)">
                             <mat-option *ngIf="item.hasEmpty" value=""></mat-option>
                             <ng-container *ngFor="let option of userInputList[item.selectListName!]">
-                                <mat-option *ngIf="!item.useNameMap" [value]="option" [innerText]="item.optionTranslationTag + option| translate"></mat-option>
-                                <mat-option *ngIf="item.useNameMap" [value]="option" [innerText]="item.optionTranslationTag + item.optionNameMap![option] | translate"></mat-option>
+                                <ng-container [ngSwitch]="item.useNameMap">
+                                    <mat-option *ngSwitchCase="'custom'" [value]="option" [innerText]="item.optionTranslationTag + item.optionNameMap![option] | translate"></mat-option>
+                                    <mat-option *ngSwitchCase="'none'" [value]="option" [innerText]="option"></mat-option>
+                                    <mat-option *ngSwitchDefault [value]="option" [innerText]="item.optionTranslationTag + option.toString() | translate"></mat-option>
+                                </ng-container>
                             </ng-container>
                         </mat-select>
                     </mat-form-field>
+                    <mat-slide-toggle
+                        *ngIf="item.isSwitch"
+                        class="normal-field dps-toggle"
+                        color="primary"
+                        [formControlName]="item.model"
+                        (ngModelChange)="item.onChange($event)"
+                    >
+                    </mat-slide-toggle>
                 </td>
             </tr>
         </ng-container>

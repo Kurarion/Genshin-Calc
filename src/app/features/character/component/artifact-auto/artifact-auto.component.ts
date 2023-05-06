@@ -1,9 +1,9 @@
 import { DecimalPipe, PercentPipe } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, NoCommaPipe, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, NoCommaPipe, RelayoutMsgService, TYPE_SYS_LANG, DPSService, CharacterService } from 'src/app/shared/shared.module';
 import type { EChartsOption } from 'echarts';
 import { lastValueFrom, Subscription } from 'rxjs';
 
@@ -12,10 +12,12 @@ interface InputItem {
   title: string,
   isInput?: boolean,
   isSelect?: boolean,
+  isSwitch?: boolean,
+  hidden?: string[],
   hasEmpty?: boolean,
   isRequire: boolean,
   selectListName?: string,
-  useNameMap?: boolean,
+  useNameMap?: "default" | "custom" | "none",
   optionNameMap?: Record<string, string>,
   optionTranslationTag?: string,
   model: string,
@@ -25,9 +27,13 @@ interface InputItem {
 @Component({
   selector: 'app-artifact-auto',
   templateUrl: './artifact-auto.component.html',
-  styleUrls: ['./artifact-auto.component.css']
+  styleUrls: ['./artifact-auto.component.css'],
 })
 export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnInit {
+  readonly isDPS = "isDPS"
+  readonly notDPS = "notDPS"
+  readonly isMix = "isMix"
+  readonly notMix = "notMix"
   readonly optimalStep = 10;
   readonly step = 1;
   readonly minValid = 0;
@@ -104,13 +110,34 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   ]);
   readonly defaultPoint: number = 250;
 
-  readonly inputItemsMix: InputItem[] = [
+  readonly inputItems: InputItem[] = [
+    {
+      name: "USE_DPS",
+      title: "USE_DPS",
+      isSwitch: true,
+      isRequire: true,
+      model: "useDPS",
+      onChange: this.setUseDPS.bind(this),
+    },
+    {
+      name: "USED_DPS_INDEX",
+      title: "USED_DPS_INDEX",
+      isSelect: true,
+      isRequire: true,
+      hasEmpty: false,
+      selectListName: "dpsIndexs",
+      model: "usedDPSIndex",
+      useNameMap: "none",
+      hidden: [this.notDPS],
+      onChange: this.setUsedDPSIndex.bind(this),
+    },
     {
       name: "DAMAGE_RATE",
       title: "DAMAGE_RATE",
       isInput: true,
       isRequire: true,
       model: "damageRate",
+      hidden: [this.isDPS],
       onChange: this.setDamageRate.bind(this),
     },
     {
@@ -122,6 +149,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       selectListName: "damageBaseList",
       optionTranslationTag: "PROPS.",
       model: "damageBase",
+      hidden: [this.isDPS],
       onChange: this.setDamageBase.bind(this),
     },
     {
@@ -130,6 +158,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       isInput: true,
       isRequire: false,
       model: "damageRateAttach",
+      hidden: [this.isDPS, this.notMix],
       onChange: this.setDamageRateAttach.bind(this),
     },
     {
@@ -141,6 +170,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       selectListName: "damageBaseList",
       optionTranslationTag: "PROPS.",
       model: "damageBaseAttach",
+      hidden: [this.isDPS, this.notMix],
       onChange: this.setDamageBaseAttach.bind(this),
     },
     {
@@ -152,6 +182,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       selectListName: "elementTypeList",
       optionTranslationTag: "PROPS.",
       model: "elementType",
+      hidden: [this.isDPS],
       onChange: this.setElementType.bind(this),
     },
     {
@@ -163,6 +194,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       selectListName: "attackTypeList",
       optionTranslationTag: "PROPS.",
       model: "attackType",
+      hidden: [this.isDPS],
       onChange: this.setAttackType.bind(this),
     },
     {
@@ -173,9 +205,10 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       hasEmpty: false,
       selectListName: "damageTypeList",
       optionTranslationTag: "GENSHIN.DMG.",
-      useNameMap: true,
+      useNameMap: "custom",
       optionNameMap: this.damageTypeNameMap,
       model: "damageType",
+      hidden: [this.isDPS],
       onChange: this.setDamageType.bind(this),
     },
     {
@@ -187,6 +220,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       selectListName: "damageTagList",
       optionTranslationTag: "TAG.",
       model: "damageTag",
+      hidden: [this.isDPS],
       onChange: this.setDamageTag.bind(this),
     },
     {
@@ -198,8 +232,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       onChange: this.setMaxCritRate.bind(this),
     },
   ]
-
-  readonly inputItems: InputItem[] = this.inputItemsMix.concat();
 
   readonly maxCritRate: number = 101;
   readonly minCritRate: number = 5;
@@ -218,24 +250,30 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   isMixRate: boolean = false;
 
   userInput = new UntypedFormGroup({
-    damageRate: new UntypedFormControl(0, [Validators.min(0.01), Validators.required]),//ダメージ倍率
-    damageBase: new UntypedFormControl('', Validators.required),//ダメージベース
+    useDPS: new UntypedFormControl(false, Validators.required),//DPSを使用
+    usedDPSIndex: new UntypedFormControl(1, this.useDPSValidator(true)),//使用したDPSインデックス
+    damageRate: new UntypedFormControl(0, [Validators.min(0.01), this.useDPSValidator(false)]),//ダメージ倍率
+    damageBase: new UntypedFormControl('', this.useDPSValidator(false)),//ダメージベース
     damageRateAttach: new UntypedFormControl(0, [Validators.min(0)]),//ダメージ倍率(追加)
     damageBaseAttach: new UntypedFormControl(''),//ダメージベース(追加)
-    elementType: new UntypedFormControl('', Validators.required),//元素タイプ
-    attackType: new UntypedFormControl('', Validators.required),//攻撃タイプ
-    damageType: new UntypedFormControl('', Validators.required),//ダメージタイプ
+    elementType: new UntypedFormControl('', this.useDPSValidator(false)),//元素タイプ
+    attackType: new UntypedFormControl('', this.useDPSValidator(false)),//攻撃タイプ
+    damageType: new UntypedFormControl('', this.useDPSValidator(false)),//ダメージタイプ
     damageTag: new UntypedFormControl(''),//タグ
     maxCritRate: new UntypedFormControl(0, [Validators.min(this.minCritRate)]),//最大会心率
   })
 
-  userInputList: Record<string, string[]> = {
+  userInputList: Record<string, (number|string)[]> = {
+    dpsIndexs: [],
     damageBaseList: [],
     elementTypeList: [],
     attackTypeList: [],
     damageTypeList: [],
     damageTagList: [],
   }
+
+  userInputHiddenFlag: Set<string> = new Set<string>();
+  userInputHiddenStatus: Map<string, boolean> = new Map<string, boolean>();
 
   // //ダメージ倍率
   // damageRate!: number;
@@ -327,6 +365,8 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     private matSnackBar: MatSnackBar, 
     private translateService: TranslateService,
     private relayoutMsgService: RelayoutMsgService,
+    private DPSService: DPSService,
+    private characterService: CharacterService,
     private languageService: LanguageService,
     private globalProgressService: GlobalProgressService) {
       super(relayoutMsgService);
@@ -347,9 +387,10 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   }
 
   ngOnInit(): void {
-    this.inputItems.splice(2,2);
     //チェックミクス
     this.isMixRate = Const.PROPS_HAS_MIX_RATE.has(this.characterIndex.toString());
+    this.userInputHiddenFlag.add(this.isMixRate?this.isMix:this.notMix);
+    this.calcHiddenStatus();
     this.initList();
     this.initData();
   }
@@ -366,6 +407,8 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
 
   initData() {
     this.data = this.artifactService.getAllStorageInfo(this.characterIndex, this.index);
+    this.userInput.get('useDPS')?.setValue((this.data.autoUseDPS ?? false));
+    this.userInput.get('usedDPSIndex')?.setValue((this.data.autoUsedDPSIndex ?? 0));
     this.userInput.get('damageRate')?.setValue((this.data.autoDamageRate ?? this.initDamageRate));
     this.userInput.get('damageBase')?.setValue(this.data.autoDamageBase ?? '');
     this.userInput.get('damageRateAttach')?.setValue((this.data.autoDamageRateAttach ?? 0));
@@ -384,14 +427,17 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       this.currentPoint.enable();
       this.currentPointInput.enable();
     }
+    //初期化表示
     this.setElementType(this.userInput.get('elementType')?.value);
-    // this.calcActualProp();
+    this.setUseDPS(this.userInput.get('useDPS')?.value);
+    //初期化処理
     this.updateChips();
     this.setDisplayWith();
     this.getAllPropsData();
   }
 
   initList(){
+    this.userInputList['dpsIndexs'] = [];
     this.userInputList['damageBaseList'] = Const.PROPS_OPTIMAL_DAMAGE_BASE_LIST;
     this.userInputList['damageBaseListAttach'] = Const.PROPS_OPTIMAL_DAMAGE_BASE_LIST;
     this.userInputList['elementTypeList'] = Const.PROPS_OPTIMAL_ELEMENT_TYPE_LIST;
@@ -399,6 +445,34 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.userInputList['damageTypeList'] = [];
     this.userInputList['damageTagList'] = Const.PROPS_TAG_MAP.get(this.characterIndex.toString()) ?? [];
     this.resultForCalc = new Uint8Array(this.maxValid);
+  }
+
+  setUseDPS(value: boolean){
+    if(value != this.data.autoUseDPS){
+      this.willNeedUpdate();
+    }
+    this.data.autoUseDPS = value;
+    if(value) {
+      this.userInputHiddenFlag.delete(this.notDPS);
+      this.userInputHiddenFlag.add(this.isDPS);
+    } else {
+      this.userInputHiddenFlag.delete(this.isDPS);
+      this.userInputHiddenFlag.add(this.notDPS);
+    }
+    this.calcHiddenStatus();
+    if(this.userInput?.get('useDPS')?.value){
+      this.setDPSIndexList();
+    }else{
+      this.userInputList['dpsIndexs'] = [];
+    }
+    this.onExpandStatusChanged();
+  }
+
+  setUsedDPSIndex(value: number){
+    if(value != this.data.autoUsedDPSIndex){
+      this.willNeedUpdate();
+    }
+    this.data.autoUsedDPSIndex = value;
   }
 
   setDamageRate(value: number){
@@ -597,7 +671,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.globalProgressService.setMode("buffer");
     this.globalProgressService.setValue(0);
     this.hasClickCal = true;
-    let result = new Promise<void>((resolve) => {
+    let result = new Promise<void>((resolve, reject) => {
       //チェック
       let hasError = false;
       for(let key in this.userInput.controls){
@@ -618,21 +692,96 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         this.currentPointInput.setValue(this.getDisplayValue(this.currentPoint.value));
         this.setPropCurrentPoint(this.currentPoint.value);
 
-        let param: DamageParam = {
-          rate: this.userInput.get('damageRate')!.value as number / 100,
-          base: this.userInput.get('damageBase')!.value as string,
-          rateAttach: [],
-          baseAttach: [],
-          elementBonusType: this.userInput.get('elementType')!.value as string,
-          attackBonusType: this.userInput.get('attackType')!.value as string,
-          tag: this.userInput.get('damageTag')!.value as string ?? undefined,
-        }
-        if(this.isMixRate){
-          if(this.userInput.get('damageRateAttach')!.value !== 0 && this.userInput.get('damageBase')!.value !== ''){
-            param.rateAttach = [[this.userInput.get('damageRateAttach')!.value as number / 100]];
-            param.baseAttach = [this.userInput.get('damageBaseAttach')!.value as string];
+        //DPS
+        const isDPS = this.userInput.get('useDPS')!.value;
+        const selectedDPSIndex = this.userInput.get('usedDPSIndex')!.value - 1;
+        const params: DamageParam[] = [];
+        const damageTypes: string[] = [];
+        const times: number[] = [];
+
+        if(isDPS) {
+          const len = this.DPSService.getStorageInfoLength(this.characterIndex);
+          let isFailed = false;
+          let failedMsg = '';
+          switch(null) {
+            default: {
+              //存在チェック
+              if(len <= selectedDPSIndex){
+                //存在しないDPSインデックス
+                this.setDPSIndexList();
+                this.userInput.get('usedDPSIndex')?.setValue(1);
+                this.setUsedDPSIndex(1);
+                //失敗
+                isFailed = true;
+                failedMsg = 'AUTO.NOT_EXIT_DPS_INDEX';
+                break;
+              }
+              //DPS詳細リスト取得
+              const info = this.DPSService.getStorageInfo(this.characterIndex, selectedDPSIndex);
+              for(let i = 0; i < info.dmgs.length; ++i) {
+                const dmg = info.dmgs[i];
+                const skill = dmg.skill;
+                const valueIndexs = dmg.valueIndexs;
+                const resultIndex = dmg.resultIndex;
+                const skillIndex = dmg.skillIndex;
+                const dmgTimes = dmg.times ?? 1;
+                //元素付与
+                let overrideElement = "";
+                if (skill === Const.NAME_SKILLS_NORMAL){
+                  overrideElement = this.characterService.getOverrideElement(this.characterIndex);
+                }
+                const dmgValues = this.calculatorService.getSkillDmgValue(this.characterIndex, skill, valueIndexs, overrideElement, skillIndex, true);
+                const dmgParam = dmgValues[1][resultIndex];
+                //入力パラメータ設定
+                params.push(dmgParam);
+                damageTypes.push(dmg.damageProp);
+                times.push(dmgTimes);
+              }
+              //チェック
+              if(params.length < 1) {
+                //失敗
+                isFailed = true;
+                failedMsg = 'AUTO.BLANK_DPS_LIST';
+                break;
+              }
+            }
           }
+          //失敗した場合
+          if(isFailed) {
+            this.resultCurve = '';
+            this.currentPoint.disable();
+            this.currentPointInput.disable();
+            this.effectNum = 0;
+            this.setPropEffectNum(this.effectNum);
+            this.setPropCurve(this.resultCurve);
+            this.setPropCurrentPoint(this.currentPoint.value);
+            this.getAllPropsData();
+            reject(failedMsg);
+            return;
+          }
+        } else {
+          const param: DamageParam = {
+            rate: this.userInput.get('damageRate')!.value as number / 100,
+            base: this.userInput.get('damageBase')!.value as string,
+            rateAttach: [],
+            baseAttach: [],
+            elementBonusType: this.userInput.get('elementType')!.value as string,
+            attackBonusType: this.userInput.get('attackType')!.value as string,
+            tag: this.userInput.get('damageTag')!.value as string ?? undefined,
+          }
+          if(this.isMixRate){
+            if(this.userInput.get('damageRateAttach')!.value !== 0 && this.userInput.get('damageBase')!.value !== ''){
+              param.rateAttach = [[this.userInput.get('damageRateAttach')!.value as number / 100]];
+              param.baseAttach = [this.userInput.get('damageBaseAttach')!.value as string];
+            }
+          }
+          const damageType = this.userInput.get('damageType')!.value;
+          //入力パラメータ設定
+          params.push(param);
+          damageTypes.push(damageType);
+          times.push(1);
         }
+
         let calcResult: DamageResult;
         let actualEffectSet = new Set();
         let actualEffectNum: number = 0;
@@ -648,21 +797,45 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
           let currentLoopMaxValue = 0;
           for(let key of this.subs){
             let oldValue = tempExtraData[key];
+            let finalDamageVal = 0;
+            let critOverflow = false;
+            let reuseDatas = undefined;
             tempExtraData[key] += this.genshinDataService.getOptimalReliquaryAffixStep(key);
-            calcResult = this.calculatorService.getDamage(this.characterIndex, param, tempExtraData);
-            if(key == Const.PROP_CRIT_RATE && calcResult.finalCritRate > maxCritRate){
-              tempExtraData[key] = oldValue;
+            for(let i = 0; i < params.length; ++i){
+              const param = params[i];
+              calcResult = this.calculatorService.getDamage(this.characterIndex, param, tempExtraData, reuseDatas);
+              reuseDatas = calcResult.tempAllDate;
+              finalDamageVal += (calcResult[damageTypes[i] as keyof DamageResult] as number ?? 0) * times[i];
+              if(key == Const.PROP_CRIT_RATE && calcResult.displayCritRate > maxCritRate){
+                critOverflow = true
+                break;
+              }
+            }
+            if(critOverflow){
               continue;
             }
-            if(currentLoopMaxValue < (calcResult[this.userInput.get('damageType')!.value as keyof DamageResult] as number)){
+            if(currentLoopMaxValue < finalDamageVal){
               currentLoopMaxProp = key;
               this.resultForCalc[i] = this.subsMap.get(currentLoopMaxProp)!;
-              currentLoopMaxValue = calcResult[this.userInput.get('damageType')!.value as keyof DamageResult] as number;
+              currentLoopMaxValue = finalDamageVal;
             }
             tempExtraData[key] = oldValue;
           }
+          //無効なる計算
+          if(currentLoopMaxValue == 0){
+            this.resultCurve = '';
+            this.currentPoint.disable();
+            this.currentPointInput.disable();
+            this.effectNum = 0;
+            this.setPropEffectNum(this.effectNum);
+            this.setPropCurve(this.resultCurve);
+            this.setPropCurrentPoint(this.currentPoint.value);
+            this.getAllPropsData();
+            reject('AUTO.NO_RESULT');
+            return;
+          }
           actualEffectSet.add(currentLoopMaxProp);
-          extraData[currentLoopMaxProp] += this.genshinDataService.getOptimalReliquaryAffixStep(currentLoopMaxProp);;
+          extraData[currentLoopMaxProp] += this.genshinDataService.getOptimalReliquaryAffixStep(currentLoopMaxProp);
         }
 
         actualEffectNum = actualEffectSet.size;
@@ -677,7 +850,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         this.setPropCurve(this.resultCurve);
         this.setPropCurrentPoint(this.currentPoint.value);
         this.willNeedUpdate(false);
-        this.getAllPropsData()
+        this.getAllPropsData();
         resolve();
       }, 100)
     });
@@ -689,9 +862,9 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
           duration: 1000
         })
       });
-    }).catch(()=>{
+    }).catch((error: string)=>{
       //失敗
-      this.translateService.get('AUTO.FAILED').subscribe((res: string) => {
+      this.translateService.get(error ?? 'AUTO.FAILED').subscribe((res: string) => {
         this.matSnackBar.open(res, undefined, {
           duration: 1000
         })
@@ -706,7 +879,35 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   getRowValue(v: number, base = 10){
     return parseInt((v * base).toFixed(0));
   }
+
   getDisplayValue(v: number, base = 10){
     return parseFloat((v / base).toFixed(1));
+  }
+
+  useDPSValidator(inDPS: boolean){
+    return (control: AbstractControl): ValidationErrors | null => {
+      const useDPS = this.userInput?.get('useDPS')?.value ?? false;
+      if(useDPS === inDPS) {
+        return Validators.required(control);
+      }
+      return null;
+    };
+  }
+
+  calcHiddenStatus(){
+    const tempMap = new Map<string, boolean>();
+    this.inputItems.forEach((item: InputItem) => {
+      let state = false;
+      if(item.hidden){
+        state = item.hidden.some((v) => this.userInputHiddenFlag.has(v));
+      }
+      tempMap.set(item.name, state);
+    })
+    this.userInputHiddenStatus = tempMap;
+  }
+
+  private setDPSIndexList() {
+    const len = this.DPSService.getStorageInfoLength(this.characterIndex);
+    this.userInputList['dpsIndexs'] = Array.from({length: len}).map((_, i) => i + 1);
   }
 }

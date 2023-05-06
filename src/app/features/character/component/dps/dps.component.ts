@@ -225,11 +225,10 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     if(this.selectedIndex >= index){
       let toSetIndex = this.tabs.length - 1
       this.selectedIndex = toSetIndex > 0?toSetIndex:0;
-      this.setSelectedIndex();
     }else{
       this.selectedIndex = 0;
-      this.setSelectedIndex();
     }
+    this.setSelectedIndex();
   }
 
   removeItem(index: number) {

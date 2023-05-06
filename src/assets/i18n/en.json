@@ -384,7 +384,12 @@
     "ELEMENT_TYPE": "Element Type Bonus",
     "ATTACK_TYPE": "Attack Type Bonus",
     "DAMAGE_TYPE": "Target Damage Type",
-    "DAMAGE_TAG": "Damage Tag"
+    "DAMAGE_TAG": "Damage Tag",
+    "USE_DPS": "DPS Calculation",
+    "USED_DPS_INDEX": "DPS Index", 
+    "NOT_EXIT_DPS_INDEX": "The DPS does not exist for that index.",
+    "BLANK_DPS_LIST": "The DPS list is blank for that index.",
+    "NO_RESULT": "Invalid calculation."
   },
   "SW": {
     "READY": "Data update completed!;;Reload"

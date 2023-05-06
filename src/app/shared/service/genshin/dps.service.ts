@@ -117,15 +117,12 @@ export class DPSService {
   }
 
   //全組合せ情報取得
-  getStorageInfos(charIndex: string | number, index?: number){
+  getStorageInfos(charIndex: string | number){
     //初期化無しの場合対応（チームメンバー）
     if(this.dataMap[charIndex] === undefined){
       return [];
     }
     let keyStr = charIndex.toString();
-    if(index == undefined){
-      index = this.dataMap[charIndex].selectedIndex;
-    }
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].info;
   }

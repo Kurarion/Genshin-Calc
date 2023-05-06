@@ -108,6 +108,8 @@ export interface DamageParam {
 export interface DamageResult {
   elementBonusType: string;
   finalCritRate: number;
+  displayCritRate: number;
+  tempAllDate: any;
 
   originDmg: number;
   critDmg: number;
@@ -1288,15 +1290,21 @@ export class CalculatorService {
   }
 
   //ダメージ取得
-  getDamage(index: string | number, param: DamageParam, extraData?: Record<string, number>, toAddWeaponSmelting?: number){
+  getDamage(index: string | number, param: DamageParam, extraData?: Record<string, number>, toAddWeaponSmelting?: number, reuseDatas?: Record<string, number>){
     let indexStr = index.toString();
     if(this.isDirty(indexStr) && extraData == undefined){
       this.initAllData(indexStr);
     }
     let result: DamageResult;
     let data = this.dataMap[indexStr].allData!;
+    let tempAllDate = undefined;
     if(extraData != undefined){
-      data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+      if(reuseDatas != undefined) {
+        data = reuseDatas;
+      }else{
+        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        tempAllDate = data;
+      }
     }
     let rate = param.rate;
     let base = param.base;
@@ -1322,8 +1330,10 @@ export class CalculatorService {
     //--------------------
     let critSectionValue = 0;
     let finalCritRate = data[Const.PROP_CRIT_RATE];
+    let displayCritRate = data[Const.PROP_CRIT_RATE];
     let finalCritDmg = data[Const.PROP_CRIT_DMG];
     finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ALL];
+    displayCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ALL];
     finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ALL];
     //--------------------
     //3.ダメージアップ区域
@@ -1779,6 +1789,8 @@ export class CalculatorService {
     result = {
       elementBonusType: elementBonusType,
       finalCritRate: finalCritRate,
+      displayCritRate: displayCritRate,
+      tempAllDate: tempAllDate,
       originDmg: originDmg,
       critDmg: critDmg,
       expectDmg: expectDmg,
@@ -1935,7 +1947,7 @@ export class CalculatorService {
     return result;
   }
 
-  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[], overrideElement?: string, skillIndex?: number | string): [DamageResult[], DamageParam[]]{
+  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[], overrideElement?: string, skillIndex?: number | string, onlyParam: boolean = false): [DamageResult[], DamageParam[]]{
     let indexStr = index.toString();
     let params: DamageParam[] = [];
     let results: DamageResult[] = []
@@ -2140,8 +2152,10 @@ export class CalculatorService {
       }
     }
 
-    for(let param of params){
-      results.push(this.getDamage(indexStr, param));
+    if(!onlyParam){
+      for(let param of params){
+        results.push(this.getDamage(indexStr, param));
+      }
     }
 
     return [results, params];

@@ -59,5 +59,9 @@
 }
 
 .use-visible {
+    z-index: 3;
+}
+
+.use-visible-low {
     z-index: 2;
 }

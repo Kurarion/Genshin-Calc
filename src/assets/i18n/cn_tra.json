@@ -384,7 +384,12 @@
     "ELEMENT_TYPE": "元素類型加成",
     "ATTACK_TYPE": "攻擊類型加成",
     "DAMAGE_TYPE": "最優傷害類型",
-    "DAMAGE_TAG": "傷害標簽"
+    "DAMAGE_TAG": "傷害標簽",
+    "USE_DPS": "DPS最優計算",
+    "USED_DPS_INDEX": "DPS索引", 
+    "NOT_EXIT_DPS_INDEX": "不存在該索引的DPS。",
+    "BLANK_DPS_LIST": "該索引的DPS為空。",
+    "NO_RESULT": "無效計算。"
   },
   "SW": {
     "READY": "數據更新完成!;;重新加載"

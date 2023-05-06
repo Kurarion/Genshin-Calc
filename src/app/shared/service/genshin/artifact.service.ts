@@ -34,6 +34,8 @@ export interface ArtifactStorageInfo {
   autoPropCurrentPoint?: number;
   autoMaxCritRate?: number;
   autoNeedUpdate?: boolean;
+  autoUseDPS?: boolean;
+  autoUsedDPSIndex?: number;
 }
 
 export interface ArtifactStorageData {
