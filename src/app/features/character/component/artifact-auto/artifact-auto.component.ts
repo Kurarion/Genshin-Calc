@@ -676,7 +676,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
         }
       }
       if(hasError){
-        return;
+        reject();
       }
       
       setTimeout(()=>{
@@ -750,7 +750,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
             this.setPropCurrentPoint(this.currentPoint.value);
             this.getAllPropsData();
             reject(failedMsg);
-            return;
           }
         } else {
           const param: DamageParam = {
@@ -841,7 +840,6 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
             this.setPropCurrentPoint(this.currentPoint.value);
             this.getAllPropsData();
             reject(errorMsg);
-            return;
           }
           //判断
           if(step < steps) {
