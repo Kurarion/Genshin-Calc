@@ -777,6 +777,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
 
         let calcResult: DamageResult;
         let actualEffectSet = new Set();
+        let tempResultForCalc = new Uint8Array(this.maxValid);
         let actualEffectNum: number = 0;
         let maxCritRate: number = this.userInput.get('maxCritRate')!.value as number / 100;
         let extraData: Record<string, number>={};
@@ -784,7 +785,12 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
           extraData[key] = 0;
         }
         let lastLoopMaxValue = 0;
-        for(let i = this.minValid; i <= this.maxValid; ++i){
+        const steps = this.maxValid;
+        let step = this.minValid;
+        let errorFlag = false;
+        let errorMsg = '';
+        const calcFunc = () => {
+          //計算
           let tempExtraData = {...extraData};
           let currentLoopMaxProp = "";
           let currentLoopMaxValue = lastLoopMaxValue;
@@ -809,13 +815,23 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
             }
             if(currentLoopMaxValue < finalDamageVal){
               currentLoopMaxProp = key;
-              this.resultForCalc[i] = this.subsMap.get(currentLoopMaxProp)!;
+              tempResultForCalc[step] = this.subsMap.get(currentLoopMaxProp)!;
               currentLoopMaxValue = finalDamageVal;
             }
             tempExtraData[key] = oldValue;
           }
           //無効なる計算
           if(currentLoopMaxValue == 0 || currentLoopMaxValue == lastLoopMaxValue){
+            errorFlag = true;
+            errorMsg = "AUTO.NO_RESULT";
+          }
+          actualEffectSet.add(currentLoopMaxProp);
+          extraData[currentLoopMaxProp] += this.genshinDataService.getOptimalReliquaryAffixStep(currentLoopMaxProp);
+          lastLoopMaxValue = currentLoopMaxValue;
+
+          ++step;
+          //エラーチェック
+          if(errorFlag){
             this.resultCurve = '';
             this.currentPoint.disable();
             this.currentPointInput.disable();
@@ -824,29 +840,99 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
             this.setPropCurve(this.resultCurve);
             this.setPropCurrentPoint(this.currentPoint.value);
             this.getAllPropsData();
-            reject('AUTO.NO_RESULT');
+            reject(errorMsg);
             return;
           }
-          actualEffectSet.add(currentLoopMaxProp);
-          extraData[currentLoopMaxProp] += this.genshinDataService.getOptimalReliquaryAffixStep(currentLoopMaxProp);
-          lastLoopMaxValue = currentLoopMaxValue;
+          //判断
+          if(step < steps) {
+            //ループ
+            this.globalProgressService.setValue(step / steps * 104);
+            setTimeout(calcFunc);
+          } else {
+            this.globalProgressService.setValue(100);
+            //計算終了処理
+            actualEffectNum = actualEffectSet.size;
+
+            this.resultForCalc = tempResultForCalc;
+            this.resultCurve = this.resultForCalc.join('');
+            this.currentPoint.setValue(this.defaultPoint);
+            this.currentPoint.enable();
+            this.currentPointInput.setValue(this.defaultPoint / 10);
+            this.currentPointInput.enable();
+            this.effectNum = (actualEffectNum > this.maxValidArray.length - 1)?this.maxValidArray.length - 1:actualEffectNum;
+            this.setPropEffectNum(this.effectNum);
+            this.setPropCurve(this.resultCurve);
+            this.setPropCurrentPoint(this.currentPoint.value);
+            this.willNeedUpdate(false);
+            this.getAllPropsData();
+            resolve();
+          }
         }
+        setTimeout(calcFunc);
+        // for(let i = this.minValid; i <= this.maxValid; ++i){
+        //   let tempExtraData = {...extraData};
+        //   let currentLoopMaxProp = "";
+        //   let currentLoopMaxValue = lastLoopMaxValue;
+        //   for(let key of this.subs){
+        //     let oldValue = tempExtraData[key];
+        //     let finalDamageVal = 0;
+        //     let critOverflow = false;
+        //     let reuseDatas = undefined;
+        //     tempExtraData[key] += this.genshinDataService.getOptimalReliquaryAffixStep(key);
+        //     for(let i = 0; i < params.length; ++i){
+        //       const param = params[i];
+        //       calcResult = this.calculatorService.getDamage(this.characterIndex, param, tempExtraData, reuseDatas);
+        //       reuseDatas = calcResult.tempAllDate;
+        //       finalDamageVal += (calcResult[damageTypes[i] as keyof DamageResult] as number ?? 0) * times[i];
+        //       if(key == Const.PROP_CRIT_RATE && calcResult.displayCritRate > maxCritRate){
+        //         critOverflow = true
+        //         break;
+        //       }
+        //     }
+        //     if(critOverflow){
+        //       continue;
+        //     }
+        //     if(currentLoopMaxValue < finalDamageVal){
+        //       currentLoopMaxProp = key;
+        //       tempResultForCalc[i] = this.subsMap.get(currentLoopMaxProp)!;
+        //       currentLoopMaxValue = finalDamageVal;
+        //     }
+        //     tempExtraData[key] = oldValue;
+        //   }
+        //   //無効なる計算
+        //   if(currentLoopMaxValue == 0 || currentLoopMaxValue == lastLoopMaxValue){
+        //     this.resultCurve = '';
+        //     this.currentPoint.disable();
+        //     this.currentPointInput.disable();
+        //     this.effectNum = 0;
+        //     this.setPropEffectNum(this.effectNum);
+        //     this.setPropCurve(this.resultCurve);
+        //     this.setPropCurrentPoint(this.currentPoint.value);
+        //     this.getAllPropsData();
+        //     reject('AUTO.NO_RESULT');
+        //     return;
+        //   }
+        //   actualEffectSet.add(currentLoopMaxProp);
+        //   extraData[currentLoopMaxProp] += this.genshinDataService.getOptimalReliquaryAffixStep(currentLoopMaxProp);
+        //   lastLoopMaxValue = currentLoopMaxValue;
+        // }
 
-        actualEffectNum = actualEffectSet.size;
+        // actualEffectNum = actualEffectSet.size;
 
-        this.resultCurve = this.resultForCalc.join('');
-        this.currentPoint.setValue(this.defaultPoint);
-        this.currentPoint.enable();
-        this.currentPointInput.setValue(this.defaultPoint / 10);
-        this.currentPointInput.enable();
-        this.effectNum = (actualEffectNum > this.maxValidArray.length - 1)?this.maxValidArray.length - 1:actualEffectNum;
-        this.setPropEffectNum(this.effectNum);
-        this.setPropCurve(this.resultCurve);
-        this.setPropCurrentPoint(this.currentPoint.value);
-        this.willNeedUpdate(false);
-        this.getAllPropsData();
-        resolve();
-      }, 100)
+        // this.resultForCalc = tempResultForCalc;
+        // this.resultCurve = this.resultForCalc.join('');
+        // this.currentPoint.setValue(this.defaultPoint);
+        // this.currentPoint.enable();
+        // this.currentPointInput.setValue(this.defaultPoint / 10);
+        // this.currentPointInput.enable();
+        // this.effectNum = (actualEffectNum > this.maxValidArray.length - 1)?this.maxValidArray.length - 1:actualEffectNum;
+        // this.setPropEffectNum(this.effectNum);
+        // this.setPropCurve(this.resultCurve);
+        // this.setPropCurrentPoint(this.currentPoint.value);
+        // this.willNeedUpdate(false);
+        // this.getAllPropsData();
+        // resolve();
+      })
     }).then(()=>{
       //完了
       this.translateService.get('AUTO.DONE').subscribe((res: string) => {
