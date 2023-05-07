@@ -22,6 +22,7 @@ interface InputItem {
   optionTranslationTag?: string,
   model: string,
   onChange: any,
+  onSelectOpenedChanged?: any,
 }
 
 @Component({
@@ -130,6 +131,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       useNameMap: "none",
       hidden: [this.notDPS],
       onChange: this.setUsedDPSIndex.bind(this),
+      onSelectOpenedChanged: this.setDPSIndexList.bind(this),
     },
     {
       name: "DAMAGE_RATE",
@@ -987,7 +989,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.userInputHiddenStatus = tempMap;
   }
 
-  private setDPSIndexList() {
+  setDPSIndexList() {
     const len = this.DPSService.getStorageInfoLength(this.characterIndex);
     this.userInputList['dpsIndexs'] = Array.from({length: len}).map((_, i) => i + 1);
   }

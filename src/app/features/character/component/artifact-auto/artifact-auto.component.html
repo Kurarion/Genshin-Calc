@@ -54,7 +54,8 @@
                         <mat-label [innerText]="'AUTO.' + item.title | translate"></mat-label>
                         <mat-select 
                             [formControlName]="item.model"
-                            (ngModelChange)="item.onChange($event)">
+                            (ngModelChange)="item.onChange($event)"
+                            (openedChange)="item.onSelectOpenedChanged?item.onSelectOpenedChanged($event):';'">
                             <mat-option *ngIf="item.hasEmpty" value=""></mat-option>
                             <ng-container *ngFor="let option of userInputList[item.selectListName!]">
                                 <ng-container [ngSwitch]="item.useNameMap">
