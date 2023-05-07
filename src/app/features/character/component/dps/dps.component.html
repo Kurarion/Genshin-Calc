@@ -51,56 +51,63 @@
                         <span [innerText]="'DPS.TIPS' | translate"></span>
                     </div>
                     <ng-container *ngFor="let dmg of damageInfos; index as i">
-                        <div class="dmg-item" [style.background]="specialColorMap[dmg.resultProp] ?? elementColorMap[dmg.elementType]">
-                            <div class="one-line">
-                                <span class="skill-prefix-name" [innerText]="('TEAM.' + dmgFromName[dmg.name + (dmg.skillIndex ?? '')] | translate)"></span>
-                                <span *ngIf="dmg.index" [innerText]="'DPS.DELIMITER' | translate"></span>
-                                <span *ngIf="dmg.index">{{ dmg.index }}<span [innerText]="'DPS.HIT' | translate"></span></span>
-                                <span [innerText]="'DPS.DELIMITER' | translate"></span>
-                                <span>{{ dmg.rate }}</span>
+                        <div class="dmg-item">
+                            <div class="one-line align-start">
+                                <img class="skill-icon" *ngIf="dmg.iconSrc" [style.background-image]="dmg.iconBGColor" [src]="dmg.iconSrc" loading="lazy" appImgErrorHandle>
+                                <div>
+                                    <div class="one-line">
+                                        <span class="skill-prefix-name" [innerText]="('TEAM.' + dmgFromName[dmg.name + (dmg.skillIndex ?? '')] | translate)"></span>
+                                        <span *ngIf="dmg.index" [innerText]="'DPS.DELIMITER' | translate"></span>
+                                        <span *ngIf="dmg.index">{{ dmg.index }}<span [innerText]="'DPS.HIT' | translate"></span></span>
+                                        <span [innerText]="'DPS.DELIMITER' | translate"></span>
+                                        <span>{{ dmg.rate }}</span>
+                                    </div>
+                                    <div>
+                                        <div class="one-line">
+                                            <span class="skill-prefix-name" [innerText]="'DPS.DMG_VAL_LABEL' | translate"></span>
+                                            <span [innerText]="'DPS.DELIMITER' | translate"></span>
+                                            <span>{{ $any(dmg.results[dmg.resultProp] ?? 0).toFixed(2) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="last-right">
                                     <mat-icon class="close-icon" (click)="removeItem(i)">close</mat-icon>
                                 </div>
                             </div>
-                            <div>
-                                <div class="one-line">
-                                    <span class="skill-prefix-name" [innerText]="'DPS.DMG_VAL_LABEL' | translate"></span>
-                                    <span [innerText]="'DPS.DELIMITER' | translate"></span>
-                                    <span>{{ $any(dmg.results[dmg.resultProp] ?? 0).toFixed(2) }}</span>
-                                </div>
-                                <br>
+                            <mat-divider></mat-divider>
+                            <div class="dmg-info-detail" [style.background]="specialColorMap[dmg.resultProp] ?? elementColorMap[dmg.elementType]">
+                                <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always" class="diabled-black-color detail-field detail-field-left">
+                                    <mat-label [innerText]="'DPS.ELEMENT_TYPE' | translate"></mat-label>
+                                    <select matNativeControl disabled>
+                                        <option [innerText]="'COMMON.ELEMENT_TYPE.' + dmg.elementType | translate"></option>
+                                    </select>
+                                </mat-form-field>
+                                <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always" class="diabled-black-color detail-field detail-field-right">
+                                    <mat-label [innerText]="'DPS.ATTACK_TYPE' | translate"></mat-label>
+                                    <select matNativeControl disabled>
+                                        <option [innerText]="'COMMON.ATTACK_TYPE.' + dmg.attackType | translate"></option>
+                                    </select>
+                                </mat-form-field>
+                                <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon detail-field detail-field-left">
+                                    <mat-label [innerText]="'DPS.DMG_TYPE' | translate"></mat-label>
+                                    <mat-select [value]="dmg.resultProp" (selectionChange)="changeProp(i, $event.value)">
+                                        <ng-container *ngFor="let dmgType of dmg.isAbsoluteDmg?damageTypeAbsMap.get(dmg.elementType):damageTypeMap.get(dmg.elementType)">
+                                            <mat-option [value]="dmgType">
+                                                <span [innerText]="'GENSHIN.DMG.' + damageTypeNameMap[dmgType].toUpperCase() | translate"></span>
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon detail-field detail-field-right">
+                                    <mat-label [innerText]="'DPS.TIMES' | translate"></mat-label>
+                                    <input matInput 
+                                        type="number"
+                                        step="0.01"
+                                        [(ngModel)]="dmg.times"
+                                        (keyup)="onTimesValueKeyup(i, $event)"
+                                    >
+                                </mat-form-field>
                             </div>
-                            <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always" class="diabled-black-color">
-                                <mat-label [innerText]="'DPS.ELEMENT_TYPE' | translate"></mat-label>
-                                <select matNativeControl disabled>
-                                    <option [innerText]="'COMMON.ELEMENT_TYPE.' + dmg.elementType | translate"></option>
-                                </select>
-                            </mat-form-field>
-                            <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always" class="diabled-black-color">
-                                <mat-label [innerText]="'DPS.ATTACK_TYPE' | translate"></mat-label>
-                                <select matNativeControl disabled>
-                                    <option [innerText]="'COMMON.ATTACK_TYPE.' + dmg.attackType | translate"></option>
-                                </select>
-                            </mat-form-field>
-                            <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon">
-                                <mat-label [innerText]="'DPS.DMG_TYPE' | translate"></mat-label>
-                                <mat-select [value]="dmg.resultProp" (selectionChange)="changeProp(i, $event.value)">
-                                    <ng-container *ngFor="let dmgType of dmg.isAbsoluteDmg?damageTypeAbsMap.get(dmg.elementType):damageTypeMap.get(dmg.elementType)">
-                                        <mat-option [value]="dmgType">
-                                            <span [innerText]="'GENSHIN.DMG.' + damageTypeNameMap[dmgType].toUpperCase() | translate"></span>
-                                        </mat-option>
-                                    </ng-container>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon">
-                                <mat-label [innerText]="'DPS.TIMES' | translate"></mat-label>
-                                <input matInput 
-                                    type="number"
-                                    step="0.01"
-                                    [(ngModel)]="dmg.times"
-                                    (keyup)="onTimesValueKeyup(i, $event)"
-                                >
-                            </mat-form-field>
                         </div>
                     </ng-container>
                 </div>

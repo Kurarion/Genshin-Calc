@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { CalculatorService, character, CharacterService, Const, DamageResult, DPSService, DPSStorageInfo, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { ArtifactService, CalculatorService, character, CharacterService, CharSkill, CharSkills, Const, DamageResult, DPSService, DPSStorageInfo, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 interface DamageInfo {
@@ -16,6 +16,8 @@ interface DamageInfo {
   times: number;
   tag?: string;
   isAbsoluteDmg?: boolean;
+  iconSrc: string;
+  iconBGColor: string;
 }
 @Component({
   selector: 'app-dps',
@@ -157,6 +159,8 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     private calculatorService: CalculatorService, 
     private translateService: TranslateService,
     private characterService: CharacterService,
+    private weaponService: WeaponService,
+    private artifactService: ArtifactService,
     private relayoutMsgService: RelayoutMsgService,) { 
       super(relayoutMsgService);
     }
@@ -318,6 +322,36 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
         badDmgInfoIndexs.push(i);
         continue;
       }
+      let iconSrc = "";
+      let iconBGColor = Const.SKILL_ICON_GRADIENT[0] + 
+      Const.ELEMENT_COLOR_MAP[Const.ELEMENT_BONUS_TYPE_MAP.get(dmgParam.elementBonusType)!] +
+      Const.SKILL_ICON_GRADIENT[1];
+      switch(skill){
+        case Const.NAME_SKILLS_NORMAL:
+        case Const.NAME_SKILLS_SKILL:
+        case Const.NAME_SKILLS_ELEMENTAL_BURST:
+        case Const.NAME_SKILLS_OTHER:
+          iconSrc = (this.data.skills![skill as keyof CharSkills] as CharSkill).images.icon;
+          break;
+        case Const.NAME_SKILLS_PROUD:
+          iconSrc = (this.data.skills![skill as keyof CharSkills] as CharSkill[])[skillIndex!].images.icon;
+          break;
+        case Const.NAME_CONSTELLATION:
+          iconSrc = (this.data.skills!.talents)[skillIndex!].images.icon;
+          break;
+        case Const.NAME_EFFECT: {
+          const weapon = this.weaponService.get(this.weaponService.getIndex(this.data.id)!);
+          iconSrc = weapon.images.icon;
+          iconBGColor = "";
+          break;
+        }
+        case Const.NAME_SET: {
+          const set = this.artifactService.get(this.artifactService.getStorageFullSetIndex(this.data.id)!);
+          iconSrc = set.images.icon;
+          iconBGColor = "";
+          break;
+        }
+      }
       this.damageInfos.push({
         name: skill,
         skillIndex: skillIndex,
@@ -334,6 +368,8 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
         times: times,
         tag: dmgParam.tag,
         isAbsoluteDmg: dmgParam.isAbsoluteDmg,
+        iconSrc: iconSrc,
+        iconBGColor: iconBGColor,
       })
     }
     badDmgInfoIndexs.reverse().forEach((value: number) => {

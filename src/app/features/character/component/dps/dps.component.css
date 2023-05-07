@@ -147,8 +147,8 @@ input[type=number] {
 }
 
 .list-container::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
 }
 
 .list-container::-webkit-scrollbar-thumb {
@@ -166,7 +166,7 @@ input[type=number] {
 .dmg-item {
     padding: 5px;
     margin: 1% 0;
-    border: 1px solid rgba(128, 128, 128, 0.15);
+    border: 2px dashed rgba(128, 128, 128, 0.35);
 }
 
 .skill-prefix-name {
@@ -179,6 +179,20 @@ input[type=number] {
     display: flex;
     align-items: center;
     gap: 0 0.2em;
+}
+
+.align-start {
+    align-items: flex-start;
+    margin-bottom: 0.4em;
+}
+
+.dmg-info-detail {
+    border: 1px solid rgba(128, 128, 128, 0.255);
+    box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.3);
+    margin-top: 0.6em;
+    padding: 1em 0.5em 0 0.5em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .last-right {
@@ -214,12 +228,24 @@ input[type=number] {
     padding: 4px;
 }
 
-::ng-deep .align-select-expand-icon .mat-select-arrow-wrapper {
+:host ::ng-deep .align-select-expand-icon .mat-select-arrow-wrapper {
     transform: translate(4.5px, 0);
 }
 
-::ng-deep .diabled-black-color .mat-input-element:disabled {
+:host ::ng-deep .diabled-black-color .mat-input-element:disabled {
     color: black;
+}
+
+.detail-field {
+    max-width: 145px;
+}
+
+.detail-field-left {
+    margin-right: auto;
+}
+
+.detail-field-right {
+    margin-left: auto;
 }
 
 .no-item-tip {

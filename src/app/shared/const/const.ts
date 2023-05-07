@@ -1840,6 +1840,17 @@ export class Const {
     [8, "DENDRO"],
   ])
   
+  static readonly ELEMENT_BONUS_TYPE_MAP:  Map<string, string> = new Map([
+    ["DMG_BONUS_CRYO", "CRYO"],
+    ["DMG_BONUS_ANEMO", "ANEMO"],
+    ["DMG_BONUS_ELECTRO", "ELECTRO"],
+    ["DMG_BONUS_GEO", "GEO"],
+    ["DMG_BONUS_PYRO", "PYRO"],
+    ["DMG_BONUS_HYDRO", "HYDRO"],
+    ["DMG_BONUS_DENDRO", "DENDRO"],
+    ["DMG_BONUS_PHYSICAL", "PHYSICAL"],
+  ])
+  
   //*********************************
   //           共通符
   //*********************************
