@@ -667,12 +667,14 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     return new Promise<void>((resolve, reject) => {
       //チェック
       let hasError = false;
-      for(let key in this.userInput.controls){
-        this.userInput.get(key)!.markAsDirty();
-        this.userInput.get(key)!.markAsTouched();
-        const controlErrors: ValidationErrors|undefined|null = this.userInput!.get(key)?.errors;
-        if (controlErrors != null && controlErrors != undefined) {
-          hasError = true;
+      for(let [key, hidden] of this.userInputHiddenStatus.entries()){
+        if(!hidden){
+          this.userInput.get(key)!.markAsDirty();
+          this.userInput.get(key)!.markAsTouched();
+          const controlErrors: ValidationErrors|undefined|null = this.userInput!.get(key)?.errors;
+          if (controlErrors != null && controlErrors != undefined) {
+            hasError = true;
+          }
         }
       }
       if(hasError){
@@ -980,7 +982,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       if(item.hidden){
         state = item.hidden.some((v) => this.userInputHiddenFlag.has(v));
       }
-      tempMap.set(item.name, state);
+      tempMap.set(item.model, state);
     })
     this.userInputHiddenStatus = tempMap;
   }
