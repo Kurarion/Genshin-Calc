@@ -11178,7 +11178,8 @@
                         "maxValConstIndex": 1,
                         "target": ["DMG_BONUS_CRYO", "DMG_BONUS_ANEMO", "DMG_BONUS_ELECTRO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_DENDRO"],
                         "selfElementTypeLimit": true,
-                        "settingType": "resident"
+                        "settingType": "switch",
+                        "defaultEnable":false
                     }]
                 }
             ]
