@@ -5,6 +5,7 @@ import { Const, DamageResult, ExtraDataService, GenshinDataService, StorageServi
 export interface DPSStorageInfo {
   dmgs: DmgInfo[];
   duration: number;
+  outline?: string;
 }
 
 export interface DmgInfo {
@@ -114,6 +115,15 @@ export class DPSService {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].info.length;
+  }
+
+  //DPS組合せタグ取得
+  getStorageInfoTags(charIndex: string | number){
+    let keyStr = charIndex.toString();
+    this.initDefaultData(keyStr);
+    return this.dataMap[keyStr].info.map((info: DPSStorageInfo,) => {
+      return info.outline ?? ''
+    })
   }
 
   //全組合せ情報取得

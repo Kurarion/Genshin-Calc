@@ -21,6 +21,14 @@
                         </div>
                         <!-- 値 -->
                         <br>
+                        <mat-form-field appearance="legacy" floatLabel="always" class="long-field">
+                            <mat-label [innerText]="'DPS.OUTLINE' | translate"></mat-label>
+                            <input matInput
+                                maxlength="40"
+                                [(ngModel)]="showOutlineValue"
+                                (keyup)="onOutlineValueKeyup($event)"
+                            >
+                        </mat-form-field>
                         <mat-form-field appearance="legacy" floatLabel="always" class="normal-field">
                             <mat-label [innerText]="'DPS.DURATION' | translate"></mat-label>
                             <input matInput 
@@ -41,10 +49,12 @@
                         <button class="add-button" mat-icon-button (click)="addTab()" matTooltip="Add" matTooltipPosition="above">
                             <mat-icon>add_circle</mat-icon>
                         </button>
+                        <button class="add-button" mat-icon-button (click)="addCodeTab()" matTooltip="Import" matTooltipPosition="above">
+                            <mat-icon>arrow_circle_down</mat-icon>
+                        </button>
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>
-            <!-- <mat-divider></mat-divider> -->
             <div class="list-container">
                 <div class="dmg-list">
                     <div *ngIf="damageInfos && damageInfos.length == 0" class="no-item-tip">
@@ -112,7 +122,6 @@
                     </ng-container>
                 </div>
             </div>
-            <!-- <mat-divider></mat-divider> -->
             <br>
             <div class="one-line">
                 <div class="white"></div>
@@ -121,6 +130,16 @@
                     <div class="dps-val">{{ dps }}</div>
                 </div>
             </div>
+            <br>
+            <mat-divider></mat-divider>
+            <br>
+            <mat-form-field appearance="outline" floatLabel="always" class="auto-field">
+                <mat-label [innerText]="'DPS.CODE' | translate"></mat-label>
+                <input matInput [ngModel]="showDPSCodeValue" readonly>
+                <button mat-icon-button matSuffix (click)="copyCode()">
+                    <mat-icon class="material-icons-outlined">share</mat-icon>
+                </button>
+            </mat-form-field>
         </mat-card-content>
     </mat-card>
 </ng-container>

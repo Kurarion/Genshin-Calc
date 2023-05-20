@@ -76,6 +76,11 @@ table tr:first-child .content-right {
 
 .add-button {
     width: 30px;
+    height: 30px;
+}
+
+:host ::ng-deep .mat-icon-button {
+    line-height: 30px !important;
 }
 
 :host ::ng-deep .set-field mat-form-field {

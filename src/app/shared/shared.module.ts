@@ -12,6 +12,7 @@ import { MatFilteringSelectorComponent } from './component/mat-filtering-selecto
 import { CharaOptionComponent } from './component/chara-option/chara-option.component';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { ManualDialogComponent } from './component/manual-dialog/manual-dialog.component';
+import { TextInputDialogComponent } from './component/text-input-dialog/text-input-dialog.component';
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -21,8 +22,9 @@ import { RemoveZeroSuffixPipe } from './pipe/remove-zero-suffix.pipe';
 import { ImgErrorHandleDirective } from './directive/img-error-handle.directive';
 import { ImgLoadAndErrorHandleDirective } from './directive/img-load-and-error-handle.directive';
 
-export { ConfirmDialogComponent, ConfirmDialogData } from './component/confirm-dialog/confirm-dialog.component'
-export { ManualDialogComponent, ManualDialogData } from './component/manual-dialog/manual-dialog.component'
+export { ConfirmDialogComponent, ConfirmDialogData } from './component/confirm-dialog/confirm-dialog.component';
+export { ManualDialogComponent, ManualDialogData } from './component/manual-dialog/manual-dialog.component';
+export { TextInputDialogComponent, TextInputDialogData, TextInputDialogResult } from './component/text-input-dialog/text-input-dialog.component';
 
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -66,6 +68,7 @@ let shardList: any[] = [
   CharaOptionComponent,
   ConfirmDialogComponent,
   ManualDialogComponent,
+  TextInputDialogComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,

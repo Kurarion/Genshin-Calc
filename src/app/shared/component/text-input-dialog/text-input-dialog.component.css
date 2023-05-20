@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+}
+
+.container-content {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em 0;
+    align-items: center;
+    width: 60vw;
+}
+
+.container-action {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-content {
+    text-align: left;
+    width: 100%;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.form-field-textarea {
+    height: 40vh;
+    resize: none;
+}

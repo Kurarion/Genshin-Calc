@@ -73,6 +73,11 @@ table tr:first-child .content-right {
 
 .add-button {
     width: 30px;
+    height: 30px;
+}
+
+:host ::ng-deep .mat-icon-button {
+    line-height: 30px !important;
 }
 
 .menu-div {
@@ -80,7 +85,7 @@ table tr:first-child .content-right {
 }
 
 .switch {
-    transform: translate(68px, 5px);
+    transform: translate(62px, 5px);
 }
 
 .tab {

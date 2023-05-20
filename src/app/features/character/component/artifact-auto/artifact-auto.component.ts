@@ -17,6 +17,7 @@ interface InputItem {
   hasEmpty?: boolean,
   isRequire: boolean,
   selectListName?: string,
+  isSelectObjectList?: boolean,
   useNameMap?: "default" | "custom" | "none",
   optionNameMap?: Record<string, string>,
   optionTranslationTag?: string,
@@ -127,6 +128,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       isRequire: true,
       hasEmpty: false,
       selectListName: "dpsIndexs",
+      isSelectObjectList: true,
       model: "usedDPSIndex",
       useNameMap: "none",
       hidden: [this.notDPS],
@@ -263,7 +265,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     maxCritRate: new UntypedFormControl(0, [Validators.min(this.minCritRate)]),//最大会心率
   })
 
-  userInputList: Record<string, (number|string)[]> = {
+  userInputList: Record<string, (number|string|{name: any, value: any})[]> = {
     dpsIndexs: [],
     damageBaseList: [],
     elementTypeList: [],
@@ -990,7 +992,26 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   }
 
   setDPSIndexList() {
-    const len = this.DPSService.getStorageInfoLength(this.characterIndex);
-    this.userInputList['dpsIndexs'] = Array.from({length: len}).map((_, i) => i + 1);
+    const tags = this.DPSService.getStorageInfoTags(this.characterIndex);
+    this.userInputList['dpsIndexs'] = Array.from({length: tags.length}).map((_, i) => {
+      const index = i + 1;
+      const outline = tags[i];
+      const hasTag = outline.length > 0;
+      let tag = outline;
+      let name = '';
+      if (outline.length > 11) {
+        tag = outline.substring(0, 11).trimEnd() + '...';
+      }
+      if (hasTag) {
+        name = index.toString() + ' ('+ tag + ')';
+      } else {
+        name = index.toString();
+      }
+
+      return {
+        name: name,
+        value: index,
+      };
+    });
   }
 }

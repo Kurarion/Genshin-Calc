@@ -465,6 +465,9 @@
   },
   "DPS": {
     "NAME": "DPS",
+    "OUTLINE": "Label",
+    "CODE": "Code",
+    "COPIED": "Copied to clipboard!",
     "DURATION": "Time Axis",
     "SECONDS": "s",
     "ELEMENT_TYPE": "Element Type",
@@ -475,7 +478,15 @@
     "HIT": "-Hit",
     "DPS_LABEL": "DPS",
     "DMG_VAL_LABEL": "[Damage]",
-    "APPENDED": "DPS: Damage information added successfully",
-    "TIPS": "Tips: Click the [+] button on the left side of the Damage Type to add damage information to the DPS list."
+    "APPENDED": "DPS: Damage information added successfully!",
+    "TIPS": "Tips: Click the [+] button on the left side of the Damage Type to add damage information to the DPS list.",
+    "IMPORT_DIALOG":{
+      "TITLE": "DPS Code Import", 
+      "CONTENT": "Please import the code for character ID「{{CHAR_ID}}」",
+      "OK": "Import",
+      "CANCEL": "Cancel", 
+      "SUCCESS": "Import succeeded!",
+      "FAILED": "Import failed."
+    }
   }
 }

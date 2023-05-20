@@ -1,0 +1,16 @@
+<div class="container">
+    <h1 mat-dialog-title>{{ data.title| translate:data.titleVal }}</h1>
+    <div mat-dialog-content class="container-content">
+        <div class="text-content">
+            <span>{{ data.content | translate:data.contentVal }}</span>
+        </div>
+        <mat-form-field appearance="fill" floatLabel="always" class="form-field">
+            <mat-label>{{ data.inputLabel | translate:data.inputLabelVal}}</mat-label>
+            <textarea matInput [(ngModel)]="result.value" class="form-field-textarea"></textarea>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="container-action">
+        <button mat-button (click)="onNoClick()" cdkFocusInitial>{{ data.cancel | translate:data.cancelVal }}</button>
+        <button mat-button (click)="onOkClick()">{{ data.ok | translate:data.okVal }}</button>
+    </div>
+</div>

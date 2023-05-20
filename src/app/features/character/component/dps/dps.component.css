@@ -73,6 +73,11 @@ table tr:first-child .content-right {
 
 .add-button {
     width: 30px;
+    height: 30px;
+}
+
+:host ::ng-deep .mat-icon-button {
+    line-height: 30px !important;
 }
 
 .menu-div {
@@ -110,6 +115,14 @@ input[type=number] {
 
 .normal-field {
     width: 13em;
+}
+
+.long-field {
+    width: 280px;
+}
+
+.auto-field {
+    width: 100%;
 }
 
 .element-fix {

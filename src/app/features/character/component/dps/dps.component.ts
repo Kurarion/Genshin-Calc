@@ -1,7 +1,9 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { ArtifactService, CalculatorService, character, CharacterService, CharSkill, CharSkills, Const, DamageResult, DPSService, DPSStorageInfo, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
+import { ArtifactService, CalculatorService, character, CharacterService, CharSkill, CharSkills, Const, DamageResult, DmgInfo, DPSService, DPSStorageInfo, ExpansionPanelCommon, RelayoutMsgService, TextInputDialogComponent, TextInputDialogData, TextInputDialogResult, TYPE_SYS_LANG, WeaponService } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 interface DamageInfo {
@@ -116,6 +118,30 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     [Const.NAME_SET + '2']: "ARTIFACT_NAME",
   }
 
+  readonly skillCodeKeyMap: Map<string, string> = new Map([
+    [Const.NAME_SKILLS_NORMAL, "A"],
+    [Const.NAME_SKILLS_SKILL, "E"],
+    [Const.NAME_SKILLS_ELEMENTAL_BURST, "Q"],
+    [Const.NAME_SKILLS_OTHER, "X"],
+    [Const.NAME_SKILLS_PROUD, "T"],
+    [Const.NAME_CONSTELLATION, "C"],
+    [Const.NAME_EFFECT, "W"],
+    [Const.NAME_SET, "S"],
+  ])
+
+  readonly skillCodeKeyReverseMap: Map<string, string> = (()=>{
+    const tempMap = new Map<string, string>()
+    this.skillCodeKeyMap.forEach((v: string, k: string) => {
+      tempMap.set(v, k)
+    })
+    return tempMap
+  })()
+
+  readonly areaSplitChar = "|"
+  readonly listSplit = ">"
+  readonly skillInfoSplit = "#"
+  readonly valusSplit = ","
+
   //キャラデータ
   @Input('data') data!: character;
   //言語
@@ -143,6 +169,10 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
   dataAppendChangedSub!: Subscription;
   //DPSタイム
   showDurationValue!: number;
+  //DPSタグ
+  showOutlineValue!: string;
+  //DPSコード
+  showDPSCodeValue!: string;
   //元素付与
   overrideElement!: string;
   //DPS
@@ -161,7 +191,9 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     private characterService: CharacterService,
     private weaponService: WeaponService,
     private artifactService: ArtifactService,
-    private relayoutMsgService: RelayoutMsgService,) { 
+    private relayoutMsgService: RelayoutMsgService,
+    private matSnackBar: MatSnackBar,
+    private matDialog: MatDialog,) { 
       super(relayoutMsgService);
     }
 
@@ -189,6 +221,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
       setTimeout(()=>{
         //再計算
         this.updateDatas();
+        this.calcCode();
       })
     });
     //データ更新
@@ -196,12 +229,14 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
       if(v) {
         //再計算
         this.updateDatas();
+        this.calcCode();
       }
     })
     //データ追加
     this.dataAppendChangedSub = this.DPSService.changed().subscribe(()=>{
       //再計算
       this.updateDatas();
+      this.calcCode();
     })
   }
 
@@ -227,6 +262,48 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     this.setSelectedIndex();
   }
 
+  addCodeTab() {
+    const characterIndex = this.data.id.toString();
+    const contentVal = {'CHAR_ID': characterIndex};
+    const data: TextInputDialogData = {
+      title: 'DPS.IMPORT_DIALOG.TITLE',
+      content: 'DPS.IMPORT_DIALOG.CONTENT',
+      contentVal: contentVal,
+      inputLabel: 'DPS.CODE',
+      cancel: 'DPS.IMPORT_DIALOG.CANCEL',
+      ok: 'DPS.IMPORT_DIALOG.OK',
+    }
+    const dialogRef = this.matDialog.open(TextInputDialogComponent, {data});
+    dialogRef.afterClosed().subscribe((result: TextInputDialogResult) => {
+      if (result.isOk) {
+        const code = result.value;
+        const [info, ok] = this.importCode(code);
+        if (!ok || info === null) {
+          //失敗
+          this.translateService.get('DPS.IMPORT_DIALOG.FAILED').subscribe((res: string) => {
+            this.matSnackBar.open(res, undefined, {
+              duration: 500
+            })
+          })
+        } else {
+          this.DPSService.addStorageInfo(this.data.id);
+          const currentStorageIndex = this.infos.length - 1;
+          this.infos[currentStorageIndex].dmgs = info.dmgs;
+          this.infos[currentStorageIndex].duration = info.duration;
+          this.infos[currentStorageIndex].outline = info.outline;
+          this.localAddTab();
+          this.setSelectedIndex();
+          //成功
+          this.translateService.get('DPS.IMPORT_DIALOG.SUCCESS').subscribe((res: string) => {
+            this.matSnackBar.open(res, undefined, {
+              duration: 500
+            })
+          })
+        }
+      }
+    })
+  }
+
   removeTab(index: number) {
     this.tabs.splice(index, 1);
     this.DPSService.deleteStorageInfo(this.data.id, index);
@@ -243,12 +320,14 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     this.infos[this.selectedIndex].dmgs.splice(index, 1);
     this.damageInfos.splice(index, 1);
     this.calcDPS();
+    this.calcCode();
   }
 
   changeProp(index: number, prop: keyof DamageResult) {
     this.infos[this.selectedIndex].dmgs[index].damageProp = prop;
     this.damageInfos[index].resultProp = prop;
     this.calcDPS();
+    this.calcCode();
   }
 
   onTabChanged() {
@@ -274,6 +353,13 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     }
     this.infos[this.selectedIndex].duration = value;
     this.calcDPS();
+    this.calcCode();
+  }
+
+  onOutlineValueKeyup(event: KeyboardEvent){
+    let originValue = (event.target as HTMLInputElement).value;
+    this.infos[this.selectedIndex].outline = originValue;
+    this.calcCode();
   }
 
   onTimesValueKeyup(index: number, event: KeyboardEvent){
@@ -284,6 +370,17 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     }
     this.infos[this.selectedIndex].dmgs[index].times = value;
     this.calcDPS();
+    this.calcCode();
+  }
+
+  copyCode() {
+    navigator.clipboard.writeText(this.showDPSCodeValue).then(() =>{
+      this.translateService.get('DPS.COPIED').subscribe((res: string) => {
+        this.matSnackBar.open(res, undefined, {
+          duration: 500
+        })
+      })
+    })
   }
 
   private localAddTab(){
@@ -294,6 +391,8 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
   private updateShowValue(){
     let durationValue = this.infos[this.selectedIndex].duration;
     this.showDurationValue = parseFloat(durationValue.toFixed(8));
+    this.showOutlineValue = this.infos[this.selectedIndex].outline ?? "";
+    this.calcCode();
   }
 
   private initInfos(){
@@ -390,4 +489,124 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
     this.onExpandStatusChanged();
   }
 
+  private calcCode() {
+    const areaSplitChar = this.areaSplitChar;
+    const listSplit = this.listSplit;
+    const skillInfoSplit = this.skillInfoSplit;
+    const valusSplit = this.valusSplit;
+
+    const characterId = this.data.id.toString();
+    const outline = encodeURI(this.showOutlineValue ?? "");
+    const duration = this.showDurationValue.toString();
+    const data = this.infos[this.selectedIndex].dmgs.reduce((previousValue: string, info: DmgInfo)=>{
+      const skillIndex = info.skillIndex?.toString() ?? '';
+      const indexOffset = this.getIndexOffset(info.skill);
+      const hasSkillIndex = skillIndex.length > 0;
+      const skillCode = this.skillCodeKeyMap.get(info.skill)! + (hasSkillIndex ? (info.skillIndex! + indexOffset) : '');
+      const valueIndexs = info.valueIndexs.join(valusSplit);
+      const resultIndex = info.resultIndex.toString();
+      const damageProp = info.damageProp.toString();
+      const times = info.times?.toString() ?? '1';
+      const temp = [
+        skillCode,
+        valueIndexs,
+        resultIndex,
+        damageProp,
+        times,
+      ].join(skillInfoSplit);
+
+      return previousValue + listSplit + temp;
+    }, '')
+
+    this.showDPSCodeValue = [characterId, outline, duration, data].join(areaSplitChar);
+  }
+
+  private importCode(code: string): [DPSStorageInfo | null, boolean] {
+    const areaSplitChar = this.areaSplitChar;
+    const listSplit = this.listSplit;
+    const skillInfoSplit = this.skillInfoSplit;
+    const valusSplit = this.valusSplit;
+
+    try {
+      switch (true) {
+        default: {
+          if (!code) {
+            break;
+          }
+          const vals = code.trim().replace(/[\n\s]/g, '').split(areaSplitChar);
+          if (vals.length !== 4) {
+            break;
+          }
+          const characterId = vals[0];
+          const outline = decodeURI(vals[1]);
+          const duration = parseFloat(vals[2]) || 1;
+          const infos = vals[3];
+          if (characterId !== this.data.id.toString()) {
+            break;
+          }
+  
+          const skillInfo = infos.split(listSplit);
+          const skillRes = []
+          for (let i = 1; i < skillInfo.length; ++i) {
+            const tempParts = skillInfo[i].split(skillInfoSplit);
+            if (tempParts.length === 5) {
+              const originSkillCode = tempParts[0];
+              const tempSkillCode = originSkillCode.substring(0, 1);
+              const tempSkill = this.skillCodeKeyReverseMap.get(tempSkillCode)
+              if (!tempSkill) {
+                continue;
+              }
+              let tempSkillIndex: number|undefined = parseInt(originSkillCode.substring(1)) - this.getIndexOffset(tempSkill);
+              if (isNaN(tempSkillIndex)) {
+                tempSkillIndex = undefined;
+              }
+              const tempValueIndexsStr = tempParts[1];
+              const tempValueIndexs = tempValueIndexsStr.split(valusSplit).map((v: string) => {
+                return parseInt(v) || 0;
+              })
+              let tempResultIndex = parseInt(tempParts[2]);
+              if (isNaN(tempResultIndex)) {
+                tempResultIndex = 0;
+              }
+              const tempDamageProp = tempParts[3] as keyof DamageResult;
+              let tempTimes = parseFloat(tempParts[4]);
+              if (isNaN(tempTimes)) {
+                tempTimes = 1;
+              }
+
+              const tempDmgInfo = {
+                skill: tempSkill,
+                valueIndexs: tempValueIndexs,
+                resultIndex: tempResultIndex,
+                skillIndex: tempSkillIndex,
+                damageProp: tempDamageProp,
+                times: tempTimes,
+              } as DmgInfo;
+    
+              skillRes.push(tempDmgInfo);
+            }
+          }
+  
+          return [{
+            dmgs: skillRes,
+            duration,
+            outline,
+          } as DPSStorageInfo, true]
+        }
+      }
+      //失敗
+      return [null, false]
+    } catch {
+      //失敗
+      return [null, false]
+    }
+  }
+
+  private getIndexOffset(skillName: string) {
+    let indexOffset = 1;
+    if (Const.NAME_SET === skillName) {
+      indexOffset = 0;
+    }
+    return indexOffset;
+  }
 }
