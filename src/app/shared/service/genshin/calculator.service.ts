@@ -2415,6 +2415,54 @@ export class CalculatorService {
                       break;
                   }
                 }
+                if(shieldInfo.originSkills){
+                  const tempRate = rate
+                  for(let i = 0; i < shieldInfo.originSkills.length; ++i){
+                    let originRateInfo = characterData!.skills![shieldInfo.originSkills[i] as keyof CharSkills] as CharSkill;
+                    let originSkillLevel = this.getCharacterSkillLevel(indexStr, shieldInfo.originSkills[i]);
+                    let originRate = originRateInfo.paramMap[originSkillLevel][shieldInfo.originIndexs![i]]
+                    switch(shieldInfo.originRelations![i]){
+                      case "*":
+                        rate *= originRate
+                        break;
+                      case "+":
+                        rate += originRate
+                        break;
+                      case "-":
+                        rate -= originRate
+                        break;
+                      case "/":
+                        rate /= originRate
+                        break;
+                    }
+  
+                    let tempExtra = 0
+                    let originConstVal = originRateInfo.paramMap[originSkillLevel][shieldInfo.originConstIndexs![i]]
+                    switch(shieldInfo.originConstRelations![i]){
+                      case "*":
+                        tempExtra = tempRate * originConstVal
+                        break;
+                      case "+":
+                        tempExtra = tempRate + originConstVal
+                        break;
+                      case "-":
+                        tempExtra = tempRate - originConstVal
+                        break;
+                      case "/":
+                        tempExtra = tempRate / originConstVal
+                        break;
+                    }
+  
+                    switch(shieldInfo.originInnerRelations![i]){
+                      case "+":
+                        extra += tempExtra
+                        break;
+                      case "-":
+                        extra -= tempExtra
+                        break;
+                    }
+                  }
+                }
                 params.push({
                   base: base,
                   rate: rate,
