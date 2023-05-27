@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ConfirmDialogComponent, ConfirmDialogData, Const, HttpService, LanguageService, ManualDialogComponent, ManualDialogData, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CharacterQueryParam, CharacterService, ConfirmDialogComponent, ConfirmDialogData, Const, EnkaService, HttpService, LanguageService, MainQueryParam, ManualDialogComponent, ManualDialogData, SettingService, TYPE_SYS_LANG, TextInputDialogComponent, OverlayService } from 'src/app/shared/shared.module';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -61,10 +61,15 @@ export class MainComponent implements OnInit, OnDestroy {
 
   constructor(private httpService: HttpService,
     private languageService: LanguageService,
+    private route: ActivatedRoute,
     private router: Router,
+    private characterService: CharacterService,
+    private enkaService: EnkaService,
+    private settingService: SettingService,
     private translateService: TranslateService,
     private matDialog: MatDialog,
-    private matSnackBar: MatSnackBar,) {
+    private matSnackBar: MatSnackBar,
+    private overlayService: OverlayService,) {
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
     //言語変更検知
@@ -77,7 +82,68 @@ export class MainComponent implements OnInit, OnDestroy {
     }, 100)
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this.route.queryParams
+      .subscribe((params: MainQueryParam) => {
+        //戻る防止
+        history.pushState(null, '', '');
+        window.addEventListener('popstate', ()=>{
+          history.pushState(null, '', '');
+        })
+        //パラメータ処理
+        new Promise<void>((resolve, reject) => {
+          this.overlayService.showLoading();
+          setTimeout(async () => {
+            try {
+              //Enka絞り込み
+              if(params.filterEnka && params.filterEnka === '1') {
+                this.settingService.resetSetting();
+                const setting = this.settingService.getMenuSetting();
+                setting.filterEnka = true;
+              }
+              //Enka UID
+              if(params.uid) {
+                this.enkaService.updateEnkaUID(params.uid);
+                await this.enkaService.initEnkaData(params.uid).then((addedNum: number)=>{
+                  //完了
+                  let messageId = 'ENKA.DONE'
+                  if (addedNum === 0) {
+                    messageId = 'ENKA.DONE_ZERO'
+                  }
+                  this.translateService.get(messageId).subscribe((res: string) => {
+                    this.matSnackBar.open(res, undefined, {
+                      duration: 2000
+                    })
+                  });
+                }).catch(()=>{
+                  //失敗
+                  this.translateService.get('ENKA.FAILED').subscribe((res: string) => {
+                    this.matSnackBar.open(res, undefined, {
+                      duration: 2000
+                    })
+                  });
+                  reject();
+                })
+              }
+              //キャラページに遷移
+              if(params.character &&
+                Object.keys(this.characterService.getMap()).includes(params.character)) {
+                  const characterQueryParam: CharacterQueryParam = {
+                    index: params.character,
+                  }
+                  this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                  this.router.navigate([Const.MENU_CHARACTER], {queryParams: characterQueryParam, skipLocationChange: true}));
+              }
+              resolve();
+            } catch (error) {
+              reject();
+            }
+          })
+        }).finally(() => {
+          this.overlayService.hideLoading();
+        })
+      }
+    );
     this.initializeBackGroundImage();
   }
 

@@ -4,7 +4,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { EnkaService } from 'src/app/shared/shared.module';
+import { EnkaService, OverlayService } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-enka',
@@ -15,7 +15,16 @@ export class EnkaComponent implements OnInit {
 
   uid = new UntypedFormControl();
 
-  constructor(private enkaService: EnkaService, private httpClient: HttpClient, private matSnackBar: MatSnackBar, private translateService: TranslateService, private router: Router) { }
+  constructor(private enkaService: EnkaService, 
+    private httpClient: HttpClient, 
+    private matSnackBar: MatSnackBar, 
+    private translateService: TranslateService, 
+    private router: Router,
+    private overlayService: OverlayService,) {
+    this.enkaService.getEnkaUIDUpdate().subscribe((uid: string) => {
+      this.uid.setValue(uid);
+    })
+  }
 
   ngOnInit(): void {
     let temp = this.enkaService.getData();
@@ -29,6 +38,7 @@ export class EnkaComponent implements OnInit {
       this.uid.markAsTouched();
       this.uid.setErrors({'blank': true});
     }else{
+      this.overlayService.showLoading();
       this.uid.setErrors(null);
       this.router.navigate(['/']);
       this.enkaService.initEnkaData(this.uid.value).then((addedNum: number)=>{
@@ -49,6 +59,8 @@ export class EnkaComponent implements OnInit {
             duration: 2000
           })
         });
+      }).finally(()=>{
+        this.overlayService.hideLoading();
       })
     }
   }

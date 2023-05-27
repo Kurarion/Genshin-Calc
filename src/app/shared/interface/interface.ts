@@ -10,6 +10,12 @@ export interface CharacterQueryParam {
   index?: string | number,
 }
 
+export interface MainQueryParam {
+  uid?: string,
+  filterEnka?: string,
+  character?: string,
+}
+
 /** メニューインタフェース */
 export interface CharaInfo {
   index: string;

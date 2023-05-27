@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, NoCommaPipe, RelayoutMsgService, TYPE_SYS_LANG, DPSService, CharacterService } from 'src/app/shared/shared.module';
+import { ArtifactService, ArtifactStorageInfo, ArtifactStoragePartData, CalculatorService, Const, DamageParam, DamageResult, ExpansionPanelCommon, GenshinDataService, GlobalProgressService, LanguageService, NoCommaPipe, RelayoutMsgService, TYPE_SYS_LANG, DPSService, CharacterService, OverlayService } from 'src/app/shared/shared.module';
 import type { EChartsOption } from 'echarts';
 import { lastValueFrom, Subscription } from 'rxjs';
 
@@ -370,7 +370,8 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     private DPSService: DPSService,
     private characterService: CharacterService,
     private languageService: LanguageService,
-    private globalProgressService: GlobalProgressService) {
+    private globalProgressService: GlobalProgressService,
+    private overlayService: OverlayService) {
       super(relayoutMsgService);
       this.subsMap.forEach((v, k)=>{
         this.subsReverseMap.set(v.toString(), k);
@@ -669,6 +670,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     this.globalProgressService.setValue(0);
     this.hasClickCal = true;
     return new Promise<void>((resolve, reject) => {
+      this.overlayService.showLoading();
       //チェック
       let hasError = false;
       for(let [key, hidden] of this.userInputHiddenStatus.entries()){
@@ -958,6 +960,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       this.globalProgressService.setMode("determinate");
       this.globalProgressService.setValue(100);
       this.hasClickCal = false;
+      this.overlayService.hideLoading();
     })
   }
 

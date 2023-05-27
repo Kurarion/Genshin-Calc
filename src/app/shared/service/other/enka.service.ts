@@ -31,6 +31,8 @@ export class EnkaService {
   //プログレス値
   private enkaUpdate: Subject<void> = new Subject<void>();
   private enkaUpdate$ = this.enkaUpdate.asObservable();
+  private enkaUIDUpdate: Subject<string> = new Subject<string>();
+  private enkaUIDUpdate$ = this.enkaUIDUpdate.asObservable();
 
   constructor(
     private globalProgressService: GlobalProgressService,
@@ -70,6 +72,16 @@ export class EnkaService {
   //enka状態取得
   getEnkaUpdate(){
     return this.enkaUpdate$;
+  }
+
+  //enka uid状態取得
+  getEnkaUIDUpdate(){
+    return this.enkaUIDUpdate$;
+  }
+
+  //enka uid状態更新
+  updateEnkaUID(uid: string){
+    this.enkaUIDUpdate.next(uid);
   }
 
   //-----------------------------------------

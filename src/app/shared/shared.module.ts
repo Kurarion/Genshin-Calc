@@ -13,6 +13,7 @@ import { CharaOptionComponent } from './component/chara-option/chara-option.comp
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { ManualDialogComponent } from './component/manual-dialog/manual-dialog.component';
 import { TextInputDialogComponent } from './component/text-input-dialog/text-input-dialog.component';
+import { LoadingOverlayComponent } from './component/loading-overlay/loading-overlay.component';
 import { Const } from './const/const';
 import { NoCommaPipe } from './pipe/no-comma.pipe';
 import { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -25,6 +26,7 @@ import { ImgLoadAndErrorHandleDirective } from './directive/img-load-and-error-h
 export { ConfirmDialogComponent, ConfirmDialogData } from './component/confirm-dialog/confirm-dialog.component';
 export { ManualDialogComponent, ManualDialogData } from './component/manual-dialog/manual-dialog.component';
 export { TextInputDialogComponent, TextInputDialogData, TextInputDialogResult } from './component/text-input-dialog/text-input-dialog.component';
+export { LoadingOverlayComponent } from './component/loading-overlay/loading-overlay.component';
 
 export { NoCommaPipe } from './pipe/no-comma.pipe';
 export { NoStrongPipe } from './pipe/no-strong.pipe';
@@ -48,6 +50,7 @@ export { ExtraArtifactSetData, ExtraCharacterSkillsData, ExtraStatus, ExtraChara
 export { GenshinDataService } from './service/genshin/genshin-data.service';
 export { TeamBuff, SelfTeamBuff, BuffResult, DamageParam, DamageResult, HealingResult, ShieldResult, ProductResult, CalculatorService } from './service/genshin/calculator.service';
 export { RelayoutMsgService } from './service/relayout-msg.service';
+export { OverlayService } from './service/overlay.service';
 
 export { EnkaStorageData, EnkaService } from './service/other/enka.service';
 
@@ -69,6 +72,7 @@ let shardList: any[] = [
   ConfirmDialogComponent,
   ManualDialogComponent,
   TextInputDialogComponent,
+  LoadingOverlayComponent,
   NoCommaPipe,
   NoStrongPipe,
   RatePipe,

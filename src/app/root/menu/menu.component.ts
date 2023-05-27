@@ -38,11 +38,6 @@ export class MenuComponent implements OnInit {
     this.menuSetting = this.settingService.getMenuSetting();
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
-    //戻る防止
-    history.pushState(null, '', '');
-    window.addEventListener('popstate', ()=>{
-      history.pushState(null, '', '');
-    })
     //言語変更検知
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG)=>{
       this.currentLanguage = lang;

@@ -50,6 +50,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [],
@@ -98,6 +99,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     CdkTreeModule,
     ClipboardModule,
     CdkAccordionModule,
+    OverlayModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -143,6 +145,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     CdkTreeModule,
     ClipboardModule,
     CdkAccordionModule,
+    OverlayModule,
   ],
 })
 export class AngularMaterialModule {}

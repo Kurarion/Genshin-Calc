@@ -20,6 +20,25 @@ export interface SysSetting {
 })
 export class SettingService {
 
+  readonly defaultBool: boolean = false;
+  readonly defaultElementType: Record<ElementType, boolean> = {
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+  };
+  readonly defaultWeaponType: Record<WeaponType, boolean> = {
+    "WEAPON_SWORD_ONE_HAND": true,
+    "WEAPON_CATALYST": true,
+    "WEAPON_CLAYMORE": true,
+    "WEAPON_BOW": true,
+    "WEAPON_POLE": true,
+  };
+  readonly defaultContent: string = "";
+
   //データ
   setting!: SysSetting;
 
@@ -59,6 +78,15 @@ export class SettingService {
   getMenuFilterContent(){
     return this.getMenuSetting().filterContent;
   }
+  
+  resetSetting(){
+    const setting = this.getMenuSetting();
+    setting.filterEnka = this.defaultBool
+    setting.filterData = this.defaultBool
+    setting.filterElementType = {...this.defaultElementType}
+    setting.filterWeaponType = {...this.defaultWeaponType}
+    setting.filterContent = this.defaultContent
+  }
 
   private checkMenuSetting() {
     if(!this.setting?.menu) {
@@ -68,26 +96,13 @@ export class SettingService {
 
   private initMenuSetting() {
     const result: MenuSetting = {
-      filterEnka: false,
-      filterData: false,
-      filterElementType: {
-        2: true,
-        3: true,
-        4: true,
-        5: true,
-        6: true,
-        7: true,
-        8: true,
-      },
-      filterWeaponType: {
-        "WEAPON_SWORD_ONE_HAND": true,
-        "WEAPON_CATALYST": true,
-        "WEAPON_CLAYMORE": true,
-        "WEAPON_BOW": true,
-        "WEAPON_POLE": true,
-      },
-      filterContent: "",
+      filterEnka: this.defaultBool,
+      filterData: this.defaultBool,
+      filterElementType: {...this.defaultElementType},
+      filterWeaponType: {...this.defaultWeaponType},
+      filterContent: this.defaultContent,
     }
+    
     return result;
   }
 }
