@@ -12,13 +12,17 @@ export class OverlayService {
   loadingEle!: ComponentPortal<LoadingOverlayComponent>;
 
   constructor(private overlay: Overlay) {
+    this.createOverlay();
+    this.loadingEle = new ComponentPortal(LoadingOverlayComponent);
+  }
+
+  createOverlay() {
     const positionStrategy: GlobalPositionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
     this.overlayRef = this.overlay.create({
       hasBackdrop: true,
       disposeOnNavigation: true,
       positionStrategy
     });
-    this.loadingEle = new ComponentPortal(LoadingOverlayComponent);
   }
 
   showLoading() {

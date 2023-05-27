@@ -92,7 +92,9 @@ export class MainComponent implements OnInit, OnDestroy {
         })
         //パラメータ処理
         new Promise<void>((resolve, reject) => {
-          this.overlayService.showLoading();
+          if (params && Object.keys(params).length > 0) {
+            this.overlayService.showLoading();
+          }
           setTimeout(async () => {
             try {
               //Enka絞り込み
