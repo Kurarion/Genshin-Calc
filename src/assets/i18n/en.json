@@ -281,12 +281,21 @@
       "SWIRL_PYRO": "Pyro Swirl Damage",
       "SWIRL_HYDRO": "Hydro Swirl Damage",
       "DESTRUCTION": "Destruction Damage",
-      "SHIELD": "Elemental Shield HP"
+      "SHIELD": "Basic Shield Amount",
+      "SHIELD_SPECIAL": "Corr Element Absorption"
     },
     "OTHER": {
       "HEALING": "Healing",
       "PRODUCT": "Production HP",
-      "SHIELD": "Shield HP",
+      "SHIELD": "Basic Shield Amount",
+      "SHIELD_CRYO":  "Cryo Absorption",
+      "SHIELD_ANEMO": "Anemo Absorption",    
+      "SHIELD_PHYSICAL": "Physical Absorption",
+      "SHIELD_ELECTRO": "Electro Absorption",
+      "SHIELD_GEO": "Geo Absorption",
+      "SHIELD_PYRO": "Pyro Absorption",
+      "SHIELD_HYDRO": "Hydro Absorption",
+      "SHIELD_DENDRO": "Dendro Absorption",
       "BUFF": "Buff (Only Self)",
       "BUFF_MULT": "Buff (Multiple)",
       "TEAM_BUFF": "Buff (All Team)",

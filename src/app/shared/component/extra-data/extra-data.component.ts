@@ -17,14 +17,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
   private readonly colorMap: Record<string, string> = {
-    "CRYO": Const.ELEMENT_COLOR_MAP['CRYO'] + environment.elementColorAlpha,
-    "ANEMO": Const.ELEMENT_COLOR_MAP['ANEMO'] + environment.elementColorAlpha,
-    "PHYSICAL": Const.ELEMENT_COLOR_MAP['PHYSICAL'] + environment.elementColorAlpha,
-    "ELECTRO": Const.ELEMENT_COLOR_MAP['ELECTRO'] + environment.elementColorAlpha,
-    "GEO": Const.ELEMENT_COLOR_MAP['GEO'] + environment.elementColorAlpha,
-    "PYRO": Const.ELEMENT_COLOR_MAP['PYRO'] + environment.elementColorAlpha,
-    "HYDRO": Const.ELEMENT_COLOR_MAP['HYDRO'] + environment.elementColorAlpha,
-    "DENDRO": Const.ELEMENT_COLOR_MAP['DENDRO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_CRYO]: Const.ELEMENT_COLOR_MAP['CRYO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_ANEMO]: Const.ELEMENT_COLOR_MAP['ANEMO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_PHYSICAL]: Const.ELEMENT_COLOR_MAP['PHYSICAL'] + environment.elementColorAlpha,
+    [Const.ELEMENT_NONE]: Const.ELEMENT_COLOR_MAP['PHYSICAL'] + environment.elementColorAlpha,
+    [Const.ELEMENT_ELECTRO]: Const.ELEMENT_COLOR_MAP['ELECTRO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_GEO]: Const.ELEMENT_COLOR_MAP['GEO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_PYRO]: Const.ELEMENT_COLOR_MAP['PYRO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_HYDRO]: Const.ELEMENT_COLOR_MAP['HYDRO'] + environment.elementColorAlpha,
+    [Const.ELEMENT_DENDRO]: Const.ELEMENT_COLOR_MAP['DENDRO'] + environment.elementColorAlpha,
   }
 
   readonly subs = Const.PROPS_OPTIMAL_ARTIFACT_ALL_SUB;
@@ -58,8 +59,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'swirlPyroDmg',
     'swirlHydroDmg',
     'shieldHp',
+    'shieldSpecialHp',
     'destructionDmg',
   ];
+  readonly notAddToDPSPropList: (keyof DamageResult)[] = [
+    'shieldHp',
+    'shieldSpecialHp',
+  ]
   readonly healingPropList: (keyof HealingResult)[] = [
     'healing',
   ];
@@ -68,6 +74,14 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   ];
   readonly shieldPropList: (keyof ShieldResult)[] = [
     'shield',
+    'shieldCryo',
+    'shieldAnemo',
+    'shieldPhysical',
+    'shieldElectro',
+    'shieldGeo',
+    'shieldPyro',
+    'shieldHydro',
+    'shieldDendro',
   ];
 
   readonly propNameMap: Record<string, string> = {
@@ -99,11 +113,20 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'swirlPyroDmg': 'SWIRL_PYRO',
     'swirlHydroDmg': 'SWIRL_HYDRO',
     'shieldHp': 'SHIELD',
+    'shieldSpecialHp': 'SHIELD_SPECIAL',
     'destructionDmg': 'DESTRUCTION',
 
     'healing': 'HEALING',
     'product': 'PRODUCT',
     'shield': 'SHIELD',
+    'shieldCryo': 'SHIELD_CRYO',
+    'shieldAnemo': 'SHIELD_ANEMO',
+    'shieldPhysical': 'SHIELD_PHYSICAL',
+    'shieldElectro': 'SHIELD_ELECTRO',
+    'shieldGeo': 'SHIELD_GEO',
+    'shieldPyro': 'SHIELD_PYRO',
+    'shieldHydro': 'SHIELD_HYDRO',
+    'shieldDendro': 'SHIELD_DENDRO',
   };
   readonly specialColorMap: Record<string, string|undefined> = {
     'overloadedDmg': this.colorMap["PYRO"],
@@ -116,6 +139,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'swirlPyroDmg': this.colorMap["PYRO"],
     'swirlHydroDmg': this.colorMap["HYDRO"],
     'shieldHp': this.colorMap["GEO"],
+    'shieldSpecialHp': this.colorMap["GEO"],
     'destructionDmg': this.colorMap["PHYSICAL"],
     'ruptureDmg': this.colorMap["DENDRO"],
     'burgeonDmg': this.colorMap["DENDRO"],
@@ -123,7 +147,15 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
 
     'healing': '#91ffa3'+ environment.elementColorAlpha,
     'product': '#91ffa3'+ environment.elementColorAlpha,
-    'shield': this.colorMap["GEO"],
+    'shield': this.colorMap["PHYSICAL"],
+    'shieldCryo': this.colorMap["CRYO"],
+    'shieldAnemo': this.colorMap["ANEMO"],
+    'shieldPhysical': this.colorMap["PHYSICAL"],
+    'shieldElectro': this.colorMap["ELECTRO"],
+    'shieldGeo': this.colorMap["GEO"],
+    'shieldPyro': this.colorMap["PYRO"],
+    'shieldHydro': this.colorMap["HYDRO"],
+    'shieldDendro': this.colorMap["DENDRO"],
   };
 
   //キャラ

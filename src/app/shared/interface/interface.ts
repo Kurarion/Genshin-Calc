@@ -193,6 +193,8 @@ export interface ExtraSkillShield {
   //数値計算ベース
   base?: string;
   shieldBonusType?: string; //シールドタイプ
+  //シールド元素タイプ
+  shieldElementType?: string;
 }
 
 export interface ExtraSkillProduct {

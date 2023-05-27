@@ -281,12 +281,21 @@
       "SWIRL_PYRO": "火拡散ダメージ",
       "SWIRL_HYDRO": "水拡散ダメージ",
       "DESTRUCTION": "氷砕きダメージ",
-      "SHIELD": "結晶吸収量"
+      "SHIELD": "結晶基礎吸収量",
+      "SHIELD_SPECIAL": "結晶対応する元素吸収量"
     },
     "OTHER": {
       "HEALING": "治療",
       "PRODUCT": "創造物HP",
-      "SHIELD": "シールドHP",
+      "SHIELD": "基礎シールド吸収量", 
+      "SHIELD_CRYO": "氷元素吸収量",
+      "SHIELD_ANEMO": "風元素吸収量",  
+      "SHIELD_PHYSICAL": "物理吸収量", 
+      "SHIELD_ELECTRO": "雷元素吸収量",
+      "SHIELD_GEO": "岩元素吸収量",
+      "SHIELD_PYRO": "火元素吸収量",
+      "SHIELD_HYDRO": "水元素吸収量",
+      "SHIELD_DENDRO": "草元素吸収量",
       "BUFF": "バフ(自身のみ)",
       "BUFF_MULT": "バフ(複数)",
       "TEAM_BUFF": "バフ(チーム全体)",

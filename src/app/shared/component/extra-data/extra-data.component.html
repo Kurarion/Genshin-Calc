@@ -48,7 +48,7 @@
                 <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]" (click)="showDamageEcharts(prop, i)">
                     <td>
                         <div class="damage-type-container">
-                            <mat-icon class="dps-add-icon material-icons-outlined" (click)="addToDPS(prop, i);$event.stopPropagation()">playlist_add</mat-icon>
+                            <mat-icon *ngIf="!notAddToDPSPropList.includes(prop)" class="dps-add-icon material-icons-outlined" (click)="addToDPS(prop, i);$event.stopPropagation()">playlist_add</mat-icon>
                             <span [innerText]="'GENSHIN.DMG.'+propNameMap[prop] | translate"></span>
                         </div>
                     </td>

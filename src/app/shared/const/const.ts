@@ -113,6 +113,7 @@ export class Const {
   static readonly ELEMENT_SWIRL = "SWIRL";
   static readonly ELEMENT_DESTRUCTION = "DESTRUCTION";
   static readonly ELEMENT_SHIELD = "SHIELD";
+  static readonly ELEMENT_NONE = "NONE";
 
   static readonly ELEMENT_COLOR_MAP: Record<string, string> = {
     "CRYO": "#96dfff",
@@ -128,6 +129,10 @@ export class Const {
   static readonly ELEMENT_COLOR_NONE = "#cccccc";
   static readonly SKILL_ICON_GRADIENT = [
     'radial-gradient(circle, #5d5d5d 50%, ',
+    ' 60%,  rgba(0,0,0,0.3) 65%)'
+  ]
+  static readonly SHIELD_BG_GRADIENT = [
+    'radial-gradient(145deg, ',
     ' 60%,  rgba(0,0,0,0.3) 65%)'
   ]
 
@@ -166,6 +171,9 @@ export class Const {
 
   static readonly MIN_WEAPON_SMELTING = "1";
   static readonly MAX_WEAPON_SMELTING = "5";
+
+  static readonly SHIELD_SPECIAL_ELEMENT_ABS_RATE = 2.5;
+  static readonly SHIELD_GEO_ELEMENT_ABS_RATE = 1.5;
 
   //*********************************
   //           スキルタグ

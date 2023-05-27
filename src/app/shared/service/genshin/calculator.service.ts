@@ -138,6 +138,7 @@ export interface DamageResult {
   electroChargedDmg?: number;//感電
   superconductDmg?: number;//超電導
   shieldHp?: number;//結晶
+  shieldSpecialHp?: number;//結晶特定吸収量
   destructionDmg?: number;//氷砕き
 
   ruptureDmg?: number;//開花 草 水
@@ -167,10 +168,20 @@ export interface ShieldParam {
   base?: string; //数値ベース
   extra?: number; //追加値
   shieldBonusType?: string //シールドタイプ
+  shieldElementType?: string //シールド元素タイプ
 }
 
 export interface ShieldResult {
-  shield: number;
+  shield?: number;
+  shieldCryo?: number;
+  shieldAnemo?: number;
+  shieldPhysical?: number;
+  shieldElectro?: number;
+  shieldGeo?: number;
+  shieldPyro?: number;
+  shieldHydro?: number;
+  shieldDendro?: number;
+  shieldElementType?: string //シールド元素タイプ
 }
 
 export interface ProductParam {
@@ -1715,6 +1726,7 @@ export class CalculatorService {
     let destructionDmg;
     let overloadedDmg;
     let shieldHp;
+    let shieldSpecialHp;
     if(!isAbsoluteDmg){
       originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
       critDmg = originDmg * (1 + finalCritDmg);
@@ -1831,6 +1843,7 @@ export class CalculatorService {
       swirlPyroDmg: swirlPyroDmg,
       swirlHydroDmg: swirlHydroDmg,
       shieldHp: shieldHp,
+      shieldSpecialHp: shieldHp ? shieldHp * Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE : undefined,
       destructionDmg: destructionDmg,
     };
 
@@ -1894,6 +1907,7 @@ export class CalculatorService {
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
     let shieldBonusType = param.shieldBonusType;
+    let shieldElementType = param.shieldElementType;
     //計算
     let shield: number = 0;
     if(base != undefined && rate != undefined){
@@ -1926,8 +1940,56 @@ export class CalculatorService {
       }
     }
     shield *= 1 + (data[Const.PROP_DMG_ELEMENT_SHIELD_UP] ?? 0);
-    result = {
+    //シールド元素タイプ
+    let tempRes: ShieldResult = {
       shield: shield,
+      shieldCryo: shield,
+      shieldAnemo: shield,
+      shieldPhysical: shield,
+      shieldElectro: shield,
+      shieldGeo: shield,
+      shieldPyro: shield,
+      shieldHydro: shield,
+      shieldDendro: shield,
+    }
+    const specialElementAbsRate = Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE;
+    const geoElementAbsRate = Const.SHIELD_GEO_ELEMENT_ABS_RATE;
+    switch(shieldElementType) {
+      case Const.ELEMENT_CRYO:
+        tempRes.shieldCryo = shield * specialElementAbsRate;
+        break;
+      case Const.ELEMENT_ANEMO:
+        tempRes.shieldAnemo = shield * specialElementAbsRate;
+        break;
+      case Const.ELEMENT_PHYSICAL:
+        tempRes.shieldPhysical = shield * specialElementAbsRate;
+        break;
+      case Const.ELEMENT_ELECTRO:
+        tempRes.shieldElectro = shield * specialElementAbsRate;
+        break;
+      case Const.ELEMENT_GEO:
+        tempRes.shieldCryo = shield * geoElementAbsRate;
+        tempRes.shieldAnemo = shield * geoElementAbsRate;
+        tempRes.shieldPhysical = shield * geoElementAbsRate;
+        tempRes.shieldElectro = shield * geoElementAbsRate;
+        tempRes.shieldGeo = shield * geoElementAbsRate;
+        tempRes.shieldPyro = shield * geoElementAbsRate;
+        tempRes.shieldHydro = shield * geoElementAbsRate;
+        tempRes.shieldDendro = shield * geoElementAbsRate;
+        break;
+      case Const.ELEMENT_PYRO:
+        tempRes.shieldPyro = shield * specialElementAbsRate;
+        break;
+      case Const.ELEMENT_HYDRO:
+        tempRes.shieldHydro = shield * specialElementAbsRate;
+        break;
+      case Const.ELEMENT_DENDRO:
+        tempRes.shieldDendro = shield * specialElementAbsRate;
+        break;
+    }
+    result = {
+      ...tempRes,
+      shieldElementType
     }
 
     return result;
@@ -2371,10 +2433,12 @@ export class CalculatorService {
             let base = shieldInfo.base!;
             let rate = shieldInfo.customValue;
             let shieldBonusType = shieldInfo.shieldBonusType;
+            let shieldElementType = shieldInfo.shieldElementType;
             params.push({
               base: base,
               rate: rate,
-              shieldBonusType: shieldBonusType
+              shieldBonusType: shieldBonusType,
+              shieldElementType: shieldElementType
             });
           }else{
             for(let valueIndex of valueIndexs){
@@ -2408,6 +2472,7 @@ export class CalculatorService {
                 
                 let base = shieldInfo.base!;
                 let shieldBonusType = shieldInfo.shieldBonusType;
+                let shieldElementType = shieldInfo.shieldElementType;
                 if(shieldInfo.constIndex != undefined){
                   switch(shieldInfo.constCalRelation){
                     case "-":
@@ -2468,6 +2533,7 @@ export class CalculatorService {
                   rate: rate,
                   extra: extra,
                   shieldBonusType: shieldBonusType,
+                  shieldElementType: shieldElementType
                 });
               }
             }

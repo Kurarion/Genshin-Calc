@@ -281,12 +281,21 @@
       "SWIRL_PYRO": "火扩散伤害",
       "SWIRL_HYDRO": "水扩散伤害",
       "DESTRUCTION": "破冰伤害",
-      "SHIELD": "结晶生命值"
+      "SHIELD": "结晶基础盾量",
+      "SHIELD_SPECIAL": "结晶对应元素吸收量"
     },
     "OTHER": {
       "HEALING": "治疗值",
       "PRODUCT": "创造物生命值",
-      "SHIELD": "盾量",
+      "SHIELD": "基础盾量",
+      "SHIELD_CRYO": "冰元素吸收量",
+      "SHIELD_ANEMO": "风元素吸收量",
+      "SHIELD_PHYSICAL": "物理吸收量",
+      "SHIELD_ELECTRO": "雷元素吸收量",
+      "SHIELD_GEO": "岩元素吸收量",
+      "SHIELD_PYRO": "火元素吸收量",
+      "SHIELD_HYDRO": "水元素吸收量",
+      "SHIELD_DENDRO": "草元素吸收量",
       "BUFF": "增益(仅自身)",
       "BUFF_MULT": "增益(多重)",
       "TEAM_BUFF": "增益(全队)",

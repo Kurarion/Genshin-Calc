@@ -488,7 +488,8 @@
                             "shield": {
                                 "customValue": 0.3,
                                 "base": "HP",
-                                "shieldBonusType": "SHIELD_BONUS_OTHER"
+                                "shieldBonusType": "SHIELD_BONUS_OTHER",
+                                "shieldElementType": "CRYO"
                             }
                         }
                 ]
@@ -1189,7 +1190,8 @@
                             "constIndex": 1,
                             "constCalRelation": "+",
                             "base": "HP",
-                            "shieldBonusType": "SHIELD_BONUS_SKILL"
+                            "shieldBonusType": "SHIELD_BONUS_SKILL",
+                            "shieldElementType": "ELECTRO"
                         }
                     },
                     {
@@ -1244,7 +1246,8 @@
                             "shield": {
                                 "index": 0,
                                 "base": "HP",
-                                "shieldBonusType": "SHIELD_BONUS_OTHER"
+                                "shieldBonusType": "SHIELD_BONUS_OTHER",
+                                "shieldElementType": "ELECTRO"
                             }
                         }
                 ],
@@ -1718,15 +1721,9 @@
                             "constIndex": 4,
                             "constCalRelation":"+",
                             "base": "HP",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "GEO"
                         }
-                    },
-                    {
-                        "buffs":[{
-                            "customValue":0.5,
-                            "target":["SHIELD_BONUS_SKILL"],
-                            "settingType":"resident"
-                        }]
                     },
                     {
                         "buffs":[{
@@ -2211,13 +2208,9 @@
                             "base":"DEFENSE",
                             "constIndex":6,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "GEO"
                         },
-                        "buffs":[{
-                            "customValue": 0.5,
-                            "target":["SHIELD_BONUS_SKILL"],
-                            "settingType":"resident"
-                        }],
                         "healing": {
                             "index":1,
                             "base":"DEFENSE",
@@ -2252,7 +2245,8 @@
                             "shield": {
                                 "index":1,
                                 "base":"DEFENSE",
-                                "shieldBonusType":"SHIELD_BONUS_SKILL"
+                                "shieldBonusType":"SHIELD_BONUS_SKILL",
+                                "shieldElementType": "GEO"
                             }
                         }
                     ],
@@ -2801,7 +2795,8 @@
                             "base":"HP",
                             "constIndex":2,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "CRYO"
                         },
                         "buffs":[{
                             "index":4,
@@ -3284,7 +3279,8 @@
                             "base":"DEFENSE",
                             "constIndex":2,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "PYRO"
                         }
                     },
                     {
@@ -3293,7 +3289,8 @@
                             "base":"DEFENSE",
                             "constIndex":4,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "PYRO"
                         }
                     },
                     {
@@ -3302,7 +3299,8 @@
                             "base":"DEFENSE",
                             "constIndex":6,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "PYRO"
                         }
                     }
                 ],
@@ -3938,7 +3936,8 @@
                             "shield":{
                                 "index":0,
                                 "base":"HP",
-                                "shieldBonusType":"SHIELD_BONUS_OTHER"
+                                "shieldBonusType":"SHIELD_BONUS_OTHER",
+                                "shieldElementType": "PYRO"
                             }
                         }
                 ]
@@ -4225,7 +4224,8 @@
                             "constIndex":2,
                             "constCalRelation":"+",
                             "base":"HP",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "PYRO"
                         }
                     },
                     {
@@ -4234,7 +4234,8 @@
                             "constIndex":5,
                             "constCalRelation":"+",
                             "base":"HP",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "PYRO"
                         }
                     }
                 ],
@@ -4252,7 +4253,8 @@
                             "base":"HP",
                             "constIndex":3,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "PYRO"
                         }
                     }
                 ],
@@ -5644,7 +5646,8 @@
                             "constIndex":2,
                             "constCalRelation":"+",
                             "base":"HP",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "DENDRO"
                         }
                     },
                     {
@@ -5653,7 +5656,8 @@
                             "constIndex":4,
                             "constCalRelation":"+",
                             "base":"HP",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "DENDRO"
                         }
                     }
                 ],
@@ -5680,7 +5684,8 @@
                                 "originInnerRelations": ["+"],
                                 "index":0,
                                 "base":"HP",
-                                "healingBonusType":"SHIELD_BONUS_SKILL"
+                                "healingBonusType":"SHIELD_BONUS_SKILL",
+                                "shieldElementType": "DENDRO"
                             }
                         }
                     ],
@@ -5715,7 +5720,8 @@
                                 "originInnerRelations": ["+"],
                                 "index":0,
                                 "base":"HP",
-                                "healingBonusType":"SHIELD_BONUS_SKILL"
+                                "healingBonusType":"SHIELD_BONUS_SKILL",
+                                "shieldElementType": "DENDRO"
                             }
                         }
                 ],
@@ -6023,13 +6029,9 @@
                             "constIndex":1,
                             "constCalRelation":"+",
                             "base":"HP",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
-                        },
-                        "buffs":[{
-                            "customValue": 0.5,
-                            "target":["SHIELD_BONUS_SKILL"],
-                            "settingType":"resident"
-                        }]
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "GEO"
+                        }
                     }
                 ],
                 "elementalBurst": [
@@ -7032,7 +7034,8 @@
                             "base":"HP",
                             "constIndex":1,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "HYDRO"
                         },
                         "damage": {
                             "indexs": [2,3],
@@ -7300,7 +7303,8 @@
                             "base":"HP",
                             "constIndex":3,
                             "constCalRelation":"+",
-                            "shieldBonusType":"SHIELD_BONUS_SKILL"
+                            "shieldBonusType":"SHIELD_BONUS_SKILL",
+                            "shieldElementType": "CRYO"
                         },
                         "damage": {
                             "indexs": [0],
@@ -7364,7 +7368,19 @@
                                 "target":["SHIELD_BONUS_SKILL"],
                                 "settingType":"switch",
                                 "defaultEnable":false
-                            }]
+                            }],
+                            "shield": {
+                                "originSkills": ["skill"],
+                                "originIndexs": [2],
+                                "originRelations": ["*"],
+                                "originConstIndexs": [3],
+                                "originConstRelations": ["*"],
+                                "originInnerRelations": ["+"],
+                                "index":1,
+                                "base":"HP",
+                                "shieldBonusType":"SHIELD_BONUS_SKILL",
+                                "shieldElementType": "CRYO"
+                            }
                         }
                 ],
                 "3": [
@@ -9410,7 +9426,8 @@
                             "constIndex": 1,
                             "constCalRelation": "+",
                             "base": "HP",
-                            "shieldBonusType": "SHIELD_BONUS_ELEMENTAL_BURST"
+                            "shieldBonusType": "SHIELD_BONUS_ELEMENTAL_BURST",
+                            "shieldElementType": "DENDRO"
                         },
                         "healing": {
                             "index":4,
@@ -10191,7 +10208,8 @@
                 {
                     "shield": {
                         "index": 0,
-                        "base": "HP"
+                        "base": "HP",
+                        "shieldElementType": "NONE"
                     },
                     "buffs":[{
                         "index": 2,
