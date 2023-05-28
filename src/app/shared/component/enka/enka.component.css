@@ -16,7 +16,7 @@
     margin-right: 4px;
 }
 
-.shinshinmoe {
+.shinshinmoe-container {
     line-height: 0;
     width: 2em;
     margin: 1.05em 1rem 0 .4em;
@@ -24,6 +24,11 @@
     align-self: center;
     position: absolute;
     top: 0.2em;
+}
+
+.shinshinmoe {
+    margin: 0;
+    height: 0.425em;
 }
 
 .shinshinmoe:before {

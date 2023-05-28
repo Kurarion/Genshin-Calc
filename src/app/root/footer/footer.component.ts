@@ -1,24 +1,15 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { footerContentAnimation, SHOW, DISAPPEAR } from 'src/animation';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GlobalProgressService } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
-
-const SHOW='1';
-const DISAPPEAR='0';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css'],
   animations: [
-    trigger('contentChange', [
-      state(SHOW,  style({ opacity: '1' })),
-      state(DISAPPEAR, style({ opacity: '0' })),
-      transition(DISAPPEAR + ' <=> ' + SHOW, [
-        animate('0.5s')
-      ])
-    ])
+    footerContentAnimation
   ]
 })
 export class FooterComponent implements OnInit {

@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData, DPSService } from 'src/app/shared/shared.module';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { characterMainImgLoadAnimation, characterMainOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN } from 'src/animation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { map, takeUntil, Observable, Subject, Subscription } from 'rxjs';
@@ -10,8 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import MagicGrid from "magic-grid"
 
-const CSS_STATUS_BEFORE = "beforeLoad";
-const CSS_STATUS_FIN = "loaded";
 const WIDTH_DECREASE = 65;
 
 @Component({
@@ -19,34 +17,8 @@ const WIDTH_DECREASE = 65;
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
   animations: [
-    trigger('imgLoad', [
-      state(CSS_STATUS_BEFORE, style({
-        opacity: 0.01,
-      })),
-      state(CSS_STATUS_FIN, style({
-        opacity: 0.16,
-      })),
-      transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
-        animate('1s')
-      ]),
-      transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
-        animate('0.2s')
-      ])
-    ]),
-    trigger('otherLoad', [
-      state(CSS_STATUS_BEFORE, style({
-        opacity: 0.01,
-      })),
-      state(CSS_STATUS_FIN, style({
-        opacity: 1,
-      })),
-      transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
-        animate('0.5s')
-      ]),
-      transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
-        animate('0.2s')
-      ])
-    ])
+    characterMainImgLoadAnimation,
+    characterMainOtherLoadAnimation
   ]
 })
 export class MainComponent implements OnInit, OnDestroy {

@@ -1,14 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CharacterQueryParam, CharacterService, ConfirmDialogComponent, ConfirmDialogData, Const, EnkaService, HttpService, LanguageService, MainQueryParam, ManualDialogComponent, ManualDialogData, SettingService, TYPE_SYS_LANG, TextInputDialogComponent, OverlayService } from 'src/app/shared/shared.module';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { homePageImgLoadAnimation, homePageOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN } from 'src/animation';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
-const CSS_STATUS_BEFORE = "beforeLoad";
-const CSS_STATUS_FIN = "loaded";
 const HOMEPAGE_BG = "assets/init/homePageBG-compress.png";
 
 @Component({
@@ -16,34 +14,8 @@ const HOMEPAGE_BG = "assets/init/homePageBG-compress.png";
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
   animations: [
-    trigger('imgLoad', [
-      state(CSS_STATUS_BEFORE, style({
-        opacity: 0.01,
-      })),
-      state(CSS_STATUS_FIN, style({
-        opacity: 0.4,
-      })),
-      transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
-        animate('1s')
-      ]),
-      transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
-        animate('0.2s')
-      ])
-    ]),
-    trigger('otherLoad', [
-      state(CSS_STATUS_BEFORE, style({
-        opacity: 0.01,
-      })),
-      state(CSS_STATUS_FIN, style({
-        opacity: 1,
-      })),
-      transition(CSS_STATUS_BEFORE + '=>' + CSS_STATUS_FIN, [
-        animate('0.5s')
-      ]),
-      transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
-        animate('0.2s')
-      ])
-    ])
+    homePageImgLoadAnimation,
+    homePageOtherLoadAnimation
   ]
 })
 export class MainComponent implements OnInit, OnDestroy {

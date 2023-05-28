@@ -186,6 +186,7 @@ input[type=number] {
     font-size: 1em;
     /* padding-right: 0.4em; */
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .one-line {

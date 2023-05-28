@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { headerDownloadAnimation, STATE_SHOW, STATE_HIDDEN } from 'src/animation';
 import {
   Component,
   ElementRef,
@@ -19,22 +19,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './head.component.html',
   styleUrls: ['./head.component.css'],
   animations: [
-    trigger('download',[
-      state('hidden', style({
-        width: '0',
-        visibility: 'hidden',
-      })),
-      state('show', style({
-        visibility: 'visible',
-      })),
-      transition('hidden <=> show',[
-        animate('0.5s')
-      ])
-    ])
+    headerDownloadAnimation
   ]
 })
 export class HeadComponent implements OnInit {
   readonly githubRepository = environment.githubRepository;
+  readonly stateShow = STATE_SHOW
+  readonly stateHidden = STATE_HIDDEN
 
   //言語リスト
   @Input('langs') langs!: LangInfo[];

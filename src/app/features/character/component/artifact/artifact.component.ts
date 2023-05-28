@@ -151,6 +151,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.initSelectedArtifactSetIndexs(true);
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
+    this.artifactService.next();
   }
 
   setActiveIndex(){
