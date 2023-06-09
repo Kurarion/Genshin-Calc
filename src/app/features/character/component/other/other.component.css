@@ -84,10 +84,6 @@ table tr:first-child .content-right {
     float: right;
 }
 
-.switch {
-    transform: translate(62px, 5px);
-}
-
 .tab {
     height: 100%;
     margin-left: 2%;
@@ -147,4 +143,22 @@ input[type=number] {
 .all-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-div {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    row-gap: 0.5em;
+    padding: 0.5em 0 1em 0;
+}
+
+.label-container {
+    display: flex;
+    align-items: center;
+    column-gap: 0.2em;
+}
+
+.label-icon {
+    font-size: 20px;
 }

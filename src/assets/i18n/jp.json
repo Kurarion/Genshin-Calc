@@ -51,6 +51,8 @@
     "NAME": "その他",
     "TARGET": "目標属性",
     "TARGETVALUE": "目標値",
+    "CAN_SECONDARY_TRANS": "二次変換できるか",
+    "OPEN": "BUFF オン/オフ",
     "WEAPON_SMELTING_PLUS_1": "武器精錬+1",
     "WEAPON_SMELTING_PLUS_2": "武器精錬+2",
     "WEAPON_SMELTING_PLUS_3": "武器精錬+3",

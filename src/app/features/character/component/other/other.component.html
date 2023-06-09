@@ -52,14 +52,27 @@
                             <span matSuffix *ngIf="props_all_percent.includes(infos[selectedIndex].name??'')">%&nbsp;</span>
                         </mat-form-field>
                         <!-- スイッチ -->
-                        <mat-slide-toggle
-                            color="primary" 
-                            class="switch"
-                            [(ngModel)]="infos[selectedIndex].enable"
-                            (ngModelChange)="updateDirtyFlag()"
-                        ></mat-slide-toggle>
                         <br>
-                        <br>
+                        <div class="grid-div">
+                            <div class="label-container">
+                                <mat-icon class="label-icon">loop</mat-icon>
+                                <span [innerText]="'OTHER.CAN_SECONDARY_TRANS' | translate"></span>
+                            </div>
+                            <mat-slide-toggle
+                                color="primary"
+                                [(ngModel)]="infos[selectedIndex].canSecondaryTrans"
+                                (ngModelChange)="updateDirtyFlag()"
+                            ></mat-slide-toggle>
+                            <div class="label-container">
+                                <mat-icon class="label-icon">keyboard_double_arrow_up</mat-icon>
+                                <span [innerText]="'OTHER.OPEN' | translate"></span>
+                            </div>
+                            <mat-slide-toggle
+                                color="primary"
+                                [(ngModel)]="infos[selectedIndex].enable"
+                                (ngModelChange)="updateDirtyFlag()"
+                            ></mat-slide-toggle>
+                        </div>
                     </div>
                 </mat-tab>
                 <mat-tab disabled>

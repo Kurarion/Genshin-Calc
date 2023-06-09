@@ -222,14 +222,17 @@ export class OtherComponent implements OnInit, OnDestroy {
         this.infos[this.selectedIndex].name = Const.PROP_ELEMENTAL_MASTERY;
         this.infos[this.selectedIndex].value = 50;
         this.infos[this.selectedIndex].enable = true;
+        this.infos[this.selectedIndex].canSecondaryTrans = true;
         this.addTab();
         this.infos[this.selectedIndex].name = Const.PROP_ELEMENTAL_MASTERY;
         this.infos[this.selectedIndex].value = 30;
         this.infos[this.selectedIndex].enable = true;
+        this.infos[this.selectedIndex].canSecondaryTrans = true;
         this.addTab();
         this.infos[this.selectedIndex].name = Const.PROP_ELEMENTAL_MASTERY;
         this.infos[this.selectedIndex].value = 20;
         this.infos[this.selectedIndex].enable = true;
+        this.infos[this.selectedIndex].canSecondaryTrans = true;
         this.updateShowValue();
         this.updateDirtyFlag();
         break;

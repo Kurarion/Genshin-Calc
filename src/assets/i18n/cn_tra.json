@@ -51,6 +51,8 @@
     "NAME": "其他",
     "TARGET": "目標屬性",
     "TARGETVALUE": "目標值",
+    "CAN_SECONDARY_TRANS": "能否二次轉換",
+    "OPEN": "BUFF 開啟/關閉",
     "WEAPON_SMELTING_PLUS_1": "武器精煉+1",
     "WEAPON_SMELTING_PLUS_2": "武器精煉+2",
     "WEAPON_SMELTING_PLUS_3": "武器精煉+3",
@@ -282,13 +284,13 @@
       "SWIRL_HYDRO": "水擴散傷害",
       "DESTRUCTION": "破冰傷害",
       "SHIELD": "結晶基礎盾量",
-      "SHIELD_SPECIAL": "結晶對應元素吸收量" 
+      "SHIELD_SPECIAL": "結晶對應元素吸收量"
     },
     "OTHER": {
       "HEALING": "治療值",
       "PRODUCT": "創造物生命值",
       "SHIELD": "基礎盾量",
-      "SHIELD_CRYO": "冰元素吸收量", 
+      "SHIELD_CRYO": "冰元素吸收量",
       "SHIELD_ANEMO": "風元素吸收量",
       "SHIELD_PHYSICAL": "物理吸收量",
       "SHIELD_ELECTRO": "雷元素吸收量",
@@ -396,7 +398,7 @@
     "DAMAGE_TYPE": "最優傷害類型",
     "DAMAGE_TAG": "傷害標簽",
     "USE_DPS": "DPS最優計算",
-    "USED_DPS_INDEX": "DPS索引", 
+    "USED_DPS_INDEX": "DPS索引",
     "NOT_EXIT_DPS_INDEX": "不存在該索引的DPS。",
     "BLANK_DPS_LIST": "該索引的DPS為空。",
     "NO_RESULT": "無效計算。"
@@ -488,14 +490,14 @@
     "DPS_LABEL": "DPS",
     "DMG_VAL_LABEL": "[傷害值]",
     "APPENDED": "DPS: 傷害信息追加成功！",
-    "TIPS": "提示: 點擊傷害類型左側的[+]按鈕以向DPS列表中追加傷害信息。", 
-    "IMPORT_DIALOG":{
+    "TIPS": "提示: 點擊傷害類型左側的[+]按鈕以向DPS列表中追加傷害信息。",
+    "IMPORT_DIALOG": {
       "TITLE": "DPS代碼導入",
-      "CONTENT": "請導入角色ID為「{{CHAR_ID}}」的代碼",   
+      "CONTENT": "請導入角色ID為「{{CHAR_ID}}」的代碼",
       "OK": "導入",
-      "CANCEL": "取消", 
-      "SUCCESS": "導入成功!", 
-      "FAILED": "導入失敗。" 
+      "CANCEL": "取消",
+      "SUCCESS": "導入成功!",
+      "FAILED": "導入失敗。"
     }
   }
 }

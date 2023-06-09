@@ -51,6 +51,8 @@
     "NAME": "Other",
     "TARGET": "Target Attribute",
     "TARGETVALUE": "Target Value",
+    "CAN_SECONDARY_TRANS": "Can converted secondarily",
+    "OPEN": "BUFF On/Off",
     "WEAPON_SMELTING_PLUS_1": "Refine+1",
     "WEAPON_SMELTING_PLUS_2": "Refine+2",
     "WEAPON_SMELTING_PLUS_3": "Refine+3",
