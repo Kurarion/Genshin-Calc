@@ -9,11 +9,8 @@ export interface EnkaStorageData {
   avatars?: string[];
 }
 
-const API_URL = [
-  //CORSのため、一時処理
-  environment.apiProxyServer + "https://enka.network/api/uid/",
-  "",
-]
+const API_URL = "https://enka.network/api/uid/";
+const API_PROXY_URL = environment.apiProxyServer;
 const characterAscendLevels = [20, 40, 50, 60, 70, 80, 90];
 const weaponAscendLevels = [20, 40, 50, 60, 70, 80, 90];
 const enkaPropTypeMap = {
@@ -91,8 +88,14 @@ export class EnkaService {
   //-----------------------------------------
   //ユーザー情報取得
   getUIDInfos(uidStr: string): Promise<EnkaInfos|null>{
-    let url = API_URL[0] + uidStr + API_URL[1];
-    return this.httpService.get<EnkaInfos>(url);
+    const url = API_URL + uidStr;
+    const proxy_url = API_PROXY_URL + url
+    return this.httpService.get<EnkaInfos>(url).then((data: EnkaInfos|null) => {
+      if (!data) {
+        return this.httpService.get<EnkaInfos>(proxy_url)
+      }
+      return data
+    })
   }
 
   //データセット
