@@ -90,6 +90,7 @@
     "DMG_BONUS_CHARGED": "Charged DMG Bonus",
     "DMG_BONUS_PLUNGING": "Plunging DMG Bonus",
     "DMG_BONUS_SKILL": "Skill DMG Bonus",
+    "DMG_BONUS_SKILL_FREMINET_SHATTERING_PRESSURE": "Skill DMG Bonus (Shattering Pressure)",
     "DMG_BONUS_SKILL_NILOU_MOON": "Skill DMG Bonus (Watery Moon)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "Skill DMG Bonus (Tri-Karma Purification)",
     "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "Skill DMG Bonus (Mirror)",
@@ -139,8 +140,10 @@
     "DMG_RATE_UP_ALL": "All Element DMG Rate Increase",
     "DMG_RATE_UP_NORMAL": "Normal DMG Rate Increase",
     "DMG_RATE_UP_CHARGED": "Charged DMG Rate Increase",
+    "DMG_RATE_UP_CHARGED_LYNEY_GRIN_MALKIN": "Charged DMG Rate Increase (Grin-Malkin)",
     "DMG_RATE_UP_PLUNGING": "Plunging DMG Rate Increase",
     "DMG_RATE_UP_SKILL": "Skill DMG Rate Increase",
+    "DMG_RATE_UP_SKILL_FREMINET_FROST": "Skill DMG Rate Increase(Frost)",
     "DMG_RATE_UP_SKILL_FISCHL_OZ": "Skill DMG Rate Increase(Summoning)",
     "DMG_RATE_UP_ELEMENTAL_BURST": "Elemental Burst DMG Rate Increase",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU": "Elemental Burst DMG Rate Increase(Musou Hitotachi)",
@@ -186,6 +189,7 @@
     "DMG_CRIT_RATE_UP_CHARGED": "Charged DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_PLUNGING": "Plunging DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_SKILL": "Skill DMG CRIT Rate Increase",
+    "DMG_CRIT_RATE_UP_SKILL_FREMINET_SHATTERING_PRESSURE": "Skill DMG CRIT Rate Increase (Shattering Pressure)",
     "DMG_CRIT_RATE_UP_SKILL_NAHIDA_TRI_KARMA": "Skill DMG CRIT Rate Increase (Tri-Karma Purification)",
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "Elemental Burst DMG CRIT Rate Increase",
     "DMG_CRIT_RATE_UP_WEAPON": "Weapon DMG CRIT Rate Increase",
@@ -380,7 +384,10 @@
     "LAYLA_SHOOTING_STAR": "Shooting Star",
     "FISCHL_OZ": "Oz's (Summoning)",
     "ALHAITHAM_MIRROR": "Mirror",
-    "DEHYA_FIELD": "Fiery Sanctum"
+    "DEHYA_FIELD": "Fiery Sanctum",
+    "LYNEY_GRIN_MALKIN": "Grin-Malkin",
+    "FREMINET_FROST": "Frost",
+    "FREMINET_SHATTERING_PRESSURE": "Shattering Pressure"
   },
   "AUTO": {
     "CALC": "Calculate",

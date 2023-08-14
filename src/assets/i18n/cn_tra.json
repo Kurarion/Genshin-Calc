@@ -90,6 +90,7 @@
     "DMG_BONUS_CHARGED": "重擊傷害加成",
     "DMG_BONUS_PLUNGING": "下落攻擊傷害加成",
     "DMG_BONUS_SKILL": "元素技能傷害加成",
+    "DMG_BONUS_SKILL_FREMINET_SHATTERING_PRESSURE": "元素技能傷害加成(高壓粉碎)",
     "DMG_BONUS_SKILL_NILOU_MOON": "元素技能傷害加成(水月)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "元素技能傷害加成(滅淨三業)",
     "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "元素技能傷害加成(光幕)",
@@ -139,8 +140,10 @@
     "DMG_RATE_UP_ALL": "全傷害倍率增加值",
     "DMG_RATE_UP_NORMAL": "基本攻擊傷害倍率增加值",
     "DMG_RATE_UP_CHARGED": "重擊傷害倍率增加值",
+    "DMG_RATE_UP_CHARGED_LYNEY_GRIN_MALKIN": "重擊傷害倍率增加值(怪笑貓貓帽)",
     "DMG_RATE_UP_PLUNGING": "下落攻擊傷害倍率增加值",
     "DMG_RATE_UP_SKILL": "元素技能傷害倍率增加值",
+    "DMG_RATE_UP_SKILL_FREMINET_FROST": "元素技能傷害倍率增加值(霜寒)",
     "DMG_RATE_UP_SKILL_FISCHL_OZ": "元素技能傷害倍率增加值(召喚)",
     "DMG_RATE_UP_ELEMENTAL_BURST": "元素爆發傷害倍率增加值",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU": "元素爆發傷害倍率增加值(夢想一刀)",
@@ -186,6 +189,7 @@
     "DMG_CRIT_RATE_UP_CHARGED": "重擊傷害暴擊率增加值",
     "DMG_CRIT_RATE_UP_PLUNGING": "落下攻擊傷害暴擊率增加值",
     "DMG_CRIT_RATE_UP_SKILL": "元素技能傷害暴擊率增加值",
+    "DMG_CRIT_RATE_UP_SKILL_FREMINET_SHATTERING_PRESSURE": "元素技能傷害暴擊率增加值(高壓粉碎)",
     "DMG_CRIT_RATE_UP_SKILL_NAHIDA_TRI_KARMA": "元素技能傷害暴擊率增加值(滅淨三業)",
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "元素爆發傷害暴擊率增加值",
     "DMG_CRIT_RATE_UP_WEAPON": "武器傷害暴擊率增加值",
@@ -380,7 +384,10 @@
     "LAYLA_SHOOTING_STAR": "飛星",
     "FISCHL_OZ": "奧茲(召喚)",
     "ALHAITHAM_MIRROR": "光幕",
-    "DEHYA_FIELD": "淨焰劍獄領域"
+    "DEHYA_FIELD": "淨焰劍獄領域",
+    "LYNEY_GRIN_MALKIN": "怪笑貓貓帽",
+    "FREMINET_FROST": "霜寒",
+    "FREMINET_SHATTERING_PRESSURE": "高壓粉碎"
   },
   "AUTO": {
     "CALC": "計算",

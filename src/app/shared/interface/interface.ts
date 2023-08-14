@@ -121,6 +121,10 @@ export interface ExtraSkillBuff {
   //聖遺物二点セット用
   propIndex?: number;
   //----------------------
+  //連携スキル
+  originSkills?: TYPE_SKILL[];
+  originIndexs?: number[];
+  originRelations?: TYPE_RELATION[];
   //数値計算ベース
   base?: string;
   baseModifyValue?: number;

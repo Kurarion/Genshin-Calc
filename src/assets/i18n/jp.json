@@ -90,6 +90,7 @@
     "DMG_BONUS_CHARGED": "重撃ダメージ",
     "DMG_BONUS_PLUNGING": "落下攻撃ダメージ",
     "DMG_BONUS_SKILL": "元素スキルダメージ",
+    "DMG_BONUS_SKILL_FREMINET_SHATTERING_PRESSURE": "元素スキルダメージ(高圧粉砕)",
     "DMG_BONUS_SKILL_NILOU_MOON": "元素スキルダメージ(水月)",
     "DMG_BONUS_SKILL_NAHIDA_TRI_KARMA": "元素スキルダメージ(滅淨三業)",
     "DMG_BONUS_SKILL_ALHAITHAM_MIRROR": "元素スキルダメージ(光幕)",
@@ -139,8 +140,10 @@
     "DMG_RATE_UP_ALL": "全ダメージ倍率アップ値",
     "DMG_RATE_UP_NORMAL": "基本攻撃ダメージ倍率アップ値",
     "DMG_RATE_UP_CHARGED": "重撃ダメージ倍率アップ値",
+    "DMG_RATE_UP_CHARGED_LYNEY_GRIN_MALKIN": "重撃ダメージ倍率アップ値(ファニーキャット·ハット)",
     "DMG_RATE_UP_PLUNGING": "落下攻撃ダメージ倍率アップ値",
     "DMG_RATE_UP_SKILL": "元素スキルダメージ倍率アップ値",
+    "DMG_RATE_UP_SKILL_FREMINET_FROST": "元素スキルダメージ倍率アップ値(霜寒)",
     "DMG_RATE_UP_SKILL_FISCHL_OZ": "元素スキルダメージ倍率アップ値(召喚)",
     "DMG_RATE_UP_ELEMENTAL_BURST": "元素爆発ダメージ倍率アップ値",
     "DMG_RATE_UP_ELEMENTAL_BURST_RAIDEN_ITTOU": "元素爆発ダメージ倍率アップ値(夢想の一刀)",
@@ -186,6 +189,7 @@
     "DMG_CRIT_RATE_UP_CHARGED": "重撃ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_PLUNGING": "落下攻撃ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_SKILL": "元素スキルダメージ会心率アップ値",
+    "DMG_CRIT_RATE_UP_SKILL_FREMINET_SHATTERING_PRESSURE": "元素スキルダメージ会心率アップ値(高圧粉砕)",
     "DMG_CRIT_RATE_UP_SKILL_NAHIDA_TRI_KARMA": "元素スキルダメージ会心率アップ値(滅淨三業)",
     "DMG_CRIT_RATE_UP_ELEMENTAL_BURST": "元素爆発ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_WEAPON": "武器ダメージ会心率アップ値",
@@ -380,7 +384,10 @@
     "LAYLA_SHOOTING_STAR": "飛星",
     "FISCHL_OZ": "オズ(召喚)",
     "ALHAITHAM_MIRROR": "光幕",
-    "DEHYA_FIELD": "浄焔剣獄領域"
+    "DEHYA_FIELD": "浄焔剣獄領域",
+    "LYNEY_GRIN_MALKIN": "ファニーキャット·ハット",
+    "FREMINET_FROST": "霜寒",
+    "FREMINET_SHATTERING_PRESSURE": "高圧粉砕"
   },
   "AUTO": {
     "CALC": "計算",

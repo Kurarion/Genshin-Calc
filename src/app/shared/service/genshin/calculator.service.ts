@@ -3212,6 +3212,7 @@ export class CalculatorService {
           characterData.weaponType,
           characterData.info.elementType,
           overrideElement,
+          index,
         );
         if(!hasOverride && overrideElement != setBuffResult.overrideElement){
           hasOverride = true;
@@ -3234,6 +3235,7 @@ export class CalculatorService {
           characterData.weaponType,
           characterData.info.elementType,
           overrideElement,
+          index,
         );
         if(!hasOverride && overrideElement != setBuffResult.overrideElement){
           hasOverride = true;
@@ -3256,6 +3258,7 @@ export class CalculatorService {
           characterData.weaponType,
           characterData.info.elementType,
           overrideElement,
+          index,
         );
         if(!hasOverride && overrideElement != setBuffResult.overrideElement){
           hasOverride = true;
@@ -3285,6 +3288,7 @@ export class CalculatorService {
             characterData.weaponType,
             characterData.info.elementType,
             overrideElement,
+            index,
           );
           if(!hasOverride && overrideElement != setBuffResult.overrideElement){
             hasOverride = true;
@@ -3312,6 +3316,7 @@ export class CalculatorService {
             characterData.weaponType,
             characterData.info.elementType,
             overrideElement,
+            index,
           );
           if(!hasOverride && overrideElement != setBuffResult.overrideElement){
             hasOverride = true;
@@ -3358,6 +3363,7 @@ export class CalculatorService {
         characterData.weaponType,
         characterData.info.elementType,
         overrideElement,
+        index,
       );
       if(overrideElement != setBuffResult.overrideElement){
         this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
@@ -3433,6 +3439,7 @@ export class CalculatorService {
         characterData.weaponType,
         characterData.info.elementType,
         overrideElement,
+        index,
       );
       if(overrideElement != setBuffResult.overrideElement){
         this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
@@ -3538,7 +3545,9 @@ export class CalculatorService {
     buffTag: Record<string, string[]>,
     weaponType: WeaponType, 
     elementType: ElementType, 
-    crruentOverrideElement: string): SetBuffResult{
+    crruentOverrideElement: string,
+    index: string | number,
+    ): SetBuffResult{
     let setBuffResult: SetBuffResult = {};
     if(skillData == undefined || buffs == undefined){
       return setBuffResult;
@@ -3613,6 +3622,29 @@ export class CalculatorService {
               indexAddValue = buff.indexAddValue;
             }
             indexValue += indexAddValue;
+            if(buff.originSkills){
+              for(let i = 0; i < buff.originSkills.length; ++i){
+                const indexStr = index.toString();
+                const characterData = this.dataMap[indexStr].characterData;
+                let originRateInfo = characterData!.skills![buff.originSkills[i] as keyof CharSkills] as CharSkill;
+                let originSkillLevel = this.getCharacterSkillLevel(indexStr, buff.originSkills[i]);
+                let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexs![i]]
+                switch(buff.originRelations![i]){
+                  case "*":
+                    indexValue *= originRate
+                    break;
+                  case "+":
+                    indexValue += originRate
+                    break;
+                  case "-":
+                    indexValue -= originRate
+                    break;
+                  case "/":
+                    indexValue /= originRate
+                    break;
+                }
+              }
+            }
             let calRelation = buff?.calRelation ?? '+';
             switch(calRelation){
               case "-":
@@ -3788,6 +3820,29 @@ export class CalculatorService {
               indexAddValue = buff.indexAddValue;
             }
             indexValue += indexAddValue;
+            if(buff.originSkills){
+              for(let i = 0; i < buff.originSkills.length; ++i){
+                const indexStr = index.toString();
+                const characterData = this.dataMap[indexStr].characterData;
+                let originRateInfo = characterData!.skills![buff.originSkills[i] as keyof CharSkills] as CharSkill;
+                let originSkillLevel = this.getCharacterSkillLevel(indexStr, buff.originSkills[i]);
+                let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexs![i]]
+                switch(buff.originRelations![i]){
+                  case "*":
+                    indexValue *= originRate
+                    break;
+                  case "+":
+                    indexValue += originRate
+                    break;
+                  case "-":
+                    indexValue -= originRate
+                    break;
+                  case "/":
+                    indexValue /= originRate
+                    break;
+                }
+              }
+            }
             let calRelation = buff?.calRelation ?? '+';
             switch(calRelation){
               case "-":
