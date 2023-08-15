@@ -168,6 +168,8 @@
     "DMG_VAL_UP_CHARGED": "重擊傷害增加值",
     "DMG_VAL_UP_PLUNGING": "落下攻擊傷害增加值",
     "DMG_VAL_UP_SKILL": "元素技能傷害增加值",
+    "DMG_VAL_UP_SKILL_TRAVELER_TORRENT_SURGE": "元素技能傷害增加值(噴發激流)",
+    "DMG_VAL_UP_SKILL_TRAVELER_DEWDROP": "元素技能傷害增加值(露滴)",
     "DMG_VAL_UP_SKILL_CYNO_BOLT": "元素技能傷害增加值(落羽的裁择)",
     "DMG_VAL_UP_SKILL_LAYLA_SHOOTING_STAR": "元素技能傷害增加值(飛星)",
     "DMG_VAL_UP_ELEMENTAL_BURST": "元素爆發傷害增加值",
@@ -387,7 +389,9 @@
     "DEHYA_FIELD": "淨焰劍獄領域",
     "LYNEY_GRIN_MALKIN": "怪笑貓貓帽",
     "FREMINET_FROST": "霜寒",
-    "FREMINET_SHATTERING_PRESSURE": "高壓粉碎"
+    "FREMINET_SHATTERING_PRESSURE": "高壓粉碎",
+    "TRAVELER_TORRENT_SURGE": "噴發激流",
+    "TRAVELER_DEWDROP": "露滴"
   },
   "AUTO": {
     "CALC": "計算",

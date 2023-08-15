@@ -3873,6 +3873,26 @@ export class CalculatorService {
                 return v.includes(selfElementType);
               })
             }
+
+            let maxValIndexValue = 0;
+            if(buff?.maxValIndex != undefined){
+              if(skillData.paramMap){
+                maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
+              }else if(skillData.paramList){
+                maxValIndexValue = skillData.paramList[buff?.maxValIndex!];
+              }
+            }
+            let maxValBase = buff?.maxValBase;
+            let maxValConstIndexValue = 0;
+            if(buff?.maxValConstIndex != undefined){
+              if(skillData.paramMap){
+                maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
+              }else if(skillData.paramList){
+                maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
+              }
+            }else if(buff?.maxValValue != undefined){
+              maxValConstIndexValue = buff.maxValValue;
+            }
   
             let sliderMax = buff?.sliderMax;
             let sliderStep = buff?.sliderStep;
@@ -3884,6 +3904,16 @@ export class CalculatorService {
               temp.base = base;
               temp.base2 = base2;
               temp.baseModifyValue = baseModifyValue;
+              if(maxValBase){
+                //特殊上限
+                temp.specialMaxVal = {
+                  base: maxValBase,
+                  multiValue: maxValIndexValue,
+                }
+              }else{
+                //一般上限
+                temp.maxVal = maxValConstIndexValue;
+              }
               if(isMaximumStackBuff){
                 temp.multiValue = 0;
                 if((sliderMax || 0) <= sliderNumMap[buffIndex]){

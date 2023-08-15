@@ -7410,6 +7410,128 @@
                 ]
             }
         },
+        "10000005503": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "TRAVELER_TORRENT_SURGE"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "TRAVELER_DEWDROP"
+                        },
+                        "buffs":[{
+                            "index":5,
+                            "base":"HP",
+                            "target":["DMG_VAL_UP_SKILL_TRAVELER_DEWDROP"],
+                            "settingType":"switch",
+                            "defaultEnable":false
+                        }]
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "healing": {
+                                "index": 2,
+                                "base": "HP",
+                                "healingBonusType": "HEALING_BONUS_OTHER"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"HP",
+                                "maxValConstIndex":1,
+                                "originSkills": ["skill"],
+                                "originIndexs": [4],
+                                "originRelations": ["*"],
+                                "target":["DMG_VAL_UP_SKILL_TRAVELER_TORRENT_SURGE"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 6
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "3": [
+                        {
+                            "shield": {
+                                "index": 0,
+                                "base": "HP",
+                                "shieldBonusType": "SHIELD_BONUS_ELEMENTAL_BURST",
+                                "shieldElementType": "HYDRO"
+                            }
+                        }
+                ]
+            }
+        },
         "10000005504": {
             "skills": {
                 "normal": [
@@ -7893,6 +8015,128 @@
                                 "defaultEnable": false,
                                 "isAllTeam":true
                             }]
+                        }
+                ]
+            }
+        },
+        "10000007703": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "TRAVELER_TORRENT_SURGE"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "TRAVELER_DEWDROP"
+                        },
+                        "buffs":[{
+                            "index":5,
+                            "base":"HP",
+                            "target":["DMG_VAL_UP_SKILL_TRAVELER_DEWDROP"],
+                            "settingType":"switch",
+                            "defaultEnable":false
+                        }]
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "healing": {
+                                "index": 2,
+                                "base": "HP",
+                                "healingBonusType": "HEALING_BONUS_OTHER"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "base":"HP",
+                                "maxValConstIndex":1,
+                                "originSkills": ["skill"],
+                                "originIndexs": [4],
+                                "originRelations": ["*"],
+                                "target":["DMG_VAL_UP_SKILL_TRAVELER_TORRENT_SURGE"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderStep": 1,
+                                "sliderMax": 6
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "3": [
+                        {
+                            "shield": {
+                                "index": 0,
+                                "base": "HP",
+                                "shieldBonusType": "SHIELD_BONUS_ELEMENTAL_BURST",
+                                "shieldElementType": "HYDRO"
+                            }
                         }
                 ]
             }
@@ -10351,6 +10595,81 @@
                 }
             ]
         },
+        "11424": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 3,
+                        "target": ["DMG_CRIT_RATE_UP_SKILL"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 6,
+                        "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 4
+                    }]
+                }
+            ]
+        },
+        "11425": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index":3,
+                        "indexMultiValue": 0.01,
+                        "base":"HP",
+                        "maxValConstIndex":4,
+                        "target":["DMG_VAL_UP_SKILL_TRAVELER_TORRENT_SURGE"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 25
+                    }]
+                }
+            ]
+        },
+        "11426": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_CRIT_RATE_UP_SKILL"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index":1,
+                        "target":["ENERGY_RECHARGE"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
         "11501": {
             "effect": [
                 {
@@ -10868,6 +11187,38 @@
                 }
             ]
         },
+        "12424": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 4,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 5,
+                        "target": ["DMG_BONUS_CRYO","DMG_BONUS_ANEMO","DMG_BONUS_ELECTRO","DMG_BONUS_GEO","DMG_BONUS_PYRO","DMG_BONUS_HYDRO","DMG_BONUS_DENDRO"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "12425": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
         "12501": {
             "effect": [
                 {
@@ -11228,6 +11579,21 @@
                     }]
                 }
             ]
+        },
+        "13424": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType":"switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "13425": {
+            "effect": []
         },
         "13501": {
             "effect": [
@@ -11698,6 +12064,46 @@
                     {
                         "index": 0,
                         "target": ["ATTACK_UP"]
+                    }]
+                }
+            ]
+        },
+        "14424": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["HP_UP"],
+                        "settingType":"switch",
+                        "defaultEnable":false
+                    },
+                    {
+                        "index": 3,
+                        "target": ["ELEMENTAL_MASTERY"]
+                    }]
+                }
+            ]
+        },
+        "14425": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_CRYO","DMG_BONUS_ANEMO","DMG_BONUS_ELECTRO","DMG_BONUS_GEO","DMG_BONUS_PYRO","DMG_BONUS_HYDRO","DMG_BONUS_DENDRO"],
+                        "settingType":"switch",
+                        "defaultEnable":false
+                    }]
+                },{
+                    "buffs":[{
+                        "index":3,
+                        "indexMultiValue": 0.00001,
+                        "base":"HP",
+                        "maxValConstIndex":4,
+                        "target":["DMG_BONUS_CRYO","DMG_BONUS_ANEMO","DMG_BONUS_ELECTRO","DMG_BONUS_GEO","DMG_BONUS_PYRO","DMG_BONUS_HYDRO","DMG_BONUS_DENDRO"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 24
                     }]
                 }
             ]
@@ -12210,6 +12616,37 @@
                 }
             ]
         },
+        "15424": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [1],
+                        "base": "ATTACK",
+                        "canOverride": false,
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    },
+                    "buffs":[{
+                        "index": 3,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "15425": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "switch",
+                        "defaultEnable":false
+                    }]
+                }
+            ]
+        },
         "15501": {
             "effect": [
                 {
@@ -12356,6 +12793,27 @@
                         "target": ["DMG_VAL_UP_CHARGED"],
                         "settingType": "switch",
                         "defaultEnable": false
+                    }]
+                }
+            ]
+        },
+        "15512": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "sliderStartIndex": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 1,
+                        "sliderStep": 1,
+                        "sliderMax": 3
                     }]
                 }
             ]
@@ -13057,6 +13515,57 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5
+                    }]
+                }
+            ]
+        },
+        "15031": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_NORMAL","DMG_BONUS_CHARGED"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["CRIT_RATE"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }]
+                }
+            ]
+        },
+        "15032": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType":"switch",
+                        "defaultEnable":false
                     }]
                 }
             ]

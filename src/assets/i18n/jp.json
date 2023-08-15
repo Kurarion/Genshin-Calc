@@ -168,6 +168,8 @@
     "DMG_VAL_UP_CHARGED": "重撃ダメージアップ値",
     "DMG_VAL_UP_PLUNGING": "落下攻撃ダメージアップ値",
     "DMG_VAL_UP_SKILL": "元素スキルダメージアップ値",
+    "DMG_VAL_UP_SKILL_TRAVELER_TORRENT_SURGE": "元素スキルダメージアップ値(飛散する激流)",
+    "DMG_VAL_UP_SKILL_TRAVELER_DEWDROP": "元素スキルダメージアップ値(露雫)",
     "DMG_VAL_UP_SKILL_CYNO_BOLT": "元素スキルダメージアップ値(落羽的裁择)",
     "DMG_VAL_UP_SKILL_LAYLA_SHOOTING_STAR": "元素スキルダメージアップ値(飛星)",
     "DMG_VAL_UP_ELEMENTAL_BURST": "元素爆発ダメージアップ値",
@@ -387,7 +389,9 @@
     "DEHYA_FIELD": "浄焔剣獄領域",
     "LYNEY_GRIN_MALKIN": "ファニーキャット·ハット",
     "FREMINET_FROST": "霜寒",
-    "FREMINET_SHATTERING_PRESSURE": "高圧粉砕"
+    "FREMINET_SHATTERING_PRESSURE": "高圧粉砕",
+    "TRAVELER_TORRENT_SURGE": "飛散する激流",
+    "TRAVELER_DEWDROP": "露雫"
   },
   "AUTO": {
     "CALC": "計算",

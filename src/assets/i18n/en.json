@@ -168,6 +168,8 @@
     "DMG_VAL_UP_CHARGED": "Charged DMG Increase",
     "DMG_VAL_UP_PLUNGING": "Plunging DMG Increase",
     "DMG_VAL_UP_SKILL": "Skill DMG Increase",
+    "DMG_VAL_UP_SKILL_TRAVELER_TORRENT_SURGE": "Skill DMG Increase (Torrent Surge)",
+    "DMG_VAL_UP_SKILL_TRAVELER_DEWDROP": "Skill DMG Increase (Dewdrop)",
     "DMG_VAL_UP_SKILL_CYNO_BOLT": "Skill DMG Increase (Duststalker Bolt)",
     "DMG_VAL_UP_SKILL_LAYLA_SHOOTING_STAR": "Skill DMG Increase (Shooting Star)",
     "DMG_VAL_UP_ELEMENTAL_BURST": "Elemental Burst DMG Increase",
@@ -387,7 +389,9 @@
     "DEHYA_FIELD": "Fiery Sanctum",
     "LYNEY_GRIN_MALKIN": "Grin-Malkin",
     "FREMINET_FROST": "Frost",
-    "FREMINET_SHATTERING_PRESSURE": "Shattering Pressure"
+    "FREMINET_SHATTERING_PRESSURE": "Shattering Pressure",
+    "TRAVELER_TORRENT_SURGE": "Torrent Surge",
+    "TRAVELER_DEWDROP": "Dewdrop"
   },
   "AUTO": {
     "CALC": "Calculate",
