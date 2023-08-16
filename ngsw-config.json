@@ -23,6 +23,7 @@
           "/assets/icons/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)",
           "/assets/init/homePageBG.png",
           "/assets/init/homePageBG-compress.png",
+          "/assets/background/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)",
           "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }

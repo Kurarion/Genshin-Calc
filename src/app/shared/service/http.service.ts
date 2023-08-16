@@ -20,7 +20,7 @@ export class HttpService {
       })
     }
 
-  get<T>(url: string, responseType: TYPE_HTTP_RESPONSE_TYPE = 'json', useCahe: boolean = false): Promise<T | null> {
+  get<T>(url: string, responseType: TYPE_HTTP_RESPONSE_TYPE = 'json', useCahe: boolean = false, useTempPic: boolean = true): Promise<T | null> {
 
     //チェックキャッシュ
     if(this.cache.has(url) && useCahe){
@@ -42,8 +42,11 @@ export class HttpService {
         map(httpCallBack)
       )
     ).catch((error)=>{
-      if(responseType == 'blob'){
-        return this.tempPicBody;
+      if (responseType == 'blob') {
+        if (useTempPic) {   
+          return this.tempPicBody;
+        }
+        return '';
       }
     });
   }

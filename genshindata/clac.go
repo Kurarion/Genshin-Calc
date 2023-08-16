@@ -814,7 +814,7 @@ func update(localResPath string, resURL string) error {
 			WeaponType:      currentAvatarData.WeaponType,
 			Images: AVATARIMAGES{
 				Icon:       fmt.Sprintf(imgHostAvatarFormat, currentAvatarData.IconName),
-				Background: extraCharacterMap[nameText[languageCHS]].BackgroundUrl,
+				Background: getBackgroundUrl(nameText, extraCharacterMap),
 			},
 			LevelMap:     make(map[string]*PROPERTY),
 			SkillDepotId: currentAvatarData.SkillDepotId,
@@ -1320,4 +1320,12 @@ func getPlayerName(id uint64, elementTexts map[string]string) map[string]string 
 		}
 	}
 	return results
+}
+
+func getBackgroundUrl(nameText map[string]string, extraCharacterMap GenshinExtraAvatarMapData) string {
+	urlObj, has := extraCharacterMap[nameText[languageCHS]]
+	if has {
+		return urlObj.BackgroundUrl
+	}
+	return "assets/background/" + nameText[languageEN] + ".png"
 }
