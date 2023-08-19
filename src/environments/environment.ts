@@ -64,7 +64,7 @@ export const environment = {
   ],
   artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
-  apiProxyServer: 'https://genshin-calc.irisu.cc/',
+  apiProxyServer: 'https://enka-proxy.sirokuma.cc/',
   elementColorAlpha: '75',
   outputLog: true,
 };
