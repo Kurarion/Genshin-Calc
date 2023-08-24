@@ -78,10 +78,11 @@ export class MenuComponent implements OnInit {
 
   //メニューリストをフィルター
   filterMenuList() {
+    let filterTargetLowercase = this.menuSetting.filterContent.toLowerCase();
     this.filteringMenuList = this.menuList.filter((info: CharaInfo)=>{
       return (this.settingService.getMenuFilterEnka()?info.isEnkaData:true) &&
       (this.settingService.getMenuFilterData()?(this.characterService.getStorageInfo(info.index) != undefined?true:false):true) &&
-      (this.settingService.getMenuFilterContent()?info.names[this.currentLanguage].includes(this.menuSetting.filterContent):true) &&
+      (this.settingService.getMenuFilterContent()?info.names[this.currentLanguage].toLowerCase().includes(filterTargetLowercase):true) &&
       (this.settingService.getMenuFilterElementType()[info.elementTypeNumber!]) &&
       (this.settingService.getMenuFilterWeaponType()[info.weaponType!]);
     })

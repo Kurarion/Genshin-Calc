@@ -84,6 +84,7 @@ export class MatFilteringSelectorComponent implements OnInit {
 
   filteringOptions(isInit: boolean = false) {
     let currentIndex = 0;
+    let filterTargetLowercase = this.filteringContent.toLowerCase();
     this.displayList = this.displayListBackUp?.filter(
       (item: any, index: number) => {
         if(item[this.optionValueProperty] == this.model){
@@ -95,7 +96,7 @@ export class MatFilteringSelectorComponent implements OnInit {
           }
         }
         // if(item[this.optionInnerTextProperty][this.currentLanguage].includes(this.filteringContent) || this.model == item[this.optionValueProperty]){
-        if(item[this.optionInnerTextProperty][this.currentLanguage].includes(this.filteringContent)){
+        if(item[this.optionInnerTextProperty][this.currentLanguage].toLowerCase().includes(filterTargetLowercase)){
           return true;
         }
         return false;
