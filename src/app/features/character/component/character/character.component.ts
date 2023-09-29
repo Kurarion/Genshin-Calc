@@ -28,7 +28,6 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
   readonly props_sub = Const.PROPS_CHARA_WEAPON_SUB;
   readonly percent_props = Const.PROPS_CHARA_WEAPON_PERCENT;
   readonly props_all = Const.PROPS_ALL_DATA;
-  readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
 
   //キャラデータ
   @Input('data') data!: character;

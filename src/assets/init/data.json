@@ -10225,6 +10225,364 @@
                         }
                 ]
             }
+        },
+        "10000086": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4,5],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "originSkills":["normal"],
+                            "originIndexs": [0],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "originSkills":["normal"],
+                            "originIndexs": [1],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "originSkills":["normal"],
+                            "originIndexs": [2],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "originSkills":["normal"],
+                            "originIndexs": [3],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "originSkills":["normal"],
+                            "originIndexs": [4],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "originSkills":["normal"],
+                            "originIndexs": [5],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "healing": {
+                                "index":2,
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
+                            },
+                            "buffs":[{
+                                "index": 1,
+                                "target":["DMG_RATE_UP_CHARGED_WRIOTHESLEY_REBUKE"],
+                                "settingType":"switch",
+                                "defaultEnable": false
+                            }],
+                            "damage":{
+                                "customValues": [1],
+                                "originSkills":["normal"],
+                                "originIndexs": [6],
+                                "originRelations":["*"],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_CRYO",
+                                "attackBonusType": "DMG_BONUS_CHARGED",
+                                "tag": "WRIOTHESLEY_REBUKE"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["ATTACK_UP"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 5,
+                                "sliderStep": 1
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["DMG_RATE_UP_CHARGED_WRIOTHESLEY_REBUKE"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["DMG_BONUS_ELEMENTAL_BURST"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 5,
+                                "sliderStep": 1
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "healing": {
+                                "customValue": 0.5,
+                                "base":"HP",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs": [{
+                                "index": 0,
+                                "target": ["DMG_CRIT_RATE_UP_CHARGED_WRIOTHESLEY_REBUKE"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            },{
+                                "index": 1,
+                                "target": ["DMG_CRIT_DMG_UP_CHARGED_WRIOTHESLEY_REBUKE"]
+                            }]
+                        },
+                        {
+                            "damage":{
+                                "customValues": [1],
+                                "originSkills":["normal"],
+                                "originIndexs": [6],
+                                "originRelations":["*"],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_CRYO",
+                                "attackBonusType": "DMG_BONUS_CHARGED",
+                                "tag": "WRIOTHESLEY_REBUKE"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000087": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [3],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
+                        },
+                        "healing": {
+                            "index":6,
+                            "base":"HP",
+                            "healingBonusType":"HEALING_BONUS_OTHER"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [10,11,12],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [1],
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "sliderStartIndex": 0,
+                                "target":["DMG_RATE_MULTI_CHARGED"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 3,
+                                "sliderStep": 1,
+                                "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "indexMultiValue": 0.01,
+                                "target":["DMG_BONUS_HYDRO"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 50,
+                                "sliderStep": 1
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["DMG_CRIT_DMG_UP_CHARGED"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 3,
+                                "sliderStep": 1,
+                                "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage":{
+                                "indexs": [0],
+                                "canOverride": false,
+                                "base": "HP",
+                                "elementBonusType": "DMG_BONUS_HYDRO",
+                                "attackBonusType": "DMG_BONUS_CHARGED",
+                                "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
+                            }
+                        }
+                ]
+            }
         }
     },
     "weapons": {

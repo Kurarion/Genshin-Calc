@@ -134,6 +134,7 @@ export interface ExtraSkillBuff {
   //目標
   target: string[];
   convertElement?: string;
+  tag?: string;
   //チーム関連
   isAllTeam?: boolean;
   isOnlyForOther?: boolean;

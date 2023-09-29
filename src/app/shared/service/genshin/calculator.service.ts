@@ -1430,6 +1430,7 @@ export class CalculatorService {
     //--------------------
     switch(elementBonusType){
       case Const.PROP_DMG_BONUS_CRYO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_CRYO];
         finalRate += data[Const.PROP_DMG_RATE_UP_CRYO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CRYO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CRYO];
@@ -1441,6 +1442,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_CRYO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_ANEMO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ANEMO];
         finalRate += data[Const.PROP_DMG_RATE_UP_ANEMO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ANEMO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ANEMO];
@@ -1452,6 +1454,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ANEMO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_PHYSICAL:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_PHYSICAL];
         finalRate += data[Const.PROP_DMG_RATE_UP_PHYSICAL];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PHYSICAL]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PHYSICAL];
@@ -1463,6 +1466,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_PHYSICAL_MINUS];
         break;
       case Const.PROP_DMG_BONUS_ELECTRO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ELECTRO];
         finalRate += data[Const.PROP_DMG_RATE_UP_ELECTRO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELECTRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELECTRO];
@@ -1474,6 +1478,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ELECTRO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_GEO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_GEO];
         finalRate += data[Const.PROP_DMG_RATE_UP_GEO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_GEO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_GEO];
@@ -1485,6 +1490,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_GEO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_PYRO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_PYRO];
         finalRate += data[Const.PROP_DMG_RATE_UP_PYRO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PYRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PYRO];
@@ -1496,6 +1502,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_PYRO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_HYDRO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_HYDRO];
         finalRate += data[Const.PROP_DMG_RATE_UP_HYDRO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_HYDRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_HYDRO];
@@ -1507,6 +1514,7 @@ export class CalculatorService {
         dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_HYDRO_MINUS];
         break;
       case Const.PROP_DMG_BONUS_DENDRO:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_DENDRO];
         finalRate += data[Const.PROP_DMG_RATE_UP_DENDRO];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_DENDRO]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_DENDRO];
@@ -1520,6 +1528,7 @@ export class CalculatorService {
     }
     switch(attackBonusType){
       case Const.PROP_DMG_BONUS_NORMAL:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_NORMAL];
         finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_NORMAL]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL];
@@ -1528,6 +1537,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_NORMAL];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_NORMAL + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL + tag] ?? 0;
@@ -1537,6 +1547,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_CHARGED:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_CHARGED];
         finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CHARGED]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED];
@@ -1545,6 +1556,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CHARGED];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_CHARGED + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED + tag] ?? 0;
@@ -1554,6 +1566,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_PLUNGING:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_PLUNGING];
         finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PLUNGING]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING];
@@ -1562,6 +1575,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PLUNGING];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_PLUNGING + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING + tag] ?? 0;
@@ -1571,6 +1585,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_SKILL:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_SKILL];
         finalRate += data[Const.PROP_DMG_RATE_UP_SKILL];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_SKILL]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL];
@@ -1579,6 +1594,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SKILL];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_SKILL + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL + tag] ?? 0;
@@ -1588,6 +1604,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ELEMENTAL_BURST];
         finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST];
@@ -1596,6 +1613,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELEMENTAL_BURST];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_ELEMENTAL_BURST + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST + tag] ?? 0;
@@ -1605,6 +1623,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_WEAPON:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_WEAPON];
         finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_WEAPON]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON];
@@ -1613,6 +1632,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_WEAPON];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_WEAPON + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON + tag] ?? 0;
@@ -1622,6 +1642,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_OTHER:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_OTHER];
         finalRate += data[Const.PROP_DMG_RATE_UP_OTHER];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_OTHER]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER];
@@ -1630,6 +1651,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_OTHER];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_OTHER + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER + tag] ?? 0;
@@ -1639,6 +1661,7 @@ export class CalculatorService {
         }
         break;
       case Const.PROP_DMG_BONUS_SET:
+        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_SET];
         finalRate += data[Const.PROP_DMG_RATE_UP_SET];
         // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_BONUS_SET]));
         dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SET];
@@ -1647,6 +1670,7 @@ export class CalculatorService {
         dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SET];
         //特別処理
         if(hasTag){
+          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_SET + tag] ?? 0);
           finalRate += data[Const.PROP_DMG_RATE_UP_SET + tag] ?? 0;
           // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_BONUS_SET + tag] ?? 0));
           dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SET + tag] ?? 0;
@@ -1656,6 +1680,8 @@ export class CalculatorService {
         }
         break;
     }
+    //全ダメージ倍率乗算値
+    finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ALL];
     //ダメージ値区域残り
     dmgSectionValue += finalRate * (data[base] ?? 0);
     for(let i = 0; i < rateAttach.length; ++i){
@@ -1868,10 +1894,12 @@ export class CalculatorService {
     if(healingBonusType){
       switch(healingBonusType){
         case Const.PROP_HEALING_BONUS_SKILL:
+          rate *= data[Const.PROP_HEALING_RATE_MULTI_SKILL] ?? 1;
           rate += data[Const.PROP_HEALING_RATE_UP_SKILL] ?? 0;
           extra += data[Const.PROP_HEALING_VAL_UP_SKILL] ?? 0;
           break;
         case Const.PROP_HEALING_BONUS_ELEMENTAL_BURST:
+          rate *= data[Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST] ?? 1;
           rate += data[Const.PROP_HEALING_RATE_UP_ELEMENTAL_BURST] ?? 0;
           extra += data[Const.PROP_HEALING_VAL_UP_ELEMENTAL_BURST] ?? 0;
           break;
@@ -3668,7 +3696,7 @@ export class CalculatorService {
             let priority = buff?.priority ?? 0;
             let finallyCal = buff?.finallyCal ?? false;
       
-            let targets = buff?.target;
+            let targets = buff?.target.map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
             //自身元素タイプチェック
             if(checkSelfElementType){
               targets = targets.filter((v: string)=>{
@@ -3866,7 +3894,7 @@ export class CalculatorService {
             let priority = buff?.priority ?? 0;
             let finallyCal = buff?.finallyCal ?? false;
       
-            let targets = buff?.target;
+            let targets = buff?.target.map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
             //自身元素タイプチェック
             if(checkSelfElementType){
               targets = targets.filter((v: string)=>{

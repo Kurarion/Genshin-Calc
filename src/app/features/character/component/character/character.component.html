@@ -66,10 +66,12 @@
                     </mat-expansion-panel-header>
                     <!-- 属性情報 -->
                     <table>
-                        <ng-container *ngFor="let prop of props_all">
-                            <tr *ngIf="allData[prop] != 0">
-                                <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
-                                <ng-container *ngIf="props_all_percent.includes(prop); then percent else value"></ng-container>
+                        <ng-container *ngFor="let props of props_all;">
+                            <tr *ngIf="allData[props.fullName] != 0 && props.fullName as prop">
+                                <td class="content-left">
+                                    <span *ngFor="let i18n of props.i18nList;" [innerText]="i18n | translate"></span>
+                                </td>
+                                <ng-container *ngIf="props.isPercent; then percent else value"></ng-container>
                                 <ng-template #percent>
                                     <td class="content-right">
                                         <span
