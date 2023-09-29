@@ -11028,6 +11028,20 @@
                 }
             ]
         },
+        "11427": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 4,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    }]
+                }
+            ]
+        },
         "11501": {
             "effect": [
                 {
@@ -11573,6 +11587,20 @@
                         "target": ["ATTACK_UP"],
                         "settingType": "switch",
                         "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "12427": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 4,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "slider",
+                        "sliderMax":3,
+                        "sliderStep":1,
+                        "sliderInitialValue": 0
                     }]
                 }
             ]
@@ -12466,6 +12494,23 @@
                 }
             ]
         },
+        "14426": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    },{
+                        "index": 3,
+                        "target": ["DMG_BONUS_CHARGED"]
+                    }]
+                }
+            ]
+        },
         "14501": {
             "effect": [
                 {
@@ -12631,6 +12676,51 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 10
+                    }]
+                }
+            ]
+        },
+        "14513": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    },{
+                        "index": 3,
+                        "target": ["DMG_BONUS_CHARGED"]
+                    }]
+                }
+            ]
+        },
+        "14514": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["HP_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["DMG_BONUS_CHARGED"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
                     }]
                 }
             ]

@@ -109,12 +109,13 @@ type GenshinSkillAffixListData []GenshinSkillAffixData
 
 //武器特效
 type GenshinSkillAffixData struct {
-	Id              uint64    `json:"id"`
-	AffixId         uint64    `json:"affixId"`
-	Level           int       `json:"level"`
-	NameTextMapHash uint64    `json:"nameTextMapHash"`
-	DescTextMapHash uint64    `json:"descTextMapHash"`
-	ParamList       []float64 `json:"paramList"`
+	Id              uint64        `json:"id"`
+	AffixId         uint64        `json:"affixId"`
+	Level           int           `json:"level"`
+	NameTextMapHash uint64        `json:"nameTextMapHash"`
+	DescTextMapHash uint64        `json:"descTextMapHash"`
+	AddProps        []interface{} `json:"addProps"`
+	ParamList       []float64     `json:"paramList"`
 }
 
 //************************
