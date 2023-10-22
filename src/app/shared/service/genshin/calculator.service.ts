@@ -1894,12 +1894,12 @@ export class CalculatorService {
     if(healingBonusType){
       switch(healingBonusType){
         case Const.PROP_HEALING_BONUS_SKILL:
-          rate *= data[Const.PROP_HEALING_RATE_MULTI_SKILL] ?? 1;
+          rate *= 1 + data[Const.PROP_HEALING_RATE_MULTI_SKILL];
           rate += data[Const.PROP_HEALING_RATE_UP_SKILL] ?? 0;
           extra += data[Const.PROP_HEALING_VAL_UP_SKILL] ?? 0;
           break;
         case Const.PROP_HEALING_BONUS_ELEMENTAL_BURST:
-          rate *= data[Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST] ?? 1;
+          rate *= 1 + data[Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST];
           rate += data[Const.PROP_HEALING_RATE_UP_ELEMENTAL_BURST] ?? 0;
           extra += data[Const.PROP_HEALING_VAL_UP_ELEMENTAL_BURST] ?? 0;
           break;
