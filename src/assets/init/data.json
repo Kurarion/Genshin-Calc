@@ -10503,6 +10503,7 @@
                         "damage": {
                             "indexs": [0],
                             "base": "HP",
+                            "canOverride": false,
                             "elementBonusType": "DMG_BONUS_HYDRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
                         }
@@ -10511,6 +10512,7 @@
                         "damage": {
                             "indexs": [1],
                             "base": "ATTACK",
+                            "canOverride": false,
                             "elementBonusType": "DMG_BONUS_HYDRO",
                             "attackBonusType": "DMG_BONUS_SKILL"
                         }
@@ -10581,6 +10583,323 @@
                                 "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
                             }
                         }
+                ]
+            }
+        },
+        "10000088": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [3],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5,6,7],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,5],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [2],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "healing": {
+                            "index":0,
+                            "constIndex":1,
+                            "constCalRelation": "+",
+                            "base":"ATTACK",
+                            "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_CRYO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "healing": {
+                            "index":3,
+                            "constIndex":4,
+                            "constCalRelation": "+",
+                            "base":"ATTACK",
+                            "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["HEALING_BONUS"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 3,
+                                "sliderStep": 1
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target":["DMG_BONUS_CRYO"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 3,
+                                "sliderStep": 1
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "healing": {
+                                "index":1,
+                                "base":"ATTACK",
+                                "healingBonusType":"HEALING_BONUS_OTHER"
+                            }
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "sliderStartIndex": 0,
+                                "target":["ATTACK_UP"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 3,
+                                "sliderStep": 1
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["DMG_BONUS_ELEMENTAL_BURST"],
+                                "settingType": "switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage":{
+                                "indexs": [0],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_CRYO",
+                                "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            },
+                            "healing": {
+                                "index":1,
+                                "base":"ATTACK",
+                                "healingBonusType":"HEALING_BONUS_ELEMENTAL_BURST"
+                            }
+                        }
+                ]
+            }
+        },
+        "10000089": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [9],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_OTHER"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [2,3,4],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "FURINA_SALON_SOLITAIRE"
+                        }
+                    },
+                    {
+                        "healing": {
+                            "index":8,
+                            "constIndex":9,
+                            "constCalRelation": "+",
+                            "base":"HP",
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "HP",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "buffs":[{
+                            "index": 5,
+                            "target":["REVERSE_HEALING_BONUS"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderMax": 400,
+                            "sliderStep": 1,
+                            "isAllTeam": true
+                        }, {
+                            "index": 4,
+                            "target":["DMG_BONUS_ALL"],
+                            "isAllTeam": true
+                        }]
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "indexMultiValue": 0.001,
+                                "maxValConstIndex": 1,
+                                "base": "HP",
+                                "target": ["DMG_BONUS_SKILL"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "tag": "FURINA_SALON_SOLITAIRE"
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target":["HP_UP"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 400,
+                                "sliderStep": 1
+                            }]
+                        }
+                ],
+                "5": [
+                    {
+                        "buffs":[{
+                            "index": 1,
+                            "base":"HP",
+                            "overrideElement":"DMG_BONUS_HYDRO",
+                            "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING"],
+                            "settingType": "switch",
+                            "defaultEnable": false
+                        }]
+                    },
+                    {
+                        "healing": {
+                            "index":3,
+                            "base":"HP",
+                            "healingBonusType":"HEALING_BONUS_OTHER"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "index": 6,
+                            "base":"HP",
+                            "overrideElement":"DMG_BONUS_HYDRO",
+                            "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING"],
+                            "settingType": "switch",
+                            "defaultEnable": false
+                        }]
+                    }
                 ]
             }
         }
@@ -11257,6 +11576,30 @@
                         "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_SKILL"],
                         "settingType": "switch",
                         "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "11513": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "slider",
+                        "sliderMax":3,
+                        "sliderStep":1,
+                        "sliderInitialValue": 0
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 3,
+                        "target": ["HP_UP"],
+                        "settingType": "slider",
+                        "sliderMax":2,
+                        "sliderStep":1,
+                        "sliderInitialValue": 0
                     }]
                 }
             ]
