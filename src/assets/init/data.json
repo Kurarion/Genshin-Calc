@@ -10756,7 +10756,8 @@
                             "base": "ATTACK",
                             "canOverride": true,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
-                            "attackBonusType": "DMG_BONUS_NORMAL"
+                            "attackBonusType": "DMG_BONUS_NORMAL",
+                            "tag": "FURINA_NORMAL_C6"
                         }
                     },
                     {
@@ -10765,7 +10766,8 @@
                             "base": "ATTACK",
                             "canOverride": true,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
-                            "attackBonusType": "DMG_BONUS_CHARGED"
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "FURINA_NORMAL_C6"
                         }
                     },
                     {
@@ -10774,7 +10776,8 @@
                             "base": "ATTACK",
                             "canOverride": true,
                             "elementBonusType": "DMG_BONUS_PHYSICAL",
-                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                            "attackBonusType": "DMG_BONUS_PLUNGING",
+                            "tag": "FURINA_NORMAL_C6"
                         }
                     },
                     {
@@ -10783,7 +10786,7 @@
                             "base": "ATTACK",
                             "canOverride": false,
                             "elementBonusType": "DMG_BONUS_HYDRO",
-                            "attackBonusType": "DMG_BONUS_OTHER"
+                            "attackBonusType": "DMG_BONUS_NORMAL"
                         }
                     }
                 ],
@@ -10897,7 +10900,8 @@
                             "overrideElement":"DMG_BONUS_HYDRO",
                             "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING"],
                             "settingType": "switch",
-                            "defaultEnable": false
+                            "defaultEnable": false,
+                            "tag": "FURINA_NORMAL_C6"
                         }]
                     }
                 ]
@@ -11358,6 +11362,18 @@
                         "sliderStep": 1,
                         "sliderMax": 3
                     }]
+                }
+            ]
+        },
+        "11428": {
+            "effect": [
+                {
+                    "damage": {
+                        "indexs": [0],
+                        "base": "ATTACK",
+                        "elementBonusType": "DMG_BONUS_PHYSICAL",
+                        "attackBonusType": "DMG_BONUS_WEAPON"
+                    }
                 }
             ]
         },
