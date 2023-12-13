@@ -92,6 +92,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
       this.calculatorService.allDataChanged().subscribe(()=>{
         this.getAllData();
       })
+      window.umami?.track(Array.from(['cn_sim', 'cn_tra', 'en', 'jp'], (k: TYPE_SYS_LANG) => this.data.name[k]).join(' / '))
     })
   }
 

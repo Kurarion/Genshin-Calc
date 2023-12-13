@@ -22,7 +22,7 @@
     width: 100%;
 }
 
-@media screen and (max-width: 1182px) {
+@media screen and (max-aspect-ratio: 13/9) {
     .background {
         position: absolute;
         background-position: top 0% right 0%;

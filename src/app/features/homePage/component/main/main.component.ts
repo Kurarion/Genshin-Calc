@@ -163,11 +163,13 @@ export class MainComponent implements OnInit, OnDestroy {
       file: currentFile,
     }
     const dialogRef = this.matDialog.open(ManualDialogComponent, {data})
+    window.umami?.track('Manual')
   }
 
   //分析サイト
   openAnalytics() {
     const url = environment.analyticsUrl;
+    window.umami?.track('Analytics')
     window.open(url, '_blank');
   }
 

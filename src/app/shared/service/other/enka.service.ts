@@ -139,9 +139,11 @@ export class EnkaService {
         this.enkaUpdate.next();
         //終了する
         resolve(addedNum)
+        window.umami?.track(`Enka: Success`)
       } else {
         //サーバーダウン
         reject()
+        window.umami?.track(`Enka: Failure`)
       }
     })
   }

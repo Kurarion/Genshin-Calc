@@ -96,6 +96,7 @@ export class HeadComponent implements OnInit {
       const { outcome } = await this.getInstallPop().userChoice;
       if (outcome === 'accepted') {
         this.showDownload = false;
+        window.umami?.track('Download')
       }
     }
   }
