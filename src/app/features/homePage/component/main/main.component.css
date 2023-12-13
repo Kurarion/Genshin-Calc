@@ -13,13 +13,26 @@
 
 .background {
     position: absolute;
-    bottom: 0;
-    background-position: top 0% right -100%;
-    background-size: cover;
-    /* background-attachment: fixed; */
+    background-position: top 0% right 0%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: blur(0.35px);
     z-index: -10;
     min-height: 100%;
     width: 100%;
+}
+
+@media screen and (max-width: 1182px) {
+    .background {
+        position: absolute;
+        background-position: top 0% right 0%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: blur(0.35px);
+        z-index: -10;
+        min-height: 100%;
+        width: 100%;
+    }
 }
 
 .background-content {

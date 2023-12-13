@@ -10,6 +10,7 @@ export interface EnkaStorageData {
 }
 
 const API_URL = "https://enka.network/api/uid/";
+const USE_ORIGIN_ENKA = environment.useOriginApi;
 const API_PROXY_URL = environment.apiProxyServer;
 const characterAscendLevels = [20, 40, 50, 60, 70, 80, 90];
 const weaponAscendLevels = [20, 40, 50, 60, 70, 80, 90];
@@ -90,12 +91,16 @@ export class EnkaService {
   getUIDInfos(uidStr: string): Promise<EnkaInfos|null>{
     const url = API_URL + uidStr;
     const proxy_url = API_PROXY_URL + url
-    return this.httpService.get<EnkaInfos>(url).then((data: EnkaInfos|null) => {
-      if (!data) {
-        return this.httpService.get<EnkaInfos>(proxy_url)
-      }
-      return data
-    })
+    if (USE_ORIGIN_ENKA) {
+      return this.httpService.get<EnkaInfos>(url).then((data: EnkaInfos|null) => {
+        if (!data) {
+          return this.httpService.get<EnkaInfos>(proxy_url)
+        }
+        return data
+      })
+    } else {
+      return this.httpService.get<EnkaInfos>(proxy_url)
+    }
   }
 
   //データセット

@@ -467,6 +467,9 @@
     "MANUAL":{
       "TITLE": "使用指南",
       "OK": "确认"
+    },
+    "ANALYTICS": {
+      "TITLE": "访问统计"
     }
   },
   "COMMON":{

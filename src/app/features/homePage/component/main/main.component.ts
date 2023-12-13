@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 
 const HOMEPAGE_BG = "assets/init/homePageBG-compress.png";
@@ -162,6 +163,12 @@ export class MainComponent implements OnInit, OnDestroy {
       file: currentFile,
     }
     const dialogRef = this.matDialog.open(ManualDialogComponent, {data})
+  }
+
+  //分析サイト
+  openAnalytics() {
+    const url = environment.analyticsUrl;
+    window.open(url, '_blank');
   }
 
   /**

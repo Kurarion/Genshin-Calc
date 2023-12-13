@@ -467,6 +467,9 @@
     "MANUAL": {
       "TITLE": "Guide",
       "OK": "Confirm"
+    },
+    "ANALYTICS": {
+      "TITLE": "Access Analysis"
     }
   },
   "COMMON": {

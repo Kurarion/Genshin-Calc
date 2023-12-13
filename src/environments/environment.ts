@@ -64,7 +64,9 @@ export const environment = {
   ],
   artifactEffectContentPreffix: '•',
   githubRepository: 'https://github.com/Kurarion/Genshin-Calc',
+  useOriginApi: false,
   apiProxyServer: 'https://enka-proxy.sirokuma.cc/',
+  analyticsUrl: 'https://umami.sirokuma.cc/share/0MMtBs1LSy07e4Bw/Inteyvat',
   elementColorAlpha: '75',
   outputLog: true,
 };

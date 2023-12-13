@@ -24,6 +24,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HeadComponent implements OnInit {
   readonly githubRepository = environment.githubRepository;
+  readonly analyticsUrl = environment.analyticsUrl;
   readonly stateShow = STATE_SHOW
   readonly stateHidden = STATE_HIDDEN
 
