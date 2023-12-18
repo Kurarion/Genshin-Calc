@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType, TeamService } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType, TeamService, CalcUnit, CalcItem, TYPE_RELATION } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 const name_normal = Const.NAME_SKILLS_NORMAL;
@@ -45,6 +45,7 @@ export interface SpecialBuff {
   specialMaxVal?: SpecialBuffMaxVal;
   tag?: string;
   finallyCal?: boolean;
+  finalResCalQueue?: CalcItem[];
 }
 
 export interface SelfTeamBuff {
@@ -87,7 +88,8 @@ export interface TeamBuff {
   priority?: number;
   maxVal?: number;
   specialMaxVal?: SpecialBuffMaxVal;
-  buffTag?: string,
+  buffTag?: string;
+  finalResCalQueue?: CalcItem[];
 }
 
 export interface SpecialBuffMaxVal {
@@ -195,6 +197,8 @@ export interface ProductResult {
 }
 
 export interface BuffResult {
+  showIndex?: number;
+  showPriority?: number;
   valueIndex: number;
   type: string;
   switchValue?: boolean;
@@ -2720,13 +2724,13 @@ export class CalculatorService {
             //聖遺物と武器効果が一箇所しないため、表示チェックを排除する（一時的）
             if(skill != Const.NAME_SET && skill != Const.NAME_EFFECT){
               if(valueIndexs != undefined){
-                if(buffInfo?.index != undefined){
-                  if(!valueIndexs.includes(buffInfo.index)){
+                if(buffInfo?.showIndex != undefined){
+                  if(!valueIndexs.includes(buffInfo.showIndex)){
                     continue;
                   }
                 }
-                if(buffInfo?.constIndex != undefined){
-                  if(!valueIndexs.includes(buffInfo.constIndex)){
+                if(buffInfo?.index != undefined){
+                  if(!valueIndexs.includes(buffInfo.index)){
                     continue;
                   }
                 }
@@ -2744,6 +2748,8 @@ export class CalculatorService {
                     tempValue = this.characterService.getExtraSwitch(indexStr, skill, infoIndex, skillIndex);
                   }
                   results.push({
+                    showIndex: buffInfo.showIndex,
+                    showPriority: buffInfo.showPriority ?? 1,
                     valueIndex: infoIndex,
                     type: 'switch',
                     switchValue: tempValue,
@@ -2762,6 +2768,8 @@ export class CalculatorService {
                     tempValue = this.characterService.getExtraSlider(indexStr, skill, infoIndex, skillIndex);
                   }
                   results.push({
+                    showIndex: buffInfo.showIndex,
+                    showPriority: buffInfo.showPriority ?? 1,
                     valueIndex: infoIndex,
                     type: 'slider',
                     sliderValue: tempValue,
@@ -2783,7 +2791,7 @@ export class CalculatorService {
         }
       }
   
-      return results;
+      return results.sort((a: BuffResult, b: BuffResult) => b.showPriority! - a.showPriority!);
   }
 
   setSkillBuffValue(index: string | number, skill: string, valueIndex: number, type: string, setValue: number | boolean, skillIndex?: number | string){
@@ -3593,11 +3601,16 @@ export class CalculatorService {
         let isOnlyForOther = buff.isOnlyForOther ?? false;
         let isEnableInSwitch = true;
         let isEnableInSlider = true;
+        let toSetVal = 0;
         if(!(buffIndex in switchOnSet) || switchOnSet[buffIndex] != true){
           isEnableInSwitch = false;
+        } else {
+          toSetVal = 1;
         }
         if(!(buffIndex in sliderNumMap) || typeof sliderNumMap[buffIndex] != "number"){
           isEnableInSlider = false;
+        } else {
+          toSetVal = sliderNumMap[buffIndex];
         }
   
         if(buff){
@@ -3614,116 +3627,126 @@ export class CalculatorService {
           //限定自身元素タイプチェック準備
           let checkSelfElementType = buff?.selfElementTypeLimit === true;
           let selfElementType = Const.ELEMENT_TYPE_MAP.get(elementType)!;
+          //入力値を変数に保存
+          if (buff.setTo !== undefined) {
+            result[buff.setTo] = toSetVal;
+          }
+          //結果再計算列
+          const calQueue = buff.finalResCalQueue;
+          //共通
+          let indexValue = 0;
+          if(buff?.index != undefined){
+            if(skillData.paramMap){
+              indexValue = skillData.paramMap[skillLevel][buff?.index!];
+            }else if(skillData.paramList){
+              indexValue = skillData.paramList[buff?.index!];
+            }
+          }else if(buff?.customValue != undefined){
+            indexValue = buff.customValue;
+          }else if(buff?.propIndex != undefined){
+            indexValue = skillData.addProps![buff?.propIndex].value;
+          }
+          let constIndexValue = 0;
+          if(buff?.constIndex != undefined){
+            if(skillData.paramMap){
+              constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
+            }else if(skillData.paramList){
+              constIndexValue = skillData.paramList[buff?.constIndex!];
+            }
+          }
+          let indexMultiValue = 1;
+          if(buff?.indexMultiValue != undefined){
+            indexMultiValue = buff.indexMultiValue;
+          }
+          indexValue *= indexMultiValue;
+          let indexAddValue = 0;
+          if(buff?.indexAddValue != undefined){
+            indexAddValue = buff.indexAddValue;
+          }
+          indexValue += indexAddValue;
+          if(buff.originSkills){
+            for(let i = 0; i < buff.originSkills.length; ++i){
+              const indexStr = index.toString();
+              const characterData = this.dataMap[indexStr].characterData;
+              let originRateInfo = characterData!.skills![buff.originSkills[i] as keyof CharSkills] as CharSkill;
+              let originSkillLevel = this.getCharacterSkillLevel(indexStr, buff.originSkills[i]);
+              let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexs![i]]
+              switch(buff.originRelations![i]){
+                case "*":
+                  indexValue *= originRate
+                  break;
+                case "+":
+                  indexValue += originRate
+                  break;
+                case "-":
+                  indexValue -= originRate
+                  break;
+                case "/":
+                  indexValue /= originRate
+                  break;
+              }
+            }
+          }
+          let calRelation = buff?.calRelation ?? '+';
+          switch(calRelation){
+            case "-":
+              indexValue = -1 * indexValue;
+              break;
+          }
+          let constCalRelation = buff?.constCalRelation ?? '+';
+    
+          let base = buff?.base;
+          //ベース２
+          let base2 = buff.base2;
+          let baseModifyValue = buff?.baseModifyValue;
+          let baseModifyRelation = buff?.baseModifyRelation;
+          if(baseModifyValue != undefined){
+            switch(baseModifyRelation){
+              case "-":
+                baseModifyValue = -1 * baseModifyValue;
+                break;
+            }
+          }
+          let priority = buff?.priority ?? 0;
+          let finallyCal = buff?.finallyCal ?? false;
+    
+          let targets = buff?.target.map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
+          //自身元素タイプチェック
+          if(checkSelfElementType){
+            targets = targets.filter((v: string)=>{
+              return v.includes(selfElementType);
+            })
+          }
+    
+          let maxValIndexValue = 0;
+          if(buff?.maxValIndex != undefined){
+            if(skillData.paramMap){
+              maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
+            }else if(skillData.paramList){
+              maxValIndexValue = skillData.paramList[buff?.maxValIndex!];
+            }
+          }
+          let maxValBase = buff?.maxValBase;
+          let maxValConstIndexValue = 0;
+          if(buff?.maxValConstIndex != undefined){
+            if(skillData.paramMap){
+              maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
+            }else if(skillData.paramList){
+              maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
+            }
+          }else if(buff?.maxValValue != undefined){
+            maxValConstIndexValue = buff.maxValValue;
+          }
           
+          // ------------
+          // 入力タイプ分岐処理
+          // ------------
           if(isEnableInSwitch){
             //元素付与
             if(buff.overrideElement != undefined && overrideElement == ""){
               overrideElement = buff.overrideElement;
             }
-            let indexValue = 0;
-            if(buff?.index != undefined){
-              if(skillData.paramMap){
-                indexValue = skillData.paramMap[skillLevel][buff?.index!];
-              }else if(skillData.paramList){
-                indexValue = skillData.paramList[buff?.index!];
-              }
-            }else if(buff?.customValue != undefined){
-              indexValue = buff.customValue;
-            }else if(buff?.propIndex != undefined){
-              indexValue = skillData.addProps![buff?.propIndex].value;
-            }
-            let constIndexValue = 0;
-            if(buff?.constIndex != undefined){
-              if(skillData.paramMap){
-                constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
-              }else if(skillData.paramList){
-                constIndexValue = skillData.paramList[buff?.constIndex!];
-              }
-            }
-            let indexMultiValue = 1;
-            if(buff?.indexMultiValue != undefined){
-              indexMultiValue = buff.indexMultiValue;
-            }
-            indexValue *= indexMultiValue;
-            let indexAddValue = 0;
-            if(buff?.indexAddValue != undefined){
-              indexAddValue = buff.indexAddValue;
-            }
-            indexValue += indexAddValue;
-            if(buff.originSkills){
-              for(let i = 0; i < buff.originSkills.length; ++i){
-                const indexStr = index.toString();
-                const characterData = this.dataMap[indexStr].characterData;
-                let originRateInfo = characterData!.skills![buff.originSkills[i] as keyof CharSkills] as CharSkill;
-                let originSkillLevel = this.getCharacterSkillLevel(indexStr, buff.originSkills[i]);
-                let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexs![i]]
-                switch(buff.originRelations![i]){
-                  case "*":
-                    indexValue *= originRate
-                    break;
-                  case "+":
-                    indexValue += originRate
-                    break;
-                  case "-":
-                    indexValue -= originRate
-                    break;
-                  case "/":
-                    indexValue /= originRate
-                    break;
-                }
-              }
-            }
-            let calRelation = buff?.calRelation ?? '+';
-            switch(calRelation){
-              case "-":
-                indexValue = -1 * indexValue;
-                break;
-            }
-            let constCalRelation = buff?.constCalRelation ?? '+';
-      
-            let base = buff?.base;
-            //ベース２
-            let base2 = buff.base2;
-            let baseModifyValue = buff?.baseModifyValue;
-            let baseModifyRelation = buff?.baseModifyRelation;
-            if(baseModifyValue != undefined){
-              switch(baseModifyRelation){
-                case "-":
-                  baseModifyValue = -1 * baseModifyValue;
-                  break;
-              }
-            }
-            let priority = buff?.priority ?? 0;
-            let finallyCal = buff?.finallyCal ?? false;
-      
-            let targets = buff?.target.map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
-            //自身元素タイプチェック
-            if(checkSelfElementType){
-              targets = targets.filter((v: string)=>{
-                return v.includes(selfElementType);
-              })
-            }
-      
-            let maxValIndexValue = 0;
-            if(buff?.maxValIndex != undefined){
-              if(skillData.paramMap){
-                maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
-              }else if(skillData.paramList){
-                maxValIndexValue = skillData.paramList[buff?.maxValIndex!];
-              }
-            }
-            let maxValBase = buff?.maxValBase;
-            let maxValConstIndexValue = 0;
-            if(buff?.maxValConstIndex != undefined){
-              if(skillData.paramMap){
-                maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
-              }else if(skillData.paramList){
-                maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
-              }
-            }else if(buff?.maxValValue != undefined){
-              maxValConstIndexValue = buff.maxValValue;
-            }
-      
+
             if(base){
               //特殊バフ
               let temp: SpecialBuff = {};
@@ -3778,20 +3801,8 @@ export class CalculatorService {
             }else{
               //一般バフ
               let value = indexValue;
-              switch(constCalRelation){
-                case '+':
-                  value += constIndexValue;
-                  break;
-                case '-':
-                  value -= constIndexValue;
-                  break;
-                case '*':
-                  value *= constIndexValue;
-                  break;
-                case '/':
-                  value /= constIndexValue;
-                  break;
-              }
+              value = this.calRelationResult(value, constIndexValue, constCalRelation)
+              value = this.getFinalResCalQueueResult(result, value, calQueue)
               for(let tar of targets){
                 if(!isOnlyForOther){
                   if(!result[tar]){
@@ -3816,112 +3827,7 @@ export class CalculatorService {
               }
             }
           }else if(isEnableInSlider){
-            let id = 0;
-            let indexValue = 0;
             let isMaximumStackBuff = buff?.isMaximumStackBuff || false;
-            if(buff?.index != undefined){
-              if(skillData.paramMap){
-                indexValue = skillData.paramMap[skillLevel][buff?.index!];
-              }else if(skillData.paramList){
-                indexValue = skillData.paramList[buff?.index!];
-              }
-            }else if(buff?.customValue != undefined){
-              indexValue = buff.customValue;
-            }else if(buff?.propIndex != undefined){
-              indexValue = skillData.addProps![buff?.propIndex].value;
-            }
-            let constIndexValue = 0;
-            if(buff?.constIndex != undefined){
-              if(skillData.paramMap){
-                constIndexValue = skillData.paramMap[skillLevel][buff?.constIndex!];
-              }else if(skillData.paramList){
-                constIndexValue = skillData.paramList[buff?.constIndex!];
-              }
-            }
-            let indexMultiValue = 1;
-            if(buff?.indexMultiValue != undefined){
-              indexMultiValue = buff.indexMultiValue;
-            }
-            indexValue *= indexMultiValue;
-            let indexAddValue = 0;
-            if(buff?.indexAddValue != undefined){
-              indexAddValue = buff.indexAddValue;
-            }
-            indexValue += indexAddValue;
-            if(buff.originSkills){
-              for(let i = 0; i < buff.originSkills.length; ++i){
-                const indexStr = index.toString();
-                const characterData = this.dataMap[indexStr].characterData;
-                let originRateInfo = characterData!.skills![buff.originSkills[i] as keyof CharSkills] as CharSkill;
-                let originSkillLevel = this.getCharacterSkillLevel(indexStr, buff.originSkills[i]);
-                let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexs![i]]
-                switch(buff.originRelations![i]){
-                  case "*":
-                    indexValue *= originRate
-                    break;
-                  case "+":
-                    indexValue += originRate
-                    break;
-                  case "-":
-                    indexValue -= originRate
-                    break;
-                  case "/":
-                    indexValue /= originRate
-                    break;
-                }
-              }
-            }
-            let calRelation = buff?.calRelation ?? '+';
-            switch(calRelation){
-              case "-":
-                indexValue = -1 * indexValue;
-                break;
-            }
-            let constCalRelation = buff?.constCalRelation ?? '+';
-      
-            let base = buff?.base;
-            //ベース２
-            let base2 = buff.base2;
-            let baseModifyValue = buff?.baseModifyValue;
-            let baseModifyRelation = buff?.baseModifyRelation;
-            if(baseModifyValue != undefined){
-              switch(baseModifyRelation){
-                case "-":
-                  baseModifyValue = -1 * baseModifyValue;
-                  break;
-              }
-            }
-            let priority = buff?.priority ?? 0;
-            let finallyCal = buff?.finallyCal ?? false;
-      
-            let targets = buff?.target.map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
-            //自身元素タイプチェック
-            if(checkSelfElementType){
-              targets = targets.filter((v: string)=>{
-                return v.includes(selfElementType);
-              })
-            }
-
-            let maxValIndexValue = 0;
-            if(buff?.maxValIndex != undefined){
-              if(skillData.paramMap){
-                maxValIndexValue = skillData.paramMap[skillLevel][buff?.maxValIndex!];
-              }else if(skillData.paramList){
-                maxValIndexValue = skillData.paramList[buff?.maxValIndex!];
-              }
-            }
-            let maxValBase = buff?.maxValBase;
-            let maxValConstIndexValue = 0;
-            if(buff?.maxValConstIndex != undefined){
-              if(skillData.paramMap){
-                maxValConstIndexValue = skillData.paramMap[skillLevel][buff?.maxValConstIndex!];
-              }else if(skillData.paramList){
-                maxValConstIndexValue = skillData.paramList[buff?.maxValConstIndex!];
-              }
-            }else if(buff?.maxValValue != undefined){
-              maxValConstIndexValue = buff.maxValValue;
-            }
-  
             let sliderMax = buff?.sliderMax;
             let sliderStep = buff?.sliderStep;
             let sliderStartIndex = buff?.sliderStartIndex;
@@ -4107,20 +4013,7 @@ export class CalculatorService {
             }else{
               //一般バフ
               let value = indexValue;
-              switch(constCalRelation){
-                case '+':
-                  value += constIndexValue;
-                  break;
-                case '-':
-                  value -= constIndexValue;
-                  break;
-                case '*':
-                  value *= constIndexValue;
-                  break;
-                case '/':
-                  value /= constIndexValue;
-                  break;
-              }
+              value = this.calRelationResult(value, constIndexValue, constCalRelation)
               for(let tar of targets){
                 if(!isOnlyForOther){
                   if(result[tar] == undefined){
@@ -4317,5 +4210,42 @@ export class CalculatorService {
       tempDmgAntiSectionValue = tempDmgAntiSectionValue/2;
     }
     return tempDmgAntiSectionValue;
+  }
+
+  private getFinalResCalQueueResult(data: Record<string, number>, currentVal: number, finalResCalQueue?: CalcItem[]): number {
+    let result = currentVal;
+    for (const item of finalResCalQueue ?? []) {
+      let tempRes = 0;
+      for (const unit of item.inner) {
+        let tempVal = 0;
+        if (unit.variable !== undefined) {
+          tempVal = data[unit.variable];
+        } else {
+          tempVal = unit.const ?? 0;
+        }
+        tempRes = this.calRelationResult(tempRes, tempVal, unit.relation);
+      }
+      result = this.calRelationResult(result, tempRes, item.relation);
+    }
+    return result;
+  }
+
+  private calRelationResult(val1: number, val2: number, relation: TYPE_RELATION): number{
+    let result = val1;
+    switch(relation){
+      case '+':
+        result += val2;
+        break;
+      case '-':
+        result -= val2;
+        break;
+      case '*':
+        result *= val2;
+        break;
+      case '/':
+        result /= val2;
+        break;
+    }
+    return result;
   }
 }

@@ -80,6 +80,8 @@ export interface ExtraSkillInfo {
 
 /** 補足データ - 4階 */
 export interface ExtraSkillDamage {
+  //結果再計算列
+  finalResCalQueue?: CalcItem[];
   //連携スキル
   originSkills?: TYPE_SKILL[];
   originIndexs?: number[];
@@ -104,6 +106,13 @@ export interface ExtraSkillDamage {
 }
 
 export interface ExtraSkillBuff {
+  //表示用
+  showIndex?: number;
+  showPriority?: number;
+  //入力値保存
+  setTo?: string;
+  //結果再計算列
+  finalResCalQueue?: CalcItem[];
   //数値計算ベース
   index?: number;
   indexMultiValue?: number;
@@ -169,6 +178,8 @@ export interface ExtraSkillBuff {
 }
 
 export interface ExtraSkillHealing {
+  //結果再計算列
+  finalResCalQueue?: CalcItem[];
   //連携スキル
   originSkills?: TYPE_SKILL[];
   originIndexs?: number[];
@@ -188,6 +199,8 @@ export interface ExtraSkillHealing {
 }
 
 export interface ExtraSkillShield {
+  //結果再計算列
+  finalResCalQueue?: CalcItem[];
   //連携スキル
   originSkills?: TYPE_SKILL[];
   originIndexs?: number[];
@@ -209,6 +222,8 @@ export interface ExtraSkillShield {
 }
 
 export interface ExtraSkillProduct {
+  //結果再計算列
+  finalResCalQueue?: CalcItem[];
   //数値計算ベースインデックスリスト
   index?: number;
   constIndex?: number;
@@ -223,3 +238,14 @@ export interface ExtraSkillProduct {
 export declare type TYPE_SKILL = 'normal' | 'skill' | 'elementalBurst' | 'proudSkills';
 export declare type TYPE_RELATION = '*' | '+' | '-' | '/';
 export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' | 'switch';
+//計算ユニット
+export interface CalcItem {
+  relation: TYPE_RELATION;
+  inner: CalcUnit[];
+}
+
+export interface CalcUnit {
+  variable?: string;
+  const?: number;
+  relation: TYPE_RELATION;
+}

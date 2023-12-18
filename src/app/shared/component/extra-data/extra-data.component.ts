@@ -181,19 +181,19 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   dmgParamDatas!: DamageParam[];
   //治療データ
   healingDatas!: HealingResult[];
-  //ダメージループ用リスト
+  //治療ループ用リスト
   healingTempDataList: number[] = [];
   //バリアデータ
   shieldDatas!: ShieldResult[];
-  //ダメージループ用リスト
+  //バリアループ用リスト
   shieldTempDataList: number[] = [];
   //生成物生命値データ
   productDatas!: ProductResult[];
-  //ダメージループ用リスト
+  //生成物生命値ループ用リスト
   productTempDataList: number[] = [];
   //バフデータ
   buffDatas!: BuffResult[];
-  //ダメージループ用リスト
+  //バフループ用リスト
   buffTempDataList: number[] = [];
   //バフswitch
   buffSwitchValue!: boolean;
