@@ -12,7 +12,7 @@
                         <br>
                         <app-mat-filtering-selector class="set-field"
                             [title]="'ARTIFACT.SET1'"
-                            [model]="selectedArtifactSetIndexs[0]"
+                            [model]="selectedArtifactSetIndexes[0]"
                             (modelChange)="onSelectArtifactSet($event, 0)"
                             [hasBlankOption]="true"
                             [originList]="artifactSetList"
@@ -30,7 +30,7 @@
                         &nbsp;
                         <app-mat-filtering-selector class="set-field"
                             [title]="'ARTIFACT.SET2'"
-                            [model]="selectedArtifactSetIndexs[1]"
+                            [model]="selectedArtifactSetIndexes[1]"
                             (modelChange)="onSelectArtifactSet($event, 1)"
                             [hasBlankOption]="true"
                             [originList]="artifactSetList"
@@ -42,10 +42,10 @@
                             [dispalyIconWhenSelected]="true"
                             [currentLanguage]="currentLanguage">
                         </app-mat-filtering-selector>
-                        <ng-container *ngIf="selectedArtifactSetIndexs[0] && selectedArtifactSetIndexs[0] != ''">
+                        <ng-container *ngIf="selectedArtifactSetIndexes[0] && selectedArtifactSetIndexes[0] != ''">
                             <br><span [innerHTML]="effectContent1"></span>
                         </ng-container>
-                        <ng-container *ngIf="selectedArtifactSetIndexs[1] && selectedArtifactSetIndexs[1] != ''">
+                        <ng-container *ngIf="selectedArtifactSetIndexes[1] && selectedArtifactSetIndexes[1] != ''">
                             <br><span [innerHTML]="effectContent2"></span>
                         </ng-container>
                         <app-extra-data
@@ -54,7 +54,7 @@
                             [skillIndex]="2"
                             [refreshFlg]="setBuffRefreshFlg"
                             [refreshBuffOnChangeFlg]="true"
-                            [valueIndexs]="effectValidIndexs">
+                            [valueIndexes]="effectValidIndexes">
                             <br>
                             <br>
                             <app-extra-data
@@ -62,7 +62,7 @@
                                 [skill]="name_set"
                                 [skillIndex]="1"
                                 [refreshFlg]="setBuffRefreshFlg"
-                                [valueIndexs]="effectValidIndexs">
+                                [valueIndexes]="effectValidIndexes">
                             </app-extra-data>
                         </app-extra-data>
                         <div class="chip-div">

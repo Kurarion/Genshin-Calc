@@ -95,7 +95,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   effectName!: string;
   effectContentRecord!: Record<TYPE_SYS_LANG, string>;
   effectContent!: string;
-  effectValidIndexs!: number[];
+  effectValidIndexes!: number[];
 
   listFilterFunc!: ((value:any) => boolean);
 
@@ -168,11 +168,11 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     if(this.weaponData.skillAffixMap){
       this.effectNameRecord = this.getEffectName(this.selectedSmeltingLevel);
       this.effectContentRecord = this.getEffectContent(this.selectedSmeltingLevel);
-      this.effectValidIndexs = this.getEffectValidIndexs(this.selectedSmeltingLevel);
+      this.effectValidIndexes = this.getEffectValidIndexes(this.selectedSmeltingLevel);
       this.effectName = this.effectNameRecord[this.currentLanguage];
       this.effectContent = this.effectContentRecord[this.currentLanguage];
     }else{
-      this.effectValidIndexs = [];
+      this.effectValidIndexes = [];
       this.effectName = "";
       this.effectContent = "";
     }
@@ -272,8 +272,8 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     return this.weaponData.skillAffixMap[selectedSmeltingLevel]!.desc;
   }
 
-  getEffectValidIndexs(selectedSmeltingLevel: string): number[]{
-    return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexs;
+  getEffectValidIndexes(selectedSmeltingLevel: string): number[]{
+    return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexes;
   }
 
   //ドラッグ開始

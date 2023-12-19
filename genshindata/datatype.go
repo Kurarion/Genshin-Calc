@@ -89,7 +89,7 @@ type AVATARSKILLINFO struct {
 	ParamDescList        map[string][]string                     `json:"paramDescList"`
 	ParamMap             map[string][]float64                    `json:"paramMap"`
 	ParamDescSplitedList map[string][]AVATARSKILLSPLITEDDESCINFO `json:"paramDescSplitedList"`
-	ParamValidIndexs     []int                                   `json:"paramValidIndexs"`
+	ParamValidIndexes    []int                                   `json:"paramValidIndexes"`
 	ProudSkillGroupId    uint64                                  `json:"proudSkillGroupId"`
 	Images               SKILLIMAGES                             `json:"images"`
 	CdTime               float64                                 `json:"cdTime"`
@@ -99,12 +99,12 @@ type AVATARSKILLINFO struct {
 
 //人物技能详细
 type AVATARSKILLSPLITEDDESCINFO struct {
-	Desc            string   `json:"desc"`
-	ValuePropIndexs []int    `json:"valuePropIndexs"`
-	Prefix          string   `json:"prefix"`
-	Middles         []string `json:"middles"`
-	Suffix          string   `json:"suffix"`
-	IsPercent       []bool   `json:"isPercent"`
+	Desc             string   `json:"desc"`
+	ValuePropIndexes []int    `json:"valuePropIndexes"`
+	Prefix           string   `json:"prefix"`
+	Middles          []string `json:"middles"`
+	Suffix           string   `json:"suffix"`
+	IsPercent        []bool   `json:"isPercent"`
 }
 
 //人物图片
@@ -150,9 +150,9 @@ type WEAPON struct {
 
 //武器特效
 type SKILLAFFIX struct {
-	Name             map[string]string `json:"name"`
-	Desc             map[string]string `json:"desc"`
-	ParamValidIndexs []int             `json:"paramValidIndexs"`
+	Name              map[string]string `json:"name"`
+	Desc              map[string]string `json:"desc"`
+	ParamValidIndexes []int             `json:"paramValidIndexes"`
 	GenshinSkillAffixData
 }
 
@@ -207,14 +207,14 @@ type RELIQUARYIMAGES struct {
 }
 
 type RELIQUARYAFFIX struct {
-	Name             map[string]string `json:"name"`
-	NameTextMapHash  uint64            `json:"nameTextMapHash"`
-	Desc             map[string]string `json:"desc"`
-	DescTextMapHash  uint64            `json:"descTextMapHash"`
-	Level            int               `json:"level"`
-	AddProps         []interface{}     `json:"addProps"`
-	ParamList        []float64         `json:"paramList"`
-	ParamValidIndexs []int             `json:"paramValidIndexs"`
+	Name              map[string]string `json:"name"`
+	NameTextMapHash   uint64            `json:"nameTextMapHash"`
+	Desc              map[string]string `json:"desc"`
+	DescTextMapHash   uint64            `json:"descTextMapHash"`
+	Level             int               `json:"level"`
+	AddProps          []interface{}     `json:"addProps"`
+	ParamList         []float64         `json:"paramList"`
+	ParamValidIndexes []int             `json:"paramValidIndexes"`
 }
 
 //GetNameFromTypeCode genshindataType名转换属性名

@@ -80,14 +80,14 @@ export class MainComponent implements OnInit, OnDestroy {
   isLargeFlg: boolean = true;
   //破棄状態
   destroyed = new Subject<void>();
-  //z-indexs
-  childZIndexs!: Record<string, number>;
+  //z-indexes
+  childZIndexes!: Record<string, number>;
   //レイアウトマネジャー
   magicGrid!: MagicGrid|null;
   //subscription
   subscriptions!: Subscription[];
   //z-index
-  private zIndexs!: string[];
+  private zIndexes!: string[];
   //コンテンツ
   @ViewChild('main') main!: ElementRef;
 
@@ -120,9 +120,9 @@ export class MainComponent implements OnInit, OnDestroy {
       })
     }));
     //z-index初期化
-    this.zIndexs = [];
-    this.childZIndexs = {};
-    this.refreshChildZIndexs();
+    this.zIndexes = [];
+    this.childZIndexes = {};
+    this.refreshChildZIndexes();
     //レイアウトフラグ
     this.isLarge = this.breakpointObserver.observe(['(min-width: 700px)']).pipe(
       takeUntil(this.destroyed),
@@ -287,15 +287,15 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onChildStartDrag(name: string){
-    if(this.childNameMap[name] != this.zIndexs[this.zIndexs.length-1]){
-      this.zIndexs.push(this.childNameMap[name]);
-      this.refreshChildZIndexs();
+    if(this.childNameMap[name] != this.zIndexes[this.zIndexes.length-1]){
+      this.zIndexes.push(this.childNameMap[name]);
+      this.refreshChildZIndexes();
     }
   }
 
-  refreshChildZIndexs(){
+  refreshChildZIndexes(){
     for(let key of this.childNames){
-      this.childZIndexs[key] = (this.zIndexs.lastIndexOf(key) + 1);
+      this.childZIndexes[key] = (this.zIndexes.lastIndexOf(key) + 1);
     }
   }
 

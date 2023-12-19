@@ -203,6 +203,19 @@ export class Const {
   //*********************************
   //           　属性
   //*********************************
+  //変数
+  static readonly PORP_VAR_CHARA_1 = "VAR_CHARA_1"
+  static readonly PORP_VAR_CHARA_2 = "VAR_CHARA_2"
+  static readonly PORP_VAR_CHARA_3 = "VAR_CHARA_3"
+  static readonly PORP_VAR_CHARA_4 = "VAR_CHARA_4"
+  static readonly PORP_VAR_CHARA_5 = "VAR_CHARA_5"
+  static readonly PORP_VAR_CHARA_6 = "VAR_CHARA_6"
+  static readonly PORP_VAR_CHARA_7 = "VAR_CHARA_7"
+  static readonly PORP_VAR_CHARA_8 = "VAR_CHARA_8"
+  static readonly PORP_VAR_SET_1 = "VAR_SET_1"
+  static readonly PORP_VAR_SET_2 = "VAR_SET_2"
+  static readonly PORP_VAR_WEAPON_1 = "VAR_WEAPON_1"
+  static readonly PORP_VAR_WEAPON_2 = "VAR_WEAPON_2"
   //特殊BUFFに変えるための仮想属性（固定1）
   static readonly PROP_FIX_NUMBER_1 = "FIX_NUMBER_1";
   //聖遺物海染硨磲治療量
@@ -622,6 +635,7 @@ export class Const {
   static readonly PORP_TAG_NEUVILLETTE_EQUITABLE_JUDGMENT = "NEUVILLETTE_EQUITABLE_JUDGMENT";
   static readonly PORP_TAG_FURINA_SALON_SOLITAIRE = "FURINA_SALON_SOLITAIRE";
   static readonly PORP_TAG_FURINA_NORMAL_C6 = "FURINA_NORMAL_C6";
+  static readonly PORP_TAG_NAVIA_SHARDSHOT = "NAVIA_SHARDSHOT";
 
   static readonly PROPS_TAG_LIST = [
     Const.PORP_TAG_RAIDEN_ITTOU,
@@ -642,6 +656,9 @@ export class Const {
     Const.PORP_TAG_TRAVELER_DEWDROP,
     Const.PORP_TAG_WRIOTHESLEY_REBUKE,
     Const.PORP_TAG_NEUVILLETTE_EQUITABLE_JUDGMENT,
+    Const.PORP_TAG_FURINA_SALON_SOLITAIRE,
+    Const.PORP_TAG_FURINA_NORMAL_C6,
+    Const.PORP_TAG_NAVIA_SHARDSHOT,
   ]
 
   static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
@@ -691,6 +708,9 @@ export class Const {
       Const.PORP_TAG_FURINA_SALON_SOLITAIRE,
       Const.PORP_TAG_FURINA_NORMAL_C6
     ]],
+    ["10000091", [
+      Const.PORP_TAG_NAVIA_SHARDSHOT
+    ]],
     ["10000005503", [
       Const.PORP_TAG_TRAVELER_TORRENT_SURGE,
       Const.PORP_TAG_TRAVELER_DEWDROP,
@@ -726,6 +746,7 @@ export class Const {
     [Const.PROP_DMG_BONUS_SKILL, Const.PORP_TAG_ALHAITHAM_MIRROR],
     [Const.PROP_DMG_BONUS_SKILL, Const.PORP_TAG_DEHYA_FIELD],
     [Const.PROP_DMG_BONUS_SKILL, Const.PORP_TAG_FURINA_SALON_SOLITAIRE],
+    [Const.PROP_DMG_BONUS_SKILL, Const.PORP_TAG_NAVIA_SHARDSHOT],
     [Const.PROP_DMG_RATE_UP_CHARGED, Const.PORP_TAG_WRIOTHESLEY_REBUKE],
     [Const.PROP_DMG_RATE_UP_CHARGED, Const.PORP_TAG_LYNEY_GRIN_MALKIN],
     [Const.PROP_DMG_RATE_MULTI_CHARGED, Const.PORP_TAG_NEUVILLETTE_EQUITABLE_JUDGMENT],
@@ -737,8 +758,10 @@ export class Const {
     [Const.PROP_DMG_CRIT_RATE_UP_CHARGED, Const.PORP_TAG_WRIOTHESLEY_REBUKE],
     [Const.PROP_DMG_CRIT_RATE_UP_SKILL, Const.PORP_TAG_FREMINET_SHATTERING_PRESSURE],
     [Const.PROP_DMG_CRIT_RATE_UP_SKILL, Const.PORP_TAG_NAHIDA_TRI_KARMA],
+    [Const.PROP_DMG_CRIT_RATE_UP_SKILL, Const.PORP_TAG_NAVIA_SHARDSHOT],
     [Const.PROP_DMG_CRIT_DMG_UP_CHARGED, Const.PORP_TAG_WRIOTHESLEY_REBUKE],
     [Const.PROP_DMG_CRIT_DMG_UP_CHARGED, Const.PORP_TAG_NEUVILLETTE_EQUITABLE_JUDGMENT],
+    [Const.PROP_DMG_CRIT_DMG_UP_SKILL, Const.PORP_TAG_NAVIA_SHARDSHOT],
   ]
 
   //*********************************
@@ -862,6 +885,18 @@ export class Const {
   );
   //計算用リスト
   static readonly PROPS_ALL_BASE = [
+    Const.PORP_VAR_CHARA_1,
+    Const.PORP_VAR_CHARA_2,
+    Const.PORP_VAR_CHARA_3,
+    Const.PORP_VAR_CHARA_4,
+    Const.PORP_VAR_CHARA_5,
+    Const.PORP_VAR_CHARA_6,
+    Const.PORP_VAR_CHARA_7,
+    Const.PORP_VAR_CHARA_8,
+    Const.PORP_VAR_SET_1,
+    Const.PORP_VAR_SET_2,
+    Const.PORP_VAR_WEAPON_1,
+    Const.PORP_VAR_WEAPON_2,
     Const.PROP_LEVEL,
     Const.PROP_HP_BASE,
     Const.PROP_ATTACK_BASE,

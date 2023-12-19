@@ -10,7 +10,7 @@ export interface DPSStorageInfo {
 
 export interface DmgInfo {
   skill: string;
-  valueIndexs: number[];
+  valueIndexes: number[];
   resultIndex: number;
   skillIndex?: number;
   damageProp: keyof DamageResult;

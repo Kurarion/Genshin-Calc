@@ -40,7 +40,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   //聖遺物セットリスト
   artifactSetList!: artifactSetOption[];
   //選択された聖遺物セットインデックス
-  selectedArtifactSetIndexs!: string[];
+  selectedArtifactSetIndexes!: string[];
   selectedFullArtifactSetIndex!: string;
 
   //キャラデータ
@@ -62,7 +62,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   effectContent2!: string;
 
   //表示用
-  effectValidIndexs!: number[];
+  effectValidIndexes!: number[];
 
   //子コンポーネント変更フラグ
   subChanged!: number;
@@ -101,19 +101,19 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     //Autoフラグ
     this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs(true);
+    this.initSelectedArtifactSetIndexes(true);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes['currentLanguage']) {
-      if(this.selectedArtifactSetIndexs && this.selectedArtifactSetIndexs.length > 0){
+      if(this.selectedArtifactSetIndexes && this.selectedArtifactSetIndexes.length > 0){
         this.initEffectContents();
       }
     }
   }
 
   updateRecords(){
-    this.effectValidIndexs = this.getEffectValidIndexs();
+    this.effectValidIndexes = this.getEffectValidIndexes();
   }
 
   addTab() {
@@ -148,7 +148,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.artifactService.recoverData(this.data.id, index);
     this.subChanged += 1;
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs(true);
+    this.initSelectedArtifactSetIndexes(true);
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
     this.artifactService.next();
@@ -157,7 +157,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   setActiveIndex(){
     this.artifactService.setStorageActiveIndex(this.data.id, this.selectedIndex);
     //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexs();
+    this.initSelectedArtifactSetIndexes();
     this.resetLastSelectedIndex();
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
@@ -172,7 +172,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
    * @param artifactSetIndex 
    */
   onSelectArtifactSet(artifactSetIndex: string, index: number) {
-    this.selectedArtifactSetIndexs[index] = artifactSetIndex;
+    this.selectedArtifactSetIndexes[index] = artifactSetIndex;
     if(environment.outputLog){
       //DEBUG
       console.log(this.artifactService.getSetData(artifactSetIndex));
@@ -184,9 +184,9 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     this.calculatorService.initExtraArtifactSetData(this.data.id);
   }
 
-  getEffectValidIndexs(){
+  getEffectValidIndexes(){
     if(this.selectedFullArtifactSetIndex != ""){
-      return this.artifactService.getSetData(this.selectedFullArtifactSetIndex).setAffixs[1].paramValidIndexs;
+      return this.artifactService.getSetData(this.selectedFullArtifactSetIndex).setAffixs[1].paramValidIndexes;
     }
     return [];
   }
@@ -197,7 +197,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   }
 
   getEffectContent(index: number): Record<TYPE_SYS_LANG, string> {
-    let artifactIndex = this.selectedArtifactSetIndexs[index -1];
+    let artifactIndex = this.selectedArtifactSetIndexes[index -1];
     if(artifactIndex == undefined){
       return this.no_desc;
     }
@@ -229,13 +229,13 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
     }
   }
 
-  private initSelectedArtifactSetIndexs(isInit?: boolean) {
-    this.selectedArtifactSetIndexs = this.artifactService.getStorageSetIndexs(this.data.id, this.selectedIndex);
+  private initSelectedArtifactSetIndexes(isInit?: boolean) {
+    this.selectedArtifactSetIndexes = this.artifactService.getStorageSetIndexes(this.data.id, this.selectedIndex);
     this.initSelectedFullArtifactSetIndex(isInit);
     this.initEffectContents();
     this.artifactService.checkAndFixExtraData(this.data.id, this.selectedIndex);
     if(!isInit){
-      this.artifactService.setStorageSetIndexsAll(this.data.id, this.selectedArtifactSetIndexs, undefined, this.lastSelectedIndex)
+      this.artifactService.setStorageSetIndexesAll(this.data.id, this.selectedArtifactSetIndexes, undefined, this.lastSelectedIndex)
     }
     //更新
     this.calculatorService.initExtraArtifactSetData(this.data.id);
@@ -243,8 +243,8 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
   }
 
   private initSelectedFullArtifactSetIndex(isInit?: boolean) {
-    if(this.selectedArtifactSetIndexs[0] == this.selectedArtifactSetIndexs[1] && this.selectedArtifactSetIndexs[0] != "" && this.selectedArtifactSetIndexs[0]){
-      this.selectedFullArtifactSetIndex = this.selectedArtifactSetIndexs[0];
+    if(this.selectedArtifactSetIndexes[0] == this.selectedArtifactSetIndexes[1] && this.selectedArtifactSetIndexes[0] != "" && this.selectedArtifactSetIndexes[0]){
+      this.selectedFullArtifactSetIndex = this.selectedArtifactSetIndexes[0];
       this.artifactService.setStorageFullSetIndex(this.data.id, this.selectedIndex, this.selectedFullArtifactSetIndex);
     }else{
       this.selectedFullArtifactSetIndex = '';
@@ -256,7 +256,7 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit {
 
   private setDefaultExtraData(){
     //追加データ更新
-    this.artifactService.setDefaultExtraData(this.data.id, this.selectedArtifactSetIndexs, this.selectedFullArtifactSetIndex);
+    this.artifactService.setDefaultExtraData(this.data.id, this.selectedArtifactSetIndexes, this.selectedFullArtifactSetIndex);
   }
 
   private resetLastSelectedIndex() {

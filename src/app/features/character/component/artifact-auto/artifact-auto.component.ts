@@ -127,7 +127,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       isSelect: true,
       isRequire: true,
       hasEmpty: false,
-      selectListName: "dpsIndexs",
+      selectListName: "dpsIndexes",
       isSelectObjectList: true,
       model: "usedDPSIndex",
       useNameMap: "none",
@@ -266,7 +266,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   })
 
   userInputList: Record<string, (number|string|{name: any, value: any})[]> = {
-    dpsIndexs: [],
+    dpsIndexes: [],
     damageBaseList: [],
     elementTypeList: [],
     attackTypeList: [],
@@ -439,7 +439,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   }
 
   initList(){
-    this.userInputList['dpsIndexs'] = [];
+    this.userInputList['dpsIndexes'] = [];
     this.userInputList['damageBaseList'] = Const.PROPS_OPTIMAL_DAMAGE_BASE_LIST;
     this.userInputList['damageBaseListAttach'] = Const.PROPS_OPTIMAL_DAMAGE_BASE_LIST;
     this.userInputList['elementTypeList'] = Const.PROPS_OPTIMAL_ELEMENT_TYPE_LIST;
@@ -465,7 +465,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     if(this.userInput?.get('useDPS')?.value){
       this.setDPSIndexList();
     }else{
-      this.userInputList['dpsIndexs'] = [];
+      this.userInputList['dpsIndexes'] = [];
     }
     this.onExpandStatusChanged();
   }
@@ -723,7 +723,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
               for(let i = 0; i < info.dmgs.length; ++i) {
                 const dmg = info.dmgs[i];
                 const skill = dmg.skill;
-                const valueIndexs = dmg.valueIndexs;
+                const valueIndexes = dmg.valueIndexes;
                 const resultIndex = dmg.resultIndex;
                 const skillIndex = dmg.skillIndex;
                 const dmgTimes = dmg.times ?? 1;
@@ -732,7 +732,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
                 if (skill === Const.NAME_SKILLS_NORMAL){
                   overrideElement = this.characterService.getOverrideElement(this.characterIndex);
                 }
-                const dmgValues = this.calculatorService.getSkillDmgValue(this.characterIndex, skill, valueIndexs, overrideElement, skillIndex, true);
+                const dmgValues = this.calculatorService.getSkillDmgValue(this.characterIndex, skill, valueIndexes, overrideElement, skillIndex, true);
                 const dmgParam = dmgValues[1][resultIndex];
                 //入力パラメータ設定
                 params.push(dmgParam);
@@ -996,7 +996,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
 
   setDPSIndexList() {
     const tags = this.DPSService.getStorageInfoTags(this.characterIndex);
-    this.userInputList['dpsIndexs'] = Array.from({length: tags.length}).map((_, i) => {
+    this.userInputList['dpsIndexes'] = Array.from({length: tags.length}).map((_, i) => {
       const index = i + 1;
       const outline = tags[i];
       const hasTag = outline.length > 0;

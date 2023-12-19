@@ -92,7 +92,7 @@ export interface WeaponSkillAffix {
     //パラメータ
     paramList: number[];
     //レベルなしのスキルパラメータインデックス
-    paramValidIndexs: number[];
+    paramValidIndexes: number[];
 }
 
 //*********************************

@@ -165,7 +165,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   //スキルサブインデックス
   @Input('skillIndex') skillIndex!: number;
   //インデックス値
-  @Input('valueIndexs') valueIndexs!: number[];
+  @Input('valueIndexes') valueIndexes!: number[];
   //強制元素オーバライド
   @Input('overrideElement') overrideElement!: string;
   //更新フラグ
@@ -181,19 +181,19 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   dmgParamDatas!: DamageParam[];
   //治療データ
   healingDatas!: HealingResult[];
-  //ダメージループ用リスト
+  //治療ループ用リスト
   healingTempDataList: number[] = [];
   //バリアデータ
   shieldDatas!: ShieldResult[];
-  //ダメージループ用リスト
+  //バリアループ用リスト
   shieldTempDataList: number[] = [];
   //生成物生命値データ
   productDatas!: ProductResult[];
-  //ダメージループ用リスト
+  //生成物生命値ループ用リスト
   productTempDataList: number[] = [];
   //バフデータ
   buffDatas!: BuffResult[];
-  //ダメージループ用リスト
+  //バフループ用リスト
   buffTempDataList: number[] = [];
   //バフswitch
   buffSwitchValue!: boolean;
@@ -367,7 +367,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       this.initDamageDatas();
       this.calDamageEchartsDatas();
     }
-    if(changes['valueIndexs']){
+    if(changes['valueIndexes']){
       this.initDamageDatas();
       this.calDamageEchartsDatas();
       this.initHealingDatas();
@@ -483,7 +483,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   addToDPS(prop: string, index: number) {
     const dmgInfo: DmgInfo = {
       skill: this.skill,
-      valueIndexs: this.valueIndexs,
+      valueIndexes: this.valueIndexes,
       resultIndex: index,
       skillIndex: this.skillIndex,
       damageProp: prop as keyof DamageResult,
@@ -623,27 +623,27 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private getDmgInfos(){
-    let temp = this.calculatorService.getSkillDmgValue(this.characterIndex, this.skill, this.valueIndexs, this.overrideElement, this.skillIndex);
+    let temp = this.calculatorService.getSkillDmgValue(this.characterIndex, this.skill, this.valueIndexes, this.overrideElement, this.skillIndex);
     return temp;
   }
 
   private getHealingInfos(){
-    let temp = this.calculatorService.getSkillHealingValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    let temp = this.calculatorService.getSkillHealingValue(this.characterIndex, this.skill, this.valueIndexes, this.skillIndex);
     return temp;
   }
 
   private getShieldInfos(){
-    let temp = this.calculatorService.getSkillShieldValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    let temp = this.calculatorService.getSkillShieldValue(this.characterIndex, this.skill, this.valueIndexes, this.skillIndex);
     return temp;
   }
 
   private getProductInfos(){
-    let temp = this.calculatorService.getSkillProductHpValue(this.characterIndex, this.skill, this.valueIndexs, this.skillIndex);
+    let temp = this.calculatorService.getSkillProductHpValue(this.characterIndex, this.skill, this.valueIndexes, this.skillIndex);
     return temp;
   }
 
   private getBuffInfos(){
-    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.skillIndex, this.valueIndexs);
+    let temp = this.calculatorService.getSkillBuffValue(this.characterIndex, this.skill, this.skillIndex, this.valueIndexes);
     return temp;
   }
 
