@@ -401,10 +401,10 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
 
   private updateDatas(){
     this.damageInfos = [];
-    const badDmgInfoIndexs = [];
+    const badDmgInfoIndexes = [];
     for(let [i, dmg] of this.infos[this.selectedIndex].dmgs.entries()) {
       const skill = dmg.skill;
-      const valueIndexs = dmg.valueIndexs;
+      const valueIndexes = dmg.valueIndexes;
       const resultIndex = dmg.resultIndex;
       const skillIndex = dmg.skillIndex;
       const times = dmg.times ?? 1;
@@ -412,13 +412,13 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
       if (skill === Const.NAME_SKILLS_NORMAL){
         overrideElement = this.overrideElement;
       }
-      const dmgValues = this.calculatorService.getSkillDmgValue(this.data.id, skill, valueIndexs, overrideElement, skillIndex)
+      const dmgValues = this.calculatorService.getSkillDmgValue(this.data.id, skill, valueIndexes, overrideElement, skillIndex)
       const dmgResult = dmgValues[0][resultIndex];
       const dmgParam = dmgValues[1][resultIndex];
       const hasHiddenResult = dmgValues[0].length > 1;
       const damageProp = dmg.damageProp;
       if (dmgResult === undefined || dmgParam === undefined) {
-        badDmgInfoIndexs.push(i);
+        badDmgInfoIndexes.push(i);
         continue;
       }
       let iconSrc = "";
@@ -454,7 +454,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
       this.damageInfos.push({
         name: skill,
         skillIndex: skillIndex,
-        index: hasHiddenResult ? (resultIndex + 1) : valueIndexs[resultIndex] + 1,
+        index: hasHiddenResult ? (resultIndex + 1) : valueIndexes[resultIndex] + 1,
         rate: dmgParam.rateAttach.reduce((pre: string, cur: number[]) => {
           return pre + ' + ' + cur.reduce((pre1: string, cur1: number)=>{
             return pre1 + (pre1.length > 0 ?' + ':'') + (cur1*100).toFixed(1)+'%'
@@ -471,7 +471,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
         iconBGColor: iconBGColor,
       })
     }
-    badDmgInfoIndexs.reverse().forEach((value: number) => {
+    badDmgInfoIndexes.reverse().forEach((value: number) => {
       this.infos[this.selectedIndex].dmgs.splice(value, 1);
     });
     this.calcDPS();
@@ -503,13 +503,13 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
       const indexOffset = this.getIndexOffset(info.skill);
       const hasSkillIndex = skillIndex.length > 0;
       const skillCode = this.skillCodeKeyMap.get(info.skill)! + (hasSkillIndex ? (info.skillIndex! + indexOffset) : '');
-      const valueIndexs = info.valueIndexs.join(valusSplit);
+      const valueIndexes = info.valueIndexes.join(valusSplit);
       const resultIndex = info.resultIndex.toString();
       const damageProp = info.damageProp.toString();
       const times = info.times?.toString() ?? '1';
       const temp = [
         skillCode,
-        valueIndexs,
+        valueIndexes,
         resultIndex,
         damageProp,
         times,
@@ -560,8 +560,8 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
               if (isNaN(tempSkillIndex)) {
                 tempSkillIndex = undefined;
               }
-              const tempValueIndexsStr = tempParts[1];
-              const tempValueIndexs = tempValueIndexsStr.split(valusSplit).map((v: string) => {
+              const tempValueIndexesStr = tempParts[1];
+              const tempValueIndexes = tempValueIndexesStr.split(valusSplit).map((v: string) => {
                 return parseInt(v) || 0;
               })
               let tempResultIndex = parseInt(tempParts[2]);
@@ -576,7 +576,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit {
 
               const tempDmgInfo = {
                 skill: tempSkill,
-                valueIndexs: tempValueIndexs,
+                valueIndexes: tempValueIndexes,
                 resultIndex: tempResultIndex,
                 skillIndex: tempSkillIndex,
                 damageProp: tempDamageProp,

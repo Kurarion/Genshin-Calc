@@ -525,7 +525,7 @@ func update(localResPath string, resURL string) error {
 				GenshinSkillAffixData: weaponSkillAffixDataList[i],
 				Name:                  getTextFromHash(weaponSkillAffixDataList[i].NameTextMapHash, textMap, false),
 				Desc:                  getRegxTextFromHash(weaponSkillAffixDataList[i].DescTextMapHash, textMap, false),
-				ParamValidIndexs:      calWeaponNoLevelValidParamIndexs(weaponSkillAffixDataList[i].ParamList),
+				ParamValidIndexes:     calWeaponNoLevelValidParamIndexes(weaponSkillAffixDataList[i].ParamList),
 			}
 	}
 	//圣遗物
@@ -558,14 +558,14 @@ func update(localResPath string, resURL string) error {
 			reliquarySetAffixMap[reliquarySetAffixDataList[i].Id] = make([]*RELIQUARYAFFIX, 0)
 		}
 		reliquarySetAffixMap[reliquarySetAffixDataList[i].Id] = append(reliquarySetAffixMap[reliquarySetAffixDataList[i].Id], &RELIQUARYAFFIX{
-			Name:             getTextFromHash(reliquarySetAffixDataList[i].NameTextMapHash, textMap, false),
-			Desc:             getRegxTextFromHash(reliquarySetAffixDataList[i].DescTextMapHash, textMap, false),
-			NameTextMapHash:  reliquarySetAffixDataList[i].NameTextMapHash,
-			DescTextMapHash:  reliquarySetAffixDataList[i].DescTextMapHash,
-			Level:            reliquarySetAffixDataList[i].Level + 1,
-			AddProps:         reliquarySetAffixDataList[i].AddProps,
-			ParamList:        reliquarySetAffixDataList[i].ParamList,
-			ParamValidIndexs: calWeaponNoLevelValidParamIndexs(reliquarySetAffixDataList[i].ParamList),
+			Name:              getTextFromHash(reliquarySetAffixDataList[i].NameTextMapHash, textMap, false),
+			Desc:              getRegxTextFromHash(reliquarySetAffixDataList[i].DescTextMapHash, textMap, false),
+			NameTextMapHash:   reliquarySetAffixDataList[i].NameTextMapHash,
+			DescTextMapHash:   reliquarySetAffixDataList[i].DescTextMapHash,
+			Level:             reliquarySetAffixDataList[i].Level + 1,
+			AddProps:          reliquarySetAffixDataList[i].AddProps,
+			ParamList:         reliquarySetAffixDataList[i].ParamList,
+			ParamValidIndexes: calWeaponNoLevelValidParamIndexes(reliquarySetAffixDataList[i].ParamList),
 		})
 	}
 	reliquaryCodexDataMap := make(map[uint64][]*GenshinReliquaryCodexData)
@@ -746,11 +746,11 @@ func update(localResPath string, resURL string) error {
 				continue
 			}
 			dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, AVATARSKILLINFO{
-				Name:             getTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].NameTextMapHash, textMap, false),
-				Desc:             getRegxTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].DescTextMapHash, textMap, false),
-				Icon:             avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
-				ParamMap:         avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
-				ParamValidIndexs: calCharacterNoLevelValidParamIndexs(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]),
+				Name:              getTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].NameTextMapHash, textMap, false),
+				Desc:              getRegxTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].DescTextMapHash, textMap, false),
+				Icon:              avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
+				ParamMap:          avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
+				ParamValidIndexes: calCharacterNoLevelValidParamIndexes(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]),
 				Images: SKILLIMAGES{
 					Icon: fmt.Sprintf(imgHostOhterFormat, avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon),
 				},
@@ -765,11 +765,11 @@ func update(localResPath string, resURL string) error {
 				fmt.Sprintf(configSkillLevelFormat, 1): avatarTalentDataMap[temp2].ParamList,
 			}
 			dataAvatarSkillsMap[temp.Id].Talents = append(dataAvatarSkillsMap[temp.Id].Talents, AVATARSKILLINFO{
-				Name:             getTextFromHash(avatarTalentDataMap[temp2].NameTextMapHash, textMap, false),
-				Desc:             getRegxTextFromHash(avatarTalentDataMap[temp2].DescTextMapHash, textMap, false),
-				Icon:             avatarTalentDataMap[temp2].Icon,
-				ParamMap:         tempParamMap,
-				ParamValidIndexs: calCharacterNoLevelValidParamIndexs(tempParamMap),
+				Name:              getTextFromHash(avatarTalentDataMap[temp2].NameTextMapHash, textMap, false),
+				Desc:              getRegxTextFromHash(avatarTalentDataMap[temp2].DescTextMapHash, textMap, false),
+				Icon:              avatarTalentDataMap[temp2].Icon,
+				ParamMap:          tempParamMap,
+				ParamValidIndexes: calCharacterNoLevelValidParamIndexes(tempParamMap),
 				Images: SKILLIMAGES{
 					Icon: fmt.Sprintf(imgHostOhterFormat, avatarTalentDataMap[temp2].Icon),
 				},
@@ -1258,12 +1258,12 @@ func calParamDesc(paramDescList map[string][]string) map[string][]AVATARSKILLSPL
 			suffix = others[len(others)-1]
 
 			tempList = append(tempList, AVATARSKILLSPLITEDDESCINFO{
-				Desc:            desc,
-				ValuePropIndexs: valuePropIndexes,
-				Prefix:          prefix,
-				Middles:         middles,
-				Suffix:          suffix,
-				IsPercent:       isPercent,
+				Desc:             desc,
+				ValuePropIndexes: valuePropIndexes,
+				Prefix:           prefix,
+				Middles:          middles,
+				Suffix:           suffix,
+				IsPercent:        isPercent,
 			})
 		}
 		results[i] = tempList
@@ -1274,7 +1274,7 @@ func calParamDesc(paramDescList map[string][]string) map[string][]AVATARSKILLSPL
 }
 
 //无等级技能描述
-func calCharacterNoLevelValidParamIndexs(paramMap map[string][]float64) []int {
+func calCharacterNoLevelValidParamIndexes(paramMap map[string][]float64) []int {
 	results := make([]int, 0)
 	paramList := paramMap[fmt.Sprintf(configSkillLevelFormat, 1)]
 	for i, v := range paramList {
@@ -1291,7 +1291,7 @@ func calCharacterNoLevelValidParamIndexs(paramMap map[string][]float64) []int {
 }
 
 //无等级技能描述
-func calWeaponNoLevelValidParamIndexs(paramList []float64) []int {
+func calWeaponNoLevelValidParamIndexes(paramList []float64) []int {
 	results := make([]int, 0)
 	for i, v := range paramList {
 		if v == 0 {

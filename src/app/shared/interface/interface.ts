@@ -84,11 +84,11 @@ export interface ExtraSkillDamage {
   finalResCalQueue?: CalcItem[];
   //連携スキル
   originSkills?: TYPE_SKILL[];
-  originIndexs?: number[];
+  originIndexes?: number[];
   originRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
-  indexs?: number[];
-  indexsAttach?: number[][];
+  indexes?: number[];
+  indexesAttach?: number[][];
   //カスタマー倍率
   customValues?: number[];
   //----------------------
@@ -110,8 +110,8 @@ export interface ExtraSkillBuff {
   showIndex?: number;
   showPriority?: number;
   //入力値保存
-  setTo?: string[];
-  setValCalQueue?: CalcItem[][];
+  setTos?: string[];
+  setValCalQueues?: CalcItem[][];
   //結果再計算列
   finalResCalQueue?: CalcItem[];
   //数値計算ベース
@@ -133,7 +133,7 @@ export interface ExtraSkillBuff {
   //----------------------
   //連携スキル
   originSkills?: TYPE_SKILL[];
-  originIndexs?: number[];
+  originIndexes?: number[];
   originRelations?: TYPE_RELATION[];
   //数値計算ベース
   base?: string;
@@ -183,9 +183,9 @@ export interface ExtraSkillHealing {
   finalResCalQueue?: CalcItem[];
   //連携スキル
   originSkills?: TYPE_SKILL[];
-  originIndexs?: number[];
+  originIndexes?: number[];
   originRelations?: TYPE_RELATION[];
-  originConstIndexs?: number[];
+  originConstIndexes?: number[];
   originConstRelations?: TYPE_RELATION[];
   originInnerRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
@@ -204,9 +204,9 @@ export interface ExtraSkillShield {
   finalResCalQueue?: CalcItem[];
   //連携スキル
   originSkills?: TYPE_SKILL[];
-  originIndexs?: number[];
+  originIndexes?: number[];
   originRelations?: TYPE_RELATION[];
-  originConstIndexs?: number[];
+  originConstIndexes?: number[];
   originConstRelations?: TYPE_RELATION[];
   originInnerRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト

@@ -97,14 +97,14 @@ export class ExtraDataService {
     return result;
   }
 
-  getArtifactSetDefaultSetting(indexs: string[], fullIndex: string){
+  getArtifactSetDefaultSetting(indexes: string[], fullIndex: string){
     let result: ExtraArtifactSetData = {}
     if(fullIndex != ''){
       let temp = this.getArtifactSet(fullIndex);
       result.set1 = this.getDefaultConfig(temp?.set1);
       result.set2 = this.getDefaultConfig(temp?.set2);
     }else{
-      for(let [index, value] of indexs.entries()){
+      for(let [index, value] of indexes.entries()){
         let key = Const.NAME_SET + (index + 1).toString();
         if(value && value != ''){
           let temp = this.getArtifactSet(value);

@@ -248,7 +248,7 @@ export class EnkaService {
 
   initReliquary(avatarId: string, reliquaries: EnkaEquip[]){
     let info: ArtifactStorageInfo = {};
-    let setIndexs: string[] = ['',''];
+    let setIndexes: string[] = ['',''];
     let setIndexMap: Record<string, number> = {};
 
     for(let reliquary of reliquaries){
@@ -315,9 +315,9 @@ export class EnkaService {
     //セット情報
     for(let key in setIndexMap){
       for(let i = 0; i < Math.floor(setIndexMap[key]/2); ++i){
-        for(let j = 0; j < setIndexs.length; ++j){
-          if(setIndexs[j] == ''){
-            setIndexs[j] = key;
+        for(let j = 0; j < setIndexes.length; ++j){
+          if(setIndexes[j] == ''){
+            setIndexes[j] = key;
             break;
           }
         }
@@ -325,7 +325,7 @@ export class EnkaService {
     }
 
     let lastIndex = this.artifactService.pushStorageInfo(avatarId, info);
-    this.artifactService.setStorageSetIndexsAll(avatarId, setIndexs, undefined, lastIndex);
+    this.artifactService.setStorageSetIndexesAll(avatarId, setIndexes, undefined, lastIndex);
   }
 
   initWeapon(avatarId: string, weapon: EnkaEquip ){

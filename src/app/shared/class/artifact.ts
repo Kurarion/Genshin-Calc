@@ -26,7 +26,7 @@ export interface ArtifactSetAffixs {
     //パラメータリスト
     paramList: number[];
     //レベルなしのスキルパラメータインデックス
-    paramValidIndexs: number[];
+    paramValidIndexes: number[];
 }
 
 //*********************************

@@ -94,7 +94,7 @@ export interface CharStatus {
 //*********************************
 export interface CharSkillDescObject {
     desc: string;
-    valuePropIndexs: number[];
+    valuePropIndexes: number[];
     prefix: string;
     middles: string[];
     suffix: string;
@@ -123,7 +123,7 @@ export interface CharSkill {
     //計算後の記述パラメータ
     paramDescSplitedList: Record<TYPE_SYS_LANG, CharSkillDescObject[]>;
     //レベルなしのスキルパラメータインデックス
-    paramValidIndexs: number[];
+    paramValidIndexes: number[];
     //スキルID
     proudSkillGroupId: number;
     //*********************************

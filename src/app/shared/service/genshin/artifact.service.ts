@@ -14,7 +14,7 @@ export interface ArtifactStoragePartData {
 
 export interface ArtifactStorageInfo {
   isAuto?: boolean;
-  setIndexs?: string[];
+  setIndexes?: string[];
   setFullIndex?: string;
   extra?: ExtraArtifactSetData;
   flower?: ArtifactStoragePartData;
@@ -202,7 +202,7 @@ export class ArtifactService {
   }
 
   //聖遺物セット設定
-  setStorageSetIndexsAll(charIndex: string | number, setIndexs: string[], index?: number, lastIndex?: number){
+  setStorageSetIndexesAll(charIndex: string | number, setIndexes: string[], index?: number, lastIndex?: number){
     let keyStr = charIndex.toString();
     let infoIndex = this.dataMap[keyStr].activeIndex;
     if(index != undefined){
@@ -210,9 +210,9 @@ export class ArtifactService {
     }
     this.initDefaultData(keyStr);
     let info = this.dataMap[keyStr].info[infoIndex];
-    info.setIndexs = setIndexs;
-    if(setIndexs[0] == setIndexs[1] && setIndexs[0] != "" && setIndexs[0]){
-      info.setFullIndex = setIndexs[0];
+    info.setIndexes = setIndexes;
+    if(setIndexes[0] == setIndexes[1] && setIndexes[0] != "" && setIndexes[0]){
+      info.setFullIndex = setIndexes[0];
     }else{
       info.setFullIndex = '';
     }
@@ -224,7 +224,7 @@ export class ArtifactService {
         return
       }
     }
-    this.setDefaultExtraData(keyStr, info.setIndexs, info.setFullIndex);
+    this.setDefaultExtraData(keyStr, info.setIndexes, info.setFullIndex);
   }
 
   //聖遺物情報コピー
@@ -242,7 +242,7 @@ export class ArtifactService {
   }
 
   //聖遺物セット情報取得
-  getStorageSetIndexs(charIndex: string | number, index?: number){
+  getStorageSetIndexes(charIndex: string | number, index?: number){
     let keyStr = charIndex.toString();
     if(index == undefined){
       index = this.dataMap[charIndex].activeIndex;
@@ -251,10 +251,10 @@ export class ArtifactService {
     if(!(index in this.dataMap[keyStr].info)){
       this.dataMap[keyStr].info[index] = {};
     }
-    if(this.dataMap[keyStr].info[index].setIndexs == undefined || this.dataMap[keyStr].info[index].setIndexs?.length != 2){
-      this.dataMap[keyStr].info[index].setIndexs = ['', ''];
+    if(this.dataMap[keyStr].info[index].setIndexes == undefined || this.dataMap[keyStr].info[index].setIndexes?.length != 2){
+      this.dataMap[keyStr].info[index].setIndexes = ['', ''];
     }
-    return this.dataMap[keyStr].info[index].setIndexs!;
+    return this.dataMap[keyStr].info[index].setIndexes!;
   }
 
   setStorageFullSetIndex(charIndex: string | number, index?: number, value?: string, isInit?: boolean){
@@ -380,21 +380,21 @@ export class ArtifactService {
     if(selectedIndex < 0 || selectedIndex >= this.dataMap[charKeyStr].info.length){
       return
     }
-    const indexs = this.dataMap[charKeyStr].info[selectedIndex].setIndexs;
+    const indexes = this.dataMap[charKeyStr].info[selectedIndex].setIndexes;
     const fullIndex = this.dataMap[charKeyStr].info[selectedIndex].setFullIndex;
-    if(!Array.isArray(indexs) || indexs.length !== 2) {
-      this.dataMap[charKeyStr].info[selectedIndex].setIndexs = ['', '']
+    if(!Array.isArray(indexes) || indexes.length !== 2) {
+      this.dataMap[charKeyStr].info[selectedIndex].setIndexes = ['', '']
       return
     }
     if(!fullIndex){
       return
     }
-    if(!indexs.every((v: string) => v === fullIndex)){
+    if(!indexes.every((v: string) => v === fullIndex)){
       this.dataMap[charKeyStr].info[selectedIndex].extra = {};
       this.dataMap[charKeyStr].info[selectedIndex].setFullIndex = "";
       return
     }
-    const target = this.extraDataService.getArtifactSetDefaultSetting(indexs, fullIndex);
+    const target = this.extraDataService.getArtifactSetDefaultSetting(indexes, fullIndex);
     const handler = {
       set: function(obj: any, prop: string, value: any) {
         obj[prop] = value;
@@ -438,8 +438,8 @@ export class ArtifactService {
   }
 
   private checkAndSetInfoData(info: ArtifactStorageInfo){
-    if(info.setIndexs == undefined){
-      info.setIndexs = ['', ''];
+    if(info.setIndexes == undefined){
+      info.setIndexes = ['', ''];
     }
     if(info.setFullIndex == undefined){
       info.setFullIndex = '';

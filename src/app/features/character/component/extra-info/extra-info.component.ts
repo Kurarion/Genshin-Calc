@@ -108,7 +108,7 @@ export class ExtraInfoComponent implements OnInit, OnChanges {
   private getTalentValue(key: string, obj: CharSkillDescObject, lang: TYPE_SYS_LANG, currentLevel: string, withOrigin: boolean = false): string {
     let result = obj.prefix;
     let values: string[] = [];
-    obj.valuePropIndexs.forEach((index: number, i: number) => {
+    obj.valuePropIndexes.forEach((index: number, i: number) => {
       let value: string | number = (this.data.skills[key as keyof CharSkills] as CharSkill).paramMap[currentLevel][index];
       if (!withOrigin) {
         if (obj.isPercent[i]) {

@@ -2061,7 +2061,7 @@ export class CalculatorService {
     return result;
   }
 
-  getSkillDmgValue(index: string | number, skill: string, valueIndexs: number[], overrideElement?: string, skillIndex?: number | string, onlyParam: boolean = false): [DamageResult[], DamageParam[]]{
+  getSkillDmgValue(index: string | number, skill: string, valueIndexes: number[], overrideElement?: string, skillIndex?: number | string, onlyParam: boolean = false): [DamageResult[], DamageParam[]]{
     let indexStr = index.toString();
     let params: DamageParam[] = [];
     let results: DamageResult[] = []
@@ -2100,15 +2100,15 @@ export class CalculatorService {
       for(let info of infos){
         //全含め必要
         let damageInfo = info.damage;
-        let indexsAttach = damageInfo?.indexsAttach ?? [];
+        let indexesAttach = damageInfo?.indexesAttach ?? [];
         let tempRateInfo: CharSkill;
         let rateAttach: number[][] = [];
         switch(skill){
           case Const.NAME_CONSTELLATION:
             tempRateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
-            indexsAttach.forEach((valueIndexs)=>{
+            indexesAttach.forEach((valueIndexes)=>{
               let temp:number[] = [];
-              valueIndexs.forEach((valueIndex)=>{
+              valueIndexes.forEach((valueIndex)=>{
                 temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
               })
               rateAttach.push(temp);
@@ -2116,9 +2116,9 @@ export class CalculatorService {
             break;
           case Const.NAME_SKILLS_PROUD:
             tempRateInfo = characterData!.skills.proudSkills[skillIndex as number];
-            indexsAttach.forEach((valueIndexs)=>{
+            indexesAttach.forEach((valueIndexes)=>{
               let temp:number[] = [];
-              valueIndexs.forEach((valueIndex)=>{
+              valueIndexes.forEach((valueIndex)=>{
                 temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
               })
               rateAttach.push(temp);
@@ -2126,27 +2126,27 @@ export class CalculatorService {
             break;
           case Const.NAME_SKILLS_OTHER:
             tempRateInfo = characterData!.skills.other;
-            indexsAttach.forEach((valueIndexs)=>{
+            indexesAttach.forEach((valueIndexes)=>{
               let temp:number[] = [];
-              valueIndexs.forEach((valueIndex)=>{
+              valueIndexes.forEach((valueIndex)=>{
                 temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
               })
               rateAttach.push(temp);
             })
             break;
           case Const.NAME_EFFECT:
-            indexsAttach.forEach((valueIndexs)=>{
+            indexesAttach.forEach((valueIndexes)=>{
               let temp:number[] = [];
-              valueIndexs.forEach((valueIndex)=>{
+              valueIndexes.forEach((valueIndex)=>{
                 temp.push(weaponData!.skillAffixMap[currentLevel].paramList[valueIndex]);
               })
               rateAttach.push(temp);
             })
             break;
           case Const.NAME_SET:
-            indexsAttach.forEach((valueIndexs)=>{
+            indexesAttach.forEach((valueIndexes)=>{
               let temp:number[] = [];
-              valueIndexs.forEach((valueIndex)=>{
+              valueIndexes.forEach((valueIndex)=>{
                 temp.push(artifactSetData.setAffixs[1].paramList[valueIndex]);
               })
               rateAttach.push(temp);
@@ -2154,9 +2154,9 @@ export class CalculatorService {
             break;
           default:
             tempRateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
-            indexsAttach.forEach((valueIndexs)=>{
+            indexesAttach.forEach((valueIndexes)=>{
               let temp:number[] = [];
-              valueIndexs.forEach((valueIndex)=>{
+              valueIndexes.forEach((valueIndex)=>{
                 temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
               })
               rateAttach.push(temp);
@@ -2174,7 +2174,7 @@ export class CalculatorService {
               for(let i = 0; i < damageInfo.originSkills.length; ++i){
                 let originRateInfo = characterData!.skills![damageInfo.originSkills[i] as keyof CharSkills] as CharSkill;
                 let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkills[i]);
-                let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexs![i]]
+                let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexes![i]]
                 switch(damageInfo.originRelations![i]){
                   case "*":
                     rate *= originRate
@@ -2204,8 +2204,8 @@ export class CalculatorService {
             });
           }
         }else{
-          for(let valueIndex of valueIndexs){
-            if(damageInfo && damageInfo.indexs && damageInfo.indexs.includes(valueIndex)){
+          for(let valueIndex of valueIndexes){
+            if(damageInfo && damageInfo.indexes && damageInfo.indexes.includes(valueIndex)){
               let rateInfo: CharSkill;
               let rate: number;
               if(skill == Const.NAME_CONSTELLATION){
@@ -2229,7 +2229,7 @@ export class CalculatorService {
                 for(let i = 0; i < damageInfo.originSkills.length; ++i){
                   let originRateInfo = characterData!.skills![damageInfo.originSkills[i] as keyof CharSkills] as CharSkill;
                   let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkills[i]);
-                  let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexs![i]]
+                  let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexes![i]]
                   switch(damageInfo.originRelations![i]){
                     case "*":
                       rate *= originRate
@@ -2279,7 +2279,7 @@ export class CalculatorService {
     return [results, params];
   }
 
-  getSkillHealingValue(index: string | number, skill: string, valueIndexs: number[], skillIndex?: number | string){
+  getSkillHealingValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string){
     let indexStr = index.toString();
     let params: HealingParam[] = [];
     let results: HealingResult[] = []
@@ -2329,7 +2329,7 @@ export class CalculatorService {
             finalResCalQueue: healingInfo.finalResCalQueue,
           });
         }else{
-          for(let valueIndex of valueIndexs){
+          for(let valueIndex of valueIndexes){
             if(healingInfo && healingInfo.index != undefined && healingInfo.index == valueIndex){
               let rateInfo: CharSkill;
               let rate: number;
@@ -2371,7 +2371,7 @@ export class CalculatorService {
                 for(let i = 0; i < healingInfo.originSkills.length; ++i){
                   let originRateInfo = characterData!.skills![healingInfo.originSkills[i] as keyof CharSkills] as CharSkill;
                   let originSkillLevel = this.getCharacterSkillLevel(indexStr, healingInfo.originSkills[i]);
-                  let originRate = originRateInfo.paramMap[originSkillLevel][healingInfo.originIndexs![i]]
+                  let originRate = originRateInfo.paramMap[originSkillLevel][healingInfo.originIndexes![i]]
                   switch(healingInfo.originRelations![i]){
                     case "*":
                       rate *= originRate
@@ -2388,7 +2388,7 @@ export class CalculatorService {
                   }
 
                   let tempExtra = 0
-                  let originConstVal = originRateInfo.paramMap[originSkillLevel][healingInfo.originConstIndexs![i]]
+                  let originConstVal = originRateInfo.paramMap[originSkillLevel][healingInfo.originConstIndexes![i]]
                   switch(healingInfo.originConstRelations![i]){
                     case "*":
                       tempExtra = tempRate * originConstVal
@@ -2434,7 +2434,7 @@ export class CalculatorService {
     return results;
   }
 
-  getSkillShieldValue(index: string | number, skill: string, valueIndexs: number[], skillIndex?: number | string){
+  getSkillShieldValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string){
     let indexStr = index.toString();
     let params: ShieldParam[] = [];
     let results: ShieldResult[] = []
@@ -2486,7 +2486,7 @@ export class CalculatorService {
               finalResCalQueue: shieldInfo.finalResCalQueue,
             });
           }else{
-            for(let valueIndex of valueIndexs){
+            for(let valueIndex of valueIndexes){
               if(shieldInfo && shieldInfo.index != undefined && shieldInfo.index == valueIndex){
                 let rateInfo: CharSkill;
                 let rate: number;
@@ -2530,7 +2530,7 @@ export class CalculatorService {
                   for(let i = 0; i < shieldInfo.originSkills.length; ++i){
                     let originRateInfo = characterData!.skills![shieldInfo.originSkills[i] as keyof CharSkills] as CharSkill;
                     let originSkillLevel = this.getCharacterSkillLevel(indexStr, shieldInfo.originSkills[i]);
-                    let originRate = originRateInfo.paramMap[originSkillLevel][shieldInfo.originIndexs![i]]
+                    let originRate = originRateInfo.paramMap[originSkillLevel][shieldInfo.originIndexes![i]]
                     switch(shieldInfo.originRelations![i]){
                       case "*":
                         rate *= originRate
@@ -2547,7 +2547,7 @@ export class CalculatorService {
                     }
   
                     let tempExtra = 0
-                    let originConstVal = originRateInfo.paramMap[originSkillLevel][shieldInfo.originConstIndexs![i]]
+                    let originConstVal = originRateInfo.paramMap[originSkillLevel][shieldInfo.originConstIndexes![i]]
                     switch(shieldInfo.originConstRelations![i]){
                       case "*":
                         tempExtra = tempRate * originConstVal
@@ -2594,7 +2594,7 @@ export class CalculatorService {
       return results;
   }
   
-  getSkillProductHpValue(index: string | number, skill: string, valueIndexs: number[], skillIndex?: number | string){
+  getSkillProductHpValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string){
     let indexStr = index.toString();
     let params: ProductParam[] = [];
     let results: ProductResult[] = []
@@ -2642,7 +2642,7 @@ export class CalculatorService {
               finalResCalQueue: productHpInfo.finalResCalQueue,
             });
           }else{
-            for(let valueIndex of valueIndexs){
+            for(let valueIndex of valueIndexes){
               if(productHpInfo && productHpInfo.index != undefined && productHpInfo.index == valueIndex){
                 let rateInfo: CharSkill;
                 let rate: number;
@@ -2697,7 +2697,7 @@ export class CalculatorService {
       return results;
   }
 
-  getSkillBuffValue(index: string | number, skill: string, skillIndex?: number | string, valueIndexs?: number[]){
+  getSkillBuffValue(index: string | number, skill: string, skillIndex?: number | string, valueIndexes?: number[]){
     let indexStr = index.toString();
     let results: BuffResult[] = [];
 
@@ -2739,14 +2739,14 @@ export class CalculatorService {
             let tempValue: any;
             //聖遺物と武器効果が一箇所しないため、表示チェックを排除する（一時的）
             if(skill != Const.NAME_SET && skill != Const.NAME_EFFECT){
-              if(valueIndexs != undefined){
+              if(valueIndexes != undefined){
                 if(buffInfo?.showIndex != undefined){
-                  if(!valueIndexs.includes(buffInfo.showIndex)){
+                  if(!valueIndexes.includes(buffInfo.showIndex)){
                     continue;
                   }
                 }
                 if(buffInfo?.index != undefined){
-                  if(!valueIndexs.includes(buffInfo.index)){
+                  if(!valueIndexes.includes(buffInfo.index)){
                     continue;
                   }
                 }
@@ -3455,19 +3455,19 @@ export class CalculatorService {
   //聖遺物セットデータ解析
   private getExtraReliquarySetData(index: string): [Record<string, number>, SpecialBuff[], TeamBuff[]]{
     let characterData = this.dataMap[index]!.characterData!;
-    let artifactSetIndexs = this.artifactService.getStorageSetIndexs(index);
+    let artifactSetIndexes = this.artifactService.getStorageSetIndexes(index);
     let overrideElement = this.characterService.getOverrideElement(index);
     let result: Record<string, number> = {};
     let specialResult: SpecialBuff[] = [];
     let specialTeamSlefResult: TeamBuff[] = [];
     let targetIndexInfos: artifactSetInfo[] = [];
-    let ownedIndexs: string[] = [];
-    for(let [i,setIndex] of artifactSetIndexs.entries()){
+    let ownedIndexes: string[] = [];
+    for(let [i,setIndex] of artifactSetIndexes.entries()){
       if(setIndex != undefined && setIndex != ""){
-        ownedIndexs.push(setIndex);
+        ownedIndexes.push(setIndex);
         targetIndexInfos.push({
           index: setIndex,
-          level: ownedIndexs.filter(x => x == setIndex).length,
+          level: ownedIndexes.filter(x => x == setIndex).length,
           setIndex: i + 1,
         });
       }
@@ -3650,9 +3650,9 @@ export class CalculatorService {
           let checkSelfElementType = buff?.selfElementTypeLimit === true;
           let selfElementType = Const.ELEMENT_TYPE_MAP.get(elementType)!;
           //入力値を変数に保存
-          if (buff.setTo !== undefined) {
-            for (const [index, tempSetTo] of buff.setTo.entries()) {
-              const tempCalQueue = buff.setValCalQueue?buff.setValCalQueue[index]:[];
+          if (buff.setTos !== undefined) {
+            for (const [index, tempSetTo] of buff.setTos.entries()) {
+              const tempCalQueue = buff.setValCalQueues?buff.setValCalQueues[index]:[];
               const tempToSetVal = this.getFinalResCalQueueResult({}, toSetOriginalVal, tempCalQueue);
               result[tempSetTo] = tempToSetVal;
             }
@@ -3696,7 +3696,7 @@ export class CalculatorService {
               const characterData = this.dataMap[indexStr].characterData;
               let originRateInfo = characterData!.skills![buff.originSkills[i] as keyof CharSkills] as CharSkill;
               let originSkillLevel = this.getCharacterSkillLevel(indexStr, buff.originSkills[i]);
-              let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexs![i]]
+              let originRate = originRateInfo.paramMap[originSkillLevel][buff.originIndexes![i]]
               switch(buff.originRelations![i]){
                 case "*":
                   indexValue *= originRate
