@@ -397,7 +397,8 @@
     "WRIOTHESLEY_REBUKE": "誅罰",
     "NEUVILLETTE_EQUITABLE_JUDGMENT": "衡平な裁量",
     "FURINA_SALON_SOLITAIRE": "サロン·ソリティア",
-    "FURINA_NORMAL_C6": "ソリストの誘い"
+    "FURINA_NORMAL_C6": "ソリストの誘い",
+    "NAVIA_SHARDSHOT": "ロースラ晶弾"
   },
   "AUTO": {
     "CALC": "計算",
@@ -445,12 +446,18 @@
     "WEAPON_NAME": "[武器]",
     "ARTIFACT_NAME": "[聖遺物]"
   },
-  "DESC": {
-    "GOLDEN_MAJESTY": {
-      "WITH_SHIELD": "シールドの場合のバフ（前のバフとの間で1つを選択）"
+  "BUFF": {
+    "GOLDEN_MAJESTY_SHIELD": {
+      "DESC": "シールドの場合のバフ（前のバフとの間で1つを選択）"
     },
-    "TRAVELER": {
-      "PROUDSKILL_2": "豊穰の勾玉（単位：枚）の数を吸収することで元素チャージ効率の追加分"
+    "TRAVELER_PROUDSKILL_2": {
+      "DESC": "豊穰の勾玉（単位：枚）の数を吸収することで元素チャージ効率の追加分"
+    },
+    "NAVIA_STACKS_OF_CRYSTAL": {
+      "TITLE": "裂晶の欠片"
+    },
+    "NAVIA_ROSULA_SHARDSHOTS": {
+      "TITLE": "ロースラ晶弾"
     }
   },
   "MENU": {

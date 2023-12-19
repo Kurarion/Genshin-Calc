@@ -7864,7 +7864,7 @@
                                 "sliderInitialValue": 0,
                                 "sliderStep": 1,
                                 "sliderMax": 3,
-                                "desc": "DESC.TRAVELER.PROUDSKILL_2"
+                                "desc": "BUFF.TRAVELER_PROUDSKILL_2.DESC"
                             }]
                         },
                         {
@@ -7876,7 +7876,7 @@
                                 "sliderInitialValue": 0,
                                 "sliderStep": 1,
                                 "sliderMax": 3,
-                                "desc": "DESC.TRAVELER.PROUDSKILL_2",
+                                "desc": "BUFF.TRAVELER_PROUDSKILL_2.DESC",
                                 "isOnlyForOther": true
                             }]
                         }
@@ -8470,7 +8470,7 @@
                             "sliderInitialValue": 0,
                             "sliderStep": 1,
                             "sliderMax": 3,
-                            "desc": "DESC.TRAVELER.PROUDSKILL_2"
+                            "desc": "BUFF.TRAVELER_PROUDSKILL_2.DESC"
                         }]
                     },
                     {
@@ -8482,7 +8482,7 @@
                             "sliderInitialValue": 0,
                             "sliderStep": 1,
                             "sliderMax": 3,
-                            "desc": "DESC.TRAVELER.PROUDSKILL_2",
+                            "desc": "BUFF.TRAVELER_PROUDSKILL_2.DESC",
                             "isOnlyForOther": true
                         }]
                     }]
@@ -10931,6 +10931,348 @@
                     }
                 ]
             }
+        },
+        "10000090": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [7,8,9],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "healing": {
+                            "index":4,
+                            "base":"HP",
+                            "constIndex":5,
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        },
+                        "damage": {
+                            "indexs": [0,1,2],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [6],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target": ["DMG_ANTI_PYRO_MINUS", "DMG_ANTI_ELECTRO_MINUS"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isAllTeam":true
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "indexMultiValue": 0.001,
+                                "maxValConstIndex": 2,
+                                "base": "HP",
+                                "target": ["ATTACK_UP"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isAllTeam":true
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                    {
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "5": [
+                    {
+                        "healing": {
+                            "index":1,
+                            "base":"HP",
+                            "healingBonusType":"HEALING_BONUS_OTHER"
+                        },
+                        "buffs":[{
+                            "index": 2,
+                            "target":["DMG_BONUS_PYRO", "DMG_BONUS_ELECTRO"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderMax": 3,
+                            "isAllTeam": true
+                        }]
+                    }
+                ]
+            }
+        },
+        "10000091": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexs": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "buffs":[{
+                            "showIndex": 0,
+                            "showPriority": 2,
+                            "setTo": ["VAR_CHARA_1", "VAR_CHARA_2"],
+                            "setValCalQueue": [
+                                [
+                                    {
+                                        "relation": "+",
+                                        "inner": [],
+                                        "clampMax": 3
+                                    }
+                                ],
+                                [
+                                    {
+                                        "relation": "-",
+                                        "inner": [
+                                            {
+                                                "relation": "+",
+                                                "const": 3
+                                            }
+                                        ],
+                                        "clampMin": 0
+                                    }
+                                ]
+                            ],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderMax": 6,
+                            "sliderStep": 1,
+                            "title": "BUFF.NAVIA_STACKS_OF_CRYSTAL.TITLE"
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 0,
+                            "showPriority": 1,
+                            "setTo": ["VAR_CHARA_3"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 5,
+                            "sliderMin": 5,
+                            "sliderMax": 11,
+                            "sliderStep": 2,
+                            "title": "BUFF.NAVIA_ROSULA_SHARDSHOTS.TITLE"
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "index": 1,
+                            "base": "VAR_CHARA_2",
+                            "target": ["DMG_BONUS_SKILL"],
+                            "settingType": "resident",
+                            "tag": "NAVIA_SHARDSHOT"
+                        }],
+                        "damage": {
+                            "indexs": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "finalResCalQueue": [
+                                {
+                                    "relation": "*",
+                                    "inner": [
+                                        {
+                                            "relation": "+",
+                                            "variable": "VAR_CHARA_3"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "relation": "*",
+                                    "inner": [
+                                        {
+                                            "relation": "+",
+                                            "variable": "VAR_CHARA_3"
+                                        },
+                                        {
+                                            "relation": "-",
+                                            "const": 9
+                                        }
+                                    ],
+                                    "innerClampMin": 1
+                                }
+                            ],
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_SKILL",
+                            "tag": "NAVIA_SHARDSHOT"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexs": [4],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexs": [0,1],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "overrideElement": "DMG_BONUS_GEO"
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index":0,
+                                "target": ["ATTACK_UP"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMax": 2,
+                                "sliderStep": 1
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base": "VAR_CHARA_1",
+                                "target":["DMG_CRIT_RATE_UP_SKILL"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "tag": "NAVIA_SHARDSHOT"
+                            }],
+                            "damage": {
+                                "originSkills": ["elementalBurst"],
+                                "originIndexs": [1],
+                                "originRelations": ["*"],
+                                "customValues": [1],
+                                "base": "ATTACK",
+                                "canOverride": false,
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                            }
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["DMG_ANTI_GEO_MINUS"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ],
+                "5": [
+                    {
+                        "buffs":[{
+                            "index": 0,
+                            "base": "VAR_CHARA_2",
+                            "target":["DMG_CRIT_DMG_UP_SKILL"],
+                            "settingType": "switch",
+                            "defaultEnable": false,
+                            "tag": "NAVIA_SHARDSHOT"
+                        }]
+                    }
+                ]
+            }
         }
     },
     "weapons": {
@@ -11503,7 +11845,7 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5,
-                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
+                        "desc": "BUFF.GOLDEN_MAJESTY_SHIELD.DESC"
                     }]
                 }
             ]
@@ -11975,6 +12317,27 @@
                 }
             ]
         },
+        "12426": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["ATTACK_UP"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 6
+                    }]
+                }
+            ]
+        },
         "12427": {
             "effect": [
                 {
@@ -12078,7 +12441,7 @@
                         "sliderMax":5,
                         "sliderStep":1,
                         "sliderInitialValue": 0,
-                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
+                        "desc": "BUFF.GOLDEN_MAJESTY_SHIELD.DESC"
                     }]
                 }
             ]
@@ -12126,6 +12489,27 @@
                         "target": ["HP_UP"],
                         "settingType": "switch",
                         "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "12512": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "propIndex": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 2
                     }]
                 }
             ]
@@ -12442,7 +12826,7 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5,
-                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
+                        "desc": "BUFF.GOLDEN_MAJESTY_SHIELD.DESC"
                     }]
                 }
             ]
@@ -12957,7 +13341,7 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 5,
-                        "desc": "DESC.GOLDEN_MAJESTY.WITH_SHIELD"
+                        "desc": "BUFF.GOLDEN_MAJESTY_SHIELD.DESC"
                     }]
                 }
             ]
@@ -14398,6 +14782,84 @@
                         "target": ["DMG_BONUS_SKILL"],
                         "settingType":"switch",
                         "defaultEnable":false
+                    }]
+                }
+            ]
+        },
+        "15033": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["HEALING_BONUS"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "index": 3,
+                        "indexMultiValue": 100,
+                        "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING", "DMG_VAL_UP_SKILL", "DMG_VAL_UP_ELEMENTAL_BURST"],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 150,
+                        "isAllTeam": true
+                    }]
+                }
+            ]
+        },
+        "15034": {
+            "set1": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }]
+                }
+            ],
+            "set2": [
+                {
+                    "buffs":[{
+                        "setTo": ["VAR_SET_1"],
+                        "setValCalQueue": [
+                            [
+                                {
+                                    "relation": "*",
+                                    "inner": [
+                                        {
+                                            "relation": "+",
+                                            "const": 1.5
+                                        }
+                                    ]
+                                },
+                                {
+                                    "relation": "+",
+                                    "inner": [
+                                        {
+                                            "relation": "-",
+                                            "const": 0.5
+                                        }
+                                    ],
+                                    "clampMin":0
+                                }
+                            ]
+                        ],
+                        "settingType":"slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 2
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "base": "VAR_SET_1",
+                        "target": ["DMG_BONUS_GEO"],
+                        "settingType":"resident"
                     }]
                 }
             ]

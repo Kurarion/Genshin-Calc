@@ -110,7 +110,8 @@ export interface ExtraSkillBuff {
   showIndex?: number;
   showPriority?: number;
   //入力値保存
-  setTo?: string;
+  setTo?: string[];
+  setValCalQueue?: CalcItem[][];
   //結果再計算列
   finalResCalQueue?: CalcItem[];
   //数値計算ベース
@@ -242,6 +243,10 @@ export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' |
 export interface CalcItem {
   relation: TYPE_RELATION;
   inner: CalcUnit[];
+  innerClampMin?: number;
+  innerClampMax?: number;
+  clampMin?: number;
+  clampMax?: number;
 }
 
 export interface CalcUnit {

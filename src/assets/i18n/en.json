@@ -397,7 +397,8 @@
     "WRIOTHESLEY_REBUKE": "Rebuke: Vaulting Fist",
     "NEUVILLETTE_EQUITABLE_JUDGMENT": "Equitable Judgment",
     "FURINA_SALON_SOLITAIRE": "Salon Solitaire",
-    "FURINA_NORMAL_C6": "Soloist's Solicitation"
+    "FURINA_NORMAL_C6": "Soloist's Solicitation",
+    "NAVIA_SHARDSHOT": "Rosula Shardshot"
   },
   "AUTO": {
     "CALC": "Calculate",
@@ -445,12 +446,18 @@
     "WEAPON_NAME": "[Weapon]",
     "ARTIFACT_NAME": "[Artifact]"
   },
-  "DESC": {
-    "GOLDEN_MAJESTY": {
-      "WITH_SHIELD": "Bonus in case of shield (select one of the settings with the previous BUFF)"
+  "BUFF": {
+    "GOLDEN_MAJESTY_SHIELD": {
+      "DESC": "Bonus in case of shield (select one of the settings with the previous BUFF)"
     },
-    "TRAVELER": {
-      "PROUDSKILL_2": "Additional recharge increase by the absorb the amount of Abundance Amulets (unit: piece)"
+    "TRAVELER_PROUDSKILL_2": {
+      "DESC": "Additional recharge increase by the absorb the amount of Abundance Amulets (unit: piece)"
+    },
+    "NAVIA_STACKS_OF_CRYSTAL": {
+      "TITLE": "Stacks of Crystal"
+    },
+    "NAVIA_ROSULA_SHARDSHOTS": {
+      "TITLE": "Rosula Shardshots"
     }
   },
   "MENU": {

@@ -397,7 +397,8 @@
     "WRIOTHESLEY_REBUKE": "懲戒·凌躍拳",
     "NEUVILLETTE_EQUITABLE_JUDGMENT": "衡平推裁",
     "FURINA_SALON_SOLITAIRE": "孤心沙龍",
-    "FURINA_NORMAL_C6": "獨舞之邀"
+    "FURINA_NORMAL_C6": "獨舞之邀",
+    "NAVIA_SHARDSHOT": "玫瑰晶彈"
   },
   "AUTO": {
     "CALC": "計算",
@@ -445,12 +446,18 @@
     "WEAPON_NAME": "[武器]",
     "ARTIFACT_NAME": "[聖遺物]"
   },
-  "DESC": {
-    "GOLDEN_MAJESTY": {
-      "WITH_SHIELD": "護盾情況下的加成（與上一個BUFF選擇其一設置）"
+  "BUFF": {
+    "GOLDEN_MAJESTY_SHIELD": {
+      "DESC": "護盾情況下的加成（與上一個BUFF選擇其一設置）"
     },
-    "TRAVELER": {
-      "PROUDSKILL_2": "吸收豐穰勾玉數額外的充能加成（單位：個）"
+    "TRAVELER_PROUDSKILL_2": {
+      "DESC": "吸收豐穰勾玉數額外的充能加成（單位：個）"
+    },
+    "NAVIA_STACKS_OF_CRYSTAL": {
+      "TITLE": "裂晶彈片"
+    },
+    "NAVIA_ROSULA_SHARDSHOTS": {
+      "TITLE": "玫瑰晶彈"
     }
   },
   "MENU": {

@@ -106,6 +106,7 @@ export interface DamageParam {
   attackBonusType: string; //攻撃タイプ
   tag?: string; //タグ
   isAbsoluteDmg?: boolean; //絶対ダメージ
+  finalResCalQueue?: CalcItem[];
 }
 
 export interface DamageResult {
@@ -159,6 +160,7 @@ export interface HealingParam {
   base?: string; //数値ベース
   extra?: number; //追加値
   healingBonusType?: string; //治療タイプ
+  finalResCalQueue?: CalcItem[];
 }
 
 export interface HealingResult {
@@ -171,6 +173,7 @@ export interface ShieldParam {
   extra?: number; //追加値
   shieldBonusType?: string //シールドタイプ
   shieldElementType?: string //シールド元素タイプ
+  finalResCalQueue?: CalcItem[];
 }
 
 export interface ShieldResult {
@@ -190,6 +193,7 @@ export interface ProductParam {
   rate?: number; //倍率
   base?: string; //数値ベース
   extra?: number; //追加値
+  finalResCalQueue?: CalcItem[];
 }
 
 export interface ProductResult {
@@ -1759,6 +1763,7 @@ export class CalculatorService {
     let shieldSpecialHp;
     if(!isAbsoluteDmg){
       originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
+      originDmg = this.getFinalResCalQueueResult(data, originDmg, param.finalResCalQueue);
       critDmg = originDmg * (1 + finalCritDmg);
       expectDmg = originDmg * (1 - finalCritRate) + critDmg * finalCritRate;
 
@@ -1920,6 +1925,7 @@ export class CalculatorService {
       healing += extra;
     }
     healing *= (1 + data[Const.PROP_HEALING_BONUS] + data[Const.PROP_REVERSE_HEALING_BONUS] + (healingBonusType?(data[healingBonusType] ?? 0):0));
+    healing = this.getFinalResCalQueueResult(data, healing, param.finalResCalQueue);
     result = {
       healing: healing,
     }
@@ -1972,6 +1978,7 @@ export class CalculatorService {
       }
     }
     shield *= 1 + (data[Const.PROP_DMG_ELEMENT_SHIELD_UP] ?? 0);
+    shield = this.getFinalResCalQueueResult(data, shield, param.finalResCalQueue);
     //シールド元素タイプ
     let tempRes: ShieldResult = {
       shield: shield,
@@ -2046,6 +2053,7 @@ export class CalculatorService {
     if(extra != undefined){
       product += extra;
     }
+    product = this.getFinalResCalQueueResult(data, product, param.finalResCalQueue);
     result = {
       product: product,
     }
@@ -2192,6 +2200,7 @@ export class CalculatorService {
               elementBonusType: elementBonusType,
               tag: damageInfo.tag,
               isAbsoluteDmg: damageInfo.isAbsoluteDmg,
+              finalResCalQueue: damageInfo.finalResCalQueue,
             });
           }
         }else{
@@ -2253,6 +2262,7 @@ export class CalculatorService {
                 elementBonusType: elementBonusType,
                 tag: damageInfo.tag,
                 isAbsoluteDmg: damageInfo.isAbsoluteDmg,
+                finalResCalQueue: damageInfo.finalResCalQueue,
               });
             }
           }
@@ -2316,6 +2326,7 @@ export class CalculatorService {
             base: base,
             rate: rate,
             healingBonusType: healingBonusType,
+            finalResCalQueue: healingInfo.finalResCalQueue,
           });
         }else{
           for(let valueIndex of valueIndexs){
@@ -2408,6 +2419,7 @@ export class CalculatorService {
                 rate: rate,
                 extra: extra,
                 healingBonusType: healingBonusType,
+                finalResCalQueue: healingInfo.finalResCalQueue,
               });
             }
           }
@@ -2470,7 +2482,8 @@ export class CalculatorService {
               base: base,
               rate: rate,
               shieldBonusType: shieldBonusType,
-              shieldElementType: shieldElementType
+              shieldElementType: shieldElementType,
+              finalResCalQueue: shieldInfo.finalResCalQueue,
             });
           }else{
             for(let valueIndex of valueIndexs){
@@ -2565,7 +2578,8 @@ export class CalculatorService {
                   rate: rate,
                   extra: extra,
                   shieldBonusType: shieldBonusType,
-                  shieldElementType: shieldElementType
+                  shieldElementType: shieldElementType,
+                  finalResCalQueue: shieldInfo.finalResCalQueue,
                 });
               }
             }
@@ -2625,6 +2639,7 @@ export class CalculatorService {
             params.push({
               base: base,
               rate: rate,
+              finalResCalQueue: productHpInfo.finalResCalQueue,
             });
           }else{
             for(let valueIndex of valueIndexs){
@@ -2667,6 +2682,7 @@ export class CalculatorService {
                   base: base,
                   rate: rate,
                   extra: extra,
+                  finalResCalQueue: productHpInfo.finalResCalQueue,
                 });
               }
             }
@@ -3018,6 +3034,7 @@ export class CalculatorService {
     }
     let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
     let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * buff.multiValue!;
+    toAdd = this.getFinalResCalQueueResult(result, toAdd, buff.finalResCalQueue);
     if(buff.maxVal && toAdd > buff.maxVal){
       toAdd = buff.maxVal;
     }else if(buff.specialMaxVal != undefined){
@@ -3031,7 +3048,7 @@ export class CalculatorService {
     this.recalBaseProp(buff.target, result);
   }
 
-  private appendToExtraTeam(buffs: TeamBuff[], extraTeamOnceResult: Record<string, number>, extraTeamSecondaryResult: Record<string, number>, extraSpecialTeamResult: SpecialBuff[], buffTag: Record<string,string[]>){
+  private appendToExtraTeam(buffs: TeamBuff[], extraTeamOnceResult: Record<string, number>, extraTeamSecondaryResult: Record<string, number>, extraSpecialTeamResult: SpecialBuff[], buffTag: Record<string,string[]>, result: Record<string, number> = {}){
     for(let v of buffs){
       if(v.calByOrigin && v.isSpecial){
         extraSpecialTeamResult.push(v as SpecialBuff);
@@ -3041,14 +3058,14 @@ export class CalculatorService {
             extraTeamOnceResult[v.target] = 0;
           }
           if(this.checkAndSetBuffTag(v.tag,v.target,buffTag)){
-            extraTeamOnceResult[v.target] += v.val ?? 0;
+            extraTeamOnceResult[v.target] += this.getFinalResCalQueueResult(result, v.val ?? 0, v.finalResCalQueue);
           }
         }else{
           if(!extraTeamSecondaryResult.hasOwnProperty(v.target)){
             extraTeamSecondaryResult[v.target] = 0;
           }
           if(this.checkAndSetBuffTag(v.tag,v.target,buffTag)){
-            extraTeamSecondaryResult[v.target] += v.val ?? 0;
+            extraTeamSecondaryResult[v.target] += this.getFinalResCalQueueResult(result, v.val ?? 0, v.finalResCalQueue);
           }
         }
       }
@@ -3070,6 +3087,7 @@ export class CalculatorService {
         }
         let modifyValue = v.baseModifyValue?v.baseModifyValue:0;
         let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * v.multiValue!;
+        toAdd = this.getFinalResCalQueueResult(props, toAdd, buff.finalResCalQueue);
         if(v.maxVal && toAdd > v.maxVal){
           toAdd = v.maxVal;
         }else if(v.specialMaxVal != undefined){
@@ -3507,6 +3525,7 @@ export class CalculatorService {
 
       //チームバフ
       let buffs = this.dataMap[subIndex].selfTeamBuff!;
+      const result = this.dataMap[subIndex].allData
       for(let key of [
         Const.NAME_SKILLS_NORMAL,
         Const.NAME_SKILLS_SKILL,
@@ -3521,6 +3540,7 @@ export class CalculatorService {
           this.dataMap[index].extraTeamSecondaryResult!,
           this.dataMap[index].extraSpecialTeamResult!,
           this.dataMap[index].buffTag!,
+          result,
         );
       }
       for(let v of buffs.proudSkills){
@@ -3530,6 +3550,7 @@ export class CalculatorService {
           this.dataMap[index].extraTeamSecondaryResult!,
           this.dataMap[index].extraSpecialTeamResult!,
           this.dataMap[index].buffTag!,
+          result,
         );
       }
       for(let key of [
@@ -3546,6 +3567,7 @@ export class CalculatorService {
           this.dataMap[index].extraTeamSecondaryResult!,
           this.dataMap[index].extraSpecialTeamResult!,
           this.dataMap[index].buffTag!,
+          result,
         );
       }
     }
@@ -3601,16 +3623,16 @@ export class CalculatorService {
         let isOnlyForOther = buff.isOnlyForOther ?? false;
         let isEnableInSwitch = true;
         let isEnableInSlider = true;
-        let toSetVal = 0;
+        let toSetOriginalVal = 0;
         if(!(buffIndex in switchOnSet) || switchOnSet[buffIndex] != true){
           isEnableInSwitch = false;
         } else {
-          toSetVal = 1;
+          toSetOriginalVal = 1;
         }
         if(!(buffIndex in sliderNumMap) || typeof sliderNumMap[buffIndex] != "number"){
           isEnableInSlider = false;
         } else {
-          toSetVal = sliderNumMap[buffIndex];
+          toSetOriginalVal = sliderNumMap[buffIndex];
         }
   
         if(buff){
@@ -3629,7 +3651,11 @@ export class CalculatorService {
           let selfElementType = Const.ELEMENT_TYPE_MAP.get(elementType)!;
           //入力値を変数に保存
           if (buff.setTo !== undefined) {
-            result[buff.setTo] = toSetVal;
+            for (const [index, tempSetTo] of buff.setTo.entries()) {
+              const tempCalQueue = buff.setValCalQueue?buff.setValCalQueue[index]:[];
+              const tempToSetVal = this.getFinalResCalQueueResult({}, toSetOriginalVal, tempCalQueue);
+              result[tempSetTo] = tempToSetVal;
+            }
           }
           //結果再計算列
           const calQueue = buff.finalResCalQueue;
@@ -3710,7 +3736,7 @@ export class CalculatorService {
           let priority = buff?.priority ?? 0;
           let finallyCal = buff?.finallyCal ?? false;
     
-          let targets = buff?.target.map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
+          let targets = (buff?.target ?? []).map((val) => val + (buff?.tag ? Const.CONCATENATION_TAG + buff.tag : ''));
           //自身元素タイプチェック
           if(checkSelfElementType){
             targets = targets.filter((v: string)=>{
@@ -4219,13 +4245,25 @@ export class CalculatorService {
       for (const unit of item.inner) {
         let tempVal = 0;
         if (unit.variable !== undefined) {
-          tempVal = data[unit.variable];
+          tempVal = data[unit.variable] ?? 0;
         } else {
           tempVal = unit.const ?? 0;
         }
         tempRes = this.calRelationResult(tempRes, tempVal, unit.relation);
       }
+      if (item.innerClampMin !== undefined && tempRes < item.innerClampMin) {
+        tempRes = item.innerClampMin;
+      }
+      if (item.innerClampMax !== undefined && tempRes > item.innerClampMax) {
+        tempRes = item.innerClampMax;
+      }
       result = this.calRelationResult(result, tempRes, item.relation);
+      if (item.clampMin !== undefined && result < item.clampMin) {
+        result = item.clampMin;
+      }
+      if (item.clampMax !== undefined && result > item.clampMax) {
+        result = item.clampMax;
+      }
     }
     return result;
   }
