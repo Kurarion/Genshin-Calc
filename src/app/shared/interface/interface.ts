@@ -251,6 +251,12 @@ export interface CalcItem {
 
 export interface CalcUnit {
   variable?: string;
+  varMap?: Record<string, number>;
   const?: number;
   relation: TYPE_RELATION;
+}
+
+export interface MapUnit {
+  input: number[];
+  output: number[];
 }

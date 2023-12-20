@@ -4246,6 +4246,10 @@ export class CalculatorService {
         let tempVal = 0;
         if (unit.variable !== undefined) {
           tempVal = data[unit.variable] ?? 0;
+          if (unit.varMap !== undefined) {
+            const varMap = unit.varMap;
+            tempVal = this.valMapFunc(tempVal, varMap);
+          }
         } else {
           tempVal = unit.const ?? 0;
         }
@@ -4283,6 +4287,14 @@ export class CalculatorService {
       case '/':
         result /= val2;
         break;
+    }
+    return result;
+  }
+
+  private valMapFunc(value: number, varMap: Record<string, number>): number {
+    let result = value;
+    if (varMap.hasOwnProperty(value)) {
+      result = varMap[value];
     }
     return result;
   }

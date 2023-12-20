@@ -11131,9 +11131,9 @@
                             "setTos": ["VAR_CHARA_3"],
                             "settingType": "slider",
                             "sliderInitialValue": 5,
-                            "sliderMin": 5,
+                            "sliderMin": 1,
                             "sliderMax": 11,
-                            "sliderStep": 2,
+                            "sliderStep": 1,
                             "title": "BUFF.NAVIA_ROSULA_SHARDSHOTS.TITLE"
                         }]
                     },
@@ -11155,23 +11155,22 @@
                                     "inner": [
                                         {
                                             "relation": "+",
-                                            "variable": "VAR_CHARA_3"
+                                            "variable": "VAR_CHARA_3",
+                                            "varMap": {
+                                                "1": 1,
+                                                "2": 1.05,
+                                                "3": 1.1,
+                                                "4": 1.15,
+                                                "5": 1.2,
+                                                "6": 1.36,
+                                                "7": 1.4,
+                                                "8": 1.6,
+                                                "9": 1.666666,
+                                                "10": 1.9,
+                                                "11": 2
+                                            }
                                         }
                                     ]
-                                },
-                                {
-                                    "relation": "*",
-                                    "inner": [
-                                        {
-                                            "relation": "+",
-                                            "variable": "VAR_CHARA_3"
-                                        },
-                                        {
-                                            "relation": "-",
-                                            "const": 9
-                                        }
-                                    ],
-                                    "innerClampMin": 1
                                 }
                             ],
                             "elementBonusType": "DMG_BONUS_GEO",
@@ -14790,7 +14789,7 @@
             "set1": [
                 {
                     "buffs":[{
-                        "index": 0,
+                        "propIndex": 0,
                         "target": ["HEALING_BONUS"],
                         "settingType": "resident"
                     }]
@@ -14815,7 +14814,7 @@
             "set1": [
                 {
                     "buffs":[{
-                        "index": 0,
+                        "propIndex": 0,
                         "target": ["ATTACK_UP"],
                         "settingType": "resident"
                     }]
