@@ -89,10 +89,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Inteyvat:build:production"
+              "buildTarget": "Inteyvat:build:production"
             },
             "development": {
-              "browserTarget": "Inteyvat:build:development"
+              "buildTarget": "Inteyvat:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,7 +100,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Inteyvat:build"
+            "buildTarget": "Inteyvat:build"
           }
         },
         "test": {

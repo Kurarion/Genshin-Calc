@@ -15,7 +15,7 @@
                         class="avater"
                     >
                     </app-chara-option>
-                    <mat-form-field *ngIf="isFirst" appearance="legacy" floatLabel="always" floatLabel="always">
+                    <mat-form-field appearance="fill" *ngIf="isFirst" floatLabel="always" floatLabel="always">
                         <mat-label [innerText]="'TEAM.MEMBER_NAME_'+i | translate"></mat-label>
                         <select matNativeControl disabled>
                             <option>{{data.name[currentLanguage]}}</option>

@@ -18,7 +18,7 @@
                     [currentLanguage]="currentLanguage">
                 </app-mat-filtering-selector>
                 <br>
-                <mat-form-field appearance="legacy" floatLabel="always">
+                <mat-form-field appearance="fill" floatLabel="always">
                     <mat-label [innerText]="'ENEMY.PLAYERNUM' | translate"></mat-label>
                     <mat-select [(ngModel)]="selectedPlayerNum" (ngModelChange)="onChangePlayerNum($event)">
                         <ng-container *ngFor="let playerNum of playerNumOptions">
@@ -40,7 +40,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <!-- レベル選択 -->
-                <mat-form-field appearance="legacy" floatLabel="always">
+                <mat-form-field appearance="fill" floatLabel="always">
                     <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
                     <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
                         <ng-container *ngFor="let option of levelOptions">

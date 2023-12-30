@@ -21,7 +21,7 @@
                         </div>
                         <!-- 値 -->
                         <br>
-                        <mat-form-field appearance="legacy" floatLabel="always" class="long-field">
+                        <mat-form-field appearance="fill" floatLabel="always" class="long-field">
                             <mat-label [innerText]="'DPS.OUTLINE' | translate"></mat-label>
                             <input matInput
                                 maxlength="40"
@@ -29,7 +29,7 @@
                                 (keyup)="onOutlineValueKeyup($event)"
                             >
                         </mat-form-field>
-                        <mat-form-field appearance="legacy" floatLabel="always" class="normal-field">
+                        <mat-form-field appearance="fill" floatLabel="always" class="normal-field">
                             <mat-label [innerText]="'DPS.DURATION' | translate"></mat-label>
                             <input matInput 
                                 type="number"
@@ -86,19 +86,19 @@
                             </div>
                             <mat-divider></mat-divider>
                             <div class="dmg-info-detail" [style.background]="specialColorMap[dmg.resultProp] ?? elementColorMap[dmg.elementType]">
-                                <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always" class="diabled-black-color detail-field detail-field-left">
+                                <mat-form-field appearance="fill" floatLabel="always" floatLabel="always" class="diabled-black-color detail-field detail-field-left">
                                     <mat-label [innerText]="'DPS.ELEMENT_TYPE' | translate"></mat-label>
                                     <select matNativeControl disabled>
                                         <option [innerText]="'COMMON.ELEMENT_TYPE.' + dmg.elementType | translate"></option>
                                     </select>
                                 </mat-form-field>
-                                <mat-form-field appearance="legacy" floatLabel="always" floatLabel="always" class="diabled-black-color detail-field detail-field-right">
+                                <mat-form-field appearance="fill" floatLabel="always" floatLabel="always" class="diabled-black-color detail-field detail-field-right">
                                     <mat-label [innerText]="'DPS.ATTACK_TYPE' | translate"></mat-label>
                                     <select matNativeControl disabled>
                                         <option [innerText]="'COMMON.ATTACK_TYPE.' + dmg.attackType | translate"></option>
                                     </select>
                                 </mat-form-field>
-                                <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon detail-field detail-field-left">
+                                <mat-form-field appearance="fill" floatLabel="always" class="align-select-expand-icon detail-field detail-field-left">
                                     <mat-label [innerText]="'DPS.DMG_TYPE' | translate"></mat-label>
                                     <mat-select [value]="dmg.resultProp" (selectionChange)="changeProp(i, $event.value)">
                                         <ng-container *ngFor="let dmgType of dmg.isAbsoluteDmg?damageTypeAbsMap.get(dmg.elementType):damageTypeMap.get(dmg.elementType)">
@@ -108,7 +108,7 @@
                                         </ng-container>
                                     </mat-select>
                                 </mat-form-field>
-                                <mat-form-field appearance="legacy" floatLabel="always" class="align-select-expand-icon detail-field detail-field-right">
+                                <mat-form-field appearance="fill" floatLabel="always" class="align-select-expand-icon detail-field detail-field-right">
                                     <mat-label [innerText]="'DPS.TIMES' | translate"></mat-label>
                                     <input matInput 
                                         type="number"

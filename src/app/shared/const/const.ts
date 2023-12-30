@@ -7,25 +7,6 @@ interface PROPS_INFO {
   isPercent: boolean,
 }
 
-const props_all_map_func = (list: string[]): PROPS_INFO => {
-  const fullName = list.join(Const.CONCATENATION_TAG)
-  const i18nCatalogProps = 'PROPS.'
-  const i18nCatalogTag = 'TAG.'
-  const i18nLeftBrackets = 'TAG.LEFT_BRACKETS'
-  const i18nRightBrackets = 'TAG.RIGHT_BRACKETS'
-  const i18nList: string[] = [i18nCatalogProps + list[0]]
-  for(let i = 1; i < list.length; ++i) {
-    i18nList.push(i18nLeftBrackets)
-    i18nList.push(i18nCatalogTag + list[i])
-    i18nList.push(i18nRightBrackets)
-  }
-  return {
-    fullName,
-    i18nList,
-    isPercent: Const.PROPS_ALL_DATA_PERCENT.includes(fullName)
-  }
-}
-
 export class Const {
   //*********************************
   //        ローカルストレージ
@@ -1246,6 +1227,26 @@ export class Const {
   ].concat(Const.PROPS_ALL_BASE_SPACIAL_PERCENT.map((val: string[]) => {
     return val.join(Const.CONCATENATION_TAG)
   }));
+
+  static props_all_map_func = (list: string[]): PROPS_INFO => {
+    const fullName = list.join(Const.CONCATENATION_TAG)
+    const i18nCatalogProps = 'PROPS.'
+    const i18nCatalogTag = 'TAG.'
+    const i18nLeftBrackets = 'TAG.LEFT_BRACKETS'
+    const i18nRightBrackets = 'TAG.RIGHT_BRACKETS'
+    const i18nList: string[] = [i18nCatalogProps + list[0]]
+    for(let i = 1; i < list.length; ++i) {
+      i18nList.push(i18nLeftBrackets)
+      i18nList.push(i18nCatalogTag + list[i])
+      i18nList.push(i18nRightBrackets)
+    }
+    return {
+      fullName,
+      i18nList,
+      isPercent: Const.PROPS_ALL_DATA_PERCENT.includes(fullName)
+    }
+  }
+
   //計算後データ属性リスト
   static readonly PROPS_ALL_DATA: PROPS_INFO[] = [
     [Const.PROP_HP],
@@ -1431,7 +1432,7 @@ export class Const {
     [Const.PROP_OTHER_OCEAN_HUED_HEALING],
   ]
     .concat(Const.PROPS_ALL_BASE_SPACIAL_PERCENT, Const.PROPS_ALL_BASE_SPACIAL)
-    .map(props_all_map_func);
+    .map(Const.props_all_map_func);
   //計算するリスト
   static readonly PROPS_TO_CAL = [
     Const.PROP_HP,

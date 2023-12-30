@@ -310,7 +310,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
   // damageTagList!: string[];
 
   //表示メソッド
-  displayWith!: (value: number) => string | number;
+  displayWith!: (value: number) => string;
   //Echarts
   echartsOption: EChartsOption = {
     tooltip: {

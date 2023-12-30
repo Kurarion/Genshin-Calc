@@ -15,7 +15,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <!-- レベル選択 -->
-                        <mat-form-field appearance="legacy" floatLabel="always">
+                        <mat-form-field appearance="fill" floatLabel="always">
                             <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
                             <mat-select [(ngModel)]="selectedLevels[skill]" (ngModelChange)="onChangeLevel(skill, $event)">
                                 <ng-container *ngFor="let option of levelOptions">

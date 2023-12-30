@@ -23,15 +23,27 @@
                         </mat-slide-toggle>
                     </ng-container>
                     <ng-container *ngIf="buffDatas[i].type! == 'slider'">
-                        <mat-slider
+                        <!-- <mat-slider
                             color="primary"
                             [min]="buffDatas[i].min!"
                             [max]="buffDatas[i].max!"
                             [step]="buffDatas[i].step!"
-                            [thumbLabel]="true"
+                            [discrete]="true"
                             tickInterval="auto"
                             [value]="buffDatas[i].sliderValue!"
                             (change)="onChangeSlider($event, buffDatas[i].valueIndex!)">
+                        </mat-slider> -->
+                        <mat-slider
+                            discrete
+                            color="primary"
+                            tickInterval="auto"
+                            [min]="buffDatas[i].min!"
+                            [max]="buffDatas[i].max!"
+                            [step]="buffDatas[i].step!">
+                            <input 
+                                matSliderThumb 
+                                [value]="buffDatas[i].sliderValue!" 
+                                (valueChange)="onChangeSlider($event, buffDatas[i].valueIndex!)">
                         </mat-slider>
                     </ng-container>
                 </td>

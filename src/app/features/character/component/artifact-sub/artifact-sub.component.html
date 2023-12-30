@@ -1,5 +1,5 @@
 <ng-container *ngFor="let main of mains">
-    <mat-form-field appearance="legacy" floatLabel="always">
+    <mat-form-field appearance="fill" floatLabel="always">
         <mat-label [innerText]="'ARTIFACT.' + main | translate"></mat-label>
         <mat-select [value]="data[main.toLowerCase()].name" (selectionChange)="onSelect(main, $event.value)">
             <mat-option></mat-option>
@@ -16,7 +16,7 @@
     <table>
         <tr *ngFor="let sub of subs">
             <td>
-                <mat-form-field appearance="legacy" floatLabel="always" class="sub-field">
+                <mat-form-field appearance="fill" floatLabel="always" class="sub-field">
                     <mat-label [innerText]="'ARTIFACT.' + sub | translate"></mat-label>
                     <mat-select [value]="data[sub.toLowerCase()].name" (selectionChange)="onSelect(sub, $event.value)">
                         <mat-option></mat-option>
@@ -31,9 +31,9 @@
                 </mat-form-field>
             </td>
             <td class="one-line-div">
-                <mat-slider
+                <!-- <mat-slider
                     color="primary"
-                    [thumbLabel]="true"
+                    [discrete]="true"
                     [value]="data[sub.toLowerCase()].name?(dataReliquaryAffix[data[sub.toLowerCase()].name!].indexOf(data[sub.toLowerCase()].value!)):0"
                     (change)="onChangeSubSlider($event, sub, data[sub.toLowerCase()].name!)"
                     [disabled]="!data[sub.toLowerCase()].name"
@@ -42,8 +42,22 @@
                     [min]="subMin"
                     [step]="subStep"
                     tickInterval="auto">
+                </mat-slider> -->
+                <mat-slider
+                    color="primary"
+                    [discrete]="true"
+                    [displayWith]="displayWith"
+                    [disabled]="!data[sub.toLowerCase()].name"
+                    [max]="subMax"
+                    [min]="subMin"
+                    [step]="subStep"
+                    tickInterval="auto">
+                    <input
+                        matSliderThumb
+                        [value]="data[sub.toLowerCase()].name?(dataReliquaryAffix[data[sub.toLowerCase()].name!].indexOf(data[sub.toLowerCase()].value!)):0"
+                        (valueChange)="onChangeSubSlider($event, sub, data[sub.toLowerCase()].name!)">
                 </mat-slider>
-                <mat-form-field appearance="legacy" class="field-part-2"
+                <mat-form-field appearance="fill" class="field-part-2"
                     [matTooltip]="(data[sub.toLowerCase()].value ?? 0).toString()" matTooltipPosition="right"
                 >
                     <input type="number" matInput

@@ -450,8 +450,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onChangeSlider(change: MatSliderChange, valueIndex: number){
-    this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'slider', change.value as number, this.skillIndex);
+  onChangeSlider(changeVal: number, valueIndex: number){
+    this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'slider', changeVal, this.skillIndex);
     if(this.skill == Const.NAME_EFFECT){
       this.calculatorService.initExtraWeaponData(this.characterIndex);
     }else if(this.skill == Const.NAME_SET){

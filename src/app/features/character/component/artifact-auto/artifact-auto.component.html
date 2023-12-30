@@ -10,10 +10,10 @@
             <td class="right">
                 <div class="one-line-div">
                     <br>
-                    <mat-slider
+                    <!-- <mat-slider
                         class="field-part-1"
                         color="primary"
-                        [thumbLabel]="true"
+                        [discrete]="true"
                         [formControl]="currentPoint"
                         (change)="onChangeCurrentPointSlider()"
                         [displayWith]="displayWith"
@@ -21,8 +21,22 @@
                         [min]="minValid"
                         [step]="step"
                         tickInterval="auto">
+                    </mat-slider> -->
+                    <mat-slider
+                        class="field-part-1"
+                        color="primary"
+                        [discrete]="true"
+                        [displayWith]="displayWith"
+                        [max]="maxValidArray[effectNum - 1]"
+                        [min]="minValid"
+                        [step]="step"
+                        tickInterval="auto">
+                        <input 
+                            matSliderThumb
+                            [formControl]="currentPoint"
+                            (change)="onChangeCurrentPointSlider()">
                     </mat-slider>
-                    <mat-form-field appearance="legacy" class="field-part-2">
+                    <mat-form-field appearance="fill" class="field-part-2">
                         <input type="number" matInput 
                         title=""
                         [max]="maxValidArray[effectNum - 1]/10"
@@ -40,7 +54,7 @@
                     <span [innerText]="'AUTO.' + item.name | translate"></span>
                 </td>
                 <td class="right">
-                    <mat-form-field appearance="legacy" floatLabel="always" *ngIf="item.isInput" class="normal-field">
+                    <mat-form-field appearance="fill" floatLabel="always" *ngIf="item.isInput" class="normal-field">
                         <mat-label [innerText]="'AUTO.' + item.title | translate"></mat-label>
                         <input matInput
                             type="number"
@@ -50,7 +64,7 @@
                         >
                         <span matSuffix>%&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="legacy" floatLabel="always" *ngIf="item.isSelect" class="normal-field">
+                    <mat-form-field appearance="fill" floatLabel="always" *ngIf="item.isSelect" class="normal-field">
                         <mat-label [innerText]="'AUTO.' + item.title | translate"></mat-label>
                         <mat-select 
                             [formControlName]="item.model"

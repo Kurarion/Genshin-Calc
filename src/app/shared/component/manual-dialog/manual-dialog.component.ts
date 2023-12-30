@@ -25,9 +25,9 @@ export class ManualDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpService.get<string>(this.data.file, "text", true).then((res: string|null)=>{
+    this.httpService.get<string>(this.data.file, "text", true).then(async (res: string|null)=>{
       if(res){
-        this.content = marked.parse(res).replace(/href="\.\/.*?"/g, '')
+        this.content = (await marked.parse(res)).replace(/href="\.\/.*?"/g, '')
       }
     })
   }

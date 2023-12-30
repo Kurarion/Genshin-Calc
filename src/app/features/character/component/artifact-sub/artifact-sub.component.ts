@@ -52,7 +52,7 @@ export class ArtifactSubComponent implements OnInit {
   chipChanged!: number;
 
   //表示メソッド
-  displayWith!: (value: number) => string | number;
+  displayWith!: (value: number) => string;
 
   constructor(private genshinDataService: GenshinDataService,
     private artifactService: ArtifactService,
@@ -169,12 +169,12 @@ export class ArtifactSubComponent implements OnInit {
     this.artifactService.next();
   }
 
-  onChangeSubSlider(change: MatSliderChange, key: string, prop: string){
+  onChangeSubSlider(changeVal: number, key: string, prop: string){
     let keyLow = key.toLowerCase();
     if(this.data[keyLow] == undefined || !this.data[keyLow].name){
       return;
     }
-    this.data[keyLow].value = this.dataReliquaryAffix[prop][change.value ?? 0];
+    this.data[keyLow].value = this.dataReliquaryAffix[prop][changeVal ?? 0];
     //更新
     this.calculatorService.setDirtyFlag(this.characterIndex);
     this.artifactService.next();

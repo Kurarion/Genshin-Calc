@@ -1,7 +1,7 @@
-<mat-chip-list class="chip-list" aria-label="Joyful Chip" [multiple]="true">
-    <mat-chip class="none-display"></mat-chip>
+<mat-chip-listbox class="chip-list" aria-label="Joyful Chip" [multiple]="true">
+    <mat-chip-option class="none-display"></mat-chip-option>
     <ng-container *ngFor="let chip of chips">
-        <mat-chip 
+        <mat-chip-option 
         class="normal-chip"
         [matTooltip]="chip.tip==undefined?'':(chip.needValue!=true?('CHIP.TIP.' + chip.tip.toUpperCase() | translate):('CHIP.TIP.' + chip.tip.toUpperCase() | translate:chip.value))" 
         matTooltipPosition="above" 
@@ -25,7 +25,7 @@
             <span 
             *ngIf="chip.needValue == true" 
             [innerText]="'CHIP.CONTENT.' + chip.content.toUpperCase() | translate:chip.value"></span>
-        </mat-chip>
+        </mat-chip-option>
     </ng-container>
     
-</mat-chip-list>
+</mat-chip-listbox>
