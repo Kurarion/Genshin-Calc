@@ -229,6 +229,7 @@ interface SkillParamInf {
 }
 
 interface CharLevelConfig {
+  normalLevel?: string;
   skillLevel?: string;
   elementalBurstLevel?: string;
 }
@@ -3225,10 +3226,16 @@ export class CalculatorService {
   //キャラ追加データ解析
   private getExtraCharacterData(index: string | number, data?: CharLevelConfig): [Record<string, number>, SpecialBuff[], TeamBuff[]]{
     let characterData = this.dataMap[index]!.characterData!;
+    let normalLevel;
     let skillLevel;
     let elementalBurstLevel;
     let characterStorageData = this.characterService.getStorageInfo(index);
     let overrideElement = this.characterService.getOverrideElement(index);
+    if(data && data.normalLevel){
+      normalLevel = data.normalLevel!;
+    }else{
+      normalLevel = characterStorageData.normalLevel!;
+    }
     if(data && data.skillLevel){
       skillLevel = data.skillLevel!;
     }else{
@@ -3251,6 +3258,29 @@ export class CalculatorService {
     }
 
     if(Const.NAME_SKILLS in setting && setting.skills){
+      if(Const.NAME_SKILLS_NORMAL in setting.skills){
+        let setBuffResult = this.setBuffDataToResult(
+          characterData.skills?.normal, 
+          normalLevel, 
+          extraCharacterData.skills!.normal,
+          setting.skills.normal!,
+          result,
+          specialResult,
+          specialTeamSlefResult,
+          [name_normal],
+          this.dataMap[index].selfTeamBuff!.normal,
+          this.dataMap[index].buffTag!,
+          characterData.weaponType,
+          characterData.info.elementType,
+          overrideElement,
+          index,
+        );
+        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+          hasOverride = true;
+          overrideElement = setBuffResult.overrideElement!;
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+        }
+      }
       if(Const.NAME_SKILLS_SKILL in setting.skills){
         let setBuffResult = this.setBuffDataToResult(
           characterData.skills?.skill, 

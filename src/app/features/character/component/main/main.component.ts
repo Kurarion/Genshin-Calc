@@ -133,11 +133,7 @@ export class MainComponent implements OnInit, OnDestroy {
     //ブラウザのレイアウトイベント
     this.isLarge.subscribe((isLarge: boolean) => {
       //レイアウトフラグ設定（メニューモードに影響する）
-      if(isLarge){
-        this.scrollBarWidth = 9;
-      }else{
-        this.scrollBarWidth = 9;
-      }
+      this.scrollBarWidth = 9;
     });
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
@@ -173,7 +169,7 @@ export class MainComponent implements OnInit, OnDestroy {
             container: ".content",
             items: 7,
             gutter: 8,
-            maxColumns: 4,
+            maxColumns: 10,
             animate: true,
             useMin: true,
           });

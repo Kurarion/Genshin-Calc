@@ -447,6 +447,15 @@
     "ARTIFACT_NAME": "[Artifact]"
   },
   "BUFF": {
+    "COMMON_EMPTY": {
+      "TITLE": ""
+    },
+    "COMMON_TIMES": {
+      "TITLE": "Times"
+    },
+    "COMMON_QUANTITY": {
+      "TITLE": "Quantity"
+    },
     "GOLDEN_MAJESTY_SHIELD": {
       "DESC": "Bonus in case of shield (select one of the settings with the previous BUFF)"
     },

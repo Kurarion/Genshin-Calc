@@ -14,6 +14,7 @@ export interface ExtraCharacterData {
 }
 
 export interface ExtraCharacterSkillsData {
+  normal?: ExtraStatus;
   skill?: ExtraStatus;
   other?: ExtraStatus;
   elementalBurst?: ExtraStatus;
@@ -65,6 +66,7 @@ export class ExtraDataService {
     }
 
     result.skills = {};
+    result.skills.normal = this.getDefaultConfig(temp?.skills?.normal);
     result.skills.skill = this.getDefaultConfig(temp?.skills?.skill);
     result.skills.other = this.getDefaultConfig(temp?.skills?.other);
     result.skills.elementalBurst = this.getDefaultConfig(temp?.skills?.elementalBurst);

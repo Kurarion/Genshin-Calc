@@ -447,6 +447,15 @@
     "ARTIFACT_NAME": "[圣遗物]"
   },
   "BUFF": {
+    "COMMON_EMPTY": {
+      "TITLE": ""
+    },
+    "COMMON_TIMES": {
+      "TITLE": "次数"
+    },
+    "COMMON_QUANTITY": {
+      "TITLE": "数量"
+    },
     "GOLDEN_MAJESTY_SHIELD": {
       "DESC": "护盾情况下的加成（与上一个BUFF选择其一设置）"
     },

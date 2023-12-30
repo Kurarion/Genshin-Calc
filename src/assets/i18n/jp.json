@@ -447,6 +447,15 @@
     "ARTIFACT_NAME": "[聖遺物]"
   },
   "BUFF": {
+    "COMMON_EMPTY": {
+      "TITLE": ""
+    },
+    "COMMON_TIMES": {
+      "TITLE": "回数"
+    },
+    "COMMON_QUANTITY": {
+      "TITLE": "数量"
+    },
     "GOLDEN_MAJESTY_SHIELD": {
       "DESC": "シールドの場合のバフ（前のバフとの間で1つを選択）"
     },

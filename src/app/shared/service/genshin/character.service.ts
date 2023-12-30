@@ -229,6 +229,9 @@ export class CharacterService {
     let skillStatus!: ExtraStatus;
     let extraData = this.dataMap[keyStr].extra;
     switch(skill){
+      case Const.NAME_SKILLS_NORMAL:
+        skillStatus = extraData!.skills!.normal!;
+        break;
       case Const.NAME_SKILLS_SKILL:
         skillStatus = extraData!.skills!.skill!;
         break;
@@ -264,6 +267,7 @@ export class CharacterService {
         ||!keysEqual(origin?.constellation?origin?.constellation[3]:undefined, target?.constellation?target?.constellation[3]:undefined)
         ||!keysEqual(origin?.constellation?origin?.constellation[4]:undefined, target?.constellation?target?.constellation[4]:undefined)
         ||!keysEqual(origin?.constellation?origin?.constellation[5]:undefined, target?.constellation?target?.constellation[5]:undefined)
+        ||!keysEqual(origin?.skills?.normal, target.skills?.normal)
         ||!keysEqual(origin?.skills?.skill, target.skills?.skill)
         ||!keysEqual(origin?.skills?.other, target.skills?.other)
         ||!keysEqual(origin?.skills?.elementalBurst, target.skills?.elementalBurst)

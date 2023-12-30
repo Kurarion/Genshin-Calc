@@ -255,8 +255,3 @@ export interface CalcUnit {
   const?: number;
   relation: TYPE_RELATION;
 }
-
-export interface MapUnit {
-  input: number[];
-  output: number[];
-}
