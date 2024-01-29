@@ -216,6 +216,8 @@ export class Const {
   static readonly PORP_VAR_SET_2 = "VAR_SET_2"
   static readonly PORP_VAR_WEAPON_1 = "VAR_WEAPON_1"
   static readonly PORP_VAR_WEAPON_2 = "VAR_WEAPON_2"
+  //特殊BUFFに変えるための仮想属性（固定0）
+  static readonly PROP_FIX_NUMBER_0 = "FIX_NUMBER_0";
   //特殊BUFFに変えるための仮想属性（固定1）
   static readonly PROP_FIX_NUMBER_1 = "FIX_NUMBER_1";
   //聖遺物海染硨磲治療量
