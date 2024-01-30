@@ -216,6 +216,8 @@ export class Const {
   static readonly PORP_VAR_SET_2 = "VAR_SET_2"
   static readonly PORP_VAR_WEAPON_1 = "VAR_WEAPON_1"
   static readonly PORP_VAR_WEAPON_2 = "VAR_WEAPON_2"
+  //特殊BUFFに変えるための仮想属性（固定0）
+  static readonly PROP_FIX_NUMBER_0 = "FIX_NUMBER_0";
   //特殊BUFFに変えるための仮想属性（固定1）
   static readonly PROP_FIX_NUMBER_1 = "FIX_NUMBER_1";
   //聖遺物海染硨磲治療量
@@ -636,6 +638,7 @@ export class Const {
   static readonly PORP_TAG_FURINA_SALON_SOLITAIRE = "FURINA_SALON_SOLITAIRE";
   static readonly PORP_TAG_FURINA_NORMAL_C6 = "FURINA_NORMAL_C6";
   static readonly PORP_TAG_NAVIA_SHARDSHOT = "NAVIA_SHARDSHOT";
+  static readonly PORP_TAG_GAMING_BESTIAL_ASCENT = "GAMING_BESTIAL_ASCENT";
 
   static readonly PROPS_TAG_LIST = [
     Const.PORP_TAG_RAIDEN_ITTOU,
@@ -659,6 +662,7 @@ export class Const {
     Const.PORP_TAG_FURINA_SALON_SOLITAIRE,
     Const.PORP_TAG_FURINA_NORMAL_C6,
     Const.PORP_TAG_NAVIA_SHARDSHOT,
+    Const.PORP_TAG_GAMING_BESTIAL_ASCENT,
   ]
 
   static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
@@ -711,6 +715,9 @@ export class Const {
     ["10000091", [
       Const.PORP_TAG_NAVIA_SHARDSHOT
     ]],
+    ["10000092", [
+      Const.PORP_TAG_GAMING_BESTIAL_ASCENT
+    ]],
     ["10000005503", [
       Const.PORP_TAG_TRAVELER_TORRENT_SURGE,
       Const.PORP_TAG_TRAVELER_DEWDROP,
@@ -759,9 +766,11 @@ export class Const {
     [Const.PROP_DMG_CRIT_RATE_UP_SKILL, Const.PORP_TAG_FREMINET_SHATTERING_PRESSURE],
     [Const.PROP_DMG_CRIT_RATE_UP_SKILL, Const.PORP_TAG_NAHIDA_TRI_KARMA],
     [Const.PROP_DMG_CRIT_RATE_UP_SKILL, Const.PORP_TAG_NAVIA_SHARDSHOT],
+    [Const.PROP_DMG_CRIT_RATE_UP_PLUNGING, Const.PORP_TAG_GAMING_BESTIAL_ASCENT],
     [Const.PROP_DMG_CRIT_DMG_UP_CHARGED, Const.PORP_TAG_WRIOTHESLEY_REBUKE],
     [Const.PROP_DMG_CRIT_DMG_UP_CHARGED, Const.PORP_TAG_NEUVILLETTE_EQUITABLE_JUDGMENT],
     [Const.PROP_DMG_CRIT_DMG_UP_SKILL, Const.PORP_TAG_NAVIA_SHARDSHOT],
+    [Const.PROP_DMG_CRIT_DMG_UP_PLUNGING, Const.PORP_TAG_GAMING_BESTIAL_ASCENT],
   ]
 
   //*********************************

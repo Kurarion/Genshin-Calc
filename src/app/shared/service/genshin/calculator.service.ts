@@ -1860,27 +1860,27 @@ export class CalculatorService {
       originMeltDmg: originMeltDmg,
       cirtMeltDmg: cirtMeltDmg,
       expectMeltDmg: expectMeltDmg,
-      originAggravateDmg: originAggravateDmg,//激化 雷
-      cirtAggravateDmg: cirtAggravateDmg,//激化 雷
-      expectAggravateDmg: expectAggravateDmg,//激化 雷
-      originSpreadDmg: originSpreadDmg,//激化 草
-      cirtSpreadDmg: cirtSpreadDmg,//激化 草
-      expectSpreadDmg: expectSpreadDmg,//激化 草
-      overloadedDmg: overloadedDmg,
-      burningDmg: burningDmg,
-      electroChargedDmg: electroChargedDmg,
-      superconductDmg: superconductDmg,
-      ruptureDmg: ruptureDmg,//開花 草 水
-      burgeonDmg: burgeonDmg,//列開花 草 水 炎
-      hyperbloomDmg: hyperbloomDmg,//超開花 草 水 雷
-      swirlCryoDmg: swirlCryoDmg,
-      swirlElectroDmg: swirlElectroDmg,
-      swirlElectroAggravateDmg: swirlElectroAggravateDmg,//拡散 雷 激化
-      swirlPyroDmg: swirlPyroDmg,
-      swirlHydroDmg: swirlHydroDmg,
-      shieldHp: shieldHp,
-      shieldSpecialHp: shieldHp ? shieldHp * Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE : undefined,
-      destructionDmg: destructionDmg,
+      originAggravateDmg: originDmg && originAggravateDmg,//激化 雷
+      cirtAggravateDmg: originDmg && cirtAggravateDmg,//激化 雷
+      expectAggravateDmg: originDmg && expectAggravateDmg,//激化 雷
+      originSpreadDmg: originDmg && originSpreadDmg,//激化 草
+      cirtSpreadDmg: originDmg && cirtSpreadDmg,//激化 草
+      expectSpreadDmg: originDmg && expectSpreadDmg,//激化 草
+      overloadedDmg: originDmg && overloadedDmg,
+      burningDmg: originDmg && burningDmg,
+      electroChargedDmg: originDmg && electroChargedDmg,
+      superconductDmg: originDmg && superconductDmg,
+      ruptureDmg: originDmg && ruptureDmg,//開花 草 水
+      burgeonDmg: originDmg && burgeonDmg,//列開花 草 水 炎
+      hyperbloomDmg: originDmg && hyperbloomDmg,//超開花 草 水 雷
+      swirlCryoDmg: originDmg && swirlCryoDmg,
+      swirlElectroDmg: originDmg && swirlElectroDmg,
+      swirlElectroAggravateDmg: originDmg && swirlElectroAggravateDmg,//拡散 雷 激化
+      swirlPyroDmg: originDmg && swirlPyroDmg,
+      swirlHydroDmg: originDmg && swirlHydroDmg,
+      shieldHp: originDmg && shieldHp,
+      shieldSpecialHp: (originDmg && shieldHp) ? (originDmg && shieldHp) * Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE : undefined,
+      destructionDmg: originDmg && destructionDmg,
     };
 
     return result;
@@ -3029,6 +3029,8 @@ export class CalculatorService {
     //特殊BUFFに変えるための仮想属性
     if(buff.base == Const.PROP_FIX_NUMBER_1){
       baseValue = 1;
+    }else if(buff.base == Const.PROP_FIX_NUMBER_0){
+      baseValue = 0;
     }
     if(buff.base2 != undefined){
       baseValue *= result[buff.base2];
@@ -3082,6 +3084,8 @@ export class CalculatorService {
         //特殊BUFFに変えるための仮想属性
         if(v.base == Const.PROP_FIX_NUMBER_1){
           baseValue = 1;
+        }else if(v.base == Const.PROP_FIX_NUMBER_0){
+          baseValue = 0;
         }
         if(v.base2 != undefined){
           baseValue *= props[v.base2];
@@ -3812,6 +3816,7 @@ export class CalculatorService {
               temp.multiValue = indexValue;
               temp.priority = priority;
               temp.finallyCal = finallyCal;
+              temp.finalResCalQueue = calQueue;
               if(maxValBase){
                 //特殊上限
                 temp.specialMaxVal = {
@@ -3894,6 +3899,7 @@ export class CalculatorService {
               temp.base = base;
               temp.base2 = base2;
               temp.baseModifyValue = baseModifyValue;
+              temp.finalResCalQueue = calQueue;
               if(maxValBase){
                 //特殊上限
                 temp.specialMaxVal = {
