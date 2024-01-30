@@ -12489,6 +12489,193 @@
                 ]
             }
         },
+        "10000092": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_PLUNGING",
+                            "tag": "GAMING_BESTIAL_ASCENT"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_PYRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "healing": {
+                            "index": 1,
+                            "base": "HP",
+                            "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "setTos": ["VAR_CHARA_1"],
+                                "settingType": "slider",
+                                "sliderInitialValue":1,
+                                "sliderMax":4,
+                                "sliderMin":1,
+                                "sliderStep":1
+                            }],
+                            "healing": {
+                                "index": 1,
+                                "base": "HP",
+                                "finalResCalQueue": [
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation": "+",
+                                                "variable": "VAR_CHARA_1"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "healingBonusType": "HEALING_BONUS_OTHER"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "setTos": ["VAR_CHARA_2"],
+                                "settingType": "slider",
+                                "sliderInitialValue": 0,
+                                "sliderMin": 0,
+                                "sliderMax": 2,
+                                "sliderStep": 1
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["REVERSE_HEALING_BONUS"],
+                                "finalResCalQueue": [
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation": "+",
+                                                "variable": "VAR_CHARA_2",
+                                                "varMap": {
+                                                    "0":0,
+                                                    "1":1,
+                                                    "2":0
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "settingType": "resident"
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "target": ["DMG_BONUS_PLUNGING"],
+                                "finalResCalQueue": [
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation": "+",
+                                                "variable": "VAR_CHARA_2",
+                                                "varMap": {
+                                                    "0":0,
+                                                    "1":0,
+                                                    "2":1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "settingType": "resident"
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "healing": {
+                                "index": 0,
+                                "base": "HP",
+                                "healingBonusType": "HEALING_BONUS_OTHER"
+                            }
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["ATTACK_UP"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "5": [
+                    {
+                        "buffs":[{
+                            "index": 0,
+                            "target":["DMG_CRIT_RATE_UP_PLUNGING"],
+                            "settingType": "switch",
+                            "defaultEnable": false,
+                            "tag": "GAMING_BESTIAL_ASCENT"
+                        },{
+                            "index": 1,
+                            "target":["DMG_CRIT_DMG_UP_PLUNGING"],
+                            "tag": "GAMING_BESTIAL_ASCENT"
+                        }]
+                    }
+                ]
+            }
+        },
         "10000093": {
             "skills": {
                 "normal": [
@@ -15006,6 +15193,19 @@
                         "sliderInitialValue": 0,
                         "sliderStep": 1,
                         "sliderMax": 3
+                    }]
+                }
+            ]
+        },
+        "14515": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["DMG_BONUS_PLUNGING"],
+                        "settingType":"switch",
+                        "defaultEnable": false,
+                        "isAllTeam": true
                     }]
                 }
             ]
