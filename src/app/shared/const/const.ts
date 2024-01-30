@@ -1997,8 +1997,10 @@ export class Const {
   static readonly SAVE_TEAM = "SAVE_TEAM";
   //システム設定データ
   static readonly SAVE_SYS_SETTING = "SAVE_SYS_SETTING";
-  //DOSデータ
+  //DPSデータ
   static readonly SAVE_DPS = "SAVE_DPS";
+  //補足データ状態データ
+  static readonly SAVE_EXTRA_INFO_STATUS = "SAVE_EXTRA_INFO_STATUS";
 
   //*********************************
   //           原神その他データ
