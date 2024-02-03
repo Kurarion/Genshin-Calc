@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData, DPSService } from 'src/app/shared/shared.module';
+import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData, DPSService, ExtraInfoService } from 'src/app/shared/shared.module';
 import { characterMainImgLoadAnimation, characterMainOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN } from 'src/animation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -106,6 +106,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private otherService: OtherService,
     private teamService: TeamService,
     private DPSService: DPSService,
+    private extraInfoService: ExtraInfoService,
     private matDialog: MatDialog,
     private matSnackBar: MatSnackBar,) {
     this.subscriptions = [];
@@ -232,6 +233,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.otherService.clearStorageInfo(indexStr);
         this.teamService.clearStorageInfo(indexStr);
         this.DPSService.clearStorageInfo(indexStr);
+        this.extraInfoService.clearStorageInfo(indexStr);
         //成功
         this.translateService.get('MENU.DELETE_CACHE.SUCCESS', contentVal).subscribe((res: string) => {
           this.matSnackBar.open(res, undefined, {

@@ -89,3 +89,25 @@ table {
 .dps-add-icon {
     padding-right: 4px;
 }
+
+.hide-btn {
+    margin-left: 5px;
+    width: 99%;
+}
+
+:host ::ng-deep .mat-button-toggle-group {
+    justify-content: center;
+}
+
+.toogle-btn {
+    width: 100%;
+}
+
+:host ::ng-deep .mat-button-toggle-checked {
+    color: rgba(0,0,0,.26);
+    background: #fff;
+}
+
+:host ::ng-deep .mat-button-toggle-label-content {
+    line-height: unset;
+}

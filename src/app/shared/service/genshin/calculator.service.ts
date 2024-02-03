@@ -107,6 +107,8 @@ export interface DamageParam {
   tag?: string; //タグ
   isAbsoluteDmg?: boolean; //絶対ダメージ
   finalResCalQueue?: CalcItem[];
+  displayCalQueue?: CalcItem[]; //表示制御
+  originIndex?: number;
 }
 
 export interface DamageResult {
@@ -115,6 +117,8 @@ export interface DamageResult {
   displayCritRate: number;
   tempAllDate: any;
   isAbsoluteDmg?: boolean;
+  forceDisplay?: boolean;
+  originIndex?: number;
 
   originDmg?: number;
   critDmg?: number;
@@ -1338,6 +1342,18 @@ export class CalculatorService {
     let tag = Const.CONCATENATION_TAG + param.tag;
     const isAbsoluteDmg = param.isAbsoluteDmg;
 
+    //表示制御
+    let forceDisplay = undefined;
+    let originIndex = param.originIndex;
+    if (param.displayCalQueue !== undefined) {
+      const displayVal = this.getFinalResCalQueueResult(data, 0, param.displayCalQueue);
+      if (displayVal < 1) {
+        forceDisplay = false;
+      } else {
+        forceDisplay = true;
+      }
+    }
+
     //計算
     //--------------------
     //1.ダメージ値区域
@@ -1851,6 +1867,8 @@ export class CalculatorService {
       displayCritRate: displayCritRate,
       tempAllDate: tempAllDate,
       isAbsoluteDmg: isAbsoluteDmg,
+      forceDisplay,
+      originIndex,
       originDmg: originDmg,
       critDmg: critDmg,
       expectDmg: expectDmg,
@@ -2202,6 +2220,7 @@ export class CalculatorService {
               tag: damageInfo.tag,
               isAbsoluteDmg: damageInfo.isAbsoluteDmg,
               finalResCalQueue: damageInfo.finalResCalQueue,
+              displayCalQueue: damageInfo.displayCalQueue
             });
           }
         }else{
@@ -2264,6 +2283,8 @@ export class CalculatorService {
                 tag: damageInfo.tag,
                 isAbsoluteDmg: damageInfo.isAbsoluteDmg,
                 finalResCalQueue: damageInfo.finalResCalQueue,
+                displayCalQueue: damageInfo.displayCalQueue,
+                originIndex: damageInfo.originSkills ? damageInfo.originIndexes![0] :valueIndex,
               });
             }
           }

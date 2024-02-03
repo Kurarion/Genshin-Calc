@@ -103,6 +103,8 @@ export interface ExtraSkillDamage {
   tag?: string; //タグ
   //絶対ダメージ
   isAbsoluteDmg?: boolean;
+  //表示制御
+  displayCalQueue?: CalcItem[];
 }
 
 export interface ExtraSkillBuff {

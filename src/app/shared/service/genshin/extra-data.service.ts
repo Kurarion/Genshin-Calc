@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Const, ExtraArtifact, ExtraSkillInfo, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
 
-//
 export interface ExtraDataStorageInfo {
   character?: ExtraCharacterData;
   weapon?: ExtraWeaponData;
 }
 
-//
 export interface ExtraCharacterData {
   skills?: ExtraCharacterSkillsData;
   constellation?: Record<string, ExtraStatus>;
@@ -33,6 +31,22 @@ export interface ExtraArtifactSetData {
 export interface ExtraStatus {
   switchOnSet?: Record<string, boolean>;
   sliderNumMap?: Record<string, number>;
+}
+
+export interface ExtraInfo {
+  skills?: ExtraCharacterInfo;
+  constellation?: Record<string, ExtraCharacterInfoStatus>;
+}
+
+export interface ExtraCharacterInfo {
+  normal?: ExtraCharacterInfoStatus;
+  skill?: ExtraCharacterInfoStatus;
+  other?: ExtraCharacterInfoStatus;
+  elementalBurst?: ExtraCharacterInfoStatus;
+  proudSkills?: ExtraCharacterInfoStatus[];
+}
+export interface ExtraCharacterInfoStatus {
+  [index: string]: boolean;
 }
 
 @Injectable({
@@ -81,6 +95,36 @@ export class ExtraDataService {
         result.constellation = {};
       }
       result.constellation[key] = this.getDefaultConfig(temp?.constellation[key]);
+    }
+
+    return result;
+
+  }
+
+  getCharacterExtraInfoDefaultSetting(index: string | number){
+
+    let temp = this.getCharacter(index);
+    let result: ExtraInfo = {}
+    if(!temp){
+      return result;
+    }
+
+    result.skills = {};
+    result.skills.normal = this.getExtraInfoDefaultConfig(temp?.skills?.normal);
+    result.skills.skill = this.getExtraInfoDefaultConfig(temp?.skills?.skill);
+    result.skills.other = this.getExtraInfoDefaultConfig(temp?.skills?.other);
+    result.skills.elementalBurst = this.getExtraInfoDefaultConfig(temp?.skills?.elementalBurst);
+    for(let obj of temp?.skills?.proudSkills ?? []){
+      if(!(result.skills.proudSkills)){
+        result.skills.proudSkills = [];
+      }
+      result.skills.proudSkills.push(this.getExtraInfoDefaultConfig(obj));
+    }
+    for(let key in temp?.constellation){
+      if(!(result.constellation)){
+        result.constellation = {};
+      }
+      result.constellation[key] = this.getExtraInfoDefaultConfig(temp?.constellation[key]);
     }
 
     return result;
@@ -153,6 +197,22 @@ export class ExtraDataService {
             }
             break;
         }
+      }
+    }
+
+    return result;
+  }
+
+  private getExtraInfoDefaultConfig(skills: ExtraSkillInfo[] | undefined){
+    let result: ExtraCharacterInfoStatus = {}
+    
+    for(let [index,obj] of skills?.entries() ?? []){
+      if(obj?.damage != undefined){
+        let standardDamage = obj.damage;
+
+        (standardDamage.originIndexes ?? standardDamage.indexes)?.forEach(element => {
+          result[element] = true;
+        });
       }
     }
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { lastValueFrom, Subscription } from 'rxjs';
-import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe, DPSService, DmgInfo } from 'src/app/shared/shared.module';
+import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe, DPSService, DmgInfo, ExtraInfoService, ExtraInfoStatus } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import type { EChartsOption } from 'echarts';
 import { TranslateService } from '@ngx-translate/core';
@@ -316,6 +316,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   langChange!: Subscription
   //元素付与変更検知結果
   overrideElementChange!: Subscription
+  //ダメージ表示状態
+  extraInfoStatus: ExtraInfoStatus | undefined = undefined;
 
   constructor(private calculatorService: CalculatorService, 
     private characterService: CharacterService,
@@ -328,7 +330,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     private decimalPipe: DecimalPipe, 
     private noCommaPipe: NoCommaPipe,
     private DPSService: DPSService,
-    private matSnackBar: MatSnackBar,) { 
+    private matSnackBar: MatSnackBar,
+    private extraInfoService: ExtraInfoService) { 
       //変更検知
       this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
         if(v){
@@ -355,6 +358,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
 
   ngOnInit(): void {
+    this.initExtraInfoStatus();
     this.initDamageDatas();
     this.initHealingDatas();
     this.initShieldDatas();
@@ -399,6 +403,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     this.dmgColors = [];
     for(let data of this.dmgDatas){
       this.dmgColors.push(this.getElementColor(data.elementBonusType));
+      if (data.forceDisplay !== undefined && data.originIndex !== undefined && this.extraInfoStatus !== undefined) {
+        this.extraInfoStatus[data.originIndex] =data.forceDisplay;
+        this.showDamageEchartsFlag = false;
+      }
     }
     if(this.dmgTempDataList.length != this.dmgDatas.length) {
       this.dmgTempDataList = new Array(this.dmgDatas.length).fill(0);
@@ -437,6 +445,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     if(this.buffTempDataList.length != this.buffDatas.length) {
       this.buffTempDataList = new Array(this.buffDatas.length).fill(0);
     }
+  }
+  initExtraInfoStatus(){
+    //ダメージ表示状態をリンク
+    this.extraInfoStatus = this.extraInfoService.getCharExtraInfoStatus(this.characterIndex, this.skill, this.skillIndex);
   }
 
   onChangeSwitch(change: MatSlideToggleChange, valueIndex: number){
@@ -620,6 +632,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       temp5!.subtext = dmgTitle;
     }
     this.damageEchartsLoading = false;
+  }
+
+  changeDisplayStatus(index: number | undefined, flag: boolean){
+    if (index !== undefined && this.extraInfoStatus) {
+      this.extraInfoStatus[index] = flag;
+      this.showDamageEchartsFlag = false;
+    }
   }
 
   private getDmgInfos(){

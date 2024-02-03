@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CalculatorService, character, CharacterService, CharStatus, Const, ExpansionPanelCommon, ExtraDataService, HttpService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import { CalculatorService, character, CharacterService, CharStatus, Const, ExpansionPanelCommon, ExtraDataService, ExtraInfoService, HttpService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -58,7 +58,8 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
     private extraDataService: ExtraDataService, 
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
-    private relayoutMsgService: RelayoutMsgService,) { 
+    private relayoutMsgService: RelayoutMsgService,
+    private extraInfoService: ExtraInfoService) { 
       super(relayoutMsgService);
     }
 
@@ -100,6 +101,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
   ngOnDestroy(): void {
     //データ保存
     this.characterService.saveData();
+    this.extraInfoService.saveData();
   }
 
   /**
