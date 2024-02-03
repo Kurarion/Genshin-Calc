@@ -12734,9 +12734,9 @@
                             "indexes": [1],
                             "base": "ATTACK",
                             "canOverride": false,
-                            "finalResCalQueue": [
+                            "displayCalQueue": [
                                 {
-                                    "relation": "*",
+                                    "relation": "+",
                                     "inner": [
                                         {
                                             "relation": "+",
@@ -12760,9 +12760,9 @@
                             "indexes": [2],
                             "base": "ATTACK",
                             "canOverride": false,
-                            "finalResCalQueue": [
+                            "displayCalQueue": [
                                 {
-                                    "relation": "*",
+                                    "relation": "+",
                                     "inner": [
                                         {
                                             "relation": "+",
@@ -12785,10 +12785,9 @@
                         "damage": {
                             "indexes": [3],
                             "base": "ATTACK",
-                            "canOverride": false,
-                            "finalResCalQueue": [
+                            "displayCalQueue": [
                                 {
-                                    "relation": "*",
+                                    "relation": "+",
                                     "inner": [
                                         {
                                             "relation": "+",
@@ -12803,6 +12802,7 @@
                                     ]
                                 }
                             ],
+                            "canOverride": false,
                             "elementBonusType": "DMG_BONUS_ANEMO",
                             "attackBonusType": "DMG_BONUS_PLUNGING"
                         }

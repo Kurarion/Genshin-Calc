@@ -42,7 +42,7 @@
 <ng-container *ngFor="let temp of dmgTempDataList; index as i">
     <div echarts *ngIf="showDamageEchartsFlag && currentDamageIndex == i" [options]="damageEchartsOption" [loading]="damageEchartsLoading" class="dmg-echarts"></div>
     <div class="scroll-div damage">
-        <table>
+        <table *ngIf="dmgDatas[i]['originIndex'] != undefined && extraInfoStatus && extraInfoStatus[$any(dmgDatas[i]['originIndex'])]">
             <!-- ダメージ -->
             <ng-container *ngFor="let prop of dmgPropList">
                 <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]" (click)="showDamageEcharts(prop, i)">
@@ -58,6 +58,22 @@
                 </tr>
             </ng-container>
         </table>
+        <mat-button-toggle-group *ngIf="dmgDatas[i]['forceDisplay'] == undefined && dmgDatas[i]['originIndex'] != undefined && extraInfoStatus" class="hide-btn" name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle
+                class="toogle-btn"
+                [disabled]="extraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
+                (click)="changeDisplayStatus(dmgDatas[i]['originIndex'], true)"
+            >
+                <mat-icon class="material-icons-outlined">control_point</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle
+                class="toogle-btn"
+                [disabled]="!extraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
+                (click)="changeDisplayStatus(dmgDatas[i]['originIndex'], false)"
+            >
+                <mat-icon class="material-icons-outlined">do_not_disturb_on</mat-icon>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of healingTempDataList; index as i">
