@@ -11578,6 +11578,7 @@
                             "buffs":[{
                                 "index": 1,
                                 "target":["DMG_RATE_UP_CHARGED_WRIOTHESLEY_REBUKE"],
+                                "setTos": ["VAR_CHARA_2"],
                                 "settingType":"switch",
                                 "defaultEnable": false
                             }],
@@ -11586,6 +11587,17 @@
                                 "originSkills":["normal"],
                                 "originIndexes": [6],
                                 "originRelations":["*"],
+                                "displayCalQueue":[
+                                    {
+                                        "relation": "+",
+                                        "inner": [
+                                            {
+                                                "relation":"+",
+                                                "variable":"VAR_CHARA_2"
+                                            }
+                                        ]
+                                    }
+                                ],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_CRYO",
@@ -11599,6 +11611,7 @@
                             "buffs":[{
                                 "index": 0,
                                 "target":["ATTACK_UP"],
+                                "setTos": ["VAR_CHARA_3"],
                                 "settingType": "slider",
                                 "sliderInitialValue": 0,
                                 "sliderMax": 5,
@@ -11623,11 +11636,10 @@
                         {
                             "buffs":[{
                                 "index": 0,
+                                "base": "VAR_CHARA_3",
                                 "target":["DMG_BONUS_ELEMENTAL_BURST"],
-                                "settingType": "slider",
-                                "sliderInitialValue": 0,
-                                "sliderMax": 5,
-                                "sliderStep": 1
+                                "settingType": "switch",
+                                "defaultEnable": false
                             }]
                         }
                 ],
@@ -11645,6 +11657,7 @@
                             "buffs": [{
                                 "index": 0,
                                 "target": ["DMG_CRIT_RATE_UP_CHARGED_WRIOTHESLEY_REBUKE"],
+                                "setTos": ["VAR_CHARA_4"],
                                 "settingType": "switch",
                                 "defaultEnable": false
                             },{
@@ -11658,6 +11671,17 @@
                                 "originSkills":["normal"],
                                 "originIndexes": [6],
                                 "originRelations":["*"],
+                                "displayCalQueue":[
+                                    {
+                                        "relation": "+",
+                                        "inner": [
+                                            {
+                                                "relation":"+",
+                                                "variable":"VAR_CHARA_4"
+                                            }
+                                        ]
+                                    }
+                                ],
                                 "canOverride": false,
                                 "base": "ATTACK",
                                 "elementBonusType": "DMG_BONUS_CRYO",
@@ -11751,6 +11775,7 @@
                             "buffs":[{
                                 "sliderStartIndex": 0,
                                 "target":["DMG_RATE_MULTI_CHARGED"],
+                                "setTos": ["VAR_CHARA_1"],
                                 "settingType": "slider",
                                 "sliderInitialValue": 0,
                                 "sliderMax": 3,
@@ -11779,21 +11804,38 @@
                         {
                             "buffs":[{
                                 "index": 0,
+                                "base": "VAR_CHARA_1",
                                 "target":["DMG_CRIT_DMG_UP_CHARGED"],
-                                "settingType": "slider",
-                                "sliderInitialValue": 0,
-                                "sliderMax": 3,
-                                "sliderStep": 1,
+                                "settingType": "switch",
+                                "defaultEnable": false,
                                 "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
                             }]
                         }
                 ],
                 "5": [
                         {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "setTos": ["VAR_CHARA_2"],
+                                "target": [],
+                                "settingType": "switch",
+                                "defaultEnable":false
+                            }],
                             "damage":{
                                 "indexes": [0],
                                 "canOverride": false,
                                 "base": "HP",
+                                "displayCalQueue":[
+                                    {
+                                        "relation": "+",
+                                        "inner": [
+                                            {
+                                                "relation":"+",
+                                                "variable":"VAR_CHARA_2"
+                                            }
+                                        ]
+                                    }
+                                ],
                                 "elementBonusType": "DMG_BONUS_HYDRO",
                                 "attackBonusType": "DMG_BONUS_CHARGED",
                                 "tag": "NEUVILLETTE_EQUITABLE_JUDGMENT"
