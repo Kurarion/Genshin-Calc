@@ -3083,14 +3083,14 @@ export class CalculatorService {
             extraTeamOnceResult[v.target] = 0;
           }
           if(this.checkAndSetBuffTag(v.tag,v.target,buffTag)){
-            extraTeamOnceResult[v.target] += this.getFinalResCalQueueResult(result, v.val ?? 0, v.finalResCalQueue);
+            extraTeamOnceResult[v.target] += v.val ?? 0;
           }
         }else{
           if(!extraTeamSecondaryResult.hasOwnProperty(v.target)){
             extraTeamSecondaryResult[v.target] = 0;
           }
           if(this.checkAndSetBuffTag(v.tag,v.target,buffTag)){
-            extraTeamSecondaryResult[v.target] += this.getFinalResCalQueueResult(result, v.val ?? 0, v.finalResCalQueue);
+            extraTeamSecondaryResult[v.target] += v.val ?? 0;
           }
         }
       }
