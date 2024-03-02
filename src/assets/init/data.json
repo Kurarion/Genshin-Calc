@@ -12050,6 +12050,43 @@
                 ],
                 "skill": [
                     {
+                        "buffs":[{
+                            "showIndex": 1,
+                            "setTos": ["VAR_CHARA_1"],
+                            "settingType": "slider",
+                            "sliderInitialValue": 0,
+                            "sliderMax": 4,
+                            "sliderStep": 1,
+                            "title": "BUFF.FURINA_HP_50_PLUS_CHAR_NUM.TITLE"
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "customValue": 0,
+                            "finalResCalQueue": [
+                                {
+                                    "relation": "+",
+                                    "inner": [
+                                        {
+                                            "relation": "+",
+                                            "variable": "VAR_CHARA_1",
+                                            "varMap": {
+                                                "0": 0,
+                                                "1": 0.1,
+                                                "2": 0.2,
+                                                "3": 0.3,
+                                                "4": 0.4
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "target":["DMG_RATE_MULTI_SKILL"],
+                            "tag": "FURINA_SALON_SOLITAIRE",
+                            "settingType": "resident"
+                        }]
+                    },
+                    {
                         "damage": {
                             "indexes": [0],
                             "base": "HP",

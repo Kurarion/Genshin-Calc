@@ -468,6 +468,9 @@
     },
     "NAVIA_ROSULA_SHARDSHOTS": {
       "TITLE": "Rosula Shardshots (Hit)"
+    },
+    "FURINA_HP_50_PLUS_CHAR_NUM": {
+      "TITLE": "Character(s) with \nmore than 50% HP"
     }
   },
   "MENU": {

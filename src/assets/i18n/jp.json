@@ -468,6 +468,9 @@
     },
     "NAVIA_ROSULA_SHARDSHOTS": {
       "TITLE": "ロースラ晶弾（命中）"
+    },
+    "FURINA_HP_50_PLUS_CHAR_NUM": {
+      "TITLE": "チームにHPが50%を超\nえているキャラクター"
     }
   },
   "MENU": {

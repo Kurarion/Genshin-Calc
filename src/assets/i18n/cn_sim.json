@@ -468,6 +468,9 @@
     },
     "NAVIA_ROSULA_SHARDSHOTS": {
       "TITLE": "玫瑰晶弹（命中）"
+    },
+    "FURINA_HP_50_PLUS_CHAR_NUM": {
+      "TITLE": "附近队伍中生命值\n高于50%的角色数"
     }
   },
   "MENU":{
