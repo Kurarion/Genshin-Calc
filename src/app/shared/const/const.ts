@@ -1816,6 +1816,10 @@ export class Const {
     Const.PROP_ATTACK,
     Const.PROP_HP,
     Const.PROP_DEFENSE,
+    Const.PROP_HEALING_BONUS,
+    Const.PROP_DMG_BONUS_ALL,
+    Const.PROP_DMG_ENEMY_DEFENSE_DOWN,
+    Const.PROP_DMG_ANTI_ALL_MINUS,
   ]
 
   //最適化用ダメージベースリスト

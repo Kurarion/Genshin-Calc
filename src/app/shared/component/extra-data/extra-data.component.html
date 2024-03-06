@@ -40,12 +40,12 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of dmgTempDataList; index as i">
-    <div echarts *ngIf="showDamageEchartsFlag && currentDamageIndex == i" [options]="damageEchartsOption" [loading]="damageEchartsLoading" class="dmg-echarts"></div>
-    <div class="scroll-div damage">
-        <table *ngIf="dmgDatas[i]['originIndex'] != undefined && extraInfoStatus && extraInfoStatus[$any(dmgDatas[i]['originIndex'])]">
+    <div echarts *ngIf="showDamageEchartsFlag && currentDamageIndex == i" [options]="damageEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
+    <div class="scroll-div clickable">
+        <table *ngIf="extraInfoStatus == undefined || dmgDatas[i]['originIndex'] != undefined && extraInfoStatus && extraInfoStatus[$any(dmgDatas[i]['originIndex'])]">
             <!-- ダメージ -->
             <ng-container *ngFor="let prop of dmgPropList">
-                <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]" (click)="showDamageEcharts(prop, i)">
+                <tr *ngIf="dmgDatas[i][prop]" [style.background]="specialColorMap[prop] ?? dmgColors[i]" (click)="showEcharts(prop, i, 'damage')">
                     <td>
                         <div class="damage-type-container">
                             <mat-icon *ngIf="!notAddToDPSPropList.includes(prop)" class="dps-add-icon material-icons-outlined" (click)="addToDPS(prop, i);$event.stopPropagation()">playlist_add</mat-icon>
@@ -77,11 +77,12 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of healingTempDataList; index as i">
-    <div class="no-scroll-div">
+    <div echarts *ngIf="showHealingEchartsFlag && currentHealingIndex == i" [options]="healingEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
+    <div class="no-scroll-div clickable">
         <table>
             <!-- 治療 -->
             <ng-container *ngFor="let prop of healingPropList">
-                <tr *ngIf="healingDatas[i][prop]" [style.background]="specialColorMap[prop]">
+                <tr *ngIf="healingDatas[i][prop]" [style.background]="specialColorMap[prop]" (click)="showEcharts(prop, i, 'healing')">
                     <td>
                         <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                     </td>
@@ -95,11 +96,12 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of productTempDataList; index as i">
-    <div class="no-scroll-div">
+    <div echarts *ngIf="showProductEchartsFlag && currentProductIndex == i" [options]="productEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
+    <div class="no-scroll-div clickable">
         <table>
             <!-- 生成物 -->
             <ng-container *ngFor="let prop of productPropList">
-                <tr *ngIf="productDatas[i][prop]" [style.background]="specialColorMap[prop]">
+                <tr *ngIf="productDatas[i][prop]" [style.background]="specialColorMap[prop]" (click)="showEcharts(prop, i, 'product')">
                     <td>
                         <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                     </td>
@@ -113,11 +115,12 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of shieldTempDataList; index as i">
-    <div class="no-scroll-div">
+    <div echarts *ngIf="showShieldEchartsFlag && currentShieldIndex == i" [options]="shieldEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
+    <div class="no-scroll-div clickable">
         <table>
             <!-- バリア -->
             <ng-container *ngFor="let prop of shieldPropList">
-                <tr *ngIf="shieldDatas[i][prop]" [style.background]="specialColorMap[prop]">
+                <tr *ngIf="shieldDatas[i][prop]" [style.background]="specialColorMap[prop]" (click)="showEcharts(prop, i, 'shield')">
                     <td>
                         <span [innerText]="'GENSHIN.OTHER.'+propNameMap[prop] | translate"></span>
                     </td>

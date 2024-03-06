@@ -88,10 +88,18 @@ export class ExtraInfoService {
         tempData = extraDataInfo?.skills?.other ?? {};
         break;
       case Const.NAME_SKILLS_PROUD:
-        tempData = extraDataInfo?.skills?.proudSkills![prodIndex!];
+        if (extraDataInfo?.skills?.proudSkills) {
+          tempData = extraDataInfo.skills.proudSkills[prodIndex!];
+        } else {
+          tempData = {};
+        }
         break;
       case Const.NAME_CONSTELLATION:
-        tempData = extraDataInfo?.constellation![prodIndex!];
+        if (extraDataInfo?.constellation) {
+          tempData = extraDataInfo.constellation[prodIndex!];
+        } else {
+          tempData = {};
+        }
         break;
     }
     return tempData;

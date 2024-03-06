@@ -45,8 +45,8 @@ tr td:nth-of-type(2) {
     cursor: default;
 }
 
-.damage table tr,
-.damage table tr span{
+.clickable table tr,
+.clickable table tr span{
     cursor: pointer !important;
 }
 
@@ -77,7 +77,7 @@ table {
     font-size: 14px;
 }
 
-.dmg-echarts {
+.common-echarts {
     padding-top: 6px;
     height: 500px;
 }

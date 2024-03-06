@@ -47,7 +47,7 @@ export class EnkaComponent implements OnInit {
       this.uid.markAsTouched();
       this.uid.setErrors({'blank': true});
     }else{
-      this.overlayService.showLoading();
+      // this.overlayService.showLoading();
       this.startSpin();
       this.uid.setErrors(null);
       this.router.navigate(['/']);
@@ -71,7 +71,7 @@ export class EnkaComponent implements OnInit {
         });
       }).finally(()=>{
         this.endSpin();
-        this.overlayService.hideLoading();
+        // this.overlayService.hideLoading();
       })
     }
   }

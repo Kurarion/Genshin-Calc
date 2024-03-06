@@ -168,6 +168,8 @@ export interface HealingParam {
 }
 
 export interface HealingResult {
+  tempAllDate: any;
+
   healing: number;
 }
 
@@ -181,6 +183,8 @@ export interface ShieldParam {
 }
 
 export interface ShieldResult {
+  tempAllDate: any;
+
   shield?: number;
   shieldCryo?: number;
   shieldAnemo?: number;
@@ -201,6 +205,8 @@ export interface ProductParam {
 }
 
 export interface ProductResult {
+  tempAllDate: any;
+
   product: number;
 }
 
@@ -1905,13 +1911,22 @@ export class CalculatorService {
   }
 
   //治療取得
-  getHealing(index: string | number, param: HealingParam){
+  getHealing(index: string | number, param: HealingParam, extraData?: Record<string, number>, toAddWeaponSmelting?: number, reuseDatas?: Record<string, number>){
     let indexStr = index.toString();
     if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
     }
     let result: HealingResult;
     let data = this.dataMap[indexStr].allData!;
+    let tempAllDate = undefined;
+    if(extraData != undefined){
+      if(reuseDatas != undefined) {
+        data = reuseDatas;
+      }else{
+        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        tempAllDate = data;
+      }
+    }
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
@@ -1946,6 +1961,7 @@ export class CalculatorService {
     healing *= (1 + data[Const.PROP_HEALING_BONUS] + data[Const.PROP_REVERSE_HEALING_BONUS] + (healingBonusType?(data[healingBonusType] ?? 0):0));
     healing = this.getFinalResCalQueueResult(data, healing, param.finalResCalQueue);
     result = {
+      tempAllDate,
       healing: healing,
     }
 
@@ -1953,13 +1969,22 @@ export class CalculatorService {
   }
 
   //バリア強度取得
-  getShield(index: string | number, param: ShieldParam){
+  getShield(index: string | number, param: ShieldParam, extraData?: Record<string, number>, toAddWeaponSmelting?: number, reuseDatas?: Record<string, number>){
     let indexStr = index.toString();
     if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
     }
     let result: ShieldResult;
     let data = this.dataMap[indexStr].allData!;
+    let tempAllDate = undefined;
+    if(extraData != undefined){
+      if(reuseDatas != undefined) {
+        data = reuseDatas;
+      }else{
+        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        tempAllDate = data;
+      }
+    }
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
@@ -2000,6 +2025,7 @@ export class CalculatorService {
     shield = this.getFinalResCalQueueResult(data, shield, param.finalResCalQueue);
     //シールド元素タイプ
     let tempRes: ShieldResult = {
+      tempAllDate,
       shield: shield,
       shieldCryo: shield,
       shieldAnemo: shield,
@@ -2054,13 +2080,22 @@ export class CalculatorService {
   }
 
   //生成物HP取得
-  getProductHp(index: string | number, param: ProductParam){
+  getProductHp(index: string | number, param: ProductParam, extraData?: Record<string, number>, toAddWeaponSmelting?: number, reuseDatas?: Record<string, number>){
     let indexStr = index.toString();
     if(this.isDirty(indexStr)){
       this.initAllData(indexStr);
     }
     let result: ProductResult;
     let data = this.dataMap[indexStr].allData!;
+    let tempAllDate = undefined;
+    if(extraData != undefined){
+      if(reuseDatas != undefined) {
+        data = reuseDatas;
+      }else{
+        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        tempAllDate = data;
+      }
+    }
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
@@ -2074,6 +2109,7 @@ export class CalculatorService {
     }
     product = this.getFinalResCalQueueResult(data, product, param.finalResCalQueue);
     result = {
+      tempAllDate,
       product: product,
     }
 
@@ -2302,7 +2338,7 @@ export class CalculatorService {
     return [results, params];
   }
 
-  getSkillHealingValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string){
+  getSkillHealingValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string): [HealingResult[], HealingParam[]]{
     let indexStr = index.toString();
     let params: HealingParam[] = [];
     let results: HealingResult[] = []
@@ -2454,10 +2490,10 @@ export class CalculatorService {
       results.push(this.getHealing(indexStr, param));
     }
 
-    return results;
+    return [results, params];
   }
 
-  getSkillShieldValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string){
+  getSkillShieldValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string): [ShieldResult[], ShieldParam[]] {
     let indexStr = index.toString();
     let params: ShieldParam[] = [];
     let results: ShieldResult[] = []
@@ -2614,10 +2650,10 @@ export class CalculatorService {
         results.push(this.getShield(indexStr, param));
       }
   
-      return results;
+      return [results, params];
   }
   
-  getSkillProductHpValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string){
+  getSkillProductHpValue(index: string | number, skill: string, valueIndexes: number[], skillIndex?: number | string): [ProductResult[], ProductParam[]] {
     let indexStr = index.toString();
     let params: ProductParam[] = [];
     let results: ProductResult[] = []
@@ -2717,7 +2753,7 @@ export class CalculatorService {
         results.push(this.getProductHp(indexStr, param));
       }
   
-      return results;
+      return [results, params];
   }
 
   getSkillBuffValue(index: string | number, skill: string, skillIndex?: number | string, valueIndexes?: number[]){

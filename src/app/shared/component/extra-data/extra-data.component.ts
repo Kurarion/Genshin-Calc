@@ -2,12 +2,21 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { lastValueFrom, Subscription } from 'rxjs';
-import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe, DPSService, DmgInfo, ExtraInfoService, ExtraInfoStatus } from 'src/app/shared/shared.module';
+import { CalculatorService, DamageResult, HealingResult, character, Const, CharacterService, CharacterStorageInfo, enemy, EnemyService, EnemyStorageInfo, ExtraCharacter, ExtraData, ExtraDataService, ExtraDataStorageInfo, ExtraWeapon, weapon, WeaponService, WeaponStorageInfo, ShieldResult, ProductResult, BuffResult, RelayoutMsgService, DamageParam, GenshinDataService, TYPE_SYS_LANG, LanguageService, NoCommaPipe, DPSService, DmgInfo, ExtraInfoService, ExtraInfoStatus, HealingParam, ShieldParam, ProductParam } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 import type { EChartsOption } from 'echarts';
 import { TranslateService } from '@ngx-translate/core';
 import { DecimalPipe, PercentPipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+const type_damage = "damage";
+const type_healing = "healing";
+const type_shield = "shield";
+const type_product = "product";
+
+type ValueType = typeof type_damage | typeof type_healing | typeof type_shield | typeof type_product
+type ValueParam = DamageParam | HealingParam | ShieldParam | ProductParam | undefined
+type ValueResult = DamageResult | HealingResult | ShieldResult | ProductResult | undefined
 
 @Component({
   selector: 'app-extra-data',
@@ -183,14 +192,20 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   healingDatas!: HealingResult[];
   //治療ループ用リスト
   healingTempDataList: number[] = [];
+  //治療パラメータデータ
+  healingParamDatas!: HealingParam[];
   //バリアデータ
   shieldDatas!: ShieldResult[];
   //バリアループ用リスト
   shieldTempDataList: number[] = [];
+  //バリアパラメータデータ
+  shieldParamDatas!: ShieldParam[];
   //生成物生命値データ
   productDatas!: ProductResult[];
   //生成物生命値ループ用リスト
   productTempDataList: number[] = [];
+  //生成物生命値パラメータデータ
+  productParamDatas!: ProductParam[];
   //バフデータ
   buffDatas!: BuffResult[];
   //バフループ用リスト
@@ -212,17 +227,48 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   currentDamageProp: string = '';
   //クリックしたダメージインデックス
   currentDamageIndex: number = -1;
-  //ラスト計算結果リスト
-  lastDamgeCalcResults: [number, DamageResult[]][] = [];
-  //ダメージEChartsローディングフラグ
-  damageEchartsLoading: boolean = false;
-  //ダメージECharts設定
-  damageEchartsOption: EChartsOption = {
+  //治療ECharts表示フラグ
+  showHealingEchartsFlag: boolean = false;
+  //クリックした治療名
+  currentHealingProp: string = '';
+  //クリックした治療インデックス
+  currentHealingIndex: number = -1;
+  //バリアECharts表示フラグ
+  showShieldEchartsFlag: boolean = false;
+  //クリックしたバリア名
+  currentShieldProp: string = '';
+  //クリックしたバリアインデックス
+  currentShieldIndex: number = -1;
+  //生成物生命値ECharts表示フラグ
+  showProductEchartsFlag: boolean = false;
+  //クリックした生成物生命値名
+  currentProductProp: string = '';
+  //クリックした生成物生命値インデックス
+  currentProductIndex: number = -1;
+  //EChartsローディングフラグ
+  commonEchartsLoading: boolean = false;
+  //ダメージラスト計算結果リスト
+  lastDamageCalcResults: [number, ValueResult[]][] = [];
+  //治療ラスト計算結果リスト
+  lastHealingCalcResults: [number, ValueResult[]][] = [];
+  //バリアラスト計算結果リスト
+  lastShieldCalcResults: [number, ValueResult[]][] = [];
+  //生成物ラスト計算結果リスト
+  lastProductCalcResults: [number, ValueResult[]][] = [];
+  //共通ECharts設定
+  commonEchartsOption: EChartsOption = {
     title: {
       right: '2%',
       bottom: '10%',
       subtext: '',
       textAlign: 'left',
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: true },
+        saveAsImage: { show: true },
+      },
     },
     tooltip: {
       trigger: 'axis',
@@ -312,6 +358,14 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     },
     series: []
   };
+  //ダメージECharts設定
+  damageEchartsOption: EChartsOption = {}
+  //治療ECharts設定
+  healingEchartsOption: EChartsOption = {}
+  //バリアECharts設定
+  shieldEchartsOption: EChartsOption = {}
+  //生成物ECharts設定
+  productEchartsOption: EChartsOption = {}
   //言語検知結果
   langChange!: Subscription
   //元素付与変更検知結果
@@ -336,7 +390,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       this.subscription = this.calculatorService.changed().subscribe((v: boolean)=>{
         if(v){
           this.initDamageDatas();
-          this.calDamageEchartsDatas();
+          this.calEchartsDatas(type_damage);
+          this.calEchartsDatas(type_healing);
+          this.calEchartsDatas(type_shield);
+          this.calEchartsDatas(type_product);
           this.initHealingDatas();
           this.initShieldDatas();
           this.initProducDatas();
@@ -347,12 +404,18 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       });
       //言語変更検知
       this.langChange = this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
-        this.calDamageEchartsDatas(false);
+        this.calEchartsDatas(type_damage, false);
+        this.calEchartsDatas(type_healing, false);
+        this.calEchartsDatas(type_shield, false);
+        this.calEchartsDatas(type_product, false);
       })
       //元素付与変更検知
       this.overrideElementChange = this.characterService.getOverrideElementChanged().subscribe(() => {
         setTimeout(()=>{
-          this.calDamageEchartsDatas(false);
+          this.calEchartsDatas(type_damage, false);
+          this.calEchartsDatas(type_healing, false);
+          this.calEchartsDatas(type_shield, false);
+          this.calEchartsDatas(type_product, false);
         }, 1)
       })
     }
@@ -369,11 +432,19 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if(changes['overrideElement']){
       this.initDamageDatas();
-      this.calDamageEchartsDatas();
+      this.calEchartsDatas(type_damage);
+      this.calEchartsDatas(type_healing);
+      this.calEchartsDatas(type_shield);
+      this.calEchartsDatas(type_product);
     }
-    if(changes['valueIndexes']){
+    if(changes['valueIndexes']
+    && (changes['valueIndexes'].previousValue?.length !== changes['valueIndexes'].currentValue?.length
+    || changes['valueIndexes'].previousValue?.some((element: any, index: number) => element != changes['valueIndexes'].currentValue[index]))){
       this.initDamageDatas();
-      this.calDamageEchartsDatas();
+      this.calEchartsDatas(type_damage);
+      this.calEchartsDatas(type_healing);
+      this.calEchartsDatas(type_shield);
+      this.calEchartsDatas(type_product);
       this.initHealingDatas();
       this.initShieldDatas();
       this.initProducDatas();
@@ -413,21 +484,27 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
   initHealingDatas(){
-    this.healingDatas = this.getHealingInfos();
+    const tempDatas = this.getHealingInfos();
+    this.healingDatas = tempDatas[0];
+    this.healingParamDatas = tempDatas[1];
     if(this.healingTempDataList.length != this.healingDatas.length) {
       this.healingTempDataList = new Array(this.healingDatas.length).fill(0);
     }
   }
 
   initShieldDatas(){
-    this.shieldDatas = this.getShieldInfos();
+    const tempDatas = this.getShieldInfos();
+    this.shieldDatas = tempDatas[0];
+    this.shieldParamDatas = tempDatas[1];
     if(this.shieldTempDataList.length != this.shieldDatas.length) {
       this.shieldTempDataList = new Array(this.shieldDatas.length).fill(0);
     }
   }
 
   initProducDatas(){
-    this.productDatas = this.getProductInfos();
+    const tempDatas = this.getProductInfos();
+    this.productDatas = tempDatas[0];
+    this.productParamDatas = tempDatas[1];
     if(this.productTempDataList.length != this.productDatas.length) {
       this.productTempDataList = new Array(this.productDatas.length).fill(0);
     }
@@ -474,17 +551,42 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   //Echartsを表示
-  showDamageEcharts(prop: string, index: number) {
-    const indexChanged = this.currentDamageIndex !== index
-    if(this.currentDamageProp !== prop || indexChanged) {
-      this.currentDamageProp = prop;
-      this.currentDamageIndex = index;
-      this.showDamageEchartsFlag = true;
+  showEcharts(prop: string, index: number, type: ValueType) {
+    let typeProp = "";
+    let typeIndex = "";
+    let typeFlag = "";
+    switch(type){
+      case type_damage:
+        typeProp = "currentDamageProp";
+        typeIndex = "currentDamageIndex";
+        typeFlag = "showDamageEchartsFlag";
+        break;
+      case type_healing:
+        typeProp = "currentHealingProp";
+        typeIndex = "currentHealingIndex";
+        typeFlag = "showHealingEchartsFlag";
+        break;
+      case type_shield:
+        typeProp = "currentShieldProp";
+        typeIndex = "currentShieldIndex";
+        typeFlag = "showShieldEchartsFlag";
+        break;
+      case type_product:
+        typeProp = "currentProductProp";
+        typeIndex = "currentProductIndex";
+        typeFlag = "showProductEchartsFlag";
+        break;
+    }
+    const indexChanged = (this as any)[typeIndex] !== index
+    if((this as any)[typeProp] !== prop || indexChanged) {
+      (this as any)[typeProp] = prop;
+      (this as any)[typeIndex] = index;
+      (this as any)[typeFlag] = true;
     }else{
-      this.showDamageEchartsFlag = !this.showDamageEchartsFlag;
+      (this as any)[typeFlag] = !(this as any)[typeFlag];
     }
     //再計算
-    this.calDamageEchartsDatas(indexChanged).finally(()=>{
+    this.calEchartsDatas(type, indexChanged).finally(()=>{
       setTimeout(()=>{
         this.relayoutMsgService.update("echarts")
       }, 50);
@@ -510,15 +612,89 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   //Echarts設定を計算
-  async calDamageEchartsDatas(reCalc: boolean = true){
-    this.damageEchartsLoading = true;
-    if(!this.showDamageEchartsFlag){
-      return
+  async calEchartsDatas(type: ValueType, reCalc: boolean = true){
+    this.commonEchartsLoading = true;
+    //設定名
+    let currentOptionProp: string = "";
+    //結果名
+    let currentResultProp: string = "";
+    //数値名
+    let currentProp: string = "";
+    //数値インデックス
+    let currentIndex: number = -1;
+    //数値結果
+    let valueResult: ValueResult = undefined;
+    //数値パラメータ
+    let valueParam: ValueParam = undefined;
+    //数値計算式
+    let valueFunc: Function | undefined = undefined;
+    //数値i18n
+    let valueI18nPrefix: string | undefined = undefined;
+    //表示フラグ
+    let showFlag: boolean = false;
+    switch(type){
+      case type_damage:
+        currentOptionProp = "damageEchartsOption";
+        currentResultProp = "lastDamageCalcResults";
+        currentProp = this.currentDamageProp;
+        currentIndex = this.currentDamageIndex;
+        valueResult = currentIndex != -1 ? this.dmgDatas[currentIndex] : undefined;
+        valueParam = currentIndex != -1 ? this.dmgParamDatas[currentIndex] : undefined;
+        valueFunc = this.calculatorService.getDamage.bind(this.calculatorService);
+        valueI18nPrefix = "DMG";
+        showFlag = this.showDamageEchartsFlag;
+        break;
+      case type_healing:
+        currentOptionProp = "healingEchartsOption";
+        currentResultProp = "lastHealingCalcResults";
+        currentProp = this.currentHealingProp;
+        currentIndex = this.currentHealingIndex;
+        valueResult = currentIndex != -1 ? this.healingDatas[currentIndex] : undefined;
+        valueParam = currentIndex != -1 ? this.healingParamDatas[currentIndex] : undefined;
+        valueFunc = this.calculatorService.getHealing.bind(this.calculatorService);
+        valueI18nPrefix = "OTHER";
+        showFlag = this.showHealingEchartsFlag;
+        break;
+      case type_shield:
+        currentOptionProp = "shieldEchartsOption";
+        currentResultProp = "lastShieldCalcResults";
+        currentProp = this.currentShieldProp;
+        currentIndex = this.currentShieldIndex;
+        valueResult = currentIndex != -1 ? this.shieldDatas[currentIndex] : undefined;
+        valueParam = currentIndex != -1 ? this.shieldParamDatas[currentIndex] : undefined;
+        valueFunc = this.calculatorService.getShield.bind(this.calculatorService);
+        valueI18nPrefix = "OTHER";
+        showFlag = this.showShieldEchartsFlag;
+        break;
+      case type_product:
+        currentOptionProp = "productEchartsOption";
+        currentResultProp = "lastProductCalcResults";
+        currentProp = this.currentProductProp;
+        currentIndex = this.currentProductIndex;
+        valueResult = currentIndex != -1 ? this.productDatas[currentIndex] : undefined;
+        valueParam = currentIndex != -1 ? this.productParamDatas[currentIndex] : undefined;
+        valueFunc = this.calculatorService.getProductHp.bind(this.calculatorService);
+        valueI18nPrefix = "OTHER";
+        showFlag = this.showProductEchartsFlag;
+        break;
+      default:
+        currentOptionProp = "";
+        currentResultProp = "";
+        currentProp = "";
+        currentIndex = -1;
+        valueResult = undefined;
+        valueParam = undefined;
+        valueFunc = () => 0;
+        valueI18nPrefix = "";
+        showFlag = false;
+        break;
     }
-    //リフレッシュ
-    this.damageEchartsOption = {...this.damageEchartsOption}
-    //スキル情報
-    const damageParam: DamageParam = this.dmgParamDatas[this.currentDamageIndex];
+    if(!showFlag){
+      this.commonEchartsLoading = false;
+      return;
+    }
+    //ECharts設定をリセット
+    (this as any)[currentOptionProp] = this.deepClone(this.commonEchartsOption);
     //追加属性
     const extraData: Record<string, number>={};
     //追加属性初期化
@@ -529,67 +705,74 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     const currentSmeltingLevel = parseInt(this.weaponService.getStorageInfo(this.characterIndex).smeltingLevel!);
     const smeltingPlusTimes = 5 - currentSmeltingLevel;
     let currentGridTop = '';
+    let currentToolBoxTop = '';
     switch(smeltingPlusTimes){
       case 0:
       case 1:
-        currentGridTop = '26%';
+        currentGridTop = '40%';
+        currentToolBoxTop = '31%';
         break;
       case 2:
-        currentGridTop = '28%';
+        currentGridTop = '42%';
+        currentToolBoxTop = '33%';
         break;
       case 3:
-        currentGridTop = '31%';
+        currentGridTop = '45%';
+        currentToolBoxTop = '36%';
         break;
       case 4:
-        currentGridTop = '31%';
+        currentGridTop = '45%';
+        currentToolBoxTop = '36%';
         break;
       default:
-        currentGridTop = '31%';
+        currentGridTop = '45%';
+        currentToolBoxTop = '36%';
         break;
     }
-    (this.damageEchartsOption!.grid! as any).top = currentGridTop;
+    ((this as any)[currentOptionProp]!.grid! as any).top = currentGridTop;
+    ((this as any)[currentOptionProp]!.toolbox! as any).top = currentToolBoxTop;
     //計算
-    if(reCalc || this.lastDamgeCalcResults.length === 0){
-      this.lastDamgeCalcResults.splice(0);
-      const currentClacResult: DamageResult = this.dmgDatas[this.currentDamageIndex];
-      const weaponSmeltingAddOneResults: DamageResult[] = [];
+    if(reCalc || (this as any)[currentResultProp].length === 0){
+      (this as any)[currentResultProp].splice(0);
+      const currentClacResult: ValueResult = valueFunc(this.characterIndex, valueParam);
+      const weaponSmeltingAddOneResults: ValueResult[] = [];
       for(let [i] of new Array(smeltingPlusTimes).entries()) {
-        weaponSmeltingAddOneResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData, i+1));
+        weaponSmeltingAddOneResults.push(valueFunc(this.characterIndex, valueParam, extraData, i+1));
       }
       const startIndex = -Math.floor(this.stepRange/2);
       const endIndex = this.stepRange + startIndex;
       for(let i = startIndex; i < endIndex; ++i) {
-        const calcResults: DamageResult[] = [];
+        const calcResults: ValueResult[] = [];
         if(i === 0){
           calcResults.push(...new Array(this.subs.length).fill(currentClacResult))
         }else{
           for(let key of this.subs){
             const extraData: Record<string, number> = {};
             extraData[key] = this.genshinDataService.getOptimalReliquaryAffixStep(key) * 10 * i;
-            calcResults.push(this.calculatorService.getDamage(this.characterIndex, damageParam, extraData));
+            calcResults.push(valueFunc(this.characterIndex, valueParam, extraData));
           }
         }
         //精錬プラス
         calcResults.push(...weaponSmeltingAddOneResults);
         //参照用のため
         calcResults.push(currentClacResult);
-        this.lastDamgeCalcResults.push([i, calcResults]);
+        (this as any)[currentResultProp].push([i, calcResults]);
       }
     }
     //dataSet設定更新とxAxis設定更新
     const dataSetItems = [];
     const xAxisItems = [];
-    for(let i = 0; i < this.lastDamgeCalcResults.length; ++i){
-      const [index, results] = this.lastDamgeCalcResults[i];
+    for(let i = 0; i < (this as any)[currentResultProp].length; ++i){
+      const [index, results] = (this as any)[currentResultProp][i];
       const indexStr = (index > 0?"+":"") + index.toString();
-      dataSetItems.push([indexStr, ...results.map((v)=>{
-        return Math.floor(v[this.currentDamageProp as keyof DamageResult] as number * 10) / 10;
+      dataSetItems.push([indexStr, ...results.map((v: any)=>{
+        return Math.floor((v as any)[currentProp] as number * 10) / 10;
       })])
       xAxisItems.push(indexStr);
     }
     //title設定更新とlegend設定更新
     const awaitArray = [];
-    awaitArray.push(lastValueFrom(this.translateService.get(`GENSHIN.DMG.${this.propNameMap[this.currentDamageProp]}`)));
+    awaitArray.push(lastValueFrom(this.translateService.get(`GENSHIN.${valueI18nPrefix}.${this.propNameMap[currentProp]}`)));
     for(let i = 0; i < this.subs.length; ++i) {
       awaitArray.push(lastValueFrom(this.translateService.get(`PROPS.${this.subs[i]}`)));
     }
@@ -610,17 +793,32 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         }
       })
     }
+    //変更のみの属性を絞り込む
+    const hiddenIndexArray = [];
+    for(let i = 0; i < this.subs.length; ++i){
+      const isAllSame = dataSetItems.every((currentResultList: any[]) => {
+        return currentResultList[i + 1] == currentResultList[currentResultList.length - 1];
+      })
+      if(isAllSame){
+        hiddenIndexArray.push(i);
+      }
+    }
+    const selected: Record<string, boolean> = {};
+    hiddenIndexArray.forEach((val: number) => {
+      selected[legendItems[val]] = false;
+    })
     //値を反映
-    const temp1 = this.damageEchartsOption.dataset;
-    const temp2 = this.damageEchartsOption.legend;
-    const temp3 = (this.damageEchartsOption!.xAxis as any[])[0];
-    const temp4 = this.damageEchartsOption;
-    const temp5 = this.damageEchartsOption!.title;;
+    const temp1 = (this as any)[currentOptionProp].dataset;
+    const temp2 = (this as any)[currentOptionProp].legend;
+    const temp3 = ((this as any)[currentOptionProp]!.xAxis as any[])[0];
+    const temp4 = (this as any)[currentOptionProp];
+    const temp5 = (this as any)[currentOptionProp]!.title;;
     if(!Array.isArray(temp1)){
       (temp1!.source as any[]) = dataSetItems;
     }
     if(!Array.isArray(temp2)){
       (temp2!.data as any[]) = legendItems;
+      (temp2!.selected as any) = selected;
     }
     if(!Array.isArray(temp3)){
       (temp3!.data as any[]) = xAxisItems;
@@ -631,7 +829,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     if(!Array.isArray(temp5)){
       temp5!.subtext = dmgTitle;
     }
-    this.damageEchartsLoading = false;
+    this.commonEchartsLoading = false;
   }
 
   changeDisplayStatus(index: number | undefined, flag: boolean){
@@ -674,15 +872,23 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     return this.colorMap[this.getElementFromBonus(element)];
   }
 
-  private copyObjectValue(target: any, source: any){
-    for(let key in source){
-      if(typeof source[key] === 'object'){
-        target[key] = {};
-        this.copyObjectValue(target[key], source[key])
-      }else{
-        target[key] = source[key];
+  private deepClone(obj: any){
+    // もし基本型またはnullであれば、そのまま返す
+    if (obj === null || typeof obj !== 'object') {
+      return obj;
+    }
+
+    // オリジナルのオブジェクトの型に基づいて、クローンを作成する
+    const clone: any = Array.isArray(obj) ? [] : {};
+
+    // オブジェクトのプロパティを再帰的にコピーする
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        clone[key] = this.deepClone(obj[key]);
       }
     }
+
+    return clone; 
   }
 
 }
