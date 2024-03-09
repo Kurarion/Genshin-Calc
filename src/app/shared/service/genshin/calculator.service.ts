@@ -2570,14 +2570,14 @@ export class CalculatorService {
         tempRes.shieldPyro = shield * geoElementAbsRate;
         tempRes.shieldHydro = shield * geoElementAbsRate;
         tempRes.shieldDendro = shield * geoElementAbsRate;
-        tempRes.calcProcessKeyMap['shieldCryo'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldAnemo'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldPhysical'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldElectro'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldGeo'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldPyro'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldHydro'].push('geoElementAbsRate');
-        tempRes.calcProcessKeyMap['shieldDendro'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldCryo'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldAnemo'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldPhysical'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldElectro'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldGeo'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldPyro'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldHydro'].push('geoElementAbsProcess');
+        tempRes.calcProcessKeyMap['shieldDendro'].push('geoElementAbsProcess');
         break;
       case Const.ELEMENT_PYRO:
         tempRes.shieldPyro = shield * specialElementAbsRate;

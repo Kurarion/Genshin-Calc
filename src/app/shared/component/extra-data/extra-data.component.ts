@@ -1042,9 +1042,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     alignedCalcProcessDataList = calcProcessDataList.map((val: any, index: number) => {
       const currentValRate = val.value / minVal;
       const currentValIndex = valueSortedKey.indexOf(val.name);
+      const toSetMaxVal = (MaxRate - DistanceRate * currentValIndex) * minVal;
       return {
         name: processNames[index],
-        value: currentValRate >= MaxRate ? (MaxRate - DistanceRate * currentValIndex) * minVal : val.value,
+        value: currentValRate >= MaxRate || val.value >= toSetMaxVal ? toSetMaxVal : val.value,
         process: val.process,
         processPrefix: val.processPrefix,
         processSuffix: val.processSuffix,
