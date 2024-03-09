@@ -112,6 +112,9 @@ export interface DamageParam {
 }
 
 export interface DamageResult {
+  calcProcessKeyMap: Record<string, string[]>;
+  calcProcessValMap: Record<string, [number, string] | undefined>;
+
   elementBonusType: string;
   finalCritRate: number;
   displayCritRate: number;
@@ -168,6 +171,9 @@ export interface HealingParam {
 }
 
 export interface HealingResult {
+  calcProcessKeyMap: Record<string, string[]>;
+  calcProcessValMap: Record<string, [number, string] | undefined>;
+
   tempAllDate: any;
 
   healing: number;
@@ -183,6 +189,9 @@ export interface ShieldParam {
 }
 
 export interface ShieldResult {
+  calcProcessKeyMap: Record<string, string[]>;
+  calcProcessValMap: Record<string, [number, string] | undefined>;
+
   tempAllDate: any;
 
   shield?: number;
@@ -205,6 +214,9 @@ export interface ProductParam {
 }
 
 export interface ProductResult {
+  calcProcessKeyMap: Record<string, string[]>;
+  calcProcessValMap: Record<string, [number, string] | undefined>;
+
   tempAllDate: any;
 
   product: number;
@@ -1366,10 +1378,12 @@ export class CalculatorService {
     //--------------------
     let finalRate = rate;
     let dmgSectionValue = 0;
+    const dmgSectionValueProcessFunc = this.createProcess(dmgSectionValue);
     //倍率
     finalRate += data[Const.PROP_DMG_RATE_UP_ALL];
-    // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ALL]));
+    rateAttach = rateAttach.map((x)=>x.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ALL])));
     dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ALL];
+    dmgSectionValueProcessFunc(dmgSectionValue, data[Const.PROP_DMG_VAL_UP_ALL], "+");
     //--------------------
     //2.会心区域
     //--------------------
@@ -1377,75 +1391,79 @@ export class CalculatorService {
     let finalCritRate = data[Const.PROP_CRIT_RATE];
     let displayCritRate = data[Const.PROP_CRIT_RATE];
     let finalCritDmg = data[Const.PROP_CRIT_DMG];
+    const critRateSectionValueProcessFunc = this.createProcess(finalCritRate);
+    const critDmgSectionValueProcessFunc = this.createProcess(finalCritDmg);
     finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ALL];
     displayCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ALL];
     finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ALL];
+    critRateSectionValueProcessFunc(finalCritRate, data[Const.PROP_DMG_CRIT_RATE_UP_ALL], "+");
+    critDmgSectionValueProcessFunc(finalCritDmg, data[Const.PROP_DMG_CRIT_DMG_UP_ALL], "+");
     //--------------------
     //3.ダメージアップ区域
     //--------------------
     let dmgUpSectionValue = 0;
+    const dmgUpSectionValueProcessFunc = this.createProcess(dmgUpSectionValue);
     dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ALL];
+    dmgUpSectionValueProcessFunc(dmgUpSectionValue, data[Const.PROP_DMG_BONUS_ALL], "+");
     //--------------------
     //4.耐性区域
     //--------------------
     let dmgAntiSectionValue = 0;
     let dmgAntiSectionMinusOnlyValue = 0;
+    const dmgAntiSectionValueProcessFunc = this.createProcess(dmgAntiSectionValue);
+    const dmgAntiSectionMinusOnlyValueProcessFunc = this.createProcess(dmgAntiSectionMinusOnlyValue);
     dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];
     dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];
+    dmgAntiSectionValueProcessFunc(dmgAntiSectionValue, data[Const.PROP_DMG_ANTI_ALL_MINUS], "-");
+    dmgAntiSectionMinusOnlyValueProcessFunc(dmgAntiSectionMinusOnlyValue, data[Const.PROP_DMG_ANTI_ALL_MINUS], "-");
     //--------------------
     //5.防御区域
     //--------------------
     let defenceSectionValue = 0;
+    const defenceSectionValueProcessFunc = this.createProcess(defenceSectionValue);
     let tempIgnoreValue = data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE] ?? 0;
     let tempDefenseValue = data[Const.PROP_DMG_ENEMY_DEFENSE];
+    defenceSectionValueProcessFunc(tempDefenseValue, data[Const.PROP_DMG_ENEMY_DEFENSE], "+");
+    let tempDefenseAttackBonusDefenseBaseProp = Const.PROP_DMG_ENEMY_DEFENSE_BASE;
+    let tempDefenseAttackBonusDefenseDownTypeProp = "";
+    let tempDefenseAttackBonusDefenseIgnoreTypeProp = "";
     switch(attackBonusType){
       case Const.PROP_DMG_BONUS_NORMAL:
-        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_NORMAL];
-        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_NORMAL] ?? 0;
-        //特別処理
-        if(hasTag){
-          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_NORMAL + tag] ?? 0;
-        }
-        tempDefenseValue *= (1 - tempIgnoreValue);
+        tempDefenseAttackBonusDefenseDownTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_DOWN_NORMAL;
+        tempDefenseAttackBonusDefenseIgnoreTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_NORMAL;
         break;
       case Const.PROP_DMG_BONUS_CHARGED:
-        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_CHARGED];
-        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_CHARGED] ?? 0;
-        //特別処理
-        if(hasTag){
-          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_CHARGED + tag] ?? 0;
-        }
-        tempDefenseValue *= (1 - tempIgnoreValue);
+        tempDefenseAttackBonusDefenseDownTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_DOWN_CHARGED;
+        tempDefenseAttackBonusDefenseIgnoreTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_CHARGED;
         break;
       case Const.PROP_DMG_BONUS_PLUNGING:
-        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_PLUNGING];
-        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING] ?? 0;
-        //特別処理
-        if(hasTag){
-          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING + tag] ?? 0;
-        }
-        tempDefenseValue *= (1 - tempIgnoreValue);
+        tempDefenseAttackBonusDefenseDownTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_DOWN_PLUNGING;
+        tempDefenseAttackBonusDefenseIgnoreTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING;
         break;
       case Const.PROP_DMG_BONUS_SKILL:
-        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_SKILL];
-        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL] ?? 0;
-        //特別処理
-        if(hasTag){
-          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL + tag] ?? 0;
-        }
-        tempDefenseValue *= (1 - tempIgnoreValue);
+        tempDefenseAttackBonusDefenseDownTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_DOWN_SKILL;
+        tempDefenseAttackBonusDefenseIgnoreTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL;
         break;
       case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
-        tempDefenseValue -= data[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * data[Const.PROP_DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST];
-        tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST] ?? 0;
+        tempDefenseAttackBonusDefenseDownTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_DOWN_ELEMENTAL_BURST;
+        tempDefenseAttackBonusDefenseIgnoreTypeProp = Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST;
+        break;
+    }
+    {
+      if (tempDefenseAttackBonusDefenseDownTypeProp != "" && tempDefenseAttackBonusDefenseIgnoreTypeProp != "") {
+        tempDefenseValue -= data[tempDefenseAttackBonusDefenseBaseProp] * data[tempDefenseAttackBonusDefenseDownTypeProp];
+        defenceSectionValueProcessFunc(tempDefenseValue, `${this.proximateVal(data[tempDefenseAttackBonusDefenseBaseProp])} ${this.times} ${this.proximateVal(data[tempDefenseAttackBonusDefenseDownTypeProp])}`, "-");
+        tempIgnoreValue += data[tempDefenseAttackBonusDefenseIgnoreTypeProp] ?? 0;
         //特別処理
         if(hasTag){
-          tempIgnoreValue += data[Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST + tag] ?? 0;
+          tempIgnoreValue += data[tempDefenseAttackBonusDefenseIgnoreTypeProp + tag] ?? 0;
         }
-        tempDefenseValue *= (1 - tempIgnoreValue);
-        break;
-    }  
-    defenceSectionValue = tempDefenseValue/(tempDefenseValue + data[Const.PROP_LEVEL]*5 + 500);
+      }
+      tempDefenseValue *= (1 - tempIgnoreValue);
+      defenceSectionValueProcessFunc(tempDefenseValue, `(1 ${this.minus} ${this.proximateVal(tempIgnoreValue)})`, "*");
+      defenceSectionValue = tempDefenseValue/(tempDefenseValue + data[Const.PROP_LEVEL]*5 + 500);
+      defenceSectionValueProcessFunc(defenceSectionValue, `(${this.proximateVal(tempDefenseValue)} + ${this.proximateVal(data[Const.PROP_LEVEL])} ${this.times} 5 + 500)`, "/");
+    }
     //--------------------
     //6.元素反応区域
     //--------------------
@@ -1459,292 +1477,257 @@ export class CalculatorService {
     //--------------------
     //補足
     //--------------------
+    let extraFinalRateMultiTypeProp = "";
+    let extraFinalRateUpTypeProp = "";
+    let extraDmgSectionValUpTypeProp = "";
+    let extraFinalCritRateUpTypeProp = "";
+    let extraFinalCritDmgUpTypeProp = "";
+    let extraDmgUpSectionBonusTypeProp = "";
+    let extraDmgAntiSectionTypeProp = "";
+    let extraDmgAntiSectionMinusOnlyTypeProp = "";
     switch(elementBonusType){
       case Const.PROP_DMG_BONUS_CRYO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_CRYO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_CRYO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CRYO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CRYO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CRYO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CRYO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CRYO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_CRYO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_CRYO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_CRYO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_CRYO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_CRYO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_CRYO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_CRYO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_CRYO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_CRYO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_CRYO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_CRYO_MINUS;
         break;
       case Const.PROP_DMG_BONUS_ANEMO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ANEMO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_ANEMO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ANEMO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ANEMO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ANEMO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ANEMO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ANEMO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_ANEMO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ANEMO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ANEMO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_ANEMO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_ANEMO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_ANEMO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_ANEMO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_ANEMO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_ANEMO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_ANEMO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_ANEMO_MINUS;
         break;
       case Const.PROP_DMG_BONUS_PHYSICAL:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_PHYSICAL];
-        finalRate += data[Const.PROP_DMG_RATE_UP_PHYSICAL];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PHYSICAL]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PHYSICAL];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PHYSICAL];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PHYSICAL];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PHYSICAL];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_PHYSICAL];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_PHYSICAL_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_PHYSICAL_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_PHYSICAL;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_PHYSICAL;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_PHYSICAL;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_PHYSICAL;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_PHYSICAL;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_PHYSICAL;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_PHYSICAL;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_PHYSICAL_MINUS;
         break;
       case Const.PROP_DMG_BONUS_ELECTRO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ELECTRO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_ELECTRO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELECTRO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELECTRO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELECTRO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELECTRO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELECTRO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_ELECTRO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ELECTRO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_ELECTRO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_ELECTRO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_ELECTRO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_ELECTRO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_ELECTRO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_ELECTRO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_ELECTRO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_ELECTRO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_ELECTRO_MINUS;
         break;
       case Const.PROP_DMG_BONUS_GEO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_GEO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_GEO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_GEO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_GEO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_GEO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_GEO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_GEO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_GEO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_GEO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_GEO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_GEO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_GEO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_GEO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_GEO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_GEO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_GEO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_GEO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_GEO_MINUS;
         break;
       case Const.PROP_DMG_BONUS_PYRO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_PYRO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_PYRO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PYRO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PYRO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PYRO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PYRO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PYRO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_PYRO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_PYRO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_PYRO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_PYRO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_PYRO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_PYRO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_PYRO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_PYRO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_PYRO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_PYRO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_PYRO_MINUS;
         break;
       case Const.PROP_DMG_BONUS_HYDRO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_HYDRO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_HYDRO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_HYDRO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_HYDRO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_HYDRO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_HYDRO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_HYDRO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_HYDRO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_HYDRO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_HYDRO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_HYDRO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_HYDRO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_HYDRO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_HYDRO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_HYDRO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_HYDRO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_HYDRO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_HYDRO_MINUS;
         break;
       case Const.PROP_DMG_BONUS_DENDRO:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_DENDRO];
-        finalRate += data[Const.PROP_DMG_RATE_UP_DENDRO];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_DENDRO]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_DENDRO];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_DENDRO];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_DENDRO];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_DENDRO];
-        dmgAntiSectionValue += data[Const.PROP_DMG_ANTI_DENDRO];
-        dmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_DENDRO_MINUS];
-        dmgAntiSectionMinusOnlyValue -= data[Const.PROP_DMG_ANTI_DENDRO_MINUS];
+        extraFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_DENDRO;
+        extraFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_DENDRO;
+        extraDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_DENDRO;
+        extraFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_DENDRO;
+        extraFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_DENDRO;
+        extraDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_DENDRO;
+        extraDmgAntiSectionTypeProp = Const.PROP_DMG_ANTI_DENDRO;
+        extraDmgAntiSectionMinusOnlyTypeProp = Const.PROP_DMG_ANTI_DENDRO_MINUS;
         break;
     }
+    {
+      finalRate *= 1 + data[extraFinalRateMultiTypeProp];
+      finalRate += data[extraFinalRateUpTypeProp];
+      rateAttach = rateAttach.map((x)=>x.map((x)=>(x+data[extraFinalRateUpTypeProp])));
+      dmgSectionValue += data[extraDmgSectionValUpTypeProp];
+      dmgSectionValueProcessFunc(dmgSectionValue, data[extraDmgSectionValUpTypeProp], "+");
+      finalCritRate += data[extraFinalCritRateUpTypeProp];
+      critRateSectionValueProcessFunc(finalCritRate, data[extraFinalCritRateUpTypeProp], "+");
+      finalCritDmg += data[extraFinalCritDmgUpTypeProp];
+      critDmgSectionValueProcessFunc(finalCritDmg, data[extraFinalCritDmgUpTypeProp], "+");
+      dmgUpSectionValue += data[extraDmgUpSectionBonusTypeProp];
+      dmgUpSectionValueProcessFunc(dmgUpSectionValue, data[extraDmgUpSectionBonusTypeProp], "+");
+      dmgAntiSectionValue += data[extraDmgAntiSectionTypeProp];
+      dmgAntiSectionValueProcessFunc(dmgAntiSectionValue, data[extraDmgAntiSectionTypeProp], "+", "start");
+      dmgAntiSectionValue -= data[extraDmgAntiSectionMinusOnlyTypeProp];
+      dmgAntiSectionValueProcessFunc(dmgAntiSectionValue, data[extraDmgAntiSectionMinusOnlyTypeProp], "-");
+      dmgAntiSectionMinusOnlyValue -= data[extraDmgAntiSectionMinusOnlyTypeProp];
+      dmgAntiSectionMinusOnlyValueProcessFunc(dmgAntiSectionMinusOnlyValue, data[extraDmgAntiSectionMinusOnlyTypeProp], "-");
+    }
+    let extraAttackFinalRateMultiTypeProp = "";
+    let extraAttackFinalRateUpTypeProp = "";
+    let extraAttackDmgSectionValUpTypeProp = "";
+    let extraAttackFinalCritRateUpTypeProp = "";
+    let extraAttackFinalCritDmgUpTypeProp = "";
+    let extraAttackDmgUpSectionBonusTypeProp = "";
     switch(attackBonusType){
       case Const.PROP_DMG_BONUS_NORMAL:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_NORMAL];
-        finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_NORMAL]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_NORMAL];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_NORMAL + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_NORMAL + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_NORMAL + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_NORMAL + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_NORMAL + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_NORMAL + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_NORMAL;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_NORMAL;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_NORMAL;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_NORMAL;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_NORMAL;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_NORMAL;
         break;
       case Const.PROP_DMG_BONUS_CHARGED:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_CHARGED];
-        finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CHARGED]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CHARGED];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_CHARGED + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_CHARGED + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_CHARGED + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_CHARGED + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_CHARGED + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_CHARGED + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_CHARGED;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_CHARGED;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_CHARGED;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_CHARGED;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_CHARGED;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_CHARGED;
         break;
       case Const.PROP_DMG_BONUS_PLUNGING:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_PLUNGING];
-        finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PLUNGING]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PLUNGING];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_PLUNGING + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_PLUNGING + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_PLUNGING + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_PLUNGING + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_PLUNGING + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_PLUNGING + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_PLUNGING;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_PLUNGING;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_PLUNGING;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_PLUNGING;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_PLUNGING;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_PLUNGING;
         break;
       case Const.PROP_DMG_BONUS_SKILL:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_SKILL];
-        finalRate += data[Const.PROP_DMG_RATE_UP_SKILL];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_SKILL]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SKILL];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_SKILL + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_SKILL + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SKILL + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SKILL + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SKILL + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SKILL + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_SKILL;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_SKILL;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_SKILL;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_SKILL;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_SKILL;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_SKILL;
         break;
       case Const.PROP_DMG_BONUS_ELEMENTAL_BURST:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ELEMENTAL_BURST];
-        finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELEMENTAL_BURST];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_ELEMENTAL_BURST + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_ELEMENTAL_BURST + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_ELEMENTAL_BURST;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_ELEMENTAL_BURST;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_ELEMENTAL_BURST;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_ELEMENTAL_BURST;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_ELEMENTAL_BURST;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_ELEMENTAL_BURST;
         break;
       case Const.PROP_DMG_BONUS_WEAPON:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_WEAPON];
-        finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_WEAPON]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_WEAPON];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_WEAPON];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_WEAPON];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_WEAPON + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_WEAPON + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_WEAPON + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_WEAPON + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_WEAPON + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_WEAPON + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_WEAPON;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_WEAPON;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_WEAPON;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_WEAPON;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_WEAPON;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_WEAPON;
         break;
       case Const.PROP_DMG_BONUS_OTHER:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_OTHER];
-        finalRate += data[Const.PROP_DMG_RATE_UP_OTHER];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_OTHER]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_OTHER];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_OTHER];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_OTHER];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_OTHER + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_RATE_UP_OTHER + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_OTHER + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_OTHER + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_OTHER + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_OTHER + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_OTHER;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_OTHER;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_OTHER;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_OTHER;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_OTHER;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_OTHER;
         break;
       case Const.PROP_DMG_BONUS_SET:
-        finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_SET];
-        finalRate += data[Const.PROP_DMG_RATE_UP_SET];
-        // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_BONUS_SET]));
-        dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SET];
-        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SET];
-        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SET];
-        dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SET];
-        //特別処理
-        if(hasTag){
-          finalRate *= 1 + (data[Const.PROP_DMG_RATE_MULTI_SET + tag] ?? 0);
-          finalRate += data[Const.PROP_DMG_RATE_UP_SET + tag] ?? 0;
-          // rateAttach = rateAttach.map((x)=>(x+data[Const.PROP_DMG_BONUS_SET + tag] ?? 0));
-          dmgSectionValue += data[Const.PROP_DMG_VAL_UP_SET + tag] ?? 0;
-          finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_SET + tag] ?? 0;
-          finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_SET + tag] ?? 0;
-          dmgUpSectionValue += data[Const.PROP_DMG_BONUS_SET + tag] ?? 0;
-        }
+        extraAttackFinalRateMultiTypeProp = Const.PROP_DMG_RATE_MULTI_SET;
+        extraAttackFinalRateUpTypeProp = Const.PROP_DMG_RATE_UP_SET;
+        extraAttackDmgSectionValUpTypeProp = Const.PROP_DMG_VAL_UP_SET;
+        extraAttackFinalCritRateUpTypeProp = Const.PROP_DMG_CRIT_RATE_UP_SET;
+        extraAttackFinalCritDmgUpTypeProp = Const.PROP_DMG_CRIT_DMG_UP_SET;
+        extraAttackDmgUpSectionBonusTypeProp = Const.PROP_DMG_BONUS_SET;
         break;
+    }
+    {
+      finalRate *= 1 + data[extraAttackFinalRateMultiTypeProp];
+      finalRate += data[extraAttackFinalRateUpTypeProp];
+      rateAttach = rateAttach.map((x)=>x.map((x)=>(x+data[extraAttackFinalRateUpTypeProp])));
+      dmgSectionValue += data[extraAttackDmgSectionValUpTypeProp];
+      dmgSectionValueProcessFunc(dmgSectionValue, data[extraAttackDmgSectionValUpTypeProp], "+");
+      finalCritRate += data[extraAttackFinalCritRateUpTypeProp];
+      critRateSectionValueProcessFunc(finalCritRate, data[extraAttackFinalCritRateUpTypeProp], "+");
+      finalCritDmg += data[extraAttackFinalCritDmgUpTypeProp];
+      critDmgSectionValueProcessFunc(finalCritDmg, data[extraAttackFinalCritDmgUpTypeProp], "+");
+      dmgUpSectionValue += data[extraAttackDmgUpSectionBonusTypeProp];
+      dmgUpSectionValueProcessFunc(dmgUpSectionValue, data[extraAttackDmgUpSectionBonusTypeProp], "+");
+      //特別処理
+      if(hasTag){
+        finalRate *= 1 + (data[extraAttackFinalRateMultiTypeProp + tag] ?? 0);
+        finalRate += data[extraAttackFinalRateUpTypeProp + tag] ?? 0;
+        rateAttach = rateAttach.map((x)=>x.map((x)=>(x+data[extraAttackFinalRateUpTypeProp])));
+        dmgSectionValue += data[extraAttackDmgSectionValUpTypeProp + tag] ?? 0;
+        dmgSectionValueProcessFunc(dmgSectionValue, data[extraAttackDmgSectionValUpTypeProp + tag] ?? 0, "+");
+        finalCritRate += data[extraAttackFinalCritRateUpTypeProp + tag] ?? 0;
+        critRateSectionValueProcessFunc(finalCritRate, data[extraAttackFinalCritRateUpTypeProp + tag] ?? 0, "+");
+        finalCritDmg += data[extraAttackFinalCritDmgUpTypeProp + tag] ?? 0;
+        critDmgSectionValueProcessFunc(finalCritDmg, data[extraAttackFinalCritDmgUpTypeProp + tag] ?? 0, "+");
+        dmgUpSectionValue += data[extraAttackDmgUpSectionBonusTypeProp + tag] ?? 0;
+        dmgUpSectionValueProcessFunc(dmgUpSectionValue, data[extraAttackDmgUpSectionBonusTypeProp + tag] ?? 0, "+");
+      }
     }
     //全ダメージ倍率乗算値
     finalRate *= 1 + data[Const.PROP_DMG_RATE_MULTI_ALL];
+    rateAttach = rateAttach.map((x)=>x.map((x)=>(x*(1 + data[Const.PROP_DMG_RATE_MULTI_ALL]))));
     //ダメージ値区域残り
-    dmgSectionValue += finalRate * (data[base] ?? 0);
+    const finalRateProcessFunc = this.createProcess(finalRate);
+    const dmg_rate_value = finalRate * (data[base] ?? 0);
+    finalRateProcessFunc(dmg_rate_value, (data[base] ?? 0), "*", "start");
+    dmgSectionValue += dmg_rate_value;
+    dmgSectionValueProcessFunc(dmgSectionValue, finalRateProcessFunc()[1], "+");
     for(let i = 0; i < rateAttach.length; ++i){
+      let tempDmgRateBaseProp = "";
       switch(baseAttach[i]){
         case Const.PROP_ATTACK:
-          rateAttach[i].forEach((v)=>{
-            dmgSectionValue += v * data[Const.PROP_ATTACK];
-          })
+          tempDmgRateBaseProp = Const.PROP_ATTACK;
           break;
         case Const.PROP_HP:
-          rateAttach[i].forEach((v)=>{
-            dmgSectionValue += v * data[Const.PROP_HP];
-          })
+          tempDmgRateBaseProp = Const.PROP_HP;
           break;
         case Const.PROP_DEFENSE:
-          rateAttach[i].forEach((v)=>{
-            dmgSectionValue += v * data[Const.PROP_DEFENSE];
-          })
+          tempDmgRateBaseProp = Const.PROP_DEFENSE;
           break;
         case Const.PROP_ELEMENTAL_MASTERY:
-          rateAttach[i].forEach((v)=>{
-            dmgSectionValue += v * data[Const.PROP_ELEMENTAL_MASTERY];
-          })
+          tempDmgRateBaseProp = Const.PROP_ELEMENTAL_MASTERY;
           break;
+      }
+      {
+        rateAttach[i].forEach((v)=>{
+          const tempfinalRateProcessFunc = this.createProcess(v);
+          const temp_dmg_rate_value = v * data[tempDmgRateBaseProp];
+          tempfinalRateProcessFunc(temp_dmg_rate_value,  data[tempDmgRateBaseProp], "*", "start");
+          dmgSectionValue += temp_dmg_rate_value;
+          dmgSectionValueProcessFunc(dmgSectionValue, tempfinalRateProcessFunc()[1], "+");
+        })
       }
     }
     //耐性区域残り
     if(dmgAntiSectionValue < 0){
       dmgAntiSectionValue = dmgAntiSectionValue/2;
+      dmgAntiSectionValueProcessFunc(dmgAntiSectionValue, 2, "/");
     }
     if(dmgAntiSectionMinusOnlyValue < 0){
       dmgAntiSectionMinusOnlyValue = dmgAntiSectionMinusOnlyValue/2;
+      dmgAntiSectionMinusOnlyValueProcessFunc(dmgAntiSectionMinusOnlyValue, 2, "/");
     }
     //会心区域残り
     if(finalCritRate < 0){
@@ -1752,6 +1735,12 @@ export class CalculatorService {
     }else if(finalCritRate > 1){
       finalCritRate = 1;
     }
+    let critExpectRate = 1;
+    const critExpectDmgSectionValueProcessFunc = this.createProcess(critExpectRate);
+    critExpectRate -= finalCritRate;
+    critExpectDmgSectionValueProcessFunc(critExpectRate, finalCritRate, "-");
+    critExpectRate += finalCritRate * (1 + finalCritDmg);
+    critExpectDmgSectionValueProcessFunc(critExpectRate, `${this.proximateVal(finalCritRate)} ${this.times} (1 ${this.plus} ${this.proximateVal(finalCritDmg)})`, "+");
 
     //結果まとめ
     let originDmg;
@@ -1784,6 +1773,44 @@ export class CalculatorService {
     let overloadedDmg;
     let shieldHp;
     let shieldSpecialHp;
+
+    let cryoAntiProcess;
+    let anemoAntiProcess;
+    let physicalAntiProcess
+    let electroAntiProcess;
+    let geoAntiProcess;
+    let pyroAntiProcess;
+    let hydroAntiProcess;
+    let dendroAntiProcess;
+
+    let vaporProcess;
+    let meltProcess;
+    let burningBaseProcess;
+    let burningRateProcess;
+    let superconductBaseProcess;
+    let superconductRateProcess;
+    let swirlBaseProcess;
+    let swirlRateProcess;
+    let swirlElectroAggravateBaseProcess;
+    let swirlElectroAggravateRateProcess;
+    let electroChargedRateProcess;
+    let electroChargedBaseProcess;
+    let destructionRateProcess;
+    let destructionBaseProcess;
+    let overloadedRateProcess;
+    let overloadedBaseProcess;
+    let shieldRateProcess;
+    let shieldBaseProcess;
+    let aggravateDmgBaseProcess;
+    let hyperbloomRateProcess;
+    let hyperbloomBaseProcess;
+    let spreadDmgBaseProcess;
+    let burgeonRateProcess;
+    let burgeonBaseProcess;
+    let ruptureRateProcess;
+    let ruptureBaseProcess;
+    let shieldSpecialRateProcess;
+
     if(!isAbsoluteDmg){
       originDmg = dmgSectionValue * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
       originDmg = this.getFinalResCalQueueResult(data, originDmg, param.finalResCalQueue);
@@ -1795,79 +1822,470 @@ export class CalculatorService {
         if(elementBonusType == Const.PROP_DMG_BONUS_PYRO){
           reactionRate = REACTION_RATE_1_5;
         }
-        originVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * originDmg;
-        cirtVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * critDmg;
-        expectVaporizeDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP] + elementAmplitudeRate) * expectDmg;
+        let tempReactionFinalRate = 1;
+        const tempValueProcessFunc = this.createProcess(tempReactionFinalRate);
+        tempReactionFinalRate += data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP];
+        tempValueProcessFunc(tempReactionFinalRate, data[Const.PROP_DMG_ELEMENT_VAPORIZE_UP]);
+        tempReactionFinalRate += elementAmplitudeRate;
+        tempValueProcessFunc(tempReactionFinalRate, elementAmplitudeRate);
+        tempReactionFinalRate *= reactionRate;
+        vaporProcess = tempValueProcessFunc(tempReactionFinalRate, reactionRate, "*");
+        
+        originVaporizeDmg = tempReactionFinalRate * originDmg;
+        cirtVaporizeDmg = tempReactionFinalRate * critDmg;
+        expectVaporizeDmg = tempReactionFinalRate * expectDmg;
       }
       if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_CRYO].includes(elementBonusType)){
         let reactionRate = REACTION_RATE_2_0;
         if(elementBonusType == Const.PROP_DMG_BONUS_CRYO){
           reactionRate = REACTION_RATE_1_5;
         }
-        originMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * originDmg;
-        cirtMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * critDmg;
-        expectMeltDmg = reactionRate * (1 + data[Const.PROP_DMG_ELEMENT_MELT_UP] + elementAmplitudeRate) * expectDmg;
+        let tempReactionFinalRate = 1;
+        const tempValueProcessFunc = this.createProcess(tempReactionFinalRate);
+        tempReactionFinalRate += data[Const.PROP_DMG_ELEMENT_MELT_UP];
+        tempValueProcessFunc(tempReactionFinalRate, data[Const.PROP_DMG_ELEMENT_MELT_UP]);
+        tempReactionFinalRate += elementAmplitudeRate;
+        tempValueProcessFunc(tempReactionFinalRate, elementAmplitudeRate);
+        tempReactionFinalRate *= reactionRate;
+        meltProcess = tempValueProcessFunc(tempReactionFinalRate, reactionRate, "*");
+
+        originMeltDmg = tempReactionFinalRate * originDmg;
+        cirtMeltDmg = tempReactionFinalRate * critDmg;
+        expectMeltDmg = tempReactionFinalRate * expectDmg;
       }
       if([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-        burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURNING_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+        let [tempDmgAntiSectionValue, tempPyroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        pyroAntiProcess = tempPyroAntiProcess();
+
+        let burningRate = 1;
+        const burningUpValueProcessFunc = this.createProcess(burningRate);
+        burningRate += data[Const.PROP_DMG_ELEMENT_BURNING_UP];
+        burningUpValueProcessFunc(burningRate, data[Const.PROP_DMG_ELEMENT_BURNING_UP]);
+        burningRate += elementCataclysmRate;
+        burningRateProcess = burningUpValueProcessFunc(burningRate, elementCataclysmRate);
+        burningBaseProcess = this.createProcess(BASE_BURNING[data[Const.PROP_LEVEL] - 1])();
+        
+        burningDmg = BASE_BURNING[data[Const.PROP_LEVEL] - 1] * burningRate * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
-        superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+        let [tempDmgAntiSectionValue, tempCryoAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
+        cryoAntiProcess = tempCryoAntiProcess();
+
+        let superconductRate = 1;
+        const superconductUpValueProcessFunc = this.createProcess(superconductRate);
+        superconductRate += data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP];
+        superconductUpValueProcessFunc(superconductRate, data[Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP]);
+        superconductRate += elementCataclysmRate;
+        superconductRateProcess = superconductUpValueProcessFunc(superconductRate, elementCataclysmRate);
+        superconductBaseProcess = this.createProcess(BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1])();
+
+        superconductDmg = BASE_SUPERCONDUCT[data[Const.PROP_LEVEL] - 1] * superconductRate * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_ANEMO].includes(elementBonusType)){
-        let tempCryoDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
-        let tempElectroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
-        let tempPyroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
-        let tempHydroDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_HYDRO);
-        let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SWIRL_UP] + elementCataclysmRate);
+        let [tempCryoDmgAntiSectionValue, tempCryoAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_CRYO);
+        let [tempElectroDmgAntiSectionValue, tempElectroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
+        let [tempPyroDmgAntiSectionValue, tempPyroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        let [tempHydroDmgAntiSectionValue, tempHydroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_HYDRO);
+        cryoAntiProcess = tempCryoAntiProcess();
+        electroAntiProcess = tempElectroAntiProcess();
+        pyroAntiProcess = tempPyroAntiProcess();
+        hydroAntiProcess = tempHydroAntiProcess();
+
+        let swirlRate = 1;
+        const swirlUpValueProcessFunc = this.createProcess(swirlRate);
+        swirlRate += data[Const.PROP_DMG_ELEMENT_SWIRL_UP];
+        swirlUpValueProcessFunc(swirlRate, data[Const.PROP_DMG_ELEMENT_SWIRL_UP]);
+        swirlRate += elementCataclysmRate;
+        swirlRateProcess = swirlUpValueProcessFunc(swirlRate, elementCataclysmRate);
+        swirlBaseProcess = this.createProcess(BASE_SWIRL[data[Const.PROP_LEVEL] - 1])();
+
+        let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * swirlRate;
         swirlCryoDmg = swirlBaseDmg * (1 - tempCryoDmgAntiSectionValue);
         swirlElectroDmg = swirlBaseDmg * (1 - tempElectroDmgAntiSectionValue);
         swirlPyroDmg = swirlBaseDmg * (1 - tempPyroDmgAntiSectionValue);
         swirlHydroDmg = swirlBaseDmg * (1 - tempHydroDmgAntiSectionValue);
-        swirlElectroAggravateDmg = BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_15 * (1 + elementSpread) * (1 - tempElectroDmgAntiSectionValue) + swirlElectroDmg;
+
+        let swirlElectroAggravateRate = 1;
+        const swirlElectroAggravateBaseProcessFunc = this.createProcess(swirlElectroAggravateRate);
+        swirlElectroAggravateRate += elementSpread;
+        swirlElectroAggravateBaseProcessFunc(swirlElectroAggravateRate, elementSpread, "+");
+        swirlElectroAggravateRate *= REACTION_RATE_1_15;
+        swirlElectroAggravateRateProcess = swirlElectroAggravateBaseProcessFunc(swirlElectroAggravateRate, REACTION_RATE_1_15, "*", "start");
+        swirlElectroAggravateBaseProcess = this.createProcess(BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1])();
+
+        swirlElectroAggravateDmg = BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * swirlElectroAggravateRate * (1 - tempElectroDmgAntiSectionValue) + swirlElectroDmg;
       }
       if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
-        electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+        let [tempDmgAntiSectionValue, tempElectroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_ELECTRO);
+        electroAntiProcess = tempElectroAntiProcess();
+
+        let electroChargedRate = 1;
+        const electroChargedUpValueProcessFunc = this.createProcess(electroChargedRate);
+        electroChargedRate += data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP];
+        electroChargedUpValueProcessFunc(electroChargedRate, data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP]);
+        electroChargedRate += elementCataclysmRate;
+        electroChargedRateProcess = electroChargedUpValueProcessFunc(electroChargedRate, elementCataclysmRate);
+        electroChargedBaseProcess = this.createProcess(BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1])();
+
+        electroChargedDmg = BASE_ELECTROCHARGED[data[Const.PROP_LEVEL] - 1] * electroChargedRate * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_PHYSICAL].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PHYSICAL);
-        destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
+        let [tempDmgAntiSectionValue, tempPhysicalAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_PHYSICAL);
+        physicalAntiProcess = tempPhysicalAntiProcess();
+
+        let destructionRate = 1;
+        const destructionUpValueProcessFunc = this.createProcess(destructionRate);
+        destructionRate += data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP];
+        destructionUpValueProcessFunc(destructionRate, data[Const.PROP_DMG_ELEMENT_DESTRUCTION_UP]);
+        destructionRate += elementCataclysmRate;
+        destructionRateProcess = destructionUpValueProcessFunc(destructionRate, elementCataclysmRate);
+        destructionBaseProcess = this.createProcess(BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1])();
+
+        destructionDmg = BASE_DESTRUCTION[data[Const.PROP_LEVEL] - 1] * destructionRate * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        let [tempDmgAntiSectionValue, tempPyroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_PYRO);
+        pyroAntiProcess = tempPyroAntiProcess();
+
+        let overloadedRate = 1;
+        const overloadedUpValueProcessFunc = this.createProcess(overloadedRate);
+        overloadedRate += data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP];
+        overloadedUpValueProcessFunc(overloadedRate, data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP]);
+        overloadedRate += elementCataclysmRate;
+        overloadedRateProcess = overloadedUpValueProcessFunc(overloadedRate, elementCataclysmRate);
+        overloadedBaseProcess = this.createProcess(BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1])();
+        
         overloadedDmg = BASE_OVERLOADED[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType)){
+        let shieldRate = 1;
+        const shieldUpValueProcessFunc = this.createProcess(shieldRate);
+        shieldRate += data[Const.PROP_DMG_ELEMENT_SHIELD_UP];
+        shieldUpValueProcessFunc(shieldRate, data[Const.PROP_DMG_ELEMENT_SHIELD_UP]);
+        shieldRate += elementShieldRate;
+        shieldRateProcess = shieldUpValueProcessFunc(shieldRate, elementShieldRate);
+        shieldBaseProcess = this.createProcess(BASE_SHIELD[data[Const.PROP_LEVEL] - 1])();
+
+        shieldSpecialRateProcess = this.createProcess(Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE)();
+
         shieldHp = BASE_SHIELD[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP] + elementShieldRate);
       }
       if([Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)){
-        originAggravateDmg = (dmgSectionValue + BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_15 * (1 + data[Const.PROP_DMG_ELEMENT_AGGRAVATE_UP] + elementSpread)) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
+        let AggravateDmgBase = 1;
+        const AggravateDmgBaseProcessFunc = this.createProcess(AggravateDmgBase);
+        AggravateDmgBase += data[Const.PROP_DMG_ELEMENT_AGGRAVATE_UP];
+        AggravateDmgBaseProcessFunc(AggravateDmgBase, data[Const.PROP_DMG_ELEMENT_AGGRAVATE_UP]);
+        AggravateDmgBase += elementSpread;
+        AggravateDmgBaseProcessFunc(AggravateDmgBase, elementSpread);
+        AggravateDmgBase *= REACTION_RATE_1_15;
+        AggravateDmgBaseProcessFunc(AggravateDmgBase, REACTION_RATE_1_15, "*");
+        AggravateDmgBase *= BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1];
+        aggravateDmgBaseProcess = AggravateDmgBaseProcessFunc(AggravateDmgBase, BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1], "*", "start");
+
+        originAggravateDmg = (dmgSectionValue + AggravateDmgBase) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
         cirtAggravateDmg = originAggravateDmg * (1 + finalCritDmg);
         expectAggravateDmg = originAggravateDmg * (1 - finalCritRate) + cirtAggravateDmg * finalCritRate;
 
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        let [tempDmgAntiSectionValue, tempDendroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        dendroAntiProcess = tempDendroAntiProcess();
+
+        let hyperbloomRate = 1;
+        const hyperbloomUpValueProcessFunc = this.createProcess(hyperbloomRate);
+        hyperbloomRate += data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP];
+        hyperbloomUpValueProcessFunc(hyperbloomRate, data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP]);
+        hyperbloomRate += elementCataclysmRate;
+        hyperbloomRateProcess = hyperbloomUpValueProcessFunc(hyperbloomRate, elementCataclysmRate);
+        hyperbloomBaseProcess = this.createProcess(BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1])();
+
         hyperbloomDmg = BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
+        let spreadDmgBase = 1;
+        const spreadDmgBaseProcessFunc = this.createProcess(spreadDmgBase);
+        spreadDmgBase += data[Const.PROP_DMG_ELEMENT_SPREAD_UP];
+        spreadDmgBaseProcessFunc(spreadDmgBase, data[Const.PROP_DMG_ELEMENT_SPREAD_UP]);
+        spreadDmgBase += elementSpread;
+        spreadDmgBaseProcessFunc(spreadDmgBase, elementSpread);
+        spreadDmgBase *= REACTION_RATE_1_25;
+        spreadDmgBaseProcessFunc(spreadDmgBase, REACTION_RATE_1_25, "*");
+        spreadDmgBase *= BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1];
+        spreadDmgBaseProcess = spreadDmgBaseProcessFunc(spreadDmgBase, BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1], "*", "start");
+
         originSpreadDmg = (dmgSectionValue + BASE_LEVEL_MULTIPLIER[data[Const.PROP_LEVEL] - 1] * REACTION_RATE_1_25 * (1 + data[Const.PROP_DMG_ELEMENT_SPREAD_UP] + elementSpread)) * (1 + dmgUpSectionValue) * (1 - dmgAntiSectionValue) * (1 - defenceSectionValue);
         cirtSpreadDmg = originSpreadDmg * (1 + finalCritDmg);
         expectSpreadDmg = originSpreadDmg * (1 - finalCritRate) + cirtSpreadDmg * finalCritRate;
       }
       if([Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        let [tempDmgAntiSectionValue, tempDendroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        dendroAntiProcess = tempDendroAntiProcess();
+
+        let burgeonRate = 1;
+        const burgeonUpValueProcessFunc = this.createProcess(burgeonRate);
+        burgeonRate += data[Const.PROP_DMG_ELEMENT_BURGEON_UP];
+        burgeonUpValueProcessFunc(burgeonRate, data[Const.PROP_DMG_ELEMENT_BURGEON_UP]);
+        burgeonRate += elementCataclysmRate;
+        burgeonRateProcess = burgeonUpValueProcessFunc(burgeonRate, elementCataclysmRate);
+        burgeonBaseProcess = this.createProcess(BASE_BURGEON[data[Const.PROP_LEVEL] - 1])();
+
         burgeonDmg = BASE_BURGEON[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_BURGEON_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
       }
       if([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)){
-        let tempDmgAntiSectionValue = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        let [tempDmgAntiSectionValue, tempDendroAntiProcess] = this.getDmgAntiSectionValue(data, Const.ELEMENT_DENDRO);
+        dendroAntiProcess = tempDendroAntiProcess();
+
+        let ruptureRate = 1;
+        const ruptureUpValueProcessFunc = this.createProcess(ruptureRate);
+        ruptureRate += data[Const.PROP_DMG_ELEMENT_RUPTURE_UP];
+        ruptureUpValueProcessFunc(ruptureRate, data[Const.PROP_DMG_ELEMENT_RUPTURE_UP]);
+        ruptureRate += elementCataclysmRate;
+        ruptureRateProcess = ruptureUpValueProcessFunc(ruptureRate, elementCataclysmRate);
+        ruptureBaseProcess = this.createProcess(BASE_RUPTURE[data[Const.PROP_LEVEL] - 1])();
+
         ruptureDmg = BASE_RUPTURE[data[Const.PROP_LEVEL] - 1] * (1 + data[Const.PROP_DMG_ELEMENT_RUPTURE_UP] + elementCataclysmRate) * (1 - tempDmgAntiSectionValue);
       }
     }else{
       originDmg = rate * (data[base] ?? 0) * (1 - dmgAntiSectionMinusOnlyValue);
     }
     result = {
+      calcProcessKeyMap: {
+        originDmg: isAbsoluteDmg ? [
+          "dmgSectionValueProcess",
+          "dmgAntiSectionMinusOnlyValueProcess",
+        ] : [
+          "dmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        critDmg: [
+          "dmgSectionValueProcess",
+          "critDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        expectDmg: [
+          "dmgSectionValueProcess",
+          "critExpectDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        originVaporizeDmg: [
+          "dmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+          "vaporProcess",
+        ],
+        cirtVaporizeDmg: [
+          "dmgSectionValueProcess",
+          "critDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+          "vaporProcess",
+        ],
+        expectVaporizeDmg: [
+          "dmgSectionValueProcess",
+          "critExpectDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+          "vaporProcess",
+        ],
+        originMeltDmg: [
+          "dmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+          "meltProcess",
+        ],
+        cirtMeltDmg: [
+          "dmgSectionValueProcess",
+          "critDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+          "meltProcess",
+        ],
+        expectMeltDmg: [
+          "dmgSectionValueProcess",
+          "critExpectDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+          "meltProcess",
+        ],
+        originAggravateDmg: [
+          "dmgSectionValueProcess",
+          "aggravateDmgBaseProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess"
+        ],
+        cirtAggravateDmg: [
+          "dmgSectionValueProcess",
+          "aggravateDmgBaseProcess",
+          "critDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        expectAggravateDmg: [
+          "dmgSectionValueProcess",
+          "aggravateDmgBaseProcess",
+          "critExpectDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        originSpreadDmg: [
+          "dmgSectionValueProcess",
+          "spreadDmgBaseProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess"
+        ],
+        cirtSpreadDmg: [
+          "dmgSectionValueProcess",
+          "spreadDmgBaseProcess",
+          "critDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        expectSpreadDmg: [
+          "dmgSectionValueProcess",
+          "spreadDmgBaseProcess",
+          "critExpectDmgSectionValueProcess",
+          "dmgUpSectionValueProcess",
+          "dmgAntiSectionValueProcess",
+          "defenceSectionValueProcess",
+        ],
+        overloadedDmg:[
+          "overloadedBaseProcess",
+          "overloadedRateProcess",
+          "pyroAntiProcess",
+        ],
+        burningDmg:[
+          "burningBaseProcess",
+          "burningRateProcess",
+          "pyroAntiProcess",
+        ],
+        electroChargedDmg:[
+          "electroChargedRateProcess",
+          "electroChargedBaseProcess",
+          "electroAntiProcess",
+        ],
+        superconductDmg:[
+          "superconductBaseProcess",
+          "superconductRateProcess",
+          "cryoAntiProcess",
+        ],
+        ruptureDmg:[
+          "ruptureBaseProcess",
+          "ruptureRateProcess",
+          "dendroAntiProcess",
+        ],
+        burgeonDmg:[
+          "burgeonBaseProcess",
+          "burgeonRateProcess",
+          "dendroAntiProcess"
+        ],
+        hyperbloomDmg:[
+          "hyperbloomBaseProcess",
+          "hyperbloomRateProcess",
+          "dendroAntiProcess",
+        ],
+        swirlCryoDmg:[
+          "swirlBaseProcess",
+          "swirlRateProcess",
+          "cryoAntiProcess",
+        ],
+        swirlElectroDmg:[
+          "swirlBaseProcess",
+          "swirlRateProcess",
+          "electroAntiProcess",
+        ],
+        swirlElectroAggravateDmg:[
+          "swirlBaseProcess",
+          "swirlRateProcess",
+          "swirlElectroAggravateBaseProcess",
+          "swirlElectroAggravateRateProcess",
+          "electroAntiProcess",
+        ],
+        swirlPyroDmg:[
+          "swirlBaseProcess",
+          "swirlRateProcess",
+          "pyroAntiProcess",
+        ],
+        swirlHydroDmg:[
+          "swirlBaseProcess",
+          "swirlRateProcess",
+          "hydroAntiProcess",
+        ],
+        shieldHp:[
+          "shieldBaseProcess",
+          "shieldRateProcess",
+        ],
+        shieldSpecialHp:[
+          "shieldBaseProcess",
+          "shieldRateProcess",
+          "shieldSpecialRateProcess",
+        ],
+        destructionDmg:[
+          "destructionBaseProcess",
+          "destructionRateProcess",
+          "physicalAntiProcess",
+        ],
+      },
+      calcProcessValMap: {
+        dmgSectionValueProcess: dmgSectionValueProcessFunc(),
+        critRateSectionValueProcess: critRateSectionValueProcessFunc(),
+        critDmgSectionValueProcess: critDmgSectionValueProcessFunc(1 + critDmgSectionValueProcessFunc()[0], "1", "+", "start"),
+        critExpectDmgSectionValueProcess: critExpectDmgSectionValueProcessFunc(),
+        dmgUpSectionValueProcess: dmgUpSectionValueProcessFunc(1 + dmgUpSectionValueProcessFunc()[0], "1", "+", "start"),
+        dmgAntiSectionValueProcess: dmgAntiSectionValueProcessFunc(1 - dmgAntiSectionValueProcessFunc()[0], "1", "-", "start"),
+        dmgAntiSectionMinusOnlyValueProcess: dmgAntiSectionMinusOnlyValueProcessFunc(1 - dmgAntiSectionMinusOnlyValueProcessFunc()[0], "1", "-", "start"),
+        defenceSectionValueProcess: defenceSectionValueProcessFunc(1 - defenceSectionValueProcessFunc()[0], "1", "-", "start"),
+
+        cryoAntiProcess,
+        anemoAntiProcess,
+        physicalAntiProcess,
+        electroAntiProcess,
+        geoAntiProcess,
+        pyroAntiProcess,
+        hydroAntiProcess,
+        dendroAntiProcess,
+        vaporProcess,
+        meltProcess,
+        burningBaseProcess,
+        burningRateProcess,
+        superconductBaseProcess,
+        superconductRateProcess,
+        swirlBaseProcess,
+        swirlRateProcess,
+        swirlElectroAggravateBaseProcess,
+        swirlElectroAggravateRateProcess,
+        electroChargedRateProcess,
+        electroChargedBaseProcess,
+        destructionRateProcess,
+        destructionBaseProcess,
+        overloadedRateProcess,
+        overloadedBaseProcess,
+        shieldRateProcess,
+        shieldBaseProcess,
+        aggravateDmgBaseProcess,
+        hyperbloomRateProcess,
+        hyperbloomBaseProcess,
+        spreadDmgBaseProcess,
+        burgeonRateProcess,
+        burgeonBaseProcess,
+        ruptureRateProcess,
+        ruptureBaseProcess,
+        shieldSpecialRateProcess,
+      },
       elementBonusType: elementBonusType,
       finalCritRate: finalCritRate,
       displayCritRate: displayCritRate,
@@ -1933,6 +2351,7 @@ export class CalculatorService {
     let healingBonusType = param.healingBonusType;
     //計算
     let healing: number = 0;
+    const healingProcessFunc = this.createProcess(healing);
     //特殊
     if(healingBonusType){
       switch(healingBonusType){
@@ -1954,13 +2373,33 @@ export class CalculatorService {
     }
     if(base != undefined && rate != undefined){
       healing += data[base] * rate;
+      healingProcessFunc(healing, `${this.proximateVal(data[base])} ${this.times} ${this.proximateVal(rate)}`, "+");
     }
     if(extra != undefined){
       healing += extra;
+      healingProcessFunc(healing, extra, "+");
     }
-    healing *= (1 + data[Const.PROP_HEALING_BONUS] + data[Const.PROP_REVERSE_HEALING_BONUS] + (healingBonusType?(data[healingBonusType] ?? 0):0));
+    let healingUp = 1;
+    const healingUpProcessFunc = this.createProcess(healingUp);
+    healingUp += data[Const.PROP_HEALING_BONUS];
+    healingUpProcessFunc(healingUp, data[Const.PROP_HEALING_BONUS], "+");
+    healingUp += data[Const.PROP_REVERSE_HEALING_BONUS];
+    healingUpProcessFunc(healingUp, data[Const.PROP_REVERSE_HEALING_BONUS], "+");
+    healingUp += (healingBonusType?(data[healingBonusType] ?? 0):0);
+    healingUpProcessFunc(healingUp, (healingBonusType?(data[healingBonusType] ?? 0):0), "+");
+    healing *= healingUp;
     healing = this.getFinalResCalQueueResult(data, healing, param.finalResCalQueue);
     result = {
+      calcProcessKeyMap:{
+        healing: [
+          "healingProcess",
+          "healingUpProcess",
+        ]
+      },
+      calcProcessValMap: {
+        healingProcess: healingProcessFunc(),
+        healingUpProcess: healingUpProcessFunc(),
+      },
       tempAllDate,
       healing: healing,
     }
@@ -1992,39 +2431,108 @@ export class CalculatorService {
     let shieldElementType = param.shieldElementType;
     //計算
     let shield: number = 0;
+    const shieldProcessFunc = this.createProcess(shield);
     if(base != undefined && rate != undefined){
       shield += data[base] * rate;
+      shieldProcessFunc(shield, `${this.proximateVal(data[base])} ${this.times} ${this.proximateVal(rate)}`, "+");
     }
     if(extra != undefined){
       shield += extra;
+      shieldProcessFunc(shield, extra, "+");
     }
     //特殊
+    let specialUp = 1;
+    const shieldSpecialUpProcessFunc = this.createProcess(specialUp);
     if(shieldBonusType){
       switch(shieldBonusType){
         case Const.PROP_SHIELD_BONUS_NORMAL:
-          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_NORMAL] ?? 0);
+          specialUp += (data[Const.PROP_SHIELD_BONUS_NORMAL] ?? 0);
           break;
         case Const.PROP_SHIELD_BONUS_SKILL:
-          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_SKILL] ?? 0);
+          specialUp += (data[Const.PROP_SHIELD_BONUS_SKILL] ?? 0);
           break;
         case Const.PROP_SHIELD_BONUS_ELEMENTAL_BURST:
-          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_ELEMENTAL_BURST] ?? 0);
+          specialUp += (data[Const.PROP_SHIELD_BONUS_ELEMENTAL_BURST] ?? 0);
           break;
         case Const.PROP_SHIELD_BONUS_WEAPON:
-          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_WEAPON] ?? 0);
+          specialUp += (data[Const.PROP_SHIELD_BONUS_WEAPON] ?? 0);
           break;
         case Const.PROP_SHIELD_BONUS_OTHER:
-          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_OTHER] ?? 0);
+          specialUp += (data[Const.PROP_SHIELD_BONUS_OTHER] ?? 0);
           break;
         case Const.PROP_SHIELD_BONUS_SET:
-          shield *= 1 + (data[Const.PROP_SHIELD_BONUS_SET] ?? 0);
+          specialUp += (data[Const.PROP_SHIELD_BONUS_SET] ?? 0);
           break;
       }
     }
-    shield *= 1 + (data[Const.PROP_DMG_ELEMENT_SHIELD_UP] ?? 0);
+    shieldSpecialUpProcessFunc(specialUp, specialUp - 1, "+");
+    shield *= specialUp;
+    let shiledCommonUp = 1;
+    const shieldCommonUpProcessFunc = this.createProcess(shiledCommonUp);
+    shiledCommonUp += (data[Const.PROP_DMG_ELEMENT_SHIELD_UP] ?? 0);
+    shieldCommonUpProcessFunc(shiledCommonUp, (data[Const.PROP_DMG_ELEMENT_SHIELD_UP] ?? 0), "+")
+    shield *= shiledCommonUp;
     shield = this.getFinalResCalQueueResult(data, shield, param.finalResCalQueue);
+    const specialElementAbsRate = Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE;
+    const geoElementAbsRate = Const.SHIELD_GEO_ELEMENT_ABS_RATE;
+    const specialElementAbsProcess = this.createProcess(specialElementAbsRate)();
+    const geoElementAbsProcess = this.createProcess(geoElementAbsRate)();
     //シールド元素タイプ
     let tempRes: ShieldResult = {
+      calcProcessKeyMap:{
+        shield: [
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldCryo:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldAnemo:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldPhysical:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldElectro:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldGeo:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldPyro:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldHydro:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+        shieldDendro:[
+          "shieldProcess",
+          "shieldSpecialUpProcess",
+          "shieldCommonUpProcess",
+        ],
+      },
+      calcProcessValMap: {
+        shieldProcess: shieldProcessFunc(),
+        shieldSpecialUpProcess: shieldSpecialUpProcessFunc(),
+        shieldCommonUpProcess: shieldCommonUpProcessFunc(),
+        specialElementAbsProcess,
+        geoElementAbsProcess,
+      },
       tempAllDate,
       shield: shield,
       shieldCryo: shield,
@@ -2036,20 +2544,22 @@ export class CalculatorService {
       shieldHydro: shield,
       shieldDendro: shield,
     }
-    const specialElementAbsRate = Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE;
-    const geoElementAbsRate = Const.SHIELD_GEO_ELEMENT_ABS_RATE;
     switch(shieldElementType) {
       case Const.ELEMENT_CRYO:
         tempRes.shieldCryo = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldCryo'].push('specialElementAbsProcess');
         break;
       case Const.ELEMENT_ANEMO:
         tempRes.shieldAnemo = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldAnemo'].push('specialElementAbsProcess');
         break;
       case Const.ELEMENT_PHYSICAL:
         tempRes.shieldPhysical = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldPhysical'].push('specialElementAbsProcess');
         break;
       case Const.ELEMENT_ELECTRO:
         tempRes.shieldElectro = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldElectro'].push('specialElementAbsProcess');
         break;
       case Const.ELEMENT_GEO:
         tempRes.shieldCryo = shield * geoElementAbsRate;
@@ -2060,15 +2570,26 @@ export class CalculatorService {
         tempRes.shieldPyro = shield * geoElementAbsRate;
         tempRes.shieldHydro = shield * geoElementAbsRate;
         tempRes.shieldDendro = shield * geoElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldCryo'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldAnemo'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldPhysical'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldElectro'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldGeo'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldPyro'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldHydro'].push('geoElementAbsRate');
+        tempRes.calcProcessKeyMap['shieldDendro'].push('geoElementAbsRate');
         break;
       case Const.ELEMENT_PYRO:
         tempRes.shieldPyro = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldPyro'].push('specialElementAbsProcess');
         break;
       case Const.ELEMENT_HYDRO:
         tempRes.shieldHydro = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldHydro'].push('specialElementAbsProcess');
         break;
       case Const.ELEMENT_DENDRO:
         tempRes.shieldDendro = shield * specialElementAbsRate;
+        tempRes.calcProcessKeyMap['shieldDendro'].push('specialElementAbsProcess');
         break;
     }
     result = {
@@ -2101,14 +2622,25 @@ export class CalculatorService {
     let rate = param.rate ?? 0;
     //計算
     let product: number = 0;
+    const productProcessFunc = this.createProcess(product);
     if(base != undefined && rate != undefined){
       product += data[base] * rate;
+      productProcessFunc(product, `${this.proximateVal(data[base])} ${this.times} ${this.proximateVal(rate)}`, "+");
     }
     if(extra != undefined){
       product += extra;
+      productProcessFunc(product, extra, "+");
     }
     product = this.getFinalResCalQueueResult(data, product, param.finalResCalQueue);
     result = {
+      calcProcessKeyMap:{
+        product: [
+          "productProcess",
+        ]
+      },
+      calcProcessValMap: {
+        productProcess: productProcessFunc(),
+      },
       tempAllDate,
       product: product,
     }
@@ -4285,9 +4817,11 @@ export class CalculatorService {
     return currentLevel!;
   }
 
-  private getDmgAntiSectionValue(data: Record<string, number>, elementType: string){
+  private getDmgAntiSectionValue(data: Record<string, number>, elementType: string): [number, Function]{
     let tempDmgAntiSectionValue = 0;
+    const tempDmgAntiSectionValueProcess = this.createProcess(tempDmgAntiSectionValue);
     tempDmgAntiSectionValue -= data[Const.PROP_DMG_ANTI_ALL_MINUS];
+    tempDmgAntiSectionValueProcess(tempDmgAntiSectionValue, data[Const.PROP_DMG_ANTI_ALL_MINUS], "-");
     let tempAntiStr = "";
     let tempAntiMinusStr = "";
     switch(elementType){
@@ -4325,11 +4859,15 @@ export class CalculatorService {
         break;
     }
     tempDmgAntiSectionValue += data[tempAntiStr];
+    tempDmgAntiSectionValueProcess(tempDmgAntiSectionValue, data[tempAntiStr], "+", "start");
     tempDmgAntiSectionValue -= data[tempAntiMinusStr];
+    tempDmgAntiSectionValueProcess(tempDmgAntiSectionValue, data[tempAntiMinusStr], "-");
     if(tempDmgAntiSectionValue < 0){
       tempDmgAntiSectionValue = tempDmgAntiSectionValue/2;
+      tempDmgAntiSectionValueProcess(tempDmgAntiSectionValue, 2, "/");
     }
-    return tempDmgAntiSectionValue;
+    tempDmgAntiSectionValueProcess(1 - tempDmgAntiSectionValueProcess()[0], "1", "-", "start");
+    return [tempDmgAntiSectionValue, tempDmgAntiSectionValueProcess];
   }
 
   private getFinalResCalQueueResult(data: Record<string, number>, currentVal: number, finalResCalQueue?: CalcItem[]): number {
@@ -4391,5 +4929,75 @@ export class CalculatorService {
       result = varMap[value];
     }
     return result;
+  }
+  
+  readonly needBracketsSign = ["+", "-"];
+  readonly plus = "&plus;"
+  readonly minus = "&minus;"
+  readonly times = "&times;"
+  readonly divide = "&divide;"
+  private proximateVal(originVal?: number) {
+    if (originVal == 0 || originVal === undefined) {
+      return 0;
+    }
+    return Math.round(originVal * 10000) / 10000;
+  }
+
+  private createProcess(val: number) {
+    let lastValue = val;
+    let processText = lastValue == 0 ? "" : `${this.proximateVal(lastValue)}`;
+    let lastSign = "";
+    return (newVal?: number, changedVal?: number | string, sign: "+"|"-"|"*"|"/" = "+", postion: "start" | "end" = "end"): [number, string] => {
+      if (newVal !== undefined) {
+        let tempChangedVal = undefined;
+        if (typeof changedVal === 'number') {
+          tempChangedVal = this.proximateVal(changedVal);
+        } else {
+          tempChangedVal = changedVal;
+        }
+        if (tempChangedVal) {
+          if (processText == "") {
+            processText = `${tempChangedVal}`;
+          } else if (Math.abs(newVal - lastValue) >= Number.EPSILON) {
+            let signText = "";
+            switch (sign){
+              case "+": {
+                signText = this.plus;
+                break;
+              }
+              case "-": {
+                signText = this.minus;
+                if (postion == "start" && lastSign !== "") {
+                  processText = `(${processText})`;
+                }
+                break;
+              }
+              case "*": {
+                signText = this.times;
+                if (this.needBracketsSign.includes(lastSign)) {
+                  processText = `(${processText})`;
+                }
+                break;
+              }
+              case "/": {
+                signText = this.divide;
+                if (this.needBracketsSign.includes(lastSign) || postion == "start") {
+                  processText = `(${processText})`;
+                }
+              }
+            }
+            const temp_text = `${tempChangedVal}`;
+            if (postion == "start") {
+              processText = temp_text + ` ${signText} ` + processText;
+            } else {
+              processText = processText + ` ${signText} ` + temp_text;
+            }
+            lastSign = sign;
+          }
+        }
+        lastValue = newVal;
+      }
+      return [this.proximateVal(lastValue), processText];
+    }
   }
 }

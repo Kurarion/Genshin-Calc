@@ -40,6 +40,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of dmgTempDataList; index as i">
+    <div echarts *ngIf="showDamageEchartsFlag && currentDamageIndex == i" [options]="damageCalcProcessEchartsOption" [loading]="commonEchartsLoading" class="calc-process-echarts"></div>
     <div echarts *ngIf="showDamageEchartsFlag && currentDamageIndex == i" [options]="damageEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
     <div class="scroll-div clickable">
         <table *ngIf="extraInfoStatus == undefined || dmgDatas[i]['originIndex'] != undefined && extraInfoStatus && extraInfoStatus[$any(dmgDatas[i]['originIndex'])]">
@@ -77,6 +78,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of healingTempDataList; index as i">
+    <div echarts *ngIf="showHealingEchartsFlag && currentHealingIndex == i" [options]="healingCalcProcessEchartsOption" [loading]="commonEchartsLoading" class="calc-process-echarts"></div>
     <div echarts *ngIf="showHealingEchartsFlag && currentHealingIndex == i" [options]="healingEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
     <div class="no-scroll-div clickable">
         <table>
@@ -96,6 +98,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of productTempDataList; index as i">
+    <div echarts *ngIf="showProductEchartsFlag && currentProductIndex == i" [options]="productCalcProcessEchartsOption" [loading]="commonEchartsLoading" class="calc-process-echarts"></div>
     <div echarts *ngIf="showProductEchartsFlag && currentProductIndex == i" [options]="productEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
     <div class="no-scroll-div clickable">
         <table>
@@ -115,6 +118,7 @@
     </div>
 </ng-container>
 <ng-container *ngFor="let temp of shieldTempDataList; index as i">
+    <div echarts *ngIf="showShieldEchartsFlag && currentShieldIndex == i" [options]="shieldCalcProcessEchartsOption" [loading]="commonEchartsLoading" class="calc-process-echarts"></div>
     <div echarts *ngIf="showShieldEchartsFlag && currentShieldIndex == i" [options]="shieldEchartsOption" [loading]="commonEchartsLoading" class="common-echarts"></div>
     <div class="no-scroll-div clickable">
         <table>

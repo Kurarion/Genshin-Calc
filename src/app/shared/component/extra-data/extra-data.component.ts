@@ -137,6 +137,64 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'shieldHydro': 'SHIELD_HYDRO',
     'shieldDendro': 'SHIELD_DENDRO',
   };
+
+  readonly processNameMap: Record<string, string> = {
+    'dmgSectionValueProcess': 'DMG_DMG_SECTION',
+    'critRateSectionValueProcess': 'DMG_CRITE_RATE',
+    'critDmgSectionValueProcess': 'DMG_CRITE_DMG',
+    'critExpectDmgSectionValueProcess': 'DMG_CRITE_EXPECT',
+    'dmgUpSectionValueProcess': 'DMG_DMG_UP',
+    'dmgAntiSectionValueProcess': 'DMG_DMG_ANTI',
+    'dmgAntiSectionMinusOnlyValueProcess': 'DMG_DMG_ANTI_ONLY_MINUS',
+    'defenceSectionValueProcess': 'DMG_DEFENCE_SECTION',
+    'cryoAntiProcess': 'DMG_CRYO_ANTI',
+    'anemoAntiProcess': 'DMG_ANEMO_ANTI',
+    'physicalAntiProcess': 'DMG_PHYSICAL_ANTI',
+    'electroAntiProcess': 'DMG_ELECTRO_ANTI',
+    'geoAntiProcess': 'DMG_GEO_ANTI',
+    'pyroAntiProcess': 'DMG_PYRO_ANTI',
+    'hydroAntiProcess': 'DMG_HYDRO_ANTI',
+    'dendroAntiProcess': 'DMG_DENDRO_ANTI',
+    'vaporProcess': 'DMG_VAPORIZE_RATE',
+    'meltProcess': 'DMG_MELT_RATE',
+    'burningBaseProcess': 'DMG_BURNING_BASE',
+    'burningRateProcess': 'DMG_BURNING_RATE',
+    'superconductBaseProcess': 'DMG_SUPERCONDUCT_BASE',
+    'superconductRateProcess': 'DMG_SUPERCONDUCT_RATE',
+    'swirlBaseProcess': 'DMG_SWIRL_BASE',
+    'swirlRateProcess': 'DMG_SWIRL_RATE',
+    'swirlElectroAggravateBaseProcess': 'DMG_SWIRL_ELECTRO_AGGRAVATE_BASE',
+    'swirlElectroAggravateRateProcess': 'DMG_SWIRL_ELECTRO_AGGRAVATE_RATE',
+    'electroChargedRateProcess': 'DMG_ELECTRO_CHARGED_RATE',
+    'electroChargedBaseProcess': 'DMG_ELECTRO_CHARGED_BASE',
+    'destructionRateProcess': 'DMG_DESTRUCTION_RATE',
+    'destructionBaseProcess': 'DMG_DESTRUCTION_BASE',
+    'overloadedRateProcess': 'DMG_OVERLOADED_RATE',
+    'overloadedBaseProcess': 'DMG_OVERLOADED_BASE',
+    'shieldRateProcess': 'DMG_SHIELD_RATE',
+    'shieldBaseProcess': 'DMG_SHIELD_BASE',
+    'aggravateDmgBaseProcess': 'DMG_AGGRAVATE_BASE',
+    'spreadDmgBaseProcess': 'DMG_SPREAD_BASE',
+    'hyperbloomRateProcess': 'DMG_HYPER_BLOOM_RATE',
+    'hyperbloomBaseProcess': 'DMG_HYPER_BLOOM_BASE',
+    'burgeonRateProcess': 'DMG_BURGEON_RATE',
+    'burgeonBaseProcess': 'DMG_BURGEON_BASE',
+    'ruptureRateProcess': 'DMG_RUPTURE_RATE',
+    'ruptureBaseProcess': 'DMG_RUPTURE_BASE',
+    'shieldSpecialRateProcess': 'DMG_SHIELD_SPECIAL_RATE',
+
+    'healingProcess': 'HEALING_BASE',
+    'healingUpProcess': 'HEALING_UP',
+
+    'shieldProcess': 'SHIELD_BASE',
+    'shieldSpecialUpProcess': 'SHIELD_SPECIAL_UP',
+    'shieldCommonUpProcess': 'SHIELD_COMMON_UP',
+    'specialElementAbsProcess': 'SHIELD_SPECIAL_ELEMENT_ABS',
+    'geoElementAbsProcess': 'SHIELD_GEO_ELEMENT_ABS',
+
+    'productProcess': 'PRODUCT_BASE',
+  };
+
   readonly specialColorMap: Record<string, string|undefined> = {
     'overloadedDmg': this.colorMap["PYRO"],
     'burningDmg': this.colorMap["PYRO"],
@@ -366,6 +424,72 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   shieldEchartsOption: EChartsOption = {}
   //生成物ECharts設定
   productEchartsOption: EChartsOption = {}
+  //共通計算過程ECharts設定
+  commonCalcProcessEchartsOption: EChartsOption = {
+    title: {
+      subtext: '',
+      left: 'center'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: (param: any) => {
+        let result = "";
+        result += `<div style="margin: 0px 0 0;line-height:1.1;">`;
+        result += `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${param.color};"></span>`;
+        result += `<span style="font-size:14px;color:#666;font-weight:400;margin-left:2px;margin-right:5px;">`;
+        result += `${param.value.name}<br>`;
+        result += `</span>`;
+        result += `<div style="height:8px"></div>`;
+        result += `<span style="margin-right:14px;"></span>`;
+        if (param.value.processPrefix) {
+          result += `<span>${param.value.processPrefix}</span>`;
+        }
+        if (param.value.processSuffix) {
+          result += `<span>${param.value.process}</span>`;
+          result += `<div style="height:4px"></div>`;
+          result += `<span style="font-size:14px;color:#666;font-weight:700">`;
+          result += `${param.value.processSuffix}`;
+          result += `</span>`;
+        } else {
+          result += `<span style="font-size:14px;color:#666;font-weight:700">`;
+          result += `${param.value.process}`;
+          result += `</span>`;
+        }
+        result += `</div>`;
+        
+        return result;
+      },
+    },
+    legend: {
+      align: 'auto'
+    },
+    grid: {
+      containLabel: true
+    },
+    dataset: {
+      source: []
+    },
+    series: [
+      {
+        name: '',
+        type: 'pie',
+        radius: [10, 65],
+        center: ['50%', '50%'],
+        roseType: 'area',
+        itemStyle: {
+          borderRadius: 5
+        }
+      }
+    ]
+  };
+  //ダメージ計算過程ECharts設定
+  damageCalcProcessEchartsOption: EChartsOption = {}
+  //治療計算過程ECharts設定
+  healingCalcProcessEchartsOption: EChartsOption = {}
+  //バリア計算過程ECharts設定
+  shieldCalcProcessEchartsOption: EChartsOption = {}
+  //生成物計算過程ECharts設定
+  productCalcProcessEchartsOption: EChartsOption = {}
   //言語検知結果
   langChange!: Subscription
   //元素付与変更検知結果
@@ -616,6 +740,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     this.commonEchartsLoading = true;
     //設定名
     let currentOptionProp: string = "";
+    //計算過程設定名
+    let currentClacProcessOptionProp: string = "";
     //結果名
     let currentResultProp: string = "";
     //数値名
@@ -635,6 +761,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     switch(type){
       case type_damage:
         currentOptionProp = "damageEchartsOption";
+        currentClacProcessOptionProp = "damageCalcProcessEchartsOption";
         currentResultProp = "lastDamageCalcResults";
         currentProp = this.currentDamageProp;
         currentIndex = this.currentDamageIndex;
@@ -646,6 +773,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         break;
       case type_healing:
         currentOptionProp = "healingEchartsOption";
+        currentClacProcessOptionProp = "healingCalcProcessEchartsOption";
         currentResultProp = "lastHealingCalcResults";
         currentProp = this.currentHealingProp;
         currentIndex = this.currentHealingIndex;
@@ -657,6 +785,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         break;
       case type_shield:
         currentOptionProp = "shieldEchartsOption";
+        currentClacProcessOptionProp = "shieldCalcProcessEchartsOption";
         currentResultProp = "lastShieldCalcResults";
         currentProp = this.currentShieldProp;
         currentIndex = this.currentShieldIndex;
@@ -668,6 +797,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         break;
       case type_product:
         currentOptionProp = "productEchartsOption";
+        currentClacProcessOptionProp = "productCalcProcessEchartsOption";
         currentResultProp = "lastProductCalcResults";
         currentProp = this.currentProductProp;
         currentIndex = this.currentProductIndex;
@@ -695,6 +825,10 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
     //ECharts設定をリセット
     (this as any)[currentOptionProp] = this.deepClone(this.commonEchartsOption);
+    (this as any)[currentClacProcessOptionProp] = this.deepClone(this.commonCalcProcessEchartsOption);
+    //ーーーーーーーーーーーーーー
+    //ーーーーダメージ計算ーーーー
+    //ーーーーーーーーーーーーーー
     //追加属性
     const extraData: Record<string, number>={};
     //追加属性初期化
@@ -795,7 +929,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
     //変更のみの属性を絞り込む
     const hiddenIndexArray = [];
-    for(let i = 0; i < this.subs.length; ++i){
+    for(let i = 0; i < this.subs.length + smeltingPlusTimes; ++i){
       const isAllSame = dataSetItems.every((currentResultList: any[]) => {
         return currentResultList[i + 1] == currentResultList[currentResultList.length - 1];
       })
@@ -829,6 +963,98 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     if(!Array.isArray(temp5)){
       temp5!.subtext = dmgTitle;
     }
+    //ーーーーーーーーーーーーーー
+    //ーーーー　計算過程　ーーーー
+    //ーーーーーーーーーーーーーー
+    const currentClacResult = valueFunc(this.characterIndex, valueParam);
+    const calcProcessDataList: any[] = [];
+    let alignedCalcProcessDataList: any[] = [];
+    let minVal = Infinity;
+    let maxVal = -Infinity;
+    const MaxRate = 6;
+    const DistanceRate = 1;
+    const processKeys: string[] = [];
+    const valueSortedKey: string[] = [];
+    (currentClacResult.calcProcessKeyMap[currentProp] as string[]).forEach((key: string)=>{
+      const tempValues = currentClacResult.calcProcessValMap[key];
+      processKeys.push(this.processNameMap[key]);
+      const needRes = tempValues[1].includes("&");
+      let processPrefix = "";
+      let processSuffix = "";
+      if (needRes) {
+        processPrefix = "";
+        processSuffix = `&equals; ${tempValues[0]}`;
+      }
+      calcProcessDataList.push({
+        name: key,
+        value: tempValues[0],
+        process: tempValues[1],
+        processPrefix,
+        processSuffix,
+      });
+    })
+    //ソート
+    calcProcessDataList.slice().sort((a: any, b: any) => {
+      return b.value - a.value;
+    }).forEach((val: any, index: number, array: any[]) => {
+      if (index == 0) {
+        maxVal = val.value;
+      }
+      if (index == array.length - 1) {
+        minVal = val.value;
+      }
+      valueSortedKey.push(val.name);
+    })
+    //位置調整
+    let currentY = '50%';
+    switch(calcProcessDataList.length){
+      case 0:
+      case 1:
+        currentY = '50%';
+        break;
+      case 2:
+        currentY = '55%';
+        break;
+      case 3:
+        currentY = '57%';
+        break;
+      case 4:
+        currentY = '60%';
+        break;
+      case 5:
+        currentY = '60%';
+        break;
+      case 6:
+        currentY = '63%';
+        break;
+      default:
+        currentY = '65%';
+        break;
+    }
+    ((this as any)[currentClacProcessOptionProp]!.series![0].center as any)[1] = currentY;
+    //title設定更新
+    const processAwaitArray: Promise<string>[] = [];
+    processKeys.forEach ((key: string)=>{
+      processAwaitArray.push(lastValueFrom(this.translateService.get(`GENSHIN.PROCESS.${key}`)));
+    })
+    const processNames = await Promise.all(processAwaitArray);
+    //再計算
+    alignedCalcProcessDataList = calcProcessDataList.map((val: any, index: number) => {
+      const currentValRate = val.value / minVal;
+      const currentValIndex = valueSortedKey.indexOf(val.name);
+      return {
+        name: processNames[index],
+        value: currentValRate >= MaxRate ? (MaxRate - DistanceRate * currentValIndex) * minVal : val.value,
+        process: val.process,
+        processPrefix: val.processPrefix,
+        processSuffix: val.processSuffix,
+      }
+    })
+    const temp6 = (this as any)[currentClacProcessOptionProp]!.dataset;
+    if(!Array.isArray(temp6)){
+      (temp6!.source as any[]) = alignedCalcProcessDataList;
+    }
+
     this.commonEchartsLoading = false;
   }
 
