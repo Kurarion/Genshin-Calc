@@ -1,0 +1,45 @@
+name: Deploy Actions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '^16.20.2'
+
+      - name: Install Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: '^1.16.3'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Golang Script
+        run: go run GenshinData -resUrl=${{ secrets.RES_URL }}
+
+      - name: Build Project
+        run: npx ng build --output-path=dist
+
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v5.0.3
+        with:
+            REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+            REMOTE_USER: ${{ secrets.SERVER_USER }}
+            REMOTE_PORT: ${{ secrets.SERVER_PORT }}
+            SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
+            SOURCE: "dist/"
+            TARGET: ${{ secrets.PROJECT_PATH }}
+            ARGS: "-rDzv -i"
+            EXCLUDE: "/dist/, /node_modules/"
