@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType, TeamService, CalcUnit, CalcItem, TYPE_RELATION } from 'src/app/shared/shared.module';
+import { CharacterService, Const, character, weapon, CharStatus, EnemyService, enemy, EnemyStatus, ExtraDataService, WeaponService, WeaponStatus, ExtraCharacterData, ExtraSkillBuff, ExtraStatus, CharSkill, ExtraSkillInfo, WeaponSkillAffix, ExtraCharacterSkills, CharSkills, artifactStatus, ArtifactService, ExtraArtifact, ExtraArtifactSetData, ArtifactSetAddProp, OtherService, OtherStorageInfo, WeaponType, ElementType, TeamService, CalcUnit, CalcItem, TYPE_RELATION, TYPE_SKILL } from 'src/app/shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 const name_normal = Const.NAME_SKILLS_NORMAL;
@@ -2757,11 +2757,12 @@ export class CalculatorService {
             let attackBonusType = damageInfo.attackBonusType!;
             let elementBonusType = damageInfo.elementBonusType!;
             let rate = value;
+            const originRateForAttach = rate;
             if(damageInfo.originSkills){
               for(let i = 0; i < damageInfo.originSkills.length; ++i){
                 let originRateInfo = characterData!.skills![damageInfo.originSkills[i] as keyof CharSkills] as CharSkill;
                 let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkills[i]);
-                let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexes![i]]
+                let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexes![i]];
                 switch(damageInfo.originRelations![i]){
                   case "*":
                     rate *= originRate
@@ -2776,6 +2777,33 @@ export class CalculatorService {
                     rate /= originRate
                     break;
                 }
+                //付属
+                const originAttachSkills = damageInfo.originAttachSkills ?? [];
+                originAttachSkills.forEach((attachSkills: TYPE_SKILL[], attachSkillsIndex: number) => {
+                  const attachIndexes = damageInfo!.originAttachIndexes![attachSkillsIndex];
+                  let temp: number[] = [];
+                  attachSkills.forEach((attachSkill: TYPE_SKILL) => {
+                    const originAttachRateInfo = characterData!.skills![attachSkill as keyof CharSkills] as CharSkill;
+                    const originAttachSkillLevel = this.getCharacterSkillLevel(indexStr, attachSkill);
+                    let originAttachRate = originAttachRateInfo.paramMap[originAttachSkillLevel][attachIndexes![i]];
+                    switch(damageInfo!.originRelations![i]){
+                      case "*":
+                        originAttachRate *= originRateForAttach;
+                        break;
+                      case "+":
+                        originAttachRate += originRateForAttach;
+                        break;
+                      case "-":
+                        originAttachRate -= originRateForAttach;
+                        break;
+                      case "/":
+                        originAttachRate /= originRateForAttach;
+                        break;
+                    }
+                    temp.push(originAttachRate);
+                  })
+                  rateAttach.push(temp);
+                })
               }
             }
             params.push({
@@ -2814,11 +2842,12 @@ export class CalculatorService {
                 rateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
                 rate = rateInfo.paramMap[currentLevel!][valueIndex];
               }
+              const originRateForAttach = rate;
               if(damageInfo.originSkills){
                 for(let i = 0; i < damageInfo.originSkills.length; ++i){
                   let originRateInfo = characterData!.skills![damageInfo.originSkills[i] as keyof CharSkills] as CharSkill;
                   let originSkillLevel = this.getCharacterSkillLevel(indexStr, damageInfo.originSkills[i]);
-                  let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexes![i]]
+                  let originRate = originRateInfo.paramMap[originSkillLevel][damageInfo.originIndexes![i]];
                   switch(damageInfo.originRelations![i]){
                     case "*":
                       rate *= originRate
@@ -2833,6 +2862,33 @@ export class CalculatorService {
                       rate /= originRate
                       break;
                   }
+                  //付属
+                  const originAttachSkills = damageInfo.originAttachSkills ?? [];
+                  originAttachSkills.forEach((attachSkills: TYPE_SKILL[], attachSkillsIndex: number) => {
+                    const attachIndexes = damageInfo!.originAttachIndexes![attachSkillsIndex];
+                    let temp: number[] = [];
+                    attachSkills.forEach((attachSkill: TYPE_SKILL) => {
+                      const originAttachRateInfo = characterData!.skills![attachSkill as keyof CharSkills] as CharSkill;
+                      const originAttachSkillLevel = this.getCharacterSkillLevel(indexStr, attachSkill);
+                      let originAttachRate = originAttachRateInfo.paramMap[originAttachSkillLevel][attachIndexes![i]];
+                      switch(damageInfo!.originRelations![i]){
+                        case "*":
+                          originAttachRate *= originRateForAttach;
+                          break;
+                        case "+":
+                          originAttachRate += originRateForAttach;
+                          break;
+                        case "-":
+                          originAttachRate -= originRateForAttach;
+                          break;
+                        case "/":
+                          originAttachRate /= originRateForAttach;
+                          break;
+                      }
+                      temp.push(originAttachRate);
+                    })
+                    rateAttach.push(temp);
+                  })
                 }
               }
               let base = damageInfo.base!;

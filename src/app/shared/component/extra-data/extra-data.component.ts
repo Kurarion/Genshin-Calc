@@ -1064,6 +1064,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       this.extraInfoStatus[index] = flag;
       this.showDamageEchartsFlag = false;
     }
+    setTimeout(()=>{
+      this.relayoutMsgService.update("+/-")
+    }, 50);
   }
 
   private getDmgInfos(){

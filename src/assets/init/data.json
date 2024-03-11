@@ -13056,6 +13056,166 @@
                     }
                 ]
             }
+        },
+        "10000094": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,2,3,4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [5,6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "indexesAttach": [[1]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["DEFENSE"],
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [4],
+                            "indexesAttach": [[5]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["DEFENSE"],
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "indexesAttach": [[1]],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "baseAttach": ["DEFENSE"],
+                            "elementBonusType": "DMG_BONUS_GEO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "overrideElement":"DMG_BONUS_GEO"
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "showIndex": 1,
+                                "setTos": ["VAR_CHARA_1"],
+                                "settingType":"slider",
+                                "sliderInitialValue":1,
+                                "sliderMin":1,
+                                "sliderMax":2,
+                                "sliderStep":1,
+                                "title": "BUFF.COMMON_TIMES.TITLE"
+                            }]
+                        },
+                        {
+                            "damage": {
+                                "indexes": [0],
+                                "originSkills": ["skill"],
+                                "originIndexes": [4],
+                                "originAttachSkills": [["skill"]],
+                                "originAttachIndexes": [[5]],
+                                "originRelations": ["*"],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "baseAttach": ["DEFENSE"],
+                                "finalResCalQueue":[
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation":"+",
+                                                "variable":"VAR_CHARA_1"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["DMG_BONUS_GEO"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "1": [
+                        {
+                            "damage": {
+                                "indexes": [2],
+                                "originSkills": ["skill"],
+                                "originIndexes": [0],
+                                "originAttachSkills": [["skill"]],
+                                "originAttachIndexes": [[1]],
+                                "originRelations": ["*"],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "baseAttach": ["DEFENSE"],
+                                "elementBonusType": "DMG_BONUS_GEO",
+                                "attackBonusType": "DMG_BONUS_SKILL"
+                            }
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "base": "DEFENSE",
+                                "target":["DMG_VAL_UP_NORMAL"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ]
+            }
         }
     },
     "weapons": {
@@ -13766,6 +13926,42 @@
                         "sliderMax":2,
                         "sliderStep":1,
                         "sliderInitialValue": 0
+                    }]
+                }
+            ]
+        },
+        "11514": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["DEFENSE_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 2,
+                        "target": ["DMG_BONUS_SKILL"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_NORMAL"],
+                        "settingType": "switch",
+                        "defaultEnable": false
+                    },{
+                        "index": 2,
+                        "target": ["DMG_BONUS_SKILL"]
                     }]
                 }
             ]

@@ -85,6 +85,8 @@ export interface ExtraSkillDamage {
   //連携スキル
   originSkills?: TYPE_SKILL[];
   originIndexes?: number[];
+  originAttachSkills?: TYPE_SKILL[][];
+  originAttachIndexes?: number[][];
   originRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
   indexes?: number[];
