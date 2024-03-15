@@ -4,7 +4,7 @@
     </div>
     <div class="container-buttons">
         <div>
-            <button (click)="scrollToTop()" matRipple mat-mini-fab matTooltip="To top" matTooltipPosition="left" class="icon-common mat-elevation-z2" aria-label="To top">
+            <button *ngIf="showToTop" @showChange (click)="scrollToTop()" matRipple mat-mini-fab matTooltip="To top" matTooltipPosition="left" class="icon-common mat-elevation-z2" aria-label="To top">
                 <mat-icon>keyboard_arrow_up</mat-icon>
             </button>
         </div>

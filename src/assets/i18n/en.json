@@ -40,10 +40,10 @@
     "GOBLET": "Goblet",
     "CIRCLET": "Circlet",
     "MAIN": "Main Stat",
-    "SUB1": "Substat 1",
-    "SUB2": "Substat 2",
-    "SUB3": "Substat 3",
-    "SUB4": "Substat 4",
+    "SUB1": "Sub Stat 1",
+    "SUB2": "Sub Stat 2",
+    "SUB3": "Sub Stat 3",
+    "SUB4": "Sub Stat 4",
     "SET1": "Set 1",
     "SET2": "Set 2"
   },
@@ -476,6 +476,7 @@
     "NO_RESULT": "Invalid calculation."
   },
   "SW": {
+    "HAS_NEW": "New version found, start updating...",
     "READY": "Data update completed!;;Reload"
   },
   "TEAM": {
@@ -591,6 +592,19 @@
       "CANCEL": "Cancel", 
       "SUCCESS": "Import succeeded!",
       "FAILED": "Import failed."
+    }
+  },
+  "SYS_INIT": {
+    "JSON": {
+      "DOWNLOAD_TITLE": "Data Loading...",
+      "DATA_CONFIG": "Configuration Data",
+      "DATA_CHIP": "Artifact Tag Data",
+      "DATA_GENSHIN_AVATAR": "Character Data",
+      "DATA_GENSHIN_WEAPON": "Weapon Data",
+      "DATA_GENSHIN_MONSTER": "Enemy Data",
+      "DATA_GENSHIN_RELIQUARY_SET": "Artifact Set Data",
+      "DATA_GENSHIN_RELIQUARY_MAIN": "Artifact Main Stat Data",
+      "DATA_GENSHIN_RELIQUARY_SUB": "Artifact Sub Stat Data"
     }
   }
 }

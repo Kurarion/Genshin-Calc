@@ -99,6 +99,40 @@ export class Const {
   static readonly MENU_CHARACTER = 'character';
 
   //*********************************
+  //            システム
+  //*********************************
+  static readonly SYS_JSON_DATA_CONFIG = 'DATA_CONFIG';
+  static readonly SYS_JSON_DATA_CHIP = 'DATA_CHIP';
+  static readonly SYS_JSON_DATA_GENSHIN_AVATAR = 'DATA_GENSHIN_AVATAR';
+  static readonly SYS_JSON_DATA_GENSHIN_WEAPON = 'DATA_GENSHIN_WEAPON';
+  static readonly SYS_JSON_DATA_GENSHIN_MONSTER = 'DATA_GENSHIN_MONSTER';
+  static readonly SYS_JSON_DATA_GENSHIN_RELIQUARY_SET = 'DATA_GENSHIN_RELIQUARY_SET';
+  static readonly SYS_JSON_DATA_GENSHIN_RELIQUARY_MAIN = 'DATA_GENSHIN_RELIQUARY_MAIN';
+  static readonly SYS_JSON_DATA_GENSHIN_RELIQUARY_SUB = 'DATA_GENSHIN_RELIQUARY_SUB';
+
+  static readonly SYS_JSON_URLS: Record<string, string> = {
+    [this.SYS_JSON_DATA_CONFIG]: "assets/init/data.json",
+    [this.SYS_JSON_DATA_CHIP]: "assets/init/chip.json",
+    [this.SYS_JSON_DATA_GENSHIN_AVATAR]: "assets/genshin/avatar_map.json",
+    [this.SYS_JSON_DATA_GENSHIN_WEAPON]: "assets/genshin/weapon_map.json",
+    [this.SYS_JSON_DATA_GENSHIN_MONSTER]: "assets/genshin/monster_map.json",
+    [this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SET]: "assets/genshin/reliquary_set_map.json",
+    [this.SYS_JSON_DATA_GENSHIN_RELIQUARY_MAIN]: "assets/genshin/reliquary_main_map.json",
+    [this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SUB]: "assets/genshin/reliquary_affix_map.json",
+  }
+
+  static readonly SYS_JSON_LIST: string[] = [
+    this.SYS_JSON_DATA_CONFIG,
+    this.SYS_JSON_DATA_CHIP,
+    this.SYS_JSON_DATA_GENSHIN_AVATAR,
+    this.SYS_JSON_DATA_GENSHIN_WEAPON,
+    this.SYS_JSON_DATA_GENSHIN_MONSTER,
+    this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SET,
+    this.SYS_JSON_DATA_GENSHIN_RELIQUARY_MAIN,
+    this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SUB,
+  ]
+
+  //*********************************
   //            スキルなど
   //*********************************
   static readonly NAME_SKILLS = 'skills';

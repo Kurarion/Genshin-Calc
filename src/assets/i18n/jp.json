@@ -476,6 +476,7 @@
     "NO_RESULT": "無効な計算です。"
   },
   "SW": {
+    "HAS_NEW": "新しいバージョンが見つかりました。データ更新中...",
     "READY": "データ更新完了！;;リロード"
   },
   "TEAM": {
@@ -591,6 +592,19 @@
       "CANCEL": "キャンセル",
       "SUCCESS": "インポートに成功しました!",
       "FAILED": "インポートに失敗しました。"
+    }
+  },
+  "SYS_INIT": {
+    "JSON": {
+      "DOWNLOAD_TITLE": "データ読み込み中...",
+      "DATA_CONFIG": "計算用設定データ",
+      "DATA_CHIP": "聖遺物タグデータ",
+      "DATA_GENSHIN_AVATAR": "キャラクターデータ",
+      "DATA_GENSHIN_WEAPON": "武器データ",
+      "DATA_GENSHIN_MONSTER": "敵データ",
+      "DATA_GENSHIN_RELIQUARY_SET": "聖遺物セットデータ",
+      "DATA_GENSHIN_RELIQUARY_MAIN": "聖遺物メイン属性データ",
+      "DATA_GENSHIN_RELIQUARY_SUB": "聖遺物サブ属性データ"
     }
   }
 }

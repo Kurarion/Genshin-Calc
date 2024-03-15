@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CharacterQueryParam, CharacterService, ConfirmDialogComponent, ConfirmDialogData, Const, EnkaService, HttpService, LanguageService, MainQueryParam, ManualDialogComponent, ManualDialogData, SettingService, TYPE_SYS_LANG, TextInputDialogComponent, OverlayService } from 'src/app/shared/shared.module';
+import { CharacterQueryParam, CharacterService, ConfirmDialogComponent, ConfirmDialogData, Const, EnkaService, HttpService, LanguageService, MainQueryParam, ManualDialogComponent, ManualDialogData, SettingService, TYPE_SYS_LANG, TextInputDialogComponent, OverlayService, GenshinDataService } from 'src/app/shared/shared.module';
 import { homePageImgLoadAnimation, homePageOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN } from 'src/animation';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 
 const HOMEPAGE_BG = "assets/init/homePageBG-compress.png";
@@ -31,6 +32,12 @@ export class MainComponent implements OnInit, OnDestroy {
   otherState = CSS_STATUS_BEFORE;
   //言語
   currentLanguage!: TYPE_SYS_LANG;
+  //システムデータダウンロード状態
+  jsonDownloadStatus!: Map<string, number>;
+  //初期ロードフラグ
+  showLoadStatus: boolean = false;
+  //subscription
+  subscriptions!: Subscription[];
 
   constructor(private httpService: HttpService,
     private languageService: LanguageService,
@@ -42,17 +49,34 @@ export class MainComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private matDialog: MatDialog,
     private matSnackBar: MatSnackBar,
-    private overlayService: OverlayService,) {
+    private overlayService: OverlayService,
+    private genshinDataService: GenshinDataService,) {
     //初期言語設定
     this.currentLanguage = this.languageService.getCurrentLang();
     //言語変更検知
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
       this.currentLanguage = lang;
     })
-    //遅延CSSステータス変更
-    setTimeout(() => {
-      this.otherState = CSS_STATUS_FIN;
-    }, 100)
+    //ダウンロード状態初期化
+    this.jsonDownloadStatus = this.genshinDataService.getAllJsonDownloadStatus();
+    //初期ロードフラグ
+    if (this.jsonDownloadStatus.size < 1) {
+      this.showLoadStatus = true;
+    } else {
+      this.jsonDownloadStatus.forEach((v) => {
+        if (v < 100) {
+          this.showLoadStatus = true;
+        }
+      })
+    }
+    //データ変更検知
+    this.subscriptions = [];
+    this.subscriptions.push(this.genshinDataService.status().subscribe(()=>{
+      setTimeout(() => {
+        this.showLoadStatus = false;
+        this.otherState = CSS_STATUS_FIN;
+      }, 1000);
+    }));
   }
 
   ngOnInit(): void {
@@ -127,6 +151,12 @@ export class MainComponent implements OnInit, OnDestroy {
     this.backgroundLoadFlg = false;
     this.otherState = CSS_STATUS_BEFORE;
     this.imgState = CSS_STATUS_BEFORE;
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.otherState = CSS_STATUS_FIN;
+    })
   }
 
   //キャッシュ削除

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { artifactSet, character, ChipData, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
 
 @Injectable({
@@ -16,7 +17,30 @@ export class GenshinDataService {
   static dataChip: Record<string, ChipData[]>;
   static dataExtra: ExtraData;
 
+  private updateSubject: Subject<void> = new Subject<void>();
+  private updateSubject$: Observable<void> = this.updateSubject.asObservable();
+  private jsonDownloadStatus: Map<string, number> = new Map();
+
   constructor() { }
+
+  status() {
+    return this.updateSubject$;
+  }
+
+  update() {
+    this.updateSubject.next();
+  }
+
+  getJsonDownloadStatus(fileName: string){
+    if(!this.jsonDownloadStatus.has(fileName)){
+      this.jsonDownloadStatus.set(fileName, 0);
+    }
+    return this.jsonDownloadStatus.get(fileName);
+  }
+
+  getAllJsonDownloadStatus() {
+    return this.jsonDownloadStatus;
+  }
   
   static initCharacterData(data: any){
     this.dataCharacter = data;

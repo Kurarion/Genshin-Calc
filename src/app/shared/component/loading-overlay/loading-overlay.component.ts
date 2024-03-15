@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { GlobalProgressService } from 'src/app/shared/shared.module';
+
 
 @Component({
   selector: 'app-loading-overlay',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingOverlayComponent implements OnInit {
 
-  constructor() { }
+  value!: Observable<number>;
+  constructor(private globalProgressService: GlobalProgressService) {
+    this.value = globalProgressService.getValue();
+  }
 
   ngOnInit(): void {
   }

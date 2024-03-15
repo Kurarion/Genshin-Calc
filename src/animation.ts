@@ -1,6 +1,45 @@
 import { animate, animateChild, group, keyframes, query, state, style, transition, trigger } from "@angular/animations";
 
-export const routerAnimation = trigger('routeAnimations', []);
+export const routerAnimation = trigger(
+    'routeAnimations',
+    [
+        // transition('homePage => *', [
+        //     query(
+        //         ':leave',
+        //         [
+        //             style({ position: 'absolute' }),
+        //             style({ opacity: 0.4 }),
+        //             animate('500ms ease-out', style({ opacity: 0 })),
+        //             animateChild(),
+        //         ]
+        //     )
+        // ]),
+        // transition('* <=> *', [
+        //     query(
+        //         ':leave',
+        //         [
+        //             style({ position: 'absolute' }),
+        //             style({ opacity: 0.16 }),
+        //             animate('500ms ease-out', style({ opacity: 0 })),
+        //             animateChild(),
+        //         ],
+        //         { optional: true }
+        //     )
+        // ]),
+        transition('* => homePage', [
+            query(
+                ':leave',
+                [
+                    style({ position: 'absolute' }),
+                    style({ opacity: 0.16 }),
+                    animateChild(),
+                    animate('0.25s ease-out', style({ opacity: 0 })),
+                ],
+                { optional: true }
+            )
+        ]),
+    ]
+);
 
 export const STATE_SHOW = 'show';
 export const STATE_HIDDEN = 'hidden';
@@ -29,6 +68,18 @@ export const footerContentAnimation = trigger(
         state(DISAPPEAR, style({ opacity: 0 })),
         transition(DISAPPEAR + ' <=> ' + SHOW, [
             animate('0.5s')
+        ])
+    ]
+)
+export const buttonShowHideAnimation = trigger(
+    'showChange',
+    [
+        transition(':enter', [
+            style({ opacity: 0 }),
+            animate('0.25s', style({ opacity: 1 })),
+        ]),
+        transition(':leave', [
+            animate('0.25s', style({ opacity: 0 }))
         ])
     ]
 )
@@ -66,6 +117,9 @@ export const homePageOtherLoadAnimation = trigger(
         ]),
         transition(CSS_STATUS_FIN + '=>' + CSS_STATUS_BEFORE, [
             animate('0.2s')
+        ]),
+        transition(':leave', [
+            animate('0.4s', style({ opacity: 0 }))
         ])
     ]
 )

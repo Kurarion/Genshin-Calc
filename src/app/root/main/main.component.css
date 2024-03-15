@@ -41,6 +41,7 @@
 
 :host ::ng-deep .menu-sidenav > div:first-child {
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* .sidenav-content {

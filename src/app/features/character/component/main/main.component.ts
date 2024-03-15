@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData, DPSService, ExtraInfoService } from 'src/app/shared/shared.module';
-import { characterMainImgLoadAnimation, characterMainOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN } from 'src/animation';
+import { characterMainImgLoadAnimation, characterMainOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN, buttonShowHideAnimation, SHOW, DISAPPEAR } from 'src/animation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { map, takeUntil, Observable, Subject, Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import MagicGrid from "magic-grid"
+import MagicGrid from "magic-grid";
 
 const WIDTH_DECREASE = 65;
 
@@ -18,7 +18,8 @@ const WIDTH_DECREASE = 65;
   styleUrls: ['./main.component.css'],
   animations: [
     characterMainImgLoadAnimation,
-    characterMainOtherLoadAnimation
+    characterMainOtherLoadAnimation,
+    buttonShowHideAnimation,
   ]
 })
 export class MainComponent implements OnInit, OnDestroy {
@@ -90,7 +91,10 @@ export class MainComponent implements OnInit, OnDestroy {
   private zIndexes!: string[];
   //コンテンツ
   @ViewChild('main') main!: ElementRef;
-
+  //ToTopボタン表示状態
+  showToTop: boolean = false;
+  //スクロール処理メソッド
+  scrollMethod: (this: HTMLElement, ev: Event) => any = this.onWindowScroll.bind(this);
   constructor(private httpService: HttpService,
     private route: ActivatedRoute, 
     private characterService: CharacterService,
@@ -142,10 +146,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
       this.currentLanguage = lang;
     })
-    //遅延CSSステータス変更
-    setTimeout(() => {
-      this.otherState = CSS_STATUS_FIN;
-    }, 100)
   }
 
   ngOnInit(): void {
@@ -183,6 +183,14 @@ export class MainComponent implements OnInit, OnDestroy {
     this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
   }
 
+  ngAfterViewInit(): void {
+    //スクロール監視
+    this.registerWindowScroll();
+    setTimeout(() => {
+      this.otherState = CSS_STATUS_FIN;
+    })
+  }
+
   ngOnDestroy(): void {
     //CSS動画リセット
     this.backgroundLoadFlg = false;
@@ -192,17 +200,19 @@ export class MainComponent implements OnInit, OnDestroy {
     this.destroyed.next();
     this.destroyed.complete();
     this.magicGrid = null;
-    //
+    //subscriptions監視取り消し
     for(let sub of this.subscriptions){
       if(sub && !(sub?.closed)){
         sub.unsubscribe();
       }
     }
+    //スクロール監視取り消し
+    this.unregisterWindowScroll();
   }
 
   //トップへスクロール
   scrollToTop() {
-    let parent = this.main.nativeElement.parentElement.parentElement.parentElement;
+    const parent = this.main.nativeElement.parentElement.parentElement.parentElement;
     parent.scroll({
       top: 0,
       left: 0,
@@ -284,6 +294,25 @@ export class MainComponent implements OnInit, OnDestroy {
     this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
   }
 
+  onWindowScroll() {
+    const parent = this.main.nativeElement.parentElement.parentElement.parentElement as HTMLElement;
+    if (parent.scrollTop > 20) {
+      this.showToTop = true;
+    } else {
+      this.showToTop = false;
+    }
+  }
+
+  registerWindowScroll() {
+    const parent = this.main.nativeElement.parentElement.parentElement.parentElement as HTMLElement;
+    parent.addEventListener('scroll', this.scrollMethod);
+  }
+
+  unregisterWindowScroll() {
+    const parent = this.main.nativeElement.parentElement.parentElement.parentElement as HTMLElement;
+    parent.removeEventListener('scroll', this.scrollMethod);
+  }
+
   onChildStartDrag(name: string){
     if(this.childNameMap[name] != this.zIndexes[this.zIndexes.length-1]){
       this.zIndexes.push(this.childNameMap[name]);
@@ -295,11 +324,6 @@ export class MainComponent implements OnInit, OnDestroy {
     for(let key of this.childNames){
       this.childZIndexes[key] = (this.zIndexes.lastIndexOf(key) + 1);
     }
-  }
-
-  ngAfterViewChecked(){
-    // this.reLayout();
-
   }
 
   reLayout(){

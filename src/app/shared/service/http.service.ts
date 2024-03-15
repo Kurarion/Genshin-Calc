@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { TYPE_HTTP_RESPONSE_TYPE, GlobalProgressService, Const } from 'src/app/shared/shared.module';
-import { lastValueFrom, map } from 'rxjs';
+import { Observable, from, lastValueFrom, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -76,6 +76,44 @@ export class HttpService {
           break;
         case HttpEventType.Response:
           cache.set(originUrl, event.body);
+          return event.body as T | null;
+      }
+      return null;
+    }
+  }
+
+  getSystemData<T>(url: string, responseType: TYPE_HTTP_RESPONSE_TYPE = 'json', downloadStatusMap: Map<string, number>, key: string): Observable<T | null> {
+    const httpCallBack = this.getSystemDataCallBackFunc<T>(downloadStatusMap, key);
+    const option: any = {
+      observe: 'events',
+      responseType: responseType,
+      reportProgress: true,
+    }
+
+    return from(lastValueFrom(this.httpClient.get<T>(url, option).pipe(
+      map(httpCallBack)
+    )));
+  }
+
+  private getSystemDataCallBackFunc<T>(downloadStatusMap: Map<string,any>, key: string) {
+    let toLoad: number;
+    return function (event: HttpEvent<T>) {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          downloadStatusMap.set(key, 0);
+          break;
+        case HttpEventType.ResponseHeader:
+          if(event.url == null || Const.IMG_RES_404_REG.test(event.url) || !event.ok){
+            throw new Error('404');
+          }
+          toLoad = parseInt(event.headers.get("content-length") as string);
+          break;
+        case HttpEventType.DownloadProgress:
+          const percent = Math.round(event.loaded * 100 / toLoad);
+          downloadStatusMap.set(key, percent);
+          break;
+        case HttpEventType.Response:
+          downloadStatusMap.set(key, 100);
           return event.body as T | null;
       }
       return null;

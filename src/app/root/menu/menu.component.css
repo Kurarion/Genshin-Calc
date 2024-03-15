@@ -31,11 +31,12 @@
   margin-right: -1px;
   background: white;
   user-select: none;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
-.menu-list .select-filter {
-  width: 190px;
-  color: black;
+.select-filter {
+  width: 100%;
 }
 
 :host ::ng-deep .menu-list .select-filter .mat-form-field-wrapper {
@@ -151,4 +152,28 @@
 
 .button-weapon-off {
   opacity: 0.3;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.menu-items-div {
+  flex:auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 196px;
+  color: black;
+}
+
+.menu-items-div::-webkit-scrollbar {
+  width: 5px;
+}
+
+.menu-items-div::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(128, 128, 128, 0.6);
 }

@@ -32,9 +32,9 @@ tr td:nth-of-type(2) {
 }
 
 .scroll-div {
-    padding-right: 5px;
+    padding-right: 11px;
     /* max-height: 9.48em; */
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .no-scroll-div table tr span {

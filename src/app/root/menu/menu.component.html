@@ -98,13 +98,15 @@
         (ngModelChange)="filterMenuList()">
     </mat-form-field>
   </div>
-  <ng-container *ngFor="let menu of filteringMenuList">
-    <a mat-list-item (click)="onClick(menu)">
-      <app-chara-option
-        [charaInfo]="menu"
-        [currentLanguage]="currentLanguage"
-        class="option"
-      ></app-chara-option>
-    </a>
-  </ng-container>
+  <div class="menu-items-div">
+    <ng-container *ngFor="let menu of filteringMenuList">
+      <a mat-list-item (click)="onClick(menu)">
+        <app-chara-option
+          [charaInfo]="menu"
+          [currentLanguage]="currentLanguage"
+          class="option"
+        ></app-chara-option>
+      </a>
+    </ng-container>
+  </div>
 </mat-nav-list>

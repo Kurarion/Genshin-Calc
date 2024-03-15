@@ -476,6 +476,7 @@
     "NO_RESULT": "无效计算。"
   },
   "SW":{
+    "HAS_NEW": "发现新版本, 数据更新中...",
     "READY": "数据更新完成!;;重新加载"
   },
   "TEAM":{
@@ -591,6 +592,19 @@
       "CANCEL": "取消",
       "SUCCESS": "导入成功！",
       "FAILED": "导入失败。"
+    }
+  },
+  "SYS_INIT": {
+    "JSON": {
+      "DOWNLOAD_TITLE": "数据加载中...",
+      "DATA_CONFIG": "计算用配置数据",
+      "DATA_CHIP": "圣遗物标签数据",
+      "DATA_GENSHIN_AVATAR": "角色数据",
+      "DATA_GENSHIN_WEAPON": "武器数据",
+      "DATA_GENSHIN_MONSTER": "敌人数据",
+      "DATA_GENSHIN_RELIQUARY_SET": "圣遗物套装数据",
+      "DATA_GENSHIN_RELIQUARY_MAIN": "圣遗物主词条数据",
+      "DATA_GENSHIN_RELIQUARY_SUB": "圣遗物副词条"
     }
   }
 }

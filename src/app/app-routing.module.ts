@@ -9,13 +9,13 @@ const routes: Routes =
 [
   {
     path: '',
-    component:  MainComponent
+    component:  MainComponent,
+    data: { animation: 'homePage' },
   },
   {
     path: Const.MENU_CHARACTER,
     loadChildren: () =>
       import('./features/character/character.module').then((m) => m.CharacterModule),
-    data: { animation: 'characterPage' },
   },
   {
     path: '**',

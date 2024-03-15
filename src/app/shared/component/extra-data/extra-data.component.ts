@@ -599,8 +599,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     for(let data of this.dmgDatas){
       this.dmgColors.push(this.getElementColor(data.elementBonusType));
       if (data.forceDisplay !== undefined && data.originIndex !== undefined && this.extraInfoStatus !== undefined) {
-        this.extraInfoStatus[data.originIndex] =data.forceDisplay;
-        this.showDamageEchartsFlag = false;
+        this.extraInfoStatus[data.originIndex] = data.forceDisplay;
       }
     }
     if(this.dmgTempDataList.length != this.dmgDatas.length) {

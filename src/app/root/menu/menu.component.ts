@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { CharaInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService, EnkaService, SettingService, MenuSetting, ElementType, WeaponType } from 'src/app/shared/shared.module';
+import { CharaInfo, Const, CharacterService, character, TYPE_SYS_LANG, LanguageService, EnkaService, SettingService, MenuSetting, ElementType, WeaponType, GenshinDataService } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-menu',
@@ -33,6 +33,7 @@ export class MenuComponent implements OnInit {
     private router: Router,
     private languageService: LanguageService,
     private settingService: SettingService,
+    private genshinDataService: GenshinDataService,
     private enkaService: EnkaService) {
     //設定データ取得
     this.menuSetting = this.settingService.getMenuSetting();
@@ -54,9 +55,20 @@ export class MenuComponent implements OnInit {
       //表示用メニューを更新
       this.filterMenuList();
     })
+    //Genshinデータ変更検知
+    this.genshinDataService.status().subscribe(()=>{
+      this.ngOnInit();
+    })
   }
 
   ngOnInit() { 
+    //メニューを初期化
+    this.initMenuList();
+    //表示用メニューを更新
+    this.filterMenuList();
+  }
+
+  initMenuList() {
     //メニュー初期化
     let tempMap = this.characterService.getMap();
     //Enkaキャラリスト
@@ -66,8 +78,6 @@ export class MenuComponent implements OnInit {
       temp.isEnkaData = enkaList.includes(key);
       this.menuList.push(temp);
     }
-    //表示用メニューを更新
-    this.filterMenuList();
   }
 
   @HostListener('window:unload')

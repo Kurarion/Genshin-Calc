@@ -8,7 +8,7 @@ import {
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { routerAnimation } from 'src/animation';
 import {
@@ -46,6 +46,8 @@ export class MainComponent implements OnInit, OnDestroy {
   langs!: LangInfo[];
   //モード
   menuMode!: MatDrawerMode;
+  //アニメーションフラグ
+  autoRouterAnimeFlag = 0;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -89,6 +91,13 @@ export class MainComponent implements OnInit, OnDestroy {
     //SW更新通知
     this.swUpdate.versionUpdates.subscribe((event)=>{
       switch (event.type) {
+        case 'VERSION_DETECTED':
+          this.translateService.get('SW.HAS_NEW').subscribe((res: string) => {
+            this.matSnackBar.open(res, undefined, {
+              duration: 1500
+            })
+          });
+          break;
         case 'VERSION_READY':
           this.translateService.get('SW.READY').subscribe((res: string) => {
             let infos = res.split(';;');
@@ -96,7 +105,7 @@ export class MainComponent implements OnInit, OnDestroy {
               window.location.reload();
             })
           });
-        break;
+          break;
       }
     })
   }
@@ -149,7 +158,19 @@ export class MainComponent implements OnInit, OnDestroy {
    * @returns 
    */
   prepareRoute(outlet: RouterOutlet) {
-    return outlet?.activatedRouteData?.['animation'];
+    if(outlet.isActivated) {
+      return outlet?.activatedRoute?.queryParams?.pipe(
+        map((param: any) => {
+          let res = outlet?.activatedRouteData?.['animation'];
+          const index = param?.['index'];
+          if (index) {
+            res += index
+          }
+          return res ?? '';
+        })
+      ) ?? of(outlet?.activatedRouteData?.['animation'] ?? '');
+    }
+    return of('');
   }
 
   openedChange(){
