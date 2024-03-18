@@ -49,7 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 15 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:1000'
+      registrationStrategy: 'registerWhenStable'
     }),
   ],
   declarations: [
