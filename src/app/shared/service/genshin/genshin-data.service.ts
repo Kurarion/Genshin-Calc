@@ -94,7 +94,7 @@ export class GenshinDataService {
       result[Const.MAP_ARTIFACE_PROP[key]] = targetValue / stepDivider;
     }
     //補足
-    result[Const.PROP_HEALING_BONUS] = result[Const.PROP_ATTACK_UP] * this.dataReliquaryMain[Const.PROP_HEALING_BONUS] / this.dataReliquaryMain[Const.PROP_ATTACK_UP];
+    result[Const.PROP_HEALING_BONUS] = result[Const.PROP_ATTACK_UP] * 0.7703862758384061;
     result[Const.PROP_DMG_BONUS_ALL] = result[Const.PROP_ATTACK_UP];
     result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN] = result[Const.PROP_ATTACK_UP];
     result[Const.PROP_DMG_ANTI_ALL_MINUS] = result[Const.PROP_ATTACK_UP];
