@@ -256,6 +256,10 @@ export class Const {
   static readonly PROP_FIX_NUMBER_1 = "FIX_NUMBER_1";
   //聖遺物海染硨磲治療量
   static readonly PROP_OTHER_OCEAN_HUED_HEALING = "OCEAN_HUED_HEALING";
+  //命の契約
+  static readonly PROP_BOND_OF_LIFE = "BOND_OF_LIFE";
+  //命の契約値
+  static readonly PROP_BOND_OF_LIFE_VAL = "BOND_OF_LIFE_VAL";
   //レベル
   static readonly PROP_LEVEL = "LEVEL";
   //生命力ベース
@@ -808,6 +812,9 @@ export class Const {
     [Const.PROP_DMG_CRIT_DMG_UP_PLUNGING, Const.PORP_TAG_GAMING_BESTIAL_ASCENT],
   ]
 
+  //命の契約値最大値
+  static readonly MAX_BOND_OF_LIFE = 2;
+
   //*********************************
   //           属性リスト
   //*********************************
@@ -1127,6 +1134,8 @@ export class Const {
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST,
     Const.PROP_OTHER_OCEAN_HUED_HEALING,
+    Const.PROP_BOND_OF_LIFE,
+    Const.PROP_BOND_OF_LIFE_VAL,
     // Const.PROP_DMG_ENEMY_DEFENSE_BASE,
   ].concat(Const.PROPS_ALL_BASE_SPACIAL_PERCENT.concat(Const.PROPS_ALL_BASE_SPACIAL).map((val: string[]) => {
     return val.join(Const.CONCATENATION_TAG)
@@ -1287,6 +1296,7 @@ export class Const {
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST,
+    Const.PROP_BOND_OF_LIFE,
   ].concat(Const.PROPS_ALL_BASE_SPACIAL_PERCENT.map((val: string[]) => {
     return val.join(Const.CONCATENATION_TAG)
   }));
@@ -1473,6 +1483,8 @@ export class Const {
     [Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL],
     [Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST],
     [Const.PROP_OTHER_OCEAN_HUED_HEALING],
+    [Const.PROP_BOND_OF_LIFE],
+    [Const.PROP_BOND_OF_LIFE_VAL],
   ]
     .concat(Const.PROPS_ALL_BASE_SPACIAL_PERCENT, Const.PROPS_ALL_BASE_SPACIAL)
     .map(props_all_map_func);
@@ -1482,6 +1494,7 @@ export class Const {
     Const.PROP_ATTACK,
     Const.PROP_DEFENSE,
     Const.PROP_DMG_ENEMY_DEFENSE,
+    Const.PROP_BOND_OF_LIFE_VAL,
   ];
 
   // //全属性リスト
@@ -1751,6 +1764,7 @@ export class Const {
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_PLUNGING,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_SKILL,
     Const.PROP_DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST,
+    Const.PROP_BOND_OF_LIFE,
   ]
 
   static readonly PROPS_ELEMENTS = [

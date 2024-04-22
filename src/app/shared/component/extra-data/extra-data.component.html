@@ -7,23 +7,49 @@
             <!-- バフ -->
             <tr>
                 <td>
-                    <span 
+                    <span
+                        class="buff-title"
                         [innerText]="(buffDatas[i].title!?buffDatas[i].title!:(buffDatas[i].isAllTeam!?'GENSHIN.OTHER.TEAM_BUFF':(buffDatas[i].isOnlyForOther!?'GENSHIN.OTHER.ONLY_OTHER_BUFF':'GENSHIN.OTHER.BUFF'))) | translate"
                         [matTooltip]="buffDatas[i].desc!?(buffDatas[i].desc! | translate):undefined"
                         matTooltipPosition='above'
                     ></span>
                     <mat-icon *ngIf="buffDatas[i].desc!" class="icon material-icons-outlined">info</mat-icon>
                 </td>
-                <td>
-                    <ng-container *ngIf="buffDatas[i].type! == 'switch'">
+                <ng-container *ngIf="buffDatas[i].type! == 'switch'; then switch else slider"></ng-container>
+                <ng-template #switch>
+                    <td>
                         <mat-slide-toggle
+                            class="switch-buff"
                             color="primary"
                             [checked]="buffDatas[i].switchValue!"
                             (change)="onChangeSwitch($event, buffDatas[i].valueIndex!)">
                         </mat-slide-toggle>
-                    </ng-container>
-                    <ng-container *ngIf="buffDatas[i].type! == 'slider'">
+                    </td>
+                </ng-template>
+                <ng-template #slider>
+                    <td>
+                        <mat-form-field 
+                            appearance="legacy"
+                            class="slider-buff-input-field"
+                        >
+                            <input
+                                type="number"
+                                matInput
+                                title=""
+                                [step]="buffDatas[i].step!"
+                                [value]="buffDatas[i].sliderValue!"
+                                (change)="onChangeSliderValue($event, buffDatas[i].valueIndex!, i, buffDatas[i].min!, buffDatas[i].max!)"
+                            >
+                            <span matSuffix *ngIf="buffDatas[i].sliderIsPercent">%</span>
+                        </mat-form-field>
+                    </td>
+                </ng-template>
+            </tr>
+            <ng-container *ngIf="buffDatas[i].type! == 'slider'">
+                <tr>
+                    <td colspan="2">
                         <mat-slider
+                            class="slider-buff"
                             color="primary"
                             [min]="buffDatas[i].min!"
                             [max]="buffDatas[i].max!"
@@ -31,11 +57,11 @@
                             [thumbLabel]="true"
                             tickInterval="auto"
                             [value]="buffDatas[i].sliderValue!"
-                            (change)="onChangeSlider($event, buffDatas[i].valueIndex!)">
+                            (change)="onChangeSlider($event, buffDatas[i].valueIndex!, i)">
                         </mat-slider>
-                    </ng-container>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            </ng-container>
         </table>
     </div>
 </ng-container>

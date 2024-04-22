@@ -46,6 +46,8 @@ export interface SpecialBuff {
   tag?: string;
   finallyCal?: boolean;
   finalResCalQueue?: CalcItem[];
+  overrideElement?: string;
+  overrideWhenEffective?: boolean;
 }
 
 export interface SelfTeamBuff {
@@ -90,6 +92,8 @@ export interface TeamBuff {
   specialMaxVal?: SpecialBuffMaxVal;
   buffTag?: string;
   finalResCalQueue?: CalcItem[];
+  overrideElement?: string;
+  overrideWhenEffective?: boolean;
 }
 
 export interface SpecialBuffMaxVal {
@@ -165,6 +169,8 @@ export interface DamageResult {
 export interface HealingParam {
   rate?: number; //倍率
   base?: string; //数値ベース
+  rateAttach?: number[][]; //倍率
+  baseAttach?: string[]; //数値ベース
   extra?: number; //追加値
   healingBonusType?: string; //治療タイプ
   finalResCalQueue?: CalcItem[];
@@ -182,6 +188,8 @@ export interface HealingResult {
 export interface ShieldParam {
   rate?: number; //倍率
   base?: string; //数値ベース
+  rateAttach?: number[][]; //倍率
+  baseAttach?: string[]; //数値ベース
   extra?: number; //追加値
   shieldBonusType?: string //シールドタイプ
   shieldElementType?: string //シールド元素タイプ
@@ -209,6 +217,8 @@ export interface ShieldResult {
 export interface ProductParam {
   rate?: number; //倍率
   base?: string; //数値ベース
+  rateAttach?: number[][]; //倍率
+  baseAttach?: string[]; //数値ベース
   extra?: number; //追加値
   finalResCalQueue?: CalcItem[];
 }
@@ -236,6 +246,7 @@ export interface BuffResult {
   title?: string;
   isAllTeam?: boolean;
   isOnlyForOther?: boolean;
+  sliderIsPercent?: boolean;
 }
 
 export interface artifactSetInfo {
@@ -1695,30 +1706,14 @@ export class CalculatorService {
     dmgSectionValue += dmg_rate_value;
     dmgSectionValueProcessFunc(dmgSectionValue, finalRateProcessFunc()[1], "+");
     for(let i = 0; i < rateAttach.length; ++i){
-      let tempDmgRateBaseProp = "";
-      switch(baseAttach[i]){
-        case Const.PROP_ATTACK:
-          tempDmgRateBaseProp = Const.PROP_ATTACK;
-          break;
-        case Const.PROP_HP:
-          tempDmgRateBaseProp = Const.PROP_HP;
-          break;
-        case Const.PROP_DEFENSE:
-          tempDmgRateBaseProp = Const.PROP_DEFENSE;
-          break;
-        case Const.PROP_ELEMENTAL_MASTERY:
-          tempDmgRateBaseProp = Const.PROP_ELEMENTAL_MASTERY;
-          break;
-      }
-      {
-        rateAttach[i].forEach((v)=>{
-          const tempfinalRateProcessFunc = this.createProcess(v);
-          const temp_dmg_rate_value = v * data[tempDmgRateBaseProp];
-          tempfinalRateProcessFunc(temp_dmg_rate_value,  data[tempDmgRateBaseProp], "*", "start");
-          dmgSectionValue += temp_dmg_rate_value;
-          dmgSectionValueProcessFunc(dmgSectionValue, tempfinalRateProcessFunc()[1], "+");
-        })
-      }
+      let tempDmgRateBaseProp = baseAttach[i];
+      rateAttach[i].forEach((v)=>{
+        const tempfinalRateProcessFunc = this.createProcess(v);
+        const temp_dmg_rate_value = v * data[tempDmgRateBaseProp];
+        tempfinalRateProcessFunc(temp_dmg_rate_value,  data[tempDmgRateBaseProp], "*", "start");
+        dmgSectionValue += temp_dmg_rate_value;
+        dmgSectionValueProcessFunc(dmgSectionValue, tempfinalRateProcessFunc()[1], "+");
+      })
     }
     //耐性区域残り
     if(dmgAntiSectionValue < 0){
@@ -2348,6 +2343,8 @@ export class CalculatorService {
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
+    let rateAttach = param.rateAttach ?? [];
+    let baseAttach = param.baseAttach ?? [];
     let healingBonusType = param.healingBonusType;
     //計算
     let healing: number = 0;
@@ -2359,11 +2356,13 @@ export class CalculatorService {
           rate *= 1 + data[Const.PROP_HEALING_RATE_MULTI_SKILL];
           rate += data[Const.PROP_HEALING_RATE_UP_SKILL] ?? 0;
           extra += data[Const.PROP_HEALING_VAL_UP_SKILL] ?? 0;
+          rateAttach = rateAttach.map((x)=>x.map((x)=>x*(1 + data[Const.PROP_HEALING_RATE_MULTI_SKILL]) + (data[Const.PROP_HEALING_RATE_UP_SKILL] ?? 0)));
           break;
         case Const.PROP_HEALING_BONUS_ELEMENTAL_BURST:
           rate *= 1 + data[Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST];
           rate += data[Const.PROP_HEALING_RATE_UP_ELEMENTAL_BURST] ?? 0;
           extra += data[Const.PROP_HEALING_VAL_UP_ELEMENTAL_BURST] ?? 0;
+          rateAttach = rateAttach.map((x)=>x.map((x)=>x*(1 + data[Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST]) + (data[Const.PROP_HEALING_RATE_UP_ELEMENTAL_BURST] ?? 0)));
           break;
         case Const.PROP_HEALING_BONUS_WEAPON:
         case Const.PROP_HEALING_BONUS_OTHER:
@@ -2374,6 +2373,16 @@ export class CalculatorService {
     if(base != undefined && rate != undefined){
       healing += data[base] * rate;
       healingProcessFunc(healing, `${this.proximateVal(data[base])} ${this.times} ${this.proximateVal(rate)}`, "+");
+    }
+    for(let i = 0; i < rateAttach.length; ++i){
+      let tempHealingRateBaseProp = baseAttach[i];
+      rateAttach[i].forEach((v)=>{
+        const tempfinalRateProcessFunc = this.createProcess(v);
+        const temp_healing_rate_value = v * data[tempHealingRateBaseProp];
+        tempfinalRateProcessFunc(temp_healing_rate_value,  data[tempHealingRateBaseProp], "*", "start");
+        healing += temp_healing_rate_value;
+        healingProcessFunc(healing, tempfinalRateProcessFunc()[1], "+");
+      })
     }
     if(extra != undefined){
       healing += extra;
@@ -2427,6 +2436,8 @@ export class CalculatorService {
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
+    let rateAttach = param.rateAttach ?? [];
+    let baseAttach = param.baseAttach ?? [];
     let shieldBonusType = param.shieldBonusType;
     let shieldElementType = param.shieldElementType;
     //計算
@@ -2435,6 +2446,16 @@ export class CalculatorService {
     if(base != undefined && rate != undefined){
       shield += data[base] * rate;
       shieldProcessFunc(shield, `${this.proximateVal(data[base])} ${this.times} ${this.proximateVal(rate)}`, "+");
+    }
+    for(let i = 0; i < rateAttach.length; ++i){
+      let tempShieldRateBaseProp = baseAttach[i];
+      rateAttach[i].forEach((v)=>{
+        const tempfinalRateProcessFunc = this.createProcess(v);
+        const temp_shield_rate_value = v * data[tempShieldRateBaseProp];
+        tempfinalRateProcessFunc(temp_shield_rate_value,  data[tempShieldRateBaseProp], "*", "start");
+        shield += temp_shield_rate_value;
+        shieldProcessFunc(shield, tempfinalRateProcessFunc()[1], "+");
+      })
     }
     if(extra != undefined){
       shield += extra;
@@ -2620,12 +2641,24 @@ export class CalculatorService {
     let base = param.base;
     let extra = param.extra ?? 0;
     let rate = param.rate ?? 0;
+    let rateAttach = param.rateAttach ?? [];
+    let baseAttach = param.baseAttach ?? [];
     //計算
     let product: number = 0;
     const productProcessFunc = this.createProcess(product);
     if(base != undefined && rate != undefined){
       product += data[base] * rate;
       productProcessFunc(product, `${this.proximateVal(data[base])} ${this.times} ${this.proximateVal(rate)}`, "+");
+    }
+    for(let i = 0; i < rateAttach.length; ++i){
+      let tempProductRateBaseProp = baseAttach[i];
+      rateAttach[i].forEach((v)=>{
+        const tempfinalRateProcessFunc = this.createProcess(v);
+        const temp_product_rate_value = v * data[tempProductRateBaseProp];
+        tempfinalRateProcessFunc(temp_product_rate_value,  data[tempProductRateBaseProp], "*", "start");
+        product += temp_product_rate_value;
+        productProcessFunc(product, tempfinalRateProcessFunc()[1], "+");
+      })
     }
     if(extra != undefined){
       product += extra;
@@ -2965,6 +2998,71 @@ export class CalculatorService {
       for(let info of infos){
         //全含め必要
         let healingInfo = info.healing;
+        let indexesAttach = healingInfo?.indexesAttach ?? [];
+        let tempRateInfo: CharSkill;
+        let rateAttach: number[][] = [];
+        let baseAttach = healingInfo?.baseAttach;
+        switch(skill){
+          case Const.NAME_CONSTELLATION:
+            tempRateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
+            indexesAttach.forEach((valueIndexes)=>{
+              let temp:number[] = [];
+              valueIndexes.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_SKILLS_PROUD:
+            tempRateInfo = characterData!.skills.proudSkills[skillIndex as number];
+            indexesAttach.forEach((valueIndexes)=>{
+              let temp:number[] = [];
+              valueIndexes.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_SKILLS_OTHER:
+            tempRateInfo = characterData!.skills.other;
+            indexesAttach.forEach((valueIndexes)=>{
+              let temp:number[] = [];
+              valueIndexes.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_EFFECT:
+            indexesAttach.forEach((valueIndexes)=>{
+              let temp:number[] = [];
+              valueIndexes.forEach((valueIndex)=>{
+                temp.push(weaponData!.skillAffixMap[currentLevel].paramList[valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          case Const.NAME_SET:
+            indexesAttach.forEach((valueIndexes)=>{
+              let temp:number[] = [];
+              valueIndexes.forEach((valueIndex)=>{
+                temp.push(artifactSetData.setAffixs[1].paramList[valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+          default:
+            tempRateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
+            indexesAttach.forEach((valueIndexes)=>{
+              let temp:number[] = [];
+              valueIndexes.forEach((valueIndex)=>{
+                temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+              })
+              rateAttach.push(temp);
+            })
+            break;
+        }
+
         if(healingInfo?.customValue != undefined){
           let base = healingInfo.base!;
           let healingBonusType = healingInfo.healingBonusType;
@@ -2972,6 +3070,8 @@ export class CalculatorService {
           params.push({
             base: base,
             rate: rate,
+            baseAttach: baseAttach,
+            rateAttach: rateAttach,
             healingBonusType: healingBonusType,
             finalResCalQueue: healingInfo.finalResCalQueue,
           });
@@ -3064,6 +3164,8 @@ export class CalculatorService {
               params.push({
                 base: base,
                 rate: rate,
+                baseAttach: baseAttach,
+                rateAttach: rateAttach,
                 extra: extra,
                 healingBonusType: healingBonusType,
                 finalResCalQueue: healingInfo.finalResCalQueue,
@@ -3120,6 +3222,71 @@ export class CalculatorService {
         for(let info of infos){
           //全含め必要
           let shieldInfo = info.shield;
+          let indexesAttach = shieldInfo?.indexesAttach ?? [];
+          let tempRateInfo: CharSkill;
+          let rateAttach: number[][] = [];
+          let baseAttach = shieldInfo?.baseAttach;
+          switch(skill){
+            case Const.NAME_CONSTELLATION:
+              tempRateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_SKILLS_PROUD:
+              tempRateInfo = characterData!.skills.proudSkills[skillIndex as number];
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_SKILLS_OTHER:
+              tempRateInfo = characterData!.skills.other;
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_EFFECT:
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(weaponData!.skillAffixMap[currentLevel].paramList[valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_SET:
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(artifactSetData.setAffixs[1].paramList[valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            default:
+              tempRateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+          }
+  
           if(shieldInfo?.customValue != undefined){
             let base = shieldInfo.base!;
             let rate = shieldInfo.customValue;
@@ -3128,6 +3295,8 @@ export class CalculatorService {
             params.push({
               base: base,
               rate: rate,
+              baseAttach: baseAttach,
+              rateAttach: rateAttach,
               shieldBonusType: shieldBonusType,
               shieldElementType: shieldElementType,
               finalResCalQueue: shieldInfo.finalResCalQueue,
@@ -3223,6 +3392,8 @@ export class CalculatorService {
                 params.push({
                   base: base,
                   rate: rate,
+                  baseAttach: baseAttach,
+                  rateAttach: rateAttach,
                   extra: extra,
                   shieldBonusType: shieldBonusType,
                   shieldElementType: shieldElementType,
@@ -3280,12 +3451,79 @@ export class CalculatorService {
         for(let info of infos){
           //全含め必要
           let productHpInfo = info.product;
+          let indexesAttach = productHpInfo?.indexesAttach ?? [];
+          let tempRateInfo: CharSkill;
+          let rateAttach: number[][] = [];
+          let baseAttach = productHpInfo?.baseAttach;
+          switch(skill){
+            case Const.NAME_CONSTELLATION:
+              tempRateInfo = characterData!.skills.talents[parseInt(skillIndex as string)];
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_SKILLS_PROUD:
+              tempRateInfo = characterData!.skills.proudSkills[skillIndex as number];
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_SKILLS_OTHER:
+              tempRateInfo = characterData!.skills.other;
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_EFFECT:
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(weaponData!.skillAffixMap[currentLevel].paramList[valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            case Const.NAME_SET:
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(artifactSetData.setAffixs[1].paramList[valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+            default:
+              tempRateInfo = characterData!.skills![skill as keyof CharSkills] as CharSkill;
+              indexesAttach.forEach((valueIndexes)=>{
+                let temp:number[] = [];
+                valueIndexes.forEach((valueIndex)=>{
+                  temp.push(tempRateInfo.paramMap[currentLevel!][valueIndex]);
+                })
+                rateAttach.push(temp);
+              })
+              break;
+          }
+  
           if(productHpInfo?.customValue != undefined){
             let base = productHpInfo.base!;
             let rate = productHpInfo.customValue;
             params.push({
               base: base,
               rate: rate,
+              baseAttach: baseAttach,
+              rateAttach: rateAttach,
               finalResCalQueue: productHpInfo.finalResCalQueue,
             });
           }else{
@@ -3328,6 +3566,8 @@ export class CalculatorService {
                 params.push({
                   base: base,
                   rate: rate,
+                  baseAttach: baseAttach,
+                  rateAttach: rateAttach,
                   extra: extra,
                   finalResCalQueue: productHpInfo.finalResCalQueue,
                 });
@@ -3443,6 +3683,7 @@ export class CalculatorService {
                     title: buffInfo.title,
                     isAllTeam: buffInfo.isAllTeam,
                     isOnlyForOther: buffInfo.isOnlyForOther,
+                    sliderIsPercent: buffInfo.sliderIsPercent,
                   })
                   break;
                 case 'resident':
@@ -3579,10 +3820,13 @@ export class CalculatorService {
         case Const.PROP_DMG_ENEMY_DEFENSE:
           temp = result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
           break;
+        case Const.PROP_BOND_OF_LIFE_VAL:
+          temp = result[Const.PROP_HP] * result[Const.PROP_BOND_OF_LIFE];
+          break;
       }
       result[key] = temp;
     }
-
+  
     //スペシャルバフ
     let specialOrders: SpecialBuff[] = [];
     let specialOrdersFinally: SpecialBuff[] = [];
@@ -3605,7 +3849,10 @@ export class CalculatorService {
         specialOrdersFinally.push(buff);
         continue;
       }
-      this.calSpecialToResult(buff, result);
+      const buffResultInfo = this.calSpecialToResult(buff, result);
+      if(buffResultInfo?.["overrideElement"] !== undefined) {
+        this.characterService.setOverrideElement(index, buffResultInfo["overrideElement"], true);
+      }
     }
 
     //チームバフ
@@ -3664,13 +3911,23 @@ export class CalculatorService {
 
     //スペシャル処理(ファイナリー)
     for(let buff of specialOrdersFinally){
-      this.calSpecialToResult(buff, result);
+      const buffResultInfo = this.calSpecialToResult(buff, result);
+      if(buffResultInfo?.["overrideElement"] !== undefined) {
+        this.characterService.setOverrideElement(index, buffResultInfo["overrideElement"], true);
+      }
+    }
+
+    //特殊範囲処理（命の契約）
+    if(result[Const.PROP_BOND_OF_LIFE] > Const.MAX_BOND_OF_LIFE) {
+      result[Const.PROP_BOND_OF_LIFE] = Const.MAX_BOND_OF_LIFE;
+      result[Const.PROP_BOND_OF_LIFE_VAL] = result[Const.PROP_BOND_OF_LIFE] * result[Const.PROP_HP];
     }
 
     return result;
   }
 
   private calSpecialToResult(buff: SpecialBuff, result: Record<string,number>){
+    const resultInfo: Record<string, any> = {};
     let baseValue = buff.base?result[buff.base]:0;
     //特殊BUFFに変えるための仮想属性
     if(buff.base == Const.PROP_FIX_NUMBER_1){
@@ -3684,6 +3941,9 @@ export class CalculatorService {
     let modifyValue = buff.baseModifyValue?buff.baseModifyValue:0;
     let toAdd = ((baseValue + modifyValue>0)?(baseValue + modifyValue):0) * buff.multiValue!;
     toAdd = this.getFinalResCalQueueResult(result, toAdd, buff.finalResCalQueue);
+    if (buff.overrideElement && (!buff.overrideWhenEffective || buff.overrideWhenEffective && toAdd != 0)) {
+      resultInfo["overrideElement"] = buff.overrideElement;
+    }
     if(buff.maxVal && toAdd > buff.maxVal){
       toAdd = buff.maxVal;
     }else if(buff.specialMaxVal != undefined){
@@ -3695,13 +3955,20 @@ export class CalculatorService {
     result[buff.target!] += toAdd;
     //計算必要分再計算
     this.recalBaseProp(buff.target, result);
+
+    return resultInfo;
   }
 
   private appendToExtraTeam(buffs: TeamBuff[], extraTeamOnceResult: Record<string, number>, extraTeamSecondaryResult: Record<string, number>, extraSpecialTeamResult: SpecialBuff[], buffTag: Record<string,string[]>, result: Record<string, number> = {}){
+    const resultInfo: Record<string, any> = {};
+    let overrideElement = undefined;
     for(let v of buffs){
       if(v.calByOrigin && v.isSpecial){
         extraSpecialTeamResult.push(v as SpecialBuff);
       }else {
+        if (v.overrideElement && (!v.overrideWhenEffective || v.overrideWhenEffective && v.val != 0)) {
+          overrideElement = v.overrideElement;
+        }
         if(!v.canSecondaryTrans){
           if(!extraTeamOnceResult.hasOwnProperty(v.target)){
             extraTeamOnceResult[v.target] = 0;
@@ -3719,6 +3986,8 @@ export class CalculatorService {
         }
       }
     }
+    resultInfo["overrideElement"] = overrideElement;
+    return resultInfo
   }
 
   private calTeamSpecialBuff(buffs: TeamBuff[], props: Record<string,number>, resultSelfTeamBuff: SelfTeamBuff){
@@ -3765,6 +4034,7 @@ export class CalculatorService {
       case Const.PROP_HP_UP:
       case Const.PROP_VAL_HP:
         result[Const.PROP_HP] = result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
+        result[Const.PROP_BOND_OF_LIFE_VAL] = result[Const.PROP_BOND_OF_LIFE] * result[Const.PROP_HP];
         break;
       case Const.PROP_ATTACK_UP:
       case Const.PROP_VAL_ATTACK:
@@ -3776,6 +4046,9 @@ export class CalculatorService {
         break;
       case Const.PROP_DMG_ENEMY_DEFENSE_DOWN:
         result[Const.PROP_DMG_ENEMY_DEFENSE] = result[Const.PROP_DMG_ENEMY_DEFENSE_BASE] * (1 - result[Const.PROP_DMG_ENEMY_DEFENSE_DOWN]);
+        break;
+      case Const.PROP_BOND_OF_LIFE:
+        result[Const.PROP_BOND_OF_LIFE_VAL] = result[Const.PROP_BOND_OF_LIFE] * result[Const.PROP_HP];
         break;
     }
   }
@@ -3925,10 +4198,10 @@ export class CalculatorService {
           overrideElement,
           index,
         );
-        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+        if(setBuffResult?.['overrideElement'] !== undefined){
           hasOverride = true;
           overrideElement = setBuffResult.overrideElement!;
-          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
         }
       }
       if(Const.NAME_SKILLS_SKILL in setting.skills){
@@ -3948,10 +4221,10 @@ export class CalculatorService {
           overrideElement,
           index,
         );
-        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+        if(setBuffResult?.['overrideElement'] !== undefined){
           hasOverride = true;
           overrideElement = setBuffResult.overrideElement!;
-          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
         }
       }
       if(Const.NAME_SKILLS_ELEMENTAL_BURST in setting.skills){
@@ -3971,10 +4244,10 @@ export class CalculatorService {
           overrideElement,
           index,
         );
-        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+        if(setBuffResult?.['overrideElement'] !== undefined){
           hasOverride = true;
           overrideElement = setBuffResult.overrideElement!;
-          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
         }
       }
       if(Const.NAME_SKILLS_OTHER in setting.skills && extraCharacterData.skills!.other != undefined){
@@ -3994,10 +4267,10 @@ export class CalculatorService {
           overrideElement,
           index,
         );
-        if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+        if(setBuffResult?.['overrideElement'] !== undefined){
           hasOverride = true;
           overrideElement = setBuffResult.overrideElement!;
-          this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+          this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
         }
       }
       if(Const.NAME_SKILLS_PROUD in setting.skills){
@@ -4024,10 +4297,10 @@ export class CalculatorService {
             overrideElement,
             index,
           );
-          if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+          if(setBuffResult?.['overrideElement'] !== undefined){
             hasOverride = true;
             overrideElement = setBuffResult.overrideElement!;
-            this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+            this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
           }
         }
       }
@@ -4052,10 +4325,10 @@ export class CalculatorService {
             overrideElement,
             index,
           );
-          if(!hasOverride && overrideElement != setBuffResult.overrideElement){
+          if(setBuffResult?.['overrideElement'] !== undefined){
             hasOverride = true;
             overrideElement = setBuffResult.overrideElement!;
-            this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+            this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
           }
         }
       }
@@ -4099,8 +4372,8 @@ export class CalculatorService {
         overrideElement,
         index,
       );
-      if(overrideElement != setBuffResult.overrideElement){
-        this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+      if(setBuffResult?.['overrideElement'] !== undefined){
+        this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
       }
     }
 
@@ -4175,8 +4448,8 @@ export class CalculatorService {
         overrideElement,
         index,
       );
-      if(overrideElement != setBuffResult.overrideElement){
-        this.characterService.setOverrideElement(index, setBuffResult.overrideElement);
+      if(setBuffResult?.['overrideElement'] !== undefined){
+        this.characterService.setOverrideElement(index, setBuffResult.overrideElement, true);
       }
       for(let key in tempResult){
         if(result[key] == undefined){
@@ -4214,7 +4487,7 @@ export class CalculatorService {
         Const.NAME_EFFECT,
         Const.NAME_SET,
       ]){
-        this.appendToExtraTeam(
+        const buffResultInfo = this.appendToExtraTeam(
           buffs[key as keyof SelfTeamBuff] as TeamBuff[],
           this.dataMap[index].extraTeamOnceResult!,
           this.dataMap[index].extraTeamSecondaryResult!,
@@ -4222,9 +4495,12 @@ export class CalculatorService {
           this.dataMap[index].buffTag!,
           result,
         );
+        if(buffResultInfo?.["overrideElement"] !== undefined) {
+          this.characterService.setOverrideElement(index, buffResultInfo["overrideElement"], true);
+        }
       }
       for(let v of buffs.proudSkills){
-        this.appendToExtraTeam(
+        const buffResultInfo = this.appendToExtraTeam(
           v,
           this.dataMap[index].extraTeamOnceResult!,
           this.dataMap[index].extraTeamSecondaryResult!,
@@ -4232,6 +4508,9 @@ export class CalculatorService {
           this.dataMap[index].buffTag!,
           result,
         );
+        if(buffResultInfo?.["overrideElement"] !== undefined) {
+          this.characterService.setOverrideElement(index, buffResultInfo["overrideElement"], true);
+        }
       }
       for(let key of [
         Const.NAME_CONSTELLATION_1,
@@ -4241,7 +4520,7 @@ export class CalculatorService {
         Const.NAME_CONSTELLATION_5,
         Const.NAME_CONSTELLATION_6,
       ]){
-        this.appendToExtraTeam(
+        const buffResultInfo = this.appendToExtraTeam(
           buffs.constellation[key],
           this.dataMap[index].extraTeamOnceResult!,
           this.dataMap[index].extraTeamSecondaryResult!,
@@ -4249,6 +4528,9 @@ export class CalculatorService {
           this.dataMap[index].buffTag!,
           result,
         );
+        if(buffResultInfo?.["overrideElement"] !== undefined) {
+          this.characterService.setOverrideElement(index, buffResultInfo["overrideElement"], true);
+        }
       }
     }
   }
@@ -4292,7 +4574,9 @@ export class CalculatorService {
     }
     let switchOnSet = setting?.switchOnSet ?? {};
     let sliderNumMap = setting?.sliderNumMap ?? {};
-    let overrideElement = crruentOverrideElement;
+    let overrideElement = "";
+    let overrideWhenEffective = false;
+    let buffValIsNotZero = false;
 
     selfTeamBuffs.length = 0;
 
@@ -4443,16 +4727,16 @@ export class CalculatorService {
           }else if(buff?.maxValValue != undefined){
             maxValConstIndexValue = buff.maxValValue;
           }
+          //元素付与
+          overrideWhenEffective = buff.overrideWhenEffective ?? false;
           
           // ------------
           // 入力タイプ分岐処理
           // ------------
           if(isEnableInSwitch){
-            //元素付与
-            if(buff.overrideElement != undefined && overrideElement == ""){
+            if(buff.overrideElement !== undefined && buff.overrideElement !== ""){
               overrideElement = buff.overrideElement;
             }
-
             if(base){
               //特殊バフ
               let temp: SpecialBuff = {};
@@ -4475,7 +4759,13 @@ export class CalculatorService {
               }
               for(let tar of targets){
                 if(!isOnlyForOther){
-                  specialResult.push({...temp, target: tar, tag: buff.buffTag});
+                  specialResult.push({
+                    ...temp,
+                    target: tar,
+                    tag: buff.buffTag,
+                    overrideElement: overrideElement,
+                    overrideWhenEffective: overrideWhenEffective,
+                  });
                 }
                 
                 if(isAllTeam || isOnlyForOther){
@@ -4490,6 +4780,8 @@ export class CalculatorService {
                       canSecondaryTrans: buff.canSecondaryTrans,
                       canOverlying: buff.canOverlying,
                       calByOrigin: buff.calByOrigin,
+                      overrideElement: overrideElement,
+                      overrideWhenEffective: overrideWhenEffective,
                     })
                   }else{
                     selfTeamBuffs.push({
@@ -4501,6 +4793,8 @@ export class CalculatorService {
                       canSecondaryTrans: buff.canSecondaryTrans,
                       canOverlying: buff.canOverlying,
                       calByOrigin: buff.calByOrigin,
+                      overrideElement: overrideElement,
+                      overrideWhenEffective: overrideWhenEffective,
                     })
                   }
                 }
@@ -4510,6 +4804,9 @@ export class CalculatorService {
               let value = indexValue;
               value = this.calRelationResult(value, constIndexValue, constCalRelation)
               value = this.getFinalResCalQueueResult(result, value, calQueue)
+              if (value != 0) {
+                buffValIsNotZero = true;
+              }
               for(let tar of targets){
                 if(!isOnlyForOther){
                   if(!result[tar]){
@@ -4529,11 +4826,16 @@ export class CalculatorService {
                     canSecondaryTrans: buff.canSecondaryTrans,
                     canOverlying: buff.canOverlying,
                     calByOrigin: buff.calByOrigin,
+                    overrideElement: overrideElement,
+                    overrideWhenEffective: overrideWhenEffective,
                   })
                 }
               }
             }
           }else if(isEnableInSlider){
+            if(buff.overrideElement !== undefined && buff.overrideElement !== ""){
+              overrideElement = buff.overrideElement;
+            }
             let isMaximumStackBuff = buff?.isMaximumStackBuff || false;
             let sliderMax = buff?.sliderMax;
             let sliderStep = buff?.sliderStep;
@@ -4598,6 +4900,8 @@ export class CalculatorService {
                           canSecondaryTrans: buff.canSecondaryTrans,
                           canOverlying: buff.canOverlying,
                           calByOrigin: buff.calByOrigin,
+                          overrideElement: overrideElement,
+                          overrideWhenEffective: overrideWhenEffective,
                         })
                       }else{
                         selfTeamBuffs.push({
@@ -4610,6 +4914,8 @@ export class CalculatorService {
                           canSecondaryTrans: buff.canSecondaryTrans,
                           canOverlying: buff.canOverlying,
                           calByOrigin: buff.calByOrigin,
+                          overrideElement: overrideElement,
+                          overrideWhenEffective: overrideWhenEffective,
                         })
                       }
                     }
@@ -4636,6 +4942,8 @@ export class CalculatorService {
                           canSecondaryTrans: buff.canSecondaryTrans,
                           canOverlying: buff.canOverlying,
                           calByOrigin: buff.calByOrigin,
+                          overrideElement: overrideElement,
+                          overrideWhenEffective: overrideWhenEffective,
                         })
                       }else{
                         selfTeamBuffs.push({
@@ -4648,6 +4956,8 @@ export class CalculatorService {
                           canSecondaryTrans: buff.canSecondaryTrans,
                           canOverlying: buff.canOverlying,
                           calByOrigin: buff.calByOrigin,
+                          overrideElement: overrideElement,
+                          overrideWhenEffective: overrideWhenEffective,
                         })
                       }
                     }else{
@@ -4663,6 +4973,8 @@ export class CalculatorService {
                           canSecondaryTrans: buff.canSecondaryTrans,
                           canOverlying: buff.canOverlying,
                           calByOrigin: buff.calByOrigin,
+                          overrideElement: overrideElement,
+                          overrideWhenEffective: overrideWhenEffective,
                         })
                       }else{
                         selfTeamBuffs.push({
@@ -4675,6 +4987,8 @@ export class CalculatorService {
                           canSecondaryTrans: buff.canSecondaryTrans,
                           canOverlying: buff.canOverlying,
                           calByOrigin: buff.calByOrigin,
+                          overrideElement: overrideElement,
+                          overrideWhenEffective: overrideWhenEffective,
                         })
                       }
                     }
@@ -4722,6 +5036,12 @@ export class CalculatorService {
               //一般バフ
               let value = indexValue;
               value = this.calRelationResult(value, constIndexValue, constCalRelation)
+              if (value != 0) {
+                buffValIsNotZero = true;
+              }
+              if(buff.overrideElement != undefined && overrideElement == "" && sliderNumMap[buffIndex] !== 0){
+                overrideElement = buff.overrideElement;
+              }
               for(let tar of targets){
                 if(!isOnlyForOther){
                   if(result[tar] == undefined){
@@ -4762,6 +5082,8 @@ export class CalculatorService {
                       canSecondaryTrans: buff.canSecondaryTrans,
                       canOverlying: buff.canOverlying,
                       calByOrigin: buff.calByOrigin,
+                      overrideElement: overrideElement,
+                      overrideWhenEffective: overrideWhenEffective,
                     })
                   }else{
                     if(sliderStartIndex != undefined){
@@ -4781,6 +5103,8 @@ export class CalculatorService {
                         canSecondaryTrans: buff.canSecondaryTrans,
                         canOverlying: buff.canOverlying,
                         calByOrigin: buff.calByOrigin,
+                        overrideElement: overrideElement,
+                        overrideWhenEffective: overrideWhenEffective,
                       })
                     }else{
                       selfTeamBuffs.push({
@@ -4791,6 +5115,8 @@ export class CalculatorService {
                         canSecondaryTrans: buff.canSecondaryTrans,
                         canOverlying: buff.canOverlying,
                         calByOrigin: buff.calByOrigin,
+                        overrideElement: overrideElement,
+                        overrideWhenEffective: overrideWhenEffective,
                       })
                     }
                   }
@@ -4803,7 +5129,9 @@ export class CalculatorService {
     }
 
     //結果セット
-    setBuffResult.overrideElement = overrideElement;
+    if (!overrideWhenEffective || overrideWhenEffective && buffValIsNotZero) {
+      setBuffResult.overrideElement = overrideElement;
+    }
 
     return setBuffResult;
   }
@@ -4941,7 +5269,7 @@ export class CalculatorService {
         } else {
           tempVal = unit.const ?? 0;
         }
-        tempRes = this.calRelationResult(tempRes, tempVal, unit.relation);
+        tempRes = this.calRelationResult(tempRes, tempVal, unit.relation, unit.trueResult, unit.falseResult);
       }
       if (item.innerClampMin !== undefined && tempRes < item.innerClampMin) {
         tempRes = item.innerClampMin;
@@ -4960,7 +5288,7 @@ export class CalculatorService {
     return result;
   }
 
-  private calRelationResult(val1: number, val2: number, relation: TYPE_RELATION): number{
+  private calRelationResult(val1: number, val2: number, relation: TYPE_RELATION, trueResult?: number, falseResult?: number): number{
     let result = val1;
     switch(relation){
       case '+':
@@ -4975,6 +5303,32 @@ export class CalculatorService {
       case '/':
         result /= val2;
         break;
+    }
+    if (trueResult !== undefined && falseResult !== undefined) {
+      let calc = undefined;
+      switch(relation){
+        case '>':
+          calc = val1 > val2;
+          break;
+        case '>=':
+          calc = val1 >= val2;
+          break;
+        case '<':
+          calc = val1 < val2;
+          break;
+        case '<=':
+          calc = val1 <= val2;
+          break;
+        case '==':
+          calc = val1 == val2;
+          break;
+        case '!=':
+          calc = val1 != val2;
+          break;
+      }
+      if (calc !== undefined) {
+        result = calc ? trueResult : falseResult;
+      }
     }
     return result;
   }

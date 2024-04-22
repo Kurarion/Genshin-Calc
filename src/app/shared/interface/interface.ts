@@ -127,6 +127,7 @@ export interface ExtraSkillBuff {
   finallyCal?: boolean;
   //元素付与
   overrideElement?: string;
+  overrideWhenEffective?: boolean;
   //数値計算ベースインデックスリスト
   constIndex?: number;
   constCalRelation?: TYPE_RELATION;
@@ -166,6 +167,7 @@ export interface ExtraSkillBuff {
   sliderMin?: number;
   sliderInitialValue?: number;
   sliderStep?: number;
+  sliderIsPercent?: boolean;
   //特殊スライダーインデックス
   sliderStartIndex?: number;
   //設定
@@ -194,12 +196,14 @@ export interface ExtraSkillHealing {
   originInnerRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
   index?: number;
+  indexesAttach?: number[][];
   constIndex?: number;
   constCalRelation?: TYPE_RELATION;
   //カスタマー倍率
   customValue?: number;
   //数値計算ベース
   base?: string;
+  baseAttach?: string[];
   healingBonusType?: string; //治療タイプ
 }
 
@@ -215,12 +219,14 @@ export interface ExtraSkillShield {
   originInnerRelations?: TYPE_RELATION[];
   //数値計算ベースインデックスリスト
   index?: number;
+  indexesAttach?: number[][];
   constIndex?: number;
   constCalRelation?: TYPE_RELATION;
   //カスタマー倍率
   customValue?: number;
   //数値計算ベース
   base?: string;
+  baseAttach?: string[];
   shieldBonusType?: string; //シールドタイプ
   //シールド元素タイプ
   shieldElementType?: string;
@@ -231,17 +237,19 @@ export interface ExtraSkillProduct {
   finalResCalQueue?: CalcItem[];
   //数値計算ベースインデックスリスト
   index?: number;
+  indexesAttach?: number[][];
   constIndex?: number;
   constCalRelation?: TYPE_RELATION;
   //カスタマー倍率
   customValue?: number;
   //数値計算ベース
   base?: string;
+  baseAttach?: string[];
 }
 
 /** 補足データ - 5階 */
 export declare type TYPE_SKILL = 'normal' | 'skill' | 'elementalBurst' | 'proudSkills';
-export declare type TYPE_RELATION = '*' | '+' | '-' | '/';
+export declare type TYPE_RELATION = '*' | '+' | '-' | '/' | '>' | '>=' | '<' | '<=' | '!=' | '==';
 export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' | 'switch';
 //計算ユニット
 export interface CalcItem {
@@ -257,5 +265,7 @@ export interface CalcUnit {
   variable?: string;
   varMap?: Record<string, number>;
   const?: number;
+  trueResult?: number;
+  falseResult?: number;
   relation: TYPE_RELATION;
 }

@@ -75,19 +75,13 @@
 
 @keyframes changeColor {
     0% {
-        margin-left: 17px;
         box-shadow: 1px 1px 1px rgba(128, 128, 128, 0.3);
-        width: 300px;
     }
     50% {
-        margin-left: 12px;
         box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.3);
-        width: 320px;
     }
     100% {
-        margin-left: 17px;
         box-shadow: 1px 1px 1px rgba(128, 128, 128, 0.3);
-        width: 300px;
     }
 }
 

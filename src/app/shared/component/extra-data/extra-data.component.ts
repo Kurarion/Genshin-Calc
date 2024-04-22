@@ -662,8 +662,27 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onChangeSlider(change: MatSliderChange, valueIndex: number){
-    this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'slider', change.value as number, this.skillIndex);
+  onChangeSlider(change: MatSliderChange, valueIndex: number, buffIndex: number){
+    const value = change.value as number;
+    this.onChangeSliderCommon(value, valueIndex, buffIndex);
+  }
+
+  onChangeSliderValue(change: Event, valueIndex: number, buffIndex: number, min?: number, max?: number){
+    const targe = (change.target as HTMLInputElement);
+    let value = parseInt(targe.value);
+    if(min !== undefined && value < min) {
+      value = min;
+    }
+    if(max !== undefined && value > max) {
+      value = max;
+    }
+    targe.value = value.toString();
+    this.onChangeSliderCommon(value, valueIndex, buffIndex);
+  }
+
+  onChangeSliderCommon(changedValue: number, valueIndex: number, buffIndex: number) {
+    this.buffDatas[buffIndex].sliderValue = changedValue;
+    this.calculatorService.setSkillBuffValue(this.characterIndex, this.skill, valueIndex, 'slider', changedValue, this.skillIndex);
     if(this.skill == Const.NAME_EFFECT){
       this.calculatorService.initExtraWeaponData(this.characterIndex);
     }else if(this.skill == Const.NAME_SET){

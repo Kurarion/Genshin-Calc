@@ -249,7 +249,9 @@
     "SHIELD_BONUS_WEAPON": "武器盾量加成",
     "SHIELD_BONUS_OTHER": "其他盾量加成",
     "SHIELD_BONUS_SET": "聖遺物盾量加成",
-    "OCEAN_HUED_HEALING": "海染-治療量"
+    "OCEAN_HUED_HEALING": "海染-治療量",
+    "BOND_OF_LIFE": "生命之契(%)",
+    "BOND_OF_LIFE_VAL": "生命之契"
   },
   "GENSHIN": {
     "DMG": {
@@ -525,6 +527,9 @@
     },
     "FURINA_HP_50_PLUS_CHAR_NUM": {
       "TITLE": "附近隊伍中生命值\n高於50%的角色數"
+    },
+    "BOND_OF_LIFE": {
+      "TITLE": "生命之契"
     }
   },
   "MENU": {

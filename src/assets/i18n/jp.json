@@ -249,7 +249,9 @@
     "SHIELD_BONUS_WEAPON": "武器シールド",
     "SHIELD_BONUS_OTHER": "その他シールド",
     "SHIELD_BONUS_SET": "聖遺物シールド",
-    "OCEAN_HUED_HEALING": "海染-回復量"
+    "OCEAN_HUED_HEALING": "海染-回復量",
+    "BOND_OF_LIFE": "命の契約(%)",
+    "BOND_OF_LIFE_VAL": "命の契約"
   },
   "GENSHIN": {
     "DMG": {
@@ -525,6 +527,9 @@
     },
     "FURINA_HP_50_PLUS_CHAR_NUM": {
       "TITLE": "チームにHPが50%を超\nえているキャラクター"
+    },
+    "BOND_OF_LIFE": {
+      "TITLE": "命の契約"
     }
   },
   "MENU": {

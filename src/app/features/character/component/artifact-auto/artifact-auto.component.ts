@@ -350,6 +350,7 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
       {
         type: 'pie',
         radius: [8, 75],
+        center: ['50%', '40%'],
         roseType: 'radius',
         encode: {itemName: 0, value: 1, propIndex: 2}
       }

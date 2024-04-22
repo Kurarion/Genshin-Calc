@@ -249,7 +249,9 @@
     "SHIELD_BONUS_WEAPON": "Weapon Shield Bonus",
     "SHIELD_BONUS_OTHER": "Other Shield Bonus",
     "SHIELD_BONUS_SET": "Artifact Shield Bonus",
-    "OCEAN_HUED_HEALING": "Ocean-Healing"
+    "OCEAN_HUED_HEALING": "Ocean-Healing",
+    "BOND_OF_LIFE": "Bond of Life (%)",
+    "BOND_OF_LIFE_VAL": "Bond of Life"
   },
   "GENSHIN": {
     "DMG": {
@@ -525,6 +527,9 @@
     },
     "FURINA_HP_50_PLUS_CHAR_NUM": {
       "TITLE": "Character(s) with \nmore than 50% HP"
+    },
+    "BOND_OF_LIFE": {
+      "TITLE": "Bond of Life"
     }
   },
   "MENU": {

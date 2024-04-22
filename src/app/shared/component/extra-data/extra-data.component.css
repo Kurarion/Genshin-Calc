@@ -117,3 +117,39 @@ table {
 :host ::ng-deep .mat-button-toggle-label-content {
     line-height: unset;
 }
+
+.slider-buff {
+    width: 100%;
+}
+.slider-buff-input-field {
+    margin-left: 0.1em;
+    margin-right: 0.6em;
+    width: 3.2em;
+    text-align: center;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.buff-title {
+    margin-left: 0.4em;
+}
+
+.switch-buff {
+    margin-right: 0.4em;
+}
+
+:host ::ng-deep .slider-buff-input-field .mat-form-field-wrapper {
+    margin-bottom: -0.7em;
+    margin-top: -0.7em;
+}
