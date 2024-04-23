@@ -4,7 +4,8 @@
   "assetGroups": [
     {
       "name": "app",
-      "installMode": "prefetch",
+      "installMode": "lazy",
+      "updateMode": "lazy",
       "resources": {
         "files": [
           "/favicon.ico",
@@ -18,6 +19,7 @@
     {
       "name": "icons",
       "installMode": "lazy",
+      "updateMode": "lazy",
       "resources": {
         "files": [
           "/assets/icons/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)",
@@ -30,7 +32,8 @@
     },
     {
       "name": "game-data",
-      "installMode": "prefetch",
+      "installMode": "lazy",
+      "updateMode": "lazy",
       "resources": {
         "files": [
             "/assets/genshin/avatar_map.json",
@@ -44,7 +47,8 @@
     },
     {
       "name": "setting-data",
-      "installMode": "prefetch",
+      "installMode": "lazy",
+      "updateMode": "lazy",
       "resources": {
         "files": [
             "/assets/init/data.json",
