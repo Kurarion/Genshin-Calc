@@ -3826,7 +3826,13 @@ export class CalculatorService {
       }
       result[key] = temp;
     }
-  
+
+    //特殊範囲処理（命の契約）
+    if(result[Const.PROP_BOND_OF_LIFE] > Const.MAX_BOND_OF_LIFE) {
+      result[Const.PROP_BOND_OF_LIFE] = Const.MAX_BOND_OF_LIFE;
+      result[Const.PROP_BOND_OF_LIFE_VAL] = result[Const.PROP_BOND_OF_LIFE] * result[Const.PROP_HP];
+    }
+
     //スペシャルバフ
     let specialOrders: SpecialBuff[] = [];
     let specialOrdersFinally: SpecialBuff[] = [];
