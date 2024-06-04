@@ -2785,6 +2785,9 @@ export class CalculatorService {
         }
         if(damageInfo?.customValues){
           for(let value of damageInfo.customValues){
+            if(damageInfo && damageInfo.indexes && !valueIndexes.includes(damageInfo.indexes[0])){
+              continue;
+            }
             let base = damageInfo.base!;     
             let baseAttach = damageInfo.baseAttach!;
             let attackBonusType = damageInfo.attackBonusType!;
@@ -3927,6 +3930,11 @@ export class CalculatorService {
     if(result[Const.PROP_BOND_OF_LIFE] > Const.MAX_BOND_OF_LIFE) {
       result[Const.PROP_BOND_OF_LIFE] = Const.MAX_BOND_OF_LIFE;
       result[Const.PROP_BOND_OF_LIFE_VAL] = result[Const.PROP_BOND_OF_LIFE] * result[Const.PROP_HP];
+    }
+
+    if(environment.outputLog){
+      //DEBUG
+      console.log(result)
     }
 
     return result;

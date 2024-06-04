@@ -13218,6 +13218,252 @@
                 ]
             }
         },
+        "10000095": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,2],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [6],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [3,4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [7, 8],
+                            "base": "ATTACK",
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexes": [0,6],
+                            "canOverride": false,
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        },
+                        "healing": {
+                            "index":1,
+                            "base":"HP",
+                            "constIndex":2,
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "healing": {
+                            "index":3,
+                            "base":"HP",
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 0,
+                            "setTos": ["VAR_CHARA_1"],
+                            "settingType":"slider",
+                            "sliderInitialValue":0,
+                            "sliderMin":0,
+                            "sliderMax":2,
+                            "sliderStep":1,
+                            "title": "BUFF.BOLSTERING_BUBBLEBALM.TITLE"
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "target": ["DMG_BONUS_SKILL", "HEALING_BONUS_SKILL"],
+                            "finalResCalQueue": [
+                                {
+                                    "relation": "+",
+                                    "inner": [
+                                        {
+                                            "relation": "+",
+                                            "const": 0.05
+                                        },
+                                        {
+                                            "relation": "*",
+                                            "variable": "VAR_CHARA_1"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "settingType":"resident"
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 0,
+                            "customValue": 0.1,
+                            "target": ["BOND_OF_LIFE"],
+                            "settingType":"slider",
+                            "sliderInitialValue":0,
+                            "sliderMin":0,
+                            "sliderMax":2,
+                            "sliderStep":1,
+                            "title": "BUFF.SOURCEWATER.TITLE"
+                        }]
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "canOverride": false,
+                            "base": "HP",
+                            "elementBonusType": "DMG_BONUS_HYDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "setTos": ["VAR_CHARA_3"],
+                                "setValCalQueues": [
+                                    [
+                                        {
+                                            "relation": "+",
+                                            "inner": [
+                                                {
+                                                    "relation": "+",
+                                                    "const": 34
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                ],
+                                "settingType": "resident"
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base": "HP",
+                                "baseModifyValue": 30000,
+                                "baseModifyRelation": "-",
+                                "indexMultiValue": 0.001,
+                                "maxValIndex": 0,
+                                "maxValBase": "VAR_CHARA_3",
+                                "target":["DMG_VAL_UP_SKILL"],
+                                "finalResCalQueue": [
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation": "+",
+                                                "const": 1
+                                            },
+                                            {
+                                                "relation": "+",
+                                                "variable": "VAR_CHARA_2"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "isOnlyForOther": true
+                            },{
+                                "index": 3,
+                                "target":["DMG_BONUS_HYDRO"]
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "indexMultiValue": 0.1,
+                                "target": ["HEALING_BONUS"],
+                                "settingType":"slider",
+                                "sliderInitialValue":0,
+                                "sliderMin":0,
+                                "sliderMax":100,
+                                "sliderStep":1,
+                                "sliderIsPercent": true,
+                                "title": "BUFF.HEALING_HP.TITLE"
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "customValue": 0.25,
+                                "target":["VAR_CHARA_2"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            },{
+                                "customValue": 8.75,
+                                "target":["VAR_CHARA_3"]
+                            }]
+                        }
+                ],
+                "1": [
+                        {
+                            "shield": {
+                                "index": 0,
+                                "base": "HP",
+                                "shieldElementType": "HYDRO"
+                            },
+                            "buffs":[{
+                                "index": 1,
+                                "target":["DMG_ANTI_HYDRO_MINUS"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base": "HP",
+                                "indexMultiValue": 0.001,
+                                "maxValConstIndex": 3,
+                                "target":["CRIT_RATE"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            },{
+                                "index": 1,
+                                "base": "HP",
+                                "indexMultiValue": 0.001,
+                                "maxValConstIndex": 4,
+                                "target":["CRIT_DMG"]
+                            }]
+                        }
+                ]
+            }
+        },
         "10000096": {
             "skills": {
                 "normal": [
@@ -13404,6 +13650,486 @@
                             },{
                                 "index": 1,
                                 "target":["DMG_CRIT_DMG_UP_NORMAL", "DMG_CRIT_DMG_UP_ELEMENTAL_BURST"]
+                            }]
+                        }
+                ]
+            }
+        },
+        "10000097": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [4,5],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [6],
+                            "indexesAttach": [[7]],
+                            "base": "ATTACK",
+                            "baseAttach": ["ELEMENTAL_MASTERY"],
+                            "canOverride": false,
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "SETHOS_SHADOWPIERCING_SHOTS"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [8,9,10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "buffs":[{
+                            "index": 0,
+                            "base":"ELEMENTAL_MASTERY",
+                            "target": ["DMG_VAL_UP_CHARGED"],
+                            "settingType": "switch",
+                            "defaultEnable": false,
+                            "tag": "SETHOS_DUSK_BOLTS"
+                        }]
+                    },
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "customValues": [1],
+                            "originSkills":["normal"],
+                            "originIndexes": [0],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "SETHOS_DUSK_BOLTS"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "customValues": [1],
+                            "originSkills":["normal"],
+                            "originIndexes": [1],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "SETHOS_DUSK_BOLTS"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "customValues": [1],
+                            "originSkills":["normal"],
+                            "originIndexes": [2],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "SETHOS_DUSK_BOLTS"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "customValues": [1],
+                            "originSkills":["normal"],
+                            "originIndexes": [3],
+                            "originRelations":["*"],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_CHARGED",
+                            "tag": "SETHOS_DUSK_BOLTS"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "base":"ELEMENTAL_MASTERY",
+                                "target": ["DMG_VAL_UP_CHARGED"],
+                                "settingType": "switch",
+                                "defaultEnable": false,
+                                "tag": "SETHOS_SHADOWPIERCING_SHOTS"
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_CRIT_RATE_UP_CHARGED"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "tag": "SETHOS_SHADOWPIERCING_SHOTS"
+                            }]
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_BONUS_ELECTRO"],
+                                "settingType": "slider",
+                                "sliderStep": 1,
+                                "sliderInitialValue":0,
+                                "sliderMax": 2,
+                                "sliderMin": 0
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["ELEMENTAL_MASTERY"],
+                                "settingType": "switch",
+                                "defaultEnable":false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ]
+            }
+        },
+        "10000098": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,2,3,9],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 4,
+                            "setTos": ["VAR_CHARA_1"],
+                            "settingType":"slider",
+                            "sliderInitialValue":3,
+                            "sliderMin":1,
+                            "sliderMax":3,
+                            "sliderStep":1,
+                            "title": "BUFF.COMMON_TIMES.TITLE"
+                        }]
+                    },
+                    {
+                        "damage": {
+                            "indexes": [4],
+                            "base": "ATTACK",
+                            "finalResCalQueue":[
+                                {
+                                    "relation": "*",
+                                    "inner": [
+                                        {
+                                            "relation":"+",
+                                            "variable":"VAR_CHARA_1"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [10],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [12,13,14],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,3,4,9],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 6,
+                            "setTos": ["VAR_CHARA_4"],
+                            "settingType":"slider",
+                            "sliderInitialValue":3,
+                            "sliderMin":1,
+                            "sliderMax":3,
+                            "sliderStep":1,
+                            "title": "BUFF.COMMON_TIMES.TITLE"
+                        }]
+                    },
+                    {
+                        "damage": {
+                            "indexes": [6],
+                            "base": "ATTACK",
+                            "finalResCalQueue":[
+                                {
+                                    "relation": "*",
+                                    "inner": [
+                                        {
+                                            "relation":"+",
+                                            "variable":"VAR_CHARA_4"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "healing":{
+                            "index":5,
+                            "base":"BOND_OF_LIFE_VAL",
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "healing":{
+                            "index":7,
+                            "base":"BOND_OF_LIFE_VAL",
+                            "healingBonusType":"HEALING_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "index": 2,
+                            "target": ["BOND_OF_LIFE"],
+                            "settingType":"switch",
+                            "defaultEnable":false
+                        }]
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 8,
+                            "customValue": 0.01,
+                            "target": ["BOND_OF_LIFE"],
+                            "settingType":"slider",
+                            "sliderInitialValue":0,
+                            "sliderMin":0,
+                            "sliderMax":200,
+                            "sliderStep":5,
+                            "sliderIsPercent": true,
+                            "title": "BUFF.BOND_OF_LIFE.TITLE"
+                        }]
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_ELECTRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        },
+                        "buffs":[{
+                            "index": 1,
+                            "target": ["BOND_OF_LIFE"],
+                            "settingType":"switch",
+                            "defaultEnable":false
+                        }]
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "setTos": ["VAR_CHARA_3"],
+                                "setValCalQueues": [
+                                    [
+                                        {
+                                            "relation": "+",
+                                            "inner": [
+                                                {
+                                                    "relation": "+",
+                                                    "const": 0
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                ],
+                                "settingType": "resident"
+                            }]
+                        },
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "base": "ATTACK",
+                                "maxValIndex": 1,
+                                "maxValBase": "VAR_CHARA_3",
+                                "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_ELEMENTAL_BURST"],
+                                "finalResCalQueue":[
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation":"+",
+                                                "variable":"VAR_CHARA_3"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "settingType":"slider",
+                                "sliderMin": 0,
+                                "sliderMax": 3,
+                                "sliderStep": 1,
+                                "sliderInitialValue": 0
+                            }]
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "target": ["CRIT_RATE"],
+                                "settingType":"slider",
+                                "sliderMin": 0,
+                                "sliderMax": 2,
+                                "sliderStep": 1,
+                                "sliderInitialValue": 0
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "setTos": ["VAR_CHARA_2"],
+                                "settingType":"slider",
+                                "sliderInitialValue":2,
+                                "sliderMin":1,
+                                "sliderMax":2,
+                                "sliderStep":1,
+                                "title": "BUFF.COMMON_TIMES.TITLE"
+                            }]
+                        },
+                        {
+                            "damage": {
+                                "indexes": [1],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "finalResCalQueue":[
+                                    {
+                                        "relation": "*",
+                                        "inner": [
+                                            {
+                                                "relation":"+",
+                                                "variable":"VAR_CHARA_2"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "elementBonusType": "DMG_BONUS_ELECTRO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "showIndex": 0,
+                                "customValue": 0.5,
+                                "target":["VAR_CHARA_3"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "3": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "base": "BOND_OF_LIFE",
+                                "maxValConstIndex": 2,
+                                "target":["DMG_BONUS_ELEMENTAL_BURST"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "damage": {
+                                "indexes": [4],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_ELECTRO",
+                                "attackBonusType": "DMG_BONUS_NORMAL"
+                            }
+                        },
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target":["CRIT_RATE"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            },{
+                                "index": 1,
+                                "target":["CRIT_DMG"]
                             }]
                         }
                 ]
@@ -14154,6 +14880,28 @@
                     },{
                         "index": 2,
                         "target": ["DMG_BONUS_SKILL"]
+                    }]
+                }
+            ]
+        },
+        "11515": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["CRIT_DMG"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target": ["DMG_BONUS_ALL"],
+                        "settingType": "slider",
+                        "sliderMax": 3,
+                        "sliderMin": 0,
+                        "sliderStep": 1,
+                        "sliderInitialValue": 0
                     }]
                 }
             ]
@@ -16109,6 +16857,21 @@
                 }
             ]
         },
+        "15426": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ELEMENTAL_MASTERY"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 2,
+                        "sliderMin": 0
+                    }]
+                }
+            ]
+        },
         "15501": {
             "effect": [
                 {
@@ -16276,6 +17039,26 @@
                         "sliderInitialValue": 1,
                         "sliderStep": 1,
                         "sliderMax": 3
+                    }]
+                }
+            ]
+        },
+        "15513": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["HP_UP"],
+                        "settingType": "slider",
+                        "sliderInitialValue": 0,
+                        "sliderStep": 1,
+                        "sliderMax": 3
+                    },
+                    {
+                        "index": 6,
+                        "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
+                        "sliderMax": 3,
+                        "isMaximumStackBuff": true
                     }]
                 }
             ]

@@ -454,7 +454,9 @@
     "FURINA_SALON_SOLITAIRE": "孤心沙龍",
     "FURINA_NORMAL_C6": "獨舞之邀",
     "NAVIA_SHARDSHOT": "玫瑰晶彈",
-    "GAMING_BESTIAL_ASCENT": "瑞獸登高樓"
+    "GAMING_BESTIAL_ASCENT": "瑞獸登高樓",
+    "SETHOS_DUSK_BOLTS": "瞑弦矢",
+    "SETHOS_SHADOWPIERCING_SHOTS": "貫影箭"
   },
   "AUTO": {
     "CALC": "計算",
@@ -530,6 +532,15 @@
     },
     "BOND_OF_LIFE": {
       "TITLE": "生命之契"
+    },
+    "BOLSTERING_BUBBLEBALM": {
+      "TITLE": "激癒水球等級"
+    },
+    "SOURCEWATER": {
+      "TITLE": "源水之滴"
+    },
+    "HEALING_HP": {
+      "TITLE": "治療量"
     }
   },
   "MENU": {
