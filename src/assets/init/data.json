@@ -13439,7 +13439,8 @@
                                 "index": 1,
                                 "target":["DMG_ANTI_HYDRO_MINUS"],
                                 "settingType": "switch",
-                                "defaultEnable": false
+                                "defaultEnable": false,
+                                "isAllTeam": true
                             }]
                         }
                 ],
