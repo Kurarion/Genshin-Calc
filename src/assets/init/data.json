@@ -14104,8 +14104,9 @@
                         {
                             "buffs":[{
                                 "index": 0,
+                                "indexMultiValue": 100,
                                 "base": "BOND_OF_LIFE",
-                                "maxValConstIndex": 2,
+                                "maxValConstIndex": 1,
                                 "target":["DMG_BONUS_ELEMENTAL_BURST"],
                                 "settingType": "switch",
                                 "defaultEnable": false
