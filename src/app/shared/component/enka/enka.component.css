@@ -4,6 +4,7 @@
     border-radius: 4px;
     background-color: #ebebeb;
     margin-right: 10px;
+    display: flex;
 }
 
 .enka-field{
@@ -38,8 +39,8 @@
     font-size: 1.91em;
 }
 
-:host ::ng-deep.mat-form-field{
-    background-color: #ffffff81 !important;
+:host ::ng-deep.mat-form-field-flex{
+    background-color: unset;
 }
 
 :host ::ng-deep .mat-form-field-wrapper{
