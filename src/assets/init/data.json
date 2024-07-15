@@ -14136,6 +14136,154 @@
                         }
                 ]
             }
+        },
+        "10000099": {
+            "skills": {
+                "normal": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,2,3],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_NORMAL"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [4],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_CHARGED"
+                        }
+                    },
+                    {
+                        "damage": {
+                            "indexes": [6,7,8],
+                            "base": "ATTACK",
+                            "canOverride": true,
+                            "elementBonusType": "DMG_BONUS_PHYSICAL",
+                            "attackBonusType": "DMG_BONUS_PLUNGING"
+                        }
+                    }
+                ],
+                "skill": [
+                    {
+                        "damage": {
+                            "indexes": [0,1,4],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    },
+                    {
+                        "buffs":[{
+                            "showIndex": 2,
+                            "setTos": ["VAR_CHARA_1"],
+                            "settingType":"slider",
+                            "sliderInitialValue":1,
+                            "sliderMin":1,
+                            "sliderMax":2,
+                            "sliderStep":1,
+                            "title": "BUFF.COMMON_TIMES.TITLE"
+                        }]
+                    },
+                    {
+                        "damage": {
+                            "indexes": [2],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "finalResCalQueue":[
+                                {
+                                    "relation": "*",
+                                    "inner": [
+                                        {
+                                            "relation":"+",
+                                            "variable":"VAR_CHARA_1"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_SKILL"
+                        }
+                    }
+                ],
+                "elementalBurst": [
+                    {
+                        "damage": {
+                            "indexes": [0],
+                            "canOverride": false,
+                            "base": "ATTACK",
+                            "elementBonusType": "DMG_BONUS_DENDRO",
+                            "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+                        }
+                    }
+                ],
+                "proudSkills": [
+                    [
+                        {
+                            "damage": {
+                                "indexes": [0],
+                                "canOverride": false,
+                                "base": "ATTACK",
+                                "elementBonusType": "DMG_BONUS_DENDRO",
+                                "attackBonusType": "DMG_BONUS_OTHER",
+                                "tag": "EMILIE_CLEARDEW_COLOGNE"
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "indexMultiValue":0.001,
+                                "base": "ATTACK",
+                                "maxValConstIndex": 1,
+                                "target": ["DMG_BONUS_ALL"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                    ]
+                ]
+            },
+            "constellation": {
+                "0": [
+                        {
+                            "buffs":[{
+                                "index": 1,
+                                "target": ["DMG_BONUS_SKILL", "DMG_BONUS_OTHER_EMILIE_CLEARDEW_COLOGNE"],
+                                "settingType":"switch",
+                                "defaultEnable":false
+                            }]
+                        }
+                ],
+                "1": [
+                        {
+                            "buffs":[{
+                                "index": 0,
+                                "target": ["DMG_ANTI_DENDRO_MINUS"],
+                                "settingType":"switch",
+                                "defaultEnable":false,
+                                "isAllTeam":true
+                            }]
+                        }
+                ],
+                "5": [
+                        {
+                            "buffs":[{
+                                "index": 2,
+                                "overrideElement":"DMG_BONUS_DENDRO",
+                                "target": ["DMG_RATE_UP_NORMAL", "DMG_RATE_UP_CHARGED"],
+                                "settingType": "switch",
+                                "defaultEnable": false
+                            }]
+                        }
+                ]
+            }
         }
     },
     "weapons": {
@@ -15899,6 +16047,27 @@
                             }
                         ],
                         "settingType": "resident"
+                    }]
+                }
+            ]
+        },
+        "13513": {
+            "effect": [
+                {
+                    "buffs":[{
+                        "index": 0,
+                        "target": ["ATTACK_UP"],
+                        "settingType": "resident"
+                    }]
+                },
+                {
+                    "buffs":[{
+                        "index": 1,
+                        "target":["DMG_BONUS_ALL"],
+                        "settingType": "slider",
+                        "sliderInitialValue":0,
+                        "sliderStep":1,
+                        "sliderMax":2
                     }]
                 }
             ]
