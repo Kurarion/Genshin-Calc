@@ -281,7 +281,7 @@ export class EnkaService {
         let minDiff = value + 1;
         for(let v of this.genshinDataService.getReliquaryAffix(subProp)){
           let tempDiff = Math.abs(value - v);
-          if(tempDiff < minDiff){
+          if(tempDiff < minDiff + Number.EPSILON){
             minDiff = tempDiff;
             finalValue = v;
           }else{

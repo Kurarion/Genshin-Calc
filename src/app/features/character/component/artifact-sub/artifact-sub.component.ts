@@ -200,7 +200,7 @@ export class ArtifactSubComponent implements OnInit {
     }else{
       for(let v of valueList){
         let tempDiff = Math.abs(value - v);
-        if(tempDiff < minDiff){
+        if(tempDiff < minDiff + Number.EPSILON){
           minDiff = tempDiff;
           finalValue = v;
         }else{
