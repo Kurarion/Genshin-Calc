@@ -9,11 +9,11 @@
     "CONSTELLATION": "命座",
     "ALLPROPS": "全属性"
   },
-  "PLAYER":{
+  "PLAYER": {
     "BOY": "空",
     "GIRL": "荧"
   },
-  "ELEMENT":{
+  "ELEMENT": {
     "CRYO": "冰",
     "ANEMO": "风",
     "ELECTRO": "雷",
@@ -25,7 +25,7 @@
   "WEAPON": {
     "NAME": "武器名",
     "PROPS": "武器属性",
-    "SMELTING":"精炼"
+    "SMELTING": "精炼"
   },
   "ENEMY": {
     "NAME": "敌人名",
@@ -254,7 +254,7 @@
     "BOND_OF_LIFE_VAL": "生命之契"
   },
   "GENSHIN": {
-    "DMG":{
+    "DMG": {
       "ORIGIN": "不暴击伤害",
       "CRIT": "暴击伤害",
       "EXPECT": "期望伤害",
@@ -480,11 +480,11 @@
     "BLANK_DPS_LIST": "该索引的DPS为空。",
     "NO_RESULT": "无效计算。"
   },
-  "SW":{
+  "SW": {
     "HAS_NEW": "发现新版本, 数据更新中...",
     "READY": "数据更新完成!;;重新加载"
   },
-  "TEAM":{
+  "TEAM": {
     "NAME": "队伍",
     "MEMBER_NAME_1": "成员1",
     "MEMBER_NAME_2": "成员2",
@@ -544,8 +544,8 @@
       "TITLE": "治疗量"
     }
   },
-  "MENU":{
-    "DELETE_CACHE":{
+  "MENU": {
+    "DELETE_CACHE": {
       "TITLE": "角色数据清除",
       "ALL_TITLE": "数据清除",
       "WANRING": "确定要清除角色「{{NAME}}」的全部数据么？",
@@ -555,7 +555,7 @@
       "SUCCESS": "已重置「{{NAME}}」的数据！",
       "ALL_SUCCESS": "已重置全部数据！"
     },
-    "MANUAL":{
+    "MANUAL": {
       "TITLE": "使用指南",
       "OK": "确认"
     },
@@ -563,7 +563,7 @@
       "TITLE": "访问统计"
     }
   },
-  "COMMON":{
+  "COMMON": {
     "ELEMENT_TYPE": {
       "DMG_BONUS_CRYO": "冰元素",
       "DMG_BONUS_ANEMO": "风元素",
@@ -602,7 +602,7 @@
     "DMG_VAL_LABEL": "[伤害值]",
     "APPENDED": "DPS: 伤害信息追加成功！",
     "TIPS": "提示：点击伤害类型左侧的[+]按钮以向DPS列表中追加伤害信息。",
-    "IMPORT_DIALOG":{
+    "IMPORT_DIALOG": {
       "TITLE": "DPS代码导入",
       "CONTENT": "请导入角色ID为「{{CHAR_ID}}」的代码",
       "OK": "导入",

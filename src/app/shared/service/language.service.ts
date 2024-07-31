@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, Subject, switchMap, tap } from 'rxjs';
-import { Const, LangInfo, RelayoutMsgService, StorageService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import {Injectable} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {TranslateService} from '@ngx-translate/core';
+import {map, Observable, Subject, switchMap, tap} from 'rxjs';
+import {
+  Const,
+  LangInfo,
+  RelayoutMsgService,
+  StorageService,
+  TYPE_SYS_LANG,
+} from 'src/app/shared/shared.module';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LanguageService {
-
   //言語リスト
   static langs: LangInfo[] = Const.LIST_LANG;
   static langCodes: TYPE_SYS_LANG[] = LanguageService.langs.map((l) => l.code);
@@ -20,11 +25,13 @@ export class LanguageService {
   private currentLangCode$: Observable<TYPE_SYS_LANG> = this.currentLangCode.asObservable();
   private currentLangCodeAfterPreProcess: Observable<TYPE_SYS_LANG>;
 
-  constructor(private translateService: TranslateService,
+  constructor(
+    private translateService: TranslateService,
     private storageService: StorageService,
     //private ocrService: OcrService,
     private titleService: Title,
-    private relayoutMsgService: RelayoutMsgService) {
+    private relayoutMsgService: RelayoutMsgService,
+  ) {
     //言語設定
     this.translateService.addLangs(LanguageService.langCodes);
     //言語変更監視
@@ -33,9 +40,9 @@ export class LanguageService {
         return this.setLang(nextLang).pipe(
           tap(() => {
             this.currentLang = nextLang;
-          })
+          }),
         );
-      })
+      }),
     );
     //初期化
     // this.initLang();
@@ -54,11 +61,11 @@ export class LanguageService {
     return this.currentLang;
   }
 
-  setStorageLang(lang: TYPE_SYS_LANG){
+  setStorageLang(lang: TYPE_SYS_LANG) {
     this.storageService.setItem(Const.STORAGE_LANG, lang);
   }
 
-  getStorageLang(){
+  getStorageLang() {
     return this.storageService.getItem(Const.STORAGE_LANG);
   }
 
@@ -71,8 +78,9 @@ export class LanguageService {
       .use(
         langCode?.match(new RegExp(LanguageService.langs.join('|')))
           ? langCode
-          : environment.defaultLang
-      ).pipe(
+          : environment.defaultLang,
+      )
+      .pipe(
         map(() => {
           //タブタイトル初期化
           this.updateTabTitleName();
@@ -83,10 +91,10 @@ export class LanguageService {
           //ストレージに保存
           this.setStorageLang(langCode);
           //レイアウト更新
-          this.relayoutMsgService.update("langChange");
+          this.relayoutMsgService.update('langChange');
 
           return langCode;
-        })
+        }),
       );
   }
 
@@ -104,9 +112,7 @@ export class LanguageService {
    */
   private initLang() {
     //ストレージから復元
-    const lang =
-      this.getStorageLang() ??
-      this.translateService.getDefaultLang();
+    const lang = this.getStorageLang() ?? this.translateService.getDefaultLang();
     //言語設定
     this.currentLang = lang as TYPE_SYS_LANG;
     this.nextLang(lang as TYPE_SYS_LANG);

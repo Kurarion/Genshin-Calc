@@ -1,14 +1,52 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { RelayoutMsgService, CalculatorService, character, CharacterQueryParam, CharacterService, HttpService, LanguageService, TYPE_SYS_LANG, ConfirmDialogData, ConfirmDialogComponent, Const, WeaponService, EnemyService, ArtifactService, OtherService, TeamService, ManualDialogComponent, ManualDialogData, DPSService, ExtraInfoService } from 'src/app/shared/shared.module';
-import { characterMainImgLoadAnimation, characterMainOtherLoadAnimation, CSS_STATUS_BEFORE, CSS_STATUS_FIN, buttonShowHideAnimation, SHOW, DISAPPEAR } from 'src/animation';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { map, takeUntil, Observable, Subject, Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import MagicGrid from "magic-grid";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import {
+  RelayoutMsgService,
+  CalculatorService,
+  character,
+  CharacterQueryParam,
+  CharacterService,
+  HttpService,
+  LanguageService,
+  TYPE_SYS_LANG,
+  ConfirmDialogData,
+  ConfirmDialogComponent,
+  Const,
+  WeaponService,
+  EnemyService,
+  ArtifactService,
+  OtherService,
+  TeamService,
+  ManualDialogComponent,
+  ManualDialogData,
+  DPSService,
+  ExtraInfoService,
+} from 'src/app/shared/shared.module';
+import {
+  characterMainImgLoadAnimation,
+  characterMainOtherLoadAnimation,
+  CSS_STATUS_BEFORE,
+  CSS_STATUS_FIN,
+  buttonShowHideAnimation,
+  SHOW,
+  DISAPPEAR,
+} from 'src/animation';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
+import {map, takeUntil, Observable, Subject, Subscription} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {TranslateService} from '@ngx-translate/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import MagicGrid from 'magic-grid';
 
 const WIDTH_DECREASE = 65;
 
@@ -20,9 +58,9 @@ const WIDTH_DECREASE = 65;
     characterMainImgLoadAnimation,
     characterMainOtherLoadAnimation,
     buttonShowHideAnimation,
-  ]
+  ],
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly name_character = 'character';
   readonly name_enemy = 'enemy';
   readonly name_weapon = 'weapon';
@@ -33,7 +71,7 @@ export class MainComponent implements OnInit, OnDestroy {
   readonly name_team = 'team';
   readonly name_dps = 'dps';
 
-  readonly childNameMap: Record<string,string> = {
+  readonly childNameMap: Record<string, string> = {
     'character': '0',
     'enemy': '1',
     'weapon': '2',
@@ -46,15 +84,15 @@ export class MainComponent implements OnInit, OnDestroy {
   };
 
   readonly childNames = [
-    '0',//'character',
-    '1',//'enemy',
-    '2',//'weapon',
-    '3',//'artifact',
-    '4',//'talent',
-    '5',//'constellation',
-    '6',//'other',
-    '7',//'team',
-    '8',//'dps',
+    '0', //'character',
+    '1', //'enemy',
+    '2', //'weapon',
+    '3', //'artifact',
+    '4', //'talent',
+    '5', //'constellation',
+    '6', //'other',
+    '7', //'team',
+    '8', //'dps',
   ];
 
   //背景画像URL
@@ -84,7 +122,7 @@ export class MainComponent implements OnInit, OnDestroy {
   //z-indexes
   childZIndexes!: Record<string, number>;
   //レイアウトマネジャー
-  magicGrid!: MagicGrid|null;
+  magicGrid!: MagicGrid | null;
   //subscription
   subscriptions!: Subscription[];
   //z-index
@@ -95,8 +133,9 @@ export class MainComponent implements OnInit, OnDestroy {
   showToTop: boolean = false;
   //スクロール処理メソッド
   scrollMethod: (this: HTMLElement, ev: Event) => any = this.onWindowScroll.bind(this);
-  constructor(private httpService: HttpService,
-    private route: ActivatedRoute, 
+  constructor(
+    private httpService: HttpService,
+    private route: ActivatedRoute,
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
     private languageService: LanguageService,
@@ -112,18 +151,23 @@ export class MainComponent implements OnInit, OnDestroy {
     private DPSService: DPSService,
     private extraInfoService: ExtraInfoService,
     private matDialog: MatDialog,
-    private matSnackBar: MatSnackBar,) {
+    private matSnackBar: MatSnackBar,
+  ) {
     this.subscriptions = [];
-    this.subscriptions.push(this.relayoutMsgService.status().subscribe(()=>{
-      setTimeout(()=>{
-        this.reLayout();
-      })
-    }));
-    this.subscriptions.push(this.calculatorService.changed().subscribe(()=>{
-      setTimeout(()=>{
-        this.reLayout();
-      })
-    }));
+    this.subscriptions.push(
+      this.relayoutMsgService.status().subscribe(() => {
+        setTimeout(() => {
+          this.reLayout();
+        });
+      }),
+    );
+    this.subscriptions.push(
+      this.calculatorService.changed().subscribe(() => {
+        setTimeout(() => {
+          this.reLayout();
+        });
+      }),
+    );
     //z-index初期化
     this.zIndexes = [];
     this.childZIndexes = {};
@@ -133,7 +177,7 @@ export class MainComponent implements OnInit, OnDestroy {
       takeUntil(this.destroyed),
       map((state: BreakpointState) => {
         return state.matches;
-      })
+      }),
     );
     //ブラウザのレイアウトイベント
     this.isLarge.subscribe((isLarge: boolean) => {
@@ -145,39 +189,37 @@ export class MainComponent implements OnInit, OnDestroy {
     //言語変更検知
     this.languageService.getLang().subscribe((lang: TYPE_SYS_LANG) => {
       this.currentLanguage = lang;
-    })
+    });
   }
 
   ngOnInit(): void {
-    this.route.queryParams
-      .subscribe((params: CharacterQueryParam) => {
-        //キャラデータ
-        this.data = this.characterService.get(params.index!);
-        //チャラインデックス
-        this.currentCharacterIndex = params.index!.toString();
-        //背景初期化
-        this.initializeBackGroundImage();
-        //追加データ初期化
-        this.characterService.setDefaultExtraData(params.index!);
-        this.calculatorService.initCharacterData(params.index!);
-        if(environment.outputLog){
-          //DEBUG
-          console.log(this.data)
-        }
-        //レイアウト
-        setTimeout(()=>{
-          this.magicGrid = new MagicGrid({
-            container: ".content",
-            items: 7,
-            gutter: 8,
-            maxColumns: 10,
-            animate: true,
-            useMin: true,
-          });
-          this.magicGrid.listen();
-        })
+    this.route.queryParams.subscribe((params: CharacterQueryParam) => {
+      //キャラデータ
+      this.data = this.characterService.get(params.index!);
+      //チャラインデックス
+      this.currentCharacterIndex = params.index!.toString();
+      //背景初期化
+      this.initializeBackGroundImage();
+      //追加データ初期化
+      this.characterService.setDefaultExtraData(params.index!);
+      this.calculatorService.initCharacterData(params.index!);
+      if (environment.outputLog) {
+        //DEBUG
+        console.log(this.data);
       }
-    );
+      //レイアウト
+      setTimeout(() => {
+        this.magicGrid = new MagicGrid({
+          container: '.content',
+          items: 7,
+          gutter: 8,
+          maxColumns: 10,
+          animate: true,
+          useMin: true,
+        });
+        this.magicGrid.listen();
+      });
+    });
     //画面横幅取得
     this.screenWidth = window.innerWidth;
     this.setCardWidth = this.screenWidth - WIDTH_DECREASE;
@@ -188,7 +230,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.registerWindowScroll();
     setTimeout(() => {
       this.otherState = CSS_STATUS_FIN;
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -201,8 +243,8 @@ export class MainComponent implements OnInit, OnDestroy {
     this.destroyed.complete();
     this.magicGrid = null;
     //subscriptions監視取り消し
-    for(let sub of this.subscriptions){
-      if(sub && !(sub?.closed)){
+    for (let sub of this.subscriptions) {
+      if (sub && !sub?.closed) {
         sub.unsubscribe();
       }
     }
@@ -216,8 +258,8 @@ export class MainComponent implements OnInit, OnDestroy {
     parent.scroll({
       top: 0,
       left: 0,
-      behavior: 'smooth'
-    })
+      behavior: 'smooth',
+    });
   }
 
   //キャッシュ削除
@@ -230,10 +272,10 @@ export class MainComponent implements OnInit, OnDestroy {
       contentVal: contentVal,
       cancel: 'MENU.DELETE_CACHE.CANCEL',
       ok: 'MENU.DELETE_CACHE.OK',
-    }
-    const dialogRef = this.matDialog.open(ConfirmDialogComponent, {data})
+    };
+    const dialogRef = this.matDialog.open(ConfirmDialogComponent, {data});
     dialogRef.afterClosed().subscribe((result: boolean) => {
-      if(result){
+      if (result) {
         //削除
         const indexStr = this.data.id.toString();
         this.characterService.clearStorageInfo(indexStr);
@@ -245,16 +287,22 @@ export class MainComponent implements OnInit, OnDestroy {
         this.DPSService.clearStorageInfo(indexStr);
         this.extraInfoService.clearStorageInfo(indexStr);
         //成功
-        this.translateService.get('MENU.DELETE_CACHE.SUCCESS', contentVal).subscribe((res: string) => {
-          this.matSnackBar.open(res, undefined, {
-            duration: 1500
-          })
-        });
+        this.translateService
+          .get('MENU.DELETE_CACHE.SUCCESS', contentVal)
+          .subscribe((res: string) => {
+            this.matSnackBar.open(res, undefined, {
+              duration: 1500,
+            });
+          });
         //リフレッシュ
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-        this.router.navigate([Const.MENU_CHARACTER], {queryParams: {index: this.data.id}, skipLocationChange: true}));
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate([Const.MENU_CHARACTER], {
+            queryParams: {index: this.data.id},
+            skipLocationChange: true,
+          }),
+        );
       }
-    })
+    });
   }
 
   //マニュアル
@@ -262,8 +310,8 @@ export class MainComponent implements OnInit, OnDestroy {
     const currentFile = Const.MAP_MANUAL_FILE[this.currentLanguage];
     const data: ManualDialogData = {
       file: currentFile,
-    }
-    const dialogRef = this.matDialog.open(ManualDialogComponent, {data})
+    };
+    const dialogRef = this.matDialog.open(ManualDialogComponent, {data});
   }
 
   /**
@@ -274,20 +322,22 @@ export class MainComponent implements OnInit, OnDestroy {
       // this.backgroundLoadFlg = false;
       let url = this.data.images.background;
       if (url) {
-        this.httpService.get<Blob>(url, 'blob', true, false).then((v: Blob | null) => {
-          if (v) {
-            this.backgroundURL = window.URL.createObjectURL(v);
-            setTimeout(() => {
-              // this.backgroundLoadFlg = true;
-              this.imgState = CSS_STATUS_FIN;
-            }, 100)
-          }
-        }).catch(() => { });
+        this.httpService
+          .get<Blob>(url, 'blob', true, false)
+          .then((v: Blob | null) => {
+            if (v) {
+              this.backgroundURL = window.URL.createObjectURL(v);
+              setTimeout(() => {
+                // this.backgroundLoadFlg = true;
+                this.imgState = CSS_STATUS_FIN;
+              }, 100);
+            }
+          })
+          .catch(() => {});
       }
     }
   }
 
-  
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
     this.screenWidth = window.innerWidth;
@@ -313,21 +363,21 @@ export class MainComponent implements OnInit, OnDestroy {
     parent.removeEventListener('scroll', this.scrollMethod);
   }
 
-  onChildStartDrag(name: string){
-    if(this.childNameMap[name] != this.zIndexes[this.zIndexes.length-1]){
+  onChildStartDrag(name: string) {
+    if (this.childNameMap[name] != this.zIndexes[this.zIndexes.length - 1]) {
       this.zIndexes.push(this.childNameMap[name]);
       this.refreshChildZIndexes();
     }
   }
 
-  refreshChildZIndexes(){
-    for(let key of this.childNames){
-      this.childZIndexes[key] = (this.zIndexes.lastIndexOf(key) + 1);
+  refreshChildZIndexes() {
+    for (let key of this.childNames) {
+      this.childZIndexes[key] = this.zIndexes.lastIndexOf(key) + 1;
     }
   }
 
-  reLayout(){
-    if(this.magicGrid?.ready()){
+  reLayout() {
+    if (this.magicGrid?.ready()) {
       this.magicGrid.positionItems();
     }
   }

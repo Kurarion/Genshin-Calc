@@ -1,5 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Const, ExtraDataService, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
+import {Injectable} from '@angular/core';
+import {
+  Const,
+  ExtraDataService,
+  GenshinDataService,
+  StorageService,
+} from 'src/app/shared/shared.module';
 
 export interface OtherStorageInfo {
   name?: string;
@@ -14,55 +19,57 @@ export interface OtherStorageData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OtherService {
-
   //データマップ
   dataMap!: Record<string, OtherStorageData>;
 
-  constructor(private storageService: StorageService, private extraDataService: ExtraDataService) {
-    let temp = this.storageService.getJSONItem(Const.SAVE_OTHER)
-    if(temp){
+  constructor(
+    private storageService: StorageService,
+    private extraDataService: ExtraDataService,
+  ) {
+    let temp = this.storageService.getJSONItem(Const.SAVE_OTHER);
+    if (temp) {
       this.dataMap = temp;
-    }else{
+    } else {
       this.dataMap = {};
     }
   }
 
   //クリア
-  clearStorageInfo(index: string | number){
+  clearStorageInfo(index: string | number) {
     let indexStr = index.toString();
     delete this.dataMap[indexStr];
   }
 
   //ストレージに保存
-  saveData(){
+  saveData() {
     this.storageService.setJSONItem(Const.SAVE_OTHER, this.dataMap);
   }
 
   //適用中インデックス取得
-  getStorageSelectedIndex(charIndex: string | number){
+  getStorageSelectedIndex(charIndex: string | number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].selectedIndex;
   }
 
   //適用中インデックス設定
-  setStorageSelectedIndex(charIndex: string | number, index: number){
+  setStorageSelectedIndex(charIndex: string | number, index: number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     this.dataMap[keyStr].selectedIndex = index;
   }
 
   //その他バフ削除
-  deleteStorageInfo(charIndex: string | number, index: number){
+  deleteStorageInfo(charIndex: string | number, index: number) {
     let keyStr = charIndex.toString();
     this.dataMap[keyStr].info.splice(index, 1);
   }
 
   //その他バフ追加
-  addStorageInfo(charIndex: string | number){
+  addStorageInfo(charIndex: string | number) {
     let keyStr = charIndex.toString();
     this.dataMap[keyStr].info.push({
       value: 0,
@@ -70,81 +77,86 @@ export class OtherService {
   }
 
   //その他バフコピー
-  copyAndCreateStorageInfo(charIndex: string | number, sourceIndex: number){
+  copyAndCreateStorageInfo(charIndex: string | number, sourceIndex: number) {
     let keyStr = charIndex.toString();
-    if(Object.keys(this.dataMap[keyStr].info[sourceIndex]).length === 0){
+    if (Object.keys(this.dataMap[keyStr].info[sourceIndex]).length === 0) {
       this.addStorageInfo(keyStr);
-    }else{
-      this.dataMap[keyStr].info.push(JSON.parse(JSON.stringify(this.dataMap[keyStr].info[sourceIndex])));
+    } else {
+      this.dataMap[keyStr].info.push(
+        JSON.parse(JSON.stringify(this.dataMap[keyStr].info[sourceIndex])),
+      );
     }
   }
 
   //設定長さ取得
-  getStorageInfoLength(charIndex: string | number){
+  getStorageInfoLength(charIndex: string | number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].info.length;
   }
 
   //全設定情報取得
-  getStorageInfos(charIndex: string | number, index?: number, filter: 'all'|'once'|'secondary' = 'all'){
+  getStorageInfos(
+    charIndex: string | number,
+    index?: number,
+    filter: 'all' | 'once' | 'secondary' = 'all',
+  ) {
     //初期化無しの場合対応（チームメンバー）
-    if(this.dataMap[charIndex] === undefined){
+    if (this.dataMap[charIndex] === undefined) {
       return [];
     }
     let keyStr = charIndex.toString();
-    if(index == undefined){
+    if (index == undefined) {
       index = this.dataMap[charIndex].selectedIndex;
     }
     this.initDefaultData(keyStr);
-    switch(filter){
+    switch (filter) {
       case 'all':
         return this.dataMap[keyStr].info;
       case 'once':
-        return this.dataMap[keyStr].info.filter((item)=>{
-          if(item.canSecondaryTrans){
+        return this.dataMap[keyStr].info.filter((item) => {
+          if (item.canSecondaryTrans) {
             return false;
           }
           return true;
-        })
+        });
       case 'secondary':
-        return this.dataMap[keyStr].info.filter((item)=>{
-          if(item.canSecondaryTrans){
+        return this.dataMap[keyStr].info.filter((item) => {
+          if (item.canSecondaryTrans) {
             return true;
           }
           return false;
-        })
+        });
       default:
         return this.dataMap[keyStr].info;
     }
   }
 
   //設定情報取得
-  getStorageInfo(charIndex: string | number, index?: number){
+  getStorageInfo(charIndex: string | number, index?: number) {
     let keyStr = charIndex.toString();
-    if(index == undefined){
+    if (index == undefined) {
       index = this.dataMap[charIndex].selectedIndex;
     }
     this.initDefaultData(keyStr);
-    if(!(index in this.dataMap[keyStr].info)){
+    if (!(index in this.dataMap[keyStr].info)) {
       this.dataMap[keyStr].info[index] = {
         value: 0,
       };
     }
     return this.dataMap[keyStr].info[index];
   }
-  
-  private initDefaultData(keyStr: string){
-    if(this.dataMap[keyStr] == undefined){
+
+  private initDefaultData(keyStr: string) {
+    if (this.dataMap[keyStr] == undefined) {
       this.dataMap[keyStr] = {
         selectedIndex: 0,
         info: [
           {
             value: 0,
-          }
+          },
         ],
       };
     }
   }
-
 }

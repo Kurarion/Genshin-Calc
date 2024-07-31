@@ -1,6 +1,14 @@
-import { Injectable } from '@angular/core';
-import { keysEqual } from 'src/app/shared/class/util';
-import { Const, ExtraDataService, ExtraStatus, ExtraWeaponData, GenshinDataService, StorageService, weapon } from 'src/app/shared/shared.module';
+import {Injectable} from '@angular/core';
+import {keysEqual} from 'src/app/shared/class/util';
+import {
+  Const,
+  ExtraDataService,
+  ExtraStatus,
+  ExtraWeaponData,
+  GenshinDataService,
+  StorageService,
+  weapon,
+} from 'src/app/shared/shared.module';
 
 export interface WeaponStorageInfo {
   weapon?: string;
@@ -10,24 +18,27 @@ export interface WeaponStorageInfo {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeaponService {
-
   //データマップ
   dataMap!: Record<string, WeaponStorageInfo>;
 
-  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService, private extraDataService: ExtraDataService) { 
-    let temp = this.storageService.getJSONItem(Const.SAVE_CHARACTER_WEAPON)
-    if(temp){
+  constructor(
+    private genshinDataService: GenshinDataService,
+    private storageService: StorageService,
+    private extraDataService: ExtraDataService,
+  ) {
+    let temp = this.storageService.getJSONItem(Const.SAVE_CHARACTER_WEAPON);
+    if (temp) {
       this.dataMap = temp;
-    }else{
+    } else {
       this.dataMap = {};
     }
   }
 
   //クリア
-  clearStorageInfo(index: string | number){
+  clearStorageInfo(index: string | number) {
     let indexStr = index.toString();
     delete this.dataMap[indexStr];
   }
@@ -41,15 +52,15 @@ export class WeaponService {
   }
 
   //設定取得
-  getStorageInfo(charIndex: string | number){
+  getStorageInfo(charIndex: string | number) {
     let keyStr = charIndex.toString();
     return this.dataMap[keyStr];
   }
 
   //デフォルト武器取得
-  getIndex(charIndex: string | number): string|undefined {
+  getIndex(charIndex: string | number): string | undefined {
     let keyStr = charIndex.toString();
-    if(keyStr in this.dataMap && this.dataMap[keyStr]){
+    if (keyStr in this.dataMap && this.dataMap[keyStr]) {
       return this.dataMap[keyStr].weapon;
     }
     return undefined;
@@ -59,16 +70,16 @@ export class WeaponService {
   setIndex(charIndex: string | number, index: string | number) {
     let charKeyStr = charIndex.toString();
     let weaponKeyStr = index.toString();
-    if(!this.dataMap[charKeyStr]){
+    if (!this.dataMap[charKeyStr]) {
       this.dataMap[charKeyStr] = {};
     }
     this.dataMap[charKeyStr].weapon = weaponKeyStr;
   }
 
   //デフォルトレベル取得
-  getLevel(charIndex: string | number): string|undefined {
+  getLevel(charIndex: string | number): string | undefined {
     let keyStr = charIndex.toString();
-    if(keyStr in this.dataMap && this.dataMap[keyStr]){
+    if (keyStr in this.dataMap && this.dataMap[keyStr]) {
       return this.dataMap[keyStr].level;
     }
     return undefined;
@@ -77,16 +88,16 @@ export class WeaponService {
   //レベル設定
   setLevel(charIndex: string | number, level: string) {
     let charKeyStr = charIndex.toString();
-    if(!this.dataMap[charKeyStr]){
+    if (!this.dataMap[charKeyStr]) {
       this.dataMap[charKeyStr] = {};
     }
     this.dataMap[charKeyStr].level = level;
   }
 
   //突破レベル取得
-  getSmeltingLevel(charIndex: string | number): string|undefined {
+  getSmeltingLevel(charIndex: string | number): string | undefined {
     let keyStr = charIndex.toString();
-    if(keyStr in this.dataMap && this.dataMap[keyStr]){
+    if (keyStr in this.dataMap && this.dataMap[keyStr]) {
       return this.dataMap[keyStr].smeltingLevel;
     }
     return undefined;
@@ -95,98 +106,120 @@ export class WeaponService {
   //突破レベル設定
   setSmeltingLevel(charIndex: string | number, smeltingLevel: string) {
     let charKeyStr = charIndex.toString();
-    if(!this.dataMap[charKeyStr]){
+    if (!this.dataMap[charKeyStr]) {
       this.dataMap[charKeyStr] = {};
     }
     this.dataMap[charKeyStr].smeltingLevel = smeltingLevel;
   }
 
   //デフォールト追加データ設定
-  setDefaultExtraData(charIndex: string | number, index: string | number, force: boolean = false){
+  setDefaultExtraData(charIndex: string | number, index: string | number, force: boolean = false) {
     let charKeyStr = charIndex.toString();
     let weaponKeyStr = index.toString();
-    if(!this.dataMap[charKeyStr]){
+    if (!this.dataMap[charKeyStr]) {
       this.dataMap[charKeyStr] = {};
     }
-    if(force){
+    if (force) {
       this.dataMap[charKeyStr].extra = this.extraDataService.getWeaponDefaultSetting(weaponKeyStr);
-    }else{
+    } else {
       this.checkExtraData(charKeyStr, weaponKeyStr);
     }
   }
-  
+
   //追加データクリア
-  clearExtraData(index: string | number){
+  clearExtraData(index: string | number) {
     delete this.getExtraData(index)?.effect;
   }
 
   //追加データ取得
-  getExtraData(index: string | number){
+  getExtraData(index: string | number) {
     let charKeyStr = index.toString();
-    if(charKeyStr in this.dataMap && this.dataMap[charKeyStr]){
+    if (charKeyStr in this.dataMap && this.dataMap[charKeyStr]) {
       return this.dataMap[charKeyStr].extra;
     }
     return undefined;
   }
 
-  setExtraSwitch(index: string | number, skill: string, buffIndex: number, enable: boolean, skillIndex?: number | string){
+  setExtraSwitch(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    enable: boolean,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['switchOnSet'] == undefined){
+    if (skillStatus['switchOnSet'] == undefined) {
       skillStatus['switchOnSet'] = {};
     }
     skillStatus['switchOnSet'][buffIndex.toString()] = enable;
   }
 
-  setExtraSlider(index: string | number, skill: string, buffIndex: number, setValue: number, skillIndex?: number | string){
+  setExtraSlider(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    setValue: number,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['sliderNumMap'] == undefined){
+    if (skillStatus['sliderNumMap'] == undefined) {
       skillStatus['sliderNumMap'] = {};
     }
     skillStatus['sliderNumMap'][buffIndex.toString()] = setValue;
   }
 
-  getExtraSwitch(index: string | number, skill: string, buffIndex: number, skillIndex?: number | string){
+  getExtraSwitch(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['switchOnSet'] != undefined){
+    if (skillStatus['switchOnSet'] != undefined) {
       return skillStatus['switchOnSet'][buffIndex.toString()];
     }
     return false;
   }
 
-  getExtraSlider(index: string | number, skill: string, buffIndex: number, skillIndex?: number | string){
+  getExtraSlider(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['sliderNumMap'] != undefined){
+    if (skillStatus['sliderNumMap'] != undefined) {
       return skillStatus['sliderNumMap'][buffIndex.toString()];
     }
     return 0;
   }
 
   //ストレージに保存
-  saveData(){
-    this.storageService.setJSONItem(Const.SAVE_CHARACTER_WEAPON, this.dataMap)
+  saveData() {
+    this.storageService.setJSONItem(Const.SAVE_CHARACTER_WEAPON, this.dataMap);
   }
 
-  private getExtraSkillData(index: string | number, skill: string, skillIndex?: number | string){
+  private getExtraSkillData(index: string | number, skill: string, skillIndex?: number | string) {
     let keyStr = index.toString();
     let skillStatus!: ExtraStatus;
     let extraData = this.dataMap[keyStr].extra;
-    switch(skill){
+    switch (skill) {
       case Const.NAME_EFFECT:
         skillStatus = extraData!.effect!;
         break;
     }
     return skillStatus!;
   }
-  
-  private checkExtraData(index: string, weaponIndex: string){
+
+  private checkExtraData(index: string, weaponIndex: string) {
     let target = this.extraDataService.getWeaponDefaultSetting(weaponIndex);
-    if(Object.keys(this.getExtraData(index)??{}).length === 0){
+    if (Object.keys(this.getExtraData(index) ?? {}).length === 0) {
       this.dataMap[index].extra = target;
-    }else{
+    } else {
       let origin = this.dataMap[index].extra;
-      if(!keysEqual(origin?.effect, target.effect)){
+      if (!keysEqual(origin?.effect, target.effect)) {
         this.dataMap[index].extra = target;
-      } 
+      }
     }
   }
 }

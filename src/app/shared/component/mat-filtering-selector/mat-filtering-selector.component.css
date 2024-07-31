@@ -1,68 +1,72 @@
+:host ::ng-deep .mat-form-field {
+  width: 100%;
+}
+
 .select-filter {
-    width: 100%;
-    color: black;
+  width: 100%;
+  color: black;
 }
 
 .option {
-    padding-left: 1.5em !important;
+  padding-left: 1.5em !important;
 }
 
 .selected-icon {
-    width: 2.5em;
-    height: 2.5em;
-    border-radius: 11%;
-    margin-bottom: 0.1em;
-    vertical-align: middle;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 11%;
+  margin-bottom: 0.1em;
+  vertical-align: middle;
 }
 
 .icon {
-    width: 2.8em;
-    height: 2.8em;
-    border-radius: 11%;
-    vertical-align: middle;
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 11%;
+  vertical-align: middle;
 }
 
-::ng-deep mat-optgroup.sticky .mat-form-field-flex > .mat-form-field-infix { 
-    padding: 0.4em 0px !important;
-    padding-bottom: 0.3em !important;
+::ng-deep mat-optgroup.sticky .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+  padding-bottom: 0.3em !important;
 }
 
 ::ng-deep mat-optgroup.sticky .mat-input-element {
-    transform: translateY(-0.15em);
+  transform: translateY(-0.15em);
 }
 
-::ng-deep mat-optgroup.sticky .mat-optgroup-label{
-    position: sticky;
-    z-index: 1;
-    top: 0;
-    padding-left: 2px;
-    padding-right: 2px;
-    background-color: white;
-    box-shadow: 1px -2px 10px 0px grey;
-    border-radius: 2px;
+::ng-deep mat-optgroup.sticky .mat-optgroup-label {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  padding-left: 2px;
+  padding-right: 2px;
+  background-color: white;
+  box-shadow: 1px -2px 10px 0px grey;
+  border-radius: 2px;
 }
 
 .virtual-viewport {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .virtual-viewport::-webkit-scrollbar {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 9px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 9px;
 }
 
 .virtual-viewport::-webkit-scrollbar-thumb {
-    border-radius: 9px;
-    border: 1px solid white;
-    background-color: grey;
+  border-radius: 9px;
+  border: 1px solid white;
+  background-color: grey;
 }
 
 ::ng-deep .virtual-viewport > .cdk-virtual-scroll-content-wrapper > .mat-option {
-    height: 3.5em !important;
+  height: 3.5em !important;
 }
 
 .just-for-initial-value-show {
-    visibility: hidden;
-    height: 0 !important;
+  visibility: hidden;
+  height: 0 !important;
 }

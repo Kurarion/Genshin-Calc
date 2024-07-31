@@ -1,10 +1,14 @@
 <div class="enka">
-    <mat-form-field class="enka-field enka-input" appearance="fill">
-        <input matInput [formControl]="uid" placeholder="UID">
-    </mat-form-field>
-    <button mat-icon-button class="icon-button" (click)="onClick()">
-        <div class="shinshinmoe-container">
-            <figure [@enkaLoad]="enkaButtonState" (@enkaLoad.done)="onAnimationDone()" class="shinshinmoe"></figure>
-        </div>
-    </button>
+  <mat-form-field class="enka-field enka-input" appearance="fill">
+    <input matInput [formControl]="uid" placeholder="UID" />
+  </mat-form-field>
+  <button mat-icon-button class="icon-button" (click)="onClick()">
+    <div class="shinshinmoe-container">
+      <figure
+        [@enkaLoad]="enkaButtonState"
+        (@enkaLoad.done)="onAnimationDone()"
+        class="shinshinmoe"
+      ></figure>
+    </div>
+  </button>
 </div>

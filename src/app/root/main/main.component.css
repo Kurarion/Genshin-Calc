@@ -48,11 +48,19 @@
 
 } */
 
-.sidenav-content::-webkit-scrollbar{
+.sidenav-content::-webkit-scrollbar {
   width: 9px;
 }
 
 .sidenav-content::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: grey;
+}
+
+::ng-deep .card {
+  border-radius: 10px !important;
+}
+
+::ng-deep .mat-expansion-panel {
+  border-radius: 10px !important;
 }

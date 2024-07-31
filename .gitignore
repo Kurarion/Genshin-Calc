@@ -43,3 +43,6 @@ Thumbs.db
 
 # GenshinData
 src/assets/genshin
+
+# eslint
+.eslintcache

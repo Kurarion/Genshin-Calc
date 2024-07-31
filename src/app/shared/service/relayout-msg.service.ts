@@ -1,21 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RelayoutMsgService {
-
   private relayoutMsg: Subject<string> = new Subject<string>();
   private relayoutMsg$: Observable<string> = this.relayoutMsg.asObservable();
 
-  constructor() { }
+  constructor() {}
 
-  update(str: string){
+  update(str: string) {
     this.relayoutMsg.next(str);
   }
 
-  status(){
+  status() {
     return this.relayoutMsg$;
   }
 }

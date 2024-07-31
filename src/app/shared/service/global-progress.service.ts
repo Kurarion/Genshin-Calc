@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { ProgressBarMode } from '@angular/material/progress-bar';
-import { Observable, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {ProgressBarMode} from '@angular/material/progress-bar';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +9,7 @@ export class GlobalProgressService {
   private readonly DEFAULT_DELAY = 150;
 
   //プログレスモード
-  private progressMode: Subject<ProgressBarMode> =
-    new Subject<ProgressBarMode>();
+  private progressMode: Subject<ProgressBarMode> = new Subject<ProgressBarMode>();
   private progressMode$ = this.progressMode.asObservable();
   //プログレス値
   private progressValue: Subject<number> = new Subject<number>();
@@ -26,7 +25,6 @@ export class GlobalProgressService {
   private progessMessage$ = this.progessMessage.asObservable();
 
   constructor() {
-
     let handler = (value: number) => {
       if (value == 100) {
         this.end();

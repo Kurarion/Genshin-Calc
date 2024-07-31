@@ -1,19 +1,35 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { CalculatorService, character, Const, OtherService, OtherStorageInfo, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {
+  CalculatorService,
+  character,
+  Const,
+  OtherService,
+  OtherStorageInfo,
+  TYPE_SYS_LANG,
+} from 'src/app/shared/shared.module';
 
 interface propObj {
-  value: any,
-  names: Record<string, string>
+  value: any;
+  names: Record<string, string>;
 }
 
 @Component({
   selector: 'app-other',
   templateUrl: './other.component.html',
-  styleUrls: ['./other.component.css']
+  styleUrls: ['./other.component.css'],
 })
-export class OtherComponent implements OnInit, OnDestroy {
-
+export class OtherComponent implements OnInit, OnDestroy, OnChanges {
   readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
   readonly pyroIconUrl = Const.ELEMENT_SVG_PATH.get(2);
   readonly hydroIconUrl = Const.ELEMENT_SVG_PATH.get(3);
@@ -31,15 +47,9 @@ export class OtherComponent implements OnInit, OnDestroy {
     'geo': this.geoIconUrl,
     'electro': this.electroIconUrl,
     'dendro': this.dendroIconUrl,
-  }
+  };
 
-  readonly loopElemnt = [
-    'pyro',
-    'hydro',
-    'cryo',
-    'geo',
-    'dendro',
-  ]
+  readonly loopElemnt = ['pyro', 'hydro', 'cryo', 'geo', 'dendro'];
 
   tabs: string[] = [];
   //選択されたインデックス
@@ -60,31 +70,32 @@ export class OtherComponent implements OnInit, OnDestroy {
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
 
   showValue!: number;
 
   constructor(
-    private otherService: OtherService, 
-    private calculatorService: CalculatorService, 
-    private translateService: TranslateService) { }
+    private otherService: OtherService,
+    private calculatorService: CalculatorService,
+    private translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     //リスト初期化
-    this.propList = Array.from(Const.PROPS_OTHER, (v,i)=>{
+    this.propList = Array.from(Const.PROPS_OTHER, (v, i) => {
       let initNames: Record<string, string> = {};
-      for(let lang of Const.LIST_LANG){
-        initNames[lang.code] = "";
+      for (let lang of Const.LIST_LANG) {
+        initNames[lang.code] = '';
       }
       return {
         value: v,
-        names: initNames
-      }
+        names: initNames,
+      };
     });
     this.updateNames();
     //タブリスト初期化
     let length = this.otherService.getStorageInfoLength(this.data.id);
-    if(length == undefined || length == 0){
+    if (length == undefined || length == 0) {
       length = 1;
     }
     this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
@@ -124,10 +135,10 @@ export class OtherComponent implements OnInit, OnDestroy {
   removeTab(index: number) {
     this.tabs.splice(index, 1);
     this.otherService.deleteStorageInfo(this.data.id, index);
-    if(this.selectedIndex >= index){
-      let toSetIndex = this.tabs.length - 1
-      this.selectedIndex = toSetIndex > 0?toSetIndex:0;
-    }else{
+    if (this.selectedIndex >= index) {
+      let toSetIndex = this.tabs.length - 1;
+      this.selectedIndex = toSetIndex > 0 ? toSetIndex : 0;
+    } else {
       this.selectedIndex = 0;
     }
     this.setSelectedIndex();
@@ -138,48 +149,48 @@ export class OtherComponent implements OnInit, OnDestroy {
     this.updateShowValue();
   }
 
-  setSelectedIndex(){
+  setSelectedIndex() {
     this.otherService.setStorageSelectedIndex(this.data.id, this.selectedIndex);
     this.updateShowValue();
   }
 
-  onSelectProp(prop: string, index: number){
+  onSelectProp(prop: string, index: number) {
     this.infos[index].name = prop;
     this.infos[this.selectedIndex].value = 0;
-    if(prop == Const.PROP_HP_UP){
+    if (prop == Const.PROP_HP_UP) {
       this.infos[this.selectedIndex].canSecondaryTrans = true;
     }
     this.updateShowValue();
     this.updateDirtyFlag();
   }
 
-  onValueKeyup(event: KeyboardEvent){
+  onValueKeyup(event: KeyboardEvent) {
     let originValue = (event.target as HTMLInputElement).value;
     let value = parseFloat(originValue);
-    if(isNaN(value)){
+    if (isNaN(value)) {
       value = 0;
     }
-    if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
-      value /= 100; 
+    if (this.props_all_percent.includes(this.infos[this.selectedIndex].name ?? '')) {
+      value /= 100;
     }
     this.infos[this.selectedIndex].value = value;
-    if(this.infos[this.selectedIndex].enable){
+    if (this.infos[this.selectedIndex].enable) {
       this.updateDirtyFlag();
     }
   }
 
-  updateDirtyFlag(){
+  updateDirtyFlag() {
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
 
-  onClickElementTemplate(elementType: string){
-    switch(elementType){
+  onClickElementTemplate(elementType: string) {
+    switch (elementType) {
       case 'pyro':
         this.addTab();
         this.infos[this.selectedIndex].name = Const.PROP_ATTACK_UP;
@@ -212,7 +223,7 @@ export class OtherComponent implements OnInit, OnDestroy {
         this.infos[this.selectedIndex].enable = true;
         this.addTab();
         this.infos[this.selectedIndex].name = Const.PROP_DMG_ANTI_GEO_MINUS;
-        this.infos[this.selectedIndex].value = 0.20;
+        this.infos[this.selectedIndex].value = 0.2;
         this.infos[this.selectedIndex].enable = true;
         this.updateShowValue();
         this.updateDirtyFlag();
@@ -239,28 +250,28 @@ export class OtherComponent implements OnInit, OnDestroy {
     }
   }
 
-  private localAddTab(){
+  private localAddTab() {
     this.tabs.push((this.tabs.length + 1).toString());
     this.selectedIndex = this.tabs.length - 1;
   }
 
-  private initInfos(){
+  private initInfos() {
     this.infos = this.otherService.getStorageInfos(this.data.id);
   }
 
-  private updateShowValue(){
-    let value = this.infos[this.selectedIndex].value
-    if(this.props_all_percent.includes(this.infos[this.selectedIndex].name??'')){
-      value *= 100; 
+  private updateShowValue() {
+    let value = this.infos[this.selectedIndex].value;
+    if (this.props_all_percent.includes(this.infos[this.selectedIndex].name ?? '')) {
+      value *= 100;
     }
     this.showValue = parseFloat(value.toFixed(8));
   }
 
-  private updateNames(){
-    this.propList?.forEach((v)=>{
+  private updateNames() {
+    this.propList?.forEach((v) => {
       this.translateService.get('PROPS.' + v.value.toUpperCase()).subscribe((res: string) => {
         v.names[this.currentLanguage] = res;
-      })
-    })
+      });
+    });
   }
 }

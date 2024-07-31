@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-
-  constructor() { }
+  constructor() {}
 
   setItem(key: string, data: any) {
     //ローカルストレージに保存
@@ -25,7 +24,7 @@ export class StorageService {
   getJSONItem(key: string) {
     //ローカルストレージから取得
     let temp = localStorage.getItem(key);
-    if(temp){
+    if (temp) {
       return JSON.parse(temp);
     }
     return undefined;

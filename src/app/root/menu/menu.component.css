@@ -33,6 +33,7 @@
   user-select: none;
   flex-grow: 0;
   flex-shrink: 0;
+  width: 189px;
 }
 
 .select-filter {
@@ -44,7 +45,7 @@
 }
 
 :host ::ng-deep .menu-list .select-filter .mat-form-field-infix {
-  border-top: .44em solid rgba(0,0,0,0);
+  border-top: 0.44em solid rgba(0, 0, 0, 0);
   padding: 0.5em 0 0.5em 0;
   width: 100%;
 }
@@ -65,7 +66,11 @@
   align-items: center;
   justify-content: space-around;
   padding: 2px;
-  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+  transition:
+    border 0.5s,
+    background-color 0.5s,
+    filter 0.4s,
+    opacity 0.4s;
   cursor: default;
 }
 
@@ -77,7 +82,11 @@
 .element-icon {
   width: 20px;
   height: 20px;
-  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+  transition:
+    border 0.5s,
+    background-color 0.5s,
+    filter 0.4s,
+    opacity 0.4s;
 }
 
 .button-element-on {
@@ -108,7 +117,7 @@
 }
 
 .shinshinmoe:before {
-  content: "\e93a";
+  content: '\e93a';
   font-family: shicon;
   font-size: 1.91em;
 }
@@ -125,7 +134,11 @@
 .other-content {
   width: 24px;
   height: 24px;
-  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+  transition:
+    border 0.5s,
+    background-color 0.5s,
+    filter 0.4s,
+    opacity 0.4s;
 }
 
 .weapon-filter-div {
@@ -140,10 +153,14 @@
   border-color: grey;
 }
 
-.weapon-icon{
+.weapon-icon {
   width: 25px;
   height: 25px;
-  transition: border 0.5s, background-color 0.5s, filter 0.4s, opacity 0.4s;
+  transition:
+    border 0.5s,
+    background-color 0.5s,
+    filter 0.4s,
+    opacity 0.4s;
 }
 
 .button-weapon-on {
@@ -162,7 +179,7 @@
 }
 
 .menu-items-div {
-  flex:auto;
+  flex: auto;
   overflow-y: auto;
   overflow-x: hidden;
   width: 196px;

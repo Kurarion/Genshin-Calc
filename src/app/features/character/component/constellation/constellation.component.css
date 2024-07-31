@@ -1,63 +1,63 @@
 .card {
-    max-width: 350px;
-    min-width: 290px;
-    margin: 12px;
-    transition: box-shadow 500ms;
+  max-width: 350px;
+  min-width: 290px;
+  margin: 12px;
+  transition: box-shadow 500ms;
 }
 
 .avatar {
-    width: 80px;
-    height: 80px;
-    background-size: cover;
-    margin-bottom: 5px;
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  margin-bottom: 5px;
 }
 
 .content {
-    padding-top: 2px;
+  padding-top: 2px;
 }
 
-:host ::ng-deep .content .mat-expansion-panel.mat-expanded.expand-over{
-    overflow: visible;
+:host ::ng-deep .content .mat-expansion-panel.mat-expanded.expand-over {
+  overflow: visible;
 }
 
 .expand {
-    margin-top: 1px;
+  margin-top: 1px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 table tr:first-child .content-left {
-    border-top: 1px solid rgba(0,0,0,.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 table tr:first-child .content-right {
-    border-top: 1px solid rgba(0,0,0,.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-left {
-    text-align: left;
-    border-bottom: 1px solid rgba(0,0,0,.12);
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-right {
-    text-align: right;
-    border-bottom: 1px solid rgba(0,0,0,.12);
+  text-align: right;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-right-button {
-    text-align: center;
-    border-bottom: none;
+  text-align: center;
+  border-bottom: none;
 }
 
 .drap-handle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #ccc;
-    cursor: move;
-    width: 24px;
-    height: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccc;
+  cursor: move;
+  width: 24px;
+  height: 24px;
 }

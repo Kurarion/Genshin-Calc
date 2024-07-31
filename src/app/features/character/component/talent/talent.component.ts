@@ -1,7 +1,25 @@
-import { PercentPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NoCommaPipe } from 'src/app/shared/pipe/no-comma.pipe';
-import { CalculatorService, character, CharacterService, CharSkill, CharSkillDescObject, CharSkills, Const, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import {PercentPipe, DecimalPipe} from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {NoCommaPipe} from 'src/app/shared/pipe/no-comma.pipe';
+import {
+  CalculatorService,
+  character,
+  CharacterService,
+  CharSkill,
+  CharSkillDescObject,
+  CharSkills,
+  Const,
+  ExpansionPanelCommon,
+  RelayoutMsgService,
+  TYPE_SYS_LANG,
+} from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -11,23 +29,22 @@ interface levelOption {
 @Component({
   selector: 'app-talent',
   templateUrl: './talent.component.html',
-  styleUrls: ['./talent.component.css']
+  styleUrls: ['./talent.component.css'],
 })
 export class TalentComponent extends ExpansionPanelCommon implements OnInit {
-
   private readonly minLevel = 1;
   private readonly maxLevel = 15;
   private readonly defaultLevel = 10;
 
   readonly skills: (keyof CharSkills)[] = [
-    Const.NAME_SKILLS_NORMAL, 
-    Const.NAME_SKILLS_SKILL, 
+    Const.NAME_SKILLS_NORMAL,
+    Const.NAME_SKILLS_SKILL,
     Const.NAME_SKILLS_ELEMENTAL_BURST,
   ];
   readonly otherSkills: (keyof CharSkills)[] = [Const.NAME_SKILLS_OTHER];
   readonly proudSkills: (keyof CharSkills)[] = [Const.NAME_SKILLS_PROUD];
   readonly levelPadNum = 2;
-  
+
   readonly talentDefaultLevel = Const.NAME_TALENT_DEFAULT_LEVEL;
 
   readonly props = Const.PROPS_CHARA_ENEMY_BASE;
@@ -45,7 +62,7 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
   //レベルオプションリスト
   levelOptions: levelOption[] = [];
   //選択されたレベルリスト
@@ -56,16 +73,17 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
   constructor(
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
-    private relayoutMsgService: RelayoutMsgService,) { 
-      super(relayoutMsgService, 30);
-    }
+    private relayoutMsgService: RelayoutMsgService,
+  ) {
+    super(relayoutMsgService, 30);
+  }
 
   ngOnInit(): void {
     //BGカラー設定
-    this.iconBGColor = 
-    Const.SKILL_ICON_GRADIENT[0] + 
-    Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(this.data.info.elementType)!] +
-    Const.SKILL_ICON_GRADIENT[1];
+    this.iconBGColor =
+      Const.SKILL_ICON_GRADIENT[0] +
+      Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(this.data.info.elementType)!] +
+      Const.SKILL_ICON_GRADIENT[1];
     //レベル初期設定
     for (let i = this.minLevel; i <= this.maxLevel; ++i) {
       this.levelOptions.push({
@@ -78,13 +96,19 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
       let temp: levelOption;
       switch (key) {
         case Const.NAME_SKILLS_NORMAL:
-          temp = this.getLevelFromString(this.characterService.getNormalLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+          temp =
+            this.getLevelFromString(this.characterService.getNormalLevel(this.data.id)) ??
+            this.levelOptions[this.defaultLevel - 1];
           break;
         case Const.NAME_SKILLS_SKILL:
-          temp = this.getLevelFromString(this.characterService.getSkillLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+          temp =
+            this.getLevelFromString(this.characterService.getSkillLevel(this.data.id)) ??
+            this.levelOptions[this.defaultLevel - 1];
           break;
         case Const.NAME_SKILLS_ELEMENTAL_BURST:
-          temp = this.getLevelFromString(this.characterService.getElementalBurstLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+          temp =
+            this.getLevelFromString(this.characterService.getElementalBurstLevel(this.data.id)) ??
+            this.levelOptions[this.defaultLevel - 1];
           break;
       }
       this.selectedLevels[key] = temp!;
@@ -107,14 +131,14 @@ export class TalentComponent extends ExpansionPanelCommon implements OnInit {
         this.characterService.setElementalBurstLevel(this.data.id, value.level);
         break;
     }
-    if(!withoutInitExtra){
+    if (!withoutInitExtra) {
       //更新
       this.calculatorService.initExtraCharacterData(this.data.id);
     }
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
 

@@ -1,54 +1,54 @@
 .sub-field {
-    width: 140px;
+  width: 140px;
 }
 
 .sub-span {
-    display: inline-block;
-    text-align: left;
-    width: 27px;
+  display: inline-block;
+  text-align: left;
+  width: 27px;
 }
 
 table {
-    width: 96%;
-    border-collapse: collapse;
+  width: 96%;
+  border-collapse: collapse;
 }
 
 tr td:nth-of-type(1) {
-    text-align: left;
+  text-align: left;
 }
 
 tr td:nth-of-type(2) {
-    text-align: right;
+  text-align: right;
 }
 
 .chip-div {
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
 }
 
 .field-part-1 {
-    width: 10em;
+  width: 10em;
 }
 
 .field-part-2 {
-    margin-left: 0.1em;
-    width: 3.2em;
-    text-align: center;
+  margin-left: 0.1em;
+  width: 3.2em;
+  text-align: center;
 }
 
 .one-line-div {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
+input[type='number'] {
+  -moz-appearance: textfield;
 }

@@ -1,5 +1,27 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CalculatorService, character, CharacterService, CharStatus, Const, ExpansionPanelCommon, ExtraDataService, ExtraInfoService, HttpService, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {propShowHideColAnimation} from 'src/animation';
+import {
+  CalculatorService,
+  character,
+  CharacterService,
+  CharStatus,
+  Const,
+  ExpansionPanelCommon,
+  ExtraDataService,
+  ExtraInfoService,
+  HttpService,
+  RelayoutMsgService,
+  TYPE_SYS_LANG,
+} from 'src/app/shared/shared.module';
 
 interface levelOption {
   level: string;
@@ -15,10 +37,10 @@ interface subProp {
 @Component({
   selector: 'app-character',
   templateUrl: './character.component.html',
-  styleUrls: ['./character.component.css']
+  styleUrls: ['./character.component.css'],
+  animations: [propShowHideColAnimation],
 })
 export class CharacterComponent extends ExpansionPanelCommon implements OnInit, OnDestroy {
-
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
   private readonly ascendLevels = [20, 40, 50, 60, 70, 80, 90];
@@ -40,7 +62,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
   //キャラアイコン
   avatarURL!: string;
   //キャラアイコンローディングフラグ
@@ -54,14 +76,16 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
   //計算後データ
   allData!: Record<string, number> | undefined;
 
-  constructor(private httpService: HttpService, 
-    private extraDataService: ExtraDataService, 
+  constructor(
+    private httpService: HttpService,
+    private extraDataService: ExtraDataService,
     private characterService: CharacterService,
     private calculatorService: CalculatorService,
     private relayoutMsgService: RelayoutMsgService,
-    private extraInfoService: ExtraInfoService) { 
-      super(relayoutMsgService);
-    }
+    private extraInfoService: ExtraInfoService,
+  ) {
+    super(relayoutMsgService);
+  }
 
   ngOnInit(): void {
     //プロフィール画像初期化
@@ -81,20 +105,26 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
       }
     }
     //初期選択
-    this.selectedLevel = this.getLevelFromString(this.characterService.getLevel(this.data.id)) ?? this.levelOptions[this.levelOptions.length - 1];
+    this.selectedLevel =
+      this.getLevelFromString(this.characterService.getLevel(this.data.id)) ??
+      this.levelOptions[this.levelOptions.length - 1];
     //初期データ更新
     this.onChangeLevel(this.selectedLevel);
     //計算後データ取得
     setTimeout(() => {
       this.getAllData();
       this.onExpandStatusChanged();
-    })
+    });
     setTimeout(() => {
-      this.calculatorService.allDataChanged().subscribe(()=>{
+      this.calculatorService.allDataChanged().subscribe(() => {
         this.getAllData();
-      })
-      window.umami?.track(Array.from(['cn_sim', 'cn_tra', 'en', 'jp'], (k: TYPE_SYS_LANG) => this.data.name[k]).join(' / '))
-    })
+      });
+      window.umami?.track(
+        Array.from(['cn_sim', 'cn_tra', 'en', 'jp'], (k: TYPE_SYS_LANG) => this.data.name[k]).join(
+          ' / ',
+        ),
+      );
+    });
   }
 
   @HostListener('window:unload')
@@ -106,7 +136,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
 
   /**
    * レベル変更処理
-   * @param value 
+   * @param value
    */
   onChangeLevel(value: levelOption) {
     this.selectedLevelProps = {};
@@ -116,7 +146,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
       this.selectedLevelProps[upperKey] = {
         isPercent: this.percent_props.includes(upperKey),
         value: temp[key as keyof CharStatus],
-      }
+      };
     }
     this.characterService.setLevel(this.data.id, value.level);
     //更新
@@ -124,7 +154,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
 
@@ -135,14 +165,17 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
     if (!this.avatarURL) {
       this.avatarLoadFlg = false;
       let url = this.data.images.icon;
-      this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
-        if (v) {
-          this.avatarURL = window.URL.createObjectURL(v);
-          setTimeout(() => {
-            this.avatarLoadFlg = true;
-          }, 100)
-        }
-      }).catch(() => { });
+      this.httpService
+        .get<Blob>(url, 'blob', true)
+        .then((v: Blob | null) => {
+          if (v) {
+            this.avatarURL = window.URL.createObjectURL(v);
+            setTimeout(() => {
+              this.avatarLoadFlg = true;
+            }, 100);
+          }
+        })
+        .catch(() => {});
     }
   }
 
@@ -151,12 +184,12 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
       return undefined;
     }
     let levelNum = parseInt(level);
-    let isAscend = level.includes("+");
+    let isAscend = level.includes('+');
     let index = -1;
     for (let i = 0; i < this.ascendLevels.length; ++i) {
-      if(this.ascendLevels[i] < levelNum){
-        ++index
-      }else{
+      if (this.ascendLevels[i] < levelNum) {
+        ++index;
+      } else {
         break;
       }
     }
@@ -165,8 +198,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
     return this.levelOptions[resultIndex];
   }
 
-  private getAllData(){
+  private getAllData() {
     this.allData = this.calculatorService.getAllDataCache(this.data.id);
   }
-
 }

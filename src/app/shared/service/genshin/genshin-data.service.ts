@@ -1,12 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { artifactSet, character, ChipData, Const, enemy, ExtraData, weapon } from 'src/app/shared/shared.module';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {
+  artifactSet,
+  character,
+  ChipData,
+  Const,
+  enemy,
+  ExtraData,
+  weapon,
+} from 'src/app/shared/shared.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GenshinDataService {
-
   static dataCharacter: Record<string, character>;
   static dataWeapon: Record<string, weapon>;
   static dataMonster: Record<string, enemy>;
@@ -21,7 +28,7 @@ export class GenshinDataService {
   private updateSubject$: Observable<void> = this.updateSubject.asObservable();
   private jsonDownloadStatus: Map<string, number> = new Map();
 
-  constructor() { }
+  constructor() {}
 
   status() {
     return this.updateSubject$;
@@ -31,8 +38,8 @@ export class GenshinDataService {
     this.updateSubject.next();
   }
 
-  getJsonDownloadStatus(fileName: string){
-    if(!this.jsonDownloadStatus.has(fileName)){
+  getJsonDownloadStatus(fileName: string) {
+    if (!this.jsonDownloadStatus.has(fileName)) {
       this.jsonDownloadStatus.set(fileName, 0);
     }
     return this.jsonDownloadStatus.get(fileName);
@@ -41,54 +48,54 @@ export class GenshinDataService {
   getAllJsonDownloadStatus() {
     return this.jsonDownloadStatus;
   }
-  
-  static initCharacterData(data: any){
+
+  static initCharacterData(data: any) {
     this.dataCharacter = data;
   }
-  static initWeaponData(data: any){
+  static initWeaponData(data: any) {
     this.dataWeapon = data;
   }
-  static initMonsterData(data: any){
+  static initMonsterData(data: any) {
     this.dataMonster = data;
   }
-  static initReliquarySetData(data: any){
+  static initReliquarySetData(data: any) {
     this.dataReliquarySet = data;
   }
-  static initReliquaryMainData(data: any){
+  static initReliquaryMainData(data: any) {
     let result: Record<string, number> = {};
-    for(let key in data){
+    for (let key in data) {
       result[Const.MAP_ARTIFACE_PROP[key]] = data[key];
     }
     this.dataReliquaryMain = result;
   }
-  static initReliquaryAffixData(data: any){
+  static initReliquaryAffixData(data: any) {
     let result: Record<string, number[]> = {};
     const originLength = 4;
     const maxUpTimes = 6;
-    for(let key in data){
+    for (let key in data) {
       let originList = data[key];
       let resultList: number[] = [0];
-      for(let t = 1; t <= maxUpTimes; ++t){
+      for (let t = 1; t <= maxUpTimes; ++t) {
         let max = originLength * 1 + (t - 1) * (originLength - 1);
-        for(let x = 0; x < max; ++x){
+        for (let x = 0; x < max; ++x) {
           let result = 0;
-          for(let i = 0; i < t; ++i){
-            let index = x - 3*i < 0 ?0:(x - 3*i);
-            result += originList[index>(originLength-1)?(originLength-1):index];
+          for (let i = 0; i < t; ++i) {
+            let index = x - 3 * i < 0 ? 0 : x - 3 * i;
+            result += originList[index > originLength - 1 ? originLength - 1 : index];
           }
           resultList.push(result);
         }
       }
-      result[Const.MAP_ARTIFACE_PROP[key]] = resultList.sort(function(a,b){
-        return a - b
+      result[Const.MAP_ARTIFACE_PROP[key]] = resultList.sort(function (a, b) {
+        return a - b;
       });
     }
     this.dataReliquaryAffix = result;
   }
-  static initOptimalReliquaryAffixStep(data: any){
+  static initOptimalReliquaryAffixStep(data: any) {
     let result: Record<string, number> = {};
     const stepDivider = 10;
-    for(let key in data){
+    for (let key in data) {
       let originValues = data[key];
       let targetValue = originValues[originValues.length - 1];
       result[Const.MAP_ARTIFACE_PROP[key]] = targetValue / stepDivider;
@@ -100,45 +107,44 @@ export class GenshinDataService {
     result[Const.PROP_DMG_ANTI_ALL_MINUS] = result[Const.PROP_ATTACK_UP];
     this.dataOptimalReliquaryAffixStep = result;
   }
-  static initChipData(data: any){
+  static initChipData(data: any) {
     this.dataChip = data;
   }
-  static initExtraData(data: any){
+  static initExtraData(data: any) {
     this.dataExtra = data;
   }
 
-  getCharacter(index: string){
+  getCharacter(index: string) {
     return GenshinDataService.dataCharacter[index];
   }
-  getWeapon(index: string){
+  getWeapon(index: string) {
     return GenshinDataService.dataWeapon[index];
   }
-  getMonster(index: string){
+  getMonster(index: string) {
     return GenshinDataService.dataMonster[index];
   }
-  getReliquarySet(index: string){
+  getReliquarySet(index: string) {
     return GenshinDataService.dataReliquarySet[index];
   }
-  getReliquaryMain(index: string){
+  getReliquaryMain(index: string) {
     return GenshinDataService.dataReliquaryMain[index];
   }
-  getReliquaryAffix(index: string){
+  getReliquaryAffix(index: string) {
     return GenshinDataService.dataReliquaryAffix[index];
   }
-  getOptimalReliquaryAffixStep(index: string){
+  getOptimalReliquaryAffixStep(index: string) {
     return GenshinDataService.dataOptimalReliquaryAffixStep[index];
   }
-  getChip(index: string){
+  getChip(index: string) {
     return GenshinDataService.dataChip[index];
   }
-  getExtraCharacterData(index: string){
+  getExtraCharacterData(index: string) {
     return GenshinDataService.dataExtra.characters[index];
   }
-  getExtraWeaponData(index: string){
+  getExtraWeaponData(index: string) {
     return GenshinDataService.dataExtra.weapons[index];
   }
-  getExtraArtifactData(index: string){
+  getExtraArtifactData(index: string) {
     return GenshinDataService.dataExtra.artifact[index];
   }
-
 }

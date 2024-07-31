@@ -1,31 +1,31 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
-import { Const } from '../const/const';
+import {Directive, ElementRef, HostListener} from '@angular/core';
+import {Const} from '../const/const';
 
 @Directive({
-  selector: 'img[appImgLoadAndErrorHandle]'
+  selector: 'img[appImgLoadAndErrorHandle]',
 })
 export class ImgLoadAndErrorHandleDirective {
-
   hasLoaded = false;
   hasErrored = false;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {}
 
-  @HostListener("error")
+  @HostListener('error')
   private onError() {
-    if(!this.hasErrored){
+    if (!this.hasErrored) {
       this.hasErrored = true;
       this.el.nativeElement.src = Const.IMG_ON_ERROR;
     }
   }
 
-  @HostListener("load")
+  @HostListener('load')
   private onLoad() {
-    if(!this.hasLoaded &&
-      (this.el.nativeElement as HTMLImageElement).naturalHeight == Const.IMG_RES_404_HEIGHT){
-        this.hasLoaded = true;
-        this.onError();
+    if (
+      !this.hasLoaded &&
+      (this.el.nativeElement as HTMLImageElement).naturalHeight == Const.IMG_RES_404_HEIGHT
+    ) {
+      this.hasLoaded = true;
+      this.onError();
     }
   }
-
 }

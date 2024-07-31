@@ -1,136 +1,172 @@
 <ng-container *ngIf="data.skills.normal.name">
-    <mat-card class="card" [style.width.px]="cardWidth">
-        <mat-card-header class="header">
-            <mat-card-title [innerText]="'ARTIFACT.NAME' | translate"></mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="content">
+  <mat-card class="card" [style.width.px]="cardWidth">
+    <mat-card-header class="header">
+      <mat-card-title [innerText]="'ARTIFACT.NAME' | translate"></mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <mat-divider></mat-divider>
+      <mat-tab-group
+        class="overflow-x-show-tab-group"
+        [(selectedIndex)]="selectedIndex"
+        (selectedIndexChange)="setActiveIndex()"
+        animationDuration="0"
+      >
+        <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
+          <div class="artifact-set">
+            <!-- 聖遺物詳細 -->
+            <br />
+            <app-mat-filtering-selector
+              class="set-field"
+              [title]="'ARTIFACT.SET1'"
+              [model]="selectedArtifactSetIndexes[0]"
+              (modelChange)="onSelectArtifactSet($event, 0)"
+              [hasBlankOption]="true"
+              [originList]="artifactSetList"
+              [optionValueProperty]="'setId'"
+              [optionInnerTextProperty]="'setName'"
+              [selectedDispalyProperty]="'setName'"
+              [selectedDispalyIcon]="true"
+              [service]="artifactService"
+              [dispalyIconWhenSelected]="true"
+              [currentLanguage]="currentLanguage"
+            >
+            </app-mat-filtering-selector>
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <app-mat-filtering-selector
+              class="set-field"
+              [title]="'ARTIFACT.SET2'"
+              [model]="selectedArtifactSetIndexes[1]"
+              (modelChange)="onSelectArtifactSet($event, 1)"
+              [hasBlankOption]="true"
+              [originList]="artifactSetList"
+              [optionValueProperty]="'setId'"
+              [optionInnerTextProperty]="'setName'"
+              [selectedDispalyProperty]="'setName'"
+              [selectedDispalyIcon]="true"
+              [service]="artifactService"
+              [dispalyIconWhenSelected]="true"
+              [currentLanguage]="currentLanguage"
+            >
+            </app-mat-filtering-selector>
+            <ng-container
+              *ngIf="selectedArtifactSetIndexes[0] && selectedArtifactSetIndexes[0] !== ''"
+            >
+              <br /><span [innerHTML]="effectContent1"></span>
+            </ng-container>
+            <ng-container
+              *ngIf="selectedArtifactSetIndexes[1] && selectedArtifactSetIndexes[1] !== ''"
+            >
+              <br /><span [innerHTML]="effectContent2"></span>
+            </ng-container>
+            <app-extra-data
+              [characterIndex]="data.id"
+              [skill]="name_set"
+              [skillIndex]="2"
+              [refreshFlg]="setBuffRefreshFlg"
+              [refreshBuffOnChangeFlg]="true"
+              [valueIndexes]="effectValidIndexes"
+            >
+              <br />
+              <br />
+              <app-extra-data
+                [characterIndex]="data.id"
+                [skill]="name_set"
+                [skillIndex]="1"
+                [refreshFlg]="setBuffRefreshFlg"
+                [valueIndexes]="effectValidIndexes"
+              >
+              </app-extra-data>
+            </app-extra-data>
+            <div class="chip-div">
+              <app-artifact-chips
+                [characterIndex]="data.id"
+                [index]="index"
+                [isFull]="true"
+                [isAuto]="isSelectedIndexAuto"
+              ></app-artifact-chips>
+            </div>
+          </div>
+          <mat-tab-group
+            *ngIf="selectedIndex === index"
+            mat-stretch-tabs
+            (selectedIndexChange)="onExpandStatusChanged()"
+            [(selectedIndex)]="partIndex"
+            animationDuration="0"
+          >
+            <ng-container *ngFor="let type of artifactList">
+              <mat-tab [label]="'ARTIFACT.' + type | translate">
+                <div class="artifact-sub">
+                  <br />
+                  <app-artifact-sub
+                    [characterIndex]="data.id"
+                    [index]="index"
+                    [artifactType]="type"
+                    [changed]="subChanged"
+                    [isAuto]="isSelectedIndexAuto"
+                  >
+                  </app-artifact-sub>
+                </div>
+              </mat-tab>
+            </ng-container>
+            <mat-tab disabled>
+              <ng-template mat-tab-label>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button *ngIf="!isSelectedIndexAuto" mat-menu-item (click)="rollback(index)">
+                    <mat-icon>replay</mat-icon>
+                    <span [innerText]="'SYS.ROLLBACK' | translate"></span>
+                  </button>
+                  <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
+                    <mat-icon>delete</mat-icon>
+                    <span [innerText]="'SYS.DELETE' | translate"></span>
+                  </button>
+                </mat-menu>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+          <ng-container *ngIf="selectedIndex === index && isSelectedIndexAuto">
             <mat-divider></mat-divider>
-            <mat-tab-group class="overflow-x-show-tab-group" [(selectedIndex)]="selectedIndex" (selectedIndexChange)="setActiveIndex()" animationDuration="0">
-                <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
-                    <div class="artifact-set">
-                        <!-- 聖遺物詳細 -->
-                        <br>
-                        <app-mat-filtering-selector class="set-field"
-                            [title]="'ARTIFACT.SET1'"
-                            [model]="selectedArtifactSetIndexes[0]"
-                            (modelChange)="onSelectArtifactSet($event, 0)"
-                            [hasBlankOption]="true"
-                            [originList]="artifactSetList"
-                            [optionValueProperty]="'setId'"
-                            [optionInnerTextProperty]="'setName'"
-                            [selectedDispalyProperty]="'setName'"
-                            [selectedDispalyIcon]="true"
-                            [service]="artifactService"
-                            [dispalyIconWhenSelected]="true"
-                            [currentLanguage]="currentLanguage">
-                        </app-mat-filtering-selector>
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        <app-mat-filtering-selector class="set-field"
-                            [title]="'ARTIFACT.SET2'"
-                            [model]="selectedArtifactSetIndexes[1]"
-                            (modelChange)="onSelectArtifactSet($event, 1)"
-                            [hasBlankOption]="true"
-                            [originList]="artifactSetList"
-                            [optionValueProperty]="'setId'"
-                            [optionInnerTextProperty]="'setName'"
-                            [selectedDispalyProperty]="'setName'"
-                            [selectedDispalyIcon]="true"
-                            [service]="artifactService"
-                            [dispalyIconWhenSelected]="true"
-                            [currentLanguage]="currentLanguage">
-                        </app-mat-filtering-selector>
-                        <ng-container *ngIf="selectedArtifactSetIndexes[0] && selectedArtifactSetIndexes[0] != ''">
-                            <br><span [innerHTML]="effectContent1"></span>
-                        </ng-container>
-                        <ng-container *ngIf="selectedArtifactSetIndexes[1] && selectedArtifactSetIndexes[1] != ''">
-                            <br><span [innerHTML]="effectContent2"></span>
-                        </ng-container>
-                        <app-extra-data
-                            [characterIndex]="data.id"
-                            [skill]="name_set"
-                            [skillIndex]="2"
-                            [refreshFlg]="setBuffRefreshFlg"
-                            [refreshBuffOnChangeFlg]="true"
-                            [valueIndexes]="effectValidIndexes">
-                            <br>
-                            <br>
-                            <app-extra-data
-                                [characterIndex]="data.id"
-                                [skill]="name_set"
-                                [skillIndex]="1"
-                                [refreshFlg]="setBuffRefreshFlg"
-                                [valueIndexes]="effectValidIndexes">
-                            </app-extra-data>
-                        </app-extra-data>
-                        <div class="chip-div">
-                            <app-artifact-chips
-                                [characterIndex]="data.id"
-                                [index]="index"
-                                [isFull]="true"
-                                [isAuto]="isSelectedIndexAuto"
-                            ></app-artifact-chips>
-                        </div>
-                    </div>
-                    <mat-tab-group *ngIf="selectedIndex == index" mat-stretch-tabs (selectedIndexChange)="onExpandStatusChanged()" [(selectedIndex)]="partIndex" animationDuration="0">
-                        <ng-container *ngFor="let type of artifactList">
-                            <mat-tab [label]="'ARTIFACT.' + type | translate">
-                                <div class="artifact-sub">
-                                    <br>
-                                    <app-artifact-sub
-                                        [characterIndex]="data.id"
-                                        [index]="index"
-                                        [artifactType]="type"
-                                        [changed]="subChanged"
-                                        [isAuto]="isSelectedIndexAuto"
-                                    >
-                                    </app-artifact-sub>
-                                </div>
-                            </mat-tab>
-                        </ng-container>
-                        <mat-tab disabled>
-                            <ng-template mat-tab-label>
-                                <button mat-icon-button [matMenuTriggerFor]="menu">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                    <button *ngIf="!isSelectedIndexAuto" mat-menu-item (click)="rollback(index)">
-                                        <mat-icon>replay</mat-icon>
-                                        <span [innerText]="'SYS.ROLLBACK' | translate"></span>
-                                    </button>
-                                    <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
-                                        <mat-icon>delete</mat-icon>
-                                        <span [innerText]="'SYS.DELETE' | translate"></span>
-                                    </button>
-                                </mat-menu>
-                            </ng-template>
-                        </mat-tab>
-                    </mat-tab-group>
-                    <ng-container *ngIf="selectedIndex == index && isSelectedIndexAuto">
-                        <mat-divider></mat-divider>
-                        <app-artifact-auto
-                            *ngIf="isSelectedIndexAuto"
-                            [characterIndex]="data.id"
-                            [index]="index"
-                        ></app-artifact-auto>
-                    </ng-container>
-                </mat-tab>
-                <mat-tab disabled>
-                    <ng-template mat-tab-label>
-                        <button class="add-button" mat-icon-button (click)="copyTab()" matTooltip="Copy" matTooltipPosition="above">
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
-                        <button class="add-button" mat-icon-button (click)="addTab()" matTooltip="Add" matTooltipPosition="above">
-                            <mat-icon>add_circle</mat-icon>
-                        </button>
-                        <button class="add-button" mat-icon-button (click)="addAutoTab()" matTooltip="Add Auto" matTooltipPosition="above">
-                            <mat-icon>queue_play_next</mat-icon>
-                        </button>
-                    </ng-template>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card-content>
-    </mat-card>
+            <app-artifact-auto
+              *ngIf="isSelectedIndexAuto"
+              [characterIndex]="data.id"
+              [index]="index"
+            ></app-artifact-auto>
+          </ng-container>
+        </mat-tab>
+        <mat-tab disabled>
+          <ng-template mat-tab-label>
+            <button
+              class="add-button"
+              mat-icon-button
+              (click)="copyTab()"
+              matTooltip="Copy"
+              matTooltipPosition="above"
+            >
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <button
+              class="add-button"
+              mat-icon-button
+              (click)="addTab()"
+              matTooltip="Add"
+              matTooltipPosition="above"
+            >
+              <mat-icon>add_circle</mat-icon>
+            </button>
+            <button
+              class="add-button"
+              mat-icon-button
+              (click)="addAutoTab()"
+              matTooltip="Add Auto"
+              matTooltipPosition="above"
+            >
+              <mat-icon>queue_play_next</mat-icon>
+            </button>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

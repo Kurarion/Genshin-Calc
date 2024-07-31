@@ -1,29 +1,28 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { CharacterService, CharaInfo, Const, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {CharacterService, CharaInfo, Const, TYPE_SYS_LANG} from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-chara-option',
   templateUrl: './chara-option.component.html',
-  styleUrls: ['./chara-option.component.css']
+  styleUrls: ['./chara-option.component.css'],
 })
-export class CharaOptionComponent implements OnInit {
-
+export class CharaOptionComponent implements OnInit, OnChanges {
   readonly tempPicUrl = Const.IMG_ON_ERROR;
   readonly tempQualityBG = Const.QUALITY_TEMP_BG;
 
-  @Input('charaInfo') charaInfo!: CharaInfo|undefined;
+  @Input('charaInfo') charaInfo!: CharaInfo | undefined;
   @Input('currentLanguage') currentLanguage!: TYPE_SYS_LANG;
   @Input('charaIndex') charaIndex!: string;
   @Input('useIndex') useIndex: boolean = false;
   @Input('onlyPic') onlyPic: boolean = false;
 
-  constructor(private characterService: CharacterService) { }
+  constructor(private characterService: CharacterService) {}
 
   ngOnInit(): void {
-    if(this.useIndex){
-      if(this.charaIndex && this.charaIndex!=""){
+    if (this.useIndex) {
+      if (this.charaIndex && this.charaIndex != '') {
         this.charaInfo = this.getCharaInfo(this.charaIndex);
-      }else{
+      } else {
         this.charaInfo = undefined;
       }
     }
@@ -35,9 +34,8 @@ export class CharaOptionComponent implements OnInit {
     }
   }
 
-  getCharaInfo(index: string|number): CharaInfo {
+  getCharaInfo(index: string | number): CharaInfo {
     let temp = this.characterService.getCharaInfo(index);
     return temp;
   }
-
 }

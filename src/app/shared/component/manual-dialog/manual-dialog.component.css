@@ -1,43 +1,43 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1em;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
 }
 
 .title {
-    margin-left: .7em;
+  margin-left: 0.7em;
 }
 
 .container-content {
-    border: 1px solid gray;
-    border-radius: 2px;
-    margin-left: 1em;
-    margin-right: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    height: 65vh;
+  border: 1px solid gray;
+  border-radius: 2px;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  height: 65vh;
 }
 
 .content {
-    width: 73vw;
-    max-width: 73vw;
+  width: 73vw;
+  max-width: 73vw;
 }
 
-::ng-deep .container-content img:not([height]){
-    width: 100%;
+::ng-deep .container-content img:not([height]) {
+  width: 100%;
 }
 
 .container-action {
-    margin-left: auto;
-    margin-right: 1em;
+  margin-left: auto;
+  margin-right: 1em;
 }
 
 .container-content::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 .container-content::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: grey;
+  border-radius: 3px;
+  background-color: grey;
 }

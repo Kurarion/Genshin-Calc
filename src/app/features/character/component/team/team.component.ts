@@ -1,7 +1,37 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { ArtifactService, artifactSet, CalculatorService, character, CharacterService, CharaInfo, CharSkills, Const, ExpansionPanelCommon, MemberIndex, OtherService, OtherStorageInfo, RelayoutMsgService, SelfTeamBuff, TeamBuff, TeamService, TeamSetStorageInfo, TYPE_SYS_LANG, weapon, WeaponService } from 'src/app/shared/shared.module';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {
+  ArtifactService,
+  artifactSet,
+  CalculatorService,
+  character,
+  CharacterService,
+  CharaInfo,
+  CharSkills,
+  Const,
+  ExpansionPanelCommon,
+  MemberIndex,
+  OtherService,
+  OtherStorageInfo,
+  RelayoutMsgService,
+  SelfTeamBuff,
+  TeamBuff,
+  TeamService,
+  TeamSetStorageInfo,
+  TYPE_SYS_LANG,
+  weapon,
+  WeaponService,
+} from 'src/app/shared/shared.module';
 
 interface memberOption {
   index: string;
@@ -18,26 +48,25 @@ interface MemberInfo {
 }
 
 interface TeamSetBuffInfo {
-  "1"?: MemberInfo;
-  "2"?: MemberInfo;
-  "3"?: MemberInfo;
-  "4"?: MemberInfo;
+  '1'?: MemberInfo;
+  '2'?: MemberInfo;
+  '3'?: MemberInfo;
+  '4'?: MemberInfo;
 }
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css']
+  styleUrls: ['./team.component.css'],
 })
-export class TeamComponent extends ExpansionPanelCommon implements OnInit {
-
+export class TeamComponent extends ExpansionPanelCommon implements OnInit, OnDestroy {
   //ループメンバーインデックス
-  readonly listIndex: MemberIndex[] = [1,2,3,4];
+  readonly listIndex: MemberIndex[] = [1, 2, 3, 4];
   readonly selfIndex: MemberIndex[] = [1];
-  readonly ohterIndex: MemberIndex[] = [2,3,4];
+  readonly ohterIndex: MemberIndex[] = [2, 3, 4];
   readonly skills: (keyof CharSkills)[] = [
-    Const.NAME_SKILLS_NORMAL, 
-    Const.NAME_SKILLS_SKILL, 
+    Const.NAME_SKILLS_NORMAL,
+    Const.NAME_SKILLS_SKILL,
     Const.NAME_SKILLS_ELEMENTAL_BURST,
     Const.NAME_SKILLS_OTHER,
   ];
@@ -52,37 +81,33 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     Const.NAME_CONSTELLATION_6,
   ];
   readonly skillsBuff: (keyof SelfTeamBuff)[] = [
-    Const.NAME_SKILLS_NORMAL, 
-    Const.NAME_SKILLS_SKILL, 
+    Const.NAME_SKILLS_NORMAL,
+    Const.NAME_SKILLS_SKILL,
     Const.NAME_SKILLS_ELEMENTAL_BURST,
     Const.NAME_SKILLS_OTHER,
   ];
-  readonly weapon: (keyof SelfTeamBuff)[] = [
-    Const.NAME_EFFECT,
-  ];
-  readonly artifact: (keyof SelfTeamBuff)[] = [
-    Const.NAME_SET,
-  ];
+  readonly weapon: (keyof SelfTeamBuff)[] = [Const.NAME_EFFECT];
+  readonly artifact: (keyof SelfTeamBuff)[] = [Const.NAME_SET];
 
   readonly props_all_percent = Const.PROPS_ALL_DATA_PERCENT;
 
   readonly buffFromName: Record<string, string> = {
-    "Skill0": "SKILL_A_NAME",
-    "Skill1": "SKILL_E_NAME",
-    "Skill2": "SKILL_Q_NAME",
-    "Skill3": "SKILL_X_NAME",
-    "Pround0": "PROUND_1_NAME",
-    "Pround1": "PROUND_2_NAME",
-    "Pround2": "PROUND_3_NAME",
-    "Constellation0": "CONSTELLATION_1_NAME",
-    "Constellation1": "CONSTELLATION_2_NAME",
-    "Constellation2": "CONSTELLATION_3_NAME",
-    "Constellation3": "CONSTELLATION_4_NAME",
-    "Constellation4": "CONSTELLATION_5_NAME",
-    "Constellation5": "CONSTELLATION_6_NAME",
-    "Weapon": "WEAPON_NAME",
-    "Artifact": "ARTIFACT_NAME",
-  }
+    'Skill0': 'SKILL_A_NAME',
+    'Skill1': 'SKILL_E_NAME',
+    'Skill2': 'SKILL_Q_NAME',
+    'Skill3': 'SKILL_X_NAME',
+    'Pround0': 'PROUND_1_NAME',
+    'Pround1': 'PROUND_2_NAME',
+    'Pround2': 'PROUND_3_NAME',
+    'Constellation0': 'CONSTELLATION_1_NAME',
+    'Constellation1': 'CONSTELLATION_2_NAME',
+    'Constellation2': 'CONSTELLATION_3_NAME',
+    'Constellation3': 'CONSTELLATION_4_NAME',
+    'Constellation4': 'CONSTELLATION_5_NAME',
+    'Constellation5': 'CONSTELLATION_6_NAME',
+    'Weapon': 'WEAPON_NAME',
+    'Artifact': 'ARTIFACT_NAME',
+  };
 
   //キャラデータ
   @Input('data') data!: character;
@@ -95,7 +120,7 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
 
   //選択されたメンバーインデックス
   memberIndexes!: TeamSetStorageInfo;
@@ -105,17 +130,17 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
   memberList: memberOption[] = [];
 
   constructor(
-    private teamService: TeamService, 
-    private calculatorService: CalculatorService, 
+    private teamService: TeamService,
+    private calculatorService: CalculatorService,
     private translateService: TranslateService,
     private characterService: CharacterService,
     private weaponService: WeaponService,
     private artifactService: ArtifactService,
-    private router: Router, 
+    private router: Router,
     private relayoutMsgService: RelayoutMsgService,
-    ) { 
-      super(relayoutMsgService);
-    }
+  ) {
+    super(relayoutMsgService);
+  }
 
   ngOnInit(): void {
     //チーム初期化
@@ -129,27 +154,27 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     setTimeout(() => {
       this.updateSelfBuff();
       this.onExpandStatusChanged();
-    })
+    });
     setTimeout(() => {
-      this.calculatorService.allDataChanged().subscribe(()=>{
+      this.calculatorService.allDataChanged().subscribe(() => {
         this.updateSelfBuff();
-      })
-    })
+      });
+    });
   }
-  
+
   onSelectTeamMember(memberIndex: string, postion: MemberIndex) {
     let isDuplicate = false;
     //重複する場合
-    if(memberIndex!=""){
-      for(let i of this.listIndex){
-        if(i != postion && memberIndex == this.memberIndexes[i]){
+    if (memberIndex != '') {
+      for (let i of this.listIndex) {
+        if (i != postion && memberIndex == this.memberIndexes[i]) {
           this.teamService.addTeamMemberStorageInfo(this.data.id, i, this.memberIndexes[postion]);
           this.teamService.addTeamMemberStorageInfo(this.data.id, postion, memberIndex);
           isDuplicate = true;
         }
       }
     }
-    if(!isDuplicate){
+    if (!isDuplicate) {
       this.teamService.addTeamMemberStorageInfo(this.data.id, postion, memberIndex);
     }
     this.updateTeamMemberFromStorage();
@@ -163,13 +188,13 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     this.teamService.saveData();
   }
 
-  updateDirtyFlag(){
+  updateDirtyFlag() {
     //更新
     this.calculatorService.setDirtyFlag(this.data.id);
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
 
@@ -177,9 +202,13 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
    * クリック処理
    */
   onClick(index: string) {
-    if(index){
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-      this.router.navigate([Const.MENU_CHARACTER], {queryParams: {index: index}, skipLocationChange: true}));
+    if (index) {
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate([Const.MENU_CHARACTER], {
+          queryParams: {index: index},
+          skipLocationChange: true,
+        }),
+      );
     }
   }
 
@@ -189,8 +218,8 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
   private initializeMemberList(lang?: TYPE_SYS_LANG) {
     this.memberList = [];
     let keys = this.characterService.getStorageMapKeys();
-    for(let key of keys) {
-      if(key == this.data.id.toString()){
+    for (let key of keys) {
+      if (key == this.data.id.toString()) {
         continue;
       }
       let temp: CharaInfo = this.characterService.getCharaInfo(key);
@@ -198,7 +227,7 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     }
   }
 
-  private initTeam(){
+  private initTeam() {
     this.teamService.addTeamMemberStorageInfo(this.data.id, 1, this.data.id);
   }
 
@@ -206,60 +235,64 @@ export class TeamComponent extends ExpansionPanelCommon implements OnInit {
     this.memberIndexes = this.teamService.getTeamStorageInfo(this.data.id)!;
   }
 
-  private updateSelfBuff(){
-    for(let key of this.selfIndex){
+  private updateSelfBuff() {
+    for (let key of this.selfIndex) {
       this.updateMemberBuff(key);
     }
   }
 
-  private updateMemberBuffAll(){
-    for(let key of this.listIndex){
+  private updateMemberBuffAll() {
+    for (let key of this.listIndex) {
       this.updateMemberBuff(key);
     }
   }
 
   private updateMemberBuff(postion: MemberIndex) {
     let index = this.memberIndexes[postion];
-    if(!this.memberInfos[postion]){
+    if (!this.memberInfos[postion]) {
       this.memberInfos[postion] = {};
     }
-    if(index){
+    if (index) {
       let data = this.characterService.get(index);
       let buff = this.calculatorService.getSelfTeamBuff(index);
       let hasBuff = false;
       this.memberInfos[postion]!.buff = buff;
       this.memberInfos[postion]!.data = data;
-      this.memberInfos[postion]!.weapon = this.weaponService.get(this.weaponService.getIndex(data.id)!);
-      this.memberInfos[postion]!.artifact = this.artifactService.get(this.artifactService.getStorageFullSetIndex(data.id)!);
-      this.memberInfos[postion]!.iconBGColor = 
-        Const.SKILL_ICON_GRADIENT[0] + 
+      this.memberInfos[postion]!.weapon = this.weaponService.get(
+        this.weaponService.getIndex(data.id)!,
+      );
+      this.memberInfos[postion]!.artifact = this.artifactService.get(
+        this.artifactService.getStorageFullSetIndex(data.id)!,
+      );
+      this.memberInfos[postion]!.iconBGColor =
+        Const.SKILL_ICON_GRADIENT[0] +
         Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(data.info.elementType)!] +
         Const.SKILL_ICON_GRADIENT[1];
-      if(buff){
+      if (buff) {
         const checkList: TeamBuff[] = [];
-        for(let key of this.skillsBuff.concat(this.weapon).concat(this.artifact)){
-          checkList.push(...buff[key as keyof SelfTeamBuff] as TeamBuff[])
+        for (let key of this.skillsBuff.concat(this.weapon).concat(this.artifact)) {
+          checkList.push(...(buff[key as keyof SelfTeamBuff] as TeamBuff[]));
         }
-        for(let v of buff[Const.NAME_SKILLS_PROUD]){
+        for (let v of buff[Const.NAME_SKILLS_PROUD]) {
           checkList.push(...v);
         }
-        for(let k of this.constellations){
+        for (let k of this.constellations) {
           checkList.push(...buff[Const.NAME_CONSTELLATION][k]);
         }
-        for(let i of checkList){
-          if(i.val && i.val != 0 || i.calByOrigin){
+        for (let i of checkList) {
+          if ((i.val && i.val != 0) || i.calByOrigin) {
             hasBuff = true;
             break;
           }
         }
       }
       this.memberInfos[postion]!.hasBuff = hasBuff;
-    }else{
+    } else {
       this.memberInfos[postion] = {};
     }
   }
 
-  private updateDatas(){
+  private updateDatas() {
     //更新
     this.calculatorService.initExtraTeamBuffData(this.data.id);
     this.updateMemberBuffAll();

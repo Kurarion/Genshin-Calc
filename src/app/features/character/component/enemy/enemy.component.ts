@@ -1,6 +1,28 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { enemy, HttpService, LanguageService, TYPE_SYS_LANG, EnemyService, EnemyStatus, ExtraDataService, character, Const, CalculatorService, RelayoutMsgService, ExpansionPanelCommon } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  enemy,
+  HttpService,
+  LanguageService,
+  TYPE_SYS_LANG,
+  EnemyService,
+  EnemyStatus,
+  ExtraDataService,
+  character,
+  Const,
+  CalculatorService,
+  RelayoutMsgService,
+  ExpansionPanelCommon,
+} from 'src/app/shared/shared.module';
+import {environment} from 'src/environments/environment';
 
 interface levelOption {
   level: string;
@@ -23,10 +45,9 @@ interface enemyOption {
 @Component({
   selector: 'app-enemy',
   templateUrl: './enemy.component.html',
-  styleUrls: ['./enemy.component.css']
+  styleUrls: ['./enemy.component.css'],
 })
-export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
-
+export class EnemyComponent extends ExpansionPanelCommon implements OnInit, OnDestroy {
   private readonly minLevel = 1;
   private readonly maxLevel = 100;
   private readonly defaultLevel = 90;
@@ -34,7 +55,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   private readonly minPlayerNum = 1;
   private readonly maxPlayerNum = 4;
   readonly hpRates = [1.0, 1.5, 2.0, 2.5];
-  readonly attackRates = [1.0, 1.10, 1.25, 1.40];
+  readonly attackRates = [1.0, 1.1, 1.25, 1.4];
   private readonly levelPadNum = 3;
 
   readonly props = Const.PROPS_CHARA_ENEMY_BASE;
@@ -52,7 +73,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
   //敵リスト
   enemyList: enemyOption[] = [];
   //選択された敵インデックス
@@ -77,13 +98,15 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   //選択されたレベル属性
   selectedLevelProps!: Record<string, subProp>;
 
-  constructor(private httpService: HttpService, 
-    public enemyService: EnemyService, 
+  constructor(
+    private httpService: HttpService,
+    public enemyService: EnemyService,
     private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService,
-    private relayoutMsgService: RelayoutMsgService,) { 
-      super(relayoutMsgService);
-    }
+    private relayoutMsgService: RelayoutMsgService,
+  ) {
+    super(relayoutMsgService);
+  }
 
   ngOnInit(): void {
     //敵リスト初期化
@@ -101,12 +124,19 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
     //敵初期選択
     this.selectedEnemyIndex = this.enemyService.getIndex(this.data.id) ?? this.enemyList[0].index;
     //存在性チェック
-    if(this.selectedEnemyIndex != this.enemyList[0].index && this.enemyService.get(this.selectedEnemyIndex) == undefined){
+    if (
+      this.selectedEnemyIndex != this.enemyList[0].index &&
+      this.enemyService.get(this.selectedEnemyIndex) == undefined
+    ) {
       this.selectedEnemyIndex = this.enemyList[0].index;
     }
-    this.selectedPlayerNum = this.getPlayerNumFromNumber(this.enemyService.getPlayerNum(this.data.id)) ?? this.minPlayerNum;
+    this.selectedPlayerNum =
+      this.getPlayerNumFromNumber(this.enemyService.getPlayerNum(this.data.id)) ??
+      this.minPlayerNum;
     //レベル初期選択
-    this.selectedLevel = this.getLevelFromString(this.enemyService.getLevel(this.data.id)) ?? this.levelOptions[this.defaultLevel - 1];
+    this.selectedLevel =
+      this.getLevelFromString(this.enemyService.getLevel(this.data.id)) ??
+      this.levelOptions[this.defaultLevel - 1];
     //初期データ更新
     this.onSelectEnemy(this.selectedEnemyIndex);
     this.onChangeLevel(this.selectedLevel);
@@ -123,7 +153,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
     this.selectedEnemyIndex = enemyIndex;
     //敵の切り替え
     this.enemyData = this.enemyService.get(enemyIndex);
-    if(environment.outputLog){
+    if (environment.outputLog) {
       //DEBUG
       console.log(this.enemyData);
     }
@@ -145,7 +175,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
       this.selectedLevelProps[upperKey] = {
         isPercent: this.percent_props.includes(upperKey),
         value: temp[key as keyof EnemyStatus],
-      }
+      };
     }
     //レベル設定
     this.enemyService.setLevel(this.data.id, value.level);
@@ -159,11 +189,11 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   }
 
   getPropRate(name: string): number[] {
-    return this[name.toLocaleLowerCase() + 'Rates' as keyof EnemyComponent] as number[];
+    return this[(name.toLocaleLowerCase() + 'Rates') as keyof EnemyComponent] as number[];
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
 
@@ -173,14 +203,17 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
     let url = this.enemyData.images.icon;
-    this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
-      if (v) {
-        this.avatarURL = window.URL.createObjectURL(v);
-        setTimeout(() => {
-          this.avatarLoadFlg = true;
-        }, 100)
-      }
-    }).catch(() => { });
+    this.httpService
+      .get<Blob>(url, 'blob', true)
+      .then((v: Blob | null) => {
+        if (v) {
+          this.avatarURL = window.URL.createObjectURL(v);
+          setTimeout(() => {
+            this.avatarLoadFlg = true;
+          }, 100);
+        }
+      })
+      .catch(() => {});
   }
 
   /**
@@ -195,7 +228,7 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
         names: tempMap[key].name,
         codeName: tempMap[key].monsterName,
         enemyType: tempMap[key].type,
-      })
+      });
     }
   }
 
@@ -214,5 +247,4 @@ export class EnemyComponent extends ExpansionPanelCommon implements OnInit {
 
     return playerNum;
   }
-
 }

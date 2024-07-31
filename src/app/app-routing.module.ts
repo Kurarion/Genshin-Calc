@@ -1,16 +1,15 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { Const } from 'src/app/shared/shared.module';
-import { MainComponent } from './features/homePage/homePage.module';
-import { PreloadAllModules } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {Const} from 'src/app/shared/shared.module';
+import {MainComponent} from './features/homePage/homePage.module';
+import {PreloadAllModules} from '@angular/router';
+import {BrowserModule} from '@angular/platform-browser';
 
-const routes: Routes = 
-[
+const routes: Routes = [
   {
     path: '',
-    component:  MainComponent,
-    data: { animation: 'homePage' },
+    component: MainComponent,
+    data: {animation: 'homePage'},
   },
   {
     path: Const.MENU_CHARACTER,
@@ -20,18 +19,15 @@ const routes: Routes =
   {
     path: '**',
     redirectTo: '',
-  }
+  },
 ];
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(
-      routes,
-      {
-        preloadingStrategy: PreloadAllModules
-      }
-    )
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
 })

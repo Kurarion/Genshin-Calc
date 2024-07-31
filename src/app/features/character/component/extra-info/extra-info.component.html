@@ -2,46 +2,42 @@
 <ng-container *ngIf="hasLevel; then skills else other"></ng-container>
 <!-- 条件が偽の時には「Create」と表示される -->
 <ng-template #skills>
-    <ng-container *ngIf="skill == 'normal'">
-        <mat-form-field appearance="legacy" floatLabel="always">
-            <mat-label [innerText]="'GENSHIN.OTHER.OVERRIDE_ELEMENT' | translate"></mat-label>
-            <mat-select [ngModel]="overrideElement" (ngModelChange)="onChangeElement($event)">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let element of elementList" [value]="element">
-                    <span [innerText]="'GENSHIN.OTHER.' + element | translate"></span>
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+  <ng-container *ngIf="skill === 'normal'">
+    <mat-form-field appearance="legacy" floatLabel="always">
+      <mat-label [innerText]="'GENSHIN.OTHER.OVERRIDE_ELEMENT' | translate"></mat-label>
+      <mat-select [ngModel]="overrideElement" (ngModelChange)="onChangeElement($event)">
+        <mat-option></mat-option>
+        <mat-option *ngFor="let element of elementList" [value]="element">
+          <span [innerText]="'GENSHIN.OTHER.' + element | translate"></span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  <div class="grid-wrapper">
+    <ng-container *ngFor="let temp of tempDataList; index as i">
+      <div class="grid-column-all">
+        <div class="placeholder"></div>
+      </div>
+      <div class="temp-place"></div>
+      <span class="left-align" [innerText]="skillDescDatas[i].desc"></span>
+      <span
+        class="right-align"
+        [innerText]="showValues[i]"
+        [matTooltip]="tipValues[i]"
+        matTooltipPosition="right"
+      >
+      </span>
+      <div class="grid-column-all loop-bottom-div">
+        <app-extra-data
+          [characterIndex]="data.id"
+          [skill]="skill"
+          [valueIndexes]="skillDescDatas[i].valuePropIndexes"
+          [overrideElement]="overrideElement"
+          [isFromInfo]="true"
+        >
+        </app-extra-data>
+      </div>
     </ng-container>
-    <table>
-        <ng-container *ngFor="let temp of tempDataList; index as i">
-            <tr>
-                <td colspan="2">
-                    <div class="placeholder"></div>
-                </td>
-            </tr>
-            <tr>
-                <td [innerText]="skillDescDatas[i].desc"></td>
-                <td>
-                    <span 
-                        [innerText]="showValues[i]"
-                        [matTooltip]="tipValues[i]" matTooltipPosition="right">
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <app-extra-data
-                        [characterIndex]="data.id"
-                        [skill]="skill"
-                        [valueIndexes]="skillDescDatas[i].valuePropIndexes"
-                        [overrideElement]="overrideElement">
-                    </app-extra-data>
-                </td>
-            </tr>
-        </ng-container>
-    </table>
+  </div>
 </ng-template>
-<ng-template #other>
-
-</ng-template>
+<ng-template #other> </ng-template>

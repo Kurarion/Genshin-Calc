@@ -1,117 +1,122 @@
 .card {
-    max-width: 350px;
-    min-width: 290px;
-    margin: 12px;
+  max-width: 350px;
+  min-width: 290px;
+  margin: 12px;
 }
 
 .avatar {
-    width: 80px;
-    height: 80px;
-    background-size: cover;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    border-radius: 0%;
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 0%;
 }
 
 .header-text {
-    font-size: inherit;
+  font-size: inherit;
 }
 
 .content {
-    padding-top: 2px;
+  padding-top: 2px;
 }
 
-:host ::ng-deep .content .mat-expansion-panel{
-    overflow: visible;
+:host ::ng-deep .content .mat-expansion-panel {
+  overflow: visible;
 }
 
 .expand {
-    margin-top: 1px;
+  margin-top: 1px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 table tr:first-child .content-left {
-    border-top: 1px solid rgba(0, 0, 0, .12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 table tr:first-child .content-right {
-    border-top: 1px solid rgba(0, 0, 0, .12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-left {
-    text-align: left;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-right {
-    text-align: right;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
+  text-align: right;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-right-button {
-    text-align: center;
-    border-bottom: none;
+  text-align: center;
+  border-bottom: none;
 }
 
 .drap-handle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #ccc;
-    cursor: move;
-    width: 24px;
-    height: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccc;
+  cursor: move;
+  width: 24px;
+  height: 24px;
 }
 
 :host ::ng-deep.mat-tab-label,
 :host ::ng-deep.mat-tab-label-active {
-    min-width: 0 !important;
-    padding: 3px !important;
-    margin: 3px !important;
+  min-width: 0 !important;
+  padding: 3px !important;
+  margin: 3px !important;
 }
 
 .add-button {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 :host ::ng-deep .mat-icon-button {
-    line-height: 30px !important;
+  line-height: 30px !important;
 }
 
 :host ::ng-deep .set-field mat-form-field {
-    width: 140px;
+  width: 140px;
 }
 
 .artifact-set {
-    margin-left: 2%;
-    width: 94%;
-    margin-right: 2%;
+  margin-left: 2%;
+  width: 94%;
+  margin-right: 2%;
 }
 
 .artifact-sub {
-    margin-left: 2%;
-    width: 96%;
-    height: 99%;
-    overflow-y: hidden;
-    overflow-x: visible;
+  margin-left: 2%;
+  width: 96%;
+  height: 99%;
+  overflow-y: hidden;
+  overflow-x: visible;
 }
 
 .chip-div {
-    padding-top: 0.5em;
-    padding-bottom: 0.1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.1em;
 }
 
 :host ::ng-deep .overflow-x-show-tab-group .mat-tab-body-wrapper {
-    overflow: visible;
+  overflow: visible;
 }
 :host ::ng-deep .overflow-x-show-tab-group .mat-tab-body-wrapper .mat-tab-body-active {
-    overflow: visible;
+  overflow: visible;
 }
-:host ::ng-deep .overflow-x-show-tab-group .mat-tab-body-wrapper .mat-tab-body-active .mat-tab-body-content {
-    overflow: visible;
+:host
+  ::ng-deep
+  .overflow-x-show-tab-group
+  .mat-tab-body-wrapper
+  .mat-tab-body-active
+  .mat-tab-body-content {
+  overflow: visible;
 }

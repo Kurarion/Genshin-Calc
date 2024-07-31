@@ -1,27 +1,31 @@
 <ng-container *ngIf="data.skills.normal.name">
-    <mat-card class="card" [style.width.px]="cardWidth">
-        <mat-card-header>
-            <mat-card-title [innerText]="'OTHER.NAME' | translate"></mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="content">
-            <mat-divider></mat-divider>
-            <mat-tab-group [(selectedIndex)]="selectedIndex" animationDuration="0" (selectedIndexChange)="onTabChanged()">
-                <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
-                    <div class="tab">
-                        <div class="menu-div">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
-                                    <mat-icon>delete</mat-icon>
-                                    <span [innerText]="'SYS.DELETE' | translate"></span>
-                                </button>
-                            </mat-menu>
-                        </div>
-                        <!-- 選択 -->
-                        <br>
-                        <!-- <mat-form-field class="prop-field" appearance="legacy" floatLabel="always">
+  <mat-card class="card" [style.width.px]="cardWidth">
+    <mat-card-header>
+      <mat-card-title [innerText]="'OTHER.NAME' | translate"></mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <mat-divider></mat-divider>
+      <mat-tab-group
+        [(selectedIndex)]="selectedIndex"
+        animationDuration="0"
+        (selectedIndexChange)="onTabChanged()"
+      >
+        <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
+          <div class="tab">
+            <div class="menu-div">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="removeTab(index)" [disabled]="tabs.length < 2">
+                  <mat-icon>delete</mat-icon>
+                  <span [innerText]="'SYS.DELETE' | translate"></span>
+                </button>
+              </mat-menu>
+            </div>
+            <!-- 選択 -->
+            <br />
+            <!-- <mat-form-field class="prop-field" appearance="legacy" floatLabel="always">
                             <mat-label [innerText]="'OTHER.TARGET' | translate"></mat-label>
                             <mat-select [(ngModel)]="infos[selectedIndex].name" (ngModelChange)="onSelectProp($event)">
                                 <mat-option></mat-option>
@@ -30,74 +34,101 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field> -->
-                        <app-mat-filtering-selector class="prop-field"
-                            [title]="'OTHER.TARGET'"
-                            [model]="infos[selectedIndex].name"
-                            (modelChange)="onSelectProp($event, selectedIndex)"
-                            [originList]="propList"
-                            [optionValueProperty]="'value'"
-                            [optionInnerTextProperty]="'names'"
-                            [currentLanguage]="currentLanguage">
-                        </app-mat-filtering-selector>
-                        <!-- 値 -->
-                        <br>
-                        <mat-form-field appearance="legacy" floatLabel="always" class="normal-field">
-                            <mat-label [innerText]="'OTHER.TARGETVALUE' | translate"></mat-label>
-                            <input matInput 
-                                type="number"
-                                step="0.01"
-                                [(ngModel)]="showValue"
-                                (keyup)="onValueKeyup($event)"
-                            >
-                            <span matSuffix *ngIf="props_all_percent.includes(infos[selectedIndex].name??'')">%&nbsp;</span>
-                        </mat-form-field>
-                        <!-- スイッチ -->
-                        <br>
-                        <div class="grid-div">
-                            <div class="label-container">
-                                <mat-icon class="label-icon">loop</mat-icon>
-                                <span [innerText]="'OTHER.CAN_SECONDARY_TRANS' | translate"></span>
-                            </div>
-                            <mat-slide-toggle
-                                color="primary"
-                                [(ngModel)]="infos[selectedIndex].canSecondaryTrans"
-                                (ngModelChange)="updateDirtyFlag()"
-                            ></mat-slide-toggle>
-                            <div class="label-container">
-                                <mat-icon class="label-icon">keyboard_double_arrow_up</mat-icon>
-                                <span [innerText]="'OTHER.OPEN' | translate"></span>
-                            </div>
-                            <mat-slide-toggle
-                                color="primary"
-                                [(ngModel)]="infos[selectedIndex].enable"
-                                (ngModelChange)="updateDirtyFlag()"
-                            ></mat-slide-toggle>
-                        </div>
-                    </div>
-                </mat-tab>
-                <mat-tab disabled>
-                    <ng-template mat-tab-label>
-                        <button class="add-button" mat-icon-button (click)="copyTab()" matTooltip="Copy" matTooltipPosition="above">
-                            <mat-icon>content_copy</mat-icon>
-                        </button>
-                        <button class="add-button" mat-icon-button (click)="addTab()" matTooltip="Add" matTooltipPosition="above">
-                            <mat-icon>add_circle</mat-icon>
-                        </button>
-                    </ng-template>
-                </mat-tab>
-            </mat-tab-group>
-            <mat-divider></mat-divider>
-            <div class="all-element">
-                <ng-container *ngFor="let element of loopElemnt">
-                    <div class="element-fix" (click)="onClickElementTemplate(element)">
-                        <img class="element-icon" [src]="$any(elementMap)[element]" loading="lazy" appImgErrorHandle>
-                        <span class="element-add">
-                            +
-                        </span>
-                        <img class="element-icon" [src]="$any(elementMap)[element]" loading="lazy" appImgErrorHandle>
-                    </div>
-                </ng-container>
+            <app-mat-filtering-selector
+              class="prop-field"
+              [title]="'OTHER.TARGET'"
+              [model]="infos[selectedIndex].name"
+              (modelChange)="onSelectProp($event, selectedIndex)"
+              [originList]="propList"
+              [optionValueProperty]="'value'"
+              [optionInnerTextProperty]="'names'"
+              [currentLanguage]="currentLanguage"
+            >
+            </app-mat-filtering-selector>
+            <!-- 値 -->
+            <br />
+            <mat-form-field appearance="legacy" floatLabel="always" class="normal-field">
+              <mat-label [innerText]="'OTHER.TARGETVALUE' | translate"></mat-label>
+              <input
+                matInput
+                type="number"
+                step="0.01"
+                [(ngModel)]="showValue"
+                (keyup)="onValueKeyup($event)"
+              />
+              <span matSuffix *ngIf="props_all_percent.includes(infos[selectedIndex].name??'')"
+                >%&nbsp;</span
+              >
+            </mat-form-field>
+            <!-- スイッチ -->
+            <br />
+            <div class="grid-div">
+              <div class="label-container">
+                <mat-icon class="label-icon">loop</mat-icon>
+                <span [innerText]="'OTHER.CAN_SECONDARY_TRANS' | translate"></span>
+              </div>
+              <mat-slide-toggle
+                class="margin-left-auto"
+                color="primary"
+                [(ngModel)]="infos[selectedIndex].canSecondaryTrans"
+                (ngModelChange)="updateDirtyFlag()"
+              ></mat-slide-toggle>
+              <div class="label-container">
+                <mat-icon class="label-icon">keyboard_double_arrow_up</mat-icon>
+                <span [innerText]="'OTHER.OPEN' | translate"></span>
+              </div>
+              <mat-slide-toggle
+                class="margin-left-auto"
+                color="primary"
+                [(ngModel)]="infos[selectedIndex].enable"
+                (ngModelChange)="updateDirtyFlag()"
+              ></mat-slide-toggle>
             </div>
-        </mat-card-content>
-    </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab disabled>
+          <ng-template mat-tab-label>
+            <button
+              class="add-button"
+              mat-icon-button
+              (click)="copyTab()"
+              matTooltip="Copy"
+              matTooltipPosition="above"
+            >
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <button
+              class="add-button"
+              mat-icon-button
+              (click)="addTab()"
+              matTooltip="Add"
+              matTooltipPosition="above"
+            >
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+      <mat-divider></mat-divider>
+      <div class="all-element">
+        <ng-container *ngFor="let element of loopElemnt">
+          <div class="element-fix" (click)="onClickElementTemplate(element)">
+            <img
+              class="element-icon"
+              [src]="$any(elementMap)[element]"
+              loading="lazy"
+              appImgErrorHandle
+            />
+            <span class="element-add"> + </span>
+            <img
+              class="element-icon"
+              [src]="$any(elementMap)[element]"
+              loading="lazy"
+              appImgErrorHandle
+            />
+          </div>
+        </ng-container>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

@@ -1,75 +1,75 @@
-.auto-div{
-    width: 95%;
-    padding-left: 2%;
-    padding-right: 3%;
-    overflow-x: visible;
+.auto-div {
+  width: 95%;
+  padding-left: 2%;
+  padding-right: 3%;
+  overflow-x: visible;
 }
 
-.button-div{
-    width: 100%;
+.button-div {
+  width: 100%;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 .left {
-    text-align: left;
+  text-align: left;
 }
 
 .normal-field {
-    width: 13em;
+  width: 13em;
 }
 
 .dps-toggle {
-    height: 4em;
+  height: 4em;
 }
 
 .one-line-div {
-    overflow: hidden;
-    white-space: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .field-part-1 {
-    width: 10em;
-    margin-right: 4px;
+  width: 10em;
+  margin-right: 4px;
 }
 
 .field-part-2 {
-    margin-left: 0.5em;
-    width: 2.5em;
-    text-align:center;
+  margin-left: 0.5em;
+  width: 2.5em;
+  text-align: center;
 }
 
 .higher-div {
-    margin-top: 0.9em;
-    white-space: nowrap;
-    width: 2em;
+  margin-top: 0.9em;
+  white-space: nowrap;
+  width: 2em;
 }
 
 .tip {
-    color: rgba(0, 0, 0, 0.466);
+  color: rgba(0, 0, 0, 0.466);
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .echarts-div {
-    overflow: visible;
-    height: 290px;
+  overflow: visible;
+  height: 290px;
 }

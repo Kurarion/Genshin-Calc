@@ -298,8 +298,8 @@
       "HEALING": "Healing",
       "PRODUCT": "Production HP",
       "SHIELD": "Basic Shield Amount",
-      "SHIELD_CRYO":  "Cryo Absorption",
-      "SHIELD_ANEMO": "Anemo Absorption",    
+      "SHIELD_CRYO": "Cryo Absorption",
+      "SHIELD_ANEMO": "Anemo Absorption",
       "SHIELD_PHYSICAL": "Physical Absorption",
       "SHIELD_ELECTRO": "Electro Absorption",
       "SHIELD_GEO": "Geo Absorption",
@@ -475,7 +475,7 @@
     "DAMAGE_TYPE": "Target Damage Type",
     "DAMAGE_TAG": "Damage Tag",
     "USE_DPS": "DPS Calculation",
-    "USED_DPS_INDEX": "DPS Index", 
+    "USED_DPS_INDEX": "DPS Index",
     "NOT_EXIT_DPS_INDEX": "The DPS does not exist for that index.",
     "BLANK_DPS_LIST": "The DPS list is blank for that index.",
     "NO_RESULT": "Invalid calculation."
@@ -602,11 +602,11 @@
     "DMG_VAL_LABEL": "[Damage]",
     "APPENDED": "DPS: Damage information added successfully!",
     "TIPS": "Tips: Click the [+] button on the left side of the Damage Type to add damage information to the DPS list.",
-    "IMPORT_DIALOG":{
-      "TITLE": "DPS Code Import", 
+    "IMPORT_DIALOG": {
+      "TITLE": "DPS Code Import",
       "CONTENT": "Please import the code for character ID「{{CHAR_ID}}」",
       "OK": "Import",
-      "CANCEL": "Cancel", 
+      "CANCEL": "Cancel",
       "SUCCESS": "Import succeeded!",
       "FAILED": "Import failed."
     }

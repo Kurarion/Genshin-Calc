@@ -1,22 +1,28 @@
-import { PercentPipe, DecimalPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ArtifactService, ArtifactStoragePartData, ChipData, Const, GenshinDataService, NoCommaPipe } from 'src/app/shared/shared.module';
+import {PercentPipe, DecimalPipe} from '@angular/common';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {
+  ArtifactService,
+  ArtifactStoragePartData,
+  ChipData,
+  Const,
+  GenshinDataService,
+  NoCommaPipe,
+} from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-artifact-chips',
   templateUrl: './artifact-chips.component.html',
-  styleUrls: ['./artifact-chips.component.css']
+  styleUrls: ['./artifact-chips.component.css'],
 })
-export class ArtifactChipsComponent implements OnInit {
-
+export class ArtifactChipsComponent implements OnInit, OnDestroy {
   readonly parts = [
     Const.ARTIFACT_FLOWER,
     Const.ARTIFACT_PLUME,
     Const.ARTIFACT_SANDS,
     Const.ARTIFACT_GOBLET,
     Const.ARTIFACT_CIRCLET,
-  ]
+  ];
   readonly subs = [
     Const.ARTIFACT_SUB1,
     Const.ARTIFACT_SUB2,
@@ -45,31 +51,33 @@ export class ArtifactChipsComponent implements OnInit {
   //変更検知
   subscription!: Subscription;
 
-  constructor(private genshinDataService: GenshinDataService,
+  constructor(
+    private genshinDataService: GenshinDataService,
     private artifactService: ArtifactService,
     private percentPipe: PercentPipe,
     private decimalPipe: DecimalPipe,
-    private noCommaPipe: NoCommaPipe,) { }
+    private noCommaPipe: NoCommaPipe,
+  ) {}
 
   ngOnInit(): void {
     this.nameZh = this.genshinDataService.getCharacter(this.characterIndex.toString()).name.cn_sim;
     this.updateChips();
-    this.subscription = this.artifactService.changed().subscribe(()=>{
+    this.subscription = this.artifactService.changed().subscribe(() => {
       this.updateChips();
     });
   }
 
   ngOnDestroy(): void {
-    if(this.subscription && !this.subscription.closed){
+    if (this.subscription && !this.subscription.closed) {
       this.subscription.unsubscribe();
     }
   }
 
-  updateChips(){
+  updateChips() {
     this.chips = [];
     //計算準備
     let partData: ArtifactStoragePartData;
-    let allData: Record<string, number|string>;
+    let allData: Record<string, number | string>;
     let isFull: boolean;
     let isAuto: boolean;
     let tempData;
@@ -77,32 +85,47 @@ export class ArtifactChipsComponent implements OnInit {
     isAuto = this.isAuto;
     allData = {};
     allData[Const.ALL_PROPS_KEY] = 0;
-    for(let part of this.parts){
+    for (let part of this.parts) {
       let partName;
-      if(isFull){
+      if (isFull) {
         partName = part;
-      }else{
+      } else {
         partName = this.partName;
       }
-      partData = this.artifactService.getStorageInfo(this.characterIndex, this.index, partName.toLowerCase());
-      for(let sub of this.subs){
+      partData = this.artifactService.getStorageInfo(
+        this.characterIndex,
+        this.index,
+        partName.toLowerCase(),
+      );
+      for (let sub of this.subs) {
         tempData = partData[sub.toLowerCase()];
-        if(tempData.name != undefined){
+        if (tempData.name != undefined) {
           let indexValue;
-          if(!isAuto){
-            allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] = (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number ?? 0) + tempData.value!;
-            indexValue = this.dataReliquaryAffix[tempData.name].indexOf((allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number));
-          }else{
-            allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] = (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number ?? 0) + tempData.value!;
-            indexValue = this.floorIndexByDichotomy(this.dataReliquaryAffix[tempData.name], (allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number));
+          if (!isAuto) {
+            allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] =
+              ((allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number) ?? 0) + tempData.value!;
+            indexValue = this.dataReliquaryAffix[tempData.name].indexOf(
+              allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number,
+            );
+          } else {
+            allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] =
+              ((allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number) ?? 0) + tempData.value!;
+            indexValue = this.floorIndexByDichotomy(
+              this.dataReliquaryAffix[tempData.name],
+              allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number,
+            );
           }
-          allData[tempData.name] = ((allData[tempData.name] as number) ?? 0) + +(indexValue * 100/this.subMax).toFixed(this.fixNum);
+          allData[tempData.name] =
+            ((allData[tempData.name] as number) ?? 0) +
+            +((indexValue * 100) / this.subMax).toFixed(this.fixNum);
         }
       }
       {
         tempData = partData[Const.ARTIFACT_MAIN.toLowerCase()];
-        if(tempData.name != undefined){
-          allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + tempData.name] = ((allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + tempData.name] as number) ?? 0) + 1;
+        if (tempData.name != undefined) {
+          allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + tempData.name] =
+            ((allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + tempData.name] as number) ??
+              0) + 1;
           // let tempValue;
           // if(!isAuto){
           //   tempValue = tempData.value!;
@@ -110,28 +133,36 @@ export class ArtifactChipsComponent implements OnInit {
           //   tempValue = tempData.value!/this.parts.length;
           // }
           // allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] = ((allData[tempData.name + Const.SUFFIX_ACTUAL_KEY] as number)??0) + tempValue;
-          allData[partName + Const.CONCATENATION_CHIP + Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + tempData.name] = 1;
+          allData[
+            partName +
+              Const.CONCATENATION_CHIP +
+              Const.ARTIFACT_MAIN +
+              Const.CONCATENATION_CHIP +
+              tempData.name
+          ] = 1;
         }
       }
-      if(!isFull){
+      if (!isFull) {
         break;
       }
     }
-    for(let key of Const.PROPS_ARTIFACT_SUB){
-      if(allData[key] != undefined){
-        allData[Const.ALL_PROPS_KEY] = (allData[Const.ALL_PROPS_KEY] as number) + (allData[key] as number);
+    for (let key of Const.PROPS_ARTIFACT_SUB) {
+      if (allData[key] != undefined) {
+        allData[Const.ALL_PROPS_KEY] =
+          (allData[Const.ALL_PROPS_KEY] as number) + (allData[key] as number);
       }
     }
     allData[Const.ALL_PROPS_KEY] = +(allData[Const.ALL_PROPS_KEY] as number).toFixed(this.fixNum);
-    if(isFull){
-      for(let key in allData){
-        if(key.includes(Const.ARTIFACT_MAIN)){
-          continue; 
+    if (isFull) {
+      for (let key in allData) {
+        if (key.includes(Const.ARTIFACT_MAIN)) {
+          continue;
         }
-        if(key.includes(Const.SUFFIX_ACTUAL_KEY)){
+        if (key.includes(Const.SUFFIX_ACTUAL_KEY)) {
           let divider = this.parts.length;
           const propName = key.replace(new RegExp(`${Const.SUFFIX_ACTUAL_KEY}$`), '');
-          divider -= allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + propName] as number ?? 0;
+          divider -=
+            (allData[Const.ARTIFACT_MAIN + Const.CONCATENATION_CHIP + propName] as number) ?? 0;
           allData[key] = (allData[key] as number) / divider;
           continue;
         }
@@ -139,106 +170,121 @@ export class ArtifactChipsComponent implements OnInit {
       }
     }
     //補足
-    for(let toAddProp of Const.PROPS_ARTIFACT_SUB){
-      if(allData[toAddProp] == undefined){
+    for (let toAddProp of Const.PROPS_ARTIFACT_SUB) {
+      if (allData[toAddProp] == undefined) {
         allData[toAddProp] = 0;
         allData[toAddProp + Const.SUFFIX_ACTUAL_KEY] = 0;
       }
     }
-    for(let originKey of Const.PROPS_ARTIFACT_SUB){
+    for (let originKey of Const.PROPS_ARTIFACT_SUB) {
       let strValue = '';
       if (Const.PROPS_CHIP_DECIMAL.includes(originKey)) {
-        strValue = this.noCommaPipe.transform(this.decimalPipe.transform(allData[originKey+Const.SUFFIX_ACTUAL_KEY], '1.0-1') as string);
+        strValue = this.noCommaPipe.transform(
+          this.decimalPipe.transform(
+            allData[originKey + Const.SUFFIX_ACTUAL_KEY],
+            '1.0-1',
+          ) as string,
+        );
       } else {
-        strValue = this.percentPipe.transform(allData[originKey+Const.SUFFIX_ACTUAL_KEY], '1.0-1') as string;
+        strValue = this.percentPipe.transform(
+          allData[originKey + Const.SUFFIX_ACTUAL_KEY],
+          '1.0-1',
+        ) as string;
       }
       allData[originKey + Const.SUFFIX_ACTUAL_KEY + Const.SUFFIX_KEY_STR] = strValue;
     }
     //計算
-    for(let chip of this.genshinDataService.getChip(Const.ALL_CHARACTER_KEY).concat(this.genshinDataService.getChip(this.nameZh) ?? [])){
-      if(chip.onlyForAll == true && isFull != true){
+    for (let chip of this.genshinDataService
+      .getChip(Const.ALL_CHARACTER_KEY)
+      .concat(this.genshinDataService.getChip(this.nameZh) ?? [])) {
+      if (chip.onlyForAll == true && isFull != true) {
         continue;
       }
-      if(chip.onlyForOne == true && isFull == true){
+      if (chip.onlyForOne == true && isFull == true) {
         continue;
       }
-      if(chip.rules == undefined){
+      if (chip.rules == undefined) {
         continue;
       }
       let resBool = true;
-      if(chip.rules.length > 0){
-        for(let rule of chip.rules){
-          if(!resBool){
+      if (chip.rules.length > 0) {
+        for (let rule of chip.rules) {
+          if (!resBool) {
             break;
           }
           let subResBool = false;
-          for(let subRule of rule){
-            if(subRule.propName != undefined && subRule.propName in allData){
+          for (let subRule of rule) {
+            if (subRule.propName != undefined && subRule.propName in allData) {
               let isMatch = true;
-              if(subRule.expectGEValue != undefined){
-                isMatch = isMatch && allData[subRule.propName] as number >= subRule.expectGEValue;
+              if (subRule.expectGEValue != undefined) {
+                isMatch = isMatch && (allData[subRule.propName] as number) >= subRule.expectGEValue;
               }
-              if(subRule.expectLEValue != undefined){
-                isMatch = isMatch && allData[subRule.propName] as number <= subRule.expectLEValue;
+              if (subRule.expectLEValue != undefined) {
+                isMatch = isMatch && (allData[subRule.propName] as number) <= subRule.expectLEValue;
               }
               subResBool = isMatch;
-              if(subResBool){
+              if (subResBool) {
                 break;
               }
             }
           }
           resBool = subResBool;
-        }  
+        }
       }
-      if(resBool){
+      if (resBool) {
         let toSetChip = chip;
-        if(chip.needValue){
+        if (chip.needValue) {
           toSetChip = {
             ...chip,
-            value: allData
-          }
+            value: allData,
+          };
         }
         this.chips.push(toSetChip);
       }
     }
   }
 
-  getColor(chip: ChipData){
-    if(chip.colors != undefined && chip.colors.length > 0){
-      if(chip.needValue != true){
+  getColor(chip: ChipData) {
+    if (chip.colors != undefined && chip.colors.length > 0) {
+      if (chip.needValue != true) {
         return chip.colors[0];
-      }else if(chip.colorPropName != undefined && chip.colorDivides != undefined){
+      } else if (chip.colorPropName != undefined && chip.colorDivides != undefined) {
         let index = 0;
         let target = chip.value[chip.colorPropName];
-        for(let v of chip.colorDivides){
-          if(target > v){
+        for (let v of chip.colorDivides) {
+          if (target > v) {
             ++index;
-          }else{
+          } else {
             break;
           }
         }
-        if(index < chip.colors.length){
+        if (index < chip.colors.length) {
           return chip.colors[index];
         }
       }
       return chip.colors[0];
-    }else{
-      return "";
+    } else {
+      return '';
     }
   }
 
-  private floorIndexByDichotomy(array: number[], target: number, start?: number, end?: number): number{
-    if(start == undefined) start = 0;
-    if(end == undefined) end = array.length - 1;
+  private floorIndexByDichotomy(
+    array: number[],
+    target: number,
+    start?: number,
+    end?: number,
+  ): number {
+    if (start == undefined) start = 0;
+    if (end == undefined) end = array.length - 1;
     let center = Math.floor((start + end) / 2);
-    if(center == start){
+    if (center == start) {
       return start;
     }
-    if(target < array[center]){
+    if (target < array[center]) {
       return this.floorIndexByDichotomy(array, target, start, center);
-    }else if(target > array[center]){
+    } else if (target > array[center]) {
       return this.floorIndexByDichotomy(array, target, center, end);
-    }else{
+    } else {
       return center;
     }
   }

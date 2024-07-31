@@ -1,68 +1,73 @@
 .card {
-    max-width: 350px;
-    min-width: 290px;
-    margin: 12px;
-    transition: box-shadow 500ms;
+  max-width: 350px;
+  min-width: 290px;
+  margin: 12px;
+  transition: box-shadow 500ms;
 }
 
 .header-text {
-    font-size: inherit;
+  font-size: inherit;
 }
 
 :host ::ng-deep .prop-field mat-form-field {
-    width: 280px;
+  width: 280px;
 }
 
 .avater {
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 0.6rem;
-    margin-right: 0.3rem;
-    margin-left: 0.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0.6rem;
+  margin-right: 0.3rem;
+  margin-left: 0.5rem;
+}
+
+.avater-select {
+  flex: auto;
 }
 
 .teams {
-    margin: 0.5em 1em;
-    display: flex;
-    flex-direction: column;
+  margin: 0.5em 1em;
+  display: flex;
+  flex-direction: column;
 }
 
 .member-select {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    align-content: center;
-    flex-wrap: nowrap;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: nowrap;
 }
 
 .member-buff {
-    border: 1px solid rgba(128, 128, 128, 0.15);
+  border: 1px solid rgba(128, 128, 128, 0.15);
+  border-radius: 10px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .content-left {
-    text-align: left;
-    border-bottom: 1px solid rgba(0,0,0,.12);
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .content-right {
-    text-align: right;
-    border-bottom: 1px solid rgba(0,0,0,.12);
+  text-align: right;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .go-page {
-    margin-bottom: 1em;
-    margin-left: 1.4em;
-    cursor: pointer;
+  margin-bottom: 1em;
+  margin-left: 1.4em;
+  cursor: pointer;
 }
 
 .skill-prefix-name {
-    font-size: 0.9em;
-    padding-right: 0.4em;
-    font-weight: 700;
-    white-space: nowrap;
+  font-size: 0.9em;
+  padding-right: 0.4em;
+  font-weight: 700;
+  white-space: nowrap;
 }

@@ -1,5 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Const, ExtraArtifact, ExtraSkillInfo, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
+import {Injectable} from '@angular/core';
+import {
+  Const,
+  ExtraArtifact,
+  ExtraSkillInfo,
+  GenshinDataService,
+  StorageService,
+} from 'src/app/shared/shared.module';
 
 export interface ExtraDataStorageInfo {
   character?: ExtraCharacterData;
@@ -50,32 +56,33 @@ export interface ExtraCharacterInfoStatus {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExtraDataService {
-
   //データマップ
   dataMap!: Record<string, ExtraDataStorageInfo>;
 
-  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService) { }
-  
-  getCharacter(index: string | number){
+  constructor(
+    private genshinDataService: GenshinDataService,
+    private storageService: StorageService,
+  ) {}
+
+  getCharacter(index: string | number) {
     return this.genshinDataService.getExtraCharacterData(index.toString());
   }
 
-  getWeapon(index: string | number){
+  getWeapon(index: string | number) {
     return this.genshinDataService.getExtraWeaponData(index.toString());
   }
 
-  getArtifactSet(index: string | number){
+  getArtifactSet(index: string | number) {
     return this.genshinDataService.getExtraArtifactData(index.toString());
   }
 
-  getCharacterDefaultSetting(index: string | number){
-
+  getCharacterDefaultSetting(index: string | number) {
     let temp = this.getCharacter(index);
-    let result: ExtraCharacterData = {}
-    if(!temp){
+    let result: ExtraCharacterData = {};
+    if (!temp) {
       return result;
     }
 
@@ -84,28 +91,26 @@ export class ExtraDataService {
     result.skills.skill = this.getDefaultConfig(temp?.skills?.skill);
     result.skills.other = this.getDefaultConfig(temp?.skills?.other);
     result.skills.elementalBurst = this.getDefaultConfig(temp?.skills?.elementalBurst);
-    for(let obj of temp?.skills?.proudSkills ?? []){
-      if(!(result.skills.proudSkills)){
+    for (let obj of temp?.skills?.proudSkills ?? []) {
+      if (!result.skills.proudSkills) {
         result.skills.proudSkills = [];
       }
       result.skills.proudSkills.push(this.getDefaultConfig(obj));
     }
-    for(let key in temp?.constellation){
-      if(!(result.constellation)){
+    for (let key in temp?.constellation) {
+      if (!result.constellation) {
         result.constellation = {};
       }
       result.constellation[key] = this.getDefaultConfig(temp?.constellation[key]);
     }
 
     return result;
-
   }
 
-  getCharacterExtraInfoDefaultSetting(index: string | number){
-
+  getCharacterExtraInfoDefaultSetting(index: string | number) {
     let temp = this.getCharacter(index);
-    let result: ExtraInfo = {}
-    if(!temp){
+    let result: ExtraInfo = {};
+    if (!temp) {
       return result;
     }
 
@@ -114,27 +119,26 @@ export class ExtraDataService {
     result.skills.skill = this.getExtraInfoDefaultConfig(temp?.skills?.skill);
     result.skills.other = this.getExtraInfoDefaultConfig(temp?.skills?.other);
     result.skills.elementalBurst = this.getExtraInfoDefaultConfig(temp?.skills?.elementalBurst);
-    for(let obj of temp?.skills?.proudSkills ?? []){
-      if(!(result.skills.proudSkills)){
+    for (let obj of temp?.skills?.proudSkills ?? []) {
+      if (!result.skills.proudSkills) {
         result.skills.proudSkills = [];
       }
       result.skills.proudSkills.push(this.getExtraInfoDefaultConfig(obj));
     }
-    for(let key in temp?.constellation){
-      if(!(result.constellation)){
+    for (let key in temp?.constellation) {
+      if (!result.constellation) {
         result.constellation = {};
       }
       result.constellation[key] = this.getExtraInfoDefaultConfig(temp?.constellation[key]);
     }
 
     return result;
-
   }
 
-  getWeaponDefaultSetting(index: string | number){
+  getWeaponDefaultSetting(index: string | number) {
     let temp = this.getWeapon(index);
-    let result: ExtraWeaponData = {}
-    if(!temp){
+    let result: ExtraWeaponData = {};
+    if (!temp) {
       return result;
     }
 
@@ -143,19 +147,21 @@ export class ExtraDataService {
     return result;
   }
 
-  getArtifactSetDefaultSetting(indexes: string[], fullIndex: string){
-    let result: ExtraArtifactSetData = {}
-    if(fullIndex != ''){
+  getArtifactSetDefaultSetting(indexes: string[], fullIndex: string) {
+    let result: ExtraArtifactSetData = {};
+    if (fullIndex != '') {
       let temp = this.getArtifactSet(fullIndex);
       result.set1 = this.getDefaultConfig(temp?.set1);
       result.set2 = this.getDefaultConfig(temp?.set2);
-    }else{
-      for(let [index, value] of indexes.entries()){
+    } else {
+      for (let [index, value] of indexes.entries()) {
         let key = Const.NAME_SET + (index + 1).toString();
-        if(value && value != ''){
+        if (value && value != '') {
           let temp = this.getArtifactSet(value);
-          result[key as keyof ExtraArtifactSetData] = this.getDefaultConfig(temp?temp.set1:undefined);
-        }else{
+          result[key as keyof ExtraArtifactSetData] = this.getDefaultConfig(
+            temp ? temp.set1 : undefined,
+          );
+        } else {
           result[key as keyof ExtraArtifactSetData] = {};
         }
       }
@@ -164,17 +170,17 @@ export class ExtraDataService {
     return result;
   }
 
-  private getDefaultConfig(skills: ExtraSkillInfo[] | undefined){
-    let result: ExtraStatus = {}
-    
-    for(let [index,obj] of skills?.entries() ?? []){
-      if(obj?.buffs != undefined && obj?.buffs.length > 0){
+  private getDefaultConfig(skills: ExtraSkillInfo[] | undefined) {
+    let result: ExtraStatus = {};
+
+    for (let [index, obj] of skills?.entries() ?? []) {
+      if (obj?.buffs != undefined && obj?.buffs.length > 0) {
         let standardBuff = obj.buffs[0];
-        switch(standardBuff.settingType){
+        switch (standardBuff.settingType) {
           case 'switch-value':
           case 'switch':
             {
-              if(!result.switchOnSet){
+              if (!result.switchOnSet) {
                 result.switchOnSet = {};
               }
               result.switchOnSet![index.toString()] = standardBuff.defaultEnable ?? false;
@@ -182,7 +188,7 @@ export class ExtraDataService {
             break;
           case 'slider':
             {
-              if(!result.sliderNumMap){
+              if (!result.sliderNumMap) {
                 result.sliderNumMap = {};
               }
               result.sliderNumMap![index.toString()] = standardBuff.sliderInitialValue ?? 0;
@@ -190,7 +196,7 @@ export class ExtraDataService {
             break;
           case 'resident':
             {
-              if(!result.switchOnSet){
+              if (!result.switchOnSet) {
                 result.switchOnSet = {};
               }
               result.switchOnSet![index.toString()] = true;
@@ -203,14 +209,14 @@ export class ExtraDataService {
     return result;
   }
 
-  private getExtraInfoDefaultConfig(skills: ExtraSkillInfo[] | undefined){
-    let result: ExtraCharacterInfoStatus = {}
-    
-    for(let [index,obj] of skills?.entries() ?? []){
-      if(obj?.damage != undefined){
+  private getExtraInfoDefaultConfig(skills: ExtraSkillInfo[] | undefined) {
+    let result: ExtraCharacterInfoStatus = {};
+
+    for (let [index, obj] of skills?.entries() ?? []) {
+      if (obj?.damage != undefined) {
         let standardDamage = obj.damage;
 
-        (standardDamage.originIndexes ?? standardDamage.indexes)?.forEach(element => {
+        (standardDamage.originIndexes ?? standardDamage.indexes)?.forEach((element) => {
           result[element] = true;
         });
       }

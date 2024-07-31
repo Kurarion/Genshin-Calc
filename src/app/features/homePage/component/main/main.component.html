@@ -1,39 +1,55 @@
 <div class="main">
-    <div class="background" [style.right]="'0px'" *ngIf="backgroundURL" [style.background-image]="'url(' + backgroundURL + ')'" [@imgLoad]="imgState">
-        <div class="background"></div>
+  <div
+    class="background"
+    [style.right]="'0px'"
+    *ngIf="backgroundURL"
+    [style.background-image]="'url(' + backgroundURL + ')'"
+    [@imgLoad]="imgState"
+  >
+    <div class="background"></div>
+  </div>
+  <div *ngIf="showLoadStatus" [@otherLoad]="otherState" class="status-div">
+    <div>
+      <span class="download-files-title-span">
+        {{ 'SYS_INIT.JSON.DOWNLOAD_TITLE' | translate}}
+      </span>
     </div>
-    <div *ngIf="showLoadStatus" [@otherLoad]="otherState" class="status-div">
-        <div>
-            <span class="download-files-title-span">
-                {{ 'SYS_INIT.JSON.DOWNLOAD_TITLE' | translate}}
-            </span>
-        </div>
-        <div *ngFor="let statusObj of jsonDownloadStatus | keyvalue">
-            <span class="download-file-span">
-                {{ 'SYS_INIT.JSON.' + statusObj.key | translate }}
-            </span>
-            <mat-progress-bar class="download-process-bar" mode="buffer" [value]="statusObj.value"></mat-progress-bar>
-        </div>
+    <div *ngFor="let statusObj of jsonDownloadStatus | keyvalue">
+      <span class="download-file-span">
+        {{ 'SYS_INIT.JSON.' + statusObj.key | translate }}
+      </span>
+      <mat-progress-bar
+        class="download-process-bar"
+        mode="buffer"
+        [value]="statusObj.value"
+      ></mat-progress-bar>
     </div>
-    <div class="container-buttons">
-        <div>
-            <button matRipple mat-mini-fab [matMenuTriggerFor]="menu" class="icon-common mat-elevation-z2" aria-label="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item class="align-v" (click)="openManual()" >
-                    <mat-icon class="align-icon material-icons-outlined">explore</mat-icon>
-                    <span>{{ 'MENU.MANUAL.TITLE' | translate }}</span>
-                </button>
-                <button mat-menu-item class="align-v" (click)="openAnalytics()" >
-                    <mat-icon class="align-icon material-icons-outlined">analytics</mat-icon>
-                    <span>{{ 'MENU.ANALYTICS.TITLE' | translate }}</span>
-                </button>
-                <button mat-menu-item class="align-v" (click)="removeCurrentCache()" >
-                    <mat-icon class="align-icon">layers_clear</mat-icon>
-                    <span>{{ 'MENU.DELETE_CACHE.ALL_TITLE' | translate }}</span>
-                </button>
-            </mat-menu>
-        </div>
+  </div>
+  <div class="container-buttons">
+    <div>
+      <button
+        matRipple
+        mat-mini-fab
+        [matMenuTriggerFor]="menu"
+        class="icon-common mat-elevation-z2"
+        aria-label="menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item class="align-v" (click)="openManual()">
+          <mat-icon class="align-icon material-icons-outlined">explore</mat-icon>
+          <span>{{ 'MENU.MANUAL.TITLE' | translate }}</span>
+        </button>
+        <button mat-menu-item class="align-v" (click)="openAnalytics()">
+          <mat-icon class="align-icon material-icons-outlined">analytics</mat-icon>
+          <span>{{ 'MENU.ANALYTICS.TITLE' | translate }}</span>
+        </button>
+        <button mat-menu-item class="align-v" (click)="removeCurrentCache()">
+          <mat-icon class="align-icon">layers_clear</mat-icon>
+          <span>{{ 'MENU.DELETE_CACHE.ALL_TITLE' | translate }}</span>
+        </button>
+      </mat-menu>
     </div>
+  </div>
 </div>

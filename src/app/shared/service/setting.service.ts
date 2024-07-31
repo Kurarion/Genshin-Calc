@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Const, ElementType, StorageService, WeaponType } from 'src/app/shared/shared.module';
+import {Injectable} from '@angular/core';
+import {Const, ElementType, StorageService, WeaponType} from 'src/app/shared/shared.module';
 
 //メニュー設定
 export interface MenuSetting {
@@ -12,14 +12,13 @@ export interface MenuSetting {
 
 //システム設定
 export interface SysSetting {
-  menu?: MenuSetting
+  menu?: MenuSetting;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingService {
-
   readonly defaultBool: boolean = false;
   readonly defaultElementType: Record<ElementType, boolean> = {
     2: true,
@@ -31,22 +30,22 @@ export class SettingService {
     8: true,
   };
   readonly defaultWeaponType: Record<WeaponType, boolean> = {
-    "WEAPON_SWORD_ONE_HAND": true,
-    "WEAPON_CATALYST": true,
-    "WEAPON_CLAYMORE": true,
-    "WEAPON_BOW": true,
-    "WEAPON_POLE": true,
+    'WEAPON_SWORD_ONE_HAND': true,
+    'WEAPON_CATALYST': true,
+    'WEAPON_CLAYMORE': true,
+    'WEAPON_BOW': true,
+    'WEAPON_POLE': true,
   };
-  readonly defaultContent: string = "";
+  readonly defaultContent: string = '';
 
   //データ
   setting!: SysSetting;
 
   constructor(private storageService: StorageService) {
-    let temp = this.storageService.getJSONItem(Const.SAVE_SYS_SETTING)
-    if(temp){
+    let temp = this.storageService.getJSONItem(Const.SAVE_SYS_SETTING);
+    if (temp) {
       this.setting = temp;
-    }else{
+    } else {
       this.setting = {
         menu: this.initMenuSetting(),
       };
@@ -54,42 +53,42 @@ export class SettingService {
   }
 
   //ストレージに保存
-  saveData(){
+  saveData() {
     this.storageService.setJSONItem(Const.SAVE_SYS_SETTING, this.setting);
   }
 
   //メニューデータ取得
-  getMenuSetting(){
+  getMenuSetting() {
     this.checkMenuSetting();
     return this.setting.menu!;
   }
-  getMenuFilterEnka(){
+  getMenuFilterEnka() {
     return this.getMenuSetting().filterEnka;
   }
-  getMenuFilterData(){
+  getMenuFilterData() {
     return this.getMenuSetting().filterData;
   }
-  getMenuFilterElementType(){
+  getMenuFilterElementType() {
     return this.getMenuSetting().filterElementType;
   }
-  getMenuFilterWeaponType(){
+  getMenuFilterWeaponType() {
     return this.getMenuSetting().filterWeaponType;
   }
-  getMenuFilterContent(){
+  getMenuFilterContent() {
     return this.getMenuSetting().filterContent;
   }
-  
-  resetSetting(){
+
+  resetSetting() {
     const setting = this.getMenuSetting();
-    setting.filterEnka = this.defaultBool
-    setting.filterData = this.defaultBool
-    setting.filterElementType = {...this.defaultElementType}
-    setting.filterWeaponType = {...this.defaultWeaponType}
-    setting.filterContent = this.defaultContent
+    setting.filterEnka = this.defaultBool;
+    setting.filterData = this.defaultBool;
+    setting.filterElementType = {...this.defaultElementType};
+    setting.filterWeaponType = {...this.defaultWeaponType};
+    setting.filterContent = this.defaultContent;
   }
 
   private checkMenuSetting() {
-    if(!this.setting?.menu) {
+    if (!this.setting?.menu) {
       this.setting.menu = this.initMenuSetting();
     }
   }
@@ -101,8 +100,8 @@ export class SettingService {
       filterElementType: {...this.defaultElementType},
       filterWeaponType: {...this.defaultWeaponType},
       filterContent: this.defaultContent,
-    }
-    
+    };
+
     return result;
   }
 }

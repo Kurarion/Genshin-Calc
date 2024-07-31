@@ -1,6 +1,28 @@
-import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { weapon, CharStatus, HttpService, TYPE_SYS_LANG, WeaponService, ExtraDataService, character, Const, CalculatorService, RelayoutMsgService, ExpansionPanelCommon } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  weapon,
+  CharStatus,
+  HttpService,
+  TYPE_SYS_LANG,
+  WeaponService,
+  ExtraDataService,
+  character,
+  Const,
+  CalculatorService,
+  RelayoutMsgService,
+  ExpansionPanelCommon,
+} from 'src/app/shared/shared.module';
+import {environment} from 'src/environments/environment';
 
 interface levelOption {
   level: string;
@@ -23,10 +45,9 @@ interface weaponOption {
 @Component({
   selector: 'app-weapon',
   templateUrl: './weapon.component.html',
-  styleUrls: ['./weapon.component.css']
+  styleUrls: ['./weapon.component.css'],
 })
 export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnDestroy, OnChanges {
-
   private readonly notExitLevel = -1;
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
@@ -40,7 +61,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     3: 6,
     2: 4,
     1: 4,
-  }
+  };
   private readonly levelPadNum = 2;
   private readonly smeltingLevelPadNum = 1;
 
@@ -61,7 +82,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
   //武器タイプ
   charWeaponType!: string;
   //武器リスト
@@ -97,22 +118,24 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   effectContent!: string;
   effectValidIndexes!: number[];
 
-  listFilterFunc!: ((value:any) => boolean);
+  listFilterFunc!: (value: any) => boolean;
 
-  constructor(private httpService: HttpService,
+  constructor(
+    private httpService: HttpService,
     public weaponService: WeaponService,
     private calculatorService: CalculatorService,
     private extraDataService: ExtraDataService,
-    private relayoutMsgService: RelayoutMsgService,) { 
-      super(relayoutMsgService, 1);
-      this.setExpandStatus(0, true);
-    }
+    private relayoutMsgService: RelayoutMsgService,
+  ) {
+    super(relayoutMsgService, 1);
+    this.setExpandStatus(0, true);
+  }
 
   ngOnInit(): void {
     //武器タイプ設定
     this.charWeaponType = this.data.weaponType;
     //フィルター関数
-    this.listFilterFunc = ((weapon: any)=>weapon.weaponType == this.charWeaponType);
+    this.listFilterFunc = (weapon: any) => weapon.weaponType == this.charWeaponType;
     //武器リスト初期化
     this.initializeWeaponList();
     //その他
@@ -134,19 +157,26 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     }
     //武器初期選択
     let storageWeaponIndex = this.weaponService.getIndex(this.data.id);
-    if(storageWeaponIndex){
+    if (storageWeaponIndex) {
       this.selectedWeaponIndex = storageWeaponIndex;
-    }else{
+    } else {
       for (let i = 1; i < this.weaponList.length; ++i) {
-        if (this.weaponList[i].weaponType == this.charWeaponType && this.weaponList[i].rankLevel == this.maxSmeltingLevel) {
+        if (
+          this.weaponList[i].weaponType == this.charWeaponType &&
+          this.weaponList[i].rankLevel == this.maxSmeltingLevel
+        ) {
           this.selectedWeaponIndex = this.weaponList[i].index;
           break;
         }
       }
     }
     //レベル初期選択
-    this.selectedLevel = this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ?? this.levelOptions[this.levelOptions.length - 1];
-    this.selectedSmeltingLevel = this.getSmeltingLevelFromString(this.weaponService.getSmeltingLevel(this.data.id)) ?? this.defaultSmeltingLevel;
+    this.selectedLevel =
+      this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ??
+      this.levelOptions[this.levelOptions.length - 1];
+    this.selectedSmeltingLevel =
+      this.getSmeltingLevelFromString(this.weaponService.getSmeltingLevel(this.data.id)) ??
+      this.defaultSmeltingLevel;
     //初期データ更新
     this.onSelectWeapon(this.selectedWeaponIndex);
     this.onChangeLevel(this.selectedLevel);
@@ -154,27 +184,27 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes['currentLanguage']) {
-      if(this.effectNameRecord != undefined){
+    if (changes['currentLanguage']) {
+      if (this.effectNameRecord != undefined) {
         this.effectName = this.effectNameRecord[this.currentLanguage];
       }
-      if(this.effectContentRecord != undefined){
+      if (this.effectContentRecord != undefined) {
         this.effectContent = this.effectContentRecord[this.currentLanguage];
       }
     }
   }
 
-  updateRecords(){
-    if(this.weaponData.skillAffixMap){
+  updateRecords() {
+    if (this.weaponData.skillAffixMap) {
       this.effectNameRecord = this.getEffectName(this.selectedSmeltingLevel);
       this.effectContentRecord = this.getEffectContent(this.selectedSmeltingLevel);
       this.effectValidIndexes = this.getEffectValidIndexes(this.selectedSmeltingLevel);
       this.effectName = this.effectNameRecord[this.currentLanguage];
       this.effectContent = this.effectContentRecord[this.currentLanguage];
-    }else{
+    } else {
       this.effectValidIndexes = [];
-      this.effectName = "";
-      this.effectContent = "";
+      this.effectName = '';
+      this.effectContent = '';
     }
   }
 
@@ -186,7 +216,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
 
   /**
    * 武器変更処理
-   * @param weaponIndex 
+   * @param weaponIndex
    */
   onSelectWeapon(weaponIndex: string) {
     this.selectedWeaponIndex = weaponIndex;
@@ -199,19 +229,25 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     }
     //武器の切り替え
     this.weaponData = this.weaponService.get(weaponIndex);
-    if(environment.outputLog){
+    if (environment.outputLog) {
       //DEBUG
       console.log(this.weaponData);
     }
     //武器最高レベル
-    this.selectedWeaponAbleMaxLevel = this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
+    this.selectedWeaponAbleMaxLevel =
+      this.ascendLevels[this.ascendLevelsMap[this.weaponData.rankLevel]];
     // if (oldWeaponAbleMaxLevel == this.notExitLevel || oldWeaponAbleMaxLevel == this.selectedLevel.levelNum || this.selectedLevel.levelNum > this.selectedWeaponAbleMaxLevel) {
     //   //実行あり得ない（三星以上）
     //   this.selectedLevel = this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ?? this.levelOptions[this.selectedWeaponAbleMaxLevel + this.ascendLevels.indexOf(this.selectedWeaponAbleMaxLevel) - 1];
     // }
     //武器最高精錬レベル
-    this.selectedWeaponAbleMaxSmeltingLevel = Object.keys(this.weaponData.skillAffixMap??{}).length;
-    if (this.selectedWeaponAbleMaxSmeltingLevel != 0 && parseInt(this.selectedSmeltingLevel) > this.selectedWeaponAbleMaxSmeltingLevel){
+    this.selectedWeaponAbleMaxSmeltingLevel = Object.keys(
+      this.weaponData.skillAffixMap ?? {},
+    ).length;
+    if (
+      this.selectedWeaponAbleMaxSmeltingLevel != 0 &&
+      parseInt(this.selectedSmeltingLevel) > this.selectedWeaponAbleMaxSmeltingLevel
+    ) {
       this.selectedSmeltingLevel = this.selectedWeaponAbleMaxSmeltingLevel.toString();
       //武器突破レベル設定
       this.weaponService.setSmeltingLevel(this.data.id, this.selectedSmeltingLevel);
@@ -233,7 +269,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
 
   /**
    * レベル変更処理
-   * @param value 
+   * @param value
    */
   onChangeLevel(value: levelOption) {
     this.selectedLevelProps = {};
@@ -243,7 +279,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
       this.selectedLevelProps[upperKey] = {
         isPercent: this.percent_props.includes(upperKey),
         value: temp[key as keyof CharStatus],
-      }
+      };
     }
     //武器レベル設定
     this.weaponService.setLevel(this.data.id, value.level);
@@ -253,7 +289,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
 
   /**
    * 突破レベル変更処理
-   * @param value 
+   * @param value
    */
   onChangeSmeltingLevel(value: string) {
     //武器突破レベル設定
@@ -272,12 +308,12 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
     return this.weaponData.skillAffixMap[selectedSmeltingLevel]!.desc;
   }
 
-  getEffectValidIndexes(selectedSmeltingLevel: string): number[]{
+  getEffectValidIndexes(selectedSmeltingLevel: string): number[] {
     return this.weaponData.skillAffixMap[selectedSmeltingLevel].paramValidIndexes;
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
 
@@ -287,14 +323,17 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   private initializeBackGroundImage() {
     this.avatarLoadFlg = false;
     let url = this.weaponData.images.icon;
-    this.httpService.get<Blob>(url, 'blob', true).then((v: Blob | null) => {
-      if (v) {
-        this.avatarURL = window.URL.createObjectURL(v);
-        setTimeout(() => {
-          this.avatarLoadFlg = true;
-        }, 100)
-      }
-    }).catch(() => { });
+    this.httpService
+      .get<Blob>(url, 'blob', true)
+      .then((v: Blob | null) => {
+        if (v) {
+          this.avatarURL = window.URL.createObjectURL(v);
+          setTimeout(() => {
+            this.avatarLoadFlg = true;
+          }, 100);
+        }
+      })
+      .catch(() => {});
   }
 
   /**
@@ -309,7 +348,7 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
         names: tempMap[key].name,
         rankLevel: tempMap[key].rankLevel,
         weaponType: tempMap[key].weaponType,
-      })
+      });
     }
   }
 
@@ -318,12 +357,12 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
       return undefined;
     }
     let levelNum = parseInt(level);
-    let isAscend = level.includes("+");
+    let isAscend = level.includes('+');
     let index = -1;
     for (let i = 0; i < this.ascendLevels.length; ++i) {
-      if(this.ascendLevels[i] < levelNum){
-        ++index
-      }else{
+      if (this.ascendLevels[i] < levelNum) {
+        ++index;
+      } else {
         break;
       }
     }
@@ -339,5 +378,4 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
 
     return smeltingLevel;
   }
-
 }

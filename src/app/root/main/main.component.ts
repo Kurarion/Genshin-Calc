@@ -1,16 +1,11 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
-import { MatDrawerMode } from '@angular/material/sidenav';
-import { RouterOutlet } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject, of } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { routerAnimation } from 'src/animation';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {MatDrawerMode} from '@angular/material/sidenav';
+import {RouterOutlet} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable, Subject, of} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
+import {routerAnimation} from 'src/animation';
 import {
   LangInfo,
   CharaInfo,
@@ -20,19 +15,16 @@ import {
   TYPE_SYS_LANG,
   RelayoutMsgService,
 } from 'src/app/shared/shared.module';
-import { SwUpdate } from '@angular/service-worker';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {SwUpdate} from '@angular/service-worker';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
-  animations: [
-    routerAnimation
-  ],
+  animations: [routerAnimation],
 })
 export class MainComponent implements OnInit, OnDestroy {
-
   //キャプチャーするエレメントID
   captureElementID: string = Const.ID_CAPTURE_ELEMENT;
   //破棄状態
@@ -66,7 +58,7 @@ export class MainComponent implements OnInit, OnDestroy {
       takeUntil(this.destroyed),
       map((state: BreakpointState) => {
         return state.matches;
-      })
+      }),
     );
     //ブラウザのレイアウトイベント
     this.isLarge.subscribe((isLarge: boolean) => {
@@ -85,29 +77,32 @@ export class MainComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         //レイアウトフラグ設定（メニューモードに影響する）
         this.isLargeFlg = isLarge;
-        this.menuMode = isLarge?'side':'over';
+        this.menuMode = isLarge ? 'side' : 'over';
       }, flgDelay);
     });
     //SW更新通知
-    this.swUpdate.versionUpdates.subscribe((event)=>{
+    this.swUpdate.versionUpdates.subscribe((event) => {
       switch (event.type) {
         case 'VERSION_DETECTED':
           this.translateService.get('SW.HAS_NEW').subscribe((res: string) => {
             this.matSnackBar.open(res, undefined, {
-              duration: 1500
-            })
+              duration: 1500,
+            });
           });
           break;
         case 'VERSION_READY':
           this.translateService.get('SW.READY').subscribe((res: string) => {
             let infos = res.split(';;');
-            this.matSnackBar.open(infos[0], infos[1]).onAction().subscribe(()=>{
-              window.location.reload();
-            })
+            this.matSnackBar
+              .open(infos[0], infos[1])
+              .onAction()
+              .subscribe(() => {
+                window.location.reload();
+              });
           });
           break;
       }
-    })
+    });
   }
 
   ngOnInit() {
@@ -154,27 +149,29 @@ export class MainComponent implements OnInit, OnDestroy {
 
   /**
    * ルーター動画状態取得
-   * @param outlet 
-   * @returns 
+   * @param outlet
+   * @returns
    */
   prepareRoute(outlet: RouterOutlet) {
-    if(outlet.isActivated) {
-      return outlet?.activatedRoute?.queryParams?.pipe(
-        map((param: any) => {
-          let res = outlet?.activatedRouteData?.['animation'];
-          const index = param?.['index'];
-          if (index) {
-            res += index
-          }
-          return res ?? '';
-        })
-      ) ?? of(outlet?.activatedRouteData?.['animation'] ?? '');
+    if (outlet.isActivated) {
+      return (
+        outlet?.activatedRoute?.queryParams?.pipe(
+          map((param: any) => {
+            let res = outlet?.activatedRouteData?.['animation'];
+            const index = param?.['index'];
+            if (index) {
+              res += index;
+            }
+            return res ?? '';
+          }),
+        ) ?? of(outlet?.activatedRouteData?.['animation'] ?? '')
+      );
     }
     return of('');
   }
 
-  openedChange(){
-    this.relayoutMsgService.update("sidenav");
+  openedChange() {
+    this.relayoutMsgService.update('sidenav');
   }
 
   /**
@@ -184,13 +181,12 @@ export class MainComponent implements OnInit, OnDestroy {
     //ストレージから復元
     const lang =
       this.languageService.getStorageLang() ??
-      Const.CULTURELANG_MAP.get(this.translateService.getBrowserCultureLang()??"") ??
-      Const.CULTURELANG_MAP.get(this.translateService.getBrowserLang()??"") ??
+      Const.CULTURELANG_MAP.get(this.translateService.getBrowserCultureLang() ?? '') ??
+      Const.CULTURELANG_MAP.get(this.translateService.getBrowserLang() ?? '') ??
       this.translateService.getDefaultLang();
-    setTimeout(()=>{
+    setTimeout(() => {
       //言語設定
       this.languageService.nextLang(lang as TYPE_SYS_LANG);
-    })
+    });
   }
-
 }

@@ -1,19 +1,23 @@
-import { ElementType, WeaponType } from "../shared.module";
+import {ElementType, WeaponType} from '../shared.module';
 
 export declare type TYPE_SYS_LANG = 'cn_sim' | 'cn_tra' | 'en' | 'jp';
 export declare type TYPE_TESSERACT_LANG = 'chi_sim' | 'chi_tra' | 'eng' | 'jpn';
-export declare type TYPE_GENSHINDB_LANG = 'ChineseSimplified' | 'ChineseTraditional' | 'English' | 'Japanese';
+export declare type TYPE_GENSHINDB_LANG =
+  | 'ChineseSimplified'
+  | 'ChineseTraditional'
+  | 'English'
+  | 'Japanese';
 
 export declare type TYPE_HTTP_RESPONSE_TYPE = 'json' | 'text' | 'arraybuffer' | 'blob';
 
 export interface CharacterQueryParam {
-  index?: string | number,
+  index?: string | number;
 }
 
 export interface MainQueryParam {
-  uid?: string,
-  filterEnka?: string,
-  character?: string,
+  uid?: string;
+  filterEnka?: string;
+  character?: string;
 }
 
 /** メニューインタフェース */
@@ -71,11 +75,11 @@ export interface ExtraCharacterSkills {
 /** 補足データ - 3階 */
 export interface ExtraSkillInfo {
   //計算
-  damage?: ExtraSkillDamage;//ダメージ値
-  buffs?: ExtraSkillBuff[];//バフ値
-  healing?: ExtraSkillHealing;//治療値
-  shield?: ExtraSkillShield;//シールド
-  product?: ExtraSkillProduct;//召喚物
+  damage?: ExtraSkillDamage; //ダメージ値
+  buffs?: ExtraSkillBuff[]; //バフ値
+  healing?: ExtraSkillHealing; //治療値
+  shield?: ExtraSkillShield; //シールド
+  product?: ExtraSkillProduct; //召喚物
 }
 
 /** 補足データ - 4階 */

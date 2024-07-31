@@ -1,98 +1,109 @@
 <ng-container *ngIf="data">
-    <mat-card class="card" [style.width.px]="cardWidth">
-        <mat-card-header>
-            <div mat-card-avatar class="avatar" [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''">
-            </div>
-            <!-- <img mat-card-avatar class="avatar" [src]="data.images.icon" loading="lazy" appImgErrorHandle> -->
-            <mat-card-title>{{data.name[currentLanguage]}}</mat-card-title>
-            <!-- <mat-card-subtitle>{{data.weaponType}}
+  <mat-card class="card" [style.width.px]="cardWidth">
+    <mat-card-header>
+      <div
+        mat-card-avatar
+        class="avatar"
+        [style.background-image]="avatarLoadFlg?'url(' + avatarURL + ')':''"
+      ></div>
+      <!-- <img mat-card-avatar class="avatar" [src]="data.images.icon" loading="lazy" appImgErrorHandle> -->
+      <mat-card-title>{{data.name[currentLanguage]}}</mat-card-title>
+      <!-- <mat-card-subtitle>{{data.weaponType}}
             </mat-card-subtitle> -->
-        </mat-card-header>
-        <mat-card-content class="content">
-            <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <span [innerText]="'CHARACTER.PROPS' | translate"></span>
-                    </mat-panel-title>
-                    <mat-panel-description>
-
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <!-- レベル選択 -->
-                <mat-form-field appearance="legacy" floatLabel="always">
-                    <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
-                    <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
-                        <ng-container *ngFor="let option of levelOptions">
-                            <mat-option [value]="option"
-                                [innerText]="(option.levelNum | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')">
-                            </mat-option>
-                        </ng-container>
-                    </mat-select>
-                </mat-form-field>
-                <!-- 属性情報 -->
-                <table>
-                    <tr *ngFor="let prop of props">
-                        <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
-                        <td class="content-right">
-                            <span 
-                                [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
-                                [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right">
-                            </span>
-                        </td>
-                    </tr>
-                    <ng-container *ngFor="let prop of props_sub">
-                        <tr *ngIf="selectedLevelProps[prop] && selectedLevelProps[prop].value != 0">
-                            <td class="content-left" [innerText]="'PROPS.' + prop | translate"></td>
-                            <td class="content-right">
-                                <span 
-                                    [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
-                                    [matTooltip]="selectedLevelProps[prop].value" matTooltipPosition="right">
-                                </span>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </table>
-            </mat-expansion-panel>
-            <ng-container *ngIf="allData">
-                <mat-expansion-panel class="mat-elevation-z0 expand" [expanded]="true" (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <span [innerText]="'CHARACTER.ALLPROPS' | translate"></span>
-                        </mat-panel-title>
-                        <mat-panel-description>
-    
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <!-- 属性情報 -->
-                    <table>
-                        <ng-container *ngFor="let props of props_all;">
-                            <tr *ngIf="allData[props.fullName] != 0 && props.fullName as prop">
-                                <td class="content-left">
-                                    <span *ngFor="let i18n of props.i18nList;" [innerText]="i18n | translate"></span>
-                                </td>
-                                <ng-container *ngIf="props.isPercent; then percent else value"></ng-container>
-                                <ng-template #percent>
-                                    <td class="content-right">
-                                        <span
-                                            [innerText]="allData[prop] | percent: '1.0-1' | noComma"
-                                            [matTooltip]="allData[prop] + ''" matTooltipPosition="right">
-                                        </span>
-                                    </td>
-                                </ng-template>
-                                <ng-template #value>
-                                    <td class="content-right">
-                                        <span
-                                            [innerText]="allData[prop] | number: '1.0-0' | noComma"
-                                            [matTooltip]="allData[prop] + ''" matTooltipPosition="right">
-                                        </span>
-                                    </td>
-                                </ng-template>
-                            </tr>
-                        </ng-container>
-                    </table>
-                </mat-expansion-panel>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <mat-divider></mat-divider>
+      <mat-expansion-panel
+        class="mat-elevation-z0 expand"
+        [expanded]="true"
+        (afterCollapse)="onExpandStatusChanged()"
+        (afterExpand)="onExpandStatusChanged()"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span [innerText]="'CHARACTER.PROPS' | translate"></span>
+          </mat-panel-title>
+          <mat-panel-description> </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!-- レベル選択 -->
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+          <mat-select [(ngModel)]="selectedLevel" (ngModelChange)="onChangeLevel($event)">
+            <ng-container *ngFor="let option of levelOptions">
+              <mat-option
+                [value]="option"
+                [innerText]="(option.levelNum | number: '1.0-0') + (option.isAscend?('PROPS.ASCENDED' | translate):'')"
+              >
+              </mat-option>
             </ng-container>
-        </mat-card-content>
-    </mat-card>
+          </mat-select>
+        </mat-form-field>
+        <!-- 属性情報 -->
+        <div class="grid-wrapper">
+          <div class="grid-column-all">
+            <div class="placeholder"></div>
+          </div>
+          <ng-container *ngFor="let prop of props">
+            <span class="left-align" [innerText]="'PROPS.' + prop | translate"></span>
+            <span
+              class="right-align"
+              [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
+              [matTooltip]="selectedLevelProps[prop].value"
+              matTooltipPosition="right"
+            >
+            </span>
+          </ng-container>
+          <ng-container *ngFor="let prop of props_sub">
+            <ng-container *ngIf="selectedLevelProps[prop] && selectedLevelProps[prop].value !== 0">
+              <span class="left-align" [innerText]="'PROPS.' + prop | translate"></span>
+              <span
+                class="right-align"
+                [innerText]="selectedLevelProps[prop].isPercent?(selectedLevelProps[prop].value | percent: '1.0-1' | noComma):(selectedLevelProps[prop].value | number: '1.0-0' | noComma)"
+                [matTooltip]="selectedLevelProps[prop].value"
+                matTooltipPosition="right"
+              >
+              </span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+      <ng-container *ngIf="allData">
+        <mat-expansion-panel
+          class="mat-elevation-z0 expand"
+          [expanded]="true"
+          (afterCollapse)="onExpandStatusChanged()"
+          (afterExpand)="onExpandStatusChanged()"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span [innerText]="'CHARACTER.ALLPROPS' | translate"></span>
+            </mat-panel-title>
+            <mat-panel-description> </mat-panel-description>
+          </mat-expansion-panel-header>
+          <!-- 属性情報 -->
+          <div class="grid-wrapper">
+            <div class="grid-column-all">
+              <div class="placeholder"></div>
+            </div>
+            <ng-container *ngFor="let props of props_all;">
+              <ng-container *ngIf="allData[props.fullName] !== 0 && props.fullName as prop">
+                <div [@propChangeCol] class="left-align">
+                  <span *ngFor="let i18n of props.i18nList;" [innerText]="i18n | translate"></span>
+                </div>
+                <span
+                  class="right-align"
+                  [@propChangeCol]
+                  (@propChangeCol.done)="onFinishAnimation()"
+                  [innerText]="props.isPercent?(allData[prop] | percent: '1.0-1' | noComma):(allData[prop] | number: '1.0-0' | noComma)"
+                  [matTooltip]="allData[prop] + ''"
+                  matTooltipPosition="right"
+                >
+                </span>
+              </ng-container>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

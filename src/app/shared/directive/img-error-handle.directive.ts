@@ -1,19 +1,18 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
-import { Const } from '../const/const';
+import {Directive, ElementRef, HostListener} from '@angular/core';
+import {Const} from '../const/const';
 
 @Directive({
-  selector: 'img[appImgErrorHandle]'
+  selector: 'img[appImgErrorHandle]',
 })
 export class ImgErrorHandleDirective {
-
   // hasLoaded = false;
   hasErrored = false;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {}
 
-  @HostListener("error")
+  @HostListener('error')
   private onError() {
-    if(!this.hasErrored){
+    if (!this.hasErrored) {
       this.hasErrored = true;
       this.el.nativeElement.src = Const.IMG_ON_ERROR;
     }
@@ -29,5 +28,4 @@ export class ImgErrorHandleDirective {
   //     this.onError();
   //   }
   // }
-
 }

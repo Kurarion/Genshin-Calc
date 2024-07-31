@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import { GlobalPositionStrategy, Overlay, OverlayRef } from "@angular/cdk/overlay";
-import { ComponentPortal } from "@angular/cdk/portal";
-import { LoadingOverlayComponent } from '../shared.module';
+import {Injectable} from '@angular/core';
+import {GlobalPositionStrategy, Overlay, OverlayRef} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {LoadingOverlayComponent} from '../shared.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OverlayService {
-
   overlayRef!: OverlayRef;
   loadingEle!: ComponentPortal<LoadingOverlayComponent>;
 
@@ -17,11 +16,15 @@ export class OverlayService {
   }
 
   createOverlay() {
-    const positionStrategy: GlobalPositionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
+    const positionStrategy: GlobalPositionStrategy = this.overlay
+      .position()
+      .global()
+      .centerHorizontally()
+      .centerVertically();
     this.overlayRef = this.overlay.create({
       hasBackdrop: true,
       disposeOnNavigation: true,
-      positionStrategy
+      positionStrategy,
     });
   }
 
@@ -30,8 +33,8 @@ export class OverlayService {
   }
 
   hideLoading() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.overlayRef.detach();
-    }, 250)
+    }, 250);
   }
 }

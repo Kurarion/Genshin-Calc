@@ -1,7 +1,24 @@
-import { PercentPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatSliderChange } from '@angular/material/slider';
-import { ArtifactService, ArtifactStoragePartData, CalculatorService, Const, GenshinDataService } from 'src/app/shared/shared.module';
+import {PercentPipe} from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {MatSliderChange} from '@angular/material/slider';
+import {
+  ArtifactService,
+  ArtifactStoragePartData,
+  CalculatorService,
+  Const,
+  GenshinDataService,
+} from 'src/app/shared/shared.module';
 
 interface prop {
   name: string;
@@ -13,10 +30,9 @@ interface prop {
   selector: 'app-artifact-sub',
   templateUrl: './artifact-sub.component.html',
   styleUrls: ['./artifact-sub.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArtifactSubComponent implements OnInit {
-
+export class ArtifactSubComponent implements OnInit, OnChanges, OnDestroy {
   readonly percent_props = Const.PROPS_CHARA_WEAPON_PERCENT;
   readonly mains = [Const.ARTIFACT_MAIN];
   readonly subs = [
@@ -54,15 +70,17 @@ export class ArtifactSubComponent implements OnInit {
   //表示メソッド
   displayWith!: (value: number) => string | number;
 
-  constructor(private genshinDataService: GenshinDataService,
+  constructor(
+    private genshinDataService: GenshinDataService,
     private artifactService: ArtifactService,
     private calculatorService: CalculatorService,
-    private percentPipe: PercentPipe) { 
-      this.chipChanged = 0;
-      this.displayWith = (value: number) => {
-        return this.percentPipe.transform(value / this.subMax, '1.0-0') as string;
-      }
-    }
+    private percentPipe: PercentPipe,
+  ) {
+    this.chipChanged = 0;
+    this.displayWith = (value: number) => {
+      return this.percentPipe.transform(value / this.subMax, '1.0-0') as string;
+    };
+  }
 
   ngOnInit(): void {
     this.initList();
@@ -70,7 +88,7 @@ export class ArtifactSubComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['index']||changes['changed']) {
+    if (changes['index'] || changes['changed']) {
       this.initData();
       // this.updateChips();
     }
@@ -111,7 +129,7 @@ export class ArtifactSubComponent implements OnInit {
           name: key,
           value: temp[key],
           isPercent: isPercent,
-        })
+        });
       }
     }
     //サブ初期化
@@ -122,46 +140,50 @@ export class ArtifactSubComponent implements OnInit {
   }
 
   initData() {
-    this.data = this.artifactService.getStorageInfo(this.characterIndex, this.index, this.artifactType.toLowerCase());
+    this.data = this.artifactService.getStorageInfo(
+      this.characterIndex,
+      this.index,
+      this.artifactType.toLowerCase(),
+    );
   }
 
   isDuplicate(thisKey: string, prop: string): boolean {
-    for(let key in this.data){
-      if(thisKey == key){
+    for (let key in this.data) {
+      if (thisKey == key) {
         continue;
       }
-      if(this.data[key].name == prop){
+      if (this.data[key].name == prop) {
         return true;
       }
     }
     return false;
   }
 
-  onSelect(key: string, prop: string){
+  onSelect(key: string, prop: string) {
     let keyLow = key.toLowerCase();
-    if(this.data[keyLow] == undefined){
+    if (this.data[keyLow] == undefined) {
       this.data[keyLow] = {};
     }
     //重複チェック
-    for(let innerKey in this.data){
-      if(innerKey == key){
+    for (let innerKey in this.data) {
+      if (innerKey == key) {
         continue;
       }
-      if(this.data[innerKey].name == prop){
+      if (this.data[innerKey].name == prop) {
         this.data[innerKey].name = undefined;
         this.data[innerKey].value = 0;
       }
     }
     //値設定
     this.data[keyLow].name = prop;
-    if(Const.ARTIFACT_MAIN == key){
-      for(let v of this.mainList){
-        if(v.name == prop){
+    if (Const.ARTIFACT_MAIN == key) {
+      for (let v of this.mainList) {
+        if (v.name == prop) {
           this.data[keyLow].value = v.value;
           break;
         }
       }
-    }else{
+    } else {
       this.data[keyLow].value = 0;
     }
     //更新
@@ -169,9 +191,9 @@ export class ArtifactSubComponent implements OnInit {
     this.artifactService.next();
   }
 
-  onChangeSubSlider(change: MatSliderChange, key: string, prop: string){
+  onChangeSubSlider(change: MatSliderChange, key: string, prop: string) {
     let keyLow = key.toLowerCase();
-    if(this.data[keyLow] == undefined || !this.data[keyLow].name){
+    if (this.data[keyLow] == undefined || !this.data[keyLow].name) {
       return;
     }
     this.data[keyLow].value = this.dataReliquaryAffix[prop][change.value ?? 0];
@@ -180,43 +202,42 @@ export class ArtifactSubComponent implements OnInit {
     this.artifactService.next();
   }
 
-  onChangeSubValue(change: Event, key: string, prop: string){
+  onChangeSubValue(change: Event, key: string, prop: string) {
     let keyLow = key.toLowerCase();
-    if(this.data[keyLow] == undefined || !this.data[keyLow].name){
+    if (this.data[keyLow] == undefined || !this.data[keyLow].name) {
       return;
     }
-    let targe = (change.target as HTMLInputElement);
+    let targe = change.target as HTMLInputElement;
     let value = parseFloat(targe.value);
     let valueList = this.dataReliquaryAffix[this.data[keyLow].name!];
-    if(this.percent_props.includes(prop)){
+    if (this.percent_props.includes(prop)) {
       value = value / 100;
     }
     let finalValue = value;
     let minDiff = value + 1;
-    if(finalValue < 0){
+    if (finalValue < 0) {
       finalValue = 0;
-    }else if(finalValue > valueList[valueList.length - 1]){
+    } else if (finalValue > valueList[valueList.length - 1]) {
       finalValue = valueList[valueList.length - 1];
-    }else{
-      for(let v of valueList){
+    } else {
+      for (let v of valueList) {
         let tempDiff = Math.abs(value - v);
-        if(tempDiff < minDiff + Number.EPSILON){
+        if (tempDiff < minDiff + Number.EPSILON) {
           minDiff = tempDiff;
           finalValue = v;
-        }else{
+        } else {
           break;
         }
       }
     }
     this.data[keyLow].value = finalValue;
-    if(this.percent_props.includes(key)){
-      targe.value = finalValue.toFixed(1).replace('\.0$', '');
-    }else{
+    if (this.percent_props.includes(key)) {
+      targe.value = finalValue.toFixed(1).replace('.0$', '');
+    } else {
       targe.value = finalValue.toFixed(0);
     }
     //更新
     this.calculatorService.setDirtyFlag(this.characterIndex);
     this.artifactService.next();
   }
-
 }

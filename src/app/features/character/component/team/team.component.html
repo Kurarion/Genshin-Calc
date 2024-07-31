@@ -1,235 +1,367 @@
 <ng-container *ngIf="data.skills.normal.name">
-    <mat-card class="card" [style.width.px]="cardWidth">
-        <mat-card-header>
-            <mat-card-title [innerText]="'TEAM.NAME' | translate"></mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="content">
-            <mat-divider></mat-divider>
-            <div class="teams" *ngFor="let i of listIndex; first as isFirst">
-                <div class="member-select">
-                    <app-chara-option
-                        [charaIndex]="memberIndexes[i]!"
-                        [currentLanguage]="currentLanguage"
-                        [onlyPic]="true"
-                        [useIndex]="true"
-                        class="avater"
-                    >
-                    </app-chara-option>
-                    <mat-form-field *ngIf="isFirst" appearance="legacy" floatLabel="always" floatLabel="always">
-                        <mat-label [innerText]="'TEAM.MEMBER_NAME_'+i | translate"></mat-label>
-                        <select matNativeControl disabled>
-                            <option>{{data.name[currentLanguage]}}</option>
-                        </select>
-                    </mat-form-field>
-                    <app-mat-filtering-selector
-                        *ngIf="!isFirst"
-                        [title]="'TEAM.MEMBER_NAME_'+i"
-                        [model]="memberIndexes[i]!"
-                        (modelChange)="onSelectTeamMember($event, i)"
-                        [originList]="memberList"
-                        [optionValueProperty]="'index'"
-                        [isCharaInfo]="true"
-                        [optionInnerTextProperty]="'names'"
-                        [hasBlankOption]="true"
-                        [currentLanguage]="currentLanguage">
-                    </app-mat-filtering-selector>
-                    <mat-icon *ngIf="memberIndexes[i] && !isFirst" class="go-page" (click)="onClick(memberIndexes[i]!)">open_in_new</mat-icon>
-                </div>
-                <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
-                    <mat-accordion multi>
-                        <!-- skill -->
-                        <ng-container *ngFor="let skill of skills; index as num">
-                            <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
-                                    <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Skill' + num] | translate)"></span>
-                                    <span [innerText]="$any(memberInfos[i]!.data!.skills[skill]).name[currentLanguage]"></span>
-                                </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skill]">
-                                <table>
-                                    <tr>
-                                        <td class="content-left" [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"></td>
-                                        <ng-container *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"></ng-container>
-                                        <ng-template #percent>
-                                            <td class="content-right">
-                                                <span
-                                                    [innerText]="buff.val | percent: '1.0-1' | noComma"
-                                                    [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                </span>
-                                            </td>
-                                        </ng-template>
-                                        <ng-template #value>
-                                            <td class="content-right">
-                                                <span
-                                                    [innerText]="buff.val | number: '1.0-0' | noComma"
-                                                    [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                </span>
-                                            </td>
-                                        </ng-template>
-                                    </tr>
-                                </table>
-                              </ng-container>
-                            </mat-expansion-panel>
-                        </ng-container>
-                        <!-- proundSkill -->
-                        <ng-container *ngFor="let skills of proudSkills">
-                            <ng-container *ngIf="$any(memberInfos[i]?.buff)[skills]">
-                                <ng-container *ngFor="let skill of $any(memberInfos[i]?.buff)[skills]; index as proudIndex">
-                                    <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="skill.length > 0">
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].images.icon" loading="lazy" appImgErrorHandle>
-                                                <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Pround' + proudIndex] | translate)"></span>
-                                                <span [innerText]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].name[currentLanguage]"></span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <ng-container *ngFor="let buff of skill">
-                                            <table>
-                                                <tr>
-                                                    <td class="content-left" [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"></td>
-                                                    <ng-container *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"></ng-container>
-                                                    <ng-template #percent>
-                                                        <td class="content-right">
-                                                            <span
-                                                                [innerText]="buff.val | percent: '1.0-1' | noComma"
-                                                                [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                            </span>
-                                                        </td>
-                                                    </ng-template>
-                                                    <ng-template #value>
-                                                        <td class="content-right">
-                                                            <span
-                                                                [innerText]="buff.val | number: '1.0-0' | noComma"
-                                                                [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                            </span>
-                                                        </td>
-                                                    </ng-template>
-                                                </tr>
-                                            </table>
-                                        </ng-container>
-                                    </mat-expansion-panel>
-                                </ng-container>
-                            </ng-container>
-                        </ng-container>
-                        <!-- constellation -->
-                        <ng-container *ngFor="let skills of constellation">
-                            <ng-container *ngFor="let c of constellations; index as num">
-                                <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skills][c].length > 0">
-                                    <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                            <img class="skill-icon" [style.background-image]="memberInfos[i]!.iconBGColor" [src]="$any(memberInfos[i]!.data!.skills['talents'])[c].images.icon" loading="lazy" appImgErrorHandle>
-                                            <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Constellation' + num] | translate)"></span>
-                                            <span [innerText]="$any(memberInfos[i]!.data!.skills['talents'])[c].name[currentLanguage]"></span>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skills][c]">
-                                        <table>
-                                            <tr>
-                                                <td class="content-left" [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"></td>
-                                                <ng-container *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"></ng-container>
-                                                <ng-template #percent>
-                                                    <td class="content-right">
-                                                        <span
-                                                            [innerText]="buff.val | percent: '1.0-1' | noComma"
-                                                            [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                        </span>
-                                                    </td>
-                                                </ng-template>
-                                                <ng-template #value>
-                                                    <td class="content-right">
-                                                        <span
-                                                            [innerText]="buff.val | number: '1.0-0' | noComma"
-                                                            [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                        </span>
-                                                    </td>
-                                                </ng-template>
-                                            </tr>
-                                        </table>
-                                    </ng-container>
-                                </mat-expansion-panel>
-                            </ng-container>
-                        </ng-container>
-                        <!-- weapon -->
-                        <ng-container *ngFor="let skill of weapon">
-                            <mat-expansion-panel (afterCollapse)="onExpandStatusChanged()" (afterExpand)="onExpandStatusChanged()" class="mat-elevation-z0 expand" *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <img class="other-icon" [src]="$any(memberInfos[i]!.weapon).images.icon" loading="lazy" appImgErrorHandle>
-                                    <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Weapon'] | translate)"></span>
-                                    <span [innerText]="$any(memberInfos[i]!.weapon).name[currentLanguage]"></span>
-                                </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skill]">
-                                <table>
-                                    <tr>
-                                        <td class="content-left" [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"></td>
-                                        <ng-container *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"></ng-container>
-                                        <ng-template #percent>
-                                            <td class="content-right">
-                                                <span
-                                                    [innerText]="buff.val | percent: '1.0-1' | noComma"
-                                                    [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                </span>
-                                            </td>
-                                        </ng-template>
-                                        <ng-template #value>
-                                            <td class="content-right">
-                                                <span
-                                                    [innerText]="buff.val | number: '1.0-0' | noComma"
-                                                    [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                </span>
-                                            </td>
-                                        </ng-template>
-                                    </tr>
-                                </table>
-                              </ng-container>
-                            </mat-expansion-panel>
-                        </ng-container>
-                        <!-- artifact -->
-                        <ng-container *ngFor="let skill of artifact">
-                            <mat-expansion-panel 
-                                (afterCollapse)="onExpandStatusChanged()" 
-                                (afterExpand)="onExpandStatusChanged()" 
-                                class="mat-elevation-z0 expand" 
-                                *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0 && $any(memberInfos[i]!.artifact)?.images?.icon">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <img class="other-icon" [src]="$any(memberInfos[i]!.artifact).images.icon" loading="lazy" appImgErrorHandle>
-                                    <span class="skill-prefix-name" [innerText]="('TEAM.' + buffFromName['Artifact'] | translate)"></span>
-                                    <span [innerText]="$any(memberInfos[i]!.artifact).setName[currentLanguage]"></span>
-                                </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skill]">
-                                <table>
-                                    <tr>
-                                        <td class="content-left" [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"></td>
-                                        <ng-container *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"></ng-container>
-                                        <ng-template #percent>
-                                            <td class="content-right">
-                                                <span
-                                                    [innerText]="buff.val | percent: '1.0-1' | noComma"
-                                                    [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                </span>
-                                            </td>
-                                        </ng-template>
-                                        <ng-template #value>
-                                            <td class="content-right">
-                                                <span
-                                                    [innerText]="buff.val | number: '1.0-0' | noComma"
-                                                    [matTooltip]="buff.val + ''" matTooltipPosition="right">
-                                                </span>
-                                            </td>
-                                        </ng-template>
-                                    </tr>
-                                </table>
-                              </ng-container>
-                            </mat-expansion-panel>
-                        </ng-container>
-                    </mat-accordion>
-                </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
+  <mat-card class="card" [style.width.px]="cardWidth">
+    <mat-card-header>
+      <mat-card-title [innerText]="'TEAM.NAME' | translate"></mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <mat-divider></mat-divider>
+      <div class="teams" *ngFor="let i of listIndex; first as isFirst">
+        <div class="member-select">
+          <app-chara-option
+            [charaIndex]="memberIndexes[i]!"
+            [currentLanguage]="currentLanguage"
+            [onlyPic]="true"
+            [useIndex]="true"
+            class="avater"
+          >
+          </app-chara-option>
+          <mat-form-field
+            *ngIf="isFirst"
+            class="avater-select"
+            appearance="legacy"
+            floatLabel="always"
+            floatLabel="always"
+          >
+            <mat-label [innerText]="'TEAM.MEMBER_NAME_'+i | translate"></mat-label>
+            <select matNativeControl disabled>
+              <option>{{data.name[currentLanguage]}}</option>
+            </select>
+          </mat-form-field>
+          <app-mat-filtering-selector
+            *ngIf="!isFirst"
+            class="avater-select"
+            [title]="'TEAM.MEMBER_NAME_'+i"
+            [model]="memberIndexes[i]!"
+            (modelChange)="onSelectTeamMember($event, i)"
+            [originList]="memberList"
+            [optionValueProperty]="'index'"
+            [isCharaInfo]="true"
+            [optionInnerTextProperty]="'names'"
+            [hasBlankOption]="true"
+            [currentLanguage]="currentLanguage"
+          >
+          </app-mat-filtering-selector>
+          <mat-icon
+            *ngIf="memberIndexes[i] && !isFirst"
+            class="go-page"
+            (click)="onClick(memberIndexes[i]!)"
+            >open_in_new</mat-icon
+          >
+        </div>
+        <div class="member-buff" *ngIf="memberInfos[i]?.data && memberInfos[i]?.hasBuff">
+          <mat-accordion multi>
+            <!-- skill -->
+            <ng-container *ngFor="let skill of skills; index as num">
+              <mat-expansion-panel
+                (afterCollapse)="onExpandStatusChanged()"
+                (afterExpand)="onExpandStatusChanged()"
+                class="mat-elevation-z0 expand"
+                *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img
+                      class="skill-icon"
+                      [style.background-image]="memberInfos[i]!.iconBGColor"
+                      [src]="$any(memberInfos[i]!.data!.skills[skill]).images.icon"
+                      loading="lazy"
+                      appImgErrorHandle
+                    />
+                    <span
+                      class="skill-prefix-name"
+                      [innerText]="('TEAM.' + buffFromName['Skill' + num] | translate)"
+                    ></span>
+                    <span
+                      [innerText]="$any(memberInfos[i]!.data!.skills[skill]).name[currentLanguage]"
+                    ></span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skill]">
+                  <table>
+                    <tr>
+                      <td
+                        class="content-left"
+                        [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"
+                      ></td>
+                      <ng-container
+                        *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"
+                      ></ng-container>
+                      <ng-template #percent>
+                        <td class="content-right">
+                          <span
+                            [innerText]="buff.val | percent: '1.0-1' | noComma"
+                            [matTooltip]="buff.val + ''"
+                            matTooltipPosition="right"
+                          >
+                          </span>
+                        </td>
+                      </ng-template>
+                      <ng-template #value>
+                        <td class="content-right">
+                          <span
+                            [innerText]="buff.val | number: '1.0-0' | noComma"
+                            [matTooltip]="buff.val + ''"
+                            matTooltipPosition="right"
+                          >
+                          </span>
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </table>
+                </ng-container>
+              </mat-expansion-panel>
+            </ng-container>
+            <!-- proundSkill -->
+            <ng-container *ngFor="let skills of proudSkills">
+              <ng-container *ngIf="$any(memberInfos[i]?.buff)[skills]">
+                <ng-container
+                  *ngFor="let skill of $any(memberInfos[i]?.buff)[skills]; index as proudIndex"
+                >
+                  <mat-expansion-panel
+                    (afterCollapse)="onExpandStatusChanged()"
+                    (afterExpand)="onExpandStatusChanged()"
+                    class="mat-elevation-z0 expand"
+                    *ngIf="skill.length > 0"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <img
+                          class="skill-icon"
+                          [style.background-image]="memberInfos[i]!.iconBGColor"
+                          [src]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].images.icon"
+                          loading="lazy"
+                          appImgErrorHandle
+                        />
+                        <span
+                          class="skill-prefix-name"
+                          [innerText]="('TEAM.' + buffFromName['Pround' + proudIndex] | translate)"
+                        ></span>
+                        <span
+                          [innerText]="$any(memberInfos[i]!.data!.skills[skills])[proudIndex].name[currentLanguage]"
+                        ></span>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngFor="let buff of skill">
+                      <table>
+                        <tr>
+                          <td
+                            class="content-left"
+                            [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"
+                          ></td>
+                          <ng-container
+                            *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"
+                          ></ng-container>
+                          <ng-template #percent>
+                            <td class="content-right">
+                              <span
+                                [innerText]="buff.val | percent: '1.0-1' | noComma"
+                                [matTooltip]="buff.val + ''"
+                                matTooltipPosition="right"
+                              >
+                              </span>
+                            </td>
+                          </ng-template>
+                          <ng-template #value>
+                            <td class="content-right">
+                              <span
+                                [innerText]="buff.val | number: '1.0-0' | noComma"
+                                [matTooltip]="buff.val + ''"
+                                matTooltipPosition="right"
+                              >
+                              </span>
+                            </td>
+                          </ng-template>
+                        </tr>
+                      </table>
+                    </ng-container>
+                  </mat-expansion-panel>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <!-- constellation -->
+            <ng-container *ngFor="let skills of constellation">
+              <ng-container *ngFor="let c of constellations; index as num">
+                <mat-expansion-panel
+                  (afterCollapse)="onExpandStatusChanged()"
+                  (afterExpand)="onExpandStatusChanged()"
+                  class="mat-elevation-z0 expand"
+                  *ngIf="$any(memberInfos[i]?.buff)[skills][c].length > 0"
+                >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <img
+                        class="skill-icon"
+                        [style.background-image]="memberInfos[i]!.iconBGColor"
+                        [src]="$any(memberInfos[i]!.data!.skills['talents'])[c].images.icon"
+                        loading="lazy"
+                        appImgErrorHandle
+                      />
+                      <span
+                        class="skill-prefix-name"
+                        [innerText]="('TEAM.' + buffFromName['Constellation' + num] | translate)"
+                      ></span>
+                      <span
+                        [innerText]="$any(memberInfos[i]!.data!.skills['talents'])[c].name[currentLanguage]"
+                      ></span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skills][c]">
+                    <table>
+                      <tr>
+                        <td
+                          class="content-left"
+                          [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"
+                        ></td>
+                        <ng-container
+                          *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"
+                        ></ng-container>
+                        <ng-template #percent>
+                          <td class="content-right">
+                            <span
+                              [innerText]="buff.val | percent: '1.0-1' | noComma"
+                              [matTooltip]="buff.val + ''"
+                              matTooltipPosition="right"
+                            >
+                            </span>
+                          </td>
+                        </ng-template>
+                        <ng-template #value>
+                          <td class="content-right">
+                            <span
+                              [innerText]="buff.val | number: '1.0-0' | noComma"
+                              [matTooltip]="buff.val + ''"
+                              matTooltipPosition="right"
+                            >
+                            </span>
+                          </td>
+                        </ng-template>
+                      </tr>
+                    </table>
+                  </ng-container>
+                </mat-expansion-panel>
+              </ng-container>
+            </ng-container>
+            <!-- weapon -->
+            <ng-container *ngFor="let skill of weapon">
+              <mat-expansion-panel
+                (afterCollapse)="onExpandStatusChanged()"
+                (afterExpand)="onExpandStatusChanged()"
+                class="mat-elevation-z0 expand"
+                *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img
+                      class="other-icon"
+                      [src]="$any(memberInfos[i]!.weapon).images.icon"
+                      loading="lazy"
+                      appImgErrorHandle
+                    />
+                    <span
+                      class="skill-prefix-name"
+                      [innerText]="('TEAM.' + buffFromName['Weapon'] | translate)"
+                    ></span>
+                    <span [innerText]="$any(memberInfos[i]!.weapon).name[currentLanguage]"></span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skill]">
+                  <table>
+                    <tr>
+                      <td
+                        class="content-left"
+                        [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"
+                      ></td>
+                      <ng-container
+                        *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"
+                      ></ng-container>
+                      <ng-template #percent>
+                        <td class="content-right">
+                          <span
+                            [innerText]="buff.val | percent: '1.0-1' | noComma"
+                            [matTooltip]="buff.val + ''"
+                            matTooltipPosition="right"
+                          >
+                          </span>
+                        </td>
+                      </ng-template>
+                      <ng-template #value>
+                        <td class="content-right">
+                          <span
+                            [innerText]="buff.val | number: '1.0-0' | noComma"
+                            [matTooltip]="buff.val + ''"
+                            matTooltipPosition="right"
+                          >
+                          </span>
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </table>
+                </ng-container>
+              </mat-expansion-panel>
+            </ng-container>
+            <!-- artifact -->
+            <ng-container *ngFor="let skill of artifact">
+              <mat-expansion-panel
+                (afterCollapse)="onExpandStatusChanged()"
+                (afterExpand)="onExpandStatusChanged()"
+                class="mat-elevation-z0 expand"
+                *ngIf="$any(memberInfos[i]?.buff)[skill]?.length > 0 && $any(memberInfos[i]!.artifact)?.images?.icon"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img
+                      class="other-icon"
+                      [src]="$any(memberInfos[i]!.artifact).images.icon"
+                      loading="lazy"
+                      appImgErrorHandle
+                    />
+                    <span
+                      class="skill-prefix-name"
+                      [innerText]="('TEAM.' + buffFromName['Artifact'] | translate)"
+                    ></span>
+                    <span
+                      [innerText]="$any(memberInfos[i]!.artifact).setName[currentLanguage]"
+                    ></span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngFor="let buff of $any(memberInfos[i]?.buff)[skill]">
+                  <table>
+                    <tr>
+                      <td
+                        class="content-left"
+                        [innerText]="'PROPS.' + buff.target.toUpperCase() | translate"
+                      ></td>
+                      <ng-container
+                        *ngIf="props_all_percent.includes(buff.target.toUpperCase()); then percent else value"
+                      ></ng-container>
+                      <ng-template #percent>
+                        <td class="content-right">
+                          <span
+                            [innerText]="buff.val | percent: '1.0-1' | noComma"
+                            [matTooltip]="buff.val + ''"
+                            matTooltipPosition="right"
+                          >
+                          </span>
+                        </td>
+                      </ng-template>
+                      <ng-template #value>
+                        <td class="content-right">
+                          <span
+                            [innerText]="buff.val | number: '1.0-0' | noComma"
+                            [matTooltip]="buff.val + ''"
+                            matTooltipPosition="right"
+                          >
+                          </span>
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </table>
+                </ng-container>
+              </mat-expansion-panel>
+            </ng-container>
+          </mat-accordion>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

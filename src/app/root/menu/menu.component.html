@@ -1,9 +1,5 @@
 <mat-nav-list class="menu-list">
-  <div
-    class="filter-div"
-    (mousedown)="mouseDown()"
-    (mouseup)="mouseUp()"
-  >
+  <div class="filter-div" (mousedown)="mouseDown()" (mouseup)="mouseUp()">
     <!-- その他 -->
     <div class="other-filter-div">
       <div
@@ -14,9 +10,9 @@
           'button-on': this.menuSetting.filterEnka,
           'button-off': !this.menuSetting.filterEnka
         }"
-        >
+      >
         <figure
-          class="shinshinmoe other-content" 
+          class="shinshinmoe other-content"
           [ngClass]="{
             'button-other-on': this.menuSetting.filterEnka,
             'button-other-off': !this.menuSetting.filterEnka
@@ -31,7 +27,7 @@
           'button-on': this.menuSetting.filterData,
           'button-off': !this.menuSetting.filterData
         }"
-        >
+      >
         <span
           class="other-content"
           [ngClass]="{
@@ -45,7 +41,8 @@
     </div>
     <!-- 武器タイプ -->
     <div class="weapon-filter-div">
-      <div *ngFor="let weaponType of weaponTypeList"
+      <div
+        *ngFor="let weaponType of weaponTypeList"
         class="button element-button"
         (mousedown)="clickWeapon(weaponType, true)"
         (mouseenter)="clickWeapon(weaponType)"
@@ -53,22 +50,24 @@
           'button-on': menuSetting.filterWeaponType[weaponType],
           'button-off': !menuSetting.filterWeaponType[weaponType]
         }"
-        >
-        <img 
+      >
+        <img
           class="weapon-icon"
           draggable="false"
-          [src]="weaponTypeSvgPath.get(weaponType)" 
+          [src]="weaponTypeSvgPath.get(weaponType)"
           loading="lazy"
           [ngClass]="{
             'button-weapon-on': menuSetting.filterWeaponType[weaponType],
             'button-weapon-off': !menuSetting.filterWeaponType[weaponType]
           }"
-          appImgErrorHandle>
+          appImgErrorHandle
+        />
       </div>
     </div>
     <!-- 元素タイプ -->
     <div class="element-filter-div">
-      <div *ngFor="let element of elementList"
+      <div
+        *ngFor="let element of elementList"
         class="button element-button"
         (mousedown)="clickElement(element, true)"
         (mouseenter)="clickElement(element)"
@@ -76,26 +75,29 @@
           'button-on': menuSetting.filterElementType[element],
           'button-off': !menuSetting.filterElementType[element]
         }"
-        >
-        <img 
+      >
+        <img
           class="element-icon"
           draggable="false"
           [ngClass]="{
             'button-element-on': menuSetting.filterElementType[element],
             'button-element-off': !menuSetting.filterElementType[element]
           }"
-          [src]="elementSvgPath.get(element)" 
-          loading="lazy" 
-          appImgErrorHandle>
+          [src]="elementSvgPath.get(element)"
+          loading="lazy"
+          appImgErrorHandle
+        />
       </div>
     </div>
     <!-- キャラ名 -->
     <mat-form-field appearance="outline" class="select-filter">
-      <input matInput 
+      <input
+        matInput
         type="text"
         placeholder="Filter"
         [(ngModel)]="this.menuSetting.filterContent"
-        (ngModelChange)="filterMenuList()">
+        (ngModelChange)="filterMenuList()"
+      />
     </mat-form-field>
   </div>
   <div class="menu-items-div">

@@ -1,90 +1,128 @@
 <ng-container *ngIf="data.skills.normal.name">
-    <mat-card class="card" [style.width.px]="cardWidth">
-        <mat-card-header>
-            <mat-card-title [innerText]="'CHARACTER.TALENTS' | translate"></mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content class="content">
-            <mat-accordion multi>
-                <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
-                    <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(i, true)">
-                        <mat-expansion-panel-header matTooltipPosition="right">
-                            <mat-panel-title>
-                                <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
-                                <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <!-- レベル選択 -->
-                        <mat-form-field appearance="legacy" floatLabel="always">
-                            <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
-                            <mat-select [(ngModel)]="selectedLevels[skill]" (ngModelChange)="onChangeLevel(skill, $event)">
-                                <ng-container *ngFor="let option of levelOptions">
-                                    <mat-option [value]="option" [innerText]="option.levelNum">
-                                    </mat-option>
-                                </ng-container>
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- 属性情報 -->
-                        <app-extra-info
-                            class="extra-info"
-                            [data]="data"
-                            [skill]="skill"
-                            [language]="currentLanguage"
-                            [hasLevel]="true"
-                            [skillLevelIndex]="selectedLevels[skill].level">
-                        </app-extra-info>
-                        <br>
-                        <span [innerHTML]="$any(this.data.skills[skill]).desc[currentLanguage]"></span>
-                    </mat-expansion-panel>
+  <mat-card class="card" [style.width.px]="cardWidth">
+    <mat-card-header>
+      <mat-card-title [innerText]="'CHARACTER.TALENTS' | translate"></mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="content">
+      <mat-accordion multi>
+        <ng-container *ngFor="let skill of skills; index as i; first as isFirst">
+          <mat-expansion-panel
+            class="mat-elevation-z0 expand"
+            [ngClass]="{'expand-over': expandOverStatus[i]}"
+            (afterCollapse)="onExpandStatusChanged();setExpandStatus(i, false)"
+            (afterExpand)="onExpandStatusChanged();setExpandStatus(i, true)"
+          >
+            <mat-expansion-panel-header matTooltipPosition="right">
+              <mat-panel-title>
+                <img
+                  class="skill-icon"
+                  [style.background-image]="iconBGColor"
+                  [src]="$any(this.data.skills[skill]).images.icon"
+                  loading="lazy"
+                  appImgErrorHandle
+                />
+                <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- レベル選択 -->
+            <mat-form-field appearance="legacy" floatLabel="always">
+              <mat-label [innerText]="'PROPS.LEVEL' | translate"></mat-label>
+              <mat-select
+                [(ngModel)]="selectedLevels[skill]"
+                (ngModelChange)="onChangeLevel(skill, $event)"
+              >
+                <ng-container *ngFor="let option of levelOptions">
+                  <mat-option [value]="option" [innerText]="option.levelNum"> </mat-option>
                 </ng-container>
-                <ng-container *ngFor="let skill of otherSkills; index as i">
-                    <ng-container *ngIf="$any(this.data.skills[skill]).name">
-                        <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[10+i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(10+i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(10+i, true)">
-                            <mat-expansion-panel-header matTooltipPosition="right">
-                                <mat-panel-title>
-                                    <img class="skill-icon" [style.background-image]="iconBGColor" [src]="$any(this.data.skills[skill]).images.icon" loading="lazy" appImgErrorHandle>
-                                    <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <!-- 属性情報 -->
-                            <app-extra-info
-                                class="extra-info"
-                                [data]="data"
-                                [skill]="skill"
-                                [language]="currentLanguage"
-                                [hasLevel]="true"
-                                [skillLevelIndex]="talentDefaultLevel">
-                            </app-extra-info>
-                            <br>
-                            <span [innerHTML]="$any(this.data.skills[skill]).desc[currentLanguage]"></span>
-                        </mat-expansion-panel>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngFor="let skills of proudSkills">
-                    <ng-container *ngIf="$any(this.data.skills[skills])">
-                        <ng-container *ngFor="let skill of $any(this.data.skills[skills]); index as i">
-                            <mat-expansion-panel class="mat-elevation-z0 expand" [ngClass]="{'expand-over': expandOverStatus[20+i]}" (afterCollapse)="onExpandStatusChanged();setExpandStatus(20+i, false)" (afterExpand)="onExpandStatusChanged();setExpandStatus(20+i, true)">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        <img class="skill-icon" [style.background-image]="iconBGColor" [src]="skill.images.icon" loading="lazy" appImgErrorHandle>
-                                        <span [innerText]="skill.name[currentLanguage]"></span>
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <!-- 属性情報 -->
-                                <span [innerHTML]="skill.desc[currentLanguage]"></span>
-                                <app-extra-data
-                                    [characterIndex]="data.id"
-                                    [skill]="skills"
-                                    [skillIndex]="i"
-                                    [valueIndexes]="skill.paramValidIndexes">
-                                    <br>
-                                    <br>
-                                </app-extra-data>
-                            </mat-expansion-panel>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </mat-accordion>
-        </mat-card-content>
-    </mat-card>
+              </mat-select>
+            </mat-form-field>
+            <!-- 属性情報 -->
+            <app-extra-info
+              class="extra-info"
+              [data]="data"
+              [skill]="skill"
+              [language]="currentLanguage"
+              [hasLevel]="true"
+              [skillLevelIndex]="selectedLevels[skill].level"
+            >
+            </app-extra-info>
+            <br />
+            <span [innerHTML]="$any(this.data.skills[skill]).desc[currentLanguage]"></span>
+          </mat-expansion-panel>
+        </ng-container>
+        <ng-container *ngFor="let skill of otherSkills; index as i">
+          <ng-container *ngIf="$any(this.data.skills[skill]).name">
+            <mat-expansion-panel
+              class="mat-elevation-z0 expand"
+              [ngClass]="{'expand-over': expandOverStatus[10+i]}"
+              (afterCollapse)="onExpandStatusChanged();setExpandStatus(10+i, false)"
+              (afterExpand)="onExpandStatusChanged();setExpandStatus(10+i, true)"
+            >
+              <mat-expansion-panel-header matTooltipPosition="right">
+                <mat-panel-title>
+                  <img
+                    class="skill-icon"
+                    [style.background-image]="iconBGColor"
+                    [src]="$any(this.data.skills[skill]).images.icon"
+                    loading="lazy"
+                    appImgErrorHandle
+                  />
+                  <span [innerText]="$any(this.data.skills[skill]).name[currentLanguage]"></span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <!-- 属性情報 -->
+              <app-extra-info
+                class="extra-info"
+                [data]="data"
+                [skill]="skill"
+                [language]="currentLanguage"
+                [hasLevel]="true"
+                [skillLevelIndex]="talentDefaultLevel"
+              >
+              </app-extra-info>
+              <br />
+              <span [innerHTML]="$any(this.data.skills[skill]).desc[currentLanguage]"></span>
+            </mat-expansion-panel>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngFor="let skills of proudSkills">
+          <ng-container *ngIf="$any(this.data.skills[skills])">
+            <ng-container *ngFor="let skill of $any(this.data.skills[skills]); index as i">
+              <mat-expansion-panel
+                class="mat-elevation-z0 expand"
+                [ngClass]="{'expand-over': expandOverStatus[20+i]}"
+                (afterCollapse)="onExpandStatusChanged();setExpandStatus(20+i, false)"
+                (afterExpand)="onExpandStatusChanged();setExpandStatus(20+i, true)"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <img
+                      class="skill-icon"
+                      [style.background-image]="iconBGColor"
+                      [src]="skill.images.icon"
+                      loading="lazy"
+                      appImgErrorHandle
+                    />
+                    <span [innerText]="skill.name[currentLanguage]"></span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <!-- 属性情報 -->
+                <span [innerHTML]="skill.desc[currentLanguage]"></span>
+                <app-extra-data
+                  [characterIndex]="data.id"
+                  [skill]="skills"
+                  [skillIndex]="i"
+                  [valueIndexes]="skill.paramValidIndexes"
+                >
+                  <br />
+                  <br />
+                </app-extra-data>
+              </mat-expansion-panel>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

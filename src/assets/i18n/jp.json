@@ -297,10 +297,10 @@
     "OTHER": {
       "HEALING": "治療",
       "PRODUCT": "創造物HP",
-      "SHIELD": "基礎シールド吸収量", 
+      "SHIELD": "基礎シールド吸収量",
       "SHIELD_CRYO": "氷元素吸収量",
-      "SHIELD_ANEMO": "風元素吸収量",  
-      "SHIELD_PHYSICAL": "物理吸収量", 
+      "SHIELD_ANEMO": "風元素吸収量",
+      "SHIELD_PHYSICAL": "物理吸収量",
       "SHIELD_ELECTRO": "雷元素吸収量",
       "SHIELD_GEO": "岩元素吸収量",
       "SHIELD_PYRO": "火元素吸収量",
@@ -476,7 +476,7 @@
     "DAMAGE_TAG": "ダメージタグ",
     "USE_DPS": "DPS最適計算",
     "USED_DPS_INDEX": "DPSインデックス",
-    "NOT_EXIT_DPS_INDEX": "指定されたDPSが存在しないです。", 
+    "NOT_EXIT_DPS_INDEX": "指定されたDPSが存在しないです。",
     "BLANK_DPS_LIST": "指定されたDPSリストは空です。",
     "NO_RESULT": "無効な計算です。"
   },
@@ -587,8 +587,8 @@
   },
   "DPS": {
     "NAME": "DPS",
-    "OUTLINE": "ラベル", 
-    "CODE": "コード", 
+    "OUTLINE": "ラベル",
+    "CODE": "コード",
     "COPIED": "クリップボードにコピーされました!",
     "DURATION": "時間軸",
     "SECONDS": "s",
@@ -601,10 +601,10 @@
     "DPS_LABEL": "DPS",
     "DMG_VAL_LABEL": "[ダメージ]",
     "APPENDED": "DPS: ダメージ情報を追加しました。",
-    "TIPS": "ヒント: DPSリストにダメージ情報を追加するには、ダメージタイプの左側の[+]ボタンをクリックしてください。", 
-    "IMPORT_DIALOG":{
-      "TITLE": "DPSコードインポート",   
-      "CONTENT": "キャラクターIDが「{{CHAR_ID}}」のコードをインポートしてください。", 
+    "TIPS": "ヒント: DPSリストにダメージ情報を追加するには、ダメージタイプの左側の[+]ボタンをクリックしてください。",
+    "IMPORT_DIALOG": {
+      "TITLE": "DPSコードインポート",
+      "CONTENT": "キャラクターIDが「{{CHAR_ID}}」のコードをインポートしてください。",
       "OK": "インポート",
       "CANCEL": "キャンセル",
       "SUCCESS": "インポートに成功しました!",

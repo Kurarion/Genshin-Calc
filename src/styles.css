@@ -3,10 +3,10 @@
 @import 'material-icons/iconfont/material-icons.css';
 @font-face {
   font-family: shicon;
-  src: url(assets/icons/shicon.woff) format("woff");
+  src: url(assets/icons/shicon.woff) format('woff');
   font-weight: 400;
   font-style: normal;
-  font-display: block
+  font-display: block;
 }
 html,
 body {

@@ -1,3 +1,3 @@
 interface Window {
-    umami?: {track: Function};
+  umami?: {track: Function};
 }

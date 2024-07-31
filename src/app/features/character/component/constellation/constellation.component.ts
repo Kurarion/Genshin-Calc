@@ -1,15 +1,26 @@
-import { PercentPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { character, Const, ExpansionPanelCommon, RelayoutMsgService, TYPE_SYS_LANG } from 'src/app/shared/shared.module';
-
+import {PercentPipe} from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  character,
+  Const,
+  ExpansionPanelCommon,
+  RelayoutMsgService,
+  TYPE_SYS_LANG,
+} from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-constellation',
   templateUrl: './constellation.component.html',
-  styleUrls: ['./constellation.component.css']
+  styleUrls: ['./constellation.component.css'],
 })
 export class ConstellationComponent extends ExpansionPanelCommon implements OnInit {
-
   readonly constellationPrefix: string = 'c';
   readonly constellationNum: number[] = [1, 2, 3, 4, 5, 6];
 
@@ -29,26 +40,24 @@ export class ConstellationComponent extends ExpansionPanelCommon implements OnIn
   //命名
   @Input('name') name!: string;
   //ドラッグイベント
-  @Output('draged') draged = new EventEmitter<string>();
+  @Output() draged = new EventEmitter<string>();
   //アイコンBGカラー
   iconBGColor!: string;
 
-  constructor(private relayoutMsgService: RelayoutMsgService,) { 
+  constructor(private relayoutMsgService: RelayoutMsgService) {
     super(relayoutMsgService, 10);
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     //BGカラー設定
-    this.iconBGColor = 
-    Const.SKILL_ICON_GRADIENT[0] + 
-    Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(this.data.info.elementType)!] +
-    Const.SKILL_ICON_GRADIENT[1];
+    this.iconBGColor =
+      Const.SKILL_ICON_GRADIENT[0] +
+      Const.ELEMENT_COLOR_MAP[Const.ELEMENT_TYPE_MAP.get(this.data.info.elementType)!] +
+      Const.SKILL_ICON_GRADIENT[1];
   }
 
   //ドラッグ開始
-  onDrag(){
+  onDrag() {
     this.draged.emit(this.name);
   }
-  
-
 }

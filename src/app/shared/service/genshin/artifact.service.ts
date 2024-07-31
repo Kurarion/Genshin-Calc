@@ -1,7 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { keysEqual } from 'src/app/shared/class/util';
-import { artifactSet, Const, ExtraArtifactSetData, ExtraDataService, ExtraStatus, GenshinDataService, StorageService } from 'src/app/shared/shared.module';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {keysEqual} from 'src/app/shared/class/util';
+import {
+  artifactSet,
+  Const,
+  ExtraArtifactSetData,
+  ExtraDataService,
+  ExtraStatus,
+  GenshinDataService,
+  StorageService,
+} from 'src/app/shared/shared.module';
 
 export interface ArtifactStorageItemData {
   name?: string;
@@ -84,20 +92,23 @@ export interface chipSvgPath {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArtifactService {
-
   //データマップ
   dataMap!: Record<string, ArtifactStorageData>;
   private changedSubject: Subject<void> = new Subject<void>();
   private changedSubject$: Observable<void> = this.changedSubject.asObservable();
 
-  constructor(private genshinDataService: GenshinDataService, private storageService: StorageService, private extraDataService: ExtraDataService) {
-    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
-    if(temp){
+  constructor(
+    private genshinDataService: GenshinDataService,
+    private storageService: StorageService,
+    private extraDataService: ExtraDataService,
+  ) {
+    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT);
+    if (temp) {
       this.dataMap = temp;
-    }else{
+    } else {
       this.dataMap = {};
     }
   }
@@ -111,7 +122,7 @@ export class ArtifactService {
   }
 
   //クリア
-  clearStorageInfo(index: string | number){
+  clearStorageInfo(index: string | number) {
     let indexStr = index.toString();
     delete this.dataMap[indexStr];
   }
@@ -119,8 +130,8 @@ export class ArtifactService {
   //聖遺物全ロールバック
   recoverAllData(index: string | number) {
     let indexStr = index.toString();
-    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
-    if(temp){
+    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT);
+    if (temp) {
       let storageInfo: ArtifactStorageData = temp[indexStr];
       this.dataMap[indexStr].info = storageInfo.info;
     }
@@ -129,11 +140,16 @@ export class ArtifactService {
   //聖遺物ロールバック
   recoverData(index: string | number, artIndex: number) {
     let indexStr = index.toString();
-    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT)
-    if(temp){
+    let temp = this.storageService.getJSONItem(Const.SAVE_ARTIFACT);
+    if (temp) {
       let storageInfo: ArtifactStorageData = temp[indexStr];
-      if(this.dataMap[indexStr].info.length == storageInfo.info.length && artIndex < storageInfo.info.length){
-        this.dataMap[indexStr].info[artIndex] = JSON.parse(JSON.stringify(storageInfo.info[artIndex]));
+      if (
+        this.dataMap[indexStr].info.length == storageInfo.info.length &&
+        artIndex < storageInfo.info.length
+      ) {
+        this.dataMap[indexStr].info[artIndex] = JSON.parse(
+          JSON.stringify(storageInfo.info[artIndex]),
+        );
       }
     }
   }
@@ -142,7 +158,7 @@ export class ArtifactService {
     return GenshinDataService.dataReliquarySet;
   }
 
-  getSetData(index: string | number){
+  getSetData(index: string | number) {
     let indexStr = index.toString();
     return GenshinDataService.dataReliquarySet[indexStr];
   }
@@ -156,21 +172,21 @@ export class ArtifactService {
   }
 
   //適用中インデックス取得
-  getStorageActiveIndex(charIndex: string | number){
+  getStorageActiveIndex(charIndex: string | number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].activeIndex;
   }
 
   //適用中インデックスAutoフラグ取得
-  getStorageActiveIndexAutoFlag(charIndex: string | number){
+  getStorageActiveIndexAutoFlag(charIndex: string | number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr]?.info[this.getStorageActiveIndex(keyStr)]?.isAuto ?? false;
   }
 
   //適用中インデックス設定
-  setStorageActiveIndex(charIndex: string | number, index: number): number{
+  setStorageActiveIndex(charIndex: string | number, index: number): number {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     let lastKeyIndex = this.dataMap[keyStr].activeIndex;
@@ -179,21 +195,21 @@ export class ArtifactService {
   }
 
   //設定長さ取得
-  getStorageInfoLength(charIndex: string | number){
+  getStorageInfoLength(charIndex: string | number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].info.length;
   }
 
   //聖遺物セット削除
-  deleteStorageInfo(charIndex: string | number, index: number){
+  deleteStorageInfo(charIndex: string | number, index: number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     this.dataMap[keyStr].info.splice(index, 1);
   }
 
   //聖遺物プッシュ
-  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo): number{
+  pushStorageInfo(charIndex: string | number, info: ArtifactStorageInfo): number {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     this.checkAndSetInfoData(info);
@@ -202,234 +218,275 @@ export class ArtifactService {
   }
 
   //聖遺物セット設定
-  setStorageSetIndexesAll(charIndex: string | number, setIndexes: string[], index?: number, lastIndex?: number){
+  setStorageSetIndexesAll(
+    charIndex: string | number,
+    setIndexes: string[],
+    index?: number,
+    lastIndex?: number,
+  ) {
     let keyStr = charIndex.toString();
     let infoIndex = this.dataMap[keyStr].activeIndex;
-    if(index != undefined){
+    if (index != undefined) {
       infoIndex = index;
     }
     this.initDefaultData(keyStr);
     let info = this.dataMap[keyStr].info[infoIndex];
     info.setIndexes = setIndexes;
-    if(setIndexes[0] == setIndexes[1] && setIndexes[0] != "" && setIndexes[0]){
+    if (setIndexes[0] == setIndexes[1] && setIndexes[0] != '' && setIndexes[0]) {
       info.setFullIndex = setIndexes[0];
-    }else{
+    } else {
       info.setFullIndex = '';
     }
     //同じセットの場合、同じ設定にする（初期化なし）
-    if(lastIndex !== undefined && lastIndex > -1 && lastIndex < this.dataMap[keyStr].info.length){
+    if (lastIndex !== undefined && lastIndex > -1 && lastIndex < this.dataMap[keyStr].info.length) {
       let lastInfo = this.dataMap[keyStr].info[lastIndex];
-      if(lastInfo.setFullIndex == info.setFullIndex){
-        info.extra = {...lastInfo.extra}
-        return
+      if (lastInfo.setFullIndex == info.setFullIndex) {
+        info.extra = {...lastInfo.extra};
+        return;
       }
     }
     this.setDefaultExtraData(keyStr, info.setIndexes, info.setFullIndex);
   }
 
   //聖遺物情報コピー
-  copyAndCreateStorageInfo(charIndex: string | number, sourceIndex: number){
+  copyAndCreateStorageInfo(charIndex: string | number, sourceIndex: number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
-    this.dataMap[keyStr].info.push(JSON.parse(JSON.stringify(this.dataMap[keyStr].info[sourceIndex])));
+    this.dataMap[keyStr].info.push(
+      JSON.parse(JSON.stringify(this.dataMap[keyStr].info[sourceIndex])),
+    );
   }
 
   //ストレージ適用中聖遺物データ取得
-  getStorageActiveArtifactInfo(charIndex: string){
+  getStorageActiveArtifactInfo(charIndex: string) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
     return this.dataMap[keyStr].info[this.dataMap[keyStr].activeIndex];
   }
 
   //聖遺物セット情報取得
-  getStorageSetIndexes(charIndex: string | number, index?: number){
+  getStorageSetIndexes(charIndex: string | number, index?: number) {
     let keyStr = charIndex.toString();
-    if(index == undefined){
+    if (index == undefined) {
       index = this.dataMap[charIndex].activeIndex;
     }
     this.initDefaultData(keyStr);
-    if(!(index in this.dataMap[keyStr].info)){
+    if (!(index in this.dataMap[keyStr].info)) {
       this.dataMap[keyStr].info[index] = {};
     }
-    if(this.dataMap[keyStr].info[index].setIndexes == undefined || this.dataMap[keyStr].info[index].setIndexes?.length != 2){
+    if (
+      this.dataMap[keyStr].info[index].setIndexes == undefined ||
+      this.dataMap[keyStr].info[index].setIndexes?.length != 2
+    ) {
       this.dataMap[keyStr].info[index].setIndexes = ['', ''];
     }
     return this.dataMap[keyStr].info[index].setIndexes!;
   }
 
-  setStorageFullSetIndex(charIndex: string | number, index?: number, value?: string, isInit?: boolean){
+  setStorageFullSetIndex(
+    charIndex: string | number,
+    index?: number,
+    value?: string,
+    isInit?: boolean,
+  ) {
     let keyStr = charIndex.toString();
-    if(index == undefined){
+    if (index == undefined) {
       index = this.dataMap[charIndex].activeIndex;
     }
     this.initDefaultData(keyStr);
-    if(!(index in this.dataMap[keyStr].info)){
+    if (!(index in this.dataMap[keyStr].info)) {
       this.dataMap[keyStr].info[index] = {};
     }
     this.dataMap[keyStr].info[index].setFullIndex = value;
-    if(value == '' && !isInit){
+    if (value == '' && !isInit) {
       this.clearExtraData(keyStr);
     }
   }
 
   //聖遺物セットフル情報取得
-  getStorageFullSetIndex(charIndex: string | number, index?: number){
+  getStorageFullSetIndex(charIndex: string | number, index?: number) {
     let keyStr = charIndex.toString();
-    if(index == undefined){
+    if (index == undefined) {
       index = this.dataMap[charIndex].activeIndex;
     }
     this.initDefaultData(keyStr);
-    if(!(index in this.dataMap[keyStr].info)){
+    if (!(index in this.dataMap[keyStr].info)) {
       this.dataMap[keyStr].info[index] = {};
     }
-    if(this.dataMap[keyStr].info[index].setFullIndex == undefined){
+    if (this.dataMap[keyStr].info[index].setFullIndex == undefined) {
       this.dataMap[keyStr].info[index].setFullIndex = '';
     }
     return this.dataMap[keyStr].info[index].setFullIndex!;
   }
 
   //設定取得
-  getStorageInfo(charIndex: string | number, index: number, part: string){
+  getStorageInfo(charIndex: string | number, index: number, part: string) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
-    if(!(index in this.dataMap[keyStr].info)){
+    if (!(index in this.dataMap[keyStr].info)) {
       this.dataMap[keyStr].info[index] = {};
     }
-    if(this.dataMap[keyStr].info[index][part as keyof ArtifactStorageInfo] == undefined){
+    if (this.dataMap[keyStr].info[index][part as keyof ArtifactStorageInfo] == undefined) {
       this.checkAndSetInfoData(this.dataMap[keyStr].info[index]);
     }
-    return this.dataMap[keyStr].info[index][part as keyof ArtifactStorageInfo] as ArtifactStoragePartData;
+    return this.dataMap[keyStr].info[index][
+      part as keyof ArtifactStorageInfo
+    ] as ArtifactStoragePartData;
   }
 
   //全設定取得
-  getAllStorageInfo(charIndex: string | number, index: number){
+  getAllStorageInfo(charIndex: string | number, index: number) {
     let keyStr = charIndex.toString();
     this.initDefaultData(keyStr);
-    if(!(index in this.dataMap[keyStr].info)){
+    if (!(index in this.dataMap[keyStr].info)) {
       this.dataMap[keyStr].info[index] = {};
     }
-    if(this.dataMap[keyStr].info[index] == undefined){
+    if (this.dataMap[keyStr].info[index] == undefined) {
       this.checkAndSetInfoData(this.dataMap[keyStr].info[index]);
     }
     return this.dataMap[keyStr].info[index];
   }
 
   //ストレージに保存
-  saveData(){
+  saveData() {
     this.storageService.setJSONItem(Const.SAVE_ARTIFACT, this.dataMap);
   }
 
   //デフォールト追加データ設定
-  setDefaultExtraData(charIndex: string | number, index: string[], fullIndex: string){
+  setDefaultExtraData(charIndex: string | number, index: string[], fullIndex: string) {
     let charKeyStr = charIndex.toString();
     this.initDefaultData(charKeyStr);
-    this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra = 
-    {...this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra, ...this.extraDataService.getArtifactSetDefaultSetting(index, fullIndex)};
+    this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra = {
+      ...this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra,
+      ...this.extraDataService.getArtifactSetDefaultSetting(index, fullIndex),
+    };
   }
-  
+
   //追加データクリア
-  clearExtraData(index: string | number){
+  clearExtraData(index: string | number) {
     let temp = this.getExtraData(index);
     delete temp?.set1;
     delete temp?.set2;
   }
 
   //追加データ取得
-  getExtraData(index: string | number){
+  getExtraData(index: string | number) {
     let charKeyStr = index.toString();
-    if(charKeyStr in this.dataMap && this.dataMap[charKeyStr]){
+    if (charKeyStr in this.dataMap && this.dataMap[charKeyStr]) {
       return this.dataMap[charKeyStr].info[this.dataMap[charKeyStr].activeIndex].extra;
     }
     return undefined;
   }
 
-  setExtraSwitch(index: string | number, skill: string, buffIndex: number, enable: boolean, skillIndex?: number | string){
+  setExtraSwitch(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    enable: boolean,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['switchOnSet'] == undefined){
+    if (skillStatus['switchOnSet'] == undefined) {
       skillStatus['switchOnSet'] = {};
     }
     skillStatus['switchOnSet'][buffIndex.toString()] = enable;
   }
 
-  setExtraSlider(index: string | number, skill: string, buffIndex: number, setValue: number, skillIndex?: number | string){
+  setExtraSlider(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    setValue: number,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['sliderNumMap'] == undefined){
+    if (skillStatus['sliderNumMap'] == undefined) {
       skillStatus['sliderNumMap'] = {};
     }
     skillStatus['sliderNumMap'][buffIndex.toString()] = setValue;
   }
 
-  getExtraSwitch(index: string | number, skill: string, buffIndex: number, skillIndex?: number | string){
+  getExtraSwitch(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['switchOnSet'] != undefined){
+    if (skillStatus['switchOnSet'] != undefined) {
       return skillStatus['switchOnSet'][buffIndex.toString()];
     }
     return false;
   }
 
-  getExtraSlider(index: string | number, skill: string, buffIndex: number, skillIndex?: number | string){
+  getExtraSlider(
+    index: string | number,
+    skill: string,
+    buffIndex: number,
+    skillIndex?: number | string,
+  ) {
     let skillStatus = this.getExtraSkillData(index, skill, skillIndex);
-    if(skillStatus['sliderNumMap'] != undefined){
+    if (skillStatus['sliderNumMap'] != undefined) {
       return skillStatus['sliderNumMap'][buffIndex.toString()];
     }
     return 0;
   }
 
-  checkAndFixExtraData(charIndex: string | number, selectedIndex: number){
+  checkAndFixExtraData(charIndex: string | number, selectedIndex: number) {
     const charKeyStr = charIndex.toString();
-    if(selectedIndex < 0 || selectedIndex >= this.dataMap[charKeyStr].info.length){
-      return
+    if (selectedIndex < 0 || selectedIndex >= this.dataMap[charKeyStr].info.length) {
+      return;
     }
     const indexes = this.dataMap[charKeyStr].info[selectedIndex].setIndexes;
     const fullIndex = this.dataMap[charKeyStr].info[selectedIndex].setFullIndex;
-    if(!Array.isArray(indexes) || indexes.length !== 2) {
-      this.dataMap[charKeyStr].info[selectedIndex].setIndexes = ['', '']
-      return
+    if (!Array.isArray(indexes) || indexes.length !== 2) {
+      this.dataMap[charKeyStr].info[selectedIndex].setIndexes = ['', ''];
+      return;
     }
-    if(!fullIndex){
-      return
+    if (!fullIndex) {
+      return;
     }
-    if(!indexes.every((v: string) => v === fullIndex)){
+    if (!indexes.every((v: string) => v === fullIndex)) {
       this.dataMap[charKeyStr].info[selectedIndex].extra = {};
-      this.dataMap[charKeyStr].info[selectedIndex].setFullIndex = "";
-      return
+      this.dataMap[charKeyStr].info[selectedIndex].setFullIndex = '';
+      return;
     }
     const target = this.extraDataService.getArtifactSetDefaultSetting(indexes, fullIndex);
     const handler = {
-      set: function(obj: any, prop: string, value: any) {
+      set: function (obj: any, prop: string, value: any) {
         obj[prop] = value;
         return true;
       },
-      get: function(obj: any, prop: string) {
+      get: function (obj: any, prop: string) {
         return obj[prop];
-      }
-    }
+      },
+    };
     const extraInfoProxy = new Proxy(this.dataMap[charKeyStr].info[selectedIndex], handler);
-    if(Object.keys(extraInfoProxy.extra ?? {}).length === 0){
+    if (Object.keys(extraInfoProxy.extra ?? {}).length === 0) {
       extraInfoProxy.extra = target;
-    }else{
+    } else {
       let origin = extraInfoProxy.extra;
-      if(!keysEqual(origin?.set1, target?.set1)
-      ||!keysEqual(origin?.set2, target?.set2)){
+      if (!keysEqual(origin?.set1, target?.set1) || !keysEqual(origin?.set2, target?.set2)) {
         extraInfoProxy.extra = target;
       }
     }
   }
 
-  private getExtraSkillData(index: string | number, skill: string, skillIndex?: number | string){
+  private getExtraSkillData(index: string | number, skill: string, skillIndex?: number | string) {
     let keyStr = index.toString();
     let skillStatus!: ExtraStatus;
     let extraData = this.dataMap[keyStr].info[this.dataMap[keyStr].activeIndex].extra;
-    switch(skill){
+    switch (skill) {
       case Const.NAME_SET:
-        skillStatus = extraData![Const.NAME_SET + skillIndex!.toString() as keyof ExtraArtifactSetData]!;
+        skillStatus =
+          extraData![(Const.NAME_SET + skillIndex!.toString()) as keyof ExtraArtifactSetData]!;
         break;
     }
     return skillStatus!;
   }
 
-  private initDefaultData(keyStr: string){
-    if(this.dataMap[keyStr] == undefined){
+  private initDefaultData(keyStr: string) {
+    if (this.dataMap[keyStr] == undefined) {
       this.dataMap[keyStr] = {
         activeIndex: 0,
         info: [],
@@ -437,36 +494,42 @@ export class ArtifactService {
     }
   }
 
-  private checkAndSetInfoData(info: ArtifactStorageInfo){
-    if(info.setIndexes == undefined){
+  private checkAndSetInfoData(info: ArtifactStorageInfo) {
+    if (info.setIndexes == undefined) {
       info.setIndexes = ['', ''];
     }
-    if(info.setFullIndex == undefined){
+    if (info.setFullIndex == undefined) {
       info.setFullIndex = '';
     }
-    for(let key of ["flower", "plume", "sands", "goblet", "circlet"] as (keyof ArtifactStorageInfo)[]){
-      if(info[key] == undefined){
+    for (let key of [
+      'flower',
+      'plume',
+      'sands',
+      'goblet',
+      'circlet',
+    ] as (keyof ArtifactStorageInfo)[]) {
+      if (info[key] == undefined) {
         let temp = {
-          "main":{},
-          "sub1":{},
-          "sub2":{},
-          "sub3":{},
-          "sub4":{},
+          'main': {},
+          'sub1': {},
+          'sub2': {},
+          'sub3': {},
+          'sub4': {},
         };
-        switch(key){
-          case "flower":
+        switch (key) {
+          case 'flower':
             info.flower = temp;
             break;
-          case "plume":
+          case 'plume':
             info.plume = temp;
             break;
-          case "sands":
+          case 'sands':
             info.sands = temp;
             break;
-          case "goblet":
+          case 'goblet':
             info.goblet = temp;
             break;
-          case "circlet":
+          case 'circlet':
             info.circlet = temp;
             break;
         }
