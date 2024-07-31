@@ -14,7 +14,7 @@
       'show-hide-multi-switch': true,
       'with-inner-margin': isFromInfo
     }"
-    *ngIf="dmgTempDataList.length > 1"
+    *ngIf="dmgTempDataList.length > 1 && dmgDatas[0]['forceDisplay'] === undefined"
   >
     <button
       mat-icon-button
@@ -63,7 +63,7 @@
       </div>
     </ng-container>
   </div>
-  <div *ngIf="!isFromInfo" class="auto-grow-space">
+  <div *ngIf="!isFromInfo && dmgDatas[0]['forceDisplay'] === undefined" class="auto-grow-space">
     <div></div>
   </div>
 </div>
@@ -135,8 +135,6 @@
 <ng-container *ngFor="let temp of dmgTempDataList; index as i">
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showDamageEchartsFlag && currentDamageIndex === i"
     [options]="damageCalcProcessEchartsOption"
     [loading]="commonEchartsLoading"
@@ -144,8 +142,6 @@
   ></div>
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showDamageEchartsFlag && currentDamageIndex === i"
     [options]="damageEchartsOption"
     [loading]="commonEchartsLoading"
@@ -212,8 +208,6 @@
 <ng-container *ngFor="let temp of healingTempDataList; index as i">
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showHealingEchartsFlag && currentHealingIndex === i"
     [options]="healingCalcProcessEchartsOption"
     [loading]="commonEchartsLoading"
@@ -221,8 +215,6 @@
   ></div>
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showHealingEchartsFlag && currentHealingIndex === i"
     [options]="healingEchartsOption"
     [loading]="commonEchartsLoading"
@@ -256,8 +248,6 @@
 <ng-container *ngFor="let temp of productTempDataList; index as i">
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showProductEchartsFlag && currentProductIndex === i"
     [options]="productCalcProcessEchartsOption"
     [loading]="commonEchartsLoading"
@@ -265,8 +255,6 @@
   ></div>
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showProductEchartsFlag && currentProductIndex === i"
     [options]="productEchartsOption"
     [loading]="commonEchartsLoading"
@@ -300,8 +288,6 @@
 <ng-container *ngFor="let temp of shieldTempDataList; index as i">
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showShieldEchartsFlag && currentShieldIndex === i"
     [options]="shieldCalcProcessEchartsOption"
     [loading]="commonEchartsLoading"
@@ -309,8 +295,6 @@
   ></div>
   <div
     echarts
-    [@extraDataChangeEchart]
-    (@extraDataChangeEchart.done)="updateRelayout('echarts')"
     *ngIf="showShieldEchartsFlag && currentShieldIndex === i"
     [options]="shieldEchartsOption"
     [loading]="commonEchartsLoading"

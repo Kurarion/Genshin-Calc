@@ -87,13 +87,11 @@
             </div>
             <ng-container *ngFor="let props of props_all;">
               <ng-container *ngIf="allData[props.fullName] !== 0 && props.fullName as prop">
-                <div [@propChangeCol] class="left-align">
+                <div class="left-align">
                   <span *ngFor="let i18n of props.i18nList;" [innerText]="i18n | translate"></span>
                 </div>
                 <span
                   class="right-align"
-                  [@propChangeCol]
-                  (@propChangeCol.done)="onFinishAnimation()"
                   [innerText]="props.isPercent?(allData[prop] | percent: '1.0-1' | noComma):(allData[prop] | number: '1.0-0' | noComma)"
                   [matTooltip]="allData[prop] + ''"
                   matTooltipPosition="right"
