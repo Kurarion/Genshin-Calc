@@ -457,7 +457,9 @@
     "GAMING_BESTIAL_ASCENT": "Bestial Ascent",
     "SETHOS_DUSK_BOLTS": "Dusk Bolts",
     "SETHOS_SHADOWPIERCING_SHOTS": "Shadowpiercing Shots",
-    "EMILIE_CLEARDEW_COLOGNE": "Cleardew Cologne"
+    "EMILIE_CLEARDEW_COLOGNE": "Cleardew Cologne",
+    "KINICH_SCALESPIKER_CANNON": "",
+    "MUALANI_SHARKY_BITE": ""
   },
   "AUTO": {
     "CALC": "Calculate",
@@ -542,6 +544,12 @@
     },
     "HEALING_HP": {
       "TITLE": "Amount of Healing"
+    },
+    "WAVE_MOMENTUM": {
+      "TITLE": ""
+    },
+    "PREY_MARKED": {
+      "TITLE": ""
     }
   },
   "MENU": {

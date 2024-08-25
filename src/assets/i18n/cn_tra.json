@@ -457,7 +457,9 @@
     "GAMING_BESTIAL_ASCENT": "瑞獸登高樓",
     "SETHOS_DUSK_BOLTS": "瞑弦矢",
     "SETHOS_SHADOWPIERCING_SHOTS": "貫影箭",
-    "EMILIE_CLEARDEW_COLOGNE": "清露香氛"
+    "EMILIE_CLEARDEW_COLOGNE": "清露香氛",
+    "KINICH_SCALESPIKER_CANNON": "",
+    "MUALANI_SHARKY_BITE": ""
   },
   "AUTO": {
     "CALC": "計算",
@@ -542,6 +544,12 @@
     },
     "HEALING_HP": {
       "TITLE": "治療量"
+    },
+    "WAVE_MOMENTUM": {
+      "TITLE": ""
+    },
+    "PREY_MARKED": {
+      "TITLE": ""
     }
   },
   "MENU": {
