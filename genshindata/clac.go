@@ -238,7 +238,7 @@ const (
 	genshinCharacterLevelMax     = 90
 	genshinCharacterPromotedMark = "+"
 	genshinMonsterLevelMin       = 1
-	genshinMonsterLevelMax       = 100
+	genshinMonsterLevelMax       = 200
 
 	genshinMaxEmptySkillDesc = 2
 )

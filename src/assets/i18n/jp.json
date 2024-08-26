@@ -457,7 +457,9 @@
     "GAMING_BESTIAL_ASCENT": "瑞獣登楼",
     "SETHOS_DUSK_BOLTS": "瞑弦の矢",
     "SETHOS_SHADOWPIERCING_SHOTS": "貫影の矢",
-    "EMILIE_CLEARDEW_COLOGNE": "清露コロン"
+    "EMILIE_CLEARDEW_COLOGNE": "清露コロン",
+    "KINICH_SCALESPIKER_CANNON": "廻狩貫鱗砲",
+    "MUALANI_SHARKY_BITE": "サメサメバイト"
   },
   "AUTO": {
     "CALC": "計算",
@@ -542,6 +544,12 @@
     },
     "HEALING_HP": {
       "TITLE": "回復量"
+    },
+    "WAVE_MOMENTUM": {
+      "TITLE": "ウェーブチャージ"
+    },
+    "PREY_MARKED": {
+      "TITLE": "獲物マーク"
     }
   },
   "MENU": {

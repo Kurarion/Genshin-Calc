@@ -457,7 +457,9 @@
     "GAMING_BESTIAL_ASCENT": "瑞獸登高樓",
     "SETHOS_DUSK_BOLTS": "瞑弦矢",
     "SETHOS_SHADOWPIERCING_SHOTS": "貫影箭",
-    "EMILIE_CLEARDEW_COLOGNE": "清露香氛"
+    "EMILIE_CLEARDEW_COLOGNE": "清露香氛",
+    "KINICH_SCALESPIKER_CANNON": "迴獵貫鱗炮",
+    "MUALANI_SHARKY_BITE": "鯊鯊撕咬"
   },
   "AUTO": {
     "CALC": "計算",
@@ -542,6 +544,12 @@
     },
     "HEALING_HP": {
       "TITLE": "治療量"
+    },
+    "WAVE_MOMENTUM": {
+      "TITLE": "浪勢充能"
+    },
+    "PREY_MARKED": {
+      "TITLE": "獵物標記"
     }
   },
   "MENU": {

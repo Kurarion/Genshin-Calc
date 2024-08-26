@@ -49,7 +49,7 @@ interface enemyOption {
 })
 export class EnemyComponent extends ExpansionPanelCommon implements OnInit, OnDestroy {
   private readonly minLevel = 1;
-  private readonly maxLevel = 100;
+  private readonly maxLevel = 200;
   private readonly defaultLevel = 90;
 
   private readonly minPlayerNum = 1;
