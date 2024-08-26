@@ -15511,6 +15511,20 @@
           {
             "buffs": [
               {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_2"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 3,
+                "sliderStep": 1,
+                "title": "BUFF.PREY_MARKED.TITLE"
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
                 "index": 1,
                 "finalResCalQueue": [
                   {
@@ -15519,6 +15533,21 @@
                       {
                         "relation": "+",
                         "variable": "VAR_CHARA_1"
+                      }
+                    ]
+                  },
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 1,
+                          "1": 1,
+                          "2": 0.86,
+                          "3": 0.72
+                        }
                       }
                     ]
                   }
@@ -15548,25 +15577,26 @@
                         "falseResult": 0
                       }
                     ]
+                  },
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 1,
+                          "1": 1,
+                          "2": 0.86,
+                          "3": 0.72
+                        }
+                      }
+                    ]
                   }
                 ],
                 "target": ["DMG_RATE_UP_NORMAL"],
                 "tag": "MUALANI_SHARKY_BITE",
                 "settingType": "resident"
-              }
-            ]
-          },
-          {
-            "buffs": [
-              {
-                "showIndex": 0,
-                "setTos": ["VAR_CHARA_2"],
-                "settingType": "slider",
-                "sliderInitialValue": 1,
-                "sliderMin": 1,
-                "sliderMax": 3,
-                "sliderStep": 1,
-                "title": "BUFF.PREY_MARKED.TITLE"
               }
             ]
           },
@@ -15637,6 +15667,23 @@
             "buffs": [
               {
                 "index": 0,
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 1,
+                          "1": 1,
+                          "2": 0.86,
+                          "3": 0.72
+                        }
+                      }
+                    ]
+                  }
+                ],
                 "target": ["DMG_RATE_UP_NORMAL"],
                 "settingType": "switch",
                 "defaultEnable": false,
@@ -20478,7 +20525,7 @@
           "buffs": [
             {
               "index": 0,
-              "finalResCalQueue":[
+              "finalResCalQueue": [
                 {
                   "relation": "*",
                   "inner": [
@@ -20511,7 +20558,7 @@
           "buffs": [
             {
               "index": 2,
-              "finalResCalQueue":[
+              "finalResCalQueue": [
                 {
                   "relation": "*",
                   "inner": [
