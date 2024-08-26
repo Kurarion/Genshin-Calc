@@ -15258,7 +15258,7 @@
         "normal": [
           {
             "damage": {
-              "indexes": [0, 1, 2, 3],
+              "indexes": [0, 1, 2, 8],
               "base": "ATTACK",
               "canOverride": true,
               "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -15268,7 +15268,7 @@
           {
             "buffs": [
               {
-                "showIndex": 4,
+                "showIndex": 3,
                 "setTos": ["VAR_CHARA_1"],
                 "settingType": "slider",
                 "sliderInitialValue": 1,
@@ -15281,7 +15281,7 @@
           },
           {
             "damage": {
-              "indexes": [4],
+              "indexes": [3],
               "base": "ATTACK",
               "finalResCalQueue": [
                 {
@@ -15301,7 +15301,7 @@
           },
           {
             "damage": {
-              "indexes": [6, 7, 8],
+              "indexes": [5, 6, 7],
               "base": "ATTACK",
               "canOverride": true,
               "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -15566,7 +15566,7 @@
                 "sliderMin": 1,
                 "sliderMax": 3,
                 "sliderStep": 1,
-                "title": "BUFF.WAVE_MOMENTUM.TITLE"
+                "title": "BUFF.PREY_MARKED.TITLE"
               }
             ]
           },
@@ -15575,7 +15575,7 @@
               {
                 "customValue": 1,
                 "base": "FIX_NUMBER_1",
-                "target": ["DMG_BONUS_NORMAL"],
+                "target": ["DMG_RATE_MULTI_NORMAL"],
                 "finalResCalQueue": [
                   {
                     "relation": "*",
@@ -17511,6 +17511,34 @@
     "13425": {
       "effect": []
     },
+    "13427": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["ATTACK_UP"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 3
+            },
+            {
+              "index": 4,
+              "target": [
+                "DMG_BONUS_CRYO",
+                "DMG_BONUS_ANEMO",
+                "DMG_BONUS_ELECTRO",
+                "DMG_BONUS_GEO",
+                "DMG_BONUS_PYRO",
+                "DMG_BONUS_HYDRO",
+                "DMG_BONUS_DENDRO"
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "13431": {
       "effect": [
         {
@@ -18632,7 +18660,7 @@
         {
           "buffs": [
             {
-              "index": 3,
+              "index": 4,
               "target": ["DMG_BONUS_NORMAL"],
               "settingType": "slider",
               "sliderInitialValue": 0,
@@ -19080,6 +19108,34 @@
               "sliderStep": 1,
               "sliderMax": 2,
               "sliderMin": 0
+            }
+          ]
+        }
+      ]
+    },
+    "15427": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["ATTACK_UP"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 3
+            },
+            {
+              "index": 4,
+              "target": [
+                "DMG_BONUS_CRYO",
+                "DMG_BONUS_ANEMO",
+                "DMG_BONUS_ELECTRO",
+                "DMG_BONUS_GEO",
+                "DMG_BONUS_PYRO",
+                "DMG_BONUS_HYDRO",
+                "DMG_BONUS_DENDRO"
+              ]
             }
           ]
         }
@@ -20409,18 +20465,44 @@
         {
           "buffs": [
             {
+              "setTos": ["VAR_SET_1"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2,
+              "isAllTeam": true
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
               "index": 0,
+              "finalResCalQueue":[
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_SET_1"
+                    },
+                    {
+                      "relation": ">=",
+                      "const": 1,
+                      "trueResult": 1,
+                      "falseResult": 0
+                    }
+                  ]
+                }
+              ],
               "target": [
                 "DMG_BONUS_CRYO",
                 "DMG_BONUS_ELECTRO",
                 "DMG_BONUS_PYRO",
                 "DMG_BONUS_HYDRO"
               ],
-              "settingType": "slider",
-              "sliderInitialValue": 0,
-              "sliderStep": 1,
-              "sliderMax": 5,
-              "buffTag": "CINDER_CITY",
+              "settingType": "resident",
+              "buffTag": "CINDER_CITY_1",
               "isAllTeam": true
             }
           ]
@@ -20429,17 +20511,31 @@
           "buffs": [
             {
               "index": 2,
+              "finalResCalQueue":[
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_SET_1"
+                    },
+                    {
+                      "relation": ">=",
+                      "const": 2,
+                      "trueResult": 1,
+                      "falseResult": 0
+                    }
+                  ]
+                }
+              ],
               "target": [
                 "DMG_BONUS_CRYO",
                 "DMG_BONUS_ELECTRO",
                 "DMG_BONUS_PYRO",
                 "DMG_BONUS_HYDRO"
               ],
-              "settingType": "slider",
-              "sliderInitialValue": 0,
-              "sliderStep": 1,
-              "sliderMax": 5,
-              "buffTag": "CINDER_CITY",
+              "settingType": "resident",
+              "buffTag": "CINDER_CITY_2",
               "isAllTeam": true
             }
           ]
@@ -20463,7 +20559,7 @@
         {
           "buffs": [
             {
-              "index": 0,
+              "index": 1,
               "target": ["CRIT_RATE"],
               "settingType": "switch",
               "defaultEnable": false

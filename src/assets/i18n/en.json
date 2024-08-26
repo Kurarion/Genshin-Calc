@@ -458,8 +458,8 @@
     "SETHOS_DUSK_BOLTS": "Dusk Bolts",
     "SETHOS_SHADOWPIERCING_SHOTS": "Shadowpiercing Shots",
     "EMILIE_CLEARDEW_COLOGNE": "Cleardew Cologne",
-    "KINICH_SCALESPIKER_CANNON": "",
-    "MUALANI_SHARKY_BITE": ""
+    "KINICH_SCALESPIKER_CANNON": "Scalespiker Cannon",
+    "MUALANI_SHARKY_BITE": "Sharky's Bite"
   },
   "AUTO": {
     "CALC": "Calculate",
@@ -546,10 +546,10 @@
       "TITLE": "Amount of Healing"
     },
     "WAVE_MOMENTUM": {
-      "TITLE": ""
+      "TITLE": "Wave Momentum"
     },
     "PREY_MARKED": {
-      "TITLE": ""
+      "TITLE": "Marked as Prey"
     }
   },
   "MENU": {

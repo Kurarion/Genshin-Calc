@@ -458,8 +458,8 @@
     "SETHOS_DUSK_BOLTS": "瞑弦の矢",
     "SETHOS_SHADOWPIERCING_SHOTS": "貫影の矢",
     "EMILIE_CLEARDEW_COLOGNE": "清露コロン",
-    "KINICH_SCALESPIKER_CANNON": "",
-    "MUALANI_SHARKY_BITE": ""
+    "KINICH_SCALESPIKER_CANNON": "廻狩貫鱗砲",
+    "MUALANI_SHARKY_BITE": "サメサメバイト"
   },
   "AUTO": {
     "CALC": "計算",
@@ -546,10 +546,10 @@
       "TITLE": "回復量"
     },
     "WAVE_MOMENTUM": {
-      "TITLE": ""
+      "TITLE": "ウェーブチャージ"
     },
     "PREY_MARKED": {
-      "TITLE": ""
+      "TITLE": "獲物マーク"
     }
   },
   "MENU": {

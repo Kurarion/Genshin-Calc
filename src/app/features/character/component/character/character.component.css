@@ -69,7 +69,7 @@ table tr:first-child .content-right {
 }
 
 .left-align {
-  display: inline-flex;
+  display: inline-block;
   justify-content: start;
   align-items: center;
   text-align: left;
