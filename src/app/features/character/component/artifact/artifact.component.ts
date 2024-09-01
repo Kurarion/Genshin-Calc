@@ -105,21 +105,25 @@ export class ArtifactComponent extends ExpansionPanelCommon implements OnInit, O
   }
 
   ngOnInit(): void {
-    //聖遺物セットリスト初期化
-    this.initializeArtifactSetList();
-    //タブリスト初期化
-    let length = this.artifactService.getStorageInfoLength(this.data.id);
-    if (length == undefined || length == 0) {
-      length = 1;
+    try {
+      //聖遺物セットリスト初期化
+      this.initializeArtifactSetList();
+      //タブリスト初期化
+      let length = this.artifactService.getStorageInfoLength(this.data.id);
+      if (length == undefined || length == 0) {
+        length = 1;
+      }
+      this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
+      //選択中インデックス
+      this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
+      this.resetLastSelectedIndex();
+      //Autoフラグ
+      this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
+      //選択された聖遺物セット初期化
+      this.initSelectedArtifactSetIndexes(true);
+    } catch (e) {
+      console.error(e);
     }
-    this.tabs = Array.from({length: length}).map((_, i) => `${i}`);
-    //選択中インデックス
-    this.selectedIndex = this.artifactService.getStorageActiveIndex(this.data.id);
-    this.resetLastSelectedIndex();
-    //Autoフラグ
-    this.isSelectedIndexAuto = this.artifactService.getStorageActiveIndexAutoFlag(this.data.id);
-    //選択された聖遺物セット初期化
-    this.initSelectedArtifactSetIndexes(true);
   }
 
   ngOnChanges(changes: SimpleChanges) {

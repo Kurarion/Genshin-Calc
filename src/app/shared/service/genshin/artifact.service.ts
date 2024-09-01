@@ -240,7 +240,12 @@ export class ArtifactService {
     //同じセットの場合、同じ設定にする（初期化なし）
     if (lastIndex !== undefined && lastIndex > -1 && lastIndex < this.dataMap[keyStr].info.length) {
       let lastInfo = this.dataMap[keyStr].info[lastIndex];
-      if (lastInfo.setFullIndex == info.setFullIndex) {
+      if (
+        lastInfo.setFullIndex == info.setFullIndex &&
+        lastInfo.setIndexes?.length == info.setIndexes.length &&
+        info.setIndexes[0] == lastInfo.setIndexes[0] &&
+        info.setIndexes[1] == lastInfo.setIndexes[1]
+      ) {
         info.extra = {...lastInfo.extra};
         return;
       }

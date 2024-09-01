@@ -12,7 +12,7 @@
         animationDuration="0"
       >
         <mat-tab *ngFor="let tab of tabs; let index = index" [label]="'[  ' + (index + 1) + '  ]'">
-          <div class="artifact-set">
+          <div class="artifact-set" *ngIf="selectedIndex === index">
             <!-- 聖遺物詳細 -->
             <br />
             <app-mat-filtering-selector
@@ -58,24 +58,23 @@
             >
               <br /><span [innerHTML]="effectContent2"></span>
             </ng-container>
+            <br />
+            <br />
+            <app-extra-data
+              [characterIndex]="data.id"
+              [skill]="name_set"
+              [skillIndex]="1"
+              [refreshBuffOnChangeFlg]="true"
+              [valueIndexes]="effectValidIndexes"
+            >
+            </app-extra-data>
             <app-extra-data
               [characterIndex]="data.id"
               [skill]="name_set"
               [skillIndex]="2"
-              [refreshFlg]="setBuffRefreshFlg"
               [refreshBuffOnChangeFlg]="true"
               [valueIndexes]="effectValidIndexes"
             >
-              <br />
-              <br />
-              <app-extra-data
-                [characterIndex]="data.id"
-                [skill]="name_set"
-                [skillIndex]="1"
-                [refreshFlg]="setBuffRefreshFlg"
-                [valueIndexes]="effectValidIndexes"
-              >
-              </app-extra-data>
             </app-extra-data>
             <div class="chip-div">
               <app-artifact-chips

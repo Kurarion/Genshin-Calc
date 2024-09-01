@@ -132,55 +132,59 @@ export class WeaponComponent extends ExpansionPanelCommon implements OnInit, OnD
   }
 
   ngOnInit(): void {
-    //武器タイプ設定
-    this.charWeaponType = this.data.weaponType;
-    //フィルター関数
-    this.listFilterFunc = (weapon: any) => weapon.weaponType == this.charWeaponType;
-    //武器リスト初期化
-    this.initializeWeaponList();
-    //その他
-    for (let i = this.minLevel; i <= this.maxLevel; ++i) {
-      this.levelOptions.push({
-        level: i.toString().padStart(this.levelPadNum, '0'),
-        levelNum: i,
-      });
-      if (this.ascendLevels.includes(i) && i != this.maxLevel) {
+    try {
+      //武器タイプ設定
+      this.charWeaponType = this.data.weaponType;
+      //フィルター関数
+      this.listFilterFunc = (weapon: any) => weapon.weaponType == this.charWeaponType;
+      //武器リスト初期化
+      this.initializeWeaponList();
+      //その他
+      for (let i = this.minLevel; i <= this.maxLevel; ++i) {
         this.levelOptions.push({
-          level: i.toString().padStart(this.levelPadNum, '0') + '+',
+          level: i.toString().padStart(this.levelPadNum, '0'),
           levelNum: i,
-          isAscend: true,
         });
-      }
-    }
-    for (let i = this.minSmeltingLevel; i <= this.maxSmeltingLevel; ++i) {
-      this.smeltingLevelOptions.push(i.toString().padStart(this.smeltingLevelPadNum, '0'));
-    }
-    //武器初期選択
-    let storageWeaponIndex = this.weaponService.getIndex(this.data.id);
-    if (storageWeaponIndex) {
-      this.selectedWeaponIndex = storageWeaponIndex;
-    } else {
-      for (let i = 1; i < this.weaponList.length; ++i) {
-        if (
-          this.weaponList[i].weaponType == this.charWeaponType &&
-          this.weaponList[i].rankLevel == this.maxSmeltingLevel
-        ) {
-          this.selectedWeaponIndex = this.weaponList[i].index;
-          break;
+        if (this.ascendLevels.includes(i) && i != this.maxLevel) {
+          this.levelOptions.push({
+            level: i.toString().padStart(this.levelPadNum, '0') + '+',
+            levelNum: i,
+            isAscend: true,
+          });
         }
       }
+      for (let i = this.minSmeltingLevel; i <= this.maxSmeltingLevel; ++i) {
+        this.smeltingLevelOptions.push(i.toString().padStart(this.smeltingLevelPadNum, '0'));
+      }
+      //武器初期選択
+      let storageWeaponIndex = this.weaponService.getIndex(this.data.id);
+      if (storageWeaponIndex) {
+        this.selectedWeaponIndex = storageWeaponIndex;
+      } else {
+        for (let i = 1; i < this.weaponList.length; ++i) {
+          if (
+            this.weaponList[i].weaponType == this.charWeaponType &&
+            this.weaponList[i].rankLevel == this.maxSmeltingLevel
+          ) {
+            this.selectedWeaponIndex = this.weaponList[i].index;
+            break;
+          }
+        }
+      }
+      //レベル初期選択
+      this.selectedLevel =
+        this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ??
+        this.levelOptions[this.levelOptions.length - 1];
+      this.selectedSmeltingLevel =
+        this.getSmeltingLevelFromString(this.weaponService.getSmeltingLevel(this.data.id)) ??
+        this.defaultSmeltingLevel;
+      //初期データ更新
+      this.onSelectWeapon(this.selectedWeaponIndex);
+      this.onChangeLevel(this.selectedLevel);
+      this.onChangeSmeltingLevel(this.selectedSmeltingLevel);
+    } catch (e) {
+      console.error(e);
     }
-    //レベル初期選択
-    this.selectedLevel =
-      this.getLevelFromString(this.weaponService.getLevel(this.data.id)) ??
-      this.levelOptions[this.levelOptions.length - 1];
-    this.selectedSmeltingLevel =
-      this.getSmeltingLevelFromString(this.weaponService.getSmeltingLevel(this.data.id)) ??
-      this.defaultSmeltingLevel;
-    //初期データ更新
-    this.onSelectWeapon(this.selectedWeaponIndex);
-    this.onChangeLevel(this.selectedLevel);
-    this.onChangeSmeltingLevel(this.selectedSmeltingLevel);
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -3268,11 +3268,24 @@ export class CalculatorService {
     ) {
       let characterData = this.dataMap[indexStr].characterData;
       let weaponData = this.dataMap[indexStr].weaponData;
-      let artifactSetId = this.artifactService.getStorageFullSetIndex(indexStr);
-      let artifactSetData = this.artifactService.getSetData(artifactSetId);
+      let artifactSetIds = this.artifactService.getStorageSetIndexes(indexStr);
+      let artifactFullSetId = this.artifactService.getStorageFullSetIndex(indexStr);
+      let currentartifactSetId = artifactFullSetId;
+      let isFullSet = true;
+      if (
+        skill == Const.NAME_SET &&
+        artifactSetIds != undefined &&
+        artifactFullSetId != undefined &&
+        skillIndex != undefined &&
+        artifactFullSetId.length < 1
+      ) {
+        currentartifactSetId = artifactSetIds[(skillIndex as number) - 1];
+        isFullSet = false;
+      }
+      let artifactSetData = this.artifactService.getSetData(currentartifactSetId);
       let extraCharacterData = this.extraDataService.getCharacter(indexStr);
       let extraWeaponData = this.extraDataService.getWeapon(weaponData!.id);
-      let extraArtifactSetData = this.extraDataService.getArtifactSet(artifactSetId);
+      let extraArtifactSetData = this.extraDataService.getArtifactSet(currentartifactSetId);
       let infos: ExtraSkillInfo[];
       let currentLevel: string;
       if (skill == Const.NAME_CONSTELLATION) {
@@ -3290,7 +3303,7 @@ export class CalculatorService {
       } else if (skill == Const.NAME_SET) {
         infos = extraArtifactSetData
           ? (extraArtifactSetData[
-              (Const.NAME_SET + skillIndex!.toString()) as keyof ExtraArtifact
+              (Const.NAME_SET + (isFullSet ? skillIndex!.toString() : '1')) as keyof ExtraArtifact
             ] ?? [])
           : [];
         currentLevel = Const.NAME_NO_LEVEL;
