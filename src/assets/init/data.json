@@ -15647,7 +15647,7 @@
               "buffs": [
                 {
                   "sliderStartIndex": 1,
-                  "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                  "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
                   "settingType": "slider",
                   "sliderInitialValue": 0,
                   "sliderMin": 0,
