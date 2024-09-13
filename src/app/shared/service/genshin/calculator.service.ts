@@ -2362,7 +2362,11 @@ export class CalculatorService {
               isAbsoluteDmg: damageInfo.isAbsoluteDmg,
               finalResCalQueue: damageInfo.finalResCalQueue,
               displayCalQueue: damageInfo.displayCalQueue,
-              originIndex: damageInfo.originSkills ? damageInfo.originIndexes![0] : undefined,
+              originIndex: damageInfo.originSkills
+                ? damageInfo.originIndexes![0]
+                : damageInfo?.customValues
+                  ? -1
+                  : undefined,
             });
           }
         } else {
