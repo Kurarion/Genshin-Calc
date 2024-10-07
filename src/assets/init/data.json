@@ -15742,17 +15742,8 @@
           },
           {
             "damage": {
-              "indexes": [6],
+              "indexes": [6, 7, 8],
               "base": "DEFENSE",
-              "canOverride": true,
-              "elementBonusType": "DMG_BONUS_PHYSICAL",
-              "attackBonusType": "DMG_BONUS_PLUNGING"
-            }
-          },
-          {
-            "damage": {
-              "indexes": [7, 8],
-              "base": "ATTACK",
               "canOverride": true,
               "elementBonusType": "DMG_BONUS_PHYSICAL",
               "attackBonusType": "DMG_BONUS_PLUNGING"
@@ -15769,7 +15760,7 @@
           },
           {
             "damage": {
-              "indexes": [6],
+              "indexes": [6, 7, 8],
               "base": "DEFENSE",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_GEO",
