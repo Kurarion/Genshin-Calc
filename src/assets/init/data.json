@@ -15718,6 +15718,278 @@
           }
         ]
       }
+    },
+    "10000103": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [6],
+              "base": "DEFENSE",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [7, 8],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [9, 10, 11, 12],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [6],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ANTI_GEO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_GEO",
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ANTI_PYRO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_PYRO",
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ANTI_HYDRO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_HYDRO",
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ANTI_CRYO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_CRYO",
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ANTI_ELECTRO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_ELECTRO",
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0, 4],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "healing": {
+              "index": 1,
+              "constIndex": 2,
+              "base": "DEFENSE",
+              "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_PLUNGING"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "target": ["DEFENSE_UP"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [],
+          []
+        ]
+      },
+      "constellation": {
+        "1": [
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "index": 3,
+                "target": ["DMG_BONUS_ALL"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_GEO",
+                "isAllTeam": true,
+                "teamElementTypeLimit": ["GEO"]
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 1,
+                "index": 0,
+                "target": ["ATTACK_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_PYRO",
+                "isOnlyForOther": true,
+                "teamElementTypeLimit": ["PYRO"]
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 2,
+                "index": 1,
+                "target": ["HP_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_HYDRO",
+                "isOnlyForOther": true,
+                "teamElementTypeLimit": ["HYDRO"]
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 3,
+                "index": 2,
+                "target": ["CRIT_DMG"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "title": "COMMON.ELEMENT_TYPE.DMG_BONUS_CRYO",
+                "isOnlyForOther": true,
+                "teamElementTypeLimit": ["CRYO"]
+              }
+            ]
+          }
+        ],
+        "3": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "base": "DEFENSE",
+                "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "base": "DEFENSE",
+                "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "healing": {
+              "index": 3,
+              "base": "DEFENSE",
+              "healingBonusType": "HEALING_BONUS_OTHER"
+            }
+          }
+        ]
+      }
     }
   },
   "weapons": {
@@ -16253,6 +16525,21 @@
         }
       ]
     },
+    "11430": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "base": "ATTACK",
+              "target": ["DMG_VAL_UP_NORMAL"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "11431": {
       "effect": [
         {
@@ -16638,6 +16925,48 @@
               "sliderMin": 0,
               "sliderStep": 1,
               "sliderInitialValue": 0
+            }
+          ]
+        }
+      ]
+    },
+    "11516": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 7,
+              "indexMultiValue": 0.001,
+              "target": ["VAR_WEAPON_1"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DEFENSE_UP"],
+              "settingType": "slider",
+              "sliderMax": 2,
+              "sliderMin": 0,
+              "sliderStep": 1,
+              "sliderInitialValue": 0
+            },
+            {
+              "index": 3,
+              "target": ["DMG_BONUS_ALL"]
+            },
+            {
+              "index": 5,
+              "indexMultiValue": 0.001,
+              "maxValIndex": 5,
+              "maxValBase": "VAR_WEAPON_1",
+              "base": "DEFENSE",
+              "target": ["DMG_BONUS_ALL"],
+              "sliderMax": 2,
+              "isMaximumStackBuff": true,
+              "isAllTeam": true
             }
           ]
         }
@@ -17062,6 +17391,29 @@
               "sliderMax": 3,
               "sliderStep": 1,
               "sliderInitialValue": 0
+            }
+          ]
+        }
+      ]
+    },
+    "12430": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_CRIT_RATE_UP_PLUNGING"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING"],
+              "settingType": "switch",
+              "defaultEnable": false
             }
           ]
         }
@@ -17581,6 +17933,29 @@
                 "DMG_BONUS_HYDRO",
                 "DMG_BONUS_DENDRO"
               ]
+            }
+          ]
+        }
+      ]
+    },
+    "13430": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["DMG_BONUS_SKILL"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["DMG_BONUS_SKILL"],
+              "settingType": "switch",
+              "defaultEnable": false
             }
           ]
         }

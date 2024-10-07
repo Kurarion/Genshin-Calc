@@ -128,6 +128,8 @@ export interface TeamBuff {
   finalResCalQueue?: CalcItem[];
   overrideElement?: string;
   overrideWhenEffective?: boolean;
+
+  teamElementTypeLimit?: string[];
 }
 
 export interface SpecialBuffMaxVal {
@@ -3783,10 +3785,15 @@ export class CalculatorService {
     extraSpecialTeamResult: SpecialBuff[],
     buffTag: Record<string, string[]>,
     result: Record<string, number> = {},
+    elementType: string,
   ) {
     const resultInfo: Record<string, any> = {};
     let overrideElement = undefined;
     for (let v of buffs) {
+      //バフ元素チェック
+      if (v.teamElementTypeLimit && !v.teamElementTypeLimit.includes(elementType)) {
+        continue;
+      }
       if (v.calByOrigin && v.isSpecial) {
         extraSpecialTeamResult.push(v as SpecialBuff);
       } else {
@@ -4333,6 +4340,8 @@ export class CalculatorService {
   private setExtraTeamData(index: string) {
     this.initTeamBuffData(index, false);
     let team: string[] = this.teamService.getOtherMembers(index);
+    const characterData = this.dataMap[index]!.characterData!;
+    const elementType: string = Const.ELEMENT_TYPE_MAP.get(characterData.info.elementType)!;
     for (let i = 0; i < team.length; ++i) {
       let subIndex = team[i];
       if (!subIndex || !(subIndex?.length > 0)) {
@@ -4358,6 +4367,7 @@ export class CalculatorService {
           this.dataMap[index].extraSpecialTeamResult!,
           this.dataMap[index].buffTag!,
           result,
+          elementType,
         );
         if (buffResultInfo?.['overrideElement'] !== undefined) {
           this.characterService.setOverrideElement(index, buffResultInfo['overrideElement'], true);
@@ -4371,6 +4381,7 @@ export class CalculatorService {
           this.dataMap[index].extraSpecialTeamResult!,
           this.dataMap[index].buffTag!,
           result,
+          elementType,
         );
         if (buffResultInfo?.['overrideElement'] !== undefined) {
           this.characterService.setOverrideElement(index, buffResultInfo['overrideElement'], true);
@@ -4391,6 +4402,7 @@ export class CalculatorService {
           this.dataMap[index].extraSpecialTeamResult!,
           this.dataMap[index].buffTag!,
           result,
+          elementType,
         );
         if (buffResultInfo?.['overrideElement'] !== undefined) {
           this.characterService.setOverrideElement(index, buffResultInfo['overrideElement'], true);
@@ -4657,6 +4669,7 @@ export class CalculatorService {
                       calByOrigin: buff.calByOrigin,
                       overrideElement: overrideElement,
                       overrideWhenEffective: overrideWhenEffective,
+                      teamElementTypeLimit: buff.teamElementTypeLimit,
                     });
                   } else {
                     selfTeamBuffs.push({
@@ -4670,6 +4683,7 @@ export class CalculatorService {
                       calByOrigin: buff.calByOrigin,
                       overrideElement: overrideElement,
                       overrideWhenEffective: overrideWhenEffective,
+                      teamElementTypeLimit: buff.teamElementTypeLimit,
                     });
                   }
                 }
@@ -4703,6 +4717,7 @@ export class CalculatorService {
                     calByOrigin: buff.calByOrigin,
                     overrideElement: overrideElement,
                     overrideWhenEffective: overrideWhenEffective,
+                    teamElementTypeLimit: buff.teamElementTypeLimit,
                   });
                 }
               }
@@ -4781,6 +4796,7 @@ export class CalculatorService {
                           calByOrigin: buff.calByOrigin,
                           overrideElement: overrideElement,
                           overrideWhenEffective: overrideWhenEffective,
+                          teamElementTypeLimit: buff.teamElementTypeLimit,
                         });
                       } else {
                         selfTeamBuffs.push({
@@ -4795,6 +4811,7 @@ export class CalculatorService {
                           calByOrigin: buff.calByOrigin,
                           overrideElement: overrideElement,
                           overrideWhenEffective: overrideWhenEffective,
+                          teamElementTypeLimit: buff.teamElementTypeLimit,
                         });
                       }
                     }
@@ -4827,6 +4844,7 @@ export class CalculatorService {
                           calByOrigin: buff.calByOrigin,
                           overrideElement: overrideElement,
                           overrideWhenEffective: overrideWhenEffective,
+                          teamElementTypeLimit: buff.teamElementTypeLimit,
                         });
                       } else {
                         selfTeamBuffs.push({
@@ -4841,6 +4859,7 @@ export class CalculatorService {
                           calByOrigin: buff.calByOrigin,
                           overrideElement: overrideElement,
                           overrideWhenEffective: overrideWhenEffective,
+                          teamElementTypeLimit: buff.teamElementTypeLimit,
                         });
                       }
                     } else {
@@ -4858,6 +4877,7 @@ export class CalculatorService {
                           calByOrigin: buff.calByOrigin,
                           overrideElement: overrideElement,
                           overrideWhenEffective: overrideWhenEffective,
+                          teamElementTypeLimit: buff.teamElementTypeLimit,
                         });
                       } else {
                         selfTeamBuffs.push({
@@ -4872,6 +4892,7 @@ export class CalculatorService {
                           calByOrigin: buff.calByOrigin,
                           overrideElement: overrideElement,
                           overrideWhenEffective: overrideWhenEffective,
+                          teamElementTypeLimit: buff.teamElementTypeLimit,
                         });
                       }
                     }
@@ -4975,6 +4996,7 @@ export class CalculatorService {
                       calByOrigin: buff.calByOrigin,
                       overrideElement: overrideElement,
                       overrideWhenEffective: overrideWhenEffective,
+                      teamElementTypeLimit: buff.teamElementTypeLimit,
                     });
                   } else {
                     if (sliderStartIndex != undefined) {
@@ -5000,6 +5022,7 @@ export class CalculatorService {
                         calByOrigin: buff.calByOrigin,
                         overrideElement: overrideElement,
                         overrideWhenEffective: overrideWhenEffective,
+                        teamElementTypeLimit: buff.teamElementTypeLimit,
                       });
                     } else {
                       selfTeamBuffs.push({
@@ -5012,6 +5035,7 @@ export class CalculatorService {
                         calByOrigin: buff.calByOrigin,
                         overrideElement: overrideElement,
                         overrideWhenEffective: overrideWhenEffective,
+                        teamElementTypeLimit: buff.teamElementTypeLimit,
                       });
                     }
                   }

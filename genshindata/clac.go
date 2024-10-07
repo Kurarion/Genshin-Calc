@@ -19,7 +19,7 @@ const (
 	languageJP  = "jp"
 )
 
-//图片资源Host
+// 图片资源Host
 const (
 	imgHostAvatarFormat        = "https://enka.network/ui/%s.png"
 	imgHostEquipFormat         = "https://enka.network/ui/%s.png"
@@ -32,7 +32,7 @@ const (
 	imgRelicIconSuffix = "_4" //flower
 )
 
-//数据相关
+// 数据相关
 const (
 	assocTypePrefix = "ASSOC_TYPE_"
 )
@@ -141,7 +141,7 @@ var (
 	dataSaveObjMap map[string]interface{}
 )
 
-//设置
+// 设置
 const (
 	configAvatarLevelFormat      = "%02d"
 	configWeaponLevelFormat      = "%02d"
@@ -157,7 +157,7 @@ const (
 // 	}
 // )
 
-//保存路径
+// 保存路径
 const (
 	fileAvatar         = "avatar_map.json"
 	fileAvatarSkills   = "avatar_skills_map.json"
@@ -170,7 +170,7 @@ const (
 	fileLocalCharacterExtra = "character.json"
 )
 
-//文件完整路径
+// 文件完整路径
 const (
 	// pathDir   = "./src/assets/genshin"
 	pathSlash = "/"
@@ -188,7 +188,7 @@ const (
 	pathLocalCharacterExtra = pathLocalDir + pathSlash + fileLocalCharacterExtra
 )
 
-//索引
+// 索引
 const (
 	indexAvatarExcelConfig              = "AvatarExcelConfigData"
 	indexAvatarCurveExcelConfig         = "AvatarCurveExcelConfigData"
@@ -349,7 +349,7 @@ func initialize(localResPath string, resURL string) (err error) {
 	return getDataFromRepository(localResPath, resURL)
 }
 
-//更新
+// 更新
 func update(localResPath string, resURL string) error {
 	//仓库JSON文件缓存
 	repositoryJSON := make(map[string]*bytes.Buffer)
@@ -790,6 +790,9 @@ func update(localResPath string, resURL string) error {
 			continue
 		}
 		currentFetterInfo := fetterInfoDataMap[currentAvatarData.Id]
+		if currentFetterInfo == nil {
+			continue
+		}
 		elementTypeTexts := getTextFromHash(currentFetterInfo.AvatarVisionBeforTextMapHash, textMap, false)
 		elementType := elementTypeMap[elementTypeTexts[languageCHS]]
 		fetterInfo := FETTERINFO{
@@ -1122,7 +1125,7 @@ func update(localResPath string, resURL string) error {
 	return nil
 }
 
-//结果保存至本地
+// 结果保存至本地
 func saveResult() error {
 	for _, v := range dataFileMap {
 		if v.save {
@@ -1139,7 +1142,7 @@ func saveResult() error {
 	return nil
 }
 
-//获取最新数据
+// 获取最新数据
 func getDataFromRepository(localResPath string, resURL string) error {
 	err := update(localResPath, resURL)
 	if err != nil {
@@ -1148,7 +1151,7 @@ func getDataFromRepository(localResPath string, resURL string) error {
 	return saveResult()
 }
 
-//从本地读取已往结果
+// 从本地读取已往结果
 func readMapFormLocal(path string, targetObj interface{}) error {
 	content := bytes.NewBuffer(make([]byte, 0, defaultBuffSize))
 	err := readFromFile(path, content)
@@ -1162,7 +1165,7 @@ func readMapFormLocal(path string, targetObj interface{}) error {
 	return nil
 }
 
-//取得文字
+// 取得文字
 func getTextFromHash(hash uint64, textMap map[string]map[uint64]string, useT2s bool) map[string]string {
 	result := make(map[string]string)
 	for _, v := range sysLanguage {
@@ -1175,7 +1178,7 @@ func getTextFromHash(hash uint64, textMap map[string]map[uint64]string, useT2s b
 	return result
 }
 
-//取得文字(正规后)
+// 取得文字(正规后)
 func getRegxTextFromHash(hash uint64, textMap map[string]map[uint64]string, useT2s bool) map[string]string {
 	result := make(map[string]string)
 	for _, v := range sysLanguage {
@@ -1188,7 +1191,7 @@ func getRegxTextFromHash(hash uint64, textMap map[string]map[uint64]string, useT
 	return result
 }
 
-//取得文字(正规后)
+// 取得文字(正规后)
 func getRegxTextsFromHash(hashs []uint64, textMap map[string]map[uint64]string, useT2s bool) map[string][]string {
 	result := make(map[string][]string)
 	for _, v := range sysLanguage {
@@ -1217,7 +1220,7 @@ func getRegxTextsFromHash(hashs []uint64, textMap map[string]map[uint64]string, 
 	return result
 }
 
-//繁体转换
+// 繁体转换
 func tTos(in string) (out string) {
 	// out, err := t2s.Convert(in)
 	// if err != nil {
@@ -1227,7 +1230,7 @@ func tTos(in string) (out string) {
 	return
 }
 
-//技能描述解析
+// 技能描述解析
 func calParamDesc(paramDescList map[string][]string) map[string][]AVATARSKILLSPLITEDDESCINFO {
 	results := make(map[string][]AVATARSKILLSPLITEDDESCINFO)
 	for i, v := range paramDescList {
@@ -1273,7 +1276,7 @@ func calParamDesc(paramDescList map[string][]string) map[string][]AVATARSKILLSPL
 
 }
 
-//无等级技能描述
+// 无等级技能描述
 func calCharacterNoLevelValidParamIndexes(paramMap map[string][]float64) []int {
 	results := make([]int, 0)
 	paramList := paramMap[fmt.Sprintf(configSkillLevelFormat, 1)]
@@ -1290,7 +1293,7 @@ func calCharacterNoLevelValidParamIndexes(paramMap map[string][]float64) []int {
 	return results
 }
 
-//无等级技能描述
+// 无等级技能描述
 func calWeaponNoLevelValidParamIndexes(paramList []float64) []int {
 	results := make([]int, 0)
 	for i, v := range paramList {
@@ -1306,7 +1309,7 @@ func calWeaponNoLevelValidParamIndexes(paramList []float64) []int {
 	return results
 }
 
-//旅行者名字取得
+// 旅行者名字取得
 func getPlayerName(id uint64, elementTexts map[string]string) map[string]string {
 	results := make(map[string]string)
 	v, has := playerNameMap[id]

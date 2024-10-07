@@ -181,6 +181,8 @@ export interface ExtraSkillBuff {
   weaponTypeLimit?: string[];
   //限定自身元素タイプ
   selfElementTypeLimit?: boolean;
+  //チーム限定元素タイプ
+  teamElementTypeLimit?: string[];
   //マックススタックバフ（複数バフのみ適用）
   isMaximumStackBuff?: boolean;
   //説明
