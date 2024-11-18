@@ -459,7 +459,10 @@
     "SETHOS_SHADOWPIERCING_SHOTS": "Shadowpiercing Shots",
     "EMILIE_CLEARDEW_COLOGNE": "Cleardew Cologne",
     "KINICH_SCALESPIKER_CANNON": "Scalespiker Cannon",
-    "MUALANI_SHARKY_BITE": "Sharky's Bite"
+    "MUALANI_SHARKY_BITE": "Sharky's Bite",
+    "CHASCA_SHADOWHUNT_SHELL": "Shadowhunt Shell",
+    "CHASCA_SHINING_SHADOWHUNT_SHELL": "Shining Shadowhunt Shell",
+    "ORORON_HYPERSENSE": "Hypersense"
   },
   "AUTO": {
     "CALC": "Calculate",

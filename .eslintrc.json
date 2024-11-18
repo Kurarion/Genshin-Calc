@@ -37,6 +37,7 @@
           }
         ],
         "@angular-eslint/no-input-rename":"off",
+        "linebreak-style": ["off"],
         "prettier/prettier": ["error"]
       }
     },

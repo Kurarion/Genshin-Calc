@@ -459,7 +459,10 @@
     "SETHOS_SHADOWPIERCING_SHOTS": "貫影箭",
     "EMILIE_CLEARDEW_COLOGNE": "清露香氛",
     "KINICH_SCALESPIKER_CANNON": "迴獵貫鱗炮",
-    "MUALANI_SHARKY_BITE": "鯊鯊撕咬"
+    "MUALANI_SHARKY_BITE": "鯊鯊撕咬",
+    "CHASCA_SHADOWHUNT_SHELL": "追影彈",
+    "CHASCA_SHINING_SHADOWHUNT_SHELL": "煥光追影彈",
+    "ORORON_HYPERSENSE": "顯象超感"
   },
   "AUTO": {
     "CALC": "計算",

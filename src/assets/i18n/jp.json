@@ -459,7 +459,10 @@
     "SETHOS_SHADOWPIERCING_SHOTS": "貫影の矢",
     "EMILIE_CLEARDEW_COLOGNE": "清露コロン",
     "KINICH_SCALESPIKER_CANNON": "廻狩貫鱗砲",
-    "MUALANI_SHARKY_BITE": "サメサメバイト"
+    "MUALANI_SHARKY_BITE": "サメサメバイト",
+    "CHASCA_SHADOWHUNT_SHELL": "シャドウチェイサー弾",
+    "CHASCA_SHINING_SHADOWHUNT_SHELL": "シャドウチェイサー弾・光輝",
+    "ORORON_HYPERSENSE": "顕象超感覚"
   },
   "AUTO": {
     "CALC": "計算",

@@ -15981,6 +15981,482 @@
           }
         ]
       }
+    },
+    "10000104": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [6, 7, 8],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_CHARGED",
+              "tag": "CHASCA_SHADOWHUNT_SHELL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_CHARGED",
+              "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED",
+              "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_CHARGED",
+              "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_CHARGED",
+              "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "sliderStartIndex": 3,
+                  "target": ["DMG_BONUS_CHARGED"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderStep": 1,
+                  "sliderMax": 3,
+                  "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "damage": {
+                "originSkills": ["skill"],
+                "originIndexes": [2],
+                "originRelations": ["*"],
+                "indexes": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_ANEMO",
+                "attackBonusType": "DMG_BONUS_CHARGED",
+                "tag": "CHASCA_SHADOWHUNT_SHELL"
+              }
+            },
+            {
+              "damage": {
+                "originSkills": ["skill"],
+                "originIndexes": [3],
+                "originRelations": ["*"],
+                "indexes": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_CRYO",
+                "attackBonusType": "DMG_BONUS_CHARGED",
+                "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+              }
+            },
+            {
+              "damage": {
+                "originSkills": ["skill"],
+                "originIndexes": [3],
+                "originRelations": ["*"],
+                "indexes": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_ELECTRO",
+                "attackBonusType": "DMG_BONUS_CHARGED",
+                "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+              }
+            },
+            {
+              "damage": {
+                "originSkills": ["skill"],
+                "originIndexes": [3],
+                "originRelations": ["*"],
+                "indexes": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_PYRO",
+                "attackBonusType": "DMG_BONUS_CHARGED",
+                "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+              }
+            },
+            {
+              "damage": {
+                "originSkills": ["skill"],
+                "originIndexes": [3],
+                "originRelations": ["*"],
+                "indexes": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_HYDRO",
+                "attackBonusType": "DMG_BONUS_CHARGED",
+                "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+              }
+            }
+          ],
+          [],
+          []
+        ]
+      },
+      "constellation": {
+        "1": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          }
+        ],
+        "3": [
+          {
+            "damage": {
+              "customValues": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "customValues": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "customValues": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "customValues": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_CRIT_DMG_UP_CHARGED"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "CHASCA_SHADOWHUNT_SHELL"
+              },
+              {
+                "index": 1,
+                "target": ["DMG_CRIT_DMG_UP_CHARGED"],
+                "tag": "CHASCA_SHINING_SHADOWHUNT_SHELL"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000105": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5, 6, 7],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "damage": {
+                "indexes": [1],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_ELECTRO",
+                "attackBonusType": "DMG_BONUS_OTHER",
+                "tag": "ORORON_HYPERSENSE"
+              }
+            }
+          ],
+          [],
+          [],
+          []
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_BONUS_OTHER"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "ORORON_HYPERSENSE"
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_BONUS_ELECTRO"],
+                "settingType": "slider",
+                "sliderInitialValue": 0,
+                "sliderMin": 0,
+                "sliderMax": 4,
+                "sliderStep": 1
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["ATTACK_UP"],
+                "settingType": "slider",
+                "sliderInitialValue": 0,
+                "sliderMin": 0,
+                "sliderMax": 3,
+                "sliderStep": 1,
+                "isAllTeam": true
+              }
+            ],
+            "damage": {
+              "customValues": [3.2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "tag": "ORORON_HYPERSENSE"
+            }
+          }
+        ]
+      }
     }
   },
   "weapons": {
@@ -16540,6 +17016,24 @@
               "target": ["DEFENSE_UP"],
               "settingType": "switch",
               "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
+    "11432": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED"],
+              "settingType": "switch",
+              "defaultEnable": false
+            },
+            {
+              "index": 1,
+              "target": ["DMG_CRIT_RATE_UP_NORMAL", "DMG_CRIT_RATE_UP_CHARGED"]
             }
           ]
         }
@@ -18737,6 +19231,32 @@
         }
       ]
     },
+    "14430": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["HP_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 4,
+              "target": ["HP_UP"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2
+            }
+          ]
+        }
+      ]
+    },
     "14431": {
       "effect": [
         {
@@ -19554,6 +20074,23 @@
         }
       ]
     },
+    "15430": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_BONUS_CHARGED"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderMin": 0,
+              "sliderMax": 6,
+              "sliderStep": 1
+            }
+          ]
+        }
+      ]
+    },
     "15431": {
       "effect": [
         {
@@ -19803,6 +20340,40 @@
               "target": ["DMG_CRIT_RATE_UP_ELEMENTAL_BURST"],
               "sliderMax": 3,
               "isMaximumStackBuff": true
+            }
+          ]
+        }
+      ]
+    },
+    "15514": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ATTACK_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_BONUS_CHARGED"],
+              "settingType": "slider",
+              "sliderStartIndex": 2,
+              "sliderStep": 1,
+              "sliderMax": 2
+            },
+            {
+              "index": 4,
+              "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+              "settingType": "slider",
+              "sliderStartIndex": 4,
+              "sliderStep": 1,
+              "sliderMax": 2
             }
           ]
         }
