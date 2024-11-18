@@ -629,7 +629,9 @@
       "DATA_CHIP": "圣遗物标签数据",
       "DATA_GENSHIN_AVATAR": "角色数据",
       "DATA_GENSHIN_WEAPON": "武器数据",
-      "DATA_GENSHIN_MONSTER": "敌人数据",
+      "DATA_GENSHIN_MONSTER_1": "敌人数据1",
+      "DATA_GENSHIN_MONSTER_2": "敌人数据2",
+      "DATA_GENSHIN_MONSTER_3": "敌人数据3",
       "DATA_GENSHIN_RELIQUARY_SET": "圣遗物套装数据",
       "DATA_GENSHIN_RELIQUARY_MAIN": "圣遗物主词条数据",
       "DATA_GENSHIN_RELIQUARY_SUB": "圣遗物副词条"

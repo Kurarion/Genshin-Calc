@@ -629,7 +629,9 @@
       "DATA_CHIP": "Artifact Tag Data",
       "DATA_GENSHIN_AVATAR": "Character Data",
       "DATA_GENSHIN_WEAPON": "Weapon Data",
-      "DATA_GENSHIN_MONSTER": "Enemy Data",
+      "DATA_GENSHIN_MONSTER_1": "Enemy Data 1",
+      "DATA_GENSHIN_MONSTER_2": "Enemy Data 2",
+      "DATA_GENSHIN_MONSTER_3": "Enemy Data 3",
       "DATA_GENSHIN_RELIQUARY_SET": "Artifact Set Data",
       "DATA_GENSHIN_RELIQUARY_MAIN": "Artifact Main Stat Data",
       "DATA_GENSHIN_RELIQUARY_SUB": "Artifact Sub Stat Data"

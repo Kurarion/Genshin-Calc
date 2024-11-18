@@ -70,18 +70,48 @@ export class AppComponent implements OnInit {
             }),
           ),
       ),
-      //原神敵データ
+      //原神敵データ1
       lastValueFrom(
         httpService
           .getSystemData(
-            Const.SYS_JSON_URLS[Const.SYS_JSON_DATA_GENSHIN_MONSTER],
+            Const.SYS_JSON_URLS[Const.SYS_JSON_DATA_GENSHIN_MONSTER_1],
             'json',
             this.jsonDownloadStatus,
-            Const.SYS_JSON_DATA_GENSHIN_MONSTER,
+            Const.SYS_JSON_DATA_GENSHIN_MONSTER_1,
           )
           .pipe(
             tap((data) => {
-              GenshinDataService.initMonsterData(data);
+              GenshinDataService.addMonsterData(data);
+            }),
+          ),
+      ),
+      //原神敵データ2
+      lastValueFrom(
+        httpService
+          .getSystemData(
+            Const.SYS_JSON_URLS[Const.SYS_JSON_DATA_GENSHIN_MONSTER_2],
+            'json',
+            this.jsonDownloadStatus,
+            Const.SYS_JSON_DATA_GENSHIN_MONSTER_2,
+          )
+          .pipe(
+            tap((data) => {
+              GenshinDataService.addMonsterData(data);
+            }),
+          ),
+      ),
+      //原神敵データ3
+      lastValueFrom(
+        httpService
+          .getSystemData(
+            Const.SYS_JSON_URLS[Const.SYS_JSON_DATA_GENSHIN_MONSTER_3],
+            'json',
+            this.jsonDownloadStatus,
+            Const.SYS_JSON_DATA_GENSHIN_MONSTER_3,
+          )
+          .pipe(
+            tap((data) => {
+              GenshinDataService.addMonsterData(data);
             }),
           ),
       ),
@@ -147,6 +177,8 @@ export class AppComponent implements OnInit {
           ),
       ),
     );
-    return Promise.all(promiseList);
+    return Promise.all(promiseList).then(() => {
+      GenshinDataService.initMonsterData();
+    });
   }
 }

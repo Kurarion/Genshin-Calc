@@ -37,7 +37,9 @@
       "resources": {
         "files": [
             "/assets/genshin/avatar_map.json",
-            "/assets/genshin/monster_map.json",
+            "/assets/genshin/monster_map_1.json",
+            "/assets/genshin/monster_map_2.json",
+            "/assets/genshin/monster_map_3.json",
             "/assets/genshin/reliquary_affix_map.json",
             "/assets/genshin/reliquary_main_map.json",
             "/assets/genshin/reliquary_set_map.json",

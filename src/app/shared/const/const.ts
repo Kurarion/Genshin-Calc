@@ -112,7 +112,9 @@ export class Const {
   static readonly SYS_JSON_DATA_CHIP = 'DATA_CHIP';
   static readonly SYS_JSON_DATA_GENSHIN_AVATAR = 'DATA_GENSHIN_AVATAR';
   static readonly SYS_JSON_DATA_GENSHIN_WEAPON = 'DATA_GENSHIN_WEAPON';
-  static readonly SYS_JSON_DATA_GENSHIN_MONSTER = 'DATA_GENSHIN_MONSTER';
+  static readonly SYS_JSON_DATA_GENSHIN_MONSTER_1 = 'DATA_GENSHIN_MONSTER_1';
+  static readonly SYS_JSON_DATA_GENSHIN_MONSTER_2 = 'DATA_GENSHIN_MONSTER_2';
+  static readonly SYS_JSON_DATA_GENSHIN_MONSTER_3 = 'DATA_GENSHIN_MONSTER_3';
   static readonly SYS_JSON_DATA_GENSHIN_RELIQUARY_SET = 'DATA_GENSHIN_RELIQUARY_SET';
   static readonly SYS_JSON_DATA_GENSHIN_RELIQUARY_MAIN = 'DATA_GENSHIN_RELIQUARY_MAIN';
   static readonly SYS_JSON_DATA_GENSHIN_RELIQUARY_SUB = 'DATA_GENSHIN_RELIQUARY_SUB';
@@ -122,7 +124,9 @@ export class Const {
     [this.SYS_JSON_DATA_CHIP]: 'assets/init/chip.json',
     [this.SYS_JSON_DATA_GENSHIN_AVATAR]: 'assets/genshin/avatar_map.json',
     [this.SYS_JSON_DATA_GENSHIN_WEAPON]: 'assets/genshin/weapon_map.json',
-    [this.SYS_JSON_DATA_GENSHIN_MONSTER]: 'assets/genshin/monster_map.json',
+    [this.SYS_JSON_DATA_GENSHIN_MONSTER_1]: 'assets/genshin/monster_map_1.json',
+    [this.SYS_JSON_DATA_GENSHIN_MONSTER_2]: 'assets/genshin/monster_map_2.json',
+    [this.SYS_JSON_DATA_GENSHIN_MONSTER_3]: 'assets/genshin/monster_map_3.json',
     [this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SET]: 'assets/genshin/reliquary_set_map.json',
     [this.SYS_JSON_DATA_GENSHIN_RELIQUARY_MAIN]: 'assets/genshin/reliquary_main_map.json',
     [this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SUB]: 'assets/genshin/reliquary_affix_map.json',
@@ -133,7 +137,9 @@ export class Const {
     this.SYS_JSON_DATA_CHIP,
     this.SYS_JSON_DATA_GENSHIN_AVATAR,
     this.SYS_JSON_DATA_GENSHIN_WEAPON,
-    this.SYS_JSON_DATA_GENSHIN_MONSTER,
+    this.SYS_JSON_DATA_GENSHIN_MONSTER_1,
+    this.SYS_JSON_DATA_GENSHIN_MONSTER_2,
+    this.SYS_JSON_DATA_GENSHIN_MONSTER_3,
     this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SET,
     this.SYS_JSON_DATA_GENSHIN_RELIQUARY_MAIN,
     this.SYS_JSON_DATA_GENSHIN_RELIQUARY_SUB,

@@ -16,6 +16,7 @@ import {
 export class GenshinDataService {
   static dataCharacter: Record<string, character>;
   static dataWeapon: Record<string, weapon>;
+  static dataMonsters: Record<string, enemy>[] = [];
   static dataMonster: Record<string, enemy>;
   static dataReliquarySet: Record<string, artifactSet>;
   static dataReliquaryMain: Record<string, number>;
@@ -55,8 +56,49 @@ export class GenshinDataService {
   static initWeaponData(data: any) {
     this.dataWeapon = data;
   }
-  static initMonsterData(data: any) {
-    this.dataMonster = data;
+  static addMonsterData(data: any) {
+    this.dataMonsters.push(data)
+  }
+  static initMonsterData() {
+    const objs: Record<string, enemy>[] = GenshinDataService.dataMonsters;
+    this.dataMonster = new Proxy({}, {
+      get: (_, prop: string) => {
+        for (let i = objs.length - 1; i >= 0; i--) {
+          const obj = objs[i];
+          if (prop in obj) {
+            return obj[prop as keyof typeof obj];
+          }
+        }
+        return undefined;
+      },
+      has: (_, prop: string) => {
+        return objs.some(obj => prop in obj);
+      },
+      ownKeys: () => {
+        const keys = new Set<string | symbol>();
+        for (let i = objs.length - 1; i >= 0; i--) {
+          const obj = objs[i];
+          for (const key of Reflect.ownKeys(obj)) {
+            keys.add(key);
+          }
+        }
+        return Array.from(keys);
+      },
+      getOwnPropertyDescriptor: (_, prop) => {
+        for (let i = objs.length - 1; i >= 0; i--) {
+          const obj = objs[i];
+          if (prop in obj) {
+            return {
+              value: obj[prop as keyof typeof obj],
+              writable: true,
+              configurable: true,
+              enumerable: true,
+            };
+          }
+        }
+        return undefined;
+      },
+    });
   }
   static initReliquarySetData(data: any) {
     this.dataReliquarySet = data;

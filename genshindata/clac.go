@@ -127,8 +127,14 @@ var (
 	dataAvatarSkillsMap map[uint64]*AVATARSKILLS
 	//武器
 	dataWeaponMap map[uint64]*WEAPON
-	//怪物
-	dataMonsterMap map[uint64]*MONSTER
+	//怪物1
+	dataMonsterMap1 map[uint64]*MONSTER
+	//怪物2
+	dataMonsterMap2 map[uint64]*MONSTER
+	//怪物3
+	dataMonsterMap3 map[uint64]*MONSTER
+	//怪物分割数
+	dataMonsterCount int = 3
 
 	//圣遗物套装
 	dataReliquarySetMap map[uint64]*RELIQUARY
@@ -162,7 +168,9 @@ const (
 	fileAvatar         = "avatar_map.json"
 	fileAvatarSkills   = "avatar_skills_map.json"
 	fileWeapon         = "weapon_map.json"
-	fileMonster        = "monster_map.json"
+	fileMonster1       = "monster_map_1.json"
+	fileMonster2       = "monster_map_2.json"
+	fileMonster3       = "monster_map_3.json"
 	fileReliquaryAffix = "reliquary_affix_map.json"
 	fileReliquaryMain  = "reliquary_main_map.json"
 	fileReliquarySet   = "reliquary_set_map.json"
@@ -222,7 +230,9 @@ const (
 	indexReliquarySetPath   = "reliquary_set_map"
 	indexReliquaryAffixPath = "reliquary_affix_map"
 	indexReliquaryMainPath  = "reliquary_main_map"
-	indexMonsterPath        = "monster_map"
+	indexMonsterPath1       = "monster_map_1"
+	indexMonsterPath2       = "monster_map_2"
+	indexMonsterPath3       = "monster_map_3"
 	indexAvatarSkillPath    = "avatar_skills_map"
 )
 
@@ -254,7 +264,9 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		pathReliquaryMainFile  = pathDir + pathSlash + fileReliquaryMain
 		pathReliquarySetFile   = pathDir + pathSlash + fileReliquarySet
 		pathAvatarSkillsFile   = pathDir + pathSlash + fileAvatarSkills
-		pathMonsterFile        = pathDir + pathSlash + fileMonster
+		pathMonsterFile1       = pathDir + pathSlash + fileMonster1
+		pathMonsterFile2       = pathDir + pathSlash + fileMonster2
+		pathMonsterFile3       = pathDir + pathSlash + fileMonster3
 	)
 	//下载URL初始化
 	dataJSONURLMap = map[string]string{
@@ -290,7 +302,9 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		indexAvatarPath:              {path: pathAvatarFile, class: typeJs, save: true},
 		indexAvatarSkillPath:         {path: pathAvatarSkillsFile, class: typeJs, save: false},
 		indexWeaponPath:              {path: pathWeaponFile, class: typeJs, save: true},
-		indexMonsterPath:             {path: pathMonsterFile, class: typeJs, save: true},
+		indexMonsterPath1:            {path: pathMonsterFile1, class: typeJs, save: true},
+		indexMonsterPath2:            {path: pathMonsterFile2, class: typeJs, save: true},
+		indexMonsterPath3:            {path: pathMonsterFile3, class: typeJs, save: true},
 		indexReliquarySetExcelConfig: {path: pathReliquarySetFile, class: typeJs, save: true},
 		indexReliquaryAffixPath:      {path: pathReliquaryAffixFile, class: typeJs, save: true},
 		indexReliquaryMainPath:       {path: pathReliquaryMainFile, class: typeJs, save: true},
@@ -300,7 +314,9 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		pathAvatarFile:         &dataAvatarMap,
 		pathAvatarSkillsFile:   &dataAvatarSkillsMap,
 		pathWeaponFile:         &dataWeaponMap,
-		pathMonsterFile:        &dataMonsterMap,
+		pathMonsterFile1:       &dataMonsterMap1,
+		pathMonsterFile2:       &dataMonsterMap2,
+		pathMonsterFile3:       &dataMonsterMap3,
 		pathReliquarySetFile:   &dataReliquarySetMap,
 		pathReliquaryAffixFile: &dataReliquaryAffixMap,
 		pathReliquaryMainFile:  &dataReliquaryMainMap,
@@ -311,8 +327,12 @@ func Generate(targetDir string, localResPath string, resURL string) {
 	dataAvatarSkillsMap = make(map[uint64]*AVATARSKILLS)
 	//武器对应初始化
 	dataWeaponMap = make(map[uint64]*WEAPON)
-	//怪物对应初始化
-	dataMonsterMap = make(map[uint64]*MONSTER)
+	//怪物1对应初始化
+	dataMonsterMap1 = make(map[uint64]*MONSTER)
+	//怪物2对应初始化
+	dataMonsterMap2 = make(map[uint64]*MONSTER)
+	//怪物3对应初始化
+	dataMonsterMap3 = make(map[uint64]*MONSTER)
 	//圣遗物套装
 	dataReliquarySetMap = make(map[uint64]*RELIQUARY)
 	//圣遗物词条刻度
@@ -1018,6 +1038,11 @@ func update(localResPath string, resURL string) error {
 		}
 	}
 	//怪物
+	var toSplitLen int = 350
+	var monsterMapList []map[uint64]*MONSTER = []map[uint64]*MONSTER{
+		dataMonsterMap1, dataMonsterMap2, dataMonsterMap3,
+	}
+	var validNum int = 0
 	for i := range monsterBaseDataList {
 		currentMonsterData := &monsterBaseDataList[i]
 		if currentMonsterData.DescribeId == 0 ||
@@ -1073,7 +1098,8 @@ func update(localResPath string, resURL string) error {
 			}
 		}
 		//创建对象
-		dataMonsterMap[currentMonsterData.Id] = &MONSTER{
+		var currentSplitIndex = validNum / toSplitLen
+		monsterMapList[currentSplitIndex][currentMonsterData.Id] = &MONSTER{
 			Id:              currentMonsterData.Id,
 			Name:            monsterText,
 			NameTextMapHash: currentMonsterData.NameTextMapHash,
@@ -1119,8 +1145,9 @@ func update(localResPath string, resURL string) error {
 			currentProperty.Dmg_anti_hydro = currentMonsterData.GenshinSubHurtData.WaterSubHurt
 			currentProperty.Dmg_anti_dendro = currentMonsterData.GenshinSubHurtData.GrassSubHurt
 
-			dataMonsterMap[currentMonsterData.Id].LevelMap[fmt.Sprintf(configMonsterLevelFormat, ii)] = currentProperty
+			monsterMapList[currentSplitIndex][currentMonsterData.Id].LevelMap[fmt.Sprintf(configMonsterLevelFormat, ii)] = currentProperty
 		}
+		validNum += 1
 	}
 	return nil
 }
