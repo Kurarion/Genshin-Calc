@@ -102,6 +102,9 @@
     "HP_BASE": "Base HP",
     "ATTACK_BASE": "Base Attack",
     "DEFENSE_BASE": "Base Defense",
+    "HP_BASE_EXTRA": "Base HP Increase",
+    "ATTACK_BASE_EXTRA": "Base Attack Increase",
+    "DEFENSE_BASE_EXTRA": "Base Defense Increase",
     "HP_VAL_UP": "HP Increase",
     "ATTACK_VAL_UP": "Attack Increase",
     "DEFENSE_VAL_UP": "Defense Increase",
@@ -462,7 +465,10 @@
     "MUALANI_SHARKY_BITE": "Sharky's Bite",
     "CHASCA_SHADOWHUNT_SHELL": "Shadowhunt Shell",
     "CHASCA_SHINING_SHADOWHUNT_SHELL": "Shining Shadowhunt Shell",
-    "ORORON_HYPERSENSE": "Hypersense"
+    "ORORON_HYPERSENSE": "Hypersense",
+    "MAVUIKA_FLAMESTRIDER": "Flamestrider",
+    "CITLALI_FROSTFALL_STORM": "Frostfall Storm",
+    "CITLALI_ICE_STORM": "Ice Storm"
   },
   "AUTO": {
     "CALC": "Calculate",
@@ -553,6 +559,15 @@
     },
     "PREY_MARKED": {
       "TITLE": "Marked as Prey"
+    },
+    "NIGHTSOUL": {
+      "TITLE": "Nightsoul's Blessing"
+    },
+    "FIGHTING_SPIRIT": {
+      "TITLE": "Fighting Spirit"
+    },
+    "SECRET_LAW": {
+      "TITLE": "Secret Law"
     }
   },
   "MENU": {

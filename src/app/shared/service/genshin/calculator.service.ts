@@ -3291,8 +3291,7 @@ export class CalculatorService {
                 if (!valueIndexes.includes(buffInfo.showIndex)) {
                   continue;
                 }
-              }
-              if (buffInfo?.index != undefined) {
+              } else if (buffInfo?.index != undefined) {
                 if (!valueIndexes.includes(buffInfo.index)) {
                   continue;
                 }
@@ -3561,16 +3560,20 @@ export class CalculatorService {
       switch (key) {
         case Const.PROP_HP:
           temp =
-            result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
+            (result[Const.PROP_HP_BASE] + result[Const.PROP_HP_BASE_EXTRA]) *
+              (1 + result[Const.PROP_HP_UP]) +
+            result[Const.PROP_VAL_HP];
           break;
         case Const.PROP_ATTACK:
           temp =
-            result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) +
+            (result[Const.PROP_ATTACK_BASE] + result[Const.PROP_ATTACK_BASE_EXTRA]) *
+              (1 + result[Const.PROP_ATTACK_UP]) +
             result[Const.PROP_VAL_ATTACK];
           break;
         case Const.PROP_DEFENSE:
           temp =
-            result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) +
+            (result[Const.PROP_DEFENSE_BASE] + result[Const.PROP_DEFENSE_BASE_EXTRA]) *
+              (1 + result[Const.PROP_DEFENSE_UP]) +
             result[Const.PROP_VAL_DEFENSE];
           break;
         case Const.PROP_DMG_ENEMY_DEFENSE:
@@ -3831,20 +3834,24 @@ export class CalculatorService {
       case Const.PROP_HP_UP:
       case Const.PROP_VAL_HP:
         result[Const.PROP_HP] =
-          result[Const.PROP_HP_BASE] * (1 + result[Const.PROP_HP_UP]) + result[Const.PROP_VAL_HP];
+          (result[Const.PROP_HP_BASE] + result[Const.PROP_HP_BASE_EXTRA]) *
+            (1 + result[Const.PROP_HP_UP]) +
+          result[Const.PROP_VAL_HP];
         result[Const.PROP_BOND_OF_LIFE_VAL] =
           result[Const.PROP_BOND_OF_LIFE] * result[Const.PROP_HP];
         break;
       case Const.PROP_ATTACK_UP:
       case Const.PROP_VAL_ATTACK:
         result[Const.PROP_ATTACK] =
-          result[Const.PROP_ATTACK_BASE] * (1 + result[Const.PROP_ATTACK_UP]) +
+          (result[Const.PROP_ATTACK_BASE] + result[Const.PROP_ATTACK_BASE_EXTRA]) *
+            (1 + result[Const.PROP_ATTACK_UP]) +
           result[Const.PROP_VAL_ATTACK];
         break;
       case Const.PROP_DEFENSE_UP:
       case Const.PROP_VAL_DEFENSE:
         result[Const.PROP_DEFENSE] =
-          result[Const.PROP_DEFENSE_BASE] * (1 + result[Const.PROP_DEFENSE_UP]) +
+          (result[Const.PROP_DEFENSE_BASE] + result[Const.PROP_DEFENSE_BASE_EXTRA]) *
+            (1 + result[Const.PROP_DEFENSE_UP]) +
           result[Const.PROP_VAL_DEFENSE];
         break;
       case Const.PROP_DMG_ENEMY_DEFENSE_DOWN:

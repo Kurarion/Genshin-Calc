@@ -102,6 +102,9 @@
     "HP_BASE": "基础生命值",
     "ATTACK_BASE": "基础攻击力",
     "DEFENSE_BASE": "基础防御力",
+    "HP_BASE_EXTRA": "基础生命增加值",
+    "ATTACK_BASE_EXTRA": "基础攻击力增加值",
+    "DEFENSE_BASE_EXTRA": "基础防御力增加值",
     "HP_VAL_UP": "生命值增加值",
     "ATTACK_VAL_UP": "攻击力增加值",
     "DEFENSE_VAL_UP": "防御力增加值",
@@ -462,7 +465,10 @@
     "MUALANI_SHARKY_BITE": "鲨鲨撕咬",
     "CHASCA_SHADOWHUNT_SHELL": "追影弹",
     "CHASCA_SHINING_SHADOWHUNT_SHELL": "焕光追影弹",
-    "ORORON_HYPERSENSE": "显象超感"
+    "ORORON_HYPERSENSE": "显象超感",
+    "MAVUIKA_FLAMESTRIDER": "驰轮车",
+    "CITLALI_FROSTFALL_STORM": "霜陨风暴",
+    "CITLALI_ICE_STORM": "冰风暴"
   },
   "AUTO": {
     "CALC": "计算",
@@ -553,6 +559,15 @@
     },
     "PREY_MARKED": {
       "TITLE": "猎物标记"
+    },
+    "NIGHTSOUL": {
+      "TITLE": "夜魂加持"
+    },
+    "FIGHTING_SPIRIT": {
+      "TITLE": "战意"
+    },
+    "SECRET_LAW": {
+      "TITLE": "秘律之数"
     }
   },
   "MENU": {
