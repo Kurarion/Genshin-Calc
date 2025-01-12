@@ -22553,7 +22553,10 @@
                 "DMG_BONUS_CRYO",
                 "DMG_BONUS_ELECTRO",
                 "DMG_BONUS_PYRO",
-                "DMG_BONUS_HYDRO"
+                "DMG_BONUS_HYDRO",
+                "DMG_BONUS_ANEMO",
+                "DMG_BONUS_GEO",
+                "DMG_BONUS_DENDRO"
               ],
               "settingType": "resident",
               "buffTag": "CINDER_CITY_1",
@@ -22586,7 +22589,10 @@
                 "DMG_BONUS_CRYO",
                 "DMG_BONUS_ELECTRO",
                 "DMG_BONUS_PYRO",
-                "DMG_BONUS_HYDRO"
+                "DMG_BONUS_HYDRO",
+                "DMG_BONUS_ANEMO",
+                "DMG_BONUS_GEO",
+                "DMG_BONUS_DENDRO"
               ],
               "settingType": "resident",
               "buffTag": "CINDER_CITY_2",
