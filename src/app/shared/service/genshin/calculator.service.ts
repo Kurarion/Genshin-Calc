@@ -1251,9 +1251,15 @@ export class CalculatorService {
         swirlUpValueProcessFunc(swirlRate, data[Const.PROP_DMG_ELEMENT_SWIRL_UP]);
         swirlRate += elementCataclysmRate;
         swirlRateProcess = swirlUpValueProcessFunc(swirlRate, elementCataclysmRate);
-        swirlBaseProcess = this.createProcess(BASE_SWIRL[data[Const.PROP_LEVEL] - 1])();
+        let swirlBase = BASE_SWIRL[data[Const.PROP_LEVEL] - 1];
+        const swirlBaseProcessFunc = this.createProcess(swirlBase);
+        swirlBase += data[Const.PROP_DMG_ELEMENT_SWIRL_VAL_UP];
+        swirlBaseProcess = swirlBaseProcessFunc(
+          swirlBase,
+          data[Const.PROP_DMG_ELEMENT_SWIRL_VAL_UP],
+        );
 
-        let swirlBaseDmg = BASE_SWIRL[data[Const.PROP_LEVEL] - 1] * swirlRate;
+        let swirlBaseDmg = swirlBase * swirlRate;
         swirlCryoDmg = swirlBaseDmg * (1 - tempCryoDmgAntiSectionValue);
         swirlElectroDmg = swirlBaseDmg * (1 - tempElectroDmgAntiSectionValue);
         swirlPyroDmg = swirlBaseDmg * (1 - tempPyroDmgAntiSectionValue);

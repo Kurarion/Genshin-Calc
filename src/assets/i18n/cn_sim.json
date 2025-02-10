@@ -224,6 +224,7 @@
     "DMG_ELEMENT_BURNING_UP": "元素増幅(燃烧)",
     "DMG_ELEMENT_ELECTROCHARGED_UP": "元素増幅(感电)",
     "DMG_ELEMENT_SUPERCONDUCT_UP": "元素増幅(超导)",
+    "DMG_ELEMENT_SWIRL_VAL_UP": "元素増幅(扩散增加值)",
     "DMG_ELEMENT_SWIRL_UP": "元素増幅(扩散)",
     "DMG_ELEMENT_DESTRUCTION_UP": "元素増幅(破冰)",
     "DMG_ELEMENT_SHIELD_UP": "元素増幅(結晶)",

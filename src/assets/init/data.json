@@ -17441,6 +17441,122 @@
           }
         ]
       }
+    },
+    "10000109": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5, 6, 7],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            },
+            "buffs": [
+              {
+                "index": 1,
+                "base": "ELEMENTAL_MASTERY",
+                "target": ["DMG_ELEMENT_SWIRL_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            },
+            "healing": {
+              "index": 2,
+              "constIndex": 6,
+              "constCalRelation": "+",
+              "base": "ELEMENTAL_MASTERY",
+              "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "base": "ELEMENTAL_MASTERY",
+                "target": ["DMG_ELEMENT_SWIRL_VAL_UP"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "base": "ELEMENTAL_MASTERY",
+                "target": ["DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_CRYO", "DMG_BONUS_ELECTRO"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "weapons": {
@@ -19506,6 +19622,20 @@
         }
       ]
     },
+    "13432": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ATTACK_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "13501": {
       "effect": [
         {
@@ -20670,6 +20800,40 @@
               "settingType": "switch",
               "defaultEnable": false,
               "isAllTeam": true
+            }
+          ]
+        }
+      ]
+    },
+    "14518": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
             }
           ]
         }
