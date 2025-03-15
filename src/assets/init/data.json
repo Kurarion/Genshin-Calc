@@ -16818,8 +16818,7 @@
                 "base": "VAR_CHARA_1",
                 "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
                 "settingType": "switch",
-                "defaultEnable": false,
-                "tag": "MAVUIKA_FLAMESTRIDER"
+                "defaultEnable": false
               },
               {
                 "index": 3,
@@ -16894,8 +16893,7 @@
               },
               {
                 "index": 4,
-                "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
-                "tag": "MAVUIKA_FLAMESTRIDER"
+                "target": ["DMG_RATE_UP_ELEMENTAL_BURST"]
               },
               {
                 "index": 2,
