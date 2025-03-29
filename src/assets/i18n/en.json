@@ -469,7 +469,11 @@
     "ORORON_HYPERSENSE": "Hypersense",
     "MAVUIKA_FLAMESTRIDER": "Flamestrider",
     "CITLALI_FROSTFALL_STORM": "Frostfall Storm",
-    "CITLALI_ICE_STORM": "Ice Storm"
+    "CITLALI_ICE_STORM": "Ice Storm",
+    "VARESA_PLUNGE": "Plunge",
+    "VARESA_FIERY_PASSION_PLUNGE": "Fiery Passion Plunge",
+    "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "Fiery Passion Flying Kick",
+    "VARESA_VOLCANO_KABLAM": "Volcano Kablam"
   },
   "AUTO": {
     "CALC": "Calculate",

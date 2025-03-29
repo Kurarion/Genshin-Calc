@@ -469,7 +469,11 @@
     "ORORON_HYPERSENSE": "顯象超感",
     "MAVUIKA_FLAMESTRIDER": "馳輪車",
     "CITLALI_FROSTFALL_STORM": "霜陨风暴",
-    "CITLALI_ICE_STORM": "冰风暴"
+    "CITLALI_ICE_STORM": "冰风暴",
+    "VARESA_PLUNGE": "墜地衝擊",
+    "VARESA_FIERY_PASSION_PLUNGE": "熾熱激情狀態墜地衝擊",
+    "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "熾熱激情狀態飛踢",
+    "VARESA_VOLCANO_KABLAM": "大火山崩落"
   },
   "AUTO": {
     "CALC": "計算",

@@ -469,13 +469,17 @@
     "ORORON_HYPERSENSE": "顕象超感覚",
     "MAVUIKA_FLAMESTRIDER": "双駆輪",
     "CITLALI_FROSTFALL_STORM": "霜落の嵐",
-    "CITLALI_ICE_STORM": "氷晶の嵐"
+    "CITLALI_ICE_STORM": "氷晶の嵐",
+    "VARESA_PLUNGE": "落下攻撃",
+    "VARESA_FIERY_PASSION_PLUNGE": "猛烈パッション状態の落下攻撃",
+    "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "猛烈パッション状態の飛び蹴り",
+    "VARESA_VOLCANO_KABLAM": "大火山おろし"
   },
   "AUTO": {
     "CALC": "計算",
     "DONE": "計算完了！",
     "FAILED": "計算に失敗しました。",
-    "TIPS": "注：ステップ(本機能)以外の最適するダメージの計算に関連する属性やバフが変化した場合、正確な結果を得るためには再計算する必要があります。",
+    "TIPS": "注意：ステップ(本機能)以外の最適するダメージの計算に関連する属性やバフが変化した場合、正確な結果を得るためには再計算する必要があります。",
     "MAX_CRIT_RATE": "会心率上限",
     "AUTO_PROGRESS": "ステップ",
     "DAMAGE_RATE": "ダメージ倍率",

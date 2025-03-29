@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"reflect"
 	"regexp"
 	"strconv"
@@ -17,6 +18,7 @@ const (
 	languageCHT = "cn_tra"
 	languageEN  = "en"
 	languageJP  = "jp"
+	tempPath    = "./tmp"
 )
 
 // 图片资源Host
@@ -380,6 +382,18 @@ func update(localResPath string, resURL string) error {
 			temp, err = getLocalJSON(strings.Replace(v, resURL, localResPath, -1))
 		} else {
 			temp, err = getJSON(v)
+			if err == nil {
+				tempFilePath := strings.Replace(v, resURL, tempPath, -1)
+				// 获取父目录
+				parentDir := filepath.Dir(tempFilePath)
+				_, er := os.Stat(parentDir)
+				if er != nil {
+					if os.IsNotExist(er) {
+						os.MkdirAll(parentDir, 0777)
+					}
+				}
+				writeToFile(tempFilePath, bytes.NewBuffer(temp.Bytes()))
+			}
 		}
 		if err != nil {
 			return err

@@ -17546,10 +17546,512 @@
               {
                 "index": 0,
                 "base": "ELEMENTAL_MASTERY",
-                "target": ["DMG_BONUS_PYRO", "DMG_BONUS_HYDRO", "DMG_BONUS_CRYO", "DMG_BONUS_ELECTRO"],
+                "target": [
+                  "DMG_BONUS_PYRO",
+                  "DMG_BONUS_HYDRO",
+                  "DMG_BONUS_CRYO",
+                  "DMG_BONUS_ELECTRO"
+                ],
                 "settingType": "switch",
                 "defaultEnable": false,
                 "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000110": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [6, 7, 8],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            },
+            "buffs": [
+              {
+                "showIndex": 3,
+                "setTos": ["VAR_CHARA_1"],
+                "setValCalQueues": [
+                  [
+                    {
+                      "relation": ">=",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "const": 42
+                        }
+                      ],
+                      "trueResult": 54,
+                      "falseResult": "origin"
+                    }
+                  ]
+                ],
+                "settingType": "slider",
+                "sliderInitialValue": 0,
+                "sliderStep": 1,
+                "sliderMax": 54,
+                "title": "BUFF.NIGHTSOUL.TITLE"
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "base": "VAR_CHARA_1",
+                "base2": "ATTACK",
+                "maxValConstIndex": 3,
+                "target": ["ATTACK_VAL_UP"],
+                "settingType": "resident",
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["ATTACK_UP"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "healing": {
+                "index": 1,
+                "base": "ATTACK",
+                "healingBonusType": "HEALING_BONUS_OTHER"
+              }
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["ATTACK_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_BONUS_ALL"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000111": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [6, 7],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_PLUNGING",
+              "tag": "VARESA_PLUNGE"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [8, 9, 10],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [13],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [14, 15],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED",
+              "tag": "VARESA_FIERY_PASSION_PLUNGE"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "VARESA_FIERY_PASSION_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_PLUNGING",
+              "tag": "VARESA_VOLCANO_KABLAM"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_1"],
+                  "setValCalQueues": [
+                    [
+                      {
+                        "relation": "+",
+                        "inner": [
+                          {
+                            "relation": "+",
+                            "const": 0
+                          }
+                        ]
+                      }
+                    ]
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "setTos": ["VAR_CHARA_2"],
+                  "setValCalQueues": [
+                    [
+                      {
+                        "relation": "*",
+                        "inner": [
+                          {
+                            "relation": "+",
+                            "const": 0
+                          }
+                        ]
+                      }
+                    ]
+                  ],
+                  "settingType": "resident"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.1,
+                  "base": "FIX_NUMBER_1",
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_1",
+                          "varMap": {
+                            "0": 0,
+                            "1": 5
+                          }
+                        },
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 13
+                          }
+                        },
+                        {
+                          "relation": "*",
+                          "variable": "VAR_CHARA_1"
+                        }
+                      ]
+                    }
+                  ],
+                  "target": ["DMG_RATE_UP_PLUNGING"],
+                  "settingType": "resident",
+                  "tag": "VARESA_PLUNGE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_1",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "target": ["DMG_RATE_UP_PLUNGING"],
+                  "settingType": "resident",
+                  "tag": "VARESA_FIERY_PASSION_PLUNGE"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["ATTACK_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "customValue": 1,
+                "target": ["VAR_CHARA_2"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_1",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "target": ["DMG_RATE_UP_PLUNGING"],
+                "settingType": "resident",
+                "tag": "VARESA_VOLCANO_KABLAM"
+              }
+            ]
+          }
+        ],
+        "3": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "base": "ATTACK",
+                "maxValConstIndex": 1,
+                "target": ["DMG_VAL_UP_PLUNGING"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "VARESA_PLUNGE"
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "VARESA_FIERY_PASSION_ELEMENTAL_BURST"
+              },
+              {
+                "index": 2,
+                "target": ["DMG_BONUS_PLUNGING"],
+                "tag": "VARESA_VOLCANO_KABLAM"
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_CRIT_RATE_UP_PLUNGING"],
+                "settingType": "switch",
+                "defaultEnable": false
+              },
+              {
+                "index": 1,
+                "target": ["DMG_CRIT_DMG_UP_ELEMENTAL_BURST"]
               }
             ]
           }
@@ -20837,6 +21339,39 @@
         }
       ]
     },
+    "14519": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "propIndex": 0,
+              "target": ["ATTACK_UP"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_CRIT_DMG_UP_PLUNGING"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["DMG_CRIT_DMG_UP_PLUNGING"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "15301": {
       "effect": [
         {
@@ -22783,6 +23318,69 @@
             {
               "index": 1,
               "target": ["CRIT_RATE"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
+    "15039": {
+      "set1": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_BONUS_PLUNGING"],
+              "settingType": "resident"
+            }
+          ]
+        }
+      ],
+      "set2": [
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["DMG_BONUS_PLUNGING"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderMin": 0,
+              "sliderMax": 5,
+              "sliderStep": 1
+            }
+          ]
+        }
+      ]
+    },
+    "15040": {
+      "set1": [
+        {
+          "buffs": [
+            {
+              "propIndex": 0,
+              "target": ["DMG_BONUS_CRYO"],
+              "settingType": "resident"
+            }
+          ]
+        }
+      ],
+      "set2": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_BONUS_NORMAL"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["DMG_BONUS_ELEMENTAL_BURST"],
               "settingType": "switch",
               "defaultEnable": false
             }

@@ -34,6 +34,7 @@ import {
   CalcItem,
   TYPE_RELATION,
   TYPE_SKILL,
+  TYPE_ORIGIN,
 } from 'src/app/shared/shared.module';
 import {environment} from 'src/environments/environment';
 
@@ -5197,7 +5198,13 @@ export class CalculatorService {
       if (item.innerClampMax !== undefined && tempRes > item.innerClampMax) {
         tempRes = item.innerClampMax;
       }
-      result = this.calRelationResult(result, tempRes, item.relation);
+      result = this.calRelationResult(
+        result,
+        tempRes,
+        item.relation,
+        item.trueResult,
+        item.falseResult,
+      );
       if (item.clampMin !== undefined && result < item.clampMin) {
         result = item.clampMin;
       }
@@ -5212,8 +5219,8 @@ export class CalculatorService {
     val1: number,
     val2: number,
     relation: TYPE_RELATION,
-    trueResult?: number,
-    falseResult?: number,
+    trueResult?: number | TYPE_ORIGIN,
+    falseResult?: number | TYPE_ORIGIN,
   ): number {
     let result = val1;
     switch (relation) {
@@ -5253,7 +5260,13 @@ export class CalculatorService {
           break;
       }
       if (calc !== undefined) {
-        result = calc ? trueResult : falseResult;
+        result = calc
+          ? trueResult === 'origin'
+            ? result
+            : trueResult
+          : falseResult === 'origin'
+            ? result
+            : falseResult;
       }
     }
     return result;

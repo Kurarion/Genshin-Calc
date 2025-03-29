@@ -257,6 +257,7 @@ export interface ExtraSkillProduct {
 export declare type TYPE_SKILL = 'normal' | 'skill' | 'elementalBurst' | 'proudSkills';
 export declare type TYPE_RELATION = '*' | '+' | '-' | '/' | '>' | '>=' | '<' | '<=' | '!=' | '==';
 export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' | 'switch';
+export declare type TYPE_ORIGIN = 'origin';
 //計算ユニット
 export interface CalcItem {
   relation: TYPE_RELATION;
@@ -265,13 +266,15 @@ export interface CalcItem {
   innerClampMax?: number;
   clampMin?: number;
   clampMax?: number;
+  trueResult?: number | TYPE_ORIGIN;
+  falseResult?: number | TYPE_ORIGIN;
 }
 
 export interface CalcUnit {
   variable?: string;
   varMap?: Record<string, number>;
   const?: number;
-  trueResult?: number;
-  falseResult?: number;
+  trueResult?: number | TYPE_ORIGIN;
+  falseResult?: number | TYPE_ORIGIN;
   relation: TYPE_RELATION;
 }
