@@ -17779,7 +17779,7 @@
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_ELECTRO",
-              "attackBonusType": "DMG_BONUS_CHARGED"
+              "attackBonusType": "DMG_BONUS_PLUNGING"
             }
           },
           {
@@ -17788,7 +17788,7 @@
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_ELECTRO",
-              "attackBonusType": "DMG_BONUS_CHARGED",
+              "attackBonusType": "DMG_BONUS_PLUNGING",
               "tag": "VARESA_FIERY_PASSION_PLUNGE"
             }
           }
