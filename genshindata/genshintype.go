@@ -24,13 +24,10 @@ type GenshinPromoteListData []GenshinPromoteData
 type GenshinPromoteData struct {
 	AvatarPromoteId     uint64           `json:"avatarPromoteId"`
 	WeaponPromoteId     uint64           `json:"weaponPromoteId"`
-	PromoteLevel        int              `json:"AKPHFJACMIB"`
+	PromoteLevel        int              `json:"promoteLevel"`
 	AddProps            []GenshinPropAdd `json:"addProps"`
 	RequiredPlayerLevel int              `json:"requiredPlayerLevel"`
-	UnlockMaxLevel      int              `json:"OJIICILLMLH"`
-	// 针对JSON数据KEY加密的临时处理
-	// PromoteLevel        int              `json:"promoteLevel"`
-	// UnlockMaxLevel      int              `json:"unlockMaxLevel"`
+	UnlockMaxLevel      int              `json:"unlockMaxLevel"`
 }
 
 // func (this GenshinPromoteListData) Len() int {

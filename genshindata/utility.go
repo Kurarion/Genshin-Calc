@@ -8,7 +8,7 @@ import (
 	"regexp"
 )
 
-//正则
+// 正则
 const regexColorToFront = `<color`
 const regexColorToFrontReplaced = `<font color`
 const regexColorToFrontSalsh = `</color`
@@ -19,6 +19,10 @@ const regexLayout1 = `^#`
 const regexLayout1Replaced = ``
 const regexLayout2 = `\{LA.*?_PS#(\w*?)\}`
 const regexLayout2Replaced = `$1`
+const regexLayout3 = `\{LINK#(.*?)\}`
+const regexLayout3Replaced = ``
+const regexLayout4 = `\{/LINK}`
+const regexLayout4Replaced = ``
 const regexColorCode1 = `#99FFFFFF`
 const regexColorCode1Replaced = `#FF6600`
 const regexColorCode2 = `#FFD780FF`
@@ -36,13 +40,15 @@ const regexColorCode7Replaced = `#FF6600`
 const regexColorCode8 = `#99FF88FF`
 const regexColorCode8Replaced = `#FF6600`
 
-//正则
+// 正则
 var regxList = []*regexp.Regexp{
 	regexp.MustCompile(regexColorToFront),
 	regexp.MustCompile(regexColorToFrontSalsh),
 	regexp.MustCompile(regexNToBR),
 	regexp.MustCompile(regexLayout1),
 	regexp.MustCompile(regexLayout2),
+	regexp.MustCompile(regexLayout3),
+	regexp.MustCompile(regexLayout4),
 	regexp.MustCompile(regexColorCode1),
 	regexp.MustCompile(regexColorCode2),
 	regexp.MustCompile(regexColorCode3),
@@ -58,6 +64,8 @@ var regxReplaceList = []string{
 	regexNToBRReplaced,
 	regexLayout1Replaced,
 	regexLayout2Replaced,
+	regexLayout3Replaced,
+	regexLayout4Replaced,
 	regexColorCode1Replaced,
 	regexColorCode2Replaced,
 	regexColorCode3Replaced,
@@ -68,26 +76,26 @@ var regxReplaceList = []string{
 	regexColorCode8Replaced,
 }
 
-//文件定义
+// 文件定义
 type FILETYPE int
 
-//文件类型
+// 文件类型
 const (
 	typeDir FILETYPE = iota
 	typeJs
 )
 
-//文件信息
+// 文件信息
 type FILEINFO struct {
 	path  string
 	class FILETYPE
 	save  bool
 }
 
-//默认Buff大小
+// 默认Buff大小
 const defaultBuffSize = 15000
 
-//从URL读取JSON(Buffer)
+// 从URL读取JSON(Buffer)
 func getJSON(url string) (buf *bytes.Buffer, err error) {
 	rp, err := http.Get(url)
 	if err != nil {
@@ -97,7 +105,7 @@ func getJSON(url string) (buf *bytes.Buffer, err error) {
 	return readBody(rp)
 }
 
-//从Response解析到Buffer
+// 从Response解析到Buffer
 func readBody(rp *http.Response) (buf *bytes.Buffer, err error) {
 	defer func() {
 		r := recover()
@@ -114,14 +122,14 @@ func readBody(rp *http.Response) (buf *bytes.Buffer, err error) {
 	return buf, nil
 }
 
-//从本地读取JSON
+// 从本地读取JSON
 func getLocalJSON(path string) (*bytes.Buffer, error) {
 	content := bytes.NewBuffer(make([]byte, 0, defaultBuffSize))
 	err := readFromFile(path, content)
 	return content, err
 }
 
-//写入文件
+// 写入文件
 func writeToFile(path string, content *bytes.Buffer) error {
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777)
 	if err != nil {
@@ -132,7 +140,7 @@ func writeToFile(path string, content *bytes.Buffer) error {
 	return err
 }
 
-//读取文件
+// 读取文件
 func readFromFile(fileName string, content *bytes.Buffer) error {
 	f, err := os.Open(fileName)
 	if err != nil {
@@ -143,7 +151,7 @@ func readFromFile(fileName string, content *bytes.Buffer) error {
 	return err
 }
 
-//深拷贝Struct
+// 深拷贝Struct
 func copyStruct(dst, src interface{}) {
 	tempA := reflect.ValueOf(dst).Elem()
 	tempB := reflect.ValueOf(src).Elem()
@@ -154,7 +162,7 @@ func copyStruct(dst, src interface{}) {
 	}
 }
 
-//正则替换
+// 正则替换
 func htmlColorTag(origin string) string {
 	var res = origin
 	for i := range regxList {
