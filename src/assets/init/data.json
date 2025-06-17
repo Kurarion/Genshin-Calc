@@ -18318,6 +18318,468 @@
           }
         ]
       }
+    },
+    "10000114": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4, 5],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 6,
+                "setTos": ["VAR_CHARA_1"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 2,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [6],
+              "base": "ATTACK",
+              "canOverride": true,
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_1"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [8, 9, 10],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4, 5, 6],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_NORMAL",
+              "tag": "SKIRK_SEVEN_PHASE_FLASH"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 7,
+                "setTos": ["VAR_CHARA_2"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 3,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [7],
+              "base": "ATTACK",
+              "canOverride": false,
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [9, 10, 11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_3"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 5,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_3"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "SKIRK_SERPENT_SUBTLETY"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
+                "settingType": "slider",
+                "sliderInitialValue": 0,
+                "sliderMin": 0,
+                "sliderMax": 22,
+                "sliderStep": 1,
+                "tag": "SKIRK_SERPENT_SUBTLETY"
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 3,
+                "target": ["DMG_BONUS_NORMAL"],
+                "settingType": "slider",
+                "sliderStartIndex": 3,
+                "sliderMin": 0,
+                "sliderMax": 4,
+                "sliderStep": 1,
+                "tag": "SKIRK_SEVEN_PHASE_FLASH"
+              }
+            ]
+          }
+        ],
+        "proudSkills": [
+          [],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_4"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 3,
+                  "sliderStep": 1,
+                  "title": "BUFF.COMMON_TIMES.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 1,
+                  "target": ["DMG_RATE_MULTI_NORMAL"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_4",
+                          "varMap": {
+                            "0": 0,
+                            "1": 0.1,
+                            "2": 0.2,
+                            "3": 0.7
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "resident",
+                  "tag": "SKIRK_SEVEN_PHASE_FLASH"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 1,
+                  "target": ["DMG_RATE_MULTI_ELEMENTAL_BURST"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_4",
+                          "varMap": {
+                            "0": 0,
+                            "1": 0.05,
+                            "2": 0.15,
+                            "3": 0.6
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "resident"
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["ATTACK_UP"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
+        "3": [
+          {
+            "buffs": [
+              {
+                "customValue": 1,
+                "target": ["ATTACK_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_4",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0.1,
+                          "2": 0.2,
+                          "3": 0.4
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 2,
+                "setTos": ["VAR_CHARA_5"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 3,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_5"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_5"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_CRYO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          }
+        ]
+      }
+    },
+    "10000115": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5, 6],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [8, 9, 10],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "shield": {
+              "index": 2,
+              "constIndex": 1,
+              "constCalRelation": "+",
+              "base": "HP",
+              "shieldBonusType": "SHIELD_BONUS_ELEMENTAL_BURST",
+              "shieldElementType": "HYDRO"
+            }
+          }
+        ],
+        "proudSkills": [
+          [],
+          []
+        ]
+      },
+      "constellation": {
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ELEMENT_SHIELD_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "weapons": {
@@ -19313,6 +19775,98 @@
               "sliderMax": 2,
               "isMaximumStackBuff": true,
               "isAllTeam": true
+            }
+          ]
+        }
+      ]
+    },
+    "11517": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "showIndex": 0,
+              "setTos": ["VAR_WEAPON_1"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderMin": 0,
+              "sliderMax": 2,
+              "sliderStep": 1
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ATTACK_UP"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1,
+                        "2": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["ATTACK_UP"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 0,
+                        "2": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["CRIT_DMG"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 0,
+                        "2": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident"
             }
           ]
         }

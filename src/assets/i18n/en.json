@@ -473,7 +473,9 @@
     "VARESA_PLUNGE": "Plunge",
     "VARESA_FIERY_PASSION_PLUNGE": "Fiery Passion Plunge",
     "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "Fiery Passion Flying Kick",
-    "VARESA_VOLCANO_KABLAM": "Volcano Kablam"
+    "VARESA_VOLCANO_KABLAM": "Volcano Kablam",
+    "SKIRK_SERPENT_SUBTLETY": "Serpent's Subtlety",
+    "SKIRK_SEVEN_PHASE_FLASH": "Seven-Phase Flash"
   },
   "AUTO": {
     "CALC": "Calculate",

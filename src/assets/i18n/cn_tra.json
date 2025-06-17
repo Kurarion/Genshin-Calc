@@ -473,7 +473,9 @@
     "VARESA_PLUNGE": "墜地衝擊",
     "VARESA_FIERY_PASSION_PLUNGE": "熾熱激情狀態墜地衝擊",
     "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "熾熱激情狀態飛踢",
-    "VARESA_VOLCANO_KABLAM": "大火山崩落"
+    "VARESA_VOLCANO_KABLAM": "大火山崩落",
+    "SKIRK_SERPENT_SUBTLETY": "蛇之狡謀",
+    "SKIRK_SEVEN_PHASE_FLASH": "七相一閃"
   },
   "AUTO": {
     "CALC": "計算",

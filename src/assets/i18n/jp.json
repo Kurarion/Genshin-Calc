@@ -473,7 +473,9 @@
     "VARESA_PLUNGE": "落下攻撃",
     "VARESA_FIERY_PASSION_PLUNGE": "猛烈パッション状態の落下攻撃",
     "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "猛烈パッション状態の飛び蹴り",
-    "VARESA_VOLCANO_KABLAM": "大火山おろし"
+    "VARESA_VOLCANO_KABLAM": "大火山おろし",
+    "SKIRK_SERPENT_SUBTLETY": "蛇の狡智",
+    "SKIRK_SEVEN_PHASE_FLASH": "七相一閃"
   },
   "AUTO": {
     "CALC": "計算",
