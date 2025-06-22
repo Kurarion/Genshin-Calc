@@ -972,7 +972,6 @@ export class CalculatorService {
         break;
     }
     {
-      finalRate *= 1 + data[extraAttackFinalRateMultiTypeProp];
       finalRate += data[extraAttackFinalRateUpTypeProp];
       rateAttach = rateAttach.map((x) => x.map((x) => x + data[extraAttackFinalRateUpTypeProp]));
       dmgSectionValue += data[extraAttackDmgSectionValUpTypeProp];
@@ -989,7 +988,6 @@ export class CalculatorService {
       );
       //特別処理
       if (hasTag) {
-        finalRate *= 1 + (data[extraAttackFinalRateMultiTypeProp + tag] ?? 0);
         finalRate += data[extraAttackFinalRateUpTypeProp + tag] ?? 0;
         rateAttach = rateAttach.map((x) => x.map((x) => x + data[extraAttackFinalRateUpTypeProp]));
         dmgSectionValue += data[extraAttackDmgSectionValUpTypeProp + tag] ?? 0;
@@ -1016,6 +1014,14 @@ export class CalculatorService {
           data[extraAttackDmgUpSectionBonusTypeProp + tag] ?? 0,
           '+',
         );
+      }
+    }
+    {
+      finalRate *= 1 + data[extraAttackFinalRateMultiTypeProp];
+      rateAttach = rateAttach.map((x) => x.map((x) => x * (1 + data[extraAttackFinalRateMultiTypeProp])));
+      if (hasTag) {
+        finalRate *= 1 + (data[extraAttackFinalRateMultiTypeProp + tag] ?? 0);
+        rateAttach = rateAttach.map((x) => x.map((x) => x * (1 + (data[extraAttackFinalRateMultiTypeProp + tag] ?? 0))));
       }
     }
     //全ダメージ倍率乗算値
