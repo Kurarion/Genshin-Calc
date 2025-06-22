@@ -18462,7 +18462,8 @@
                 }
               ],
               "elementBonusType": "DMG_BONUS_CRYO",
-              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "SKIRK_SERPENT_SUBTLETY"
             }
           },
           {
