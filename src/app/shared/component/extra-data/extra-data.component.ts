@@ -101,6 +101,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originDmg',
     'critDmg',
     'expectDmg',
+    'originMoonElectroChargedDirectlyDmg',
+    'cirtMoonElectroChargedDirectlyDmg',
+    'expectMoonElectroChargedDirectlyDmg',
     'originVaporizeDmg',
     'cirtVaporizeDmg',
     'expectVaporizeDmg',
@@ -128,6 +131,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'shieldHp',
     'shieldSpecialHp',
     'destructionDmg',
+    'originMoonElectroChargedReactionalDmg',
+    'cirtMoonElectroChargedReactionalDmg',
+    'expectMoonElectroChargedReactionalDmg',
   ];
   readonly notAddToDPSPropList: (keyof DamageResult)[] = ['shieldHp', 'shieldSpecialHp'];
   readonly healingPropList: (keyof HealingResult)[] = ['healing'];
@@ -187,6 +193,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'shieldPyro': 'SHIELD_PYRO',
     'shieldHydro': 'SHIELD_HYDRO',
     'shieldDendro': 'SHIELD_DENDRO',
+
+    'originMoonElectroChargedDirectlyDmg': 'ORIGIN_MOON_ELECTROCHARGED_DIRECTLY',
+    'cirtMoonElectroChargedDirectlyDmg': 'CRIT_MOON_ELECTROCHARGED_DIRECTLY',
+    'expectMoonElectroChargedDirectlyDmg': 'EXPECT_MOON_ELECTROCHARGED_DIRECTLY',
+    'originMoonElectroChargedReactionalDmg': 'ORIGIN_MOON_ELECTROCHARGED_REACTIONAL',
+    'cirtMoonElectroChargedReactionalDmg': 'CRIT_MOON_ELECTROCHARGED_REACTIONAL',
+    'expectMoonElectroChargedReactionalDmg': 'EXPECT_MOON_ELECTROCHARGED_REACTIONAL',
   };
 
   readonly processNameMap: Record<string, string> = {
@@ -244,6 +257,18 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'geoElementAbsProcess': 'SHIELD_GEO_ELEMENT_ABS',
 
     'productProcess': 'PRODUCT_BASE',
+
+    'moonElectroChargedDirectlyBaseProcess': 'DMG_MOON_ELECTRO_CHARGED_DIRECTLY_BASE',
+    'originMoonElectroChargedReactionalProcess1': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_ORIGIN_1',
+    'originMoonElectroChargedReactionalProcess2': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_ORIGIN_2',
+    'originMoonElectroChargedReactionalProcess3': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_ORIGIN_3',
+    'originMoonElectroChargedReactionalProcess4': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_ORIGIN_4',
+    'critMoonElectroChargedReactionalProcess1': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_CRIT_1',
+    'critMoonElectroChargedReactionalProcess2': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_CRIT_2',
+    'critMoonElectroChargedReactionalProcess3': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_CRIT_3',
+    'critMoonElectroChargedReactionalProcess4': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_CRIT_4',
+    'expectMoonElectroChargedReactionalProcess': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_EXPECT',
+    'moonElectroChargedDmgUpSectionProcess': 'DMG_MOON_ELECTRO_CHARGED_RATE',
   };
 
   readonly specialColorMap: Record<string, string | undefined> = {
@@ -274,6 +299,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'shieldPyro': this.colorMap['PYRO'],
     'shieldHydro': this.colorMap['HYDRO'],
     'shieldDendro': this.colorMap['DENDRO'],
+
+    'originMoonElectroChargedDirectlyDmg': '#f5cdf7',
+    'cirtMoonElectroChargedDirectlyDmg': '#f5cdf7',
+    'expectMoonElectroChargedDirectlyDmg': '#f5cdf7',
+    'originMoonElectroChargedReactionalDmg': '#f5cdf7',
+    'cirtMoonElectroChargedReactionalDmg': '#f5cdf7',
+    'expectMoonElectroChargedReactionalDmg': '#f5cdf7',
   };
 
   //キャラ
@@ -1105,6 +1137,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     const valueSortedKey: string[] = [];
     (currentClacResult.calcProcessKeyMap[currentProp] as string[]).forEach((key: string) => {
       const tempValues = currentClacResult.calcProcessValMap[key];
+      if (tempValues === undefined) {
+        return;
+      }
       processKeys.push(this.processNameMap[key]);
       const needRes = tempValues[1].includes('&');
       let processPrefix = '';

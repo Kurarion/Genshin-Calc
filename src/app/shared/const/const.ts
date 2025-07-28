@@ -181,6 +181,7 @@ export class Const {
   static readonly ELEMENT_OVERLOADED = 'OVERLOADED';
   static readonly ELEMENT_BURNING = 'BURNING';
   static readonly ELEMENT_ELECTROCHARGED = 'ELECTROCHARGED';
+  static readonly ELEMENT_MOON_ELECTROCHARGED = 'MOON_ELECTROCHARGED';
   static readonly ELEMENT_SUPERCONDUCT = 'SUPERCONDUCT';
   static readonly ELEMENT_SWIRL = 'SWIRL';
   static readonly ELEMENT_DESTRUCTION = 'DESTRUCTION';
@@ -494,6 +495,8 @@ export class Const {
   static readonly PROP_DMG_RATE_MULTI_OTHER = 'DMG_RATE_MULTI_OTHER';
   //聖遺物セットダメージ倍率乗算値
   static readonly PROP_DMG_RATE_MULTI_SET = 'DMG_RATE_MULTI_SET';
+  //月感電ダメージ倍率乗算値
+  static readonly PROP_DMG_RATE_MULTI_MOON_ELECTROCHARGED = 'DMG_RATE_MULTI_MOON_ELECTROCHARGED';
   //元素スキル治療倍率乗算値
   static readonly PROP_HEALING_RATE_MULTI_SKILL = 'HEALING_RATE_MULTI_SKILL';
   //元素爆発治療倍率乗算値
@@ -620,6 +623,8 @@ export class Const {
   static readonly PROP_DMG_ELEMENT_BURNING_UP = 'DMG_ELEMENT_BURNING_UP';
   //元素(増幅）（感電）
   static readonly PROP_DMG_ELEMENT_ELECTROCHARGED_UP = 'DMG_ELEMENT_ELECTROCHARGED_UP';
+  //元素(増幅）（月感電）
+  static readonly PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP = 'DMG_ELEMENT_MOON_ELECTROCHARGED_UP';
   //元素(増幅）（超電導）
   static readonly PROP_DMG_ELEMENT_SUPERCONDUCT_UP = 'DMG_ELEMENT_SUPERCONDUCT_UP';
   //元素(増幅）（拡散アップ値）
@@ -1099,6 +1104,7 @@ export class Const {
     Const.PROP_DMG_RATE_MULTI_WEAPON,
     Const.PROP_DMG_RATE_MULTI_OTHER,
     Const.PROP_DMG_RATE_MULTI_SET,
+    Const.PROP_DMG_RATE_MULTI_MOON_ELECTROCHARGED,
     Const.PROP_HEALING_RATE_MULTI_SKILL,
     Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST,
     Const.PROP_HEALING_BONUS_NORMAL,
@@ -1172,6 +1178,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_OVERLOADED_UP,
     Const.PROP_DMG_ELEMENT_BURNING_UP,
     Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP,
+    Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP,
     Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP,
     Const.PROP_DMG_ELEMENT_SWIRL_VAL_UP,
     Const.PROP_DMG_ELEMENT_SWIRL_UP,
@@ -1286,6 +1293,7 @@ export class Const {
     Const.PROP_DMG_RATE_MULTI_WEAPON,
     Const.PROP_DMG_RATE_MULTI_OTHER,
     Const.PROP_DMG_RATE_MULTI_SET,
+    Const.PROP_DMG_RATE_MULTI_MOON_ELECTROCHARGED,
     Const.PROP_HEALING_RATE_MULTI_SKILL,
     Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST,
     Const.PROP_HEALING_BONUS_NORMAL,
@@ -1340,6 +1348,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_OVERLOADED_UP,
     Const.PROP_DMG_ELEMENT_BURNING_UP,
     Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP,
+    Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP,
     Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP,
     Const.PROP_DMG_ELEMENT_SWIRL_UP,
     Const.PROP_DMG_ELEMENT_DESTRUCTION_UP,
@@ -1458,6 +1467,7 @@ export class Const {
     [Const.PROP_DMG_RATE_MULTI_WEAPON],
     [Const.PROP_DMG_RATE_MULTI_OTHER],
     [Const.PROP_DMG_RATE_MULTI_SET],
+    [Const.PROP_DMG_RATE_MULTI_MOON_ELECTROCHARGED],
     [Const.PROP_HEALING_RATE_MULTI_SKILL],
     [Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST],
     [Const.PROP_HEALING_BONUS_NORMAL],
@@ -1531,6 +1541,7 @@ export class Const {
     [Const.PROP_DMG_ELEMENT_OVERLOADED_UP],
     [Const.PROP_DMG_ELEMENT_BURNING_UP],
     [Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP],
+    [Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP],
     [Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP],
     [Const.PROP_DMG_ELEMENT_SWIRL_VAL_UP],
     [Const.PROP_DMG_ELEMENT_SWIRL_UP],
@@ -1737,6 +1748,7 @@ export class Const {
     Const.PROP_DMG_RATE_MULTI_WEAPON,
     Const.PROP_DMG_RATE_MULTI_OTHER,
     Const.PROP_DMG_RATE_MULTI_SET,
+    Const.PROP_DMG_RATE_MULTI_MOON_ELECTROCHARGED,
     Const.PROP_HEALING_RATE_MULTI_SKILL,
     Const.PROP_HEALING_RATE_MULTI_ELEMENTAL_BURST,
     Const.PROP_HEALING_BONUS_NORMAL,
@@ -1810,6 +1822,7 @@ export class Const {
     Const.PROP_DMG_ELEMENT_OVERLOADED_UP,
     Const.PROP_DMG_ELEMENT_BURNING_UP,
     Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP,
+    Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP,
     Const.PROP_DMG_ELEMENT_SUPERCONDUCT_UP,
     Const.PROP_DMG_ELEMENT_SWIRL_VAL_UP,
     Const.PROP_DMG_ELEMENT_SWIRL_UP,
@@ -2005,11 +2018,17 @@ export class Const {
         'originDmg',
         'critDmg',
         'expectDmg',
+        'originMoonElectroChargedDirectlyDmg',
+        'cirtMoonElectroChargedDirectlyDmg',
+        'expectMoonElectroChargedDirectlyDmg',
         'originAggravateDmg',
         'cirtAggravateDmg',
         'expectAggravateDmg',
         'overloadedDmg',
         'electroChargedDmg',
+        'originMoonElectroChargedReactionalDmg',
+        'cirtMoonElectroChargedReactionalDmg',
+        'expectMoonElectroChargedReactionalDmg',
         'superconductDmg',
         'hyperbloomDmg',
       ],
@@ -2038,10 +2057,16 @@ export class Const {
         'originDmg',
         'critDmg',
         'expectDmg',
+        'originMoonElectroChargedDirectlyDmg',
+        'cirtMoonElectroChargedDirectlyDmg',
+        'expectMoonElectroChargedDirectlyDmg',
         'originVaporizeDmg',
         'cirtVaporizeDmg',
         'expectVaporizeDmg',
         'electroChargedDmg',
+        'originMoonElectroChargedReactionalDmg',
+        'cirtMoonElectroChargedReactionalDmg',
+        'expectMoonElectroChargedReactionalDmg',
         'ruptureDmg',
       ],
     ],
@@ -2078,17 +2103,26 @@ export class Const {
       Const.PROP_DMG_BONUS_ELECTRO,
       [
         'originDmg',
-        'critDmg',
-        'expectDmg',
+        'originMoonElectroChargedDirectlyDmg',
         'overloadedDmg',
         'electroChargedDmg',
+        'originMoonElectroChargedReactionalDmg',
         'superconductDmg',
         'hyperbloomDmg',
       ],
     ],
     [Const.PROP_DMG_BONUS_GEO, ['originDmg']],
     [Const.PROP_DMG_BONUS_PYRO, ['originDmg', 'overloadedDmg', 'burningDmg', 'burgeonDmg']],
-    [Const.PROP_DMG_BONUS_HYDRO, ['originDmg', 'electroChargedDmg', 'ruptureDmg']],
+    [
+      Const.PROP_DMG_BONUS_HYDRO,
+      [
+        'originDmg',
+        'originMoonElectroChargedDirectlyDmg',
+        'electroChargedDmg',
+        'originMoonElectroChargedReactionalDmg',
+        'ruptureDmg',
+      ],
+    ],
     [Const.PROP_DMG_BONUS_DENDRO, ['originDmg', 'burningDmg', 'ruptureDmg']],
   ]);
 

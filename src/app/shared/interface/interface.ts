@@ -111,6 +111,8 @@ export interface ExtraSkillDamage {
   isAbsoluteDmg?: boolean;
   //表示制御
   displayCalQueue?: CalcItem[];
+  //スペシャルダメージタイプ（デフォルトなし）
+  specialDamageType?: TYPE_SPECIAL_DAMAGE_TYPE;
 }
 
 export interface ExtraSkillBuff {
@@ -258,6 +260,10 @@ export declare type TYPE_SKILL = 'normal' | 'skill' | 'elementalBurst' | 'proudS
 export declare type TYPE_RELATION = '*' | '+' | '-' | '/' | '>' | '>=' | '<' | '<=' | '!=' | '==';
 export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' | 'switch';
 export declare type TYPE_ORIGIN = 'origin';
+export declare type TYPE_SPECIAL_DAMAGE_TYPE =
+  | ''
+  | 'moon-electro-charged-direction'
+  | 'moon-electro-charged-reaction';
 //計算ユニット
 export interface CalcItem {
   relation: TYPE_RELATION;

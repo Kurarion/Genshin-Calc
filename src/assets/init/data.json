@@ -18277,6 +18277,17 @@
                   "isAllTeam": true
                 }
               ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.002,
+                  "base": "VAR_CHARA_1",
+                  "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
+                  "settingType": "resident",
+                  "isAllTeam": true
+                }
+              ]
             }
           ],
           [
@@ -18778,6 +18789,162 @@
                 "isAllTeam": true
               }
             ]
+          }
+        ]
+      }
+    },
+    "10000116": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [7, 8, 9],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            },
+            "shield": {
+              "index": 1,
+              "constIndex": 2,
+              "constCalRelation": "+",
+              "base": "ATTACK",
+              "shieldBonusType": "SHIELD_BONUS_SKILL",
+              "shieldElementType": "ELECTRO"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "damage": {
+                "indexes": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_ELECTRO",
+                "attackBonusType": "DMG_BONUS_OTHER",
+                "specialDamageType": "moon-electro-charged-direction"
+              }
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "ATTACK",
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "damage": {
+                "customValues": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_ELECTRO",
+                "attackBonusType": "DMG_BONUS_OTHER",
+                "specialDamageType": "moon-electro-charged-reaction"
+              },
+              "buffs": [
+                {
+                  "index": 0,
+                  "indexMultiValue": 0.01,
+                  "maxValConstIndex": 1,
+                  "base": "ATTACK",
+                  "target": ["DMG_RATE_MULTI_MOON_ELECTROCHARGED"],
+                  "settingType": "resident",
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "indexMultiValue": 0.01,
+                "maxValConstIndex": 1,
+                "base": "ATTACK",
+                "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-electro-charged-direction"
+            }
+          }
+        ],
+        "5": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-electro-charged-direction"
+            }
           }
         ]
       }
@@ -20334,6 +20501,20 @@
         }
       ]
     },
+    "12432": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "12501": {
       "effect": [
         {
@@ -21280,6 +21461,74 @@
               "target": ["ATTACK_UP"],
               "settingType": "switch",
               "defaultEnable": false,
+              "isAllTeam": true
+            }
+          ]
+        }
+      ]
+    },
+    "13515": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "showIndex": 0,
+              "setTos": ["VAR_WEAPON_1"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderMin": 0,
+              "sliderMax": 2,
+              "sliderStep": 1
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ATTACK_UP"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1,
+                        "2": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 0,
+                        "2": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident",
               "isAllTeam": true
             }
           ]
@@ -23223,7 +23472,7 @@
           "buffs": [
             {
               "customValue": 0.2,
-              "target": ["DMG_ELEMENT_AGGRAVATE_UP"],
+              "target": ["DMG_ELEMENT_AGGRAVATE_UP", "DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
               "settingType": "resident"
             }
           ]

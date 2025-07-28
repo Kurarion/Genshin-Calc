@@ -217,3 +217,7 @@ input[type='number'] {
     transform: scaleX(-1);
   }
 }
+
+.value {
+  white-space: nowrap;
+}

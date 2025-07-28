@@ -29,6 +29,7 @@ import {
   TextInputDialogComponent,
   TextInputDialogData,
   TextInputDialogResult,
+  TYPE_SPECIAL_DAMAGE_TYPE,
   TYPE_SYS_LANG,
   WeaponService,
 } from 'src/app/shared/shared.module';
@@ -46,6 +47,7 @@ interface DamageInfo {
   times: number;
   tag?: string;
   isAbsoluteDmg?: boolean;
+  specialDamageType?: TYPE_SPECIAL_DAMAGE_TYPE;
   iconSrc: string;
   iconBGColor: string;
 }
@@ -88,6 +90,15 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit, OnDest
     'healing': '#91ffa3' + environment.elementColorAlpha,
     'product': '#91ffa3' + environment.elementColorAlpha,
     'shield': this.elementColorMap[Const.PROP_DMG_BONUS_GEO],
+
+    'originMoonElectroChargedDirectlyDmg': this.elementColorMap[Const.ELEMENT_MOON_ELECTROCHARGED],
+    'cirtMoonElectroChargedDirectlyDmg': this.elementColorMap[Const.ELEMENT_MOON_ELECTROCHARGED],
+    'expectMoonElectroChargedDirectlyDmg': this.elementColorMap[Const.ELEMENT_MOON_ELECTROCHARGED],
+    'originMoonElectroChargedReactionalDmg':
+      this.elementColorMap[Const.ELEMENT_MOON_ELECTROCHARGED],
+    'cirtMoonElectroChargedReactionalDmg': this.elementColorMap[Const.ELEMENT_MOON_ELECTROCHARGED],
+    'expectMoonElectroChargedReactionalDmg':
+      this.elementColorMap[Const.ELEMENT_MOON_ELECTROCHARGED],
   };
 
   readonly damageTypeMap: Map<string, string[]> = Const.PROPS_OPTIMAL_DAMAGE_TYPE_LIST_MAP;
@@ -127,6 +138,13 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit, OnDest
     'healing': 'HEALING',
     'product': 'PRODUCT',
     'shield': 'SHIELD',
+
+    'originMoonElectroChargedDirectlyDmg': 'ORIGIN_MOON_ELECTROCHARGED_DIRECTLY',
+    'cirtMoonElectroChargedDirectlyDmg': 'CRIT_MOON_ELECTROCHARGED_DIRECTLY',
+    'expectMoonElectroChargedDirectlyDmg': 'EXPECT_MOON_ELECTROCHARGED_DIRECTLY',
+    'originMoonElectroChargedReactionalDmg': 'ORIGIN_MOON_ELECTROCHARGED_REACTIONAL',
+    'cirtMoonElectroChargedReactionalDmg': 'CRIT_MOON_ELECTROCHARGED_REACTIONAL',
+    'expectMoonElectroChargedReactionalDmg': 'EXPECT_MOON_ELECTROCHARGED_REACTIONAL',
   };
 
   readonly dmgFromName: Record<string, string> = {
@@ -516,6 +534,7 @@ export class DpsComponent extends ExpansionPanelCommon implements OnInit, OnDest
         times: times,
         tag: dmgParam.tag,
         isAbsoluteDmg: dmgParam.isAbsoluteDmg,
+        specialDamageType: dmgParam.specialDamageType,
         iconSrc: iconSrc,
         iconBGColor: iconBGColor,
       });
