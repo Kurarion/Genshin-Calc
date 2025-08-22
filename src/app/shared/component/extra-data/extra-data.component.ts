@@ -104,6 +104,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonElectroChargedDirectlyDmg',
     'cirtMoonElectroChargedDirectlyDmg',
     'expectMoonElectroChargedDirectlyDmg',
+    'originMoonRuptureDirectlyDmg',
+    'cirtMoonRuptureDirectlyDmg',
+    'expectMoonRuptureDirectlyDmg',
     'originVaporizeDmg',
     'cirtVaporizeDmg',
     'expectVaporizeDmg',
@@ -200,6 +203,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonElectroChargedReactionalDmg': 'ORIGIN_MOON_ELECTROCHARGED_REACTIONAL',
     'cirtMoonElectroChargedReactionalDmg': 'CRIT_MOON_ELECTROCHARGED_REACTIONAL',
     'expectMoonElectroChargedReactionalDmg': 'EXPECT_MOON_ELECTROCHARGED_REACTIONAL',
+    'originMoonRuptureDirectlyDmg': 'ORIGIN_MOON_RUPTURE_DIRECTLY',
+    'cirtMoonRuptureDirectlyDmg': 'CRIT_MOON_RUPTURE_DIRECTLY',
+    'expectMoonRuptureDirectlyDmg': 'EXPECT_MOON_RUPTURE_DIRECTLY',
   };
 
   readonly processNameMap: Record<string, string> = {
@@ -240,10 +246,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'aggravateDmgBaseProcess': 'DMG_AGGRAVATE_BASE',
     'spreadDmgBaseProcess': 'DMG_SPREAD_BASE',
     'hyperbloomRateProcess': 'DMG_HYPER_BLOOM_RATE',
+    'hyperbloomExtraValSectionProcess': 'DMG_HYPER_BLOOM_RATE',
     'hyperbloomBaseProcess': 'DMG_HYPER_BLOOM_BASE',
     'burgeonRateProcess': 'DMG_BURGEON_RATE',
+    'burgeonExtraValSectionProcess': 'DMG_BURGEON_RATE',
     'burgeonBaseProcess': 'DMG_BURGEON_BASE',
     'ruptureRateProcess': 'DMG_RUPTURE_RATE',
+    'ruptureExtraValSectionProcess': 'DMG_RUPTURE_RATE',
     'ruptureBaseProcess': 'DMG_RUPTURE_BASE',
     'shieldSpecialRateProcess': 'DMG_SHIELD_SPECIAL_RATE',
 
@@ -269,6 +278,11 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'critMoonElectroChargedReactionalProcess4': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_CRIT_4',
     'expectMoonElectroChargedReactionalProcess': 'DMG_MOON_ELECTRO_CHARGED_REACTIONAL_EXPECT',
     'moonElectroChargedDmgUpSectionProcess': 'DMG_MOON_ELECTRO_CHARGED_RATE',
+    'moonElectroChargedPromotionProcess': 'DMG_MOON_ELECTROCHARGED_PROMOTION',
+    'moonRuptureDirectlyBaseProcess': 'DMG_MOON_RUPTURE_DIRECTLY_BASE',
+    'moonRuptureDmgUpSectionProcess': 'DMG_MOON_RUPTURE_DIRECTLY_RATE',
+    'moonRuptureExtraValSectionProcess': 'DMG_MOON_RUPTURE_DIRECTLY_EXTRA_VAL',
+    'moonRupturePromotionProcess': 'DMG_MOON_RUPTURE_PROMOTION',
   };
 
   readonly specialColorMap: Record<string, string | undefined> = {
@@ -306,6 +320,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonElectroChargedReactionalDmg': '#f5cdf7',
     'cirtMoonElectroChargedReactionalDmg': '#f5cdf7',
     'expectMoonElectroChargedReactionalDmg': '#f5cdf7',
+    'originMoonRuptureDirectlyDmg': '#aceebb',
+    'cirtMoonRuptureDirectlyDmg': '#aceebb',
+    'expectMoonRuptureDirectlyDmg': '#aceebb',
   };
 
   //キャラ
@@ -587,7 +604,13 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   //元素付与変更検知結果
   overrideElementChange!: Subscription;
   //ダメージ表示状態
-  extraInfoStatus: ExtraInfoStatus | undefined = undefined;
+  damageExtraInfoStatus: ExtraInfoStatus | undefined = undefined;
+  //治療表示状態
+  healingExtraInfoStatus: ExtraInfoStatus | undefined = undefined;
+  //バリア表示状態
+  shieldExtraInfoStatus: ExtraInfoStatus | undefined = undefined;
+  //生成物表示状態
+  productExtraInfoStatus: ExtraInfoStatus | undefined = undefined;
   //制御用フラグ
   expandToggleStatus: boolean = false;
 
@@ -702,9 +725,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       if (
         data.forceDisplay !== undefined &&
         data.originIndex !== undefined &&
-        this.extraInfoStatus !== undefined
+        this.damageExtraInfoStatus !== undefined
       ) {
-        this.extraInfoStatus[data.originIndex] = data.forceDisplay;
+        this.damageExtraInfoStatus[data.originIndex] = data.forceDisplay;
       }
     }
     if (this.dmgTempDataList.length != this.dmgDatas.length) {
@@ -753,7 +776,25 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
   initExtraInfoStatus() {
     //ダメージ表示状態をリンク
-    this.extraInfoStatus = this.extraInfoService.getCharExtraInfoStatus(
+    this.damageExtraInfoStatus = this.extraInfoService.getCharExtraInfoStatus(
+      this.characterIndex,
+      this.skill,
+      this.skillIndex,
+    );
+    //治療表示状態をリンク
+    this.healingExtraInfoStatus = this.extraInfoService.getCharExtraInfoStatus(
+      this.characterIndex,
+      this.skill,
+      this.skillIndex,
+    );
+    //バリア表示状態をリンク
+    this.shieldExtraInfoStatus = this.extraInfoService.getCharExtraInfoStatus(
+      this.characterIndex,
+      this.skill,
+      this.skillIndex,
+    );
+    //バリア表示状態をリンク
+    this.productExtraInfoStatus = this.extraInfoService.getCharExtraInfoStatus(
       this.characterIndex,
       this.skill,
       this.skillIndex,
@@ -1137,7 +1178,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     const valueSortedKey: string[] = [];
     (currentClacResult.calcProcessKeyMap[currentProp] as string[]).forEach((key: string) => {
       const tempValues = currentClacResult.calcProcessValMap[key];
-      if (tempValues === undefined) {
+      if (tempValues === undefined || tempValues?.[0] === 0) {
         return;
       }
       processKeys.push(this.processNameMap[key]);
@@ -1226,8 +1267,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   changeDisplayStatus(index: number | undefined, flag: boolean) {
-    if (index !== undefined && this.extraInfoStatus) {
-      this.extraInfoStatus[index] = flag;
+    if (index !== undefined && this.damageExtraInfoStatus) {
+      this.damageExtraInfoStatus[index] = flag;
       this.showDamageEchartsFlag = false;
     }
   }

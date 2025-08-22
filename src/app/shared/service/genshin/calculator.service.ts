@@ -148,7 +148,7 @@ export interface DamageParam {
   attackBonusType: string; //攻撃タイプ
   tag?: string; //タグ
   isAbsoluteDmg?: boolean; //絶対ダメージ
-  specialDamageType?: TYPE_SPECIAL_DAMAGE_TYPE; //月感電
+  specialDamageType?: TYPE_SPECIAL_DAMAGE_TYPE; //特殊ダメージ
   finalResCalQueue?: CalcItem[];
   displayCalQueue?: CalcItem[]; //表示制御
   originIndex?: number;
@@ -191,13 +191,6 @@ export interface DamageResult {
   burningDmg?: number; //燃焼
   electroChargedDmg?: number; //感電
 
-  originMoonElectroChargedDirectlyDmg?: number; //月感電（直接）
-  cirtMoonElectroChargedDirectlyDmg?: number; //月感電（直接）
-  expectMoonElectroChargedDirectlyDmg?: number; //月感電（直接）
-  originMoonElectroChargedReactionalDmg?: number; //月感電（反応）
-  cirtMoonElectroChargedReactionalDmg?: number; //月感電（反応）
-  expectMoonElectroChargedReactionalDmg?: number; //月感電（反応）
-
   superconductDmg?: number; //超電導
   shieldHp?: number; //結晶
   shieldSpecialHp?: number; //結晶特定吸収量
@@ -212,6 +205,16 @@ export interface DamageResult {
   swirlElectroAggravateDmg?: number; //拡散 雷 激化
   swirlPyroDmg?: number; //拡散 火
   swirlHydroDmg?: number; //拡散 水
+
+  originMoonElectroChargedDirectlyDmg?: number; //月感電（直接）
+  cirtMoonElectroChargedDirectlyDmg?: number; //月感電（直接）
+  expectMoonElectroChargedDirectlyDmg?: number; //月感電（直接）
+  originMoonElectroChargedReactionalDmg?: number; //月感電（反応）
+  cirtMoonElectroChargedReactionalDmg?: number; //月感電（反応）
+  expectMoonElectroChargedReactionalDmg?: number; //月感電（反応）
+  originMoonRuptureDirectlyDmg?: number; //月開花（直接）
+  cirtMoonRuptureDirectlyDmg?: number; //月開花（直接）
+  expectMoonRuptureDirectlyDmg?: number; //月開花（直接）
 }
 
 export interface HealingParam {
@@ -222,11 +225,13 @@ export interface HealingParam {
   extra?: number; //追加値
   healingBonusType?: string; //治療タイプ
   finalResCalQueue?: CalcItem[];
+  originIndex?: number;
 }
 
 export interface HealingResult {
   calcProcessKeyMap: Record<string, string[]>;
   calcProcessValMap: Record<string, [number, string] | undefined>;
+  originIndex?: number;
 
   tempAllDate: any;
 
@@ -242,11 +247,13 @@ export interface ShieldParam {
   shieldBonusType?: string; //シールドタイプ
   shieldElementType?: string; //シールド元素タイプ
   finalResCalQueue?: CalcItem[];
+  originIndex?: number;
 }
 
 export interface ShieldResult {
   calcProcessKeyMap: Record<string, string[]>;
   calcProcessValMap: Record<string, [number, string] | undefined>;
+  originIndex?: number;
 
   tempAllDate: any;
 
@@ -269,11 +276,13 @@ export interface ProductParam {
   baseAttach?: string[]; //数値ベース
   extra?: number; //追加値
   finalResCalQueue?: CalcItem[];
+  originIndex?: number;
 }
 
 export interface ProductResult {
   calcProcessKeyMap: Record<string, string[]>;
   calcProcessValMap: Record<string, [number, string] | undefined>;
+  originIndex?: number;
 
   tempAllDate: any;
 
@@ -649,6 +658,7 @@ export class CalculatorService {
     const isDefaultDamageType = specialDamageType === undefined || specialDamageType === '';
     const isDirectlyMoonElectrocharged = specialDamageType === 'moon-electro-charged-direction';
     const isReactionalMoonElectrocharged = specialDamageType === 'moon-electro-charged-reaction';
+    const isDirectlyMoonRupture = specialDamageType === 'moon-rupture-direction';
 
     //表示制御
     let forceDisplay = undefined;
@@ -790,6 +800,7 @@ export class CalculatorService {
     let elementSpread = 5 / (1 + 1200 / data[Const.PROP_ELEMENTAL_MASTERY]);
     let elementAggravate = elementSpread;
     let elementMoonElectroCharged = 6 / (1 + 2000 / data[Const.PROP_ELEMENTAL_MASTERY]);
+    let elementMoonRupture = 6 / (1 + 2000 / data[Const.PROP_ELEMENTAL_MASTERY]);
 
     //--------------------
     //補足
@@ -1033,6 +1044,25 @@ export class CalculatorService {
         );
       }
     }
+    //特殊ダメージ
+    {
+      //月開花（直接）
+      if (isDirectlyMoonRupture) {
+        //会心区
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENT_MOON_RUPTURE] ?? 0;
+        critRateSectionValueProcessFunc(
+          finalCritRate,
+          data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENT_MOON_RUPTURE] ?? 0,
+          '+',
+        );
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENT_MOON_RUPTURE] ?? 0;
+        critDmgSectionValueProcessFunc(
+          finalCritDmg,
+          data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENT_MOON_RUPTURE] ?? 0,
+          '+',
+        );
+      }
+    }
     {
       finalRate *= 1 + data[extraAttackFinalRateMultiTypeProp];
       rateAttach = rateAttach.map((x) =>
@@ -1117,16 +1147,19 @@ export class CalculatorService {
     let swirlPyroDmg;
     let swirlHydroDmg;
     let electroChargedDmg;
+    let destructionDmg;
+    let overloadedDmg;
+    let shieldHp;
+    let shieldSpecialHp;
     let originMoonElectroChargedDirectlyDmg; //月感電（直接）
     let cirtMoonElectroChargedDirectlyDmg; //月感電（直接）
     let expectMoonElectroChargedDirectlyDmg; //月感電（直接）
     let originMoonElectroChargedReactionalDmg; //月感電（反応）
     let cirtMoonElectroChargedReactionalDmg; //月感電（反応）
     let expectMoonElectroChargedReactionalDmg; //月感電（反応）
-    let destructionDmg;
-    let overloadedDmg;
-    let shieldHp;
-    let shieldSpecialHp;
+    let originMoonRuptureDirectlyDmg; //月開花（直接）
+    let cirtMoonRuptureDirectlyDmg; //月開花（直接）
+    let expectMoonRuptureDirectlyDmg; //月開花（直接）
 
     let cryoAntiProcess;
     let anemoAntiProcess;
@@ -1149,6 +1182,24 @@ export class CalculatorService {
     let swirlElectroAggravateRateProcess;
     let electroChargedRateProcess;
     let electroChargedBaseProcess;
+    let destructionRateProcess;
+    let destructionBaseProcess;
+    let overloadedRateProcess;
+    let overloadedBaseProcess;
+    let shieldRateProcess;
+    let shieldBaseProcess;
+    let aggravateDmgBaseProcess;
+    let hyperbloomRateProcess;
+    let hyperbloomExtraValSectionProcess;
+    let hyperbloomBaseProcess;
+    let spreadDmgBaseProcess;
+    let burgeonRateProcess;
+    let burgeonExtraValSectionProcess;
+    let burgeonBaseProcess;
+    let ruptureRateProcess;
+    let ruptureExtraValSectionProcess;
+    let ruptureBaseProcess;
+    let shieldSpecialRateProcess;
     // 月感電（直接）
     let moonElectroChargedDirectlyBaseProcess;
     // 月感電（反応）
@@ -1162,21 +1213,12 @@ export class CalculatorService {
     let critMoonElectroChargedReactionalProcess4;
     let expectMoonElectroChargedReactionalProcess;
     let moonElectroChargedDmgUpSectionProcess;
-    let destructionRateProcess;
-    let destructionBaseProcess;
-    let overloadedRateProcess;
-    let overloadedBaseProcess;
-    let shieldRateProcess;
-    let shieldBaseProcess;
-    let aggravateDmgBaseProcess;
-    let hyperbloomRateProcess;
-    let hyperbloomBaseProcess;
-    let spreadDmgBaseProcess;
-    let burgeonRateProcess;
-    let burgeonBaseProcess;
-    let ruptureRateProcess;
-    let ruptureBaseProcess;
-    let shieldSpecialRateProcess;
+    let moonElectroChargedPromotionProcess;
+    // 月開花（直接）
+    let moonRuptureDirectlyBaseProcess;
+    let moonRuptureDmgUpSectionProcess;
+    let moonRuptureExtraValSectionProcess;
+    let moonRupturePromotionProcess;
 
     let showDerivativeDamage = false;
 
@@ -1234,6 +1276,13 @@ export class CalculatorService {
               '+',
               'end',
             );
+            damgeUp += data[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0;
+            moonElectrochargedDmgUpProcessFunc(
+              damgeUp,
+              data[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0,
+              '+',
+              'end',
+            );
             moonElectroChargedDmgUpSectionProcess = moonElectrochargedDmgUpProcessFunc();
             // 耐性
             let [dmgAntiSectionValue, tempElectroAntiProcess] = this.getDmgAntiSectionValue(
@@ -1241,9 +1290,21 @@ export class CalculatorService {
               Const.ELEMENT_ELECTRO,
             );
             electroAntiProcess = tempElectroAntiProcess();
+            // プロモーション
+            const basePromotion = 1;
+            let promotion = basePromotion;
+            const moonElectrochargedPromotionProcessFunc = this.createProcess(promotion);
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0;
+            moonElectrochargedPromotionProcessFunc(
+              promotion,
+              data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0,
+              '+',
+              'end',
+            );
+            moonElectroChargedPromotionProcess = moonElectrochargedPromotionProcessFunc();
             // 計算
             originMoonElectroChargedDirectlyDmg =
-              damgeValue * (1 + damgeUp) * (1 - dmgAntiSectionValue);
+              damgeValue * damgeUp * (1 - dmgAntiSectionValue) * promotion;
             originMoonElectroChargedDirectlyDmg = this.getFinalResCalQueueResult(
               data,
               originMoonElectroChargedDirectlyDmg,
@@ -1254,6 +1315,80 @@ export class CalculatorService {
             expectMoonElectroChargedDirectlyDmg =
               originMoonElectroChargedDirectlyDmg * (1 - finalCritRate) +
               cirtMoonElectroChargedDirectlyDmg * finalCritRate;
+
+            showDerivativeDamage = true;
+            break;
+          }
+          case isDirectlyMoonRupture: {
+            // 月開花（直接）
+            let damgeValue = data[base] ?? 0;
+            const directlyMoonRuptureProcessFunc = this.createProcess(damgeValue);
+            damgeValue *= rate ?? 0;
+            directlyMoonRuptureProcessFunc(damgeValue, rate ?? 0, '*', 'end');
+            damgeValue *= 1 + (data[Const.PROP_DMG_RATE_MULTI_MOON_RUPTURE] ?? 0);
+            directlyMoonRuptureProcessFunc(
+              damgeValue,
+              1 + (data[Const.PROP_DMG_RATE_MULTI_MOON_RUPTURE] ?? 0),
+              '*',
+              'end',
+            );
+            moonRuptureDirectlyBaseProcess = directlyMoonRuptureProcessFunc();
+            // ダメージ
+            const baseRate = 1;
+            let damgeUp = baseRate;
+            const moonRuptureDmgUpProcessFunc = this.createProcess(damgeUp);
+            const elementalMasteryUp = elementMoonRupture;
+            damgeUp += elementalMasteryUp;
+            moonRuptureDmgUpProcessFunc(damgeUp, elementalMasteryUp, '+', 'end');
+            damgeUp += data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_UP] ?? 0;
+            moonRuptureDmgUpProcessFunc(
+              damgeUp,
+              data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_UP] ?? 0,
+              '+',
+              'end',
+            );
+            damgeUp += data[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0;
+            moonRuptureDmgUpProcessFunc(
+              damgeUp,
+              data[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0,
+              '+',
+              'end',
+            );
+            moonRuptureDmgUpSectionProcess = moonRuptureDmgUpProcessFunc();
+            // 提升値
+            const extraVal = data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP] ?? 0;
+            const moonRuptureExtraValProcessFunc = this.createProcess(extraVal);
+            moonRuptureExtraValSectionProcess = moonRuptureExtraValProcessFunc();
+            // 耐性
+            let [dmgAntiSectionValue, tempDendroAntiProcess] = this.getDmgAntiSectionValue(
+              data,
+              Const.ELEMENT_DENDRO,
+            );
+            dendroAntiProcess = tempDendroAntiProcess();
+            // プロモーション
+            const basePromotion = 1;
+            let promotion = basePromotion;
+            const moonRupturePromotionProcessFunc = this.createProcess(promotion);
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_PROMOTION] ?? 0;
+            moonRupturePromotionProcessFunc(
+              promotion,
+              data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_PROMOTION] ?? 0,
+              '+',
+              'end',
+            );
+            moonRupturePromotionProcess = moonRupturePromotionProcessFunc();
+            // 計算
+            originMoonRuptureDirectlyDmg =
+              (damgeValue * damgeUp + extraVal) * (1 - dmgAntiSectionValue) * promotion;
+            originMoonRuptureDirectlyDmg = this.getFinalResCalQueueResult(
+              data,
+              originMoonRuptureDirectlyDmg,
+              param.finalResCalQueue,
+            );
+            cirtMoonRuptureDirectlyDmg = originMoonRuptureDirectlyDmg * (1 + finalCritDmg);
+            expectMoonRuptureDirectlyDmg =
+              originMoonRuptureDirectlyDmg * (1 - finalCritRate) +
+              cirtMoonRuptureDirectlyDmg * finalCritRate;
 
             showDerivativeDamage = true;
             break;
@@ -1296,7 +1431,10 @@ export class CalculatorService {
           cirtMeltDmg = tempReactionFinalRate * critDmg;
           expectMeltDmg = tempReactionFinalRate * expectDmg;
         }
-        if ([Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)) {
+        if (
+          [Const.PROP_DMG_BONUS_PYRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType) &&
+          !isDirectlyMoonRupture
+        ) {
           let [tempDmgAntiSectionValue, tempPyroAntiProcess] = this.getDmgAntiSectionValue(
             data,
             Const.ELEMENT_PYRO,
@@ -1314,7 +1452,10 @@ export class CalculatorService {
           burningDmg =
             BASE_BURNING[data[Const.PROP_LEVEL] - 1] * burningRate * (1 - tempDmgAntiSectionValue);
         }
-        if ([Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)) {
+        if (
+          [Const.PROP_DMG_BONUS_CRYO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType) &&
+          !isDirectlyMoonElectrocharged
+        ) {
           let [tempDmgAntiSectionValue, tempCryoAntiProcess] = this.getDmgAntiSectionValue(
             data,
             Const.ELEMENT_CRYO,
@@ -1404,14 +1545,17 @@ export class CalculatorService {
               (1 - tempElectroDmgAntiSectionValue) +
             swirlElectroDmg;
         }
-        if ([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)) {
+        if (
+          [Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType) &&
+          !isDirectlyMoonElectrocharged
+        ) {
           let [tempDmgAntiSectionValue, tempElectroAntiProcess] = this.getDmgAntiSectionValue(
             data,
             Const.ELEMENT_ELECTRO,
           );
           electroAntiProcess = tempElectroAntiProcess();
 
-          if (!isReactionalMoonElectrocharged && !isDirectlyMoonElectrocharged) {
+          if (!isReactionalMoonElectrocharged) {
             let electroChargedRate = 1;
             const electroChargedUpValueProcessFunc = this.createProcess(electroChargedRate);
             electroChargedRate += data[Const.PROP_DMG_ELEMENT_ELECTROCHARGED_UP];
@@ -1467,16 +1611,23 @@ export class CalculatorService {
               damageValue *=
                 1 +
                 tempElementMoonElectroCharged +
-                (memberData[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP] ?? 0);
+                (memberData[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP] ?? 0) +
+                (memberData[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0);
               tempResultProcessFunc(
                 damageValue,
-                `(1 ${this.plus} ${this.proximateVal(tempElementMoonElectroCharged)} ${this.plus} ${memberData[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP] ?? 0})`,
+                `(1 ${this.plus} ${this.proximateVal(tempElementMoonElectroCharged)} ${this.plus} ${memberData[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_UP] ?? 0} ${this.plus} ${memberData[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0})`,
                 '*',
                 'end',
               );
               // 耐性
               damageValue *= 1 - tempDmgAntiSectionValue;
               tempResultProcessFunc(damageValue, 1 - tempDmgAntiSectionValue, '*', 'end');
+              // プロモーション
+              const basePromotion = 1;
+              let promotion = basePromotion;
+              promotion += data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0;
+              damageValue *= promotion;
+              tempResultProcessFunc(damageValue, promotion, '*', 'end');
 
               originDamageList.push(damageValue);
               originDamageProcessList.push(tempResultProcessFunc);
@@ -1586,7 +1737,10 @@ export class CalculatorService {
             destructionRate *
             (1 - tempDmgAntiSectionValue);
         }
-        if ([Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType)) {
+        if (
+          [Const.PROP_DMG_BONUS_ELECTRO, Const.PROP_DMG_BONUS_PYRO].includes(elementBonusType) &&
+          !isDirectlyMoonElectrocharged
+        ) {
           let [tempDmgAntiSectionValue, tempPyroAntiProcess] = this.getDmgAntiSectionValue(
             data,
             Const.ELEMENT_PYRO,
@@ -1624,7 +1778,10 @@ export class CalculatorService {
             BASE_SHIELD[data[Const.PROP_LEVEL] - 1] *
             (1 + data[Const.PROP_DMG_ELEMENT_SHIELD_UP] + elementShieldRate);
         }
-        if ([Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType)) {
+        if (
+          [Const.PROP_DMG_BONUS_ELECTRO].includes(elementBonusType) &&
+          !isDirectlyMoonElectrocharged
+        ) {
           let AggravateDmgBase = 1;
           const AggravateDmgBaseProcessFunc = this.createProcess(AggravateDmgBase);
           AggravateDmgBase += data[Const.PROP_DMG_ELEMENT_AGGRAVATE_UP];
@@ -1666,13 +1823,18 @@ export class CalculatorService {
             elementCataclysmRate,
           );
           hyperbloomBaseProcess = this.createProcess(BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1])();
+          // 提升値
+          const extraVal = data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP] ?? 0;
+          const hyperbloomExtraValSectionProcessFunc = this.createProcess(extraVal);
+          hyperbloomExtraValSectionProcess = hyperbloomExtraValSectionProcessFunc();
 
           hyperbloomDmg =
-            BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1] *
-            (1 + data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP] + elementCataclysmRate) *
+            (BASE_HYPERBLOOM[data[Const.PROP_LEVEL] - 1] *
+              (1 + data[Const.PROP_DMG_ELEMENT_HYPERBLOOM_UP] + elementCataclysmRate) +
+              extraVal) *
             (1 - tempDmgAntiSectionValue);
         }
-        if ([Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)) {
+        if ([Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType) && !isDirectlyMoonRupture) {
           let spreadDmgBase = 1;
           const spreadDmgBaseProcessFunc = this.createProcess(spreadDmgBase);
           spreadDmgBase += data[Const.PROP_DMG_ELEMENT_SPREAD_UP];
@@ -1714,13 +1876,21 @@ export class CalculatorService {
           burgeonRate += elementCataclysmRate;
           burgeonRateProcess = burgeonUpValueProcessFunc(burgeonRate, elementCataclysmRate);
           burgeonBaseProcess = this.createProcess(BASE_BURGEON[data[Const.PROP_LEVEL] - 1])();
+          // 提升値
+          const extraVal = data[Const.PROP_DMG_ELEMENT_BURGEON_EXTRA_VAL_UP] ?? 0;
+          const burgeonExtraValSectionProcessFunc = this.createProcess(extraVal);
+          burgeonExtraValSectionProcess = burgeonExtraValSectionProcessFunc();
 
           burgeonDmg =
-            BASE_BURGEON[data[Const.PROP_LEVEL] - 1] *
-            (1 + data[Const.PROP_DMG_ELEMENT_BURGEON_UP] + elementCataclysmRate) *
+            (BASE_BURGEON[data[Const.PROP_LEVEL] - 1] *
+              (1 + data[Const.PROP_DMG_ELEMENT_BURGEON_UP] + elementCataclysmRate) +
+              extraVal) *
             (1 - tempDmgAntiSectionValue);
         }
-        if ([Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType)) {
+        if (
+          [Const.PROP_DMG_BONUS_HYDRO, Const.PROP_DMG_BONUS_DENDRO].includes(elementBonusType) &&
+          !isDirectlyMoonRupture
+        ) {
           let [tempDmgAntiSectionValue, tempDendroAntiProcess] = this.getDmgAntiSectionValue(
             data,
             Const.ELEMENT_DENDRO,
@@ -1734,10 +1904,15 @@ export class CalculatorService {
           ruptureRate += elementCataclysmRate;
           ruptureRateProcess = ruptureUpValueProcessFunc(ruptureRate, elementCataclysmRate);
           ruptureBaseProcess = this.createProcess(BASE_RUPTURE[data[Const.PROP_LEVEL] - 1])();
+          // 提升値
+          const extraVal = data[Const.PROP_DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP] ?? 0;
+          const ruptureExtraValSectionProcessFunc = this.createProcess(extraVal);
+          ruptureExtraValSectionProcess = ruptureExtraValSectionProcessFunc();
 
           ruptureDmg =
-            BASE_RUPTURE[data[Const.PROP_LEVEL] - 1] *
-            (1 + data[Const.PROP_DMG_ELEMENT_RUPTURE_UP] + elementCataclysmRate) *
+            (BASE_RUPTURE[data[Const.PROP_LEVEL] - 1] *
+              (1 + data[Const.PROP_DMG_ELEMENT_RUPTURE_UP] + elementCataclysmRate) +
+              extraVal) *
             (1 - tempDmgAntiSectionValue);
         }
       }
@@ -1866,21 +2041,57 @@ export class CalculatorService {
           'electroChargedBaseProcess',
           'electroAntiProcess',
         ],
+        superconductDmg: ['superconductBaseProcess', 'superconductRateProcess', 'cryoAntiProcess'],
+        ruptureDmg: [
+          'ruptureBaseProcess',
+          'ruptureRateProcess',
+          'ruptureExtraValSectionProcess',
+          'dendroAntiProcess',
+        ],
+        burgeonDmg: [
+          'burgeonBaseProcess',
+          'burgeonRateProcess',
+          'burgeonExtraValSectionProcess',
+          'dendroAntiProcess',
+        ],
+        hyperbloomDmg: [
+          'hyperbloomBaseProcess',
+          'hyperbloomRateProcess',
+          'hyperbloomExtraValSectionProcess',
+          'dendroAntiProcess',
+        ],
+        swirlCryoDmg: ['swirlBaseProcess', 'swirlRateProcess', 'cryoAntiProcess'],
+        swirlElectroDmg: ['swirlBaseProcess', 'swirlRateProcess', 'electroAntiProcess'],
+        swirlElectroAggravateDmg: [
+          'swirlBaseProcess',
+          'swirlRateProcess',
+          'swirlElectroAggravateBaseProcess',
+          'swirlElectroAggravateRateProcess',
+          'electroAntiProcess',
+        ],
+        swirlPyroDmg: ['swirlBaseProcess', 'swirlRateProcess', 'pyroAntiProcess'],
+        swirlHydroDmg: ['swirlBaseProcess', 'swirlRateProcess', 'hydroAntiProcess'],
+        shieldHp: ['shieldBaseProcess', 'shieldRateProcess'],
+        shieldSpecialHp: ['shieldBaseProcess', 'shieldRateProcess', 'shieldSpecialRateProcess'],
+        destructionDmg: ['destructionBaseProcess', 'destructionRateProcess', 'physicalAntiProcess'],
         originMoonElectroChargedDirectlyDmg: [
           'moonElectroChargedDirectlyBaseProcess',
           'moonElectroChargedDmgUpSectionProcess',
+          'moonElectroChargedPromotionProcess',
           'electroAntiProcess',
         ],
         cirtMoonElectroChargedDirectlyDmg: [
           'moonElectroChargedDirectlyBaseProcess',
           'critDmgSectionValueProcess',
           'moonElectroChargedDmgUpSectionProcess',
+          'moonElectroChargedPromotionProcess',
           'electroAntiProcess',
         ],
         expectMoonElectroChargedDirectlyDmg: [
           'moonElectroChargedDirectlyBaseProcess',
           'critExpectDmgSectionValueProcess',
           'moonElectroChargedDmgUpSectionProcess',
+          'moonElectroChargedPromotionProcess',
           'electroAntiProcess',
         ],
         originMoonElectroChargedReactionalDmg: [
@@ -1896,24 +2107,29 @@ export class CalculatorService {
           'critMoonElectroChargedReactionalProcess4',
         ],
         expectMoonElectroChargedReactionalDmg: ['expectMoonElectroChargedReactionalProcess'],
-        superconductDmg: ['superconductBaseProcess', 'superconductRateProcess', 'cryoAntiProcess'],
-        ruptureDmg: ['ruptureBaseProcess', 'ruptureRateProcess', 'dendroAntiProcess'],
-        burgeonDmg: ['burgeonBaseProcess', 'burgeonRateProcess', 'dendroAntiProcess'],
-        hyperbloomDmg: ['hyperbloomBaseProcess', 'hyperbloomRateProcess', 'dendroAntiProcess'],
-        swirlCryoDmg: ['swirlBaseProcess', 'swirlRateProcess', 'cryoAntiProcess'],
-        swirlElectroDmg: ['swirlBaseProcess', 'swirlRateProcess', 'electroAntiProcess'],
-        swirlElectroAggravateDmg: [
-          'swirlBaseProcess',
-          'swirlRateProcess',
-          'swirlElectroAggravateBaseProcess',
-          'swirlElectroAggravateRateProcess',
-          'electroAntiProcess',
+        originMoonRuptureDirectlyDmg: [
+          'moonRuptureDirectlyBaseProcess',
+          'moonRuptureDmgUpSectionProcess',
+          'moonRuptureExtraValSectionProcess',
+          'moonRupturePromotionProcess',
+          'dendroAntiProcess',
         ],
-        swirlPyroDmg: ['swirlBaseProcess', 'swirlRateProcess', 'pyroAntiProcess'],
-        swirlHydroDmg: ['swirlBaseProcess', 'swirlRateProcess', 'hydroAntiProcess'],
-        shieldHp: ['shieldBaseProcess', 'shieldRateProcess'],
-        shieldSpecialHp: ['shieldBaseProcess', 'shieldRateProcess', 'shieldSpecialRateProcess'],
-        destructionDmg: ['destructionBaseProcess', 'destructionRateProcess', 'physicalAntiProcess'],
+        cirtMoonRuptureDirectlyDmg: [
+          'moonRuptureDirectlyBaseProcess',
+          'moonRuptureDmgUpSectionProcess',
+          'moonRuptureExtraValSectionProcess',
+          'critDmgSectionValueProcess',
+          'moonRupturePromotionProcess',
+          'dendroAntiProcess',
+        ],
+        expectMoonRuptureDirectlyDmg: [
+          'moonRuptureDirectlyBaseProcess',
+          'moonRuptureDmgUpSectionProcess',
+          'moonRuptureExtraValSectionProcess',
+          'critExpectDmgSectionValueProcess',
+          'moonRupturePromotionProcess',
+          'dendroAntiProcess',
+        ],
       },
       calcProcessValMap: {
         dmgSectionValueProcess: dmgSectionValueProcessFunc(),
@@ -1970,6 +2186,24 @@ export class CalculatorService {
         swirlElectroAggravateRateProcess,
         electroChargedRateProcess,
         electroChargedBaseProcess,
+        destructionRateProcess,
+        destructionBaseProcess,
+        overloadedRateProcess,
+        overloadedBaseProcess,
+        shieldRateProcess,
+        shieldBaseProcess,
+        aggravateDmgBaseProcess,
+        hyperbloomRateProcess,
+        hyperbloomExtraValSectionProcess,
+        hyperbloomBaseProcess,
+        spreadDmgBaseProcess,
+        burgeonRateProcess,
+        burgeonExtraValSectionProcess,
+        burgeonBaseProcess,
+        ruptureRateProcess,
+        ruptureExtraValSectionProcess,
+        ruptureBaseProcess,
+        shieldSpecialRateProcess,
         // 月感電（直接）
         moonElectroChargedDirectlyBaseProcess,
         // 月感電（反応）
@@ -1983,21 +2217,12 @@ export class CalculatorService {
         critMoonElectroChargedReactionalProcess4,
         expectMoonElectroChargedReactionalProcess,
         moonElectroChargedDmgUpSectionProcess,
-        destructionRateProcess,
-        destructionBaseProcess,
-        overloadedRateProcess,
-        overloadedBaseProcess,
-        shieldRateProcess,
-        shieldBaseProcess,
-        aggravateDmgBaseProcess,
-        hyperbloomRateProcess,
-        hyperbloomBaseProcess,
-        spreadDmgBaseProcess,
-        burgeonRateProcess,
-        burgeonBaseProcess,
-        ruptureRateProcess,
-        ruptureBaseProcess,
-        shieldSpecialRateProcess,
+        moonElectroChargedPromotionProcess,
+        // 月開花（直接）
+        moonRuptureDirectlyBaseProcess,
+        moonRuptureDmgUpSectionProcess,
+        moonRuptureExtraValSectionProcess,
+        moonRupturePromotionProcess,
       },
       elementBonusType: elementBonusType,
       finalCritRate: finalCritRate,
@@ -2024,12 +2249,6 @@ export class CalculatorService {
       overloadedDmg: showDerivativeDamage ? overloadedDmg : undefined,
       burningDmg: showDerivativeDamage ? burningDmg : undefined,
       electroChargedDmg: showDerivativeDamage ? electroChargedDmg : undefined,
-      originMoonElectroChargedDirectlyDmg: originMoonElectroChargedDirectlyDmg, //月感電（直接）
-      cirtMoonElectroChargedDirectlyDmg: cirtMoonElectroChargedDirectlyDmg, //月感電（直接）
-      expectMoonElectroChargedDirectlyDmg: expectMoonElectroChargedDirectlyDmg, //月感電（直接）
-      originMoonElectroChargedReactionalDmg: originMoonElectroChargedReactionalDmg, //月感電（反応）
-      cirtMoonElectroChargedReactionalDmg: cirtMoonElectroChargedReactionalDmg, //月感電（反応）
-      expectMoonElectroChargedReactionalDmg: expectMoonElectroChargedReactionalDmg, //月感電（反応）
       superconductDmg: showDerivativeDamage ? superconductDmg : undefined,
       ruptureDmg: showDerivativeDamage ? ruptureDmg : undefined, //開花 草 水
       burgeonDmg: showDerivativeDamage ? burgeonDmg : undefined, //列開花 草 水 炎
@@ -2044,6 +2263,15 @@ export class CalculatorService {
         ? (shieldHp || 0) * Const.SHIELD_SPECIAL_ELEMENT_ABS_RATE
         : undefined,
       destructionDmg: showDerivativeDamage ? destructionDmg : undefined,
+      originMoonElectroChargedDirectlyDmg: originMoonElectroChargedDirectlyDmg, //月感電（直接）
+      cirtMoonElectroChargedDirectlyDmg: cirtMoonElectroChargedDirectlyDmg, //月感電（直接）
+      expectMoonElectroChargedDirectlyDmg: expectMoonElectroChargedDirectlyDmg, //月感電（直接）
+      originMoonElectroChargedReactionalDmg: originMoonElectroChargedReactionalDmg, //月感電（反応）
+      cirtMoonElectroChargedReactionalDmg: cirtMoonElectroChargedReactionalDmg, //月感電（反応）
+      expectMoonElectroChargedReactionalDmg: expectMoonElectroChargedReactionalDmg, //月感電（反応）
+      originMoonRuptureDirectlyDmg: originMoonRuptureDirectlyDmg, //月開花（直接）
+      cirtMoonRuptureDirectlyDmg: cirtMoonRuptureDirectlyDmg, //月開花（直接）
+      expectMoonRuptureDirectlyDmg: expectMoonRuptureDirectlyDmg, //月開花（直接）
     };
 
     return result;
@@ -2078,6 +2306,7 @@ export class CalculatorService {
     let rateAttach = param.rateAttach ?? [];
     let baseAttach = param.baseAttach ?? [];
     let healingBonusType = param.healingBonusType;
+    let originIndex = param.originIndex;
     //計算
     let healing: number = 0;
     const healingProcessFunc = this.createProcess(healing);
@@ -2161,6 +2390,7 @@ export class CalculatorService {
       },
       tempAllDate,
       healing: healing,
+      originIndex,
     };
 
     return result;
@@ -2196,6 +2426,7 @@ export class CalculatorService {
     let baseAttach = param.baseAttach ?? [];
     let shieldBonusType = param.shieldBonusType;
     let shieldElementType = param.shieldElementType;
+    let originIndex = param.originIndex;
     //計算
     let shield: number = 0;
     const shieldProcessFunc = this.createProcess(shield);
@@ -2345,6 +2576,7 @@ export class CalculatorService {
     result = {
       ...tempRes,
       shieldElementType,
+      originIndex,
     };
 
     return result;
@@ -2378,6 +2610,7 @@ export class CalculatorService {
     let rate = param.rate ?? 0;
     let rateAttach = param.rateAttach ?? [];
     let baseAttach = param.baseAttach ?? [];
+    let originIndex = param.originIndex;
     //計算
     let product: number = 0;
     const productProcessFunc = this.createProcess(product);
@@ -2418,6 +2651,7 @@ export class CalculatorService {
       },
       tempAllDate,
       product: product,
+      originIndex,
     };
 
     return result;
@@ -2897,6 +3131,11 @@ export class CalculatorService {
             rateAttach: rateAttach,
             healingBonusType: healingBonusType,
             finalResCalQueue: healingInfo.finalResCalQueue,
+            originIndex: healingInfo.originSkills
+              ? healingInfo.originIndexes![0]
+              : healingInfo?.customValue
+                ? -1
+                : undefined,
           });
         } else {
           for (let valueIndex of valueIndexes) {
@@ -3017,6 +3256,7 @@ export class CalculatorService {
                 extra: extra,
                 healingBonusType: healingBonusType,
                 finalResCalQueue: healingInfo.finalResCalQueue,
+                originIndex: healingInfo.originSkills ? healingInfo.originIndexes![0] : valueIndex,
               });
             }
           }
@@ -3169,6 +3409,11 @@ export class CalculatorService {
             shieldBonusType: shieldBonusType,
             shieldElementType: shieldElementType,
             finalResCalQueue: shieldInfo.finalResCalQueue,
+            originIndex: shieldInfo.originSkills
+              ? shieldInfo.originIndexes![0]
+              : shieldInfo?.customValue
+                ? -1
+                : undefined,
           });
         } else {
           for (let valueIndex of valueIndexes) {
@@ -3292,6 +3537,7 @@ export class CalculatorService {
                 shieldBonusType: shieldBonusType,
                 shieldElementType: shieldElementType,
                 finalResCalQueue: shieldInfo.finalResCalQueue,
+                originIndex: shieldInfo.originSkills ? shieldInfo.originIndexes![0] : valueIndex,
               });
             }
           }
@@ -3440,6 +3686,7 @@ export class CalculatorService {
             baseAttach: baseAttach,
             rateAttach: rateAttach,
             finalResCalQueue: productHpInfo.finalResCalQueue,
+            originIndex: -1,
           });
         } else {
           for (let valueIndex of valueIndexes) {
@@ -3507,6 +3754,7 @@ export class CalculatorService {
                 rateAttach: rateAttach,
                 extra: extra,
                 finalResCalQueue: productHpInfo.finalResCalQueue,
+                originIndex: valueIndex,
               });
             }
           }

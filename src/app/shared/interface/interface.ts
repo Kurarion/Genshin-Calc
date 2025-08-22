@@ -262,6 +262,7 @@ export declare type TYPE_BUFF_SETTING = 'resident' | 'switch-value' | 'slider' |
 export declare type TYPE_ORIGIN = 'origin';
 export declare type TYPE_SPECIAL_DAMAGE_TYPE =
   | ''
+  | 'moon-rupture-direction'
   | 'moon-electro-charged-direction'
   | 'moon-electro-charged-reaction';
 //計算ユニット

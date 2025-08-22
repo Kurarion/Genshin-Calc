@@ -4,7 +4,7 @@
   <ng-content></ng-content>
 </ng-container>
 <div
-  *ngIf="dmgTempDataList.length > 0 && extraInfoStatus"
+  *ngIf="dmgTempDataList.length > 0 && damageExtraInfoStatus"
   [class]="{
     'normal-group': !isFromInfo
   }"
@@ -45,18 +45,18 @@
           mat-icon-button
           class="toogle-btn"
           [disableRipple]="true"
-          (click)="changeDisplayStatus(dmgDatas[i]['originIndex'], !extraInfoStatus[$any(dmgDatas[i]['originIndex'])])"
+          (click)="changeDisplayStatus(dmgDatas[i]['originIndex'], !damageExtraInfoStatus[$any(dmgDatas[i]['originIndex'])])"
         >
           <mat-icon
             [@showChange]
             class="material-icons-outlined"
-            *ngIf="extraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
+            *ngIf="damageExtraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
             [fontIcon]="'keyboard_arrow_up'"
           ></mat-icon>
           <mat-icon
             [@showChange]
             class="material-icons-outlined"
-            *ngIf="!extraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
+            *ngIf="!damageExtraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
             [fontIcon]="'keyboard_arrow_down'"
           ></mat-icon>
         </button>
@@ -151,7 +151,7 @@
     class="no-scroll-div clickable"
     [@extraDataChangeCol]
     (@extraDataChangeCol.done)="updateRelayout('+/-')"
-    *ngIf="extraInfoStatus === undefined || dmgDatas[i]['originIndex'] !== undefined && extraInfoStatus && extraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
+    *ngIf="damageExtraInfoStatus === undefined || dmgDatas[i]['originIndex'] !== undefined && damageExtraInfoStatus && damageExtraInfoStatus[$any(dmgDatas[i]['originIndex'])]"
   >
     <table>
       <!-- ダメージ -->
@@ -206,6 +206,67 @@
     </mat-button-toggle-group> -->
   </div>
 </ng-container>
+<div
+  *ngIf="healingTempDataList.length > 0 && healingExtraInfoStatus"
+  [class]="{
+    'normal-group': !isFromInfo
+  }"
+>
+  <div
+    [class]="{
+      'show-hide-multi-switch': true,
+      'with-inner-margin': isFromInfo
+    }"
+    *ngIf="healingTempDataList.length > 1"
+  >
+    <button
+      mat-icon-button
+      class="toogle-btn"
+      [disableRipple]="true"
+      (click)="expandToggleStatus = !expandToggleStatus"
+    >
+      <mat-icon class="material-icons-outlined menu-icon">menu</mat-icon>
+    </button>
+  </div>
+  <div
+    [@extraDataChangeRow]
+    [@extraDataChangeCol]
+    [class]="{
+      'show-hide-wrapper': true,
+      'show-hide-wrapper-multi': healingTempDataList.length > 1,
+      'with-inner-margin': isFromInfo,
+      'with-inner-margin-multi': isFromInfo && healingTempDataList.length > 1
+    }"
+    *ngIf="healingTempDataList.length === 1 || expandToggleStatus"
+  >
+    <ng-container *ngFor="let temp of healingTempDataList; index as i">
+      <div class="show-hide-switch" *ngIf="healingDatas[i]['originIndex'] !== undefined">
+        <button
+          mat-icon-button
+          class="toogle-btn"
+          [disableRipple]="true"
+          (click)="changeDisplayStatus(healingDatas[i]['originIndex'], !healingExtraInfoStatus[$any(healingDatas[i]['originIndex'])])"
+        >
+          <mat-icon
+            [@showChange]
+            class="material-icons-outlined"
+            *ngIf="healingExtraInfoStatus[$any(healingDatas[i]['originIndex'])]"
+            [fontIcon]="'keyboard_arrow_up'"
+          ></mat-icon>
+          <mat-icon
+            [@showChange]
+            class="material-icons-outlined"
+            *ngIf="!healingExtraInfoStatus[$any(healingDatas[i]['originIndex'])]"
+            [fontIcon]="'keyboard_arrow_down'"
+          ></mat-icon>
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="!isFromInfo" class="auto-grow-space">
+    <div></div>
+  </div>
+</div>
 <ng-container *ngFor="let temp of healingTempDataList; index as i">
   <div
     echarts
@@ -221,7 +282,12 @@
     [loading]="commonEchartsLoading"
     class="common-echarts"
   ></div>
-  <div class="no-scroll-div clickable">
+  <div
+    [@extraDataChangeCol]
+    (@extraDataChangeCol.done)="updateRelayout('+/-')"
+    class="no-scroll-div clickable"
+    *ngIf="healingExtraInfoStatus === undefined || healingDatas[i]['originIndex'] !== undefined && healingExtraInfoStatus && healingExtraInfoStatus[$any(healingDatas[i]['originIndex'])]"
+  >
     <table>
       <!-- 治療 -->
       <ng-container *ngFor="let prop of healingPropList">
@@ -246,6 +312,67 @@
     </table>
   </div>
 </ng-container>
+<div
+  *ngIf="productTempDataList.length > 0 && healingExtraInfoStatus"
+  [class]="{
+    'normal-group': !isFromInfo
+  }"
+>
+  <div
+    [class]="{
+      'show-hide-multi-switch': true,
+      'with-inner-margin': isFromInfo
+    }"
+    *ngIf="productTempDataList.length > 1"
+  >
+    <button
+      mat-icon-button
+      class="toogle-btn"
+      [disableRipple]="true"
+      (click)="expandToggleStatus = !expandToggleStatus"
+    >
+      <mat-icon class="material-icons-outlined menu-icon">menu</mat-icon>
+    </button>
+  </div>
+  <div
+    [@extraDataChangeRow]
+    [@extraDataChangeCol]
+    [class]="{
+      'show-hide-wrapper': true,
+      'show-hide-wrapper-multi': productTempDataList.length > 1,
+      'with-inner-margin': isFromInfo,
+      'with-inner-margin-multi': isFromInfo && productTempDataList.length > 1
+    }"
+    *ngIf="productTempDataList.length === 1 || expandToggleStatus"
+  >
+    <ng-container *ngFor="let temp of productTempDataList; index as i">
+      <div class="show-hide-switch" *ngIf="productDatas[i]['originIndex'] !== undefined">
+        <button
+          mat-icon-button
+          class="toogle-btn"
+          [disableRipple]="true"
+          (click)="changeDisplayStatus(productDatas[i]['originIndex'], !healingExtraInfoStatus[$any(productDatas[i]['originIndex'])])"
+        >
+          <mat-icon
+            [@showChange]
+            class="material-icons-outlined"
+            *ngIf="healingExtraInfoStatus[$any(productDatas[i]['originIndex'])]"
+            [fontIcon]="'keyboard_arrow_up'"
+          ></mat-icon>
+          <mat-icon
+            [@showChange]
+            class="material-icons-outlined"
+            *ngIf="!healingExtraInfoStatus[$any(productDatas[i]['originIndex'])]"
+            [fontIcon]="'keyboard_arrow_down'"
+          ></mat-icon>
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="!isFromInfo" class="auto-grow-space">
+    <div></div>
+  </div>
+</div>
 <ng-container *ngFor="let temp of productTempDataList; index as i">
   <div
     echarts
@@ -261,7 +388,12 @@
     [loading]="commonEchartsLoading"
     class="common-echarts"
   ></div>
-  <div class="no-scroll-div clickable">
+  <div
+    class="no-scroll-div clickable"
+    [@extraDataChangeCol]
+    (@extraDataChangeCol.done)="updateRelayout('+/-')"
+    *ngIf="productExtraInfoStatus === undefined || productDatas[i]['originIndex'] !== undefined && productExtraInfoStatus && productExtraInfoStatus[$any(productDatas[i]['originIndex'])]"
+  >
     <table>
       <!-- 生成物 -->
       <ng-container *ngFor="let prop of productPropList">
@@ -286,6 +418,67 @@
     </table>
   </div>
 </ng-container>
+<div
+  *ngIf="shieldTempDataList.length > 0 && shieldExtraInfoStatus"
+  [class]="{
+    'normal-group': !isFromInfo
+  }"
+>
+  <div
+    [class]="{
+      'show-hide-multi-switch': true,
+      'with-inner-margin': isFromInfo
+    }"
+    *ngIf="shieldTempDataList.length > 1"
+  >
+    <button
+      mat-icon-button
+      class="toogle-btn"
+      [disableRipple]="true"
+      (click)="expandToggleStatus = !expandToggleStatus"
+    >
+      <mat-icon class="material-icons-outlined menu-icon">menu</mat-icon>
+    </button>
+  </div>
+  <div
+    [@extraDataChangeRow]
+    [@extraDataChangeCol]
+    [class]="{
+      'show-hide-wrapper': true,
+      'show-hide-wrapper-multi': shieldTempDataList.length > 1,
+      'with-inner-margin': isFromInfo,
+      'with-inner-margin-multi': isFromInfo && shieldTempDataList.length > 1
+    }"
+    *ngIf="shieldTempDataList.length === 1 || expandToggleStatus"
+  >
+    <ng-container *ngFor="let temp of shieldTempDataList; index as i">
+      <div class="show-hide-switch" *ngIf="shieldDatas[i]['originIndex'] !== undefined">
+        <button
+          mat-icon-button
+          class="toogle-btn"
+          [disableRipple]="true"
+          (click)="changeDisplayStatus(shieldDatas[i]['originIndex'], !shieldExtraInfoStatus[$any(shieldDatas[i]['originIndex'])])"
+        >
+          <mat-icon
+            [@showChange]
+            class="material-icons-outlined"
+            *ngIf="shieldExtraInfoStatus[$any(shieldDatas[i]['originIndex'])]"
+            [fontIcon]="'keyboard_arrow_up'"
+          ></mat-icon>
+          <mat-icon
+            [@showChange]
+            class="material-icons-outlined"
+            *ngIf="!shieldExtraInfoStatus[$any(shieldDatas[i]['originIndex'])]"
+            [fontIcon]="'keyboard_arrow_down'"
+          ></mat-icon>
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="!isFromInfo" class="auto-grow-space">
+    <div></div>
+  </div>
+</div>
 <ng-container *ngFor="let temp of shieldTempDataList; index as i">
   <div
     echarts
@@ -301,7 +494,12 @@
     [loading]="commonEchartsLoading"
     class="common-echarts"
   ></div>
-  <div class="no-scroll-div clickable">
+  <div
+    [@extraDataChangeCol]
+    (@extraDataChangeCol.done)="updateRelayout('+/-')"
+    class="no-scroll-div clickable"
+    *ngIf="shieldExtraInfoStatus === undefined || shieldDatas[i]['originIndex'] !== undefined && shieldExtraInfoStatus && shieldExtraInfoStatus[$any(shieldDatas[i]['originIndex'])]"
+  >
     <table>
       <!-- バリア -->
       <ng-container *ngFor="let prop of shieldPropList">

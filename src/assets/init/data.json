@@ -18948,6 +18948,996 @@
           }
         ]
       }
+    },
+    "10000119": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [8],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [9, 10, 11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ELEMENTAL_MASTERY",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-rupture-direction"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "indexesAttach": [[4]],
+              "canOverride": false,
+              "base": "ATTACK",
+              "baseAttach": ["ELEMENTAL_MASTERY"],
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "index": 7,
+                "target": ["DMG_ANTI_DENDRO_MINUS", "DMG_ANTI_HYDRO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "elementalBurst": [
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_2"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP", "DMG_ELEMENT_BURGEON_EXTRA_VAL_UP", "DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident",
+                "isAllTeam": true
+              },{
+                "index": 3,
+                "target": ["DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_1"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "target": ["DMG_CRIT_RATE_UP_ELEMENT_MOON_RUPTURE"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_1",
+                          "varMap": {
+                            "0": 0,
+                            "1": 0,
+                            "2": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "resident",
+                  "isAllTeam": true
+                },{
+                  "index": 3,
+                  "target": ["DMG_CRIT_DMG_UP_ELEMENT_MOON_RUPTURE"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_1",
+                          "varMap": {
+                            "0": 0,
+                            "1": 0,
+                            "2": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "ELEMENTAL_MASTERY",
+                  "maxValConstIndex": 1,
+                  "target": ["DMG_BONUS_SKILL"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "damage": [
+                {
+                  "index": 0,
+                  "maxValConstIndex": 1,
+                  "base": "ELEMENTAL_MASTERY",
+                  "target": ["DMG_RATE_MULTI_MOON_RUPTURE"],
+                  "settingType": "resident",
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "healing": {
+              "index": 1,
+              "base": "ELEMENTAL_MASTERY",
+              "healingBonusType": "HEALING_BONUS_OTHER"
+            }
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_3"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP", "DMG_ELEMENT_BURGEON_EXTRA_VAL_UP", "DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident",
+                "isAllTeam": true
+              },{
+                "index": 1,
+                "target": ["DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_ELEMENT_MOON_RUPTURE_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_1",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident",
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_4"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ELEMENTAL_MASTERY",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_4"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-rupture-direction"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ELEMENTAL_MASTERY",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_4"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_DENDRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-rupture-direction"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "index": 4,
+                "target": ["DMG_ELEMENT_MOON_RUPTURE_PROMOTION"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_1",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_4",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident",
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000120": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 3,
+                "setTos": ["VAR_CHARA_1"],
+                "settingType": "slider",
+                "sliderInitialValue": 2,
+                "sliderMin": 1,
+                "sliderMax": 2,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_1"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [7, 8, 9],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 3,
+                "setTos": ["VAR_CHARA_2"],
+                "settingType": "slider",
+                "sliderInitialValue": 2,
+                "sliderMin": 1,
+                "sliderMax": 2,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [6],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1, 2, 5, 6],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-electro-charged-direction"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_3"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_3",
+                          "varMap": {
+                            "0": 0,
+                            "1": 0,
+                            "2": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "resident"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_4"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "ATTACK",
+                  "maxValConstIndex": 1,
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_4",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1,
+                            "2": 0,
+                            "3": 0
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "resident"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "damage": {
+                "customValues": [0],
+                "base": "ATTACK",
+                "canOverride": false,
+                "elementBonusType": "DMG_BONUS_ELECTRO",
+                "attackBonusType": "DMG_BONUS_OTHER",
+                "specialDamageType": "moon-electro-charged-reaction"
+              }
+            },
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "indexMultiValue": 0.01,
+                  "maxValConstIndex": 1,
+                  "base": "ATTACK",
+                  "target": ["DMG_RATE_MULTI_MOON_ELECTROCHARGED"],
+                  "settingType": "resident",
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "1": [
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_OTHER",
+              "specialDamageType": "moon-electro-charged-direction"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_ANTI_ELECTRO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "3": [
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["ATTACK_UP"],
+                "setTos": ["VAR_CHARA_4"],
+                "setValCalQueues": [
+                  [
+                    {
+                      "relation": "+",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "const": 2
+                        }
+                      ]
+                    }
+                  ]
+                ],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "base": "ATTACK",
+                "maxValConstIndex": 3,
+                "target": ["ELEMENTAL_MASTERY"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_4",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 0,
+                          "3": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident"
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION"],
+                "settingType": "switch",
+                "defaultEnable": false
+              },{
+                "index": 2,
+                "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000121": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 2,
+                "setTos": ["VAR_CHARA_1"],
+                "settingType": "slider",
+                "sliderInitialValue": 2,
+                "sliderMin": 1,
+                "sliderMax": 2,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "ATTACK",
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_1"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [7, 8, 9],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "ELEMENTAL_MASTERY",
+                  "target": ["DMG_VAL_UP_ELEMENTAL_BURST"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          []
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["ELEMENTAL_MASTERY"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "damage": {
+              "indexes": [0],
+              "indexesAttach": [[1]],
+              "canOverride": false,
+              "base": "ATTACK",
+              "baseAttach": ["ELEMENTAL_MASTERY"],
+              "elementBonusType": "DMG_BONUS_HYDRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ELEMENT_ELECTROCHARGED_UP", "DMG_ELEMENT_RUPTURE_UP", "DMG_ELEMENT_MOON_ELECTROCHARGED_UP", "DMG_ELEMENT_MOON_RUPTURE_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              },{
+                "index": 2,
+                "target": ["DMG_ELEMENT_ELECTROCHARGED_UP", "DMG_ELEMENT_RUPTURE_UP", "DMG_ELEMENT_MOON_ELECTROCHARGED_UP", "DMG_ELEMENT_MOON_RUPTURE_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "weapons": {
@@ -19525,6 +20515,47 @@
             {
               "index": 1,
               "target": ["DMG_CRIT_RATE_UP_NORMAL", "DMG_CRIT_RATE_UP_CHARGED"]
+            }
+          ]
+        }
+      ]
+    },
+    "11433": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["HP_UP"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2
+            }
+          ]
+        }
+      ]
+    },
+    "11434": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "sliderStartIndex": 1,
+              "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 3
             }
           ]
         }
@@ -20515,6 +21546,22 @@
         }
       ]
     },
+    "12433": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2
+            }
+          ]
+        }
+      ]
+    },
     "12501": {
       "effect": [
         {
@@ -21133,6 +22180,32 @@
         }
       ]
     },
+    "13433": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_ELEMENT_ELECTROCHARGED_UP"],
+              "settingType": "resident"
+            },{
+              "index": 1,
+              "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"]
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "13501": {
       "effect": [
         {
@@ -21530,6 +22603,30 @@
               ],
               "settingType": "resident",
               "isAllTeam": true
+            }
+          ]
+        }
+      ]
+    },
+    "13516": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "showIndex": 1,
+              "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "showIndex": 3,
+              "target": ["CRIT_DMG"],
+              "settingType": "switch",
+              "defaultEnable": false
             }
           ]
         }
@@ -22049,6 +23146,46 @@
         }
       ]
     },
+    "14432": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
+    "14433": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_ELEMENT_RUPTURE_UP"],
+              "settingType": "resident"
+            },{
+              "index": 1,
+              "target": ["DMG_ELEMENT_MOON_RUPTURE_UP"]
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_ELEMENT_MOON_RUPTURE_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "14501": {
       "effect": [
         {
@@ -22466,6 +23603,131 @@
               "target": ["DMG_CRIT_DMG_UP_PLUNGING"],
               "settingType": "switch",
               "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
+    "14520": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "setTos": ["VAR_WEAPON_1"],
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "setTos": ["VAR_WEAPON_2"],
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 4,
+              "target": ["DMG_ELEMENT_RUPTURE_UP"],
+              "finalResCalQueue":[
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    },
+                    {
+                      "relation": "*",
+                      "variable": "VAR_WEAPON_2",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident",
+              "isAllTeam": true
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 5,
+              "target": ["DMG_ELEMENT_BURGEON_UP", "DMG_ELEMENT_HYPERBLOOM_UP"],
+              "finalResCalQueue":[
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    },
+                    {
+                      "relation": "*",
+                      "variable": "VAR_WEAPON_2",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident",
+              "isAllTeam": true
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 6,
+              "target": ["DMG_ELEMENT_MOON_RUPTURE_UP"],
+              "finalResCalQueue":[
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    },
+                    {
+                      "relation": "*",
+                      "variable": "VAR_WEAPON_2",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "resident",
+              "isAllTeam": true
             }
           ]
         }
@@ -22990,6 +24252,22 @@
             "elementBonusType": "DMG_BONUS_PHYSICAL",
             "attackBonusType": "DMG_BONUS_WEAPON"
           }
+        }
+      ]
+    },
+    "15433": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2
+            }
+          ]
         }
       ]
     },
@@ -24495,6 +25773,89 @@
               "target": ["DMG_BONUS_ELEMENTAL_BURST"],
               "settingType": "switch",
               "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
+    "15041": {
+      "set1": [
+        {
+          "buffs": [
+            {
+              "propIndex": 0,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "resident"
+            }
+          ]
+        }
+      ],
+      "set2": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["CRIT_RATE"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2,
+              "isAllTeam": true,
+              "buffTag": "MOON_LIGHT"
+            }
+          ]
+        }
+      ]
+    },
+    "15042": {
+      "set1": [
+        {
+          "buffs": [
+            {
+              "propIndex": 0,
+              "target": ["ENERGY_RECHARGE"],
+              "settingType": "resident"
+            }
+          ]
+        }
+      ],
+      "set2": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["ELEMENTAL_MASTERY"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2,
+              "isAllTeam": true
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 3,
+              "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+              "settingType": "slider",
+              "sliderInitialValue": 0,
+              "sliderStep": 1,
+              "sliderMax": 2,
+              "isAllTeam": true,
+              "buffTag": "MOON_LIGHT"
             }
           ]
         }

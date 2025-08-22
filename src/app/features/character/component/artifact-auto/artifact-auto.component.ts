@@ -122,6 +122,9 @@ export class ArtifactAutoComponent extends ExpansionPanelCommon implements OnIni
     'originMoonElectroChargedReactionalDmg': 'ORIGIN_MOON_ELECTROCHARGED_REACTIONAL',
     'cirtMoonElectroChargedReactionalDmg': 'CRIT_MOON_ELECTROCHARGED_REACTIONAL',
     'expectMoonElectroChargedReactionalDmg': 'EXPECT_MOON_ELECTROCHARGED_REACTIONAL',
+    'originMoonRuptureDirectlyDmg': 'ORIGIN_MOON_RUPTURE_DIRECTLY',
+    'cirtMoonRuptureDirectlyDmg': 'CRIT_MOON_RUPTURE_DIRECTLY',
+    'expectMoonRuptureDirectlyDmg': 'EXPECT_MOON_RUPTURE_DIRECTLY',
   };
 
   readonly subs = Const.PROPS_OPTIMAL_ARTIFACT_SUB;
