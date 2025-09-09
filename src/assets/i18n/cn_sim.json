@@ -56,7 +56,10 @@
     "WEAPON_SMELTING_PLUS_1": "武器精炼+1",
     "WEAPON_SMELTING_PLUS_2": "武器精炼+2",
     "WEAPON_SMELTING_PLUS_3": "武器精炼+3",
-    "WEAPON_SMELTING_PLUS_4": "武器精炼+4"
+    "WEAPON_SMELTING_PLUS_4": "武器精炼+4",
+    "CHARACTER_LEVEL_90": "等级90",
+    "CHARACTER_LEVEL_95": "等级95",
+    "CHARACTER_LEVEL_100": "等级100"
   },
   "SYS": {
     "DELETE": "删除",

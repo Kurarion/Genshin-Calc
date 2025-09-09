@@ -56,7 +56,10 @@
     "WEAPON_SMELTING_PLUS_1": "武器精錬+1",
     "WEAPON_SMELTING_PLUS_2": "武器精錬+2",
     "WEAPON_SMELTING_PLUS_3": "武器精錬+3",
-    "WEAPON_SMELTING_PLUS_4": "武器精錬+4"
+    "WEAPON_SMELTING_PLUS_4": "武器精錬+4",
+    "CHARACTER_LEVEL_90": "レベル90",
+    "CHARACTER_LEVEL_95": "レベル95",
+    "CHARACTER_LEVEL_100": "レベル100"
   },
   "SYS": {
     "DELETE": "削除",
@@ -165,7 +168,7 @@
     "HEALING_RATE_MULTI_SKILL": "元素スキル治療倍率乗算ボーナス",
     "HEALING_RATE_MULTI_ELEMENTAL_BURST": "元素爆発治療倍率乗算ボーナス",
     "DMG_RATE_MULTI_MOON_ELECTROCHARGED": "月感電ダメージ倍率乗算ボーナス",
-    "DMG_RATE_MULTI_MOON_RUPTURE": "月绽放伤害倍率乘算加成",
+    "DMG_RATE_MULTI_MOON_RUPTURE": "月開花ダメージ倍率乗算ボーナス",
     "DMG_VAL_UP_CRYO": "氷元素ダメージアップ値",
     "DMG_VAL_UP_ANEMO": "風元素ダメージアップ値",
     "DMG_VAL_UP_PHYSICAL": "物理ダメージアップ値",
@@ -202,7 +205,7 @@
     "DMG_CRIT_RATE_UP_WEAPON": "武器ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_OTHER": "その他ダメージ会心率アップ値",
     "DMG_CRIT_RATE_UP_SET": "聖遺物ダメージ会心率アップ値",
-    "DMG_CRIT_RATE_UP_ELEMENT_MOON_RUPTURE": "月绽放伤害暴击率增加值",
+    "DMG_CRIT_RATE_UP_ELEMENT_MOON_RUPTURE": "月開花ダメージ会心率アップ値",
     "DMG_CRIT_DMG_UP_CRYO": "氷元素ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_ANEMO": "風元素ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_PHYSICAL": "物理ダメージ会心ダメージアップ値",
@@ -220,9 +223,9 @@
     "DMG_CRIT_DMG_UP_WEAPON": "武器ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_OTHER": "その他ダメージ会心ダメージアップ値",
     "DMG_CRIT_DMG_UP_SET": "聖遺物ダメージ会心ダメージアップ値",
-    "DMG_CRIT_DMG_UP_ELEMENT_MOON_RUPTURE": "月绽放伤害暴击伤害增加值",
+    "DMG_CRIT_DMG_UP_ELEMENT_MOON_RUPTURE": "月開花ダメージ会心ダメージアップ値",
     "DMG_ELEMENT_UP": "元素増幅(全)",
-    "DMG_ELEMENT_MOON_ALL_UP": "元素増幅(月曜)",
+    "DMG_ELEMENT_MOON_ALL_UP": "元素増幅(月反応)",
     "DMG_ELEMENT_VAPORIZE_UP": "元素増幅(蒸発)",
     "DMG_ELEMENT_MELT_UP": "元素増幅(溶解)",
     "DMG_ELEMENT_OVERLOADED_UP": "元素増幅(過負荷)",
@@ -235,15 +238,17 @@
     "DMG_ELEMENT_DESTRUCTION_UP": "元素増幅(氷砕き)",
     "DMG_ELEMENT_SHIELD_UP": "元素増幅(結晶)",
     "DMG_ELEMENT_RUPTURE_UP": "元素増幅(開花)",
-    "DMG_ELEMENT_MOON_RUPTURE_UP": "元素増幅(月绽放)",
+    "DMG_ELEMENT_MOON_RUPTURE_UP": "元素増幅(月開花)",
     "DMG_ELEMENT_BURGEON_UP": "元素増幅(烈開花)",
     "DMG_ELEMENT_HYPERBLOOM_UP": "元素増幅(超開花)",
     "DMG_ELEMENT_AGGRAVATE_UP": "元素増幅(超激化)",
     "DMG_ELEMENT_SPREAD_UP": "元素増幅(拡激化)",
-    "DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP": "元素提升值(月绽放)",
-    "DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP": "元素提升值(绽放)",
-    "DMG_ELEMENT_BURGEON_EXTRA_VAL_UP": "元素提升值(烈绽放)",
-    "DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP": "元素提升值(超绽放)",
+    "DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP": "元素上昇値(月開花)",
+    "DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP": "元素上昇値(開花)",
+    "DMG_ELEMENT_BURGEON_EXTRA_VAL_UP": "元素上昇値(烈開花)",
+    "DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP": "元素上昇値(超開花)",
+    "DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION": "元素向上(月感電)",
+    "DMG_ELEMENT_MOON_RUPTURE_PROMOTION": "元素向上(月開花)",
     "DMG_ENEMY_DEFENSE_BASE": "敵防御(基礎)",
     "DMG_ENEMY_DEFENSE": "敵防御",
     "DMG_ENEMY_DEFENSE_DOWN": "敵防御マイナス",
@@ -314,9 +319,9 @@
       "ORIGIN_MOON_ELECTROCHARGED_REACTIONAL": "通常月感電ダメージ(反応)",
       "CRIT_MOON_ELECTROCHARGED_REACTIONAL": "会心月感電ダメージ(反応)",
       "EXPECT_MOON_ELECTROCHARGED_REACTIONAL": "期待値月感電ダメージ(反応)",
-      "ORIGIN_MOON_RUPTURE_DIRECTLY": "非暴击月绽放伤害(直接)",
-      "CRIT_MOON_RUPTURE_DIRECTLY": "暴击月绽放伤害(直接)",
-      "EXPECT_MOON_RUPTURE_DIRECTLY": "期望月绽放伤害(直接)"
+      "ORIGIN_MOON_RUPTURE_DIRECTLY": "通常月開花ダメージ(直接)",
+      "CRIT_MOON_RUPTURE_DIRECTLY": "会心月開花ダメージ(直接)",
+      "EXPECT_MOON_RUPTURE_DIRECTLY": "期待値月開花ダメージ(直接)"
     },
     "OTHER": {
       "HEALING": "治療",
@@ -383,13 +388,13 @@
       "DMG_AGGRAVATE_BASE": "超激化基本エリア",
       "DMG_SPREAD_BASE": "拡激化基本エリア",
       "DMG_HYPER_BLOOM_BASE": "超開花基本エリア",
-      "DMG_HYPER_BLOOM_EXTRA_VAL": "超绽放额外提升区",
+      "DMG_HYPER_BLOOM_EXTRA_VAL": "超開花追加値エリア",
       "DMG_HYPER_BLOOM_RATE": "超開花増幅エリア",
       "DMG_BURGEON_BASE": "烈開花基本エリア",
-      "DMG_BURGEON_EXTRA_VAL": "烈绽放额外提升区",
+      "DMG_BURGEON_EXTRA_VAL": "烈開花追加値エリア",
       "DMG_BURGEON_RATE": "烈開花増幅エリア",
       "DMG_RUPTURE_BASE": "開花基本エリア",
-      "DMG_RUPTURE_EXTRA_VAL": "绽放额外提升区",
+      "DMG_RUPTURE_EXTRA_VAL": "開花追加値エリア",
       "DMG_RUPTURE_RATE": "開花増幅エリア",
       "DMG_SHIELD_SPECIAL_RATE": "対応元素エリア",
       "HEALING_BASE": "治療基本エリア",
@@ -411,11 +416,11 @@
       "DMG_MOON_ELECTRO_CHARGED_REACTIONAL_CRIT_4": "[メンバー4]反応月感電",
       "DMG_MOON_ELECTRO_CHARGED_REACTIONAL_EXPECT": "期待値月感電",
       "DMG_MOON_ELECTRO_CHARGED_RATE": "月感電増幅乗算エリア",
-      "DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION": "月感电擢升区",
-      "DMG_MOON_RUPTURE_DIRECTLY_BASE": "直伤月绽放基础乘区",
-      "DMG_MOON_RUPTURE_DIRECTLY_RATE": "月绽放増幅乘区",
-      "DMG_MOON_RUPTURE_DIRECTLY_EXTRA_VAL": "月绽放额外提升区",
-      "DMG_ELEMENT_MOON_RUPTURE_PROMOTION": "月绽放擢升区"
+      "DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION": "月感電向上エリア",
+      "DMG_MOON_RUPTURE_DIRECTLY_BASE": "直接月開花基本エリア",
+      "DMG_MOON_RUPTURE_DIRECTLY_RATE": "月開花増幅乗算エリア",
+      "DMG_MOON_RUPTURE_DIRECTLY_EXTRA_VAL": "月開花追加値エリア",
+      "DMG_ELEMENT_MOON_RUPTURE_PROMOTION": "月開花向上エリア"
     }
   },
   "ENKA": {
@@ -616,7 +621,7 @@
       "TITLE": "秘律カウント"
     },
     "MOON_LEVEL": {
-      "TITLE": "月兆等级"
+      "TITLE": "月兆レベル"
     }
   },
   "MENU": {

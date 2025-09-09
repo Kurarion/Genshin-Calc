@@ -44,6 +44,7 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
   private readonly minLevel = 1;
   private readonly maxLevel = 90;
   private readonly ascendLevels = [20, 40, 50, 60, 70, 80, 90];
+  private readonly extraLevel = [95, 100];
   private readonly levelPadNum = 2;
 
   readonly props = Const.PROPS_CHARA_ENEMY_BASE;
@@ -104,10 +105,18 @@ export class CharacterComponent extends ExpansionPanelCommon implements OnInit, 
         });
       }
     }
+    const maxLevelIndex = this.levelOptions.length - 1;
+    //追加レベル
+    for (let i of this.extraLevel) {
+      this.levelOptions.push({
+        level: i.toString().padStart(this.levelPadNum, '0'),
+        levelNum: i,
+      });
+    }
     //初期選択
     this.selectedLevel =
       this.getLevelFromString(this.characterService.getLevel(this.data.id)) ??
-      this.levelOptions[this.levelOptions.length - 1];
+      this.levelOptions[maxLevelIndex];
     //初期データ更新
     this.onChangeLevel(this.selectedLevel);
     //計算後データ取得

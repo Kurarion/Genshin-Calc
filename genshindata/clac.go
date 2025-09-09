@@ -246,11 +246,12 @@ const (
 	//武器最低星级
 	genshinMinWeaponRankLevel = 3
 
-	genshinCharacterLevelMin     = 1
-	genshinCharacterLevelMax     = 90
-	genshinCharacterPromotedMark = "+"
-	genshinMonsterLevelMin       = 1
-	genshinMonsterLevelMax       = 120
+	genshinCharacterLevelMin       = 1
+	genshinCharacterOriginLevelMax = 90
+	genshinCharacterLevelMax       = 100
+	genshinCharacterPromotedMark   = "+"
+	genshinMonsterLevelMin         = 1
+	genshinMonsterLevelMax         = 120
 
 	genshinMaxEmptySkillDesc = 2
 )
@@ -379,11 +380,14 @@ func update(localResPath string, resURL string) error {
 		var temp *bytes.Buffer
 		var err error
 		if len(localResPath) > 0 {
-			temp, err = getLocalJSON(strings.Replace(v, resURL, localResPath, -1))
+			relativePath := strings.TrimPrefix(v, resURL)
+			finalPath := filepath.Join(localResPath, relativePath)
+			temp, err = getLocalJSON(finalPath)
 		} else {
 			temp, err = getJSON(v)
 			if err == nil {
-				tempFilePath := strings.Replace(v, resURL, tempPath, -1)
+				relativePath := strings.TrimPrefix(v, resURL)
+				tempFilePath := filepath.Join(tempPath, relativePath)
 				// 获取父目录
 				parentDir := filepath.Dir(tempFilePath)
 				_, er := os.Stat(parentDir)
@@ -907,6 +911,10 @@ func update(localResPath string, resURL string) error {
 			currentPromote := list[ii]
 			requiredLevel := list[ii-1].UnlockMaxLevel
 			unlockMaxLevel := currentPromote.UnlockMaxLevel
+
+			if unlockMaxLevel == genshinCharacterOriginLevelMax {
+				unlockMaxLevel = genshinCharacterLevelMax
+			}
 
 			for iii := unlockMaxLevel; iii >= requiredLevel; iii-- {
 				currentProperty = dataAvatarMap[currentAvatarData.Id].LevelMap[fmt.Sprintf(configAvatarLevelFormat, iii)]

@@ -1028,9 +1028,23 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       this.weaponService.getStorageInfo(this.characterIndex).smeltingLevel!,
     );
     const smeltingPlusTimes = 5 - currentSmeltingLevel;
+    //現在キャラレベル
+    const currentCharacterLevel = parseInt(this.characterService.getLevel(this.characterIndex)!);
+    const toCalcCharacterLevelList = [90, 95, 100];
+    let toLoopCharacterLevelIndex = 0;
+    for (
+      ;
+      toLoopCharacterLevelIndex < toCalcCharacterLevelList.length;
+      ++toLoopCharacterLevelIndex
+    ) {
+      if (currentCharacterLevel < toCalcCharacterLevelList[toLoopCharacterLevelIndex]) {
+        break;
+      }
+    }
+    const characterLevelPlusTimes = toCalcCharacterLevelList.length - toLoopCharacterLevelIndex;
     let currentGridTop = '';
     let currentToolBoxTop = '';
-    switch (smeltingPlusTimes) {
+    switch (smeltingPlusTimes + characterLevelPlusTimes) {
       case 0:
       case 1:
         currentGridTop = '40%';
@@ -1048,9 +1062,21 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         currentGridTop = '45%';
         currentToolBoxTop = '36%';
         break;
+      case 5:
+        currentGridTop = '47%';
+        currentToolBoxTop = '38%';
+        break;
+      case 6:
+        currentGridTop = '47%';
+        currentToolBoxTop = '38%';
+        break;
+      case 7:
+        currentGridTop = '49%';
+        currentToolBoxTop = '40%';
+        break;
       default:
-        currentGridTop = '45%';
-        currentToolBoxTop = '36%';
+        currentGridTop = '50%';
+        currentToolBoxTop = '41%';
         break;
     }
     ((this as any)[currentOptionProp]!.grid! as any).top = currentGridTop;
@@ -1063,6 +1089,19 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
       for (let [i] of new Array(smeltingPlusTimes).entries()) {
         weaponSmeltingAddOneResults.push(
           valueFunc(this.characterIndex, valueParam, extraData, i + 1),
+        );
+      }
+      const characterLevelFixResults: ValueResult[] = [];
+      for (let i = toLoopCharacterLevelIndex; i < toCalcCharacterLevelList.length; ++i) {
+        characterLevelFixResults.push(
+          valueFunc(
+            this.characterIndex,
+            valueParam,
+            extraData,
+            0,
+            undefined,
+            toCalcCharacterLevelList[i],
+          ),
         );
       }
       const startIndex = -Math.floor(this.stepRange / 2);
@@ -1080,6 +1119,8 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         }
         //精錬プラス
         calcResults.push(...weaponSmeltingAddOneResults);
+        //キャラレベルプラス
+        calcResults.push(...characterLevelFixResults);
         //参照用のため
         calcResults.push(currentClacResult);
         (this as any)[currentResultProp].push([i, calcResults]);
@@ -1115,6 +1156,14 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
         lastValueFrom(this.translateService.get(`OTHER.WEAPON_SMELTING_PLUS_` + (i + 1))),
       );
     }
+    //キャラレベルプラス
+    for (let i = toLoopCharacterLevelIndex; i < toCalcCharacterLevelList.length; ++i) {
+      awaitArray.push(
+        lastValueFrom(
+          this.translateService.get(`OTHER.CHARACTER_LEVEL_` + toCalcCharacterLevelList[i]),
+        ),
+      );
+    }
     const [dmgTitle, ...legendItems] = await Promise.all(awaitArray);
     //series設定更新
     const seriesItems = [];
@@ -1130,7 +1179,7 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     }
     //変更のみの属性を絞り込む
     const hiddenIndexArray = [];
-    for (let i = 0; i < this.subs.length + smeltingPlusTimes; ++i) {
+    for (let i = 0; i < this.subs.length + smeltingPlusTimes + characterLevelPlusTimes; ++i) {
       const isAllSame = dataSetItems.every((currentResultList: any[]) => {
         return currentResultList[i + 1] == currentResultList[currentResultList.length - 1];
       });

@@ -18898,7 +18898,8 @@
                   "maxValConstIndex": 1,
                   "base": "ATTACK",
                   "target": ["DMG_RATE_MULTI_MOON_ELECTROCHARGED"],
-                  "settingType": "resident",
+                  "settingType": "switch",
+                  "defaultEnable": true,
                   "isAllTeam": true
                 }
               ]
@@ -18991,10 +18992,35 @@
             }
           },
           {
+            "buffs": [
+              {
+                "showIndex": 2,
+                "setTos": ["VAR_CHARA_5"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 3,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_QUANTITY.TITLE"
+              }
+            ]
+          },
+          {
             "damage": {
               "indexes": [2],
               "base": "ELEMENTAL_MASTERY",
               "canOverride": false,
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_5"
+                    }
+                  ]
+                }
+              ],
               "elementBonusType": "DMG_BONUS_DENDRO",
               "attackBonusType": "DMG_BONUS_OTHER",
               "specialDamageType": "moon-rupture-direction"
@@ -19038,6 +19064,7 @@
             "buffs": [
               {
                 "index": 2,
+                "base": "ELEMENTAL_MASTERY",
                 "target": ["DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP", "DMG_ELEMENT_BURGEON_EXTRA_VAL_UP", "DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP"],
                 "finalResCalQueue": [
                   {
@@ -19058,6 +19085,7 @@
                 "isAllTeam": true
               },{
                 "index": 3,
+                "base": "ELEMENTAL_MASTERY",
                 "target": ["DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP"],
                 "finalResCalQueue": [
                   {
@@ -19158,13 +19186,14 @@
           ],
           [
             {
-              "damage": [
+              "buffs": [
                 {
                   "index": 0,
-                  "maxValConstIndex": 1,
                   "base": "ELEMENTAL_MASTERY",
+                  "maxValConstIndex": 1,
                   "target": ["DMG_RATE_MULTI_MOON_RUPTURE"],
-                  "settingType": "resident",
+                  "settingType": "switch",
+                  "defaultEnable": true,
                   "isAllTeam": true
                 }
               ]
@@ -19197,6 +19226,7 @@
             "buffs": [
               {
                 "index": 0,
+                "base": "ELEMENTAL_MASTERY",
                 "target": ["DMG_ELEMENT_RUPTURE_EXTRA_VAL_UP", "DMG_ELEMENT_BURGEON_EXTRA_VAL_UP", "DMG_ELEMENT_HYPERBLOOM_EXTRA_VAL_UP"],
                 "finalResCalQueue": [
                   {
@@ -19225,6 +19255,7 @@
                 "isAllTeam": true
               },{
                 "index": 1,
+                "base": "ELEMENTAL_MASTERY",
                 "target": ["DMG_ELEMENT_MOON_RUPTURE_EXTRA_VAL_UP"],
                 "finalResCalQueue": [
                   {
@@ -19322,7 +19353,7 @@
           },
           {
             "damage": {
-              "indexes": [3],
+              "indexes": [4],
               "base": "ELEMENTAL_MASTERY",
               "displayCalQueue": [
                 {
@@ -19344,7 +19375,7 @@
           {
             "buffs": [
               {
-                "index": 4,
+                "index": 5,
                 "target": ["DMG_ELEMENT_MOON_RUPTURE_PROMOTION"],
                 "finalResCalQueue": [
                   {
@@ -19357,14 +19388,6 @@
                           "0": 0,
                           "1": 0,
                           "2": 1
-                        }
-                      },
-                      {
-                        "relation": "*",
-                        "variable": "VAR_CHARA_3",
-                        "varMap": {
-                          "0": 0,
-                          "1": 1
                         }
                       },
                       {
@@ -19636,7 +19659,8 @@
                   "maxValConstIndex": 1,
                   "base": "ATTACK",
                   "target": ["DMG_RATE_MULTI_MOON_ELECTROCHARGED"],
-                  "settingType": "resident",
+                  "settingType": "switch",
+                  "defaultEnable": true,
                   "isAllTeam": true
                 }
               ]
@@ -19648,7 +19672,7 @@
         "1": [
           {
             "damage": {
-              "indexes": [1],
+              "indexes": [0],
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_ELECTRO",
@@ -19659,10 +19683,43 @@
           {
             "buffs": [
               {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_5"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
                 "index": 2,
                 "target": ["DMG_ANTI_ELECTRO_MINUS"],
-                "settingType": "switch",
-                "defaultEnable": false,
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 1
+                        }
+                      },
+                      {
+                        "relation": "*",
+                        "variable": "VAR_CHARA_5",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident",
                 "isAllTeam": true
               }
             ]
@@ -19672,34 +19729,46 @@
           {
             "buffs": [
               {
-                "index": 2,
-                "target": ["ATTACK_UP"],
-                "setTos": ["VAR_CHARA_4"],
-                "setValCalQueues": [
-                  [
-                    {
-                      "relation": "+",
-                      "inner": [
-                        {
-                          "relation": "+",
-                          "const": 2
-                        }
-                      ]
-                    }
-                  ]
-                ],
+                "showIndex": 0,
+                "customValue": 2,
+                "target": ["VAR_CHARA_4"],
                 "settingType": "switch",
-                "defaultEnable": false,
-                "isAllTeam": true
+                "defaultEnable": false
               }
             ]
           },
           {
             "buffs": [
               {
-                "index": 2,
+                "index": 0,
+                "target": ["ATTACK_UP"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_4",
+                        "varMap": {
+                          "0": 0,
+                          "1": 0,
+                          "2": 0,
+                          "3": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "resident"
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
                 "base": "ATTACK",
-                "maxValConstIndex": 3,
+                "maxValConstIndex": 2,
                 "target": ["ELEMENTAL_MASTERY"],
                 "finalResCalQueue": [
                   {
@@ -19732,7 +19801,7 @@
                 "settingType": "switch",
                 "defaultEnable": false
               },{
-                "index": 2,
+                "index": 1,
                 "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION"],
                 "finalResCalQueue": [
                   {
@@ -20555,7 +20624,7 @@
               "settingType": "slider",
               "sliderInitialValue": 0,
               "sliderStep": 1,
-              "sliderMax": 3
+              "sliderMax": 2
             }
           ]
         }
@@ -22613,7 +22682,7 @@
         {
           "buffs": [
             {
-              "showIndex": 1,
+              "index": 1,
               "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
               "settingType": "switch",
               "defaultEnable": false
@@ -22623,7 +22692,7 @@
         {
           "buffs": [
             {
-              "showIndex": 3,
+              "index": 3,
               "target": ["CRIT_DMG"],
               "settingType": "switch",
               "defaultEnable": false
@@ -25299,6 +25368,12 @@
                 "DMG_ELEMENT_HYPERBLOOM_UP"
               ],
               "settingType": "resident"
+            },{
+              "index": 7,
+              "target": [
+                "DMG_ELEMENT_MOON_RUPTURE_UP"
+              ],
+              "settingType": "resident"
             }
           ]
         },
@@ -25315,6 +25390,11 @@
               "sliderInitialValue": 0,
               "sliderStep": 1,
               "sliderMax": 4
+            },{
+              "customValue": 0.025,
+              "target": [
+                "DMG_ELEMENT_MOON_RUPTURE_UP"
+              ]
             }
           ]
         }
@@ -25794,7 +25874,7 @@
         {
           "buffs": [
             {
-              "index": 0,
+              "index": 1,
               "target": ["CRIT_RATE"],
               "settingType": "slider",
               "sliderInitialValue": 0,
@@ -25835,7 +25915,7 @@
         {
           "buffs": [
             {
-              "index": 0,
+              "index": 1,
               "target": ["ELEMENTAL_MASTERY"],
               "settingType": "slider",
               "sliderInitialValue": 0,

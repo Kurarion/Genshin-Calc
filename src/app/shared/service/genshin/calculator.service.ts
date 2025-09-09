@@ -350,8 +350,8 @@ const BASE_LEVEL_MULTIPLIER = [
   679.49683, 707.79406, 736.671422, 765.640231, 794.773403, 824.677397, 851.157781, 877.74209,
   914.229123, 946.746752, 979.411386, 1011.223022, 1044.791746, 1077.443668, 1109.99754,
   1142.976615, 1176.369483, 1210.184393, 1253.835659, 1288.952801, 1325.484092, 1363.456928,
-  1405.097377, 1446.853458, 1488.215547, 1528.444567, 1580.367911, 1630.847528, 1711.197785,
-  1780.453941, 1847.322809, 1911.474309, 1972.864342, 2030.071808,
+  1405.097377, 1446.853458, 1488.215547, 1528.444567, 1580.367911, 1630.847528, 1561.468,
+  1780.453941, 1847.322809, 1911.474309, 1972.864342, 1674.8092,
 ];
 const BASE_BURNING = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 0.25);
 const BASE_SUPERCONDUCT = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 1.5);
@@ -629,6 +629,7 @@ export class CalculatorService {
     extraData?: Record<string, number>,
     toAddWeaponSmelting?: number,
     reuseDatas?: Record<string, number>,
+    withFixedCharacterLevel?: number,
   ) {
     let indexStr = index.toString();
     if (this.isDirty(indexStr) && extraData == undefined) {
@@ -641,7 +642,13 @@ export class CalculatorService {
       if (reuseDatas != undefined) {
         data = reuseDatas;
       } else {
-        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        data = this.getAllData(
+          indexStr,
+          extraData,
+          toAddWeaponSmelting,
+          true,
+          withFixedCharacterLevel,
+        );
         tempAllDate = data;
       }
     }
@@ -2284,6 +2291,7 @@ export class CalculatorService {
     extraData?: Record<string, number>,
     toAddWeaponSmelting?: number,
     reuseDatas?: Record<string, number>,
+    withFixedCharacterLevel?: number,
   ) {
     let indexStr = index.toString();
     if (this.isDirty(indexStr)) {
@@ -2296,7 +2304,13 @@ export class CalculatorService {
       if (reuseDatas != undefined) {
         data = reuseDatas;
       } else {
-        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        data = this.getAllData(
+          indexStr,
+          extraData,
+          toAddWeaponSmelting,
+          true,
+          withFixedCharacterLevel,
+        );
         tempAllDate = data;
       }
     }
@@ -2403,6 +2417,7 @@ export class CalculatorService {
     extraData?: Record<string, number>,
     toAddWeaponSmelting?: number,
     reuseDatas?: Record<string, number>,
+    withFixedCharacterLevel?: number,
   ) {
     let indexStr = index.toString();
     if (this.isDirty(indexStr)) {
@@ -2415,7 +2430,13 @@ export class CalculatorService {
       if (reuseDatas != undefined) {
         data = reuseDatas;
       } else {
-        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        data = this.getAllData(
+          indexStr,
+          extraData,
+          toAddWeaponSmelting,
+          true,
+          withFixedCharacterLevel,
+        );
         tempAllDate = data;
       }
     }
@@ -2589,6 +2610,7 @@ export class CalculatorService {
     extraData?: Record<string, number>,
     toAddWeaponSmelting?: number,
     reuseDatas?: Record<string, number>,
+    withFixedCharacterLevel?: number,
   ) {
     let indexStr = index.toString();
     if (this.isDirty(indexStr)) {
@@ -2601,7 +2623,13 @@ export class CalculatorService {
       if (reuseDatas != undefined) {
         data = reuseDatas;
       } else {
-        data = this.getAllData(indexStr, extraData, toAddWeaponSmelting);
+        data = this.getAllData(
+          indexStr,
+          extraData,
+          toAddWeaponSmelting,
+          true,
+          withFixedCharacterLevel,
+        );
         tempAllDate = data;
       }
     }
@@ -4036,6 +4064,7 @@ export class CalculatorService {
     extraData?: Record<string, number>,
     toAddWeaponSmelting: number = 0,
     withEnemyAnt: boolean = true,
+    withFixedCharacterLevel: number = -1,
   ) {
     let result: Record<string, number> = {};
     let indexStr = index.toString();
@@ -4051,12 +4080,14 @@ export class CalculatorService {
     let tempWeaponData: [Record<string, number>, SpecialBuff[], TeamBuff[]] | null = null;
     //カスタム武器精錬
     let useCustomWeaponSmelting = toAddWeaponSmelting !== 0;
+    //カスタムキャラレベル
+    let customCharacterLevel = withFixedCharacterLevel;
 
     for (let key of Const.PROPS_ALL_BASE) {
       if (!(key in result)) {
         result[key] = 0;
       }
-      result[key] += this.getProperty(index, key, useCustomWeaponSmelting);
+      result[key] += this.getProperty(index, key, useCustomWeaponSmelting, customCharacterLevel);
     }
     if (withEnemyAnt) {
       for (let key of Const.PROPS_ENEMY_ANTI.concat(Const.PROPS_ENEMY_DEFENSE)) {
@@ -4426,7 +4457,12 @@ export class CalculatorService {
   }
 
   //全情報から属性取得（まとめ）
-  private getProperty(index: string | number, prop: string, withoutWeaponExtra: boolean = false) {
+  private getProperty(
+    index: string | number,
+    prop: string,
+    withoutWeaponExtra: boolean = false,
+    customCharacterLevel: number = -1,
+  ) {
     let result = 0;
     let indexStr = index.toString();
     let genshinDataProp = prop;
@@ -4443,7 +4479,7 @@ export class CalculatorService {
     ) {
       switch (prop) {
         case Const.PROP_LEVEL:
-          result = this.getCharacterData(indexStr).level;
+          result = this.getCharacterData(indexStr, customCharacterLevel).level;
           return result;
         //break;
         case Const.PROP_ELEMENTAL_BURST_ENERGY:
@@ -4471,7 +4507,9 @@ export class CalculatorService {
       return this.getEnemyData(indexStr)[genshinDataProp as keyof EnemyStatus] ?? 0;
     }
 
-    result += this.getCharacterData(indexStr)[genshinDataProp as keyof CharStatus] ?? 0;
+    result +=
+      this.getCharacterData(indexStr, customCharacterLevel)[genshinDataProp as keyof CharStatus] ??
+      0;
     result += this.getWeaponData(indexStr)[genshinDataProp as keyof WeaponStatus] ?? 0;
     let extraCharaResult = this.dataMap[indexStr].extraCharaResult!;
     if (extraCharaResult[prop] != undefined) {
@@ -5610,10 +5648,12 @@ export class CalculatorService {
     return true;
   }
 
-  private getCharacterData(index: string | number): CharStatus {
-    return this.dataMap[index]!.characterData!.levelMap[
-      this.characterService.getLevel(index.toString())!
-    ];
+  private getCharacterData(index: string | number, customCharacterLevel: number = -1): CharStatus {
+    let level: string = this.characterService.getLevel(index.toString())!;
+    if (customCharacterLevel !== -1) {
+      level = customCharacterLevel.toString();
+    }
+    return this.dataMap[index]!.characterData!.levelMap[level];
   }
 
   private getWeaponData(index: string | number): WeaponStatus {
