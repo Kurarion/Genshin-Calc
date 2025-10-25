@@ -169,6 +169,7 @@
     "HEALING_RATE_MULTI_ELEMENTAL_BURST": "Elemental Burst Healing Multiplier Bonus",
     "DMG_RATE_MULTI_MOON_ELECTROCHARGED": "Lunar Electro-Charged DMG Multiplier Bonus",
     "DMG_RATE_MULTI_MOON_RUPTURE": "Lunar Rupture DMG Multiplier Bonus",
+    "DMG_BASICS_MULTI_MOON_RUPTURE": "月绽放基础区倍率乘算加成",
     "DMG_VAL_UP_CRYO": "Cryo DMG Increase",
     "DMG_VAL_UP_ANEMO": "Anemo DMG Increase",
     "DMG_VAL_UP_PHYSICAL": "Physical DMG Increase",
@@ -519,7 +520,8 @@
     "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "Fiery Passion Flying Kick",
     "VARESA_VOLCANO_KABLAM": "Volcano Kablam",
     "SKIRK_SERPENT_SUBTLETY": "Serpent's Subtlety",
-    "SKIRK_SEVEN_PHASE_FLASH": "Seven-Phase Flash"
+    "SKIRK_SEVEN_PHASE_FLASH": "Seven-Phase Flash",
+    "NEFER_PHANTASM_PERFORMANCE": "Phantasm Performance"
   },
   "AUTO": {
     "CALC": "Calculate",

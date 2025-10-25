@@ -169,6 +169,7 @@
     "HEALING_RATE_MULTI_ELEMENTAL_BURST": "元素爆發治療倍率乘算加成",
     "DMG_RATE_MULTI_MOON_ELECTROCHARGED": "月感電傷害倍率乘算加成",
     "DMG_RATE_MULTI_MOON_RUPTURE": "月綻放傷害倍率乘算加成",
+    "DMG_BASICS_MULTI_MOON_RUPTURE": "月绽放基础区倍率乘算加成",
     "DMG_VAL_UP_CRYO": "冰元素傷害增加值",
     "DMG_VAL_UP_ANEMO": "風元素傷害增加值",
     "DMG_VAL_UP_PHYSICAL": "物理傷害增加值",
@@ -519,7 +520,8 @@
     "VARESA_FIERY_PASSION_ELEMENTAL_BURST": "熾熱激情狀態飛踢",
     "VARESA_VOLCANO_KABLAM": "大火山崩落",
     "SKIRK_SERPENT_SUBTLETY": "蛇之狡謀",
-    "SKIRK_SEVEN_PHASE_FLASH": "七相一閃"
+    "SKIRK_SEVEN_PHASE_FLASH": "七相一閃",
+    "NEFER_PHANTASM_PERFORMANCE": "幻戲"
   },
   "AUTO": {
     "CALC": "計算",

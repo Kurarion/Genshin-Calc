@@ -1384,9 +1384,14 @@ export class CalculatorService {
               'end',
             );
             moonRupturePromotionProcess = moonRupturePromotionProcessFunc();
+            // // 基礎区乗算値
+            // const basics_multi = data[Const.PROP_DMG_BASICS_MULTI_MOON_RUPTURE] ?? 0;
             // 計算
             originMoonRuptureDirectlyDmg =
-              (damgeValue * damgeUp + extraVal) * (1 - dmgAntiSectionValue) * promotion;
+              (damgeValue * damgeUp + extraVal) *
+              // basics_multi *
+              (1 - dmgAntiSectionValue) *
+              promotion;
             originMoonRuptureDirectlyDmg = this.getFinalResCalQueueResult(
               data,
               originMoonRuptureDirectlyDmg,

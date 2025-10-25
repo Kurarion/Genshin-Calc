@@ -64,6 +64,18 @@ var (
 			languageEN:  "Lumine",
 			languageJP:  "蛍",
 		},
+		10000117: &map[string]string{
+			languageCHS: "奇偶·男性",
+			languageCHT: "奇偶·男性",
+			languageEN:  "Manekin",
+			languageJP:  "ドール（男）",
+		},
+		10000118: &map[string]string{
+			languageCHS: "奇偶·女性",
+			languageCHT: "奇偶·女性",
+			languageEN:  "Manekina",
+			languageJP:  "ドール（女）",
+		},
 	}
 
 	elementMap = map[int](*map[string]string){
@@ -249,12 +261,29 @@ const (
 	genshinCharacterLevelMin       = 1
 	genshinCharacterOriginLevelMax = 90
 	genshinCharacterLevelMax       = 100
+	genshinWeaponLevelMin          = 1
+	genshinWeaponLevelMax          = 90
 	genshinCharacterPromotedMark   = "+"
 	genshinMonsterLevelMin         = 1
 	genshinMonsterLevelMax         = 120
 
 	genshinMaxEmptySkillDesc = 2
 )
+
+var (
+	genshinCharacterLevelPlus = []int{95, 100}
+)
+
+var levelList []int = func() []int {
+	slice := make([]int, genshinCharacterOriginLevelMax)
+	index := 0
+	for i := genshinCharacterLevelMin; i <= genshinCharacterOriginLevelMax; i++ {
+		slice[index] = i
+		index++
+	}
+	slice = append(slice, genshinCharacterLevelPlus...)
+	return slice
+}()
 
 func Generate(targetDir string, localResPath string, resURL string) {
 	//文件完整路径
@@ -881,7 +910,7 @@ func update(localResPath string, resURL string) error {
 				defenseTypeIndex = avatarCurvesIndexMap[vv.Value]
 			}
 		}
-		for ii := genshinCharacterLevelMin; ii <= genshinCharacterLevelMax; ii++ {
+		for _, ii := range levelList {
 			currentProperty := &PROPERTY{
 				Hp:              currentAvatarData.HpBase,
 				Attack:          currentAvatarData.AttackBase,
@@ -911,12 +940,17 @@ func update(localResPath string, resURL string) error {
 			currentPromote := list[ii]
 			requiredLevel := list[ii-1].UnlockMaxLevel
 			unlockMaxLevel := currentPromote.UnlockMaxLevel
+			isExtraSpecialLevels := false
 
 			if unlockMaxLevel == genshinCharacterOriginLevelMax {
 				unlockMaxLevel = genshinCharacterLevelMax
+				isExtraSpecialLevels = true
 			}
 
 			for iii := unlockMaxLevel; iii >= requiredLevel; iii-- {
+				if isExtraSpecialLevels && iii > genshinCharacterOriginLevelMax && !containsGeneric(genshinCharacterLevelPlus, iii) {
+					continue
+				}
 				currentProperty = dataAvatarMap[currentAvatarData.Id].LevelMap[fmt.Sprintf(configAvatarLevelFormat, iii)]
 				//突破界限
 				if iii == requiredLevel {
@@ -1014,7 +1048,7 @@ func update(localResPath string, resURL string) error {
 			}
 		}
 
-		for ii := genshinCharacterLevelMin; ii <= genshinCharacterLevelMax; ii++ {
+		for ii := genshinWeaponLevelMin; ii <= genshinWeaponLevelMax; ii++ {
 			currentProperty := &PROPERTY{
 				Attack: currentWeaponData.PropGrowCurves[0].InitValue,
 			}
@@ -1380,4 +1414,13 @@ func getBackgroundUrl(nameText map[string]string, extraCharacterMap GenshinExtra
 		return urlObj.BackgroundUrl
 	}
 	return "assets/background/" + nameText[languageEN] + ".png"
+}
+
+func containsGeneric(data []int, target int) bool {
+	for _, value := range data {
+		if value == target {
+			return true
+		}
+	}
+	return false
 }
