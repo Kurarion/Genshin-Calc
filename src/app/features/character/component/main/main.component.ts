@@ -199,9 +199,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       //チャラインデックス
       this.currentCharacterIndex = params.index!.toString();
       //背景初期化
-      this.initializeBackGroundImage().catch(error => {
-        console.warn('Background initialization failed:', error);
-      });
+      this.initializeBackGroundImage()
       //追加データ初期化
       this.characterService.setDefaultExtraData(params.index!);
       this.calculatorService.initCharacterData(params.index!);
@@ -323,15 +321,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   private async initializeBackGroundImage() {
     if (!this.backgroundURL && this.data) {
       const characterId = this.data.id?.toString();
-      console.log(`Initializing background for character: ${this.data.name?.en || characterId}`);
 
       // Start background loading asynchronously
       // The imgState will be set to CSS_STATUS_FIN only after background is loaded
-      this.loadBackgroundAsync(characterId).catch(error => {
-        console.warn(`Background initialization failed for character ${characterId}:`, error);
-        // Even if background fails, set animation state to finished to ensure UI shows
-        this.imgState = CSS_STATUS_FIN;
-      });
+      this.loadBackgroundAsync(characterId)
     }
   }
 
@@ -347,19 +340,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       const assetsBackground = await this.backgroundImageService.loadAssetsBackground(this.data);
       if (assetsBackground) {
         backgroundUrl = assetsBackground;
-        console.log(`Using assets background for character: ${this.data.name?.en}`);
-      } else if (this.data?.images?.background) {
-        // Try original background URL
-        backgroundUrl = await this.backgroundImageService.loadImageWithFallback(
-          this.data.images.background,
-          characterId,
-          this.data
-        );
-        console.log(`Using URL background for character: ${this.data.name?.en}`);
       } else {
         // Use default background (white)
         backgroundUrl = this.backgroundImageService.getDefaultBackground();
-        console.log(`Using default background for character: ${this.data.name?.en}`);
       }
 
       // Update background URL (this will trigger UI update)
@@ -368,7 +351,6 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       // Set animation state to finished to trigger the fade-in effect
       this.imgState = CSS_STATUS_FIN;
     } catch (error) {
-      console.error(`Background loading failed:`, error);
       // Set white background as final fallback
       this.backgroundURL = '';
       // Still set animation state to finished to ensure UI shows
