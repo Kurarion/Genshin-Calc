@@ -6,13 +6,13 @@ package genshindata
 
 type GenshinGrowCurvesListData []GenshinGrowCurvesData
 
-//人物/武器 基础升级提升
+// 人物/武器 基础升级提升
 type GenshinGrowCurvesData struct {
 	Level      int            `json:"level"`
 	CurveInfos []GenshinCurve `json:"curveInfos"`
 }
 
-//成长类型
+// 成长类型
 type GenshinCurve struct {
 	Type  string  `json:"type"`
 	Value float64 `json:"value"`
@@ -20,7 +20,7 @@ type GenshinCurve struct {
 
 type GenshinPromoteListData []GenshinPromoteData
 
-//人物/武器 突破提升值
+// 人物/武器 突破提升值
 type GenshinPromoteData struct {
 	AvatarPromoteId     uint64           `json:"avatarPromoteId"`
 	WeaponPromoteId     uint64           `json:"weaponPromoteId"`
@@ -40,7 +40,7 @@ type GenshinPromoteData struct {
 // 	return this[i].AvatarPromoteId < this[j].AvatarPromoteId
 // }
 
-//属性增量
+// 属性增量
 type GenshinPropAdd struct {
 	PropType string  `json:"propType"`
 	Value    float64 `json:"value"`
@@ -52,7 +52,7 @@ type GenshinPropAdd struct {
 
 type GenshinAvatarBaseListData []GenshinAvatarBaseData
 
-//人物定义
+// 人物定义
 type GenshinAvatarBaseData struct {
 	Id                uint64           `json:"id"`
 	NameTextMapHash   uint64           `json:"nameTextMapHash"`
@@ -71,9 +71,12 @@ type GenshinAvatarBaseData struct {
 	CandSkillDepotIds []uint64         `json:"candSkillDepotIds"`
 	QualityType       string           `json:"qualityType"`
 	SideIconName      string           `json:"sideIconName"`
+	Tags              []string         `json:"tags"`
+	// AVATAR_TAG_MOONPHASE
+	// AVATAR_TAG_HEXENZIRKEL
 }
 
-//成长参数
+// 成长参数
 type propGrowCurves struct {
 	Type  string `json:"type"`
 	Value string `json:"growCurve"`
@@ -85,7 +88,7 @@ type propGrowCurves struct {
 
 type GenshinWeaponBaseListData []GenshinWeaponBaseData
 
-//武器定义
+// 武器定义
 type GenshinWeaponBaseData struct {
 	Id              uint64                        `json:"id"`
 	RankLevel       int                           `json:"rankLevel"`
@@ -98,7 +101,7 @@ type GenshinWeaponBaseData struct {
 	SkillAffix      []uint64                      `json:"skillAffix"`
 }
 
-//武器成长参数
+// 武器成长参数
 type GenshinWeaponPropGrowCurves struct {
 	PropType  string  `json:"propType"`
 	InitValue float64 `json:"initValue"`
@@ -107,7 +110,7 @@ type GenshinWeaponPropGrowCurves struct {
 
 type GenshinSkillAffixListData []GenshinSkillAffixData
 
-//武器特效
+// 武器特效
 type GenshinSkillAffixData struct {
 	Id              uint64        `json:"id"`
 	AffixId         uint64        `json:"affixId"`
@@ -124,7 +127,7 @@ type GenshinSkillAffixData struct {
 
 type GenshinReliquaryAffixListData []GenshinReliquaryAffix
 
-//圣遗物小词条刻度
+// 圣遗物小词条刻度
 type GenshinReliquaryAffix struct {
 	Id        uint64  `json:"id"`
 	DepotId   int     `json:"depotId"`
@@ -135,7 +138,7 @@ type GenshinReliquaryAffix struct {
 
 type GenshinReliquaryMainListData []GenshinReliquaryMain
 
-//圣遗物主词条
+// 圣遗物主词条
 type GenshinReliquaryMain struct {
 	Rank     int              `json:"rank"`
 	Level    int              `json:"level"`
@@ -144,7 +147,7 @@ type GenshinReliquaryMain struct {
 
 type GenshinReliquaryListData []GenshinReliquaryData
 
-//圣遗物定义
+// 圣遗物定义
 type GenshinReliquaryData struct {
 	SetId     uint64 `json:"setId"`
 	RankLevel int    `json:"rankLevel"`
@@ -152,7 +155,7 @@ type GenshinReliquaryData struct {
 
 type GenshinReliquarySetListData []GenshinReliquarySetData
 
-//圣遗物套装定义
+// 圣遗物套装定义
 type GenshinReliquarySetData struct {
 	SetId        uint64 `json:"setId"`
 	EquipAffixId uint64 `json:"equipAffixId"`
@@ -160,7 +163,7 @@ type GenshinReliquarySetData struct {
 
 type GenshinReliquarySetAffixListData []GenshinReliquarySetAffixData
 
-//圣遗物套装效果定义
+// 圣遗物套装效果定义
 type GenshinReliquarySetAffixData struct {
 	Id              uint64        `json:"id"`
 	NameTextMapHash uint64        `json:"nameTextMapHash"`
@@ -172,7 +175,7 @@ type GenshinReliquarySetAffixData struct {
 
 type GenshinReliquaryCodexListData []GenshinReliquaryCodexData
 
-//圣遗物星级定义
+// 圣遗物星级定义
 type GenshinReliquaryCodexData struct {
 	Id     uint64 `json:"Id"`
 	SuitId uint64 `json:"suitId"`
@@ -187,7 +190,7 @@ type GenshinMonsterBaseListData []GenshinMonsterBaseData
 type GenshinMonsterDescribeListData []GenshinMonsterDescribeData
 type GenshinMonsterTitleListData []GenshinMonsterTitleData
 
-//怪物定义
+// 怪物定义
 type GenshinMonsterBaseData struct {
 	Id                uint64           `json:"id"`
 	MonsterName       string           `json:"monsterName"`
@@ -205,7 +208,7 @@ type GenshinMonsterBaseData struct {
 	GenshinSubHurtData
 }
 
-//怪物描述
+// 怪物描述
 type GenshinMonsterDescribeData struct {
 	Id               uint64 `json:"id"`
 	NameTextMapHash  uint64 `json:"nameTextMapHash"`
@@ -214,13 +217,13 @@ type GenshinMonsterDescribeData struct {
 	Icon             string `json:"icon"`
 }
 
-//怪物标题
+// 怪物标题
 type GenshinMonsterTitleData struct {
 	TitleID              uint64 `json:"titleID"`
 	TitleNameTextMapHash uint64 `json:"titleNameTextMapHash"`
 }
 
-//抗性定义
+// 抗性定义
 type GenshinSubHurtData struct {
 	FireSubHurt     float64 `json:"fireSubHurt"`
 	GrassSubHurt    float64 `json:"grassSubHurt"`
@@ -238,61 +241,74 @@ type GenshinAvatarSkillsListData []GenshinAvatarSkillsData
 //       人物技能
 //************************
 
-//人物全技能列表
+// 人物全技能列表
 type GenshinAvatarSkillsData struct {
 	Id                      uint64                            `json:"id"`
 	EnergySkill             uint64                            `json:"energySkill"`
 	Skills                  []uint64                          `json:"skills"`
-	InherentProudSkillOpens []GenshinAvatarInherentProudSkill `json:"inherentProudSkillOpens"`
+	InherentProudSkillOpens []GenshinAvatarInherentProudSkill `json:"FECDDOLDHBL"`
 	Talents                 []uint64                          `json:"talents"`
 	TalentStarName          string                            `json:"talentStarName"`
+	SpecialProudSkillOpens  []GenshinAvatarSpecialProudSkill  `json:"LLALJAIDKPI"`
+	// InherentProudSkillOpens []GenshinAvatarInherentProudSkill `json:"inherentProudSkillOpens"`
 }
 
-//人物天赋子结构
+// 人物天赋子结构
 type GenshinAvatarInherentProudSkill struct {
 	ProudSkillGroupId      uint64 `json:"proudSkillGroupId"`
-	NeedAvatarPromoteLevel int    `json:"needAvatarPromoteLevel"`
+	NeedAvatarPromoteLevel int    `json:"LKJNHHPJKIA"`
+	// NeedAvatarPromoteLevel int    `json:"needAvatarPromoteLevel"`
+}
+
+// 人物特别天赋子结构
+type GenshinAvatarSpecialProudSkill struct {
+	ChapterId         []uint64 `json:"AFMEMNMEABG"`
+	Type              string   `json:"KLHCAFHKLNI"`
+	ProudSkillGroupId uint64   `json:"proudSkillGroupId"`
 }
 
 type GenshinAvatarSkillListData []GenshinAvatarSkillData
 
-//人物EQ技能
+// 人物EQ技能
 type GenshinAvatarSkillData struct {
-	Id                uint64  `json:"id"`
-	NameTextMapHash   uint64  `json:"nameTextMapHash"`
-	DescTextMapHash   uint64  `json:"descTextMapHash"`
-	CdTime            float64 `json:"cdTime"`
-	CostElemVal       float64 `json:"costElemVal"`
-	CostElemType      string  `json:"costElemType"`
-	SkillIcon         string  `json:"skillIcon"`
-	ProudSkillGroupId uint64  `json:"proudSkillGroupId"`
+	Id                   uint64  `json:"id"`
+	NameTextMapHash      uint64  `json:"nameTextMapHash"`
+	DescTextMapHash      uint64  `json:"descTextMapHash"`
+	SpecialDescTextMapHash uint64 `json:"IACNAENANDH"`
+	CdTime               float64 `json:"cdTime"`
+	CostElemVal          float64 `json:"costElemVal"`
+	CostElemType         string  `json:"costElemType"`
+	SkillIcon            string  `json:"skillIcon"`
+	ProudSkillGroupId    uint64  `json:"proudSkillGroupId"`
 }
 
 type GenshinAvatarProudSkillListData []GenshinAvatarProudSkillData
 
-//人物技能详细
+// 人物技能详细
 type GenshinAvatarProudSkillData struct {
-	ProudSkillId      uint64    `json:"proudSkillId"`
-	ProudSkillGroupId uint64    `json:"proudSkillGroupId"`
-	Level             int       `json:"level"`
-	ProudSkillType    int       `json:"proudSkillType"`
-	NameTextMapHash   uint64    `json:"nameTextMapHash"`
-	DescTextMapHash   uint64    `json:"descTextMapHash"`
-	Icon              string    `json:"icon"`
-	BreakLevel        int       `json:"breakLevel"`
-	ParamDescList     []uint64  `json:"paramDescList"`
-	ParamList         []float64 `json:"paramList"`
+	ProudSkillId         uint64    `json:"proudSkillId"`
+	ProudSkillGroupId    uint64    `json:"proudSkillGroupId"`
+	Level                int       `json:"level"`
+	ProudSkillType       int       `json:"proudSkillType"`
+	NameTextMapHash      uint64    `json:"nameTextMapHash"`
+	DescTextMapHash      uint64    `json:"descTextMapHash"`
+	SpecialDescTextMapHash uint64   `json:"IACNAENANDH"`
+	Icon                 string    `json:"icon"`
+	BreakLevel           int       `json:"breakLevel"`
+	ParamDescList        []uint64  `json:"paramDescList"`
+	ParamList            []float64 `json:"paramList"`
 }
 
 type GenshinAvatarTalentListData []GenshinAvatarTalentData
 
-//人物命座
+// 人物命座
 type GenshinAvatarTalentData struct {
-	TalentId        uint64    `json:"talentId"`
-	NameTextMapHash uint64    `json:"nameTextMapHash"`
-	DescTextMapHash uint64    `json:"descTextMapHash"`
-	Icon            string    `json:"icon"`
-	ParamList       []float64 `json:"paramList"`
+	TalentId              uint64    `json:"talentId"`
+	NameTextMapHash       uint64    `json:"nameTextMapHash"`
+	DescTextMapHash       uint64    `json:"descTextMapHash"`
+	SpecialDescTextMapHash uint64   `json:"IACNAENANDH"`
+	Icon                  string    `json:"icon"`
+	ParamList             []float64 `json:"paramList"`
 }
 
 //************************
@@ -301,14 +317,14 @@ type GenshinAvatarTalentData struct {
 
 type GenshinExtraAvatarMapData map[string]GenshinExtraAvatarData
 
-//补充
+// 补充
 type GenshinExtraAvatarData struct {
 	BackgroundUrl string `json:"backgroundUrl"`
 }
 
 type GenshinFetterInfoDataList []GenshinFetterInfoData
 
-//其他信息
+// 其他信息
 type GenshinFetterInfoData struct {
 	InfoBirthMonth                      int    `json:"infoBirthMonth"`
 	InfoBirthDay                        int    `json:"infoBirthDay"`
@@ -320,4 +336,58 @@ type GenshinFetterInfoData struct {
 	AvatarAssocType                     string `json:"avatarAssocType"`
 	FetterId                            uint64 `json:"fetterId"`
 	AvatarId                            uint64 `json:"avatarId"`
+}
+
+//************************
+//       教学提示
+//************************
+
+type GenshinPushTipsListData []GenshinPushTipsData
+
+// 弹出式玩法教学Tip
+type GenshinPushTipsData struct {
+	Id                 uint64 `json:"id"`
+	TitleTextMapHash   uint64 `json:"titleTextMapHash"`
+	ContentTextMapHash uint64 `json:"contentTextMapHash"`
+	GroupId            uint64 `json:"groupId"`
+	Priority           int    `json:"priority"`
+	OnlyUnlocked       bool   `json:"onlyUnlocked"`
+	IsShowInTips       bool   `json:"isShowInTips"`
+}
+
+type GenshinTutorialDetailListData []GenshinTutorialDetailData
+
+// 玩法教学详细内容
+type GenshinTutorialDetailData struct {
+	Id                 uint64 `json:"id"`
+	TitleTextMapHash   uint64 `json:"titleTextMapHash"`
+	ContentTextMapHash uint64 `json:"contentTextMapHash"`
+	GroupId            uint64 `json:"groupId"`
+	Priority           int    `json:"priority"`
+	OnlyUnlocked       bool   `json:"onlyUnlocked"`
+	IsShowInTips       bool   `json:"isShowInTips"`
+}
+
+//************************
+//       超链接和术语
+//************************
+
+type GenshinHyperLinkNameListData []GenshinHyperLinkNameData
+
+// 超链接定义
+type GenshinHyperLinkNameData struct {
+	Id              uint64   `json:"id"`
+	Color           string   `json:"color"`
+	DescParamList   []string `json:"descParamList"`
+	DescTextMapHash uint64   `json:"descTextMapHash"`
+	NameTextMapHash uint64   `json:"nameTextMapHash"`
+}
+
+type GenshinManualTextMapListData []GenshinManualTextMapData
+
+// 术语定义
+type GenshinManualTextMapData struct {
+	TextMapId                 string   `json:"textMapId"`
+	ParamTypes                []string `json:"paramTypes"`
+	TextMapContentTextMapHash uint64   `json:"textMapContentTextMapHash"`
 }

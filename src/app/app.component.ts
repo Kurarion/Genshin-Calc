@@ -174,8 +174,38 @@ export class AppComponent implements OnInit {
             tap((data) => {
               GenshinDataService.initChipData(data);
             }),
+        ),
+      ),
+      //超链接数据
+      lastValueFrom(
+        httpService
+          .getSystemData(
+            Const.SYS_JSON_URLS[Const.SYS_JSON_DATA_GENSHIN_HYPERLINK],
+            'json',
+            this.jsonDownloadStatus,
+            Const.SYS_JSON_DATA_GENSHIN_HYPERLINK,
+          )
+          .pipe(
+            tap((data) => {
+              GenshinDataService.initHyperlinkData(data);
+            }),
           ),
       ),
+      // //文本映射数据
+      // lastValueFrom(
+      //   httpService
+      //     .getSystemData(
+      //       Const.SYS_JSON_URLS[Const.SYS_JSON_DATA_GENSHIN_MANUAL_TEXTMAP],
+      //       'json',
+      //       this.jsonDownloadStatus,
+      //       Const.SYS_JSON_DATA_GENSHIN_MANUAL_TEXTMAP,
+      //     )
+      //     .pipe(
+      //       tap((data) => {
+      //         GenshinDataService.initManualTextMapData(data);
+      //       }),
+      //     ),
+      // ),
     );
     return Promise.all(promiseList).then(() => {
       GenshinDataService.initMonsterData();

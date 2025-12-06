@@ -521,7 +521,13 @@
     "VARESA_VOLCANO_KABLAM": "大火山崩落",
     "SKIRK_SERPENT_SUBTLETY": "蛇之狡谋",
     "SKIRK_SEVEN_PHASE_FLASH": "七相一闪",
-    "NEFER_PHANTASM_PERFORMANCE": "幻戏"
+    "NEFER_PHANTASM_PERFORMANCE": "幻戏",
+    "DURIN_PRINCIPLE_OF_DARKNESS": "黑度法·如星阴燃",
+    "JAHODA_PURRSONAL_COORDINATED_ASSISTANCE_ROBOT": "猫型家用互助协调器",
+    "RAZOR_SOUL_COMPANION": "狼魂",
+    "VENTI_SKILL_PRESS": "高天之歌点按",
+    "ALBEDO_TRANSIENT_BLOSSOM": "刹那之花",
+    "ALBEDO_FATAL_BLOSSOM": "生灭之花"
   },
   "AUTO": {
     "CALC": "计算",
@@ -627,6 +633,9 @@
     },
     "VEIL_OF_FALSEHOOD": {
       "TITLE": "伪秘之帷"
+    },
+    "HEXEREI_SECRET_RITE": {
+      "TITLE": "魔导·秘仪"
     }
   },
   "MENU": {
@@ -708,7 +717,9 @@
       "DATA_GENSHIN_MONSTER_3": "敌人数据3",
       "DATA_GENSHIN_RELIQUARY_SET": "圣遗物套装数据",
       "DATA_GENSHIN_RELIQUARY_MAIN": "圣遗物主词条数据",
-      "DATA_GENSHIN_RELIQUARY_SUB": "圣遗物副词条"
+      "DATA_GENSHIN_RELIQUARY_SUB": "圣遗物副词条数据",
+      "DATA_GENSHIN_HYPERLINK": "超链接数据",
+      "DATA_GENSHIN_MANUAL_TEXTMAP": "文本映射数据"
     }
   }
 }

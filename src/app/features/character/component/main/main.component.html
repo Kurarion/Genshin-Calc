@@ -2,8 +2,8 @@
   <div
     class="background"
     [style.right]="scrollBarWidth+'px'"
-    *ngIf="backgroundURL"
-    [style.background-image]="'url(' + backgroundURL + ')'"
+    [style.background-image]="backgroundURL ? 'url(' + backgroundURL + ')' : 'none'"
+    [style.background-color]="!backgroundURL ? '#ffffff' : 'none'"
     [@imgLoad]="imgState"
   >
     <div class="background"></div>

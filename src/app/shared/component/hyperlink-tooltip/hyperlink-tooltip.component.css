@@ -1,0 +1,30 @@
+.hyperlink-tooltip-container {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.hyperlink-tooltip-content {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-y: auto;
+  word-wrap: break-word;
+}
+
+.hyperlink-tooltip-text {
+  white-space: pre-wrap;
+}
+
+.hyperlink-tooltip-text ::ng-deep a {
+  color: #81d4fa;
+  text-decoration: underline;
+}
+
+.hyperlink-tooltip-text ::ng-deep a:hover {
+  color: #4fc3f7;
+}

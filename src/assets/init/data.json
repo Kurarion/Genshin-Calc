@@ -699,11 +699,63 @@
         "elementalBurst": [
           {
             "damage": {
-              "indexes": [0, 1],
+              "indexes": [0],
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_ELECTRO",
               "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [0],
+              "originRelations": ["*"],
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "RAZOR_SOUL_COMPANION"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [1],
+              "originRelations": ["*"],
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "RAZOR_SOUL_COMPANION"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [2],
+              "originRelations": ["*"],
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "RAZOR_SOUL_COMPANION"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [3],
+              "originRelations": ["*"],
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ELECTRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "RAZOR_SOUL_COMPANION"
             }
           }
         ],
@@ -720,7 +772,52 @@
                 }
               ]
             }
-          ]
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["DMG_RATE_UP_ELEMENTAL_BURST"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "tag": "RAZOR_SOUL_COMPANION"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "showIndex": 1,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "damage": {
+                "indexes": [1],
+                "canOverride": false,
+                "base": "ATTACK",
+                "displayCalQueue": [
+                  {
+                    "relation": "+",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_2"
+                      }
+                    ]
+                  }
+                ],
+                "elementBonusType": "DMG_BONUS_ELECTRO",
+                "attackBonusType": "DMG_BONUS_OTHER"
+              }
+            }
+          ],
+          []
         ]
       },
       "constellation": {
@@ -770,6 +867,19 @@
               "elementBonusType": "DMG_BONUS_ELECTRO",
               "attackBonusType": "DMG_BONUS_OTHER"
             }
+          },
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["CRIT_RATE"],
+                "settingType": "switch",
+                "defaultEnable": false
+              },{
+                "index": 1,
+                "target": ["CRIT_DMG"]
+              }
+            ]
           }
         ]
       }
@@ -960,12 +1070,160 @@
               "elementBonusType": "DMG_BONUS_PHYSICAL",
               "attackBonusType": "DMG_BONUS_PLUNGING"
             }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [0],
+              "originRelations": ["*"],
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [0],
+              "originRelations": ["*"],
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [1],
+              "originRelations": ["*"],
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [2],
+              "originRelations": ["*"],
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [3],
+              "originRelations": ["*"],
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "originSkills": ["normal"],
+              "originIndexes": [4],
+              "originRelations": ["*"],
+              "indexes": [11],
+              "base": "ATTACK",
+              "canOverride": false,
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
           }
         ],
         "skill": [
           {
             "damage": {
-              "indexes": [0, 2],
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_SKILL",
+              "tag": "VENTI_SKILL_PRESS"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_ANEMO",
@@ -1020,7 +1278,68 @@
             }
           }
         ],
-        "proudSkills": [[], []]
+        "proudSkills": [
+          [],
+          [],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["DMG_BONUS_ALL"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                },{
+                  "index": 1,
+                  "target": ["DMG_RATE_MULTI_ELEMENTAL_BURST"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          []
+        ]
       },
       "constellation": {
         "0": [
@@ -1047,17 +1366,154 @@
               "elementBonusType": "DMG_BONUS_ANEMO",
               "attackBonusType": "DMG_BONUS_CHARGED"
             }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "originSkills": ["normal", "normal"],
+              "originIndexes": [0, 11],
+              "originRelations": ["*", "*"],
+              "canOverride": false,
+              "base": "ATTACK",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "originSkills": ["normal", "normal"],
+              "originIndexes": [1, 11],
+              "originRelations": ["*", "*"],
+              "canOverride": false,
+              "base": "ATTACK",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "originSkills": ["normal", "normal"],
+              "originIndexes": [2, 11],
+              "originRelations": ["*", "*"],
+              "canOverride": false,
+              "base": "ATTACK",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "originSkills": ["normal", "normal"],
+              "originIndexes": [3, 11],
+              "originRelations": ["*", "*"],
+              "canOverride": false,
+              "base": "ATTACK",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "originSkills": ["normal", "normal"],
+              "originIndexes": [4, 11],
+              "originRelations": ["*", "*"],
+              "canOverride": false,
+              "base": "ATTACK",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "originSkills": ["normal", "normal"],
+              "originIndexes": [5, 11],
+              "originRelations": ["*", "*"],
+              "canOverride": false,
+              "base": "ATTACK",
+              "displayCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_2"
+                    }
+                  ]
+                }
+              ],
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
           }
         ],
         "1": [
           {
             "buffs": [
               {
-                "setTos": ["VAR_CHARA_1"],
-                "settingType": "slider",
-                "sliderInitialValue": 0,
-                "sliderStep": 1,
-                "sliderMax": 2,
+                "customValue": 0.24,
+                "target": ["DMG_ANTI_PHYSICAL_MINUS", "DMG_ANTI_ANEMO_MINUS"],
+                "settingType": "switch",
+                "defaultEnable": false,
                 "isAllTeam": true
               }
             ]
@@ -1065,24 +1521,11 @@
           {
             "buffs": [
               {
-                "target": ["DMG_ANTI_PHYSICAL_MINUS", "DMG_ANTI_ANEMO_MINUS"],
-                "finalResCalQueue": [
-                  {
-                    "relation": "+",
-                    "inner": [
-                      {
-                        "relation": "+",
-                        "variable": "VAR_CHARA_1",
-                        "varMap": {
-                          "1": 0.12,
-                          "2": 0.24
-                        }
-                      }
-                    ]
-                  }
-                ],
-                "settingType": "resident",
-                "isAllTeam": true
+                "index": 1,
+                "target": ["DMG_RATE_MULTI_SKILL"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "VENTI_SKILL_PRESS"
               }
             ]
           }
@@ -1094,7 +1537,8 @@
                 "customValue": 0.25,
                 "target": ["DMG_BONUS_ANEMO"],
                 "settingType": "switch",
-                "defaultEnable": false
+                "defaultEnable": false,
+                "isAllTeam": true
               }
             ]
           }
@@ -1103,35 +1547,10 @@
           {
             "buffs": [
               {
-                "setTos": ["VAR_CHARA_2"],
-                "settingType": "slider",
-                "sliderInitialValue": 0,
-                "sliderStep": 1,
-                "sliderMax": 2,
-                "isAllTeam": true
-              }
-            ]
-          },
-          {
-            "buffs": [
-              {
+                "customValue": 0.2,
                 "target": ["DMG_ANTI_ANEMO_MINUS"],
-                "finalResCalQueue": [
-                  {
-                    "relation": "+",
-                    "inner": [
-                      {
-                        "relation": "+",
-                        "variable": "VAR_CHARA_2",
-                        "varMap": {
-                          "1": 0.2,
-                          "2": 0.2
-                        }
-                      }
-                    ]
-                  }
-                ],
-                "settingType": "resident",
+                "settingType": "switch",
+                "defaultEnable": false,
                 "isAllTeam": true
               }
             ]
@@ -1139,29 +1558,26 @@
           {
             "buffs": [
               {
+                "customValue": 0.2,
                 "target": [
                   "DMG_ANTI_CRYO_MINUS",
                   "DMG_ANTI_ELECTRO_MINUS",
                   "DMG_ANTI_PYRO_MINUS",
                   "DMG_ANTI_HYDRO_MINUS"
                 ],
-                "finalResCalQueue": [
-                  {
-                    "relation": "+",
-                    "inner": [
-                      {
-                        "relation": "+",
-                        "variable": "VAR_CHARA_2",
-                        "varMap": {
-                          "1": 0,
-                          "2": 0.2
-                        }
-                      }
-                    ]
-                  }
-                ],
-                "settingType": "resident",
+                "settingType": "switch",
+                "defaultEnable": false,
                 "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["CRIT_DMG"],
+                "settingType": "switch",
+                "defaultEnable": false
               }
             ]
           }
@@ -1890,9 +2306,77 @@
               "buffs": [
                 {
                   "customValue": 0.5,
+                  "setTos": ["VAR_CHARA_4"],
                   "target": ["DMG_BONUS_CHARGED"],
                   "settingType": "switch",
                   "defaultEnable": false
+                }
+              ]
+            },
+            {
+              "damage": {
+                "originSkills": ["normal"],
+                "originIndexes": [3],
+                "originRelations": ["*"],
+                "customValues": [1],
+                "base": "ATTACK",
+                "canOverride": false,
+                "displayCalQueue": [
+                  {
+                    "relation": "+",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_4"
+                      }
+                    ]
+                  }
+                ],
+                "elementBonusType": "DMG_BONUS_PYRO",
+                "attackBonusType": "DMG_BONUS_CHARGED"
+              }
+            }
+          ],
+          [],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_5"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base":"FIX_NUMBER_1",
+                  "target": ["DMG_RATE_MULTI_CHARGED"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_5",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "slider",
+                  "sliderStartIndex": 1,
+                  "sliderMin": 0,
+                  "sliderMax": 3,
+                  "sliderStep": 1,
+                  "sliderInitialValue": 0
                 }
               ]
             }
@@ -1913,6 +2397,16 @@
               "elementBonusType": "DMG_BONUS_PYRO",
               "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
             }
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["ATTACK_UP"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
           }
         ],
         "1": [
@@ -1935,8 +2429,18 @@
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_PYRO",
-              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+              "attackBonusType": "DMG_BONUS_OTHER"
             }
+          },
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_BONUS_OTHER"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
           }
         ],
         "5": [
@@ -1947,7 +2451,10 @@
                 "target": ["DMG_BONUS_PYRO"],
                 "settingType": "switch",
                 "defaultEnable": false,
-                "isAllTeam": true
+                "isOnlyForOther": true
+              },{
+                "index": 0,
+                "target": ["DMG_BONUS_PYRO"]
               }
             ]
           }
@@ -2217,10 +2724,13 @@
             {
               "damage": {
                 "indexes": [0],
+                "originSkills": ["normal"],
+                "originIndexes": [6],
+                "originRelations": ["*"],
                 "base": "ATTACK",
                 "canOverride": false,
                 "elementBonusType": "DMG_BONUS_ELECTRO",
-                "attackBonusType": "DMG_BONUS_SKILL"
+                "attackBonusType": "DMG_BONUS_CHARGED"
               }
             }
           ],
@@ -2231,10 +2741,94 @@
                 "base": "ATTACK",
                 "canOverride": false,
                 "elementBonusType": "DMG_BONUS_ELECTRO",
-                "attackBonusType": "DMG_BONUS_SKILL"
+                "attackBonusType": "DMG_BONUS_OTHER"
               }
             }
-          ]
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "base": "FIX_NUMBER_1",
+                  "target": ["ATTACK_UP"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        },
+                        {
+                          "relation": "*",
+                          "variable": "VAR_CHARA_3",
+                          "varMap": {
+                            "0": 1,
+                            "1": 2
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 3,
+                  "base": "FIX_NUMBER_1",
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        },
+                        {
+                          "relation": "*",
+                          "variable": "VAR_CHARA_3",
+                          "varMap": {
+                            "0": 1,
+                            "1": 2
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          []
         ]
       },
       "constellation": {
@@ -2245,7 +2839,7 @@
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_PHYSICAL",
-              "attackBonusType": "DMG_BONUS_NORMAL"
+              "attackBonusType": "DMG_BONUS_OTHER"
             }
           }
         ],
@@ -2283,8 +2877,18 @@
               "base": "ATTACK",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_ELECTRO",
-              "attackBonusType": "DMG_BONUS_SKILL"
+              "attackBonusType": "DMG_BONUS_OTHER"
             }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 0,
+                "setTos": ["VAR_CHARA_3"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
           }
         ]
       }
@@ -3129,7 +3733,8 @@
               "base": "DEFENSE",
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_GEO",
-              "attackBonusType": "DMG_BONUS_SKILL"
+              "attackBonusType": "DMG_BONUS_SKILL",
+              "tag": "ALBEDO_TRANSIENT_BLOSSOM"
             }
           }
         ],
@@ -3174,7 +3779,8 @@
               ],
               "canOverride": false,
               "elementBonusType": "DMG_BONUS_GEO",
-              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "ALBEDO_FATAL_BLOSSOM"
             }
           }
         ],
@@ -3186,7 +3792,35 @@
                   "customValue": 0.25,
                   "target": ["DMG_BONUS_SKILL"],
                   "settingType": "switch",
-                  "defaultEnable": false
+                  "defaultEnable": false,
+                  "tag": "ALBEDO_TRANSIENT_BLOSSOM"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "base": "FIX_NUMBER_1",
+                  "target": ["DMG_RATE_UP_SKILL"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_7",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "tag": "ALBEDO_TRANSIENT_BLOSSOM"
                 }
               ]
             }
@@ -3204,10 +3838,94 @@
                 }
               ]
             }
-          ]
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_7"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "indexMultiValue": 0.001,
+                  "base": "DEFENSE",
+                  "maxValConstIndex": 1,
+                  "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING", "DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_7",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "indexMultiValue": 0.001,
+                  "base": "DEFENSE",
+                  "maxValConstIndex": 3,
+                  "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING", "DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_7",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          []
         ]
       },
       "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DEFENSE_UP"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
         "1": [
           {
             "buffs": [
@@ -3221,16 +3939,52 @@
                 "sliderInitialValue": 0
               }
             ]
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 1,
+                "setTos": ["VAR_CHARA_3"],
+                "settingType": "slider",
+                "sliderInitialValue": 1,
+                "sliderMin": 1,
+                "sliderMax": 3,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_QUANTITY.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "DEFENSE",
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_3"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
           }
         ],
         "3": [
           {
             "buffs": [
               {
-                "customValue": 0.3,
+                "index": 0,
                 "target": ["DMG_BONUS_PLUNGING"],
-                "settingType": "switch",
-                "defaultEnable": false,
+                "settingType": "slider",
+                "sliderMin": 0,
+                "sliderMax": 2,
+                "sliderInitialValue": 0,
                 "isAllTeam": true
               }
             ]
@@ -3245,6 +3999,33 @@
                 "settingType": "switch",
                 "defaultEnable": false,
                 "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "base":"DEFENSE",
+                "target": ["DMG_VAL_UP_ELEMENTAL_BURST"],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_7",
+                        "varMap": {
+                          "0": 0,
+                          "1": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "ALBEDO_FATAL_BLOSSOM"
               }
             ]
           }
@@ -3492,7 +4273,49 @@
                 }
               ]
             }
-          ]
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "target": ["DMG_ELEMENT_VAPORIZE_UP"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "slider",
+                  "sliderMax": 3,
+                  "sliderMin": 0,
+                  "sliderInitialValue": 0,
+                  "isOnlyForOther": true
+                }
+              ]
+            }
+          ],
+          []
         ]
       },
       "constellation": {
@@ -3501,12 +4324,51 @@
             "buffs": [
               {
                 "index": 0,
+                "base": "FIX_NUMBER_1",
                 "target": [
                   "DMG_ELEMENT_ELECTROCHARGED_UP",
                   "DMG_ELEMENT_VAPORIZE_UP",
                   "DMG_ELEMENT_SWIRL_UP",
                   "DMG_ELEMENT_MOON_ELECTROCHARGED_UP"
                 ],
+                "finalResCalQueue": [
+                  {
+                    "relation": "*",
+                    "inner": [
+                      {
+                        "relation": "+",
+                        "variable": "VAR_CHARA_3",
+                        "varMap": {
+                          "0": 1,
+                          "1": 1.6
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 1,
+                "setTos": ["VAR_CHARA_3"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 4,
+                "target": ["ELEMENTAL_MASTERY"],
                 "settingType": "switch",
                 "defaultEnable": false,
                 "isAllTeam": true
@@ -3526,6 +4388,17 @@
                 "isAllTeam": true
               }
             ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["CRIT_DMG"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
           }
         ],
         "5": [
@@ -3538,6 +4411,16 @@
                 "sliderInitialValue": 0,
                 "sliderMax": 3,
                 "sliderStep": 1
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 4,
+                "target": ["DMG_RATE_MULTI_CHARGED"],
+                "settingType": "switch",
+                "defaultEnable": false
               }
             ]
           }
@@ -3850,7 +4733,73 @@
                 }
               ]
             }
-          ]
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING", "DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 3,
+                  "target": ["DMG_BONUS_NORMAL", "DMG_BONUS_CHARGED", "DMG_BONUS_PLUNGING", "DMG_BONUS_SKILL", "DMG_BONUS_ELEMENTAL_BURST"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          []
         ]
       },
       "constellation": {
@@ -3859,6 +4808,22 @@
             "buffs": [
               {
                 "index": 0,
+                "target": [
+                  "DMG_BONUS_CRYO",
+                  "DMG_BONUS_ELECTRO",
+                  "DMG_BONUS_PYRO",
+                  "DMG_BONUS_HYDRO"
+                ],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
                 "target": [
                   "DMG_BONUS_CRYO",
                   "DMG_BONUS_ELECTRO",
@@ -19159,6 +20124,20 @@
             {
               "buffs": [
                 {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
                   "index": 2,
                   "target": ["DMG_CRIT_RATE_UP_ELEMENT_MOON_RUPTURE"],
                   "finalResCalQueue": [
@@ -19616,6 +20595,20 @@
             {
               "buffs": [
                 {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
                   "index": 2,
                   "target": ["DMG_ELEMENT_MOON_ELECTROCHARGED_UP"],
                   "finalResCalQueue": [
@@ -19968,6 +20961,20 @@
                   "title": "BUFF.MOON_LEVEL.TITLE"
                 }
               ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
             }
           ],
           [
@@ -20062,6 +21069,15 @@
     "10000122": {
       "skills": {
         "normal": [
+          {
+            "buffs":[
+              {
+                "customValue": 100,
+                "target": ["ELEMENTAL_MASTERY"],
+                "settingType": "resident"
+              }
+            ]
+          },
           {
             "damage": {
               "indexes": [0, 1, 3],
@@ -20227,20 +21243,6 @@
             {
               "buffs": [
                 {
-                  "showIndex": 0,
-                  "setTos": ["VAR_CHARA_2"],
-                  "settingType": "slider",
-                  "sliderInitialValue": 0,
-                  "sliderMin": 0,
-                  "sliderMax": 2,
-                  "sliderStep": 1,
-                  "title": "BUFF.MOON_LEVEL.TITLE"
-                }
-              ]
-            },
-            {
-              "buffs": [
-                {
                   "showIndex": 1,
                   "setTos": ["VAR_CHARA_3"],
                   "settingType": "slider",
@@ -20275,6 +21277,27 @@
                   ],
                   "target": ["DMG_RATE_MULTI_CHARGED"],
                   "tag": "NEFER_PHANTASM_PERFORMANCE",
+                  "settingType": "resident"
+                },{
+                  "index": 5,
+                  "base": ["VAR_CHARA_3"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 0,
+                            "1": 0,
+                            "2": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "target": ["DMG_BASICS_MULTI_MOON_RUPTURE"],
                   "settingType": "resident"
                 }
               ]
@@ -20324,6 +21347,34 @@
           ],
           [],
           [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
+            },
             {
               "buffs": [
                 {
@@ -20384,8 +21435,8 @@
                           "0": 0,
                           "1": 0,
                           "2": 0,
-                          "3": 1,
-                          "4": 1,
+                          "3": 0,
+                          "4": 0,
                           "5": 1
                         }
                       }
@@ -20429,6 +21480,458 @@
                 "target": ["DMG_ELEMENT_MOON_RUPTURE_PROMOTION"],
                 "settingType": "switch",
                 "defaultEnable": false
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000123": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [7, 8, 9],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 6],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3, 4, 5, 7],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_PYRO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "DURIN_PRINCIPLE_OF_DARKNESS"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base":"FIX_NUMBER_1",
+                  "target": ["DMG_ANTI_DENDRO_MINUS", "DMG_ANTI_ELECTRO_MINUS", "DMG_ANTI_ANEMO_MINUS", "DMG_ANTI_GEO_MINUS", "DMG_ANTI_PYRO_MINUS"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 1,
+                            "1": 1.75
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "base":"FIX_NUMBER_1",
+                  "target": ["DMG_ELEMENT_VAPORIZE_UP", "DMG_ELEMENT_MELT_UP"],
+                  "finalResCalQueue": [
+                    {
+                      "relation": "*",
+                      "inner": [
+                        {
+                          "relation": "+",
+                          "variable": "VAR_CHARA_2",
+                          "varMap": {
+                            "0": 1,
+                            "1": 1.75
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "indexMultiValue": 0.01,
+                  "base": "ATTACK",
+                  "maxValConstIndex": 1,
+                  "target": ["DMG_RATE_MULTI_ELEMENTAL_BURST"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+                }
+              ]
+            }
+          ],
+          []
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 4,
+                "base": "ATTACK",
+                "target": ["DMG_VAL_UP_NORMAL", "DMG_VAL_UP_CHARGED", "DMG_VAL_UP_PLUNGING", "DMG_VAL_UP_SKILL", "DMG_VAL_UP_ELEMENTAL_BURST"],
+                "settingType": "switch",
+                "isAllTeam": true,
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 6,
+                "base": "ATTACK",
+                "target": ["DMG_VAL_UP_ELEMENTAL_BURST"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_BONUS_HYDRO", "DMG_BONUS_CRYO", "DMG_BONUS_DENDRO", "DMG_BONUS_ELECTRO", "DMG_BONUS_ANEMO", "DMG_BONUS_GEO", "DMG_BONUS_PYRO"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "3": [
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST"],
+                "settingType": "switch",
+                "defaultEnable": false
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "target": ["DMG_ENEMY_DEFENSE_DOWN"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 3,
+                "target": ["DMG_ENEMY_DEFENSE_IGNORE_ELEMENTAL_BURST"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "DURIN_PRINCIPLE_OF_DARKNESS"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000124": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 2],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "showIndex": 1,
+                "setTos": ["VAR_CHARA_1"],
+                "settingType": "slider",
+                "sliderInitialValue": 2,
+                "sliderMin": 1,
+                "sliderMax": 2,
+                "sliderStep": 1,
+                "title": "BUFF.COMMON_TIMES.TITLE"
+              }
+            ]
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_CHARA_1"
+                    }
+                  ]
+                }
+              ],
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [3],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5, 6, 7],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 4],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "ATTACK",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_ANEMO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "tag": "JAHODA_PURRSONAL_COORDINATED_ASSISTANCE_ROBOT"
+            }
+          },
+          {
+            "healing": {
+              "index": 3,
+              "constIndex": 4,
+              "constCalRelation": "+",
+              "base": "ATTACK",
+              "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "healing": {
+              "index": 5,
+              "constIndex": 6,
+              "constCalRelation": "+",
+              "base": "ATTACK",
+              "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "indexAddValue":-1,
+                  "target": ["DMG_RATE_MULTI_ELEMENTAL_BURST"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "tag": "JAHODA_PURRSONAL_COORDINATED_ASSISTANCE_ROBOT"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "indexAddValue":-1,
+                  "target": ["HEALING_RATE_MULTI_ELEMENTAL_BURST"],
+                  "settingType": "switch",
+                  "defaultEnable": false
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "setTos": ["VAR_CHARA_2"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          []
+        ]
+      },
+      "constellation": {
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["CRIT_RATE"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              },{
+                "index": 1,
+                "target": ["CRIT_DMG"],
+                "isAllTeam": true
               }
             ]
           }
@@ -23139,6 +24642,74 @@
                 }
               ],
               "settingType": "resident"
+            }
+          ]
+        }
+      ]
+    },
+    "11518": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "showIndex": 0,
+              "setTos": ["VAR_WEAPON_1"],
+              "settingType": "switch",
+              "defaultEnable": false,
+              "title": "BUFF.HEXEREI_SECRET_RITE.TITLE"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_CRIT_DMG_UP_ELEMENTAL_BURST"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["ATTACK_UP"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 1,
+                        "1": 1.75
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "switch",
+              "defaultEnable": false
+            },{
+              "index": 3,
+              "target": ["ATTACK_UP"],
+              "finalResCalQueue": [
+                {
+                  "relation": "*",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 1,
+                        "1": 1.75
+                      }
+                    }
+                  ]
+                }
+              ],
+              "isOnlyForOther": true
             }
           ]
         }
@@ -26451,6 +28022,20 @@
         }
       ]
     },
+    "15434": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 1,
+              "target": ["ATTACK_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
+            }
+          ]
+        }
+      ]
+    },
     "15501": {
       "effect": [
         {
@@ -26711,6 +28296,115 @@
               "sliderStartIndex": 4,
               "sliderStep": 1,
               "sliderMax": 2
+            }
+          ]
+        }
+      ]
+    },
+    "15515": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_BONUS_NORMAL"],
+              "finalResCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "const": 1
+                    },
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_2"
+                    },
+                    {
+                      "relation": "*",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "slider",
+              "sliderStep": 1,
+              "sliderMax": 6,
+              "sliderInitialValue": 0
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_BONUS_SKILL"],
+              "finalResCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "const": 1
+                    },
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_2"
+                    },
+                    {
+                      "relation": "*",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "slider",
+              "sliderStep": 1,
+              "sliderMax": 6,
+              "sliderInitialValue": 0
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 2,
+              "target": ["DMG_BONUS_ELEMENTAL_BURST"],
+              "finalResCalQueue": [
+                {
+                  "relation": "+",
+                  "inner": [
+                    {
+                      "relation": "+",
+                      "const": 1
+                    },
+                    {
+                      "relation": "+",
+                      "variable": "VAR_WEAPON_2"
+                    },
+                    {
+                      "relation": "*",
+                      "variable": "VAR_WEAPON_1",
+                      "varMap": {
+                        "0": 0,
+                        "1": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "settingType": "slider",
+              "sliderStep": 1,
+              "sliderMax": 6,
+              "sliderInitialValue": 0
             }
           ]
         }

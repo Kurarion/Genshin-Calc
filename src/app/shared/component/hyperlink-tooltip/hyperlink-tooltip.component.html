@@ -1,0 +1,7 @@
+<div class="hyperlink-tooltip-container" *ngIf="isVisible">
+  <div class="hyperlink-tooltip-content" 
+       [style.max-width.px]="tooltipMaxWidth" 
+       [style.max-height.px]="tooltipMaxHeight">
+    <div class="hyperlink-tooltip-text" [innerHTML]="content"></div>
+  </div>
+</div>

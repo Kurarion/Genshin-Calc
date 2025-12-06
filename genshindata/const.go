@@ -1,14 +1,14 @@
 package genshindata
 
-//突破属性类型
-//基础
+// 突破属性类型
+// 基础
 const (
 	HP_BASE      = "FIGHT_PROP_BASE_HP"
 	ATTACK_BASE  = "FIGHT_PROP_BASE_ATTACK"
 	DEFENSE_BASE = "FIGHT_PROP_BASE_DEFENSE"
 )
 
-//额外
+// 额外
 const (
 	HP                    = "FIGHT_PROP_HP"
 	ATTACK                = "FIGHT_PROP_ATTACK"
@@ -32,7 +32,7 @@ const (
 	REVERSE_HEALING_BONUS = "FIGHT_PROP_HEALED_ADD"
 )
 
-//额外
+// 额外
 const (
 	DMG_ANTI_CRYO     = "FIGHT_PROP_ICE_SUB_HURT"
 	DMG_ANTI_ANEMO    = "FIGHT_PROP_WIND_SUB_HURT"
@@ -44,7 +44,7 @@ const (
 	DMG_ANTI_DENDRO   = "FIGHT_PROP_GRASS_SUB_HURT"
 )
 
-//人物成长曲线类型
+// 人物成长曲线类型
 const (
 	C_HP5      = "GROW_CURVE_HP_S5"
 	C_HP4      = "GROW_CURVE_HP_S4"
@@ -54,7 +54,7 @@ const (
 	C_DEFENSE4 = "GROW_CURVE_HP_S4"
 )
 
-//武器成长曲线类型
+// 武器成长曲线类型
 const (
 	C_W_ATTACK101   = "GROW_CURVE_ATTACK_101"
 	C_W_ATTACK102   = "GROW_CURVE_ATTACK_102"
@@ -76,7 +76,7 @@ const (
 	C_W_CRITICAL301 = "GROW_CURVE_CRITICAL_301"
 )
 
-//武器种类
+// 武器种类
 const (
 	WEAPON_SWORD_ONE_HAND = "WEAPON_SWORD_ONE_HAND"
 	WEAPON_CLAYMORE       = "WEAPON_CLAYMORE"
@@ -85,7 +85,7 @@ const (
 	WEAPON_BOW            = "WEAPON_BOW"
 )
 
-//怪物种类
+// 怪物种类
 const (
 	MONSTER_ORDINARY   = "MONSTER_ORDINARY"
 	MONSTER_BOSS       = "MONSTER_BOSS"
@@ -93,7 +93,7 @@ const (
 	MONSTER_FISH       = "MONSTER_FISH"
 )
 
-//文件信息
+// 文件信息
 const (
 	//人物定义
 	AvatarExcelConfigData = "/ExcelBinOutput/AvatarExcelConfigData.json"
@@ -145,4 +145,12 @@ const (
 	AvatarTalentExcelConfigData = "/ExcelBinOutput/AvatarTalentExcelConfigData.json"
 	//其他资料
 	FetterInfoExcelConfigData = "/ExcelBinOutput/FetterInfoExcelConfigData.json"
+	//超链接定义
+	HyperLinkNameExcelConifgData = "/ExcelBinOutput/HyperLinkNameExcelConifgData.json"
+	//术语定义
+	ManualTextMapConfigData = "/ExcelBinOutput/ManualTextMapConfigData.json"
+	//弹出式玩法教学Tip
+	PushTipsConfigData = "/ExcelBinOutput/PushTipsConfigData.json"
+	//玩法教学详细内容
+	TutorialDetailExcelConfigData = "/ExcelBinOutput/TutorialDetailExcelConfigData.json"
 )

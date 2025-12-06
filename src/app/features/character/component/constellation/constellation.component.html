@@ -4,7 +4,7 @@
       <mat-card-title [innerText]="'CHARACTER.CONSTELLATION' | translate"></mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content class="content">
+    <mat-card-content class="content" appHyperlinkInteraction>
       <mat-accordion multi>
         <ng-container *ngFor="let talent of data.skills.talents; index as i">
           <mat-expansion-panel
@@ -26,7 +26,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <!-- 効果情報 -->
-            <span [innerHTML]="talent.desc[currentLanguage]"></span>
+            <span [innerHTML]="getSkillDescription(talent) | hyperlink"></span>
             <app-extra-data
               [characterIndex]="data.id"
               [skill]="name_constellation"

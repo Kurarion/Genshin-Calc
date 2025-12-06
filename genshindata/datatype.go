@@ -1,8 +1,10 @@
 package genshindata
 
-//************************
-//         通用
-//************************
+// ************************
+//
+//	通用
+//
+// ************************
 type PROPERTY struct {
 	Level                 int     `json:"level"`
 	PromoteLevel          float64 `json:"promoteLevel"`
@@ -49,9 +51,11 @@ type DMG_ANTI struct {
 	Dmg_anti_dendro   float64 `json:"dmg_anti_dendro"`
 }
 
-//************************
-//         人物
-//************************
+// ************************
+//
+//	人物
+//
+// ************************
 type AVATAR struct {
 	Id              uint64               `json:"id"`
 	QualityType     string               `json:"qualityType"`
@@ -62,6 +66,7 @@ type AVATAR struct {
 	IconName        string               `json:"iconName"`
 	SideIconName    string               `json:"sideIconName"`
 	WeaponType      string               `json:"weaponType"`
+	Tags            []string             `json:"tags"`
 	Images          AVATARIMAGES         `json:"images"`
 	LevelMap        map[string]*PROPERTY `json:"levelMap"`
 	SkillDepotId    uint64               `json:"skillDepotId"`
@@ -69,7 +74,7 @@ type AVATAR struct {
 	Info            FETTERINFO           `json:"info"`
 }
 
-//人物技能集
+// 人物技能集
 type AVATARSKILLS struct {
 	Id             uint64            `json:"id"`
 	Normal         AVATARSKILLINFO   `json:"normal"`
@@ -80,11 +85,12 @@ type AVATARSKILLS struct {
 	Talents        []AVATARSKILLINFO `json:"talents"`
 }
 
-//人物技能
+// 人物技能
 type AVATARSKILLINFO struct {
 	Id                   uint64                                  `json:"id"`
 	Name                 map[string]string                       `json:"name"`
 	Desc                 map[string]string                       `json:"desc"`
+	SpecialDesc          map[string]string                       `json:"specialDesc"`
 	Icon                 string                                  `json:"icon"`
 	ParamDescList        map[string][]string                     `json:"paramDescList"`
 	ParamMap             map[string][]float64                    `json:"paramMap"`
@@ -97,7 +103,7 @@ type AVATARSKILLINFO struct {
 	CostElemType         string                                  `json:"costElemType"`
 }
 
-//人物技能详细
+// 人物技能详细
 type AVATARSKILLSPLITEDDESCINFO struct {
 	Desc             string   `json:"desc"`
 	ValuePropIndexes []int    `json:"valuePropIndexes"`
@@ -107,18 +113,18 @@ type AVATARSKILLSPLITEDDESCINFO struct {
 	IsPercent        []bool   `json:"isPercent"`
 }
 
-//人物图片
+// 人物图片
 type AVATARIMAGES struct {
 	Icon       string `json:"icon"`
 	Background string `json:"background"`
 }
 
-//技能图片
+// 技能图片
 type SKILLIMAGES struct {
 	Icon string `json:"icon"`
 }
 
-//人物其他信息
+// 人物其他信息
 type FETTERINFO struct {
 	BirthMonth        int               `json:"birthMonth"`
 	BirthDay          int               `json:"birthDay"`
@@ -131,9 +137,11 @@ type FETTERINFO struct {
 	ElementType       int               `json:"elementType"`
 }
 
-//************************
-//         武器
-//************************
+// ************************
+//
+//	武器
+//
+// ************************
 type WEAPON struct {
 	Id              uint64                `json:"id"`
 	RankLevel       int                   `json:"rankLevel"`
@@ -148,7 +156,7 @@ type WEAPON struct {
 	LevelMap        map[string]*PROPERTY  `json:"levelMap"`
 }
 
-//武器特效
+// 武器特效
 type SKILLAFFIX struct {
 	Name              map[string]string `json:"name"`
 	Desc              map[string]string `json:"desc"`
@@ -156,15 +164,17 @@ type SKILLAFFIX struct {
 	GenshinSkillAffixData
 }
 
-//武器图片
+// 武器图片
 type WEAPONIMAGES struct {
 	Icon       string `json:"icon"`
 	Awakenicon string `json:"awakenicon"`
 }
 
-//************************
-//         怪物
-//************************
+// ************************
+//
+//	怪物
+//
+// ************************
 type MONSTER struct {
 	Id              uint64                      `json:"id"`
 	Name            map[string]string           `json:"name"`
@@ -183,14 +193,16 @@ type MONSTERPROPERTY struct {
 	DMG_ANTI
 }
 
-//怪物图片
+// 怪物图片
 type MONSTERIMAGES struct {
 	Icon string `json:"icon"`
 }
 
-//************************
-//        圣遗物
-//************************
+// ************************
+//
+//	圣遗物
+//
+// ************************
 type RELIQUARY struct {
 	SetId           uint64            `json:"setId"`
 	RankLevel       int               `json:"rankLevel"`
@@ -201,7 +213,7 @@ type RELIQUARY struct {
 	Images          RELIQUARYIMAGES   `json:"images"`
 }
 
-//圣遗物图片
+// 圣遗物图片
 type RELIQUARYIMAGES struct {
 	Icon string `json:"icon"`
 }
@@ -217,7 +229,7 @@ type RELIQUARYAFFIX struct {
 	ParamValidIndexes []int             `json:"paramValidIndexes"`
 }
 
-//GetNameFromTypeCode genshindataType名转换属性名
+// GetNameFromTypeCode genshindataType名转换属性名
 func GetNameFromTypeCode(code string) string {
 	name := ""
 	switch code {
@@ -261,4 +273,53 @@ func GetNameFromTypeCode(code string) string {
 		name = "Healing_bonus"
 	}
 	return name
+}
+
+// ************************
+//
+//	教学提示
+//
+// ************************
+type PUSHTIPS struct {
+	Id                 uint64            `json:"id"`
+	TitleTextMapHash   uint64            `json:"titleTextMapHash"`
+	Title              map[string]string `json:"title"`
+	ContentTextMapHash uint64            `json:"contentTextMapHash"`
+	Content            map[string]string `json:"content"`
+	GroupId            uint64            `json:"groupId"`
+	GroupIdText        map[string]string `json:"groupIdText"`
+	Priority           int               `json:"priority"`
+	OnlyUnlocked       bool              `json:"onlyUnlocked"`
+	IsShowInTips       bool              `json:"isShowInTips"`
+}
+
+type TUTORIALDETAIL struct {
+	Id                 uint64            `json:"id"`
+	TitleTextMapHash   uint64            `json:"titleTextMapHash"`
+	Title              map[string]string `json:"title"`
+	ContentTextMapHash uint64            `json:"contentTextMapHash"`
+	Content            map[string]string `json:"content"`
+	GroupId            uint64            `json:"groupId"`
+	GroupIdText        map[string]string `json:"groupIdText"`
+	Priority           int               `json:"priority"`
+	OnlyUnlocked       bool              `json:"onlyUnlocked"`
+	IsShowInTips       bool              `json:"isShowInTips"`
+}
+
+// ************************
+//
+//	超链接和术语
+//
+// ************************
+type HYPERLINK struct {
+	Id                 string            `json:"id"`
+	TextMapContentHash uint64            `json:"textMapContentHash"`
+	Content            map[string]string `json:"content"`
+	ParamTypes         []string          `json:"paramTypes"`
+}
+
+type MANUALTEXTMAP struct {
+	Id                 uint64            `json:"id"`
+	TextMapContentHash uint64            `json:"textMapContentHash"`
+	Content            map[string]string `json:"content"`
 }

@@ -19,10 +19,10 @@ const regexLayout1 = `^#`
 const regexLayout1Replaced = ``
 const regexLayout2 = `\{LA.*?_PS#(\w*?)\}`
 const regexLayout2Replaced = `$1`
-const regexLayout3 = `\{LINK#(.*?)\}`
-const regexLayout3Replaced = ``
+const regexLayout3 = `\{LINK#([A-Za-z]*\d+)\}`
+const regexLayout3Replaced = `<span class="hyperlink" xlink:href="$1">`
 const regexLayout4 = `\{/LINK}`
-const regexLayout4Replaced = ``
+const regexLayout4Replaced = `</span>`
 const regexColorCode1 = `#99FFFFFF`
 const regexColorCode1Replaced = `#FF6600`
 const regexColorCode2 = `#FFD780FF`

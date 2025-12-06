@@ -1,0 +1,12 @@
+<span class="hyperlink-text" [innerHTML]="content"></span>
+
+<!-- Tooltip overlay -->
+<div class="hyperlink-overlay" *ngIf="showTooltip">
+  <div
+    #tooltipElement
+    class="hyperlink-tooltip"
+    [style.top.px]="tooltipPosition.top"
+    [style.left.px]="tooltipPosition.left">
+    <div class="hyperlink-tooltip-content" [innerHTML]="tooltipContent"></div>
+  </div>
+</div>

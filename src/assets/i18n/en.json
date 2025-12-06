@@ -169,7 +169,7 @@
     "HEALING_RATE_MULTI_ELEMENTAL_BURST": "Elemental Burst Healing Multiplier Bonus",
     "DMG_RATE_MULTI_MOON_ELECTROCHARGED": "Lunar Electro-Charged DMG Multiplier Bonus",
     "DMG_RATE_MULTI_MOON_RUPTURE": "Lunar Rupture DMG Multiplier Bonus",
-    "DMG_BASICS_MULTI_MOON_RUPTURE": "月绽放基础区倍率乘算加成",
+    "DMG_BASICS_MULTI_MOON_RUPTURE": "Lunar Rupture DMG Base Multiplier Bonus",
     "DMG_VAL_UP_CRYO": "Cryo DMG Increase",
     "DMG_VAL_UP_ANEMO": "Anemo DMG Increase",
     "DMG_VAL_UP_PHYSICAL": "Physical DMG Increase",
@@ -521,7 +521,13 @@
     "VARESA_VOLCANO_KABLAM": "Volcano Kablam",
     "SKIRK_SERPENT_SUBTLETY": "Serpent's Subtlety",
     "SKIRK_SEVEN_PHASE_FLASH": "Seven-Phase Flash",
-    "NEFER_PHANTASM_PERFORMANCE": "Phantasm Performance"
+    "NEFER_PHANTASM_PERFORMANCE": "Phantasm Performance",
+    "DURIN_PRINCIPLE_OF_DARKNESS": "Principle of Darkness: As the Stars Smolder",
+    "JAHODA_PURRSONAL_COORDINATED_ASSISTANCE_ROBOT": "Purrsonal Coordinated Assistance Robot",
+    "RAZOR_SOUL_COMPANION": "Soul Companion",
+    "VENTI_SKILL_PRESS": "Skyward Sonnet Press",
+    "ALBEDO_TRANSIENT_BLOSSOM": "Transient Blossom",
+    "ALBEDO_FATAL_BLOSSOM": "Fatal Blossom"
   },
   "AUTO": {
     "CALC": "Calculate",
@@ -624,6 +630,12 @@
     },
     "MOON_LEVEL": {
       "TITLE": "Moonsign Level"
+    },
+    "VEIL_OF_FALSEHOOD": {
+      "TITLE": "Veil of Falsehood"
+    },
+    "HEXEREI_SECRET_RITE": {
+      "TITLE": "Hexerei: Secret Rite"
     }
   },
   "MENU": {
@@ -705,7 +717,9 @@
       "DATA_GENSHIN_MONSTER_3": "Enemy Data 3",
       "DATA_GENSHIN_RELIQUARY_SET": "Artifact Set Data",
       "DATA_GENSHIN_RELIQUARY_MAIN": "Artifact Main Stat Data",
-      "DATA_GENSHIN_RELIQUARY_SUB": "Artifact Sub Stat Data"
+      "DATA_GENSHIN_RELIQUARY_SUB": "Artifact Sub Stat Data",
+      "DATA_GENSHIN_HYPERLINK": "Hyperlink Data",
+      "DATA_GENSHIN_MANUAL_TEXTMAP": "Manual Textmap Data"
     }
   }
 }

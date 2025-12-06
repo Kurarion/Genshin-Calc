@@ -108,6 +108,8 @@ export interface CharSkill {
   name: Record<TYPE_SYS_LANG, string>;
   //記述
   desc: Record<TYPE_SYS_LANG, string>;
+  //特殊技能記述
+  specialDesc: Record<TYPE_SYS_LANG, string>;
   //アイコン
   icon: string;
   //クールタイム

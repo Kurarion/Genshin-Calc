@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {
   character,
+  CharSkill,
   Const,
   ExpansionPanelCommon,
   RelayoutMsgService,
@@ -59,5 +60,23 @@ export class ConstellationComponent extends ExpansionPanelCommon implements OnIn
   //ドラッグ開始
   onDrag() {
     this.draged.emit(this.name);
+  }
+
+  /**
+   * 获取技能描述，优先使用SpecialDesc，回退到Desc
+   * @param skill 技能对象
+   * @returns 技能描述文本
+   */
+  getSkillDescription(skill: any): string {
+    const skillObj = skill as CharSkill;
+    const currentLang = this.currentLanguage;
+
+    // 优先使用SpecialDesc，如果为空则回退到Desc
+    if (skillObj.specialDesc && skillObj.specialDesc[currentLang] && skillObj.specialDesc[currentLang].trim() !== '') {
+      return skillObj.specialDesc[currentLang];
+    }
+
+    // 回退到原始Desc
+    return skillObj.desc && skillObj.desc[currentLang] ? skillObj.desc[currentLang] : '';
   }
 }

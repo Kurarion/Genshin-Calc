@@ -1,0 +1,52 @@
+.hyperlink-text {
+  color: #ff9800;
+  text-decoration: underline;
+  cursor: pointer;
+  position: relative;
+  display: inline;
+}
+
+.hyperlink-text:hover {
+  color: #f57c00;
+  text-decoration: none;
+}
+
+.hyperlink-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.hyperlink-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+.hyperlink-tooltip-content {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 300px;
+  max-height: 200px;
+  overflow-y: auto;
+  word-wrap: break-word;
+}
+
+/* Allow text formatting in tooltips */
+.hyperlink-tooltip-content ::ng-deep a {
+  color: #81d4fa;
+  text-decoration: underline;
+}
+
+.hyperlink-tooltip-content ::ng-deep a:hover {
+  color: #4fc3f7;
+}

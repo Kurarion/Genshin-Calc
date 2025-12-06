@@ -157,6 +157,15 @@ var (
 	//圣遗物主词条值
 	dataReliquaryMainMap map[string]float64
 
+	//弹出式玩法教学Tip
+	dataPushTipsMap map[uint64]*PUSHTIPS
+	//玩法教学详细内容
+	dataTutorialDetailMap map[uint64]*TUTORIALDETAIL
+	//超链接定义
+	dataHyperLinkMap map[string]*HYPERLINK
+	//术语定义
+	dataManualTextMap map[uint64]*MANUALTEXTMAP
+
 	//序列化列表
 	dataSaveObjMap map[string]interface{}
 )
@@ -188,6 +197,10 @@ const (
 	fileReliquaryAffix = "reliquary_affix_map.json"
 	fileReliquaryMain  = "reliquary_main_map.json"
 	fileReliquarySet   = "reliquary_set_map.json"
+	filePushTips       = "push_tips_map.json"
+	fileTutorialDetail = "tutorial_detail_map.json"
+	fileHyperLink      = "hyperlink_map.json"
+	fileManualTextMap  = "manual_textmap_map.json"
 
 	fileLocalCharacterExtra = "character.json"
 )
@@ -233,6 +246,10 @@ const (
 	indexProudSkillExcelConfig          = "ProudSkillExcelConfigData"
 	indexAvatarTalentExcelConfig        = "AvatarTalentExcelConfigData"
 	indexFetterInfoExcelConfigData      = "FetterInfoExcelConfigData"
+	indexHyperLinkNameExcelConfigData   = "HyperLinkNameExcelConifgData"
+	indexManualTextMapConfigData        = "ManualTextMapConfigData"
+	indexPushTipsConfigData             = "PushTipsConfigData"
+	indexTutorialDetailExcelConfigData  = "TutorialDetailExcelConfigData"
 	indexTextMapCHSFile                 = "TextMapDataCHS"
 	indexTextMapCHTFile                 = "TextMapDataCHT"
 	indexTextMapENFile                  = "TextMapDataEN"
@@ -248,6 +265,10 @@ const (
 	indexMonsterPath2       = "monster_map_2"
 	indexMonsterPath3       = "monster_map_3"
 	indexAvatarSkillPath    = "avatar_skills_map"
+	indexPushTipsPath       = "push_tips_map"
+	indexTutorialDetailPath = "tutorial_detail_map"
+	indexHyperLinkPath      = "hyperlink_map"
+	indexManualTextMapPath  = "manual_textmap_map"
 )
 
 const (
@@ -299,6 +320,10 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		pathMonsterFile1       = pathDir + pathSlash + fileMonster1
 		pathMonsterFile2       = pathDir + pathSlash + fileMonster2
 		pathMonsterFile3       = pathDir + pathSlash + fileMonster3
+		pathPushTipsFile       = pathDir + pathSlash + filePushTips
+		pathTutorialDetailFile = pathDir + pathSlash + fileTutorialDetail
+		pathHyperLinkFile      = pathDir + pathSlash + fileHyperLink
+		pathManualTextMapFile  = pathDir + pathSlash + fileManualTextMap
 	)
 	//下载URL初始化
 	dataJSONURLMap = map[string]string{
@@ -323,6 +348,10 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		indexProudSkillExcelConfig:          resURL + ProudSkillExcelConfigData,
 		indexAvatarTalentExcelConfig:        resURL + AvatarTalentExcelConfigData,
 		indexFetterInfoExcelConfigData:      resURL + FetterInfoExcelConfigData,
+		indexHyperLinkNameExcelConfigData:   resURL + HyperLinkNameExcelConifgData,
+		indexManualTextMapConfigData:        resURL + ManualTextMapConfigData,
+		indexPushTipsConfigData:             resURL + PushTipsConfigData,
+		indexTutorialDetailExcelConfigData:  resURL + TutorialDetailExcelConfigData,
 		indexTextMapCHSFile:                 resURL + TextMapDataCHS,
 		indexTextMapCHTFile:                 resURL + TextMapDataCHT,
 		indexTextMapENFile:                  resURL + TextMapDataEN,
@@ -340,6 +369,10 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		indexReliquarySetExcelConfig: {path: pathReliquarySetFile, class: typeJs, save: true},
 		indexReliquaryAffixPath:      {path: pathReliquaryAffixFile, class: typeJs, save: true},
 		indexReliquaryMainPath:       {path: pathReliquaryMainFile, class: typeJs, save: true},
+		indexPushTipsPath:            {path: pathPushTipsFile, class: typeJs, save: true},
+		indexTutorialDetailPath:      {path: pathTutorialDetailFile, class: typeJs, save: true},
+		indexHyperLinkPath:           {path: pathHyperLinkFile, class: typeJs, save: true},
+		indexManualTextMapPath:       {path: pathManualTextMapFile, class: typeJs, save: true},
 	}
 	//序列化列表
 	dataSaveObjMap = map[string]interface{}{
@@ -352,6 +385,11 @@ func Generate(targetDir string, localResPath string, resURL string) {
 		pathReliquarySetFile:   &dataReliquarySetMap,
 		pathReliquaryAffixFile: &dataReliquaryAffixMap,
 		pathReliquaryMainFile:  &dataReliquaryMainMap,
+		pathHyperLinkFile:      &dataHyperLinkMap,
+		// TODO
+		// pathPushTipsFile:       &dataPushTipsMap,
+		// pathTutorialDetailFile: &dataTutorialDetailMap,
+		// pathManualTextMapFile:  &dataManualTextMap,
 	}
 	//角色对应初始化
 	dataAvatarMap = make(map[uint64]*AVATAR)
@@ -371,6 +409,14 @@ func Generate(targetDir string, localResPath string, resURL string) {
 	dataReliquaryAffixMap = make(map[string][]float64)
 	//圣遗物主词条值
 	dataReliquaryMainMap = make(map[string]float64)
+	//弹出式玩法教学Tip
+	dataPushTipsMap = make(map[uint64]*PUSHTIPS)
+	//玩法教学详细内容
+	dataTutorialDetailMap = make(map[uint64]*TUTORIALDETAIL)
+	//超链接定义
+	dataHyperLinkMap = make(map[string]*HYPERLINK)
+	//术语定义
+	dataManualTextMap = make(map[uint64]*MANUALTEXTMAP)
 
 	//初始化
 	err := initialize(localResPath, resURL)
@@ -460,6 +506,12 @@ func update(localResPath string, resURL string) error {
 	reliquaryAffixDataList := make(GenshinReliquaryAffixListData, 0)
 	reliquaryMainDataList := make(GenshinReliquaryMainListData, 0)
 	reliquaryCodexDataList := make(GenshinReliquaryCodexListData, 0)
+	//超链接和术语
+	hyperLinkNameDataList := make(GenshinHyperLinkNameListData, 0)
+	manualTextMapDataList := make(GenshinManualTextMapListData, 0)
+	//教学提示
+	pushTipsDataList := make(GenshinPushTipsListData, 0)
+	tutorialDetailDataList := make(GenshinTutorialDetailListData, 0)
 	//文字对应
 	textMapCHS := make(map[uint64]string)
 	textMapCHT := make(map[uint64]string)
@@ -531,6 +583,14 @@ func update(localResPath string, resURL string) error {
 			json.Unmarshal(v.Bytes(), &avatarTalentDataList)
 		case indexFetterInfoExcelConfigData:
 			json.Unmarshal(v.Bytes(), &fetterInfoDataList)
+		case indexHyperLinkNameExcelConfigData:
+			json.Unmarshal(v.Bytes(), &hyperLinkNameDataList)
+		case indexManualTextMapConfigData:
+			json.Unmarshal(v.Bytes(), &manualTextMapDataList)
+		case indexPushTipsConfigData:
+			json.Unmarshal(v.Bytes(), &pushTipsDataList)
+		case indexTutorialDetailExcelConfigData:
+			json.Unmarshal(v.Bytes(), &tutorialDetailDataList)
 		case indexTextMapCHSFile:
 			json.Unmarshal(v.Bytes(), &textMapCHS)
 		case indexTextMapCHTFile:
@@ -546,6 +606,18 @@ func update(localResPath string, resURL string) error {
 	textMapCHT[0] = ""
 	textMapEN[0] = ""
 	textMapJP[0] = ""
+
+	// 创建超链接和术语映射
+	hyperLinkNameMap := make(map[uint64]uint64)
+	manualTextMapMap := make(map[string]uint64)
+
+	for i := range hyperLinkNameDataList {
+		hyperLinkNameMap[hyperLinkNameDataList[i].Id] = hyperLinkNameDataList[i].DescTextMapHash
+	}
+
+	for i := range manualTextMapDataList {
+		manualTextMapMap[manualTextMapDataList[i].TextMapId] = manualTextMapDataList[i].TextMapContentTextMapHash
+	}
 	//人物
 	avatarGrowCurvesDataMap := make(map[int]*GenshinGrowCurvesData)
 	avatarPromoteDataMap := make(map[uint64][]*GenshinPromoteData)
@@ -752,6 +824,7 @@ func update(localResPath string, resURL string) error {
 				Id:                   avatarSkillDataMap[temp.Skills[0]].Id,
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[0]].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[0]].DescTextMapHash, textMap, false),
+				SpecialDesc:          getSpecialDesc(avatarSkillDataMap[temp.Skills[0]].SpecialDescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.Skills[0]].SkillIcon,
 				ParamDescList:        normalParamDescList,
 				ParamMap:             avatarProudSkillParamDataMap[avatarSkillDataMap[temp.Skills[0]].ProudSkillGroupId],
@@ -765,6 +838,7 @@ func update(localResPath string, resURL string) error {
 				Id:                   avatarSkillDataMap[temp.Skills[1]].Id,
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[1]].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[1]].DescTextMapHash, textMap, false),
+				SpecialDesc:          getSpecialDesc(avatarSkillDataMap[temp.Skills[1]].SpecialDescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.Skills[1]].SkillIcon,
 				CdTime:               avatarSkillDataMap[temp.Skills[1]].CdTime,
 				ParamDescList:        skillParamDescList,
@@ -779,6 +853,7 @@ func update(localResPath string, resURL string) error {
 				Id:                   avatarSkillDataMap[temp.EnergySkill].Id,
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.EnergySkill].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.EnergySkill].DescTextMapHash, textMap, false),
+				SpecialDesc:          getSpecialDesc(avatarSkillDataMap[temp.EnergySkill].SpecialDescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.EnergySkill].SkillIcon,
 				CdTime:               avatarSkillDataMap[temp.EnergySkill].CdTime,
 				CostElemVal:          avatarSkillDataMap[temp.EnergySkill].CostElemVal,
@@ -797,6 +872,7 @@ func update(localResPath string, resURL string) error {
 			dataAvatarSkillsMap[temp.Id].Other = AVATARSKILLINFO{
 				Name:                 getTextFromHash(avatarSkillDataMap[temp.Skills[2]].NameTextMapHash, textMap, false),
 				Desc:                 getRegxTextFromHash(avatarSkillDataMap[temp.Skills[2]].DescTextMapHash, textMap, false),
+				SpecialDesc:          getSpecialDesc(avatarSkillDataMap[temp.Skills[2]].SpecialDescTextMapHash, textMap, false),
 				Icon:                 avatarSkillDataMap[temp.Skills[2]].SkillIcon,
 				CdTime:               avatarSkillDataMap[temp.Skills[2]].CdTime,
 				ParamDescList:        paramDescList,
@@ -807,21 +883,85 @@ func update(localResPath string, resURL string) error {
 				},
 			}
 		}
+		// 收集所有InherentProudSkillOpens和SpecialProudSkillOpens
+		// 注意：我们将按照特定顺序组合这些技能：
+		// 1. InherentProudSkillOpens（除了最后一个）
+		// 2. SpecialProudSkillOpens（全部）
+		// 3. InherentProudSkillOpens（最后一个）
+		inherentSkills := make([]AVATARSKILLINFO, 0)
+		specialSkills := make([]AVATARSKILLINFO, 0)
+
+		// 处理固有技能（InherentProudSkillOpens）
 		for ii := range temp.InherentProudSkillOpens {
 			temp2 := temp.InherentProudSkillOpens[ii]
 			if temp2.ProudSkillGroupId == 0 {
 				continue
 			}
-			dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, AVATARSKILLINFO{
-				Name:              getTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].NameTextMapHash, textMap, false),
-				Desc:              getRegxTextFromHash(avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].DescTextMapHash, textMap, false),
-				Icon:              avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon,
+			proudSkillData := avatarProudSkillDataMap[temp2.ProudSkillGroupId][0]
+			inherentSkills = append(inherentSkills, AVATARSKILLINFO{
+				Name:              getTextFromHash(proudSkillData.NameTextMapHash, textMap, false),
+				Desc:              getRegxTextFromHash(proudSkillData.DescTextMapHash, textMap, false),
+				SpecialDesc:       getSpecialDesc(proudSkillData.SpecialDescTextMapHash, textMap, false),
+				Icon:              proudSkillData.Icon,
 				ParamMap:          avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
 				ParamValidIndexes: calCharacterNoLevelValidParamIndexes(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]),
 				Images: SKILLIMAGES{
-					Icon: fmt.Sprintf(imgHostOhterFormat, avatarProudSkillDataMap[temp2.ProudSkillGroupId][0].Icon),
+					Icon: fmt.Sprintf(imgHostOhterFormat, proudSkillData.Icon),
 				},
 			})
+		}
+
+		// 处理特殊技能（SpecialProudSkillOpens）
+		for ii := range temp.SpecialProudSkillOpens {
+			temp2 := temp.SpecialProudSkillOpens[ii]
+			if temp2.ProudSkillGroupId == 0 {
+				continue
+			}
+			// 为特殊技能创建参数映射（使用默认参数或从现有技能组获取）
+			if _, exists := avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]; !exists {
+				avatarProudSkillParamDataMap[temp2.ProudSkillGroupId] = make(map[string][]float64, 0)
+			}
+			// 如果特殊技能没有参数数据，使用默认值
+			if len(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]) == 0 {
+				avatarProudSkillParamDataMap[temp2.ProudSkillGroupId][fmt.Sprintf(configSkillLevelFormat, 1)] = make([]float64, 0)
+			}
+
+			proudSkillData := avatarProudSkillDataMap[temp2.ProudSkillGroupId][0]
+			specialSkills = append(specialSkills, AVATARSKILLINFO{
+				Name:              getTextFromHash(proudSkillData.NameTextMapHash, textMap, false),
+				Desc:              getRegxTextFromHash(proudSkillData.DescTextMapHash, textMap, false),
+				SpecialDesc:       getSpecialDesc(proudSkillData.SpecialDescTextMapHash, textMap, false),
+				Icon:              proudSkillData.Icon,
+				ParamMap:          avatarProudSkillParamDataMap[temp2.ProudSkillGroupId],
+				ParamValidIndexes: calCharacterNoLevelValidParamIndexes(avatarProudSkillParamDataMap[temp2.ProudSkillGroupId]),
+				Images: SKILLIMAGES{
+					Icon: fmt.Sprintf(imgHostOhterFormat, proudSkillData.Icon),
+				},
+				ProudSkillGroupId: temp2.ProudSkillGroupId,
+			})
+		}
+
+		// 按照要求的顺序组合技能：
+		// InherentProudSkillOpens（除了最后一个） + SpecialProudSkillOpens + InherentProudSkillOpens（最后一个）
+		// 这样可以确保SpecialProudSkillOpens插入在InherentProudSkillOpens的最后一个item的前面
+		if len(inherentSkills) > 0 {
+			// 添加除了最后一个之外的所有固有技能
+			for i := 0; i < len(inherentSkills)-1; i++ {
+				dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, inherentSkills[i])
+			}
+
+			// 添加所有特殊技能
+			for i := 0; i < len(specialSkills); i++ {
+				dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, specialSkills[i])
+			}
+
+			// 添加最后一个固有技能
+			dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, inherentSkills[len(inherentSkills)-1])
+		} else {
+			// 如果没有固有技能，直接添加特殊技能
+			for i := 0; i < len(specialSkills); i++ {
+				dataAvatarSkillsMap[temp.Id].ProudSkills = append(dataAvatarSkillsMap[temp.Id].ProudSkills, specialSkills[i])
+			}
 		}
 		for ii := range temp.Talents {
 			temp2 := temp.Talents[ii]
@@ -834,6 +974,7 @@ func update(localResPath string, resURL string) error {
 			dataAvatarSkillsMap[temp.Id].Talents = append(dataAvatarSkillsMap[temp.Id].Talents, AVATARSKILLINFO{
 				Name:              getTextFromHash(avatarTalentDataMap[temp2].NameTextMapHash, textMap, false),
 				Desc:              getRegxTextFromHash(avatarTalentDataMap[temp2].DescTextMapHash, textMap, false),
+				SpecialDesc:       getSpecialDesc(avatarTalentDataMap[temp2].SpecialDescTextMapHash, textMap, false),
 				Icon:              avatarTalentDataMap[temp2].Icon,
 				ParamMap:          tempParamMap,
 				ParamValidIndexes: calCharacterNoLevelValidParamIndexes(tempParamMap),
@@ -882,6 +1023,7 @@ func update(localResPath string, resURL string) error {
 			DescTextMapHash: currentAvatarData.DescTextMapHash,
 			IconName:        currentAvatarData.IconName,
 			WeaponType:      currentAvatarData.WeaponType,
+			Tags:            currentAvatarData.Tags,
 			Images: AVATARIMAGES{
 				Icon:       fmt.Sprintf(imgHostAvatarFormat, currentAvatarData.IconName),
 				Background: getBackgroundUrl(nameText, extraCharacterMap),
@@ -987,6 +1129,7 @@ func update(localResPath string, resURL string) error {
 					DescTextMapHash: currentAvatarData.DescTextMapHash,
 					IconName:        currentAvatarData.IconName,
 					WeaponType:      currentAvatarData.WeaponType,
+					Tags:            currentAvatarData.Tags,
 					Images: AVATARIMAGES{
 						Icon:       fmt.Sprintf(imgHostAvatarFormat, currentAvatarData.IconName),
 						Background: extraCharacterMap[nameText[languageCHS]].BackgroundUrl,
@@ -1205,6 +1348,96 @@ func update(localResPath string, resURL string) error {
 		}
 		validNum += 1
 	}
+	//弹出式玩法教学Tip处理
+	for i := range pushTipsDataList {
+		currentPushTipsData := &pushTipsDataList[i]
+		//过滤
+		if currentPushTipsData.Id == 0 {
+			continue
+		}
+
+		titleText := getTextFromHash(currentPushTipsData.TitleTextMapHash, textMap, false)
+		contentText := getTextFromHash(currentPushTipsData.ContentTextMapHash, textMap, false)
+
+		//创建对象
+		dataPushTipsMap[currentPushTipsData.Id] = &PUSHTIPS{
+			Id:                 currentPushTipsData.Id,
+			TitleTextMapHash:   currentPushTipsData.TitleTextMapHash,
+			Title:              titleText,
+			ContentTextMapHash: currentPushTipsData.ContentTextMapHash,
+			Content:            contentText,
+			GroupId:            currentPushTipsData.GroupId,
+			GroupIdText:        map[string]string{}, // 如果需要GroupId的文本映射，可以在这里添加
+			Priority:           currentPushTipsData.Priority,
+			OnlyUnlocked:       currentPushTipsData.OnlyUnlocked,
+			IsShowInTips:       currentPushTipsData.IsShowInTips,
+		}
+	}
+
+	//玩法教学详细内容处理
+	for i := range tutorialDetailDataList {
+		currentTutorialDetailData := &tutorialDetailDataList[i]
+		//过滤
+		if currentTutorialDetailData.Id == 0 {
+			continue
+		}
+
+		titleText := getTextFromHash(currentTutorialDetailData.TitleTextMapHash, textMap, false)
+		contentText := getTextFromHash(currentTutorialDetailData.ContentTextMapHash, textMap, false)
+
+		//创建对象
+		dataTutorialDetailMap[currentTutorialDetailData.Id] = &TUTORIALDETAIL{
+			Id:                 currentTutorialDetailData.Id,
+			TitleTextMapHash:   currentTutorialDetailData.TitleTextMapHash,
+			Title:              titleText,
+			ContentTextMapHash: currentTutorialDetailData.ContentTextMapHash,
+			Content:            contentText,
+			GroupId:            currentTutorialDetailData.GroupId,
+			GroupIdText:        map[string]string{}, // 如果需要GroupId的文本映射，可以在这里添加
+			Priority:           currentTutorialDetailData.Priority,
+			OnlyUnlocked:       currentTutorialDetailData.OnlyUnlocked,
+			IsShowInTips:       currentTutorialDetailData.IsShowInTips,
+		}
+	}
+
+	//超链接定义处理
+	for i := range hyperLinkNameDataList {
+		currentHyperLinkData := &hyperLinkNameDataList[i]
+		//过滤
+		if currentHyperLinkData.Id == 0 {
+			continue
+		}
+
+		contentText := getTextFromHash(currentHyperLinkData.DescTextMapHash, textMap, false)
+
+		//创建对象
+		dataHyperLinkMap[strconv.FormatUint(currentHyperLinkData.Id, 10)] = &HYPERLINK{
+			Id:                 strconv.FormatUint(currentHyperLinkData.Id, 10),
+			TextMapContentHash: currentHyperLinkData.DescTextMapHash,
+			Content:            contentText,
+			ParamTypes:         []string{}, // 原始数据中没有ParamTypes，使用空数组
+		}
+	}
+
+	//术语定义处理
+	for i := range manualTextMapDataList {
+		currentManualTextMapData := &manualTextMapDataList[i]
+		//过滤
+		if currentManualTextMapData.TextMapId == "" {
+			continue
+		}
+
+		contentText := getTextFromHash(currentManualTextMapData.TextMapContentTextMapHash, textMap, false)
+
+		//创建对象 - 使用字符串ID的哈希值作为uint64 ID
+		idHash := fnv1a(currentManualTextMapData.TextMapId)
+		dataManualTextMap[idHash] = &MANUALTEXTMAP{
+			Id:                 idHash,
+			TextMapContentHash: currentManualTextMapData.TextMapContentTextMapHash,
+			Content:            contentText,
+		}
+	}
+
 	return nil
 }
 
@@ -1311,6 +1544,40 @@ func tTos(in string) (out string) {
 	// }
 	out = in
 	return
+}
+
+// 初始化技能特殊描述
+func initSpecialDesc() map[string]string {
+	result := make(map[string]string)
+	for _, v := range sysLanguage {
+		result[v] = ""
+	}
+	return result
+}
+
+// 获取技能特殊描述
+func getSpecialDesc(hash uint64, textMap map[string]map[uint64]string, useT2s bool) map[string]string {
+	result := initSpecialDesc()
+
+	// 如果hash为0，直接返回空的SpecialDesc
+	if hash == 0 {
+		return result
+	}
+
+	// 尝试解析文本，如果失败则保持空字符串
+	for _, v := range sysLanguage {
+		if useT2s && v == languageCHS {
+			if text, exists := textMap[languageCHT][hash]; exists && text != "" {
+				result[v] = htmlColorTag(tTos(text))
+			}
+			continue
+		}
+		if text, exists := textMap[v][hash]; exists && text != "" {
+			result[v] = htmlColorTag(text)
+		}
+	}
+
+	return result
 }
 
 // 技能描述解析
@@ -1423,4 +1690,14 @@ func containsGeneric(data []int, target int) bool {
 		}
 	}
 	return false
+}
+
+// 简单的FNV-1a哈希函数，用于将字符串转换为uint64
+func fnv1a(s string) uint64 {
+	hash := uint64(1469598103934665603)
+	for _, c := range s {
+		hash ^= uint64(c)
+		hash *= 1099511628211
+	}
+	return hash
 }

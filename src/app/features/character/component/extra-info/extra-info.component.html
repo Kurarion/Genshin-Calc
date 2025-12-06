@@ -13,13 +13,13 @@
       </mat-select>
     </mat-form-field>
   </ng-container>
-  <div class="grid-wrapper">
+  <div class="grid-wrapper" appHyperlinkInteraction>
     <ng-container *ngFor="let temp of tempDataList; index as i">
       <div class="grid-column-all">
         <div class="placeholder"></div>
       </div>
       <div class="temp-place"></div>
-      <span class="left-align" [innerText]="skillDescDatas[i].desc"></span>
+      <span class="left-align" [innerHTML]="skillDescDatas[i].desc | hyperlink"></span>
       <span
         class="right-align"
         [innerText]="showValues[i]"

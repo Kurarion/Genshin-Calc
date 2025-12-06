@@ -36,3 +36,14 @@ mat-progress-bar .mat-progress-bar-buffer {
   border-radius: 12%;
   vertical-align: middle;
 }
+
+/* 超链接样式 */
+.hyperlink {
+  color: #ff9800 !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
+.hyperlink:hover {
+  color: #f57c00 !important;
+}

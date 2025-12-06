@@ -24,6 +24,8 @@ export class GenshinDataService {
   static dataOptimalReliquaryAffixStep: Record<string, number>;
   static dataChip: Record<string, ChipData[]>;
   static dataExtra: ExtraData;
+  static dataHyperlink: Record<string, any>;
+  static dataManualTextMap: Record<string, any>;
 
   private updateSubject: Subject<void> = new Subject<void>();
   private updateSubject$: Observable<void> = this.updateSubject.asObservable();
@@ -158,6 +160,12 @@ export class GenshinDataService {
   static initExtraData(data: any) {
     this.dataExtra = data;
   }
+  static initHyperlinkData(data: any) {
+    this.dataHyperlink = data;
+  }
+  static initManualTextMapData(data: any) {
+    this.dataManualTextMap = data;
+  }
 
   getCharacter(index: string) {
     return GenshinDataService.dataCharacter[index];
@@ -191,5 +199,17 @@ export class GenshinDataService {
   }
   getExtraArtifactData(index: string) {
     return GenshinDataService.dataExtra.artifact[index];
+  }
+  getHyperlink(index: string) {
+    return GenshinDataService.dataHyperlink[index];
+  }
+  getManualTextMap(index: string) {
+    return GenshinDataService.dataManualTextMap[index];
+  }
+  static getHyperlink(index: string) {
+    return GenshinDataService.dataHyperlink[index];
+  }
+  static getManualTextMap(index: string) {
+    return GenshinDataService.dataManualTextMap[index];
   }
 }

@@ -20,8 +20,13 @@ import {NoStrongPipe} from './pipe/no-strong.pipe';
 import {RatePipe} from './pipe/rate.pipe';
 import {TruncatePipe} from './pipe/truncate.pipe';
 import {RemoveZeroSuffixPipe} from './pipe/remove-zero-suffix.pipe';
+import {HyperlinkPipe} from './pipe/hyperlink.pipe';
 import {ImgErrorHandleDirective} from './directive/img-error-handle.directive';
 import {ImgLoadAndErrorHandleDirective} from './directive/img-load-and-error-handle.directive';
+import {HyperlinkDirective} from './directive/hyperlink.directive';
+import {HyperlinkInteractionDirective} from './directive/hyperlink-interaction.directive';
+import {HyperlinkTooltipComponent} from './component/hyperlink-tooltip/hyperlink-tooltip.component';
+import {HyperlinkComponent} from './component/hyperlink/hyperlink.component';
 
 export {
   ConfirmDialogComponent,
@@ -43,6 +48,7 @@ export {NoStrongPipe} from './pipe/no-strong.pipe';
 export {RatePipe} from './pipe/rate.pipe';
 export {TruncatePipe} from './pipe/truncate.pipe';
 export {RemoveZeroSuffixPipe} from './pipe/remove-zero-suffix.pipe';
+export {HyperlinkPipe} from './pipe/hyperlink.pipe';
 
 export {GlobalProgressService} from './service/global-progress.service';
 export {CharacterStorageInfo, CharacterService} from './service/genshin/character.service';
@@ -74,6 +80,7 @@ export {
   ExtraInfo,
 } from './service/genshin/extra-data.service';
 export {GenshinDataService} from './service/genshin/genshin-data.service';
+export {HyperlinkService} from './service/hyperlink.service';
 export {
   TeamBuff,
   SelfTeamBuff,
@@ -91,6 +98,7 @@ export {
 export {ExtraInfoService} from './service/genshin/extra-info-status.service';
 export {RelayoutMsgService} from './service/relayout-msg.service';
 export {OverlayService} from './service/overlay.service';
+export {BackgroundImageService} from './service/background-image.service';
 
 export {EnkaStorageData, EnkaService} from './service/other/enka.service';
 
@@ -120,6 +128,11 @@ let shardList: any[] = [
   RemoveZeroSuffixPipe,
   ImgErrorHandleDirective,
   ImgLoadAndErrorHandleDirective,
+  HyperlinkDirective,
+  HyperlinkInteractionDirective,
+  HyperlinkTooltipComponent,
+  HyperlinkComponent,
+  HyperlinkPipe,
 ];
 
 @NgModule({
