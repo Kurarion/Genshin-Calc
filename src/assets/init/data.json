@@ -21306,6 +21306,7 @@
               "buffs": [
                 {
                   "index": 2,
+                  "base": "FIX_NUMBER_1",
                   "finalResCalQueue": [
                     {
                       "relation": "*",
@@ -21410,6 +21411,7 @@
             "buffs": [
               {
                 "customValue": 100,
+                "base": "FIX_NUMBER_1",
                 "finalResCalQueue": [
                   {
                     "relation": "*",

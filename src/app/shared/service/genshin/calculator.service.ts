@@ -1388,8 +1388,7 @@ export class CalculatorService {
             const basics_multi = data[Const.PROP_DMG_BASICS_MULTI_MOON_RUPTURE] ?? 0;
             // 計算
             originMoonRuptureDirectlyDmg =
-              (damgeValue * damgeUp + extraVal) *
-              (1 + basics_multi) *
+              (damgeValue * damgeUp * (1 + basics_multi) + extraVal) *
               (1 - dmgAntiSectionValue) *
               promotion;
             originMoonRuptureDirectlyDmg = this.getFinalResCalQueueResult(
