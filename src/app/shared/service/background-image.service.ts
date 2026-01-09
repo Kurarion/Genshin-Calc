@@ -3,8 +3,7 @@ import { HttpService } from '../shared.module';
 import { character } from '../class/character';
 
 /**
- * Background image loading and error handling service
- * 背景图片加载和错误处理服务
+ * 背景画像の読み込みとエラー処理サービス
  */
 @Injectable({
   providedIn: 'root'
@@ -13,25 +12,24 @@ export class BackgroundImageService {
 
   private cache = new Map<string, string>();
   private loadingPromises = new Map<string, Promise<string>>();
-  private objectUrls = new Set<string>(); // Track object URLs for cleanup
+  private objectUrls = new Set<string>(); // クリーンアップ用にobject URLを追跡
 
   constructor(private httpService: HttpService) {}
 
   /**
-   * Validate image URL format
-   * 验证图片URL格式
+   * 画像URLの形式を検証する
    */
   validateImageUrl(url: string): boolean {
     if (!url || typeof url !== 'string') {
       return false;
     }
 
-    // Check if it's a base64 encoded image
+    // base64エンコードされた画像かチェック
     if (url.startsWith('data:image/')) {
       return true;
     }
 
-    // Check if it's a valid HTTP/HTTPS URL
+    // 有効なHTTP/HTTPS URLかチェック
     try {
       const urlObj = new URL(url);
       return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
@@ -41,16 +39,14 @@ export class BackgroundImageService {
   }
 
   /**
-   * Get default background for character
-   * 获取角色的默认背景
+   * キャラクターのデフォルト背景を取得する
    */
   getDefaultBackground(): string {
-    return ''; // White background
+    return ''; // 白背景
   }
 
   /**
-   * Get assets background path based on character English name
-   * 根据角色英文名获取assets背景路径
+   * キャラクターの英名に基づいてassets背景パスを取得する
    */
   getAssetsBackgroundPath(characterData?: character): string {
     if (!characterData?.name?.en) {
@@ -59,7 +55,7 @@ export class BackgroundImageService {
 
     const englishName = characterData.name.en.trim();
 
-    // Check if exact name exists
+    // 正確な名前が存在するかチェック
     const fileName = englishName;
     const path = `assets/background/${fileName}.png`;
 
@@ -67,23 +63,21 @@ export class BackgroundImageService {
   }
 
   /**
-   * Load image with timeout
-   * 带超时的图片加载
+   * タイムアウト付きの画像読み込み
    */
   private loadImageWithTimeout(url: string, timeout: number = 5000): Promise<Blob | null> {
     return Promise.race([
       this.httpService.get<Blob>(url, 'blob', true, false),
       new Promise<null>((resolve) =>
         setTimeout(() => {
-          resolve(null); // Return null instead of rejecting to avoid unhandled rejections
+          resolve(null); // 未処理の拒否を避けるために、拒否の代わりにnullを返す
         }, timeout)
       )
     ]);
   }
 
   /**
-   * Load assets background image
-   * 加载assets背景图片
+   * assets背景画像を読み込む
    */
   async loadAssetsBackground(characterData?: character): Promise<string> {
     const assetsPath = this.getAssetsBackgroundPath(characterData);
@@ -91,17 +85,17 @@ export class BackgroundImageService {
       return '';
     }
 
-    // Check cache first
+    // まずキャッシュをチェック
     if (this.cache.has(assetsPath)) {
       return this.cache.get(assetsPath)!;
     }
 
-    // Check if already loading
+    // 既に読み込み中かチェック
     if (this.loadingPromises.has(assetsPath)) {
       return this.loadingPromises.get(assetsPath)!;
     }
 
-    // Create loading promise
+    // 読み込みPromiseを作成
     const loadingPromise = this.performAssetsBackgroundLoad(assetsPath);
     this.loadingPromises.set(assetsPath, loadingPromise);
 
@@ -115,14 +109,13 @@ export class BackgroundImageService {
   }
 
   /**
-   * Perform the actual assets background loading
-   * 执行实际的assets背景加载
+   * 実際のassets背景読み込みを実行する
    */
   private async performAssetsBackgroundLoad(assetsPath: string): Promise<string> {
     try {
 
-      // Load assets background with shorter timeout (local files should be fast)
-      const blob = await this.loadImageWithTimeout(assetsPath, 10000); // 10 second timeout for assets
+      // より短いタイムアウトでassets背景を読み込む（ローカルファイルは高速であるべき）
+      const blob = await this.loadImageWithTimeout(assetsPath, 10000); // assets用10秒タイムアウト
       if (blob) {
         const objectUrl = window.URL.createObjectURL(blob);
         this.objectUrls.add(objectUrl);
@@ -136,21 +129,20 @@ export class BackgroundImageService {
   }
 
   /**
-   * Load image with fallback strategy
-   * 使用fallback策略加载图片
+   * fallback戦略を使用して画像を読み込む
    */
   async loadImageWithFallback(url: string, characterId?: string, characterData?: character): Promise<string> {
-    // Check cache first
+    // まずキャッシュをチェック
     if (this.cache.has(url)) {
       return this.cache.get(url)!;
     }
 
-    // Check if already loading
+    // 既に読み込み中かチェック
     if (this.loadingPromises.has(url)) {
       return this.loadingPromises.get(url)!;
     }
 
-    // Create loading promise
+    // 読み込みPromiseを作成
     const loadingPromise = this.performImageLoadWithFallback(url, characterId);
     this.loadingPromises.set(url, loadingPromise);
 
@@ -164,12 +156,11 @@ export class BackgroundImageService {
   }
 
   /**
-   * Perform the actual image loading with fallback
-   * 执行实际的图片加载和fallback
+   * 実際の画像読み込みとfallbackを実行する
    */
   private async performImageLoadWithFallback(url: string, characterId?: string, characterData?: character): Promise<string> {
 
-    // First, try to load from assets based on character English name (this should be fast for local files)
+    // まず、キャラクターの英名に基づいてassetsから読み込みを試みる（ローカルファイルは高速であるべき）
     if (characterData) {
       const assetsBackground = await this.loadAssetsBackground(characterData);
       if (assetsBackground) {
@@ -177,17 +168,17 @@ export class BackgroundImageService {
       }
     }
 
-    // If no assets background and no URL provided, return white background immediately
+    // assets背景がなく、URLも提供されていない場合、即座に白背景を返す
     if (!url || url === '') {
       return this.getDefaultBackground();
     }
 
-    // Validate URL format
+    // URL形式を検証
     if (!this.validateImageUrl(url)) {
       return this.getDefaultBackground();
     }
 
-    // Try to load the original image (with timeout to prevent hanging)
+    // 元の画像の読み込みを試みる（ハングアップを防ぐためにタイムアウト付き）
     try {
       const blob = await this.loadImageWithTimeout(url);
       if (blob) {
@@ -197,16 +188,15 @@ export class BackgroundImageService {
       }
     } catch (error) {
       console.warn(`Failed to load background image: ${url}`, error);
-      // Don't call handleBackgroundLoadError to avoid additional processing
+      // 追加処理を避けるためにhandleBackgroundLoadErrorを呼び出さない
     }
 
-    // Final fallback to default background (white background)
+    // デフォルト背景（白背景）への最終fallback
     return this.getDefaultBackground();
   }
 
   /**
-   * Clear cache for a specific URL or all cache
-   * 清除特定URL或全部缓存
+   * 特定のURLまたは全キャッシュをクリアする
    */
   clearCache(url?: string): void {
     if (url) {
@@ -217,16 +207,14 @@ export class BackgroundImageService {
   }
 
   /**
-   * Get cache size (for debugging)
-   * 获取缓存大小（用于调试）
+   * キャッシュサイズを取得する（デバッグ用）
    */
   getCacheSize(): number {
     return this.cache.size;
   }
 
   /**
-   * Cleanup object URLs to prevent memory leaks
-   * 清理object URLs以防止内存泄漏
+   * メモリリークを防ぐためにobject URLsをクリーンアップする
    */
   cleanupObjectUrls(): void {
     for (const url of this.objectUrls) {
@@ -242,8 +230,7 @@ export class BackgroundImageService {
   }
 
   /**
-   * Cleanup specific object URL
-   * 清理特定的object URL
+   * 特定のobject URLをクリーンアップする
    */
   revokeObjectUrl(url: string): void {
     if (url.startsWith('blob:') && this.objectUrls.has(url)) {
@@ -257,8 +244,7 @@ export class BackgroundImageService {
   }
 
   /**
-   * Get number of tracked object URLs (for debugging)
-   * 获取跟踪的object URL数量（用于调试）
+   * 追跡中のobject URL数を取得する（デバッグ用）
    */
   getObjectUrlCount(): number {
     return this.objectUrls.size;

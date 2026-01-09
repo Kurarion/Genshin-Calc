@@ -25,33 +25,33 @@ export class HyperlinkService {
   ) {}
 
   /**
-   * 处理文本中的超链接标记，返回处理后的HTML字符串
-   * @param text 原始文本
-   * @returns 处理后的HTML字符串
+   * テキスト内のハイパーリンクタグを処理し、処理済みのHTML文字列を返す
+   * @param text 元のテキスト
+   * @returns 処理済みのHTML文字列
    */
   processHyperlinks(text: string): Observable<string> {
     if (!text) {
       return new Observable(observer => observer.next(text));
     }
-    
-    // 获取当前语言
+
+    // 現在の言語を取得
     return this.languageService.getLang().pipe(
       map(currentLang => {
-        // 使用正则表达式匹配原始超链接标记 {LINK#id}text{LINK#}
+        // 生のハイパーリンクタグに一致する正規表現を使用 {LINK#id}text{LINK#}
         const rawLinkRegex = /\{LINK#([A-Za-z]*\d+)\}(.*?)\{\/LINK\}/g;
 
         return text.replace(rawLinkRegex, (_match, linkId, linkText) => {
-          // 提取数字部分（去除字母前缀）
+          // 数値部分を抽出（アルファベットプレフィックスを削除）
           const numericId = linkId.replace(/^[A-Za-z]+/, '');
 
-          // 获取超链接数据
+          // ハイパーリンクデータを取得
           const hyperlinkData = GenshinDataService.getHyperlink(numericId);
           if (!hyperlinkData) {
-            // 如果没有找到数据，返回原始文本
+            // データが見つからない場合、元のテキストを返す
             return linkText;
           }
 
-          // 返回带有title属性的HTML元素（title通常被Angular保留）
+          // title属性を持つHTML要素を返す（titleは通常Angularによって保持される）
           return `<span class="${Const.HYPERLINK_CSS_CLASS}" title="${linkId}">${this.escapeHtml(linkText)}</span>`;
         });
       })
@@ -59,12 +59,12 @@ export class HyperlinkService {
   }
 
   /**
-   * 获取超链接的详细内容（包含所有语言）
-   * @param linkId 超链接ID
-   * @returns 包含所有语言内容的对象
+   * ハイパーリンクの詳細コンテンツを取得する（全言語含む）
+   * @param linkId ハイパーリンクID
+   * @returns 全言語のコンテンツを含むオブジェクト
    */
   getHyperlinkContentById(linkId: string): Observable<any> {
-    // 提取数字部分（去除字母前缀）
+    // 数値部分を抽出（アルファベットプレフィックスを削除）
     const numericId = linkId.replace(/^[A-Za-z]+/, '');
 
     const hyperlinkData = GenshinDataService.getHyperlink(numericId);
@@ -75,10 +75,10 @@ export class HyperlinkService {
       });
     }
 
-    // 预加载所有语言内容
+    // 全言語のコンテンツをプリロード
     const allLanguageContent: any = {};
 
-    // 处理所有可用语言
+    // 利用可能な全言語を処理
     const languages = [Const.LAN_CHS, Const.LAN_CHT, Const.LAN_EN, Const.LAN_JP];
 
     languages.forEach(lang => {
@@ -88,7 +88,7 @@ export class HyperlinkService {
       }
     });
 
-    // 立即返回所有语言内容
+    // 全言語のコンテンツを即座に返す
     return new Observable(observer => {
       observer.next(allLanguageContent);
       observer.complete();
@@ -96,30 +96,30 @@ export class HyperlinkService {
   }
 
   /**
-   * 根据当前语言选择显示内容
-   * @param allLanguageContent 包含所有语言内容的对象
-   * @returns 当前语言的内容
+   * 現在の言語に基づいて表示するコンテンツを選択する
+   * @param allLanguageContent 全言語のコンテンツを含むオブジェクト
+   * @returns 現在の言語のコンテンツ
    */
   getContentForCurrentLanguage(allLanguageContent: any): string {
     try {
       const currentLang = this.languageService.getCurrentLang();
 
-      // 首先尝试当前语言
+      // まず現在の言語を試す
       if (allLanguageContent[currentLang]) {
         return allLanguageContent[currentLang];
       }
 
-      // 尝试默认语言
+      // デフォルト言語を試す
       if (allLanguageContent[Const.DEFAULT_LANG]) {
         return allLanguageContent[Const.DEFAULT_LANG];
       }
 
-      // 尝试英文
+      // 英語を試す
       if (allLanguageContent[Const.LAN_EN]) {
         return allLanguageContent[Const.LAN_EN];
       }
 
-      // 如果都没有，返回第一个可用语言
+      // すべてがない場合、最初の利用可能な言語を返す
       const availableLanguages = Object.keys(allLanguageContent);
       if (availableLanguages.length > 0) {
         return allLanguageContent[availableLanguages[0]];
@@ -127,7 +127,7 @@ export class HyperlinkService {
 
       return '';
     } catch (error) {
-      // 回退：返回第一个可用语言
+      // フォールバック：最初の利用可能な言語を返す
       const availableLanguages = Object.keys(allLanguageContent);
       if (availableLanguages.length > 0) {
         return allLanguageContent[availableLanguages[0]];
@@ -137,9 +137,9 @@ export class HyperlinkService {
   }
 
   /**
-   * 获取手动文本映射的内容
-   * @param textMapHash 文本映射哈希值
-   * @returns 文本内容
+   * 手動テキストマップのコンテンツを取得する
+   * @param textMapHash テキストマップハッシュ値
+   * @returns テキストコンテンツ
    */
   getManualTextMapContent(textMapHash: number): Observable<string> {
     const manualTextMapData = GenshinDataService.getManualTextMap(textMapHash.toString());
@@ -155,66 +155,66 @@ export class HyperlinkService {
   }
 
   /**
-   * 从超链接数据中获取当前语言的内容
-   * @param hyperlinkData 超链接数据
-   * @param lang 语言代码
-   * @returns 本地化内容
+   * ハイパーリンクデータから現在の言語のコンテンツを取得する
+   * @param hyperlinkData ハイパーリンクデータ
+   * @param lang 言語コード
+   * @returns ローカライズされたコンテンツ
    */
   private getHyperlinkContent(hyperlinkData: HyperlinkData, lang: string): string {
-    // 首先尝试获取当前语言的内容
+    // まず現在の言語のコンテンツを取得しようとする
     let content = hyperlinkData.content[lang];
 
-    // 如果当前语言没有内容，尝试获取默认语言的内容
+    // 現在の言語にコンテンツがない場合、デフォルト言語のコンテンツを取得しようとする
     if (!content && lang !== Const.DEFAULT_LANG) {
       content = hyperlinkData.content[Const.DEFAULT_LANG];
     }
 
-    // 如果还是没有内容，尝试获取英文内容
+    // まだコンテンツがない場合、英語のコンテンツを取得しようとする
     if (!content && lang !== Const.LAN_EN) {
       content = hyperlinkData.content[Const.LAN_EN];
     }
 
-    // 如果仍然没有内容，返回空字符串
+    // 依然としてコンテンツがない場合、空文字列を返す
     if (!content) {
       return '';
     }
 
-    // 处理内容中的标记，与utility.go中的处理保持一致
+    // コンテンツ内のタグを処理する（utility.goの処理と整合性を保つ）
     content = this.processContentTags(content);
 
     return content;
   }
 
   /**
-   * 处理内容中的各种标记标签
-   * @param content 原始内容
-   * @returns 处理后的内容
+   * コンテンツ内の各種タグを処理する
+   * @param content 元のコンテンツ
+   * @returns 処理済みのコンテンツ
    */
   private processContentTags(content: string): string {
-    // 处理颜色标签 <color=#...> -> <font color=...>
+    // カラータグの処理 <color=#...> -> <font color=...>
     content = content.replace(/<color=#([^>]+)>/g, '<font color="$1">');
     content = content.replace(/<\/color>/g, '</font>');
 
-    // 处理换行符 \n -> <br>
+    // 改行文字の処理 \n -> <br>
     content = content.replace(/\\n/g, '<br>');
 
-    // 处理参数标签 {PARAM#...} - 保持原样或转换为显示友好的格式
+    // パラメータタグの処理 {PARAM#...} - そのまま維持するか表示に適した形式に変換する
     content = content.replace(/\{PARAM#[^}]+\}/g, (match) => {
-      // 简单处理：提取参数标识符并显示
+      // シンプルな処理：パラメータ識別子を抽出して表示する
       const paramId = match.match(/PARAM#([^|]+)/)?.[1];
       return `<span style="color: #FFD700; font-weight: bold;">[${paramId}]</span>`;
     });
 
-    // 处理其他可能的标记
+    // その他の可能なタグを処理
     content = content.replace(/\{[^}]+\}/g, '<span style="color: #FF9999;">?</span>');
 
     return content;
   }
 
   /**
-   * 检查文本是否包含超链接标记
-   * @param text 文本
-   * @returns 是否包含超链接
+   * テキストにハイパーリンクタグが含まれているかチェックする
+   * @param text テキスト
+   * @returns ハイパーリンクが含まれているか
    */
   hasHyperlinks(text: string): boolean {
     if (!text) return false;
@@ -223,9 +223,9 @@ export class HyperlinkService {
   }
 
   /**
-   * 从文本中提取所有超链接ID
-   * @param text 文本
-   * @returns 超链接ID数组
+   * テキストから全ハイパーリンクIDを抽出する
+   * @param text テキスト
+   * @returns ハイパーリンクIDの配列
    */
   extractHyperlinkIds(text: string): string[] {
     if (!text) return [];
@@ -233,10 +233,10 @@ export class HyperlinkService {
     const ids: string[] = [];
     let match;
 
-    // 使用匹配原始LINK#标记的正则表达式
+    // 生のLINK#タグに一致する正規表現を使用
     const rawLinkRegex = /\{LINK#([A-Za-z]*\d+)\}/g;
 
-    // 重置正则表达式的lastIndex
+    // 正規表現のlastIndexをリセット
     rawLinkRegex.lastIndex = 0;
 
     while ((match = rawLinkRegex.exec(text)) !== null) {
@@ -247,9 +247,9 @@ export class HyperlinkService {
   }
 
   /**
-   * HTML转义函数
-   * @param text 需要转义的文本
-   * @returns 转义后的文本
+   * HTMLエスケープ関数
+   * @param text エスケープするテキスト
+   * @returns エスケープ済みのテキスト
    */
   private escapeHtml(text: string): string {
     if (!text) return '';

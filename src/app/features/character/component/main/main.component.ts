@@ -316,44 +316,43 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /**
    * 背景初期化
-   * Background initialization with improved error handling and fallback
+   * エラーハンドリングとfallbackを改善した背景初期化
    */
   private async initializeBackGroundImage() {
     if (!this.backgroundURL && this.data) {
       const characterId = this.data.id?.toString();
 
-      // Start background loading asynchronously
-      // The imgState will be set to CSS_STATUS_FIN only after background is loaded
+      // 非同期で背景読み込みを開始
+      // 背景が読み込まれた後にのみimgStateがCSS_STATUS_FINに設定される
       this.loadBackgroundAsync(characterId)
     }
   }
 
   /**
-   * Asynchronous background loading that doesn't block UI
-   * 异步背景加载，不阻塞UI
+   * UIをブロックしない非同期背景読み込み
    */
   private async loadBackgroundAsync(characterId?: string): Promise<void> {
     try {
       let backgroundUrl = '';
 
-      // First try to load from assets (fastest for local files)
+      // まずassetsから読み込みを試みる（ローカルファイルは最速）
       const assetsBackground = await this.backgroundImageService.loadAssetsBackground(this.data);
       if (assetsBackground) {
         backgroundUrl = assetsBackground;
       } else {
-        // Use default background (white)
+        // デフォルト背景（白）を使用
         backgroundUrl = this.backgroundImageService.getDefaultBackground();
       }
 
-      // Update background URL (this will trigger UI update)
+      // 背景URLを更新（これによりUI更新がトリガーされる）
       this.backgroundURL = backgroundUrl;
 
-      // Set animation state to finished to trigger the fade-in effect
+      // フェードイン効果をトリガーするためにアニメーション状態を完了に設定
       this.imgState = CSS_STATUS_FIN;
     } catch (error) {
-      // Set white background as final fallback
+      // 最終fallbackとして白背景を設定
       this.backgroundURL = '';
-      // Still set animation state to finished to ensure UI shows
+      // UI表示を確実にするためにアニメーション状態を完了に設定
       this.imgState = CSS_STATUS_FIN;
     }
   }

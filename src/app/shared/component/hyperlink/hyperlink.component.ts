@@ -27,7 +27,7 @@ export class HyperlinkComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit() {
-    // Load tooltip content when component initializes
+    // コンポーネント初期化時にツールチップコンテンツを読み込む
     this.loadTooltipContent();
   }
 
@@ -42,7 +42,7 @@ export class HyperlinkComponent implements AfterViewInit, OnDestroy {
     this.clearHoverTimer();
     this.hoverTimer = setTimeout(() => {
       this.showTooltipNow();
-    }, 300); // 300ms delay
+    }, 300); // 300ms遅延
   }
 
   @HostListener('mouseleave')
@@ -78,17 +78,17 @@ export class HyperlinkComponent implements AfterViewInit, OnDestroy {
     const hostRect = this.elementRef.nativeElement.getBoundingClientRect();
     const tooltipRect = this.tooltipElement.nativeElement.getBoundingClientRect();
 
-    // Default position: below the element
+    // デフォルト位置: 要素の下
     let top = hostRect.bottom + window.scrollY + 5;
     let left = hostRect.left + window.scrollX;
 
-    // Check if tooltip would go beyond the right edge of the viewport
-    if (left + 300 > window.innerWidth) { // 300 is estimated max width
+    // ツールチップがビューポートの右端を超えるかチェック
+    if (left + 300 > window.innerWidth) { // 300は推定最大幅
       left = hostRect.right + window.scrollX - 300;
     }
 
-    // Check if tooltip would go beyond the bottom of the viewport
-    if (top + 200 > window.innerHeight + window.scrollY) { // 200 is estimated max height
+    // ツールチップがビューポートの下端を超えるかチェック
+    if (top + 200 > window.innerHeight + window.scrollY) { // 200は推定最大高さ
       top = hostRect.top + window.scrollY - 200 - 5;
     }
 

@@ -28,7 +28,7 @@ export class HyperlinkTooltipComponent implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit() {
-    // 初始化时不显示内容，只在需要时加载
+    // 初期化時にはコンテンツを表示せず、必要時にのみ読み込む
   }
   
   ngOnDestroy() {
@@ -57,25 +57,25 @@ export class HyperlinkTooltipComponent implements OnInit, OnDestroy {
   
   private showTooltip() {
     if (!this.linkId) return;
-    
-    // 如果已经有内容，直接显示
+
+    // 既にコンテンツがある場合は直接表示
     if (this.content) {
       this.isVisible = true;
-      // 使用setTimeout确保DOM已更新
+      // setTimeoutを使用してDOMが更新されたことを確認
       setTimeout(() => {
         this.positionTooltip();
         this.cdr.detectChanges();
       }, 0);
       return;
     }
-    
-    // 加载内容
+
+    // コンテンツを読み込む
     this.contentSubscription = this.hyperlinkService.getHyperlinkContentById(this.linkId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((content: string) => {
         this.content = content;
         this.isVisible = true;
-        // 使用setTimeout确保DOM已更新
+        // setTimeoutを使用してDOMが更新されたことを確認
         setTimeout(() => {
           this.positionTooltip();
           this.cdr.detectChanges();
@@ -91,41 +91,41 @@ export class HyperlinkTooltipComponent implements OnInit, OnDestroy {
   private positionTooltip() {
     if (!this.isVisible) return;
 
-    // 获取触发元素的位置（使用最近的超链接元素）
+    // トリガー要素の位置を取得（最も近いハイパーリンク要素を使用）
     const hyperlinkElements = document.querySelectorAll(`.${Const.HYPERLINK_CSS_CLASS}[${Const.HYPERLINK_DATA_ATTR}="${this.linkId}"]`);
     if (hyperlinkElements.length === 0) return;
 
-    const hyperlinkElement = hyperlinkElements[hyperlinkElements.length - 1] as HTMLElement; // 使用最后一个匹配的元素
+    const hyperlinkElement = hyperlinkElements[hyperlinkElements.length - 1] as HTMLElement; // 最後にマッチした要素を使用
     const rect = hyperlinkElement.getBoundingClientRect();
 
-    // 获取工具提示容器
+    // ツールチップコンテナを取得
     const tooltipContainer = this.elementRef.nativeElement.querySelector('.hyperlink-tooltip-container') as HTMLElement;
     if (!tooltipContainer) return;
 
-    // 先让容器可见以获取准确的尺寸
+    // 正確なサイズを取得するためにコンテナを一時的に表示
     tooltipContainer.style.visibility = 'hidden';
     tooltipContainer.style.display = 'block';
 
-    // 获取工具提示的实际尺寸
+    // ツールチップの実際のサイズを取得
     const tooltipRect = tooltipContainer.getBoundingClientRect();
     const tooltipWidth = tooltipRect.width || Math.min(this.tooltipMaxWidth, 300);
     const tooltipHeight = tooltipRect.height || Math.min(this.tooltipMaxHeight, 200);
 
-    // 计算位置
+    // 位置を計算
     let top = rect.bottom + window.scrollY + 5;
     let left = rect.left + window.scrollX;
 
-    // 检查是否超出视口右边
+    // ビューポートの右端を超えるかチェック
     if (left + tooltipWidth > window.innerWidth) {
       left = rect.right + window.scrollX - tooltipWidth;
     }
 
-    // 检查是否超出视口底部
+    // ビューポートの下端を超えるかチェック
     if (top + tooltipHeight > window.innerHeight + window.scrollY) {
       top = rect.top + window.scrollY - tooltipHeight - 5;
     }
 
-    // 设置位置
+    // 位置を設定
     tooltipContainer.style.position = 'absolute';
     tooltipContainer.style.top = `${top}px`;
     tooltipContainer.style.left = `${left}px`;

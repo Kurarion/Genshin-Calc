@@ -11,8 +11,8 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
   private hoverTimer: any = null;
   private mutationObserver: MutationObserver | null = null;
   private isTooltipVisible: boolean = false;
-  private currentAllLanguageContent: any = null; // 存储所有语言内容
-  private currentLinkId: string = ''; // 当前缓存的linkId
+  private currentAllLanguageContent: any = null; // 全言語のコンテンツを保存
+  private currentLinkId: string = ''; // 現在キャッシュされているlinkId
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -23,12 +23,12 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // 创建工具提示元素
+    // ツールチップ要素を作成
     this.createTooltipElement();
-    // 初始添加监听器
+    // 初期状態でリスナーを追加
     this.addListenersToHyperlinks(this.elementRef.nativeElement);
 
-    // 监听DOM变化
+    // DOMの変化を監視
     this.mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes) {
@@ -39,9 +39,9 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
             }
           });
         }
-        // 同时检查整个元素的变化，以防语言切换导致整个内容重新渲染
+        // 言語切り替えにより内容全体が再レンダリングされる場合に備え、要素全体の変化もチェック
         if (mutation.type === 'childList' && mutation.target === this.elementRef.nativeElement) {
-          // 延迟重新扫描，确保DOM完全更新
+          // DOMが完全に更新されたことを確認するために遅延して再スキャン
           setTimeout(() => {
             this.addListenersToHyperlinks(this.elementRef.nativeElement);
           }, 100);
@@ -54,19 +54,19 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
       subtree: true
     });
 
-    // 监听语言变化
+    // 言語の変化を監視
     this.languageService.getLang()
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // 隐藏当前tooltip，避免位置错乱
+        // 位置ずれを防ぐために現在のツールチップを非表示
         if (this.isTooltipVisible) {
           this.hideTooltip();
         }
 
-        // 语言切换后重新扫描并添加事件监听器
+        // 言語切り替え後に再スキャンしてイベントリスナーを追加
         setTimeout(() => {
           this.addListenersToHyperlinks(this.elementRef.nativeElement);
-        }, 200); // 给DOM更新一些时间
+        }, 200); // DOM更新のために少し時間を与える
       });
   }
 
@@ -74,7 +74,7 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
     this.clearHoverTimer();
     this.removeTooltip();
 
-    // 停止语言监听
+    // 言語監視を停止
     this.destroy$.next();
     this.destroy$.complete();
 
@@ -104,12 +104,12 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
   private addListenersToHyperlinks(element: HTMLElement) {
     const hyperlinks = element.querySelectorAll(`.${Const.HYPERLINK_CSS_CLASS}`);
 
-    // 如果没有找到超链接，检查原始HTML
+    // ハイパーリンクが見つからない場合は、生HTMLをチェック
     if (hyperlinks.length === 0) {
       const innerHTML = element.innerHTML;
       if (innerHTML.includes('{LINK#')) {
-        // 有未处理的LINK#标记，这表示数据处理有问题
-        // (静默处理，避免控制台污染)
+        // 処理されていないLINK#タグがある場合、データ処理に問題があることを示す
+        // （静默処理し、コンソール汚染を防ぐ）
       }
       return;
     }
@@ -117,20 +117,20 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
     hyperlinks.forEach((hyperlink) => {
       const hyperlinkElement = hyperlink as HTMLElement;
 
-      // 检查是否已经添加了监听器
+      // リスナーが既に追加されているかチェック
       if (hyperlinkElement.hasAttribute('data-hyperlink-listener')) {
         return;
       }
 
       hyperlinkElement.setAttribute('data-hyperlink-listener', 'true');
 
-      // 获取linkId
+      // linkIdを取得
       let linkId = hyperlinkElement.getAttribute(Const.HYPERLINK_DATA_ATTR);
 
-      // 如果没有找到，尝试从title属性获取（兼容性）
+      // 見つからない場合はtitle属性から取得を試みる（互換性）
       if (!linkId) {
         linkId = hyperlinkElement.getAttribute('title');
-        // 移除原生title以避免冲突
+        // 衝突を避けるためにネイティブtitleを削除
         this.renderer.removeAttribute(hyperlinkElement, 'title');
       }
 
@@ -138,12 +138,12 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
         return;
       }
 
-      // 添加基本样式
+      // 基本スタイルを追加
       this.renderer.setStyle(hyperlinkElement, 'cursor', 'pointer');
       this.renderer.setStyle(hyperlinkElement, 'color', '#ff9800');
       this.renderer.setStyle(hyperlinkElement, 'text-decoration', 'underline');
 
-      // 添加鼠标事件监听
+      // マウスイベントリスナーを追加
       this.renderer.listen(hyperlinkElement, 'mouseenter', (_event: MouseEvent) => {
         this.clearHoverTimer();
         this.hoverTimer = setTimeout(() => {
@@ -163,10 +163,10 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
       return;
     }
 
-    // 获取linkId（使用与addListenersToHyperlinks相同的逻辑）
+    // linkIdを取得（addListenersToHyperlinksと同じロジックを使用）
     let linkId = hyperlinkElement.getAttribute(Const.HYPERLINK_DATA_ATTR);
 
-    // 如果没有找到，尝试从title属性获取（兼容性）
+    // 見つからない場合はtitle属性から取得を試みる（互換性）
     if (!linkId) {
       linkId = hyperlinkElement.getAttribute('title');
     }
@@ -175,43 +175,43 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
       return;
     }
 
-    // 此时linkId肯定不是null，所以可以安全赋值
+    // この時点でlinkIdはnullではないので、安全に代入できる
     const linkIdStr = linkId;
 
-    // 记录tooltip状态
+    // ツールチップ状態を記録
     this.isTooltipVisible = true;
 
-    // 如果已经有缓存的内容且是同一个linkId，直接显示
+    // 既にキャッシュされたコンテンツがあり、同じlinkIdの場合は直接表示
     if (this.currentAllLanguageContent && Object.keys(this.currentAllLanguageContent).length > 0 && this.currentLinkId === linkIdStr) {
       this.displayCurrentLanguageContent();
       this.positionTooltip(hyperlinkElement);
       return;
     }
 
-    // 获取所有语言内容（预加载）
+    // 全言語のコンテンツを取得（プリロード）
     this.hyperlinkService.getHyperlinkContentById(linkIdStr).subscribe(allLanguageContent => {
       if (!this.tooltipElement || !this.isTooltipVisible) {
         return;
       }
 
       if (!allLanguageContent || Object.keys(allLanguageContent).length === 0) {
-        // 如果没有内容，隐藏tooltip
+        // コンテンツがない場合はツールチップを非表示
         this.hideTooltip();
         return;
       }
 
-      // 存储所有语言内容，用于语言切换
+      // 言語切り替え用に全言語のコンテンツを保存
       this.currentAllLanguageContent = allLanguageContent;
       this.currentLinkId = linkIdStr;
 
-      // 获取当前语言的内容并显示
+      // 現在の言語のコンテンツを取得して表示
       this.displayCurrentLanguageContent();
       this.positionTooltip(hyperlinkElement);
     });
   }
 
   /**
-   * 显示当前语言的内容
+   * 現在の言語のコンテンツを表示する
    */
   private displayCurrentLanguageContent() {
     if (!this.currentAllLanguageContent || !this.tooltipElement) {
@@ -241,35 +241,35 @@ export class HyperlinkInteractionDirective implements OnInit, OnDestroy {
     const hostRect = hyperlinkElement.getBoundingClientRect();
     const tooltipRect = this.tooltipElement.getBoundingClientRect();
 
-    // 获取视口尺寸
+    // ビューポートサイズを取得
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    // 计算tooltip的尺寸
+    // ツールチップのサイズを計算
     const tooltipWidth = tooltipRect.width || 300;
     const tooltipHeight = tooltipRect.height || 100;
 
-    // 简单的智能定位：优先显示在下方，如果空间不足则显示在上方
+    // シンプルなスマート配置：優先的に下部に表示、スペース不足なら上部に表示
     let top = hostRect.bottom + 10;
     let left = hostRect.left;
 
-    // 检查底部是否有足够空间
+    // 下部に十分なスペースがあるかチェック
     if (hostRect.bottom + tooltipHeight + 10 > viewportHeight) {
-      // 底部空间不足，显示在上方
+      // 下部のスペースが不足しているため、上部に表示
       top = hostRect.top - tooltipHeight - 10;
     }
 
-    // 检查右侧是否有足够空间，如果没有则向左调整
+    // 右側に十分なスペースがあるかチェック、なければ左に調整
     if (hostRect.left + tooltipWidth > viewportWidth) {
       left = viewportWidth - tooltipWidth - 10;
     }
 
-    // 确保不会超出左边界
+    // 左境界を超えないようにする
     if (left < 10) {
       left = 10;
     }
 
-    // 设置位置（使用fixed定位）
+    // 位置を設定（fixed配置を使用）
     this.renderer.setStyle(this.tooltipElement, 'top', `${top}px`);
     this.renderer.setStyle(this.tooltipElement, 'left', `${left}px`);
   }

@@ -21,17 +21,17 @@ export class HyperlinkDirective implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit() {
-    // 添加超链接样式
+    // ハイパーリンクスタイルを追加
     this.renderer.addClass(this.elementRef.nativeElement, Const.HYPERLINK_CSS_CLASS);
-    
-    // 设置数据属性
+
+    // データ属性を設定
     this.renderer.setAttribute(
-      this.elementRef.nativeElement, 
-      Const.HYPERLINK_DATA_ATTR, 
+      this.elementRef.nativeElement,
+      Const.HYPERLINK_DATA_ATTR,
       this.linkId
     );
-    
-    // 添加基本样式
+
+    // 基本スタイルを追加
     this.renderer.setStyle(this.elementRef.nativeElement, 'cursor', 'pointer');
     this.renderer.setStyle(this.elementRef.nativeElement, 'color', '#ff9800');
     this.renderer.setStyle(this.elementRef.nativeElement, 'text-decoration', 'underline');
@@ -50,7 +50,7 @@ export class HyperlinkDirective implements OnInit, OnDestroy {
   
   @HostListener('mouseenter')
   onMouseEnter() {
-    // 延迟显示工具提示
+    // ツールチップの表示を遅延させる
     setTimeout(() => {
       this.showTooltip();
     }, Const.HYPERLINK_HOVER_DELAY);
@@ -63,21 +63,21 @@ export class HyperlinkDirective implements OnInit, OnDestroy {
   
   @HostListener('click')
   onClick() {
-    // 阻止默认行为
+    // デフォルトの動作を阻止
     event?.preventDefault();
-    
-    // 显示详细内容（可以扩展为模态框或其他方式）
+
+    // 詳細コンテンツを表示（モーダルや他の方法に拡張可能）
     this.showDetailedContent();
   }
   
   private showTooltip() {
     if (!this.linkId || this.tooltipElement) return;
-    
-    // 创建工具提示元素
+
+    // ツールチップ要素を作成
     this.tooltipElement = this.renderer.createElement('div');
     this.renderer.addClass(this.tooltipElement, 'hyperlink-tooltip');
-    
-    // 设置工具提示样式
+
+    // ツールチップスタイルを設定
     this.renderer.setStyle(this.tooltipElement, 'position', 'absolute');
     this.renderer.setStyle(this.tooltipElement, 'z-index', '1000');
     this.renderer.setStyle(this.tooltipElement, 'background-color', 'rgba(0, 0, 0, 0.9)');
@@ -92,16 +92,16 @@ export class HyperlinkDirective implements OnInit, OnDestroy {
     this.renderer.setStyle(this.tooltipElement, 'overflow-y', 'auto');
     this.renderer.setStyle(this.tooltipElement, 'word-wrap', 'break-word');
     this.renderer.setStyle(this.tooltipElement, 'pointer-events', 'none');
-    
-    // 获取内容
+
+    // コンテンツを取得
     this.contentSubscription = this.hyperlinkService.getHyperlinkContentById(this.linkId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((content: string) => {
         if (this.tooltipElement) {
           this.tooltipElement.innerHTML = content;
           this.positionTooltip();
-          
-          // 添加到DOM
+
+          // DOMに追加
           this.renderer.appendChild(document.body, this.tooltipElement);
         }
       });
@@ -115,13 +115,13 @@ export class HyperlinkDirective implements OnInit, OnDestroy {
   }
   
   private showDetailedContent() {
-    // 这里可以实现更详细的内容显示方式，例如模态框
-    // 目前简单地使用alert作为示例
+    // ここでより詳細なコンテンツ表示方法を実装できます（例：モーダル）
+    // 現在は簡単にconsole.logを使用
     if (this.linkId) {
       this.hyperlinkService.getHyperlinkContentById(this.linkId)
         .pipe(takeUntil(this.destroy$))
         .subscribe((content: string) => {
-          // 在实际应用中，可以使用更好的UI组件显示内容
+          // 実際のアプリケーションでは、より良いUIコンポーネントを使用してコンテンツを表示できます
           console.log('Hyperlink content:', content);
         });
     }
@@ -129,29 +129,29 @@ export class HyperlinkDirective implements OnInit, OnDestroy {
   
   private positionTooltip() {
     if (!this.tooltipElement) return;
-    
+
     const hostElement = this.elementRef.nativeElement as HTMLElement;
     const hostRect = hostElement.getBoundingClientRect();
-    
-    // 计算位置
+
+    // 位置を計算
     let top = hostRect.bottom + window.scrollY + 5;
     let left = hostRect.left + window.scrollX;
-    
-    // 获取工具提示的预估尺寸
+
+    // ツールチップの推定サイズを取得
     const tooltipWidth = Math.min(Const.HYPERLINK_TOOLTIP_MAX_WIDTH, 200);
     const tooltipHeight = Math.min(Const.HYPERLINK_TOOLTIP_MAX_HEIGHT, 100);
-    
-    // 检查是否超出视口右边
+
+    // ビューポートの右端を超えるかチェック
     if (left + tooltipWidth > window.innerWidth) {
       left = hostRect.right + window.scrollX - tooltipWidth;
     }
-    
-    // 检查是否超出视口底部
+
+    // ビューポートの下端を超えるかチェック
     if (top + tooltipHeight > window.innerHeight + window.scrollY) {
       top = hostRect.top + window.scrollY - tooltipHeight - 5;
     }
-    
-    // 设置位置
+
+    // 位置を設定
     this.renderer.setStyle(this.tooltipElement, 'top', `${top}px`);
     this.renderer.setStyle(this.tooltipElement, 'left', `${left}px`);
   }

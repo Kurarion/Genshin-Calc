@@ -19,39 +19,39 @@ export class HyperlinkPipe implements PipeTransform, OnDestroy {
   ) {}
   
   transform(value: string): string {
-    // 如果值没有变化，返回缓存的结果
+    // 値が変更されていない場合は、キャッシュされた結果を返す
     if (value === this.lastValue) {
       return this.lastResult;
     }
 
     this.lastValue = value;
 
-    // 如果没有超链接标记，直接返回原值
+    // ハイパーリンクタグがない場合は、元の値をそのまま返す
     if (!value || !this.hyperlinkService.hasHyperlinks(value)) {
       this.lastResult = value;
       return value;
     }
-    
-    // 创建新的可观察对象来处理超链接
+
+    // ハイパーリンクを処理するための新しいObservableを作成
     this.processedValue$ = this.hyperlinkService.processHyperlinks(value)
       .pipe(
         takeUntil(this.destroy$),
-        startWith(value) // 立即返回原值，避免空值
+        startWith(value) // 空値を避けるために即座に元の値を返す
       );
-    
-    // 订阅处理结果
+
+    // 処理結果をサブスクライブ
     this.processedValue$.subscribe(processedText => {
-      // 只有当值真正变化时才更新
+      // 値が実際に変更された場合のみ更新
       if (processedText !== this.lastResult) {
         this.lastResult = processedText;
-        // 使用 setTimeout 确保在下一个变更检测周期中更新视图
+        // setTimeoutを使用して次の変更検出サイクルでビューを更新
         setTimeout(() => {
           this.cdr.markForCheck();
         }, 0);
       }
     });
-    
-    // 返回当前结果
+
+    // 現在の結果を返す
     return this.lastResult || value;
   }
   
