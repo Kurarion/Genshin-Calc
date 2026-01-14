@@ -44,5 +44,15 @@ Thumbs.db
 # GenshinData
 src/assets/genshin
 
+# Skill: genshin-data-generator - Temporary output
+.claude/skills/genshin-data-generator/output/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
 # eslint
 .eslintcache
