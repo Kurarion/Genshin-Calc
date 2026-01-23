@@ -1,16 +1,24 @@
 ---
 name: genshin-data-generator
-description: 生成原神角色伤害计算器的data.json配置文件。从游戏解包数据提取信息，根据interface.ts和const.ts生成配置JSON，支持角色、武器、圣遗物的配置生成，并提供新版本更新的修改指南。
+description: 原神角色伤害计算器数据配置辅助工具。从游戏解包数据预处理精简数据，提供数据导出和检查工具，支持AI分析和生成data.json配置。
 ---
 
-# 原神数据配置生成器
+# 原神数据配置辅助工具
+
+## ⚠️ 核心理念
+
+**这个工具不会自动生成配置**。配置生成需要 AI 根据预处理后的数据进行推理、分析和判断。
+
+**工作流程**：
+1. **预处理**：将原始解包数据（25MB+）精简为核心数据（7MB）
+2. **AI 分析**：AI 根据精简数据、游戏规则和代码逻辑进行推理
+3. **配置生成**：AI 生成符合 interface.ts 和 const.ts 规范的配置
 
 ## ⚠️ 重要规则
 
 **永远不要直接读取 `src/assets/genshin` 以下的内容！**
 
 这些解包数据文件（avatar_map.json 12MB, weapon_map.json 13MB等）体积巨大，直接读取会：
-
 - 占用大量上下文
 - 导致处理缓慢
 - 可能超出token限制
@@ -23,7 +31,7 @@ description: 生成原神角色伤害计算器的data.json配置文件。从游�
 .claude/skills/genshin-data-generator/
 ├── output/              # 临时生成的文件（Git忽略）
 │   ├── processed_data.json      # 预处理后的数据
-│   └── generated_configs/       # 自动生成的配置文件
+│   └── exports/                # 导出的单个角色/武器/圣遗物数据
 ├── archive/             # 版本归档（可选Git管理）
 │   └── v4.x.x/          # 按版本归档的重要中间结果
 ├── scripts/             # 脚本文件（Git管理）
@@ -49,7 +57,7 @@ description: 生成原神角色伤害计算器的data.json配置文件。从游�
 
 ## 快速开始
 
-使用此Skill进行版本更新时，按以下流程操作：
+使用此 Skill 进行版本更新时，按以下流程操作：
 
 ### 1. 数据预处理（首次或大版本更新）
 
@@ -64,49 +72,20 @@ python3 preprocess.py
 
 ```
 开始预处理数据...
-  输入目录: /Users/gbd/Project/Genshin-Calc/src/assets/genshin
-  输出文件: /Users/gbd/Project/Genshin-Calc/.claude/skills/genshin-data-generator/output/processed_data.json
+  输入目录: ./src/assets/genshin
+  输出文件: ./.claude/skills/genshin-data-generator/output/processed_data.json
   处理角色数据...
   处理武器数据...
   处理圣遗物数据...
 
 预处理完成！
-原始avatar_map.json: 12.34 MB
-原始weapon_map.json: 13.56 MB
-输出processed_data.json: 3.21 MB
-压缩率: 87.21%
+原始avatar_map.json: 12.25 MB
+原始weapon_map.json: 13.00 MB
+输出processed_data.json: 7.35 MB
+压缩率: 70.90%
 ```
 
-### 2. 生成data.json配置
-
-**生成单个角色配置**：
-
-```bash
-cd .claude/skills/genshin-data-generator/scripts
-python3 generate_config.py --character 10000002
-```
-
-**生成所有角色配置**：
-
-```bash
-python3 generate_config.py --all --type character
-```
-
-**生成所有武器配置**：
-
-```bash
-python3 generate_config.py --all --type weapon
-```
-
-**生成所有圣遗物配置**：
-
-```bash
-python3 generate_config.py --all --type artifact
-```
-
-### 3. 导出特定ID数据
-
-当需要参考某个特定角色/武器/圣遗物的解包数据时：
+### 2. 导出特定数据供 AI 分析
 
 **导出角色数据**：
 
@@ -127,63 +106,19 @@ python3 export_data.py --type weapon --id 11301
 python3 export_data.py --type artifact --id 301
 ```
 
-**输出示例**（角色数据导出）：
+数据将导出到 `output/exports/` 目录，方便 AI 参考和分析。
 
-```
-加载预处理数据...
-角色 10000002 (神里绫华) 数据已导出到: output/exports/character_10000002.json
-
-基本信息:
-  - 名称: 神里绫华
-  - 武器类型: WEAPON_SWORD_ONE_HAND
-  - 品质: QUALITY_ORANGE
-
-技能概览:
-  - normal: 2 个技能
-  - skill: 2 个技能
-  - elementalBurst: 1 个技能
-  - proudSkills: 3 个技能
-  - constellation: 6 个技能
-
-导出完成！
-```
-
-数据将导出到 `output/exports/` 目录，方便参考和对比。
-
-### 4. 检查未实现数据
+### 3. 检查未实现数据
 
 了解哪些数据尚未实现：
 
-**检查所有未实现的数据**：
-
 ```bash
-cd .claude/skills/genshin-data-generator/scripts
 python3 check_unimplemented.py --type all
-```
-
-**只检查未实现的角色**：
-
-```bash
-python3 check_unimplemented.py --type character
-```
-
-**只检查未实现的武器**：
-
-```bash
-python3 check_unimplemented.py --type weapon
-```
-
-**只检查未实现的圣遗物**：
-
-```bash
-python3 check_unimplemented.py --type artifact
 ```
 
 **输出示例**：
 
 ```
-加载预处理数据...
-
 ============================================================
 角色实现情况
 ============================================================
@@ -191,7 +126,6 @@ python3 check_unimplemented.py --type artifact
 解包数据中的角色总数: 95
 data.json中已实现的角色数: 85
 未实现的角色数: 10
-多余的角色数: 0
 
 未实现的角色 (10):
 ------------------------------------------------------------
@@ -200,17 +134,25 @@ data.json中已实现的角色数: 85
   ...
 
 未实现角色列表已导出到: output/unimplemented_characters.txt
-
-============================================================
-检查完成
-============================================================
 ```
 
-检查结果会显示在控制台，并导出到 `output/unimplemented_*.txt` 文件。
+### 4. AI 配置生成
 
-### 5. 更新相关文件
+AI 需要结合以下信息进行推理和配置生成：
 
-根据[更新检查清单](references/update-checklist.md)判断是否需要修改interface.ts、const.ts、calculator.service.ts。
+1. **processed_data.json**：预处理后的游戏数据
+2. **interface.ts**：配置文件的数据结构和类型接口
+3. **const.ts**：伤害计算的核心常量和枚举
+4. **calculator.service.ts**：伤害计算逻辑（参考）
+5. **本 SKILL.md**：配置生成指南和规则
+
+**AI 分析步骤**：
+
+1. 使用 `export_data.py` 导出目标角色的数据
+2. 分析 `paramDescList` 判断 `indexes` 映射
+3. 分析 `desc` 判断特殊机制（buff、治疗、护盾等）
+4. 根据武器类型和技能类型判断 `elementBonusType` 和 `attackBonusType`
+5. 生成符合规范的配置 JSON
 
 ## 数据源说明
 
@@ -227,8 +169,6 @@ data.json中已实现的角色数: 85
   - `skills.constellation`: 命座
   - 关键字段：`name`, `desc`, `paramList`, `paramDescList`
 
-  **重要**：技能的`desc`字段包含完整的技能描述，包括技能之间的联动信息。例如，某些命座效果会基于其他技能的参数，需要仔细阅读desc理解联动关系。
-
 - **weapon_map.json** (13MB): 武器数据
 
   - `name`: 武器名称（多语言）
@@ -241,7 +181,10 @@ data.json中已实现的角色数: 85
   - `setAffixs`: 套装效果（2件套、4件套）
   - 关键字段：`setName`, `name`, `desc`, `paramList`, `paramValidIndexes`, `addProps`
 
-**重要**: levelmap字段在每个角色中有90个等级的数据（1-90级），这些数据在配置生成时完全无用，预处理时会移除以节省上下文。
+**重要**：各个技能/天赋/命座/武器特效/圣遗物套装的`desc`字段(多语言)包含完整的技能描述，也可能包括其它技能之间的联动信息。例如，某些命座效果会基于其他技能的参数，需要仔细阅读desc理解联动关系。
+**重要**: 各个paramList中包含了各自技能等的param参数list，paramDescList中包含的的paramX即对应着paramlist中X-1的Index，paramValidIndexes只是单纯用于判断paramList中对应Index的有效与无效（非0即有效），实际分析时用处不是很大
+**重要**: 各个addProps中包含了各自技能等的增益Key-Value，有一部分的相关BUFF是通过addProps而非paramList来定义的，这种情况下也需要通过desc来分析这个数值是加成什么的，即使propType有定义类似的东西，但目前没有将propType中Key与计算使用的Key进行映射。因此推理过程是类似的，但实际写data.json时是有区别的。
+**重要**: levelmap字段在每个角色与武器中有各个等级的数据，这些数据在配置生成时完全无用，预处理时会移除以节省上下文。
 
 ## 相关文件说明
 
@@ -271,7 +214,7 @@ data.json中已实现的角色数: 85
 
 **作用**：定义所有常量和枚举，是伤害计算的核心配置文件
 
-**重要**：PROP*DMG*开头的常量是伤害计算的核心，涉及新反应、新伤害乘区、所有伤害、盾、治疗、生成物HP计算！
+**重要**：PROP_DMG_开头的常量是伤害计算的核心，涉及新反应、新伤害乘区、所有伤害、盾、治疗、生成物HP计算！
 
 #### 核心概念：计算乘区
 
@@ -292,7 +235,7 @@ data.json中已实现的角色数: 85
 
 #### 常量分类
 
-##### 1. 元素类型常量（ELEMENT\_\*）
+##### 1. 元素类型常量（ELEMENT_*）
 
 - `ELEMENT_PYRO`: 火元素
 - `ELEMENT_HYDRO`: 水元素
@@ -303,7 +246,9 @@ data.json中已实现的角色数: 85
 - `ELEMENT_DENDRO`: 草元素
 - `ELEMENT_PHYSICAL`: 物理元素
 
-##### 2. 伤害加成常量（PROP*DMG_BONUS*\*）
+以上常量不用于对伤害进行定义元素类型
+
+##### 2. 伤害加成常量（PROP_DMG_BONUS*）
 
 **元素伤害加成**：
 
@@ -333,7 +278,7 @@ data.json中已实现的角色数: 85
 - `PROP_DMG_BONUS_OTHER`: 其他伤害加成（天赋效果等）
 - `PROP_DMG_BONUS_SET`: 圣遗物套装伤害加成
 
-##### 3. 伤害倍率常量（PROP*DMG_RATE*\*）
+##### 3. 伤害倍率常量（PROP_DMG_RATE*）
 
 **倍率提升（加法）**：
 
@@ -352,7 +297,7 @@ data.json中已实现的角色数: 85
 - `PROP_DMG_RATE_MULTI_MOON_RUPTURE`: 月绽放倍率
 - `PROP_DMG_BASICS_MULTI_MOON_RUPTURE`: 月绽放基础倍率
 
-##### 4. 伤害抗性常量（PROP*DMG_ANTI*\*）
+##### 4. 伤害抗性常量（PROP_DMG_ANTI*）
 
 **抗性提升**：
 
@@ -367,13 +312,13 @@ data.json中已实现的角色数: 85
 
 **用途**：用于超导反应（减物理抗性）或者各种角色技能，天赋，命座中的效果来降低敌人抗性
 
-##### 5. 伤害数值常量（PROP*DMG_VAL_UP*\*）
+##### 5. 伤害数值常量（PROP_DMG_VAL_UP*）
 
 直接提升伤害计算中的基础区数值（不是百分比）：
 
 - `PROP_DMG_VAL_UP_*`: 某类技能伤害数值提升
 
-##### 6. 会心相关常量（PROP*DMG_CRIT*\*）
+##### 6. 会心相关常量（PROP_DMG_CRIT*）
 
 **会心伤害提升**：
 
@@ -383,7 +328,7 @@ data.json中已实现的角色数: 85
 
 - `PROP_DMG_CRIT_RATE_UP_*`: 某类技能会心率提升
 
-##### 7. 治疗加成常量（PROP*HEALING*\*）
+##### 7. 治疗加成常量（PROP_HEALING*）
 
 **治疗加成类型**：
 
@@ -404,7 +349,7 @@ data.json中已实现的角色数: 85
 
 - `PROP_HEALING_VAL_UP_*`: 某类技能治疗基础区数值直接提升
 
-##### 8. 护盾加成常量（PROP*SHIELD*\*）
+##### 8. 护盾加成常量（PROP_SHIELD*）
 
 **护盾加成类型**：
 
@@ -416,27 +361,27 @@ data.json中已实现的角色数: 85
 - `PROP_SHIELD_BONUS_OTHER`: 其他护盾强效加成
 - `PROP_SHIELD_BONUS_SET`: 圣遗物套装创造的护盾强效加成
 
-##### 9. 特殊标签常量（PROP*TAG*\*）
+##### 9. 特殊标签常量（PROP*TAG*）
 
 用于区分技能内部不同类型的伤害：
 
-- `PROP_TAG_RAZOR_SOUL_COMPANION`: 雷泽的灵魂伴侣伤害
+- `PROP_TAG_RAZOR_SOUL_COMPANION`: 雷泽的狼魂伤害
 - `PROP_TAG_VENTI_SKILL_PRESS`: 温迪的蓄力长按伤害
 - `PROP_TAG_FURINA_SALON_SOLITAIRE`: 芙宁娜的沙龙独舞伤害
 - 等等...
 
-**重要**：特殊标签系统用于区分技能内部多种不同类型的伤害，不是特殊机制！
+**重要**：特殊标签系统用于区分技能内部多种不同类型的伤害，不是特殊机制！，主要用于实现对同技能内不同伤害进行追加该伤害专用的BUFF使用
 
-##### 10. 基础属性常量（PROP\_\*）
+##### 10. 基础属性常量
 
 **基础属性**：
 
 - `PROP_HP_BASE`: 生命值基础（被生命加成百分比增益）
-- `PROP_HP_BASE_EXTRA`: 生命值基础（额外加成）
+- `PROP_HP_BASE_EXTRA`: 生命值基础（基础额外加成，被生命加成百分比增益）
 - `PROP_ATTACK_BASE`: 攻击力基础（被攻击力加成百分比增益）（部分buff计算使用）
-- `ATTACK_BASE_EXTRA`: 攻击力基础（额外加成）
+- `ATTACK_BASE_EXTRA`: 攻击力基础（基础额外加成，被攻击力加成百分比增益）（部分buff计算使用）
 - `PROP_DEFENSE_BASE`: 防御力基础（被防御力加成百分比增益）
-- `DEFENSE_BASE_EXTRA`: 防御力基础（额外加成）
+- `DEFENSE_BASE_EXTRA`: 防御力基础（基础额外加成，被防御力加成百分比增益）
 
 **属性提升**：
 
@@ -483,7 +428,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 }
 ```
 
-##### 12. 变量常量（PORP*VAR*\*）
+##### 12. 变量常量（PORP_VAR*）
 
 用于计算队列中的变量：
 
@@ -493,17 +438,16 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 **用途**：用于复杂的计算队列（finalResCalQueue），例如：
 
-- 某些Buff的效果基于队友属性
-- 某些技能的伤害基于叠加层数
+- 某些复杂的Buff的效果，可能需要基于一定的计算
+- 某些技能的伤害基于其他技能中的值，比如：叠加层数，需要先定义变量，并在影响技能内使用这个变量进行计算
 - 某些效果需要中间变量计算
 
-##### 13. 常量使用规则（两大组选择）
+##### 13. 伤害计算参考（两大组选择）
 
 **第一组：根据elementBonusType选择（元素类型）**
 
 - `PROP_DMG_RATE_UP_CRYO/...`: 元素倍率提升
 - `PROP_DMG_RATE_MULTI_CRYO/...`: 元素倍率倍乘
-- `PROP_DMG_BONUS_CRYO/...`: 元素伤害加成
 - `PROP_DMG_BONUS_PYRO/...`: 火元素伤害加成
 - `PROP_DMG_VAL_UP_CRYO/...`: 火元素伤害数值提升
 - `PROP_DMG_ANTI_CRYO/...`: 火元素抗性
@@ -519,11 +463,11 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 - `PROP_DMG_VAL_UP_NORMAL/...`: 普通攻击伤害数值提升
 - `PROP_DMG_CRIT_RATE_UP_NORMAL/...`: 普通攻击会心率提升
 - `PROP_DMG_CRIT_DMG_UP_NORMAL/...`: 普通攻击会心伤害提升
-- **特殊**：防御降低和防御忽略常量（如`PROP_DMG_ENEMY_DEFENSE_DOWN_NORMAL`）
+- **特殊**：一些特殊的技能TAG如果存在，则需要额外加成对应TAG的Buff
 
-**重要**：一个伤害总是同时具备两个分类（元素类型和攻击类型），两组常量互不冲突！
+**重要**：一个伤害总是同时具备两个分类（元素类型和攻击类型（又包含了TAG）），两组常量互不冲突！
 
-**全局常量**：
+**全局常量（除了特殊反应伤害之外，对象为任意伤害）**：
 
 - `PROP_DMG_RATE_UP_ALL`: 全局倍率提升
 - `PROP_DMG_RATE_MULTI_ALL`: 全局倍率倍乘
@@ -534,39 +478,155 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 #### 版本更新场景
 
-1. **新元素反应**：
+1. **新元素反应（基本不会追加，因此追加时需要慎重判断）**：
 
-   - 在calculator.service.ts实现新反应的计算逻辑，同时需要对interface.ts进行更新
+   - 在calculator.service.ts实现新反应的计算逻辑，同时需要对interface.ts中的类型进行更新
    - 在i18n文件中添加翻译
 
-2. **新伤害乘区**：
+2. **新伤害乘区（基本不会追加，因此追加时需要慎重判断）**：
 
-   - 根据需要，添加新的伤害加成常量（`PROP_DMG_BONUS_*`）
-   - 根据需要，添加新的倍率提升/倍乘常量（`PROP_DMG_RATE_UP*_` / `PROP_DMG_RATE_MULTI_*`）
+   - 根据需要，添加新的伤害加成区间常量（比如：`PROP_DMG_RATE_UP_*` / `PROP_DMG_RATE_MULTI_*`）
+   - 在calculator.service.ts实现新追加乘区的计算逻辑
 
-3. **新特殊标签**：
+3. **新特殊标签（追加频率较高）**：
 
    - 根据需要，添加新标签常量（`PROP_TAG_*`）
    - 用于区分技能内部不同类型的伤害
 
-4. **新Buff类型**：
-
-   - 添加新的属性提升常量（如：`PROP_*_UP`）
-   - 添加新的伤害数值常量（如：`PROP_DMG_VAL_UP_*`）
-
-5. **新武器类型**：
+4. **新武器类型**：
 
    - 不存在武器类型追加与更新
 
 #### 使用示例
 
-```javascript
-// 1. 伤害配置中的使用
-{
-  "elementBonusType": "DMG_BONUS_CRYO",  // 使用第一组常量（元素类型）
-  "attackBonusType": "DMG_BONUS_NORMAL",  // 使用第二组常量（攻击类型）
-}
+1. 伤害配置中的使用
 
+```javascript
+//例子1: 基于paramList中index为0，1，2，3，6的伤害倍率的物理+普通攻击类型的伤害，基于攻击力来计算，并且可以被元素覆盖
+{
+  "damage": {
+    "indexes": [0, 1, 2, 3, 6], //paramList中index为[0, 1, 2, 3, 6]的值为伤害倍率
+    "base": "ATTACK", //基于攻击力进行计算
+    "canOverride": true, //可以被元素覆盖
+    "elementBonusType": "DMG_BONUS_PHYSICAL", //伤害的元素类型为物理
+    "attackBonusType": "DMG_BONUS_NORMAL" //伤害的攻击类型为普通攻击
+  }
+},
+//例子2: 基于元素爆发技能中paramList中index为0的伤害倍率，根据本技能的paramList中index为0的值来进行乘法计算，取得最终倍率，再与攻击力计算的不可覆盖的冰+元素爆发伤害
+{
+  "damage": {
+    "originSkills": ["elementalBurst"], //参考的技能为元素爆发
+    "originIndexes": [0], //参考的技能paramList中index为0的值为伤害倍率
+    "originRelations": ["*"], //参考的技能与此技能中paramList中的值的计算关系为乘法
+    "indexes": [0], //此技能中paramList中的index为0的值为倍率（用于与参考技能中的倍率进行计算得到最终倍率）
+    "base": "ATTACK", //基于攻击力进行计算
+    "canOverride": false, //不可以被元素覆盖
+    "elementBonusType": "DMG_BONUS_CRYO", //伤害的元素类型为冰
+    "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST" //伤害的攻击类型为元素爆发伤害（视为元素爆发伤害）
+  }
+},
+//例子3: 根据VAR_CHARA_2的值来进行显示与隐藏的控制，VAR_CHARA_2不为0则显示，否则不显示该伤害
+{
+  "damage": {
+    "indexes": [1],
+    "canOverride": false,
+    "base": "ATTACK",
+    "displayCalQueue": [ //根据Queue内容来决定最终值
+      {
+        "relation": "+", //表示+inner内的最终值
+        "inner": [
+          {
+            "relation": "+", //表达此值的符号
+            "variable": "VAR_CHARA_2" //直接使用使用变量VAR_CHARA_2
+          }
+        ]
+      }
+    ],
+    "elementBonusType": "DMG_BONUS_ELECTRO", //伤害的元素类型为雷
+    "attackBonusType": "DMG_BONUS_OTHER" //伤害的攻击类型为其他
+  }
+}
+//例子4: 与例子2与3相似，但参考了两个技能的倍率进行的计算，同时也存在显示与隐藏的控制
+{
+  "damage": {
+    "indexes": [0],
+    "originSkills": ["normal", "normal"], //使用list来进行管理
+    "originIndexes": [1, 11], //使用list来进行管理
+    "originRelations": ["*", "*"], //使用list来进行管理
+    "canOverride": false,
+    "base": "ATTACK",
+    "displayCalQueue": [
+      {
+        "relation": "+",
+        "inner": [
+          {
+            "relation": "+",
+            "variable": "VAR_CHARA_2"
+          }
+        ]
+      }
+    ],
+    "elementBonusType": "DMG_BONUS_ANEMO",
+    "attackBonusType": "DMG_BONUS_NORMAL"
+  }
+},
+//例子5: 基于防御力计算的岩+元素爆发伤害（不可覆盖），但需要注意计算结果最终根据finalResCalQueue中的内容来对VAR_CHARA_3进行一次乘法计算
+{
+  "damage": {
+    "indexes": [1],
+    "base": "DEFENSE",
+    "finalResCalQueue": [ //计算结果后处理
+      {
+        "relation": "*", //表示【计算结果】*inner结果
+        "inner": [
+          {
+            "relation": "+", //表达此值的符号
+            "variable": "VAR_CHARA_3" //直接使用使用变量VAR_CHARA_3（如果VAR_CHARA_3==2则最终伤害为原来的两倍）
+          }
+        ]
+      }
+    ],
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_GEO",
+    "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+  }
+}
+//例子6: 基于攻击力与元素精通的草+元素技能的复合伤害，倍率相关的计算过程为【paramList中index为2的值】* 【攻击力】 + 【paramList中index为3的值】* 【元素精通】 ，同时此技能为元素技能中伤害标签（tag）为NAHIDA_TRI_KARMA的伤害，除了适用于技能伤害之外，而额外受到tag为NAHIDA_TRI_KARMA的对应buff加成
+{
+  "damage": {
+    "indexes": [2], //基本的Base的倍率
+    "indexesAttach": [[3]], //额外的Base的倍率
+    "canOverride": false,
+    "base": "ATTACK", //基本的Base
+    "baseAttach": ["ELEMENTAL_MASTERY"], //额外的Base
+    "elementBonusType": "DMG_BONUS_DENDRO",
+    "attackBonusType": "DMG_BONUS_SKILL",
+    "tag": "NAHIDA_TRI_KARMA" //额外受到来自相同tag的buff加成（前提是此buff针对这个伤害类型与攻击类型且tag一致）
+  }
+}
+//例子7: 基于攻击力的不可覆盖的月感电直接伤害（月反应）
+{
+  "damage": {
+    "indexes": [1, 2, 5, 6],
+    "base": "ATTACK",
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_ELECTRO",
+    "attackBonusType": "DMG_BONUS_OTHER", //因为是特殊的反应伤害，攻击类型为Other
+    "specialDamageType": "moon-electro-charged-direction" //特殊的反应伤害使用【月感电直接伤害】
+  }
+}
+//例子8: 基于自定义的伤害倍率来计算的伤害，1*攻击力
+{
+  "damage": {
+    "customValues": [1], //自定义的伤害倍率为1
+    "base": "ATTACK",
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_ELECTRO",
+    "attackBonusType": "DMG_BONUS_OTHER"
+  }
+},
+```
+```javascript
 // 2. Buff配置中的使用
 {
   "customValue": 0.3                    // 攻击力+30%
@@ -648,37 +708,12 @@ SKILL:
 
 #### 重要性说明
 
-这些PROP*DMG*常量是伤害计算的**核心**，它们：
+这些PROP_DMG_常量是伤害计算的**核心**，它们：
 
 1. 定义了所有可能的伤害类型和加成方式
 2. 支持新元素反应和新伤害乘区的快速添加
 3. 覆盖伤害、护盾、治疗、生成物HP计算的所有场景
 4. 与Buff系统紧密关联，决定了哪些属性可以被Buff影响
-
-**示例：新元素反应添加流程**
-
-当游戏添加新元素反应（假设是"风火反应"）时：
-
-1. 在const.ts添加新反应的倍率常量：
-
-```typescript
-static readonly PROP_DMG_RATE_MULTI_WIND_FIRE = 'DMG_RATE_MULTI_WIND_FIRE';
-```
-
-2. 在calculator.service.ts实现新反应的计算逻辑
-
-3. 在data.json中使用新常量：
-
-```javascript
-{
-  "target": ["DMG_RATE_MULTI_WIND_FIRE"],
-  "customValue": 1.5  // 风火反应1.5倍
-}
-```
-
-4. 在i18n文件中添加翻译（从解包数据的desc提取）
-
-这就是为什么PROP*DMG*常量如此重要的原因：它们是连接数据配置、代码逻辑和用户界面的核心纽带。
 
 ### 技能伤害配置
 
@@ -694,20 +729,29 @@ static readonly PROP_DMG_RATE_MULTI_WIND_FIRE = 'DMG_RATE_MULTI_WIND_FIRE';
 
 - 通过`paramDescList`判断每个param对应什么
 - `paramDescList`中的格式通常是：`技能伤害|{param1:F1P}`
-- 从中提取出`{param0}`、`{param1}`等对应关系
-- 例如：普通攻击1-5段为`[param0, param1, param2, param3, param4]`，重击为`param5`，则Indexes分别对应`[0,1,2,3,4]`与`[5]`
+- 从中提取出`{param1}`、`{param2}`等对应关系
+- 例如：普通攻击1-5段为`[param1, param2, param3, param4, param5]`，重击为`param6`，则Indexes分别对应`[0,1,2,3,4]`与`[5]`（由于List下标从0开始计算，需要减去1）
 
 **示例**：
 
-```
-paramDescList: [
-  "{param0:F1P}%攻击力",
-  "{param1:F1P}",
-  "重击{param2:F1P}%攻击力伤害"
-]
+```javascript
+"paramDescList": {
+    "cn_sim": [
+        "技能伤害|{param1:F1P}",
+        "猫型家用互助协调器伤害|{param2:F1P}",
+        "猫型家用互助协调器持续时间|{param3:F1}秒",
+        "猫型家用互助协调器治疗量|{param4:F1P}攻击力+{param5:I}",
+        "最低生命值角色额外治疗量|{param6:F1P}攻击力+{param7:I}",
+        "冷却时间|{param8:F1}秒",
+        "元素能量|{param9:I}"
+    ],
+    ...
 ```
 
-则indexes分别为`[0, 1, 2]`
+则此技能的伤害的indexes为`[0,1]`
+此技能的治疗量1(猫型家用互助协调器治疗量)的index与constIndex分别为`3`与`4`
+此技能的治疗量2(最低生命值角色额外治疗量)的index与constIndex分别为`5`与`6`
+**注意**：其他param（2，7，8）由于分别代表了持续时间，冷却时间以及元素能量，不涉及伤害，治疗，buff效果本身，盾量，生成物HP，因此视为无效数据，不需要写入data.json中
 
 #### 2. base属性
 
@@ -729,6 +773,8 @@ paramDescList: [
 - `ATTACK`: 攻击力（最常见）
 - `HP`: 生命值
 - `DEFENSE`: 防御力
+- `ENERGY_RECHARGE`: 元素充能效率
+- `ELEMENTAL_MASTERY`: 元素精通
 
 #### 3. attackBonusType（攻击类型）
 
@@ -755,7 +801,7 @@ paramDescList: [
 3. **优先级最低**：写在天赋（proudSkills），命座等里的，除非desc中特殊说明，否则认为是`DMG_BONUS_OTHER`类型
 
 4. **月反应直接伤害**：
-   - 是特殊的反应元素伤害，使用`specialDamageType`来指定的同时根据实际描述来判断是什么类型，多数为`DMG_BONUS_OTHER`类型
+   - 是特殊的反应元素伤害，使用`specialDamageType`来指定的同时根据实际描述来判断是什么类型，为`DMG_BONUS_OTHER`类型
 
 **常见类型**：
 
@@ -803,6 +849,7 @@ paramDescList: [
    - `canOverride: false`
 
 4. **月反应直接伤害**：
+
    - 是不可覆盖的对应反应元素类型
    - `canOverride: false`
 
@@ -814,7 +861,7 @@ paramDescList: [
 
 **判断规则**：
 
-- `true`: 可以被元素附魔覆盖（通常是物理伤害）
+- `true`: 可以被元素附魔覆盖（通常是普通，重击，下落的物理伤害）
 - `false`: 不可覆盖（通常是元素技能伤害，元素爆发伤害，天赋伤害，命座伤害等等）
 
 **常见情况**：
@@ -836,7 +883,8 @@ paramDescList: [
    - 法器角色：`false`（默认是元素伤害）
    - 其他武器：`true`（默认是物理伤害）
 
-4. **元素技能、元素爆发**：
+4. **元素技能、元素爆发、其他伤害**：
+
    - `false`（通常是元素伤害）
 
 ## 工作流程详解
@@ -848,19 +896,15 @@ paramDescList: [
 ### 新角色
 
 1. 运行预处理脚本
-2. 生成角色配置
-3. 根据desc手动调整特殊机制
-4. 检查是否需要添加新常量/接口
+2. 根据处理后的游戏数据生成data.json中的角色配置（包含特殊技能标签处理）
 
 ### 新武器
 
-1. 生成武器配置
-2. 默认skillAffixMap的paramValidIndexes
+1. 根据处理后的游戏数据生成data.json中的武器配置
 
 ### 新圣遗物套装
 
-1. 生成套装配置
-2. 确认setAffixes的addProps映射
+1. 根据处理后的游戏数据生成data.json中的套装配置
 
 ### 新反应/新机制
 
@@ -872,8 +916,7 @@ paramDescList: [
 ## 进阶功能
 
 - 特殊标签处理（VENTI_SKILL_PRESS等）- 用于区分技能内部不同类型的伤害倍率
-- constellation衍生伤害配置
-- displayCalQueue计算队列
+- displayCalQueue显示用计算队列
 - finalResCalQueue最终计算队列
 
 **注意**：特殊标签系统用于区分技能内部多种不同类型的伤害，不是特殊机制！
@@ -882,19 +925,24 @@ paramDescList: [
 
 ## 实际使用示例
 
-### 示例1：生成单个角色配置
+### 示例1：分析角色并生成配置
 
+**步骤**：
+
+1. **导出角色数据**：
 ```bash
-# 1. 运行预处理（首次运行或大版本更新）
-cd .claude/skills/genshin-data-generator/scripts
-python3 preprocess.py
-
-# 2. 生成单个角色配置
-python3 generate_config.py --character 10000002
-
-# 3. 查看生成的配置
-# 输出会在控制台显示，可以复制到 data.json 中
+python3 export_data.py --type character --id 10000002
 ```
+
+2. **AI 分析数据**：
+   - 阅读 `output/exports/character_10000002.json`
+   - 分析每个技能的 `paramDescList` 判断 `indexes`
+   - 分析 `desc` 判断特殊机制
+   - 参考 `interface.ts` 和 `const.ts` 生成配置
+
+3. **生成配置**：
+   - AI 根据分析结果生成配置 JSON
+   - 手动添加到 `src/assets/init/data.json`
 
 ### 示例2：查看特定角色的解包数据
 
@@ -920,12 +968,12 @@ python3 export_data.py --type character --id 10000002
       },
       "paramList": [43.5, 42.4, 53.1, 54.5, 68.4],
       "paramDescList": [
-        "第1段伤害{param0:F1P}%攻击力",
-        "第2段伤害{param1:F1P}%攻击力",
-        "第3段伤害{param2:F1P}%攻击力",
-        "第4段伤害{param3:F1P}%攻击力",
-        "第5段伤害{param4:F1P}%攻击力",
-        "重击伤害{param5:F1P}%攻击力"
+        "第1段伤害{param1:F1P}%攻击力",
+        "第2段伤害{param2:F1P}%攻击力",
+        "第3段伤害{param3:F1P}%攻击力",
+        "第4段伤害{param4:F1P}%攻击力",
+        "第5段伤害{param5:F1P}%攻击力",
+        "重击伤害{param6:F1P}%攻击力"
       ]
     }]
   }
@@ -936,12 +984,12 @@ python3 export_data.py --type character --id 10000002
 
 1. **从paramDescList提取indexes**：
 
-   - `{param0:F1P}` 对应第1段 → index 0
-   - `{param1:F1P}` 对应第2段 → index 1
-   - `{param2:F1P}` 对应第3段 → index 2
-   - `{param3:F1P}` 对应第4段 → index 3
-   - `{param4:F1P}` 对应第5段 → index 4
-   - `{param5:F1P}` 对应重击 → index 5
+   - `{param1:F1P}` 对应第1段 → index 0
+   - `{param2:F1P}` 对应第2段 → index 1
+   - `{param3:F1P}` 对应第3段 → index 2
+   - `{param4:F1P}` 对应第4段 → index 3
+   - `{param5:F1P}` 对应第5段 → index 4
+   - `{param6:F1P}` 对应重击 → index 5
 
 2. **判断base属性**：
 
@@ -950,9 +998,9 @@ python3 export_data.py --type character --id 10000002
 
 3. **判断elementBonusType**：
 
-   - 神里绫华是冰元素法器角色
-   - 法器角色的普通攻击默认为角色元素
-   - 因此 elementBonusType = "DMG_BONUS_CRYO"
+   - 神里绫华是冰元素单手剑角色
+   - 单手剑角色的普通攻击默认为物理类型
+   - 因此 elementBonusType = "DMG_BONUS_PHYSICAL"
 
 4. **判断attackBonusType**：
 
@@ -970,8 +1018,8 @@ python3 export_data.py --type character --id 10000002
   "damage": {
     "indexes": [0, 1, 2, 3, 4],
     "base": "ATTACK",
-    "canOverride": false,
-    "elementBonusType": "DMG_BONUS_CRYO",
+    "canOverride": true,
+    "elementBonusType": "DMG_BONUS_PHYSICAL",
     "attackBonusType": "DMG_BONUS_NORMAL"
   }
 }
@@ -1158,7 +1206,7 @@ python3 export_data.py --type character --id 10000002
 
 1. 参考[游戏机制参考](references/game-mechanics.md)
 2. 查看[高级配置指南](references/advanced-config.md)中的示例
-3. 如果是新标签，在const.ts添加`PROP*TAG*\*`常量
+3. 如果是新标签，在const.ts添加`PROP*TAG*`常量
 4. 如果是新反应，在calculator.service.ts实现
 
 **添加新标签的步骤**：
@@ -1203,27 +1251,28 @@ python3 export_data.py --type character --id 10000002
 - 预处理脚本只保留核心字段（name, desc, paramList, paramDescList）
 - 压缩率通常在 80-90%
 
-### Q4: 需要手动编写所有配置吗？
+### Q4: 配置是如何生成的？
 
-**A**: 不需要！
+**A**: 配置由 AI 根据预处理后的数据进行推理和分析后生成。
 
-- 基础配置自动生成
-- 特殊机制需要手动调整
-- 约80%以上的配置可以自动生成
+**配置生成流程**：
 
-**自动生成的内容**：
+1. **数据预处理**：运行 `preprocess.py` 精简原始数据
+2. **数据导出**：使用 `export_data.py` 导出目标角色/武器/圣遗物数据
+3. **AI 分析**：
+   - 分析 `paramDescList` 判断 `indexes` 映射关系
+   - 分析 `desc` 判断特殊机制（buff、治疗、护盾等）
+   - 根据武器类型和技能类型判断元素类型和攻击类型
+   - 参考 `interface.ts` 和 `const.ts` 确保配置符合规范
+4. **配置生成**：AI 生成符合规范的 JSON 配置
+5. **手动验证**：将配置添加到 `data.json` 并在应用中验证
 
-- 普通的伤害配置（根据 paramDescList）
-- 基础的 buff 配置（根据 desc 关键词）
-- 武器精炼效果配置
-- 圣遗物套装效果配置
-
-**需要手动调整的内容**：
-
-- 特殊标签（如温迪的蓄力）
-- 复杂的计算队列（finalResCalQueue）
-- 衍生伤害（constellation 的 originSkills）
-- 复杂的 buff 条件（元素类型限制、武器类型限制等）
+**AI 依赖的信息**：
+- `paramDescList`：参数索引的核心依据
+- `desc`：特殊机制判断的辅助依据
+- `interface.ts`：配置结构和类型定义
+- `const.ts`：常量和枚举定义
+- 本 SKILL.md：配置生成指南
 
 ### Q5: paramDescList 和 desc 的区别是什么？
 
@@ -1382,9 +1431,10 @@ i18n 的所有内容都从解包数据的 `desc` 字段中提取！
 
 ### 如果配置有问题
 
-1. 重新生成问题配置：`python3 generate_config.py --character <ID>`
-2. 手动调整生成的JSON
-3. 验证修复
+1. 使用 `export_data.py` 重新导出数据进行分析
+2. 手动分析 `paramDescList` 和 `desc`
+3. 参考 `interface.ts` 和 `const.ts` 重新生成配置
+4. 验证修复
 
 ### 如果代码有问题
 
@@ -1408,33 +1458,34 @@ update data.json for version X.Y.Z
 
 ## 扩展和定制
 
-### 添加新的desc关键词映射
+### 添加新的分析规则
 
-编辑`scripts/generate_config.py`中的`parse_desc_keywords`函数。
+当遇到新的游戏机制或特殊配置需求时：
 
-### 修改元素映射
+1. 在 SKILL.md 中添加新的分析指南
+2. 在 `archive/` 目录保存特殊配置示例
+3. 更新 `references/` 目录下的参考文档
 
-编辑`scripts/generate_config.py`中的`ELEMENT_MAP`字典。
+### 归档特殊配置
 
-### 添加新的配置模板
+当遇到特殊配置（如新反应、新机制）时：
 
-参考`references/advanced-config.md`中的示例，在`generate_config.py`中添加新的配置生成逻辑。
+1. 在 `archive/vX.Y.Z/` 创建版本文件夹
+2. 保存配置示例和推理过程
+3. 添加 README 说明分析思路
+4. 作为后续类似配置的参考
 
 ## 贡献指南
 
-如果这个Skill对你有帮助，欢迎贡献改进：
+如果这个 Skill 对你有帮助，欢迎贡献改进：
 
-1. 添加更多desc关键词的自动识别
-2. 完善特殊机制的配置模板
-3. 添加更多游戏机制参考
-4. 改进脚本错误处理
+1. 添加更多分析案例和示例
+2. 完善配置生成指南
+3. 优化预处理脚本性能
+4. 改进数据导出格式
 
 ## 相关资源
 
 - [interface.ts定义](../../src/app/shared/interface/interface.ts)
 - [const.ts定义](../../src/app/shared/const/const.ts)
 - [计算器服务](../../src/app/shared/service/genshin/calculator.service.ts)
-
-```
-
-```

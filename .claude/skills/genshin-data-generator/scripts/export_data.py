@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-导出指定ID的解包数据，方便参考
+导出指定ID的解包数据，方便 AI 分析
 """
 
 import json
@@ -8,8 +8,12 @@ import argparse
 from pathlib import Path
 import sys
 
-# 设置路径
-project_root = Path(__file__).parent.parent.parent.parent
+# 设置路径（从脚本位置查找项目根目录）
+script_dir = Path(__file__).resolve().parent
+project_root = script_dir
+while not (project_root / "src").exists() and project_root.parent != project_root:
+    project_root = project_root.parent
+
 PROCESSED_FILE = (
     project_root / ".claude/skills/genshin-data-generator/output/processed_data.json"
 )
@@ -149,7 +153,7 @@ def main():
     if args.output:
         output_dir = Path(args.output)
     else:
-        output_dir = Path(__file__).parent.parent / "output" / "exports"
+        output_dir = project_root / ".claude/skills/genshin-data-generator/output" / "exports"
 
     output_dir.mkdir(parents=True, exist_ok=True)
 

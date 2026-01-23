@@ -8,8 +8,12 @@ import argparse
 from pathlib import Path
 import sys
 
-# 设置路径
-project_root = Path(__file__).parent.parent.parent.parent
+# 设置路径（从脚本位置查找项目根目录）
+script_dir = Path(__file__).resolve().parent
+project_root = script_dir
+while not (project_root / "src").exists() and project_root.parent != project_root:
+    project_root = project_root.parent
+
 PROCESSED_FILE = (
     project_root / ".claude/skills/genshin-data-generator/output/processed_data.json"
 )
@@ -79,7 +83,7 @@ def check_characters():
             print(f"  [{chara_id}]")
 
     # 输出到文件
-    output_dir = Path(__file__).parent.parent / "output"
+    output_dir = project_root / ".claude/skills/genshin-data-generator/output"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if unimplemented_ids:
@@ -135,7 +139,7 @@ def check_weapons():
             print(f"  [{weapon_id}]")
 
     # 输出到文件
-    output_dir = Path(__file__).parent.parent / "output"
+    output_dir = project_root / ".claude/skills/genshin-data-generator/output"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if unimplemented_ids:
@@ -189,7 +193,7 @@ def check_artifacts():
             print(f"  [{set_id}]")
 
     # 输出到文件
-    output_dir = Path(__file__).parent.parent / "output"
+    output_dir = project_root / ".claude/skills/genshin-data-generator/output"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if unimplemented_ids:

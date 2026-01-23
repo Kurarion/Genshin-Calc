@@ -12,7 +12,9 @@
       "Bash(npm run)",
       "Bash(npx tsc:*)",
       "Bash(robocopy:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(python3 -m py_compile:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": []
