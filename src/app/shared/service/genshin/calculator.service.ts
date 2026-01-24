@@ -215,6 +215,12 @@ export interface DamageResult {
   originMoonRuptureDirectlyDmg?: number; //月開花（直接）
   cirtMoonRuptureDirectlyDmg?: number; //月開花（直接）
   expectMoonRuptureDirectlyDmg?: number; //月開花（直接）
+  originMoonHydroCrystallizeDirectlyDmg?: number; //月結晶（直接）
+  cirtMoonHydroCrystallizeDirectlyDmg?: number; //月結晶（直接）
+  expectMoonHydroCrystallizeDirectlyDmg?: number; //月結晶（直接）
+  originMoonHydroCrystallizeReactionalDmg?: number; //月結晶（反応）
+  cirtMoonHydroCrystallizeReactionalDmg?: number; //月結晶（反応）
+  expectMoonHydroCrystallizeReactionalDmg?: number; //月結晶（反応）
 }
 
 export interface HealingParam {
@@ -363,6 +369,7 @@ const BASE_RUPTURE = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 2);
 const BASE_BURGEON = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 3);
 const BASE_HYPERBLOOM = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 3);
 const BASE_MOON_ELECTROCHARGED_REACTION = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 1.8);
+const BASE_MOON_HYDROCRYSTALLIZE_REACTION = Array.from(BASE_LEVEL_MULTIPLIER, (x) => x * 0.96);
 const BASE_SHIELD = [
   91.1791, 98.707667, 106.23622, 113.764771, 121.293322, 128.821878, 136.350422, 143.878978,
   151.407522, 158.936078, 169.991484, 181.076253, 192.190362, 204.048207, 215.938996, 227.86275,
@@ -666,6 +673,8 @@ export class CalculatorService {
     const isDirectlyMoonElectrocharged = specialDamageType === 'moon-electro-charged-direction';
     const isReactionalMoonElectrocharged = specialDamageType === 'moon-electro-charged-reaction';
     const isDirectlyMoonRupture = specialDamageType === 'moon-rupture-direction';
+    const isDirectlyMoonHydroCrystallize = specialDamageType === 'moon-hydro-crystallize-direction';
+    const isReactionalMoonHydroCrystallize = specialDamageType === 'moon-hydro-crystallize-reaction';
 
     //表示制御
     let forceDisplay = undefined;
@@ -808,6 +817,7 @@ export class CalculatorService {
     let elementAggravate = elementSpread;
     let elementMoonElectroCharged = 6 / (1 + 2000 / data[Const.PROP_ELEMENTAL_MASTERY]);
     let elementMoonRupture = 6 / (1 + 2000 / data[Const.PROP_ELEMENTAL_MASTERY]);
+    let elementMoonHydroCrystallize = 6 / (1 + 2000 / data[Const.PROP_ELEMENTAL_MASTERY]);
 
     //--------------------
     //補足
@@ -1069,6 +1079,28 @@ export class CalculatorService {
           '+',
         );
       }
+      //月
+      if (
+        isReactionalMoonHydroCrystallize || 
+        isDirectlyMoonHydroCrystallize || 
+        isDirectlyMoonRupture || 
+        isReactionalMoonElectrocharged || 
+        isDirectlyMoonElectrocharged
+      ) {
+        //会心区
+        finalCritRate += data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENT_MOON] ?? 0;
+        critRateSectionValueProcessFunc(
+          finalCritRate,
+          data[Const.PROP_DMG_CRIT_RATE_UP_ELEMENT_MOON] ?? 0,
+          '+',
+        );
+        finalCritDmg += data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENT_MOON] ?? 0;
+        critDmgSectionValueProcessFunc(
+          finalCritDmg,
+          data[Const.PROP_DMG_CRIT_DMG_UP_ELEMENT_MOON] ?? 0,
+          '+',
+        );
+      }
     }
     {
       finalRate *= 1 + data[extraAttackFinalRateMultiTypeProp];
@@ -1167,6 +1199,12 @@ export class CalculatorService {
     let originMoonRuptureDirectlyDmg; //月開花（直接）
     let cirtMoonRuptureDirectlyDmg; //月開花（直接）
     let expectMoonRuptureDirectlyDmg; //月開花（直接）
+    let originMoonHydroCrystallizeDirectlyDmg; //月結晶（直接）
+    let cirtMoonHydroCrystallizeDirectlyDmg; //月結晶（直接）
+    let expectMoonHydroCrystallizeDirectlyDmg; //月結晶（直接）
+    let originMoonHydroCrystallizeReactionalDmg; //月結晶（反応）
+    let cirtMoonHydroCrystallizeReactionalDmg; //月結晶（反応）
+    let expectMoonHydroCrystallizeReactionalDmg; //月結晶（反応）
 
     let cryoAntiProcess;
     let anemoAntiProcess;
@@ -1226,6 +1264,20 @@ export class CalculatorService {
     let moonRuptureDmgUpSectionProcess;
     let moonRuptureExtraValSectionProcess;
     let moonRupturePromotionProcess;
+    // 月結晶（直接）
+    let moonHydroCrystallizeDirectlyBaseProcess;
+    // 月結晶（反応）
+    let originMoonHydroCrystallizeReactionalProcess1;
+    let originMoonHydroCrystallizeReactionalProcess2;
+    let originMoonHydroCrystallizeReactionalProcess3;
+    let originMoonHydroCrystallizeReactionalProcess4;
+    let critMoonHydroCrystallizeReactionalProcess1;
+    let critMoonHydroCrystallizeReactionalProcess2;
+    let critMoonHydroCrystallizeReactionalProcess3;
+    let critMoonHydroCrystallizeReactionalProcess4;
+    let expectMoonHydroCrystallizeReactionalProcess;
+    let moonHydroCrystallizeDmgUpSectionProcess;
+    let moonHydroCrystallizePromotionProcess;
 
     let showDerivativeDamage = false;
 
@@ -1268,6 +1320,9 @@ export class CalculatorService {
               '*',
               'end',
             );
+            const extraVal = data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_EXTRA_VAL_UP] ?? 0;
+            damgeValue += extraVal
+            directlyMoonElectrochargedProcessFunc(damgeValue, extraVal, '+', 'end');
             moonElectroChargedDirectlyBaseProcess = directlyMoonElectrochargedProcessFunc();
             // ダメージ
             const baseRate = 1;
@@ -1302,9 +1357,10 @@ export class CalculatorService {
             let promotion = basePromotion;
             const moonElectrochargedPromotionProcessFunc = this.createProcess(promotion);
             promotion += data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0;
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0;
             moonElectrochargedPromotionProcessFunc(
               promotion,
-              data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0,
+              (data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0) + (data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0),
               '+',
               'end',
             );
@@ -1377,9 +1433,10 @@ export class CalculatorService {
             let promotion = basePromotion;
             const moonRupturePromotionProcessFunc = this.createProcess(promotion);
             promotion += data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_PROMOTION] ?? 0;
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0;
             moonRupturePromotionProcessFunc(
               promotion,
-              data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_PROMOTION] ?? 0,
+              (data[Const.PROP_DMG_ELEMENT_MOON_RUPTURE_PROMOTION] ?? 0) + (data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0),
               '+',
               'end',
             );
@@ -1400,6 +1457,84 @@ export class CalculatorService {
             expectMoonRuptureDirectlyDmg =
               originMoonRuptureDirectlyDmg * (1 - finalCritRate) +
               cirtMoonRuptureDirectlyDmg * finalCritRate;
+
+            showDerivativeDamage = true;
+            break;
+          }
+          case isDirectlyMoonHydroCrystallize: {
+            // 月結晶（直接）
+            const specialRate = 1.6;
+            let damgeValue = specialRate;
+            const directlyMoonHydroCrystallizeProcessFunc = this.createProcess(damgeValue);
+            damgeValue *= data[base] ?? 0;
+            directlyMoonHydroCrystallizeProcessFunc(damgeValue, data[base] ?? 0, '*', 'end');
+            damgeValue *= rate ?? 0;
+            directlyMoonHydroCrystallizeProcessFunc(damgeValue, rate ?? 0, '*', 'end');
+            damgeValue *= 1 + (data[Const.PROP_DMG_RATE_MULTI_MOON_HYDROCRYSTALLIZE] ?? 0);
+            directlyMoonHydroCrystallizeProcessFunc(
+              damgeValue,
+              1 + (data[Const.PROP_DMG_RATE_MULTI_MOON_HYDROCRYSTALLIZE] ?? 0),
+              '*',
+              'end',
+            );
+            const extraVal = data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP] ?? 0;
+            damgeValue += extraVal
+            directlyMoonHydroCrystallizeProcessFunc(damgeValue, extraVal, '+', 'end');
+            moonHydroCrystallizeDirectlyBaseProcess = directlyMoonHydroCrystallizeProcessFunc();
+            // ダメージ
+            const baseRate = 1;
+            let damgeUp = baseRate;
+            const moonHydroCrystallizeDmgUpProcessFunc = this.createProcess(damgeUp);
+            const elementalMasteryUp = elementMoonHydroCrystallize;
+            damgeUp += elementalMasteryUp;
+            moonHydroCrystallizeDmgUpProcessFunc(damgeUp, elementalMasteryUp, '+', 'end');
+            damgeUp += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0;
+            moonHydroCrystallizeDmgUpProcessFunc(
+              damgeUp,
+              data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0,
+              '+',
+              'end',
+            );
+            damgeUp += data[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0;
+            moonHydroCrystallizeDmgUpProcessFunc(
+              damgeUp,
+              data[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0,
+              '+',
+              'end',
+            );
+            moonHydroCrystallizeDmgUpSectionProcess = moonHydroCrystallizeDmgUpProcessFunc();
+            // 耐性
+            let [dmgAntiSectionValue, tempGeoAntiProcess] = this.getDmgAntiSectionValue(
+              data,
+              Const.ELEMENT_GEO,
+            );
+            electroAntiProcess = tempGeoAntiProcess();
+            // プロモーション
+            const basePromotion = 1;
+            let promotion = basePromotion;
+            const moonHydroCrystallizePromotionProcessFunc = this.createProcess(promotion);
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION] ?? 0;
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0;
+            moonHydroCrystallizePromotionProcessFunc(
+              promotion,
+              (data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION] ?? 0) + (data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0),
+              '+',
+              'end',
+            );
+            moonHydroCrystallizePromotionProcess = moonHydroCrystallizePromotionProcessFunc();
+            // 計算
+            originMoonHydroCrystallizeDirectlyDmg =
+              damgeValue * damgeUp * (1 - dmgAntiSectionValue) * promotion;
+            originMoonHydroCrystallizeDirectlyDmg = this.getFinalResCalQueueResult(
+              data,
+              originMoonHydroCrystallizeDirectlyDmg,
+              param.finalResCalQueue,
+            );
+            cirtMoonHydroCrystallizeDirectlyDmg =
+              originMoonHydroCrystallizeDirectlyDmg * (1 + finalCritDmg);
+            expectMoonHydroCrystallizeDirectlyDmg =
+              originMoonHydroCrystallizeDirectlyDmg * (1 - finalCritRate) +
+              cirtMoonHydroCrystallizeDirectlyDmg * finalCritRate;
 
             showDerivativeDamage = true;
             break;
@@ -1637,6 +1772,7 @@ export class CalculatorService {
               const basePromotion = 1;
               let promotion = basePromotion;
               promotion += data[Const.PROP_DMG_ELEMENT_MOON_ELECTROCHARGED_PROMOTION] ?? 0;
+              promotion += data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0;
               damageValue *= promotion;
               tempResultProcessFunc(damageValue, promotion, '*', 'end');
 
@@ -1774,7 +1910,9 @@ export class CalculatorService {
             (1 + data[Const.PROP_DMG_ELEMENT_OVERLOADED_UP] + elementCataclysmRate) *
             (1 - tempDmgAntiSectionValue);
         }
-        if ([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType)) {
+        if ([Const.PROP_DMG_BONUS_GEO].includes(elementBonusType) && 
+          !isDirectlyMoonHydroCrystallize
+        ) {
           let shieldRate = 1;
           const shieldUpValueProcessFunc = this.createProcess(shieldRate);
           shieldRate += data[Const.PROP_DMG_ELEMENT_SHIELD_UP];
@@ -1925,6 +2063,144 @@ export class CalculatorService {
               (1 + data[Const.PROP_DMG_ELEMENT_RUPTURE_UP] + elementCataclysmRate) +
               extraVal) *
             (1 - tempDmgAntiSectionValue);
+        }
+        if (isReactionalMoonHydroCrystallize) {
+          let [tempDmgAntiSectionValue, tempGeoAntiProcess] = this.getDmgAntiSectionValue(
+            data,
+            Const.ELEMENT_GEO,
+          );
+          electroAntiProcess = tempGeoAntiProcess();
+          // 月結晶（反応）
+          const members: string[] = [indexStr].concat(
+            ...this.teamService.getOtherMembers(indexStr),
+          );
+          const originDamageList = [];
+          const originDamageProcessList = [];
+          const critDamageList = [];
+          const critDamageProcessList = [];
+          const critRateList = [];
+          const damageDistributions = [1, 1 / 2, 1 / 12, 1 / 12];
+          for (const memberIndexStr of members) {
+            if (memberIndexStr === '') {
+              continue;
+            }
+            let memberData = this.dataMap[memberIndexStr].allData!;
+            if (memberIndexStr == indexStr) {
+              memberData = data;
+            }
+            // ベース
+            let damageValue = BASE_MOON_HYDROCRYSTALLIZE_REACTION[memberData[Const.PROP_LEVEL] - 1];
+            const tempResultProcessFunc = this.createProcess(damageValue);
+            damageValue *= 1 + (data[Const.PROP_DMG_RATE_MULTI_MOON_HYDROCRYSTALLIZE] ?? 0);
+            tempResultProcessFunc(
+              damageValue,
+              `(1 ${this.plus} ${this.proximateVal(data[Const.PROP_DMG_RATE_MULTI_MOON_HYDROCRYSTALLIZE] ?? 0)})`,
+              '*',
+              'end',
+            );
+            // ダメージ
+            const tempElementMoonHydroCrystallize =
+              6 / (1 + 2000 / memberData[Const.PROP_ELEMENTAL_MASTERY]);
+            damageValue *=
+              1 +
+              tempElementMoonHydroCrystallize +
+              (memberData[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0) +
+              (memberData[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0);
+            tempResultProcessFunc(
+              damageValue,
+              `(1 ${this.plus} ${this.proximateVal(tempElementMoonHydroCrystallize)} ${this.plus} ${memberData[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0} ${this.plus} ${memberData[Const.PROP_DMG_ELEMENT_MOON_ALL_UP] ?? 0})`,
+              '*',
+              'end',
+            );
+            // 耐性
+            damageValue *= 1 - tempDmgAntiSectionValue;
+            tempResultProcessFunc(damageValue, 1 - tempDmgAntiSectionValue, '*', 'end');
+            // プロモーション
+            const basePromotion = 1;
+            let promotion = basePromotion;
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION] ?? 0;
+            promotion += data[Const.PROP_DMG_ELEMENT_MOON_PROMOTION] ?? 0;
+            damageValue *= promotion;
+            tempResultProcessFunc(damageValue, promotion, '*', 'end');
+
+            originDamageList.push(damageValue);
+            originDamageProcessList.push(tempResultProcessFunc);
+
+            // 会心ダメージ
+            let critDamageValue =
+              damageValue *
+              (1 + memberData[Const.PROP_CRIT_DMG] + memberData[Const.PROP_DMG_CRIT_DMG_UP_ALL]);
+            const tempCritResultProcessFunc = this.createProcess(
+              damageValue,
+              tempResultProcessFunc()[1],
+            );
+            tempCritResultProcessFunc(
+              critDamageValue,
+              1 + memberData[Const.PROP_CRIT_DMG] + memberData[Const.PROP_DMG_CRIT_DMG_UP_ALL],
+              '*',
+              'end',
+            );
+            critDamageList.push(critDamageValue);
+            critDamageProcessList.push(tempCritResultProcessFunc);
+
+            // 会心率
+            critRateList.push(
+              memberData[Const.PROP_CRIT_RATE] + memberData[Const.PROP_DMG_CRIT_RATE_UP_ALL],
+            );
+          }
+
+          originMoonHydroCrystallizeReactionalDmg = 0;
+          cirtMoonHydroCrystallizeReactionalDmg = 0;
+          expectMoonHydroCrystallizeReactionalDmg = 0;
+
+          const originRankingList = this.getRankings(originDamageList);
+          const critRankingList = this.getRankings(critDamageList);
+          const length = originDamageList.length;
+          for (let i = 0; i < length; ++i) {
+            const originRankingIndex = originRankingList[i];
+            const critRankingIndex = critRankingList[i];
+
+            const currentOriginVal = originDamageList[i];
+            const currentOriginProcess = originDamageProcessList[i];
+            const finalOriginVal = currentOriginVal * damageDistributions[originRankingIndex];
+            currentOriginProcess(
+              finalOriginVal,
+              damageDistributions[originRankingIndex],
+              '*',
+              'end',
+            );
+            originMoonHydroCrystallizeReactionalDmg += finalOriginVal;
+
+            const currentCritVal = critDamageList[i];
+            const currentCritProcess = critDamageProcessList[i];
+            const finalCritVal = currentCritVal * damageDistributions[critRankingIndex];
+            currentCritProcess(finalCritVal, damageDistributions[critRankingIndex], '*', 'end');
+            cirtMoonHydroCrystallizeReactionalDmg += finalCritVal;
+          }
+
+          expectMoonHydroCrystallizeReactionalDmg = this.calculateExpectedWeightedDamage(
+            originDamageList,
+            critDamageList,
+            critRateList,
+            damageDistributions,
+          );
+
+          [
+            originMoonHydroCrystallizeReactionalProcess1,
+            originMoonHydroCrystallizeReactionalProcess2,
+            originMoonHydroCrystallizeReactionalProcess3,
+            originMoonHydroCrystallizeReactionalProcess4,
+          ] = originDamageProcessList.map((func) => func());
+          [
+            critMoonHydroCrystallizeReactionalProcess1,
+            critMoonHydroCrystallizeReactionalProcess2,
+            critMoonHydroCrystallizeReactionalProcess3,
+            critMoonHydroCrystallizeReactionalProcess4,
+          ] = critDamageProcessList.map((func) => func());
+
+          expectMoonHydroCrystallizeReactionalProcess = this.createProcess(
+            expectMoonHydroCrystallizeReactionalDmg,
+          )();
         }
       }
     }
@@ -2141,6 +2417,39 @@ export class CalculatorService {
           'moonRupturePromotionProcess',
           'dendroAntiProcess',
         ],
+        originMoonHydroCrystallizeDirectlyDmg: [
+          'moonHydroCrystallizeDirectlyBaseProcess',
+          'moonHydroCrystallizeDmgUpSectionProcess',
+          'moonHydroCrystallizePromotionProcess',
+          'electroAntiProcess',
+        ],
+        cirtMoonHydroCrystallizeDirectlyDmg: [
+          'moonHydroCrystallizeDirectlyBaseProcess',
+          'critDmgSectionValueProcess',
+          'moonHydroCrystallizeDmgUpSectionProcess',
+          'moonHydroCrystallizePromotionProcess',
+          'electroAntiProcess',
+        ],
+        expectMoonHydroCrystallizeDirectlyDmg: [
+          'moonHydroCrystallizeDirectlyBaseProcess',
+          'critExpectDmgSectionValueProcess',
+          'moonHydroCrystallizeDmgUpSectionProcess',
+          'moonHydroCrystallizePromotionProcess',
+          'electroAntiProcess',
+        ],
+        originMoonHydroCrystallizeReactionalDmg: [
+          'originMoonHydroCrystallizeReactionalProcess1',
+          'originMoonHydroCrystallizeReactionalProcess2',
+          'originMoonHydroCrystallizeReactionalProcess3',
+          'originMoonHydroCrystallizeReactionalProcess4',
+        ],
+        cirtMoonHydroCrystallizeReactionalDmg: [
+          'critMoonHydroCrystallizeReactionalProcess1',
+          'critMoonHydroCrystallizeReactionalProcess2',
+          'critMoonHydroCrystallizeReactionalProcess3',
+          'critMoonHydroCrystallizeReactionalProcess4',
+        ],
+        expectMoonHydroCrystallizeReactionalDmg: ['expectMoonHydroCrystallizeReactionalProcess'],
       },
       calcProcessValMap: {
         dmgSectionValueProcess: dmgSectionValueProcessFunc(),
@@ -2234,6 +2543,20 @@ export class CalculatorService {
         moonRuptureDmgUpSectionProcess,
         moonRuptureExtraValSectionProcess,
         moonRupturePromotionProcess,
+        // 月結晶（直接）
+        moonHydroCrystallizeDirectlyBaseProcess,
+        // 月結晶（反応）
+        originMoonHydroCrystallizeReactionalProcess1,
+        originMoonHydroCrystallizeReactionalProcess2,
+        originMoonHydroCrystallizeReactionalProcess3,
+        originMoonHydroCrystallizeReactionalProcess4,
+        critMoonHydroCrystallizeReactionalProcess1,
+        critMoonHydroCrystallizeReactionalProcess2,
+        critMoonHydroCrystallizeReactionalProcess3,
+        critMoonHydroCrystallizeReactionalProcess4,
+        expectMoonHydroCrystallizeReactionalProcess,
+        moonHydroCrystallizeDmgUpSectionProcess,
+        moonHydroCrystallizePromotionProcess,
       },
       elementBonusType: elementBonusType,
       finalCritRate: finalCritRate,
@@ -2283,6 +2606,12 @@ export class CalculatorService {
       originMoonRuptureDirectlyDmg: originMoonRuptureDirectlyDmg, //月開花（直接）
       cirtMoonRuptureDirectlyDmg: cirtMoonRuptureDirectlyDmg, //月開花（直接）
       expectMoonRuptureDirectlyDmg: expectMoonRuptureDirectlyDmg, //月開花（直接）
+      originMoonHydroCrystallizeDirectlyDmg: originMoonHydroCrystallizeDirectlyDmg, //月結晶（直接）
+      cirtMoonHydroCrystallizeDirectlyDmg: cirtMoonHydroCrystallizeDirectlyDmg, //月結晶（直接）
+      expectMoonHydroCrystallizeDirectlyDmg: expectMoonHydroCrystallizeDirectlyDmg, //月結晶（直接）
+      originMoonHydroCrystallizeReactionalDmg: originMoonHydroCrystallizeReactionalDmg, //月結晶（反応）
+      cirtMoonHydroCrystallizeReactionalDmg: cirtMoonHydroCrystallizeReactionalDmg, //月結晶（反応）
+      expectMoonHydroCrystallizeReactionalDmg: expectMoonHydroCrystallizeReactionalDmg, //月結晶（反応）
     };
 
     return result;

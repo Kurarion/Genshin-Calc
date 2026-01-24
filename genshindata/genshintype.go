@@ -246,24 +246,24 @@ type GenshinAvatarSkillsData struct {
 	Id                      uint64                            `json:"id"`
 	EnergySkill             uint64                            `json:"energySkill"`
 	Skills                  []uint64                          `json:"skills"`
-	InherentProudSkillOpens []GenshinAvatarInherentProudSkill `json:"FECDDOLDHBL"`
+	InherentProudSkillOpens []GenshinAvatarInherentProudSkill `json:"LOAMPGAFLMA"`
 	Talents                 []uint64                          `json:"talents"`
 	TalentStarName          string                            `json:"talentStarName"`
-	SpecialProudSkillOpens  []GenshinAvatarSpecialProudSkill  `json:"LLALJAIDKPI"`
+	SpecialProudSkillOpens  []GenshinAvatarSpecialProudSkill  `json:"GFFGFBCGBDH"`
 	// InherentProudSkillOpens []GenshinAvatarInherentProudSkill `json:"inherentProudSkillOpens"`
 }
 
 // 人物天赋子结构
 type GenshinAvatarInherentProudSkill struct {
 	ProudSkillGroupId      uint64 `json:"proudSkillGroupId"`
-	NeedAvatarPromoteLevel int    `json:"LKJNHHPJKIA"`
+	NeedAvatarPromoteLevel int    `json:"AMKLKEEBGPM"`
 	// NeedAvatarPromoteLevel int    `json:"needAvatarPromoteLevel"`
 }
 
 // 人物特别天赋子结构
 type GenshinAvatarSpecialProudSkill struct {
-	ChapterId         []uint64 `json:"AFMEMNMEABG"`
-	Type              string   `json:"KLHCAFHKLNI"`
+	ChapterId         []uint64 `json:"BFCALCJMJKD"`
+	Type              string   `json:"AFMOAPEAINH"`
 	ProudSkillGroupId uint64   `json:"proudSkillGroupId"`
 }
 
@@ -271,44 +271,44 @@ type GenshinAvatarSkillListData []GenshinAvatarSkillData
 
 // 人物EQ技能
 type GenshinAvatarSkillData struct {
-	Id                   uint64  `json:"id"`
-	NameTextMapHash      uint64  `json:"nameTextMapHash"`
-	DescTextMapHash      uint64  `json:"descTextMapHash"`
-	SpecialDescTextMapHash uint64 `json:"IACNAENANDH"`
-	CdTime               float64 `json:"cdTime"`
-	CostElemVal          float64 `json:"costElemVal"`
-	CostElemType         string  `json:"costElemType"`
-	SkillIcon            string  `json:"skillIcon"`
-	ProudSkillGroupId    uint64  `json:"proudSkillGroupId"`
+	Id                     uint64  `json:"id"`
+	NameTextMapHash        uint64  `json:"nameTextMapHash"`
+	DescTextMapHash        uint64  `json:"descTextMapHash"`
+	SpecialDescTextMapHash uint64  `json:"IACNAENANDH"`
+	CdTime                 float64 `json:"cdTime"`
+	CostElemVal            float64 `json:"costElemVal"`
+	CostElemType           string  `json:"costElemType"`
+	SkillIcon              string  `json:"skillIcon"`
+	ProudSkillGroupId      uint64  `json:"proudSkillGroupId"`
 }
 
 type GenshinAvatarProudSkillListData []GenshinAvatarProudSkillData
 
 // 人物技能详细
 type GenshinAvatarProudSkillData struct {
-	ProudSkillId         uint64    `json:"proudSkillId"`
-	ProudSkillGroupId    uint64    `json:"proudSkillGroupId"`
-	Level                int       `json:"level"`
-	ProudSkillType       int       `json:"proudSkillType"`
-	NameTextMapHash      uint64    `json:"nameTextMapHash"`
-	DescTextMapHash      uint64    `json:"descTextMapHash"`
-	SpecialDescTextMapHash uint64   `json:"IACNAENANDH"`
-	Icon                 string    `json:"icon"`
-	BreakLevel           int       `json:"breakLevel"`
-	ParamDescList        []uint64  `json:"paramDescList"`
-	ParamList            []float64 `json:"paramList"`
+	ProudSkillId           uint64    `json:"proudSkillId"`
+	ProudSkillGroupId      uint64    `json:"proudSkillGroupId"`
+	Level                  int       `json:"level"`
+	ProudSkillType         int       `json:"proudSkillType"`
+	NameTextMapHash        uint64    `json:"nameTextMapHash"`
+	DescTextMapHash        uint64    `json:"descTextMapHash"`
+	SpecialDescTextMapHash uint64    `json:"IACNAENANDH"`
+	Icon                   string    `json:"icon"`
+	BreakLevel             int       `json:"breakLevel"`
+	ParamDescList          []uint64  `json:"paramDescList"`
+	ParamList              []float64 `json:"paramList"`
 }
 
 type GenshinAvatarTalentListData []GenshinAvatarTalentData
 
 // 人物命座
 type GenshinAvatarTalentData struct {
-	TalentId              uint64    `json:"talentId"`
-	NameTextMapHash       uint64    `json:"nameTextMapHash"`
-	DescTextMapHash       uint64    `json:"descTextMapHash"`
-	SpecialDescTextMapHash uint64   `json:"IACNAENANDH"`
-	Icon                  string    `json:"icon"`
-	ParamList             []float64 `json:"paramList"`
+	TalentId               uint64    `json:"talentId"`
+	NameTextMapHash        uint64    `json:"nameTextMapHash"`
+	DescTextMapHash        uint64    `json:"descTextMapHash"`
+	SpecialDescTextMapHash uint64    `json:"IACNAENANDH"`
+	Icon                   string    `json:"icon"`
+	ParamList              []float64 `json:"paramList"`
 }
 
 //************************

@@ -107,6 +107,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonRuptureDirectlyDmg',
     'cirtMoonRuptureDirectlyDmg',
     'expectMoonRuptureDirectlyDmg',
+    'originMoonHydroCrystallizeDirectlyDmg',
+    'cirtMoonHydroCrystallizeDirectlyDmg',
+    'expectMoonHydroCrystallizeDirectlyDmg',
     'originVaporizeDmg',
     'cirtVaporizeDmg',
     'expectVaporizeDmg',
@@ -137,6 +140,9 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonElectroChargedReactionalDmg',
     'cirtMoonElectroChargedReactionalDmg',
     'expectMoonElectroChargedReactionalDmg',
+    'originMoonHydroCrystallizeReactionalDmg',
+    'cirtMoonHydroCrystallizeReactionalDmg',
+    'expectMoonHydroCrystallizeReactionalDmg',
   ];
   readonly notAddToDPSPropList: (keyof DamageResult)[] = ['shieldHp', 'shieldSpecialHp'];
   readonly healingPropList: (keyof HealingResult)[] = ['healing'];
@@ -206,6 +212,12 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonRuptureDirectlyDmg': 'ORIGIN_MOON_RUPTURE_DIRECTLY',
     'cirtMoonRuptureDirectlyDmg': 'CRIT_MOON_RUPTURE_DIRECTLY',
     'expectMoonRuptureDirectlyDmg': 'EXPECT_MOON_RUPTURE_DIRECTLY',
+    'originMoonHydroCrystallizeDirectlyDmg': 'ORIGIN_MOON_HYDROCRYSTALLIZE_DIRECTLY',
+    'cirtMoonHydroCrystallizeDirectlyDmg': 'CRIT_MOON_HYDROCRYSTALLIZE_DIRECTLY',
+    'expectMoonHydroCrystallizeDirectlyDmg': 'EXPECT_MOON_HYDROCRYSTALLIZE_DIRECTLY',
+    'originMoonHydroCrystallizeReactionalDmg': 'ORIGIN_MOON_HYDROCRYSTALLIZE_REACTIONAL',
+    'cirtMoonHydroCrystallizeReactionalDmg': 'CRIT_MOON_HYDROCRYSTALLIZE_REACTIONAL',
+    'expectMoonHydroCrystallizeReactionalDmg': 'EXPECT_MOON_HYDROCRYSTALLIZE_REACTIONAL',
   };
 
   readonly processNameMap: Record<string, string> = {
@@ -283,6 +295,18 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'moonRuptureDmgUpSectionProcess': 'DMG_MOON_RUPTURE_DIRECTLY_RATE',
     'moonRuptureExtraValSectionProcess': 'DMG_MOON_RUPTURE_DIRECTLY_EXTRA_VAL',
     'moonRupturePromotionProcess': 'DMG_MOON_RUPTURE_PROMOTION',
+    'moonHydroCrystallizeDirectlyBaseProcess': 'DMG_MOON_HYDRO_CRYSTALLIZE_DIRECTLY_BASE',
+    'originMoonHydroCrystallizeReactionalProcess1': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_ORIGIN_1',
+    'originMoonHydroCrystallizeReactionalProcess2': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_ORIGIN_2',
+    'originMoonHydroCrystallizeReactionalProcess3': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_ORIGIN_3',
+    'originMoonHydroCrystallizeReactionalProcess4': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_ORIGIN_4',
+    'critMoonHydroCrystallizeReactionalProcess1': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_CRIT_1',
+    'critMoonHydroCrystallizeReactionalProcess2': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_CRIT_2',
+    'critMoonHydroCrystallizeReactionalProcess3': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_CRIT_3',
+    'critMoonHydroCrystallizeReactionalProcess4': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_CRIT_4',
+    'expectMoonHydroCrystallizeReactionalProcess': 'DMG_MOON_HYDRO_CRYSTALLIZE_REACTIONAL_EXPECT',
+    'moonHydroCrystallizeDmgUpSectionProcess': 'DMG_MOON_HYDRO_CRYSTALLIZE_RATE',
+    'moonHydroCrystallizePromotionProcess': 'DMG_MOON_HYDROCRYSTALLIZE_PROMOTION',
   };
 
   readonly specialColorMap: Record<string, string | undefined> = {
@@ -323,6 +347,12 @@ export class ExtraDataComponent implements OnInit, OnDestroy, OnChanges {
     'originMoonRuptureDirectlyDmg': '#aceebb',
     'cirtMoonRuptureDirectlyDmg': '#aceebb',
     'expectMoonRuptureDirectlyDmg': '#aceebb',
+    'originMoonHydroCrystallizeDirectlyDmg': '#f5ed7f',
+    'cirtMoonHydroCrystallizeDirectlyDmg': '#f5ed7f',
+    'expectMoonHydroCrystallizeDirectlyDmg': '#f5ed7f',
+    'originMoonHydroCrystallizeReactionalDmg': '#f5ed7f',
+    'cirtMoonHydroCrystallizeReactionalDmg': '#f5ed7f',
+    'expectMoonHydroCrystallizeReactionalDmg': '#f5ed7f',
   };
 
   //キャラ

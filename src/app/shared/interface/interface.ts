@@ -264,7 +264,9 @@ export declare type TYPE_SPECIAL_DAMAGE_TYPE =
   | ''
   | 'moon-rupture-direction'
   | 'moon-electro-charged-direction'
-  | 'moon-electro-charged-reaction';
+  | 'moon-electro-charged-reaction'
+  | 'moon-hydro-crystallize-direction'
+  | 'moon-hydro-crystallize-reaction';
 //計算ユニット
 export interface CalcItem {
   relation: TYPE_RELATION;

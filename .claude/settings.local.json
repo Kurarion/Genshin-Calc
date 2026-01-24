@@ -12,7 +12,9 @@
       "Bash(npm run)",
       "Bash(npx tsc:*)",
       "Bash(robocopy:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(npx openspec validate:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
