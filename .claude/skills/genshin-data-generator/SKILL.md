@@ -499,524 +499,66 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 #### 使用示例
 
-1. 伤害配置中的使用
+> **示例格式说明**
+> - **源数据**: 来自 processed_data.json 的原始游戏数据
+> - **推断过程**: 从源数据分析并生成配置的步骤
+> - **最终配置**: 生成的 data.json 配置
 
+---
+
+### 1. 伤害配置示例
+
+#### 示例1.1: 基础物理普通攻击（神里绫华）
+
+**角色**: 神里绫华 (10000002) - 神里流·倾
+
+**源数据**:
 ```javascript
-//例子1: 基于paramList中index为0，1，2，3，6的伤害倍率的物理+普通攻击类型的伤害，基于攻击力来计算，并且可以被元素覆盖
-{
-  "damage": {
-    "indexes": [0, 1, 2, 3, 6], //paramList中index为[0, 1, 2, 3, 6]的值为伤害倍率
-    "base": "ATTACK", //基于攻击力进行计算
-    "canOverride": true, //可以被元素覆盖
-    "elementBonusType": "DMG_BONUS_PHYSICAL", //伤害的元素类型为物理
-    "attackBonusType": "DMG_BONUS_NORMAL" //伤害的攻击类型为普通攻击
-  }
-},
-//例子2: 基于元素爆发技能中paramList中index为0的伤害倍率，根据本技能的paramList中index为0的值来进行乘法计算，取得最终倍率，再与攻击力计算的不可覆盖的冰+元素爆发伤害
-{
-  "damage": {
-    "originSkills": ["elementalBurst"], //参考的技能为元素爆发
-    "originIndexes": [0], //参考的技能paramList中index为0的值为伤害倍率
-    "originRelations": ["*"], //参考的技能与此技能中paramList中的值的计算关系为乘法
-    "indexes": [0], //此技能中paramList中的index为0的值为倍率（用于与参考技能中的倍率进行计算得到最终倍率）
-    "base": "ATTACK", //基于攻击力进行计算
-    "canOverride": false, //不可以被元素覆盖
-    "elementBonusType": "DMG_BONUS_CRYO", //伤害的元素类型为冰
-    "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST" //伤害的攻击类型为元素爆发伤害（视为元素爆发伤害）
-  }
-},
-//例子3: 根据VAR_CHARA_2的值来进行显示与隐藏的控制，VAR_CHARA_2不为0则显示，否则不显示该伤害
-{
-  "damage": {
-    "indexes": [1],
-    "canOverride": false,
-    "base": "ATTACK",
-    "displayCalQueue": [ //根据Queue内容来决定最终值
-      {
-        "relation": "+", //表示+inner内的最终值
-        "inner": [
-          {
-            "relation": "+", //表达此值的符号
-            "variable": "VAR_CHARA_2" //直接使用使用变量VAR_CHARA_2
-          }
-        ]
-      }
-    ],
-    "elementBonusType": "DMG_BONUS_ELECTRO", //伤害的元素类型为雷
-    "attackBonusType": "DMG_BONUS_OTHER" //伤害的攻击类型为其他
-  }
-}
-//例子4: 与例子2与3相似，但参考了两个技能的倍率进行的计算，同时也存在显示与隐藏的控制
-{
-  "damage": {
-    "indexes": [0],
-    "originSkills": ["normal", "normal"], //使用list来进行管理
-    "originIndexes": [1, 11], //使用list来进行管理
-    "originRelations": ["*", "*"], //使用list来进行管理
-    "canOverride": false,
-    "base": "ATTACK",
-    "displayCalQueue": [
-      {
-        "relation": "+",
-        "inner": [
-          {
-            "relation": "+",
-            "variable": "VAR_CHARA_2"
-          }
-        ]
-      }
-    ],
-    "elementBonusType": "DMG_BONUS_ANEMO",
-    "attackBonusType": "DMG_BONUS_NORMAL"
-  }
-},
-//例子5: 基于防御力计算的岩+元素爆发伤害（不可覆盖），但需要注意计算结果最终根据finalResCalQueue中的内容来对VAR_CHARA_3进行一次乘法计算
-{
-  "damage": {
-    "indexes": [1],
-    "base": "DEFENSE",
-    "finalResCalQueue": [ //计算结果后处理
-      {
-        "relation": "*", //表示【计算结果】*inner结果
-        "inner": [
-          {
-            "relation": "+", //表达此值的符号
-            "variable": "VAR_CHARA_3" //直接使用使用变量VAR_CHARA_3（如果VAR_CHARA_3==2则最终伤害为原来的两倍）
-          }
-        ]
-      }
-    ],
-    "canOverride": false,
-    "elementBonusType": "DMG_BONUS_GEO",
-    "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
-  }
-}
-//例子6: 基于攻击力与元素精通的草+元素技能的复合伤害，倍率相关的计算过程为【paramList中index为2的值】* 【攻击力】 + 【paramList中index为3的值】* 【元素精通】 ，同时此技能为元素技能中伤害标签（tag）为NAHIDA_TRI_KARMA的伤害，除了适用于技能伤害之外，而额外受到tag为NAHIDA_TRI_KARMA的对应buff加成
-{
-  "damage": {
-    "indexes": [2], //基本的Base的倍率
-    "indexesAttach": [[3]], //额外的Base的倍率
-    "canOverride": false,
-    "base": "ATTACK", //基本的Base
-    "baseAttach": ["ELEMENTAL_MASTERY"], //额外的Base
-    "elementBonusType": "DMG_BONUS_DENDRO",
-    "attackBonusType": "DMG_BONUS_SKILL",
-    "tag": "NAHIDA_TRI_KARMA" //额外受到来自相同tag的buff加成（前提是此buff针对这个伤害类型与攻击类型且tag一致）
-  }
-}
-//例子7: 基于攻击力的不可覆盖的月感电直接伤害（月反应）
-{
-  "damage": {
-    "indexes": [1, 2, 5, 6],
-    "base": "ATTACK",
-    "canOverride": false,
-    "elementBonusType": "DMG_BONUS_ELECTRO",
-    "attackBonusType": "DMG_BONUS_OTHER", //因为是特殊的反应伤害，攻击类型为Other
-    "specialDamageType": "moon-electro-charged-direction" //特殊的反应伤害使用【月感电直接伤害】
-  }
-}
-//例子8: 基于自定义的伤害倍率来计算的伤害，1*攻击力
-{
-  "damage": {
-    "customValues": [1], //自定义的伤害倍率为1
-    "base": "ATTACK",
-    "canOverride": false,
-    "elementBonusType": "DMG_BONUS_ELECTRO",
-    "attackBonusType": "DMG_BONUS_OTHER"
-  }
-},
-```
-```javascript
-// 2. Buff配置中的使用
-{
-  "customValue": 0.3                    // 攻击力+30%
-  "target": ["ATTACK_UP"],              // 使用PROP_ATTACK_UP
-}
+// paramDescList (简体中文)
+[
+  "一段伤害|{param1:F1P}",           // param1 = 0.457253 (等级1)
+  "二段伤害|{param2:F1P}",           // param2 = 0.486846
+  "三段伤害|{param3:F1P}",           // param3 = 0.626218
+  "四段伤害|{param4:F1P}*3",         // param4 = 0.226464 (3次)
+  "五段伤害|{param7:F1P}",           // param7 = 0
+  "重击伤害|{param8:F1P}*3",         // param8 = 0.781817 (3次)
+  ...
+]
 
-{
-  "index": 1                     // 使用该技能paramList中index为1的值（随着技能等级变化）
-  "target": ["DMG_RATE_UP_SKILL"],      // 使用PROP_DMG_RATE_UP_SKILL
-}
-
-{
-  "customValue": 0.5                     // 冰元素伤害倍率×0.5
-  "target": ["DMG_RATE_MULTI_CRYO"],    // 使用PROP_DMG_RATE_MULTI_CRYO
-}
-
-// 3. 治疗配置中的使用
-{
-  "healingBonusType": "HEALING_BONUS_SKILL"  // 使用PROP_HEALING_BONUS_SKILL
-}
-
-{
-  "target": ["HEALING_RATE_UP_SKILL"],   // 使用PROP_HEALING_RATE_UP_SKILL
-  "customValue": 0.15                    // 元素技能治疗倍率+15%
-}
-
-// 4. 护盾配置中的使用
-{
-  "shieldBonusType": "SHIELD_BONUS_SKILL",   // 使用PROP_SHIELD_BONUS_SKILL
-  "shieldElementType": "CRYO"
-}
-
-// 5. 会心独立区
-{
-  "target": ["DMG_CRIT_DMG_UP_SKILL"],    // 使用PROP_DMG_CRIT_DMG_UP_SKILL
-  "customValue": 0.15                      // 元素技能会心伤害+15%
-}
-
-// 6. 生成物HP计算
-{
-  "product": {
-    "index": 0,
-    "base": "HP",
-    "elementBonusType": "DMG_BONUS_CRYO"    // 用于元素加成区计算
-  }
-}
-
-// 7. 治疗倍率倍乘
-{
-  "target": ["HEALING_RATE_MULTI_SKILL"],  // 使用PROP_HEALING_RATE_MULTI_SKILL
-  "customValue": 0.5                       // 元素技能治疗倍率×0.5
-}
+// paramMap["01"] (等级1的参数值)
+[0.457253, 0.486846, 0.626218, 0.226464, 0, 0, 0.781817, ...]
 ```
 
-#### 常量命名规则
-
-```
-PROP_DMG_ {TYPE} _ {ELEMENT/SKILL}
-       ↓     ↓             ↓
-      伤害  类型        元素/技能
-
-TYPE:
-- BONUS: 伤害加成
-- RATE_UP: 倍率提升（加法）
-- RATE_MULTI: 倍率倍乘（乘法）
-- VAL_UP: 数值提升
-- ANTI: 抗性
-- CRIT_RATE: 会心率
-- CRIT_DMG: 会心伤害
-- ENEMY_DEFENSE_DOWN: 防御降低
-- ENEMY_DEFENSE_IGNORE: 防御无视
-
-ELEMENT:
-- CRYO, PYRO, HYDRO, ELECTRO, ANEMO, GEO, DENDRO, PHYSICAL, ALL
-
-SKILL:
-- NORMAL, CHARGED, PLUNGING, SKILL, ELEMENTAL_BURST, WEAPON, OTHER, SET
-```
-
-#### 重要性说明
-
-这些PROP_DMG_常量是伤害计算的**核心**，它们：
-
-1. 定义了所有可能的伤害类型和加成方式
-2. 支持新元素反应和新伤害乘区的快速添加
-3. 覆盖伤害、护盾、治疗、生成物HP计算的所有场景
-4. 与Buff系统紧密关联，决定了哪些属性可以被Buff影响
-
-### 技能伤害配置
-
-**重要**：技能配置的核心依据是`paramDescList`，而不是`desc`！`desc`只是对技能本身的描述，需要结合`paramDescList`来判断参数如何与indexes映射。
-
-#### 1. indexes映射
-
-```javascript
-"indexes": [0, 1, 2, 3, 6]
-```
-
-**判断方法**：
-
-- 通过`paramDescList`判断每个param对应什么
-- `paramDescList`中的格式通常是：`技能伤害|{param1:F1P}`
-- 从中提取出`{param1}`、`{param2}`等对应关系
-- 例如：普通攻击1-5段为`[param1, param2, param3, param4, param5]`，重击为`param6`，则Indexes分别对应`[0,1,2,3,4]`与`[5]`（由于List下标从0开始计算，需要减去1）
-
-**示例**：
-
-```javascript
-"paramDescList": {
-    "cn_sim": [
-        "技能伤害|{param1:F1P}",
-        "猫型家用互助协调器伤害|{param2:F1P}",
-        "猫型家用互助协调器持续时间|{param3:F1}秒",
-        "猫型家用互助协调器治疗量|{param4:F1P}攻击力+{param5:I}",
-        "最低生命值角色额外治疗量|{param6:F1P}攻击力+{param7:I}",
-        "冷却时间|{param8:F1}秒",
-        "元素能量|{param9:I}"
-    ],
-    ...
-```
-
-则此技能的伤害的indexes为`[0,1]`
-此技能的治疗量1(猫型家用互助协调器治疗量)的index与constIndex分别为`3`与`4`
-此技能的治疗量2(最低生命值角色额外治疗量)的index与constIndex分别为`5`与`6`
-**注意**：其他param（2，7，8）由于分别代表了持续时间，冷却时间以及元素能量，不涉及伤害，治疗，buff效果本身，盾量，生成物HP，因此视为无效数据，不需要写入data.json中
-
-#### 2. base属性
-
-```javascript
-"base": "ATTACK"
-```
-
-**判断方法**：
-
-- 根据`paramDescList`判断
-- `{paramX:F1P}`后面如果没有其他内容，默认为攻击力
-- 如果写了明确说明，就按照写的来（实际文言可能不是以下内容，请根据内容来判断）
-- 例如：`{param0:F1P}%攻击力` → base: "ATTACK"
-- 例如：`{param0:F1P}%生命值` → base: "HP"
-- 例如：`{param0:F1P}%防御力` → base: "DEFENSE"
-
-**常见base属性**：
-
-- `ATTACK`: 攻击力（最常见）
-- `HP`: 生命值
-- `DEFENSE`: 防御力
-- `ENERGY_RECHARGE`: 元素充能效率
-- `ELEMENTAL_MASTERY`: 元素精通
-
-#### 3. attackBonusType（攻击类型）
-
-```javascript
-"attackBonusType": "DMG_BONUS_NORMAL"
-```
-
-**判断优先级**：
-
-1. **优先级最高**：desc中有明确说明的特殊伤害，或者直接说“视为XX伤害”
-
-   - 例如：`"造成相当于普通攻击伤害的XXX%"` → `DMG_BONUS_NORMAL`
-   - 例如：`"造成相当于元素技能伤害的XXX%"` → `DMG_BONUS_SKILL`
-   - 例如：`"视为元素爆发伤害"` → `DMG_BONUS_ELEMENTAL_BURST`
-
-2. **优先级次高**：根据技能类型判断
-
-   - 普通攻击 → `DMG_BONUS_NORMAL`
-   - 重击 → `DMG_BONUS_CHARGED`
-   - 下落攻击 → `DMG_BONUS_PLUNGING`
-   - 元素技能 → `DMG_BONUS_SKILL`
-   - 元素爆发 → `DMG_BONUS_ELEMENTAL_BURST`
-
-3. **优先级最低**：写在天赋（proudSkills），命座等里的，除非desc中特殊说明，否则认为是`DMG_BONUS_OTHER`类型
-
-4. **月反应直接伤害**：
-   - 是特殊的反应元素伤害，使用`specialDamageType`来指定的同时根据实际描述来判断是什么类型，为`DMG_BONUS_OTHER`类型
-
-**常见类型**：
-
-- `DMG_BONUS_NORMAL`: 普通攻击
-- `DMG_BONUS_CHARGED`: 重击
-- `DMG_BONUS_PLUNGING`: 下落攻击
-- `DMG_BONUS_SKILL`: 元素技能
-- `DMG_BONUS_ELEMENTAL_BURST`: 元素爆发
-- `DMG_BONUS_OTHER`: 其他（如天赋效果，未明确说明伤害类型的命座效果，武器效果，圣遗物效果伤害）
-
-#### 4. elementBonusType（元素类型）
-
-```javascript
-"elementBonusType": "DMG_BONUS_CRYO"
-```
-
-**判断规则**：
-
-1. **优先级最高**：desc中有明确说明
-
-   - 例如：`"造成冰元素伤害"` → `DMG_BONUS_CRYO`
-   - 例如：`"造成火元素伤害"` → `DMG_BONUS_PYRO`
-
-2. **优先级次高**：根据武器类型和技能类型判断
-
-   **法器角色**：
-
-   - 默认：普通、重击、下落攻击 → 不可覆盖的对应角色元素类型
-   - 例如：法器冰元素角色，普通攻击 → `canOverride: false`, `elementBonusType: "DMG_BONUS_CRYO"`
-
-   **弓箭角色**：
-
-   - 默认：重击（满蓄力） → 不可覆盖的对应角色元素类型
-   - 其他：除了特殊描述之外都是可覆盖的物理伤害
-   - 例如：弓箭火元素角色，满蓄力重击 → `canOverride: false`, `elementBonusType: "DMG_BONUS_PYRO"`
-
-   **其他武器类型**：
-
-   - 默认：除了特殊描述之外都是可覆盖的物理伤害
-   - 例如：剑、大剑、长柄武器的普通攻击 → `canOverride: true`, `elementBonusType: "DMG_BONUS_PHYSICAL"`
-
-3. **元素技能和元素爆发**：
-
-   - 通常是不可覆盖的对应角色元素类型，但存在元素技能或者元素爆发中的物理类型伤害类型
-   - `canOverride: false`
-
-4. **月反应直接伤害**：
-
-   - 是不可覆盖的对应反应元素类型
-   - `canOverride: false`
-
-#### 5. canOverride
-
-```javascript
-"canOverride": true
-```
-
-**判断规则**：
-
-- `true`: 可以被元素附魔覆盖（通常是普通，重击，下落的物理伤害）
-- `false`: 不可覆盖（通常是元素技能伤害，元素爆发伤害，天赋伤害，命座伤害等等）
-
-**常见情况**：
-
-1. **普通攻击**：
-
-   - 法器角色：`false`（默认是元素伤害）
-   - 弓箭角色：`true`（默认是物理伤害）
-   - 其他武器：`true`（默认是物理伤害）
-
-2. **重击**：
-
-   - 法器角色：`false`（默认是元素伤害）
-   - 弓箭角色：满蓄力`false`（元素伤害），未满蓄力`true`（物理伤害）
-   - 其他武器：`true`（默认是物理伤害）
-
-3. **下落攻击**：
-
-   - 法器角色：`false`（默认是元素伤害）
-   - 其他武器：`true`（默认是物理伤害）
-
-4. **元素技能、元素爆发、其他伤害**：
-
-   - `false`（通常是元素伤害）
-
-## 工作流程详解
-
-详见[完整工作流程](references/workflow.md)
-
-## 常见更新场景
-
-### 新角色
-
-1. 运行预处理脚本
-2. 根据处理后的游戏数据生成data.json中的角色配置（包含特殊技能标签处理）
-
-### 新武器
-
-1. 根据处理后的游戏数据生成data.json中的武器配置
-
-### 新圣遗物套装
-
-1. 根据处理后的游戏数据生成data.json中的套装配置
-
-### 新反应/新机制
-
-1. 在const.ts添加新常量
-2. 在calculator.service.ts添加计算逻辑
-3. 在interface.ts添加新接口或者值
-4. 生成对应配置
-
-## 进阶功能
-
-- 特殊标签处理（VENTI_SKILL_PRESS等）- 用于区分技能内部不同类型的伤害倍率
-- displayCalQueue显示用计算队列
-- finalResCalQueue最终计算队列
-
-**注意**：特殊标签系统用于区分技能内部多种不同类型的伤害，不是特殊机制！
-
-详见[高级配置指南](references/advanced-config.md)
-
-## 实际使用示例
-
-### 示例1：分析角色并生成配置
-
-**步骤**：
-
-1. **导出角色数据**：
-```bash
-python3 export_data.py --type character --id 10000002
-```
-
-2. **AI 分析数据**：
-   - 阅读 `output/exports/character_10000002.json`
-   - 分析每个技能的 `paramDescList` 判断 `indexes`
-   - 分析 `desc` 判断特殊机制
-   - 参考 `interface.ts` 和 `const.ts` 生成配置
-
-3. **生成配置**：
-   - AI 根据分析结果生成配置 JSON
-   - 手动添加到 `src/assets/init/data.json`
-
-### 示例2：查看特定角色的解包数据
-
-```bash
-# 导出特定角色的解包数据，方便参考
-python3 export_data.py --type character --id 10000002
-
-# 数据将导出到 output/exports/character_10000002.json
-# 使用文本编辑器查看该文件，分析 skills 中的 desc 和 paramDescList
-```
-
-### 示例3：判断一个技能的indexes和base
-
-**输入数据**（从解包数据导出）：
-
-```json
-{
-  "skills": {
-    "normal": [{
-      "name": {"cn_sim": "普通攻击·神里流·剑术"},
-      "desc": {
-        "cn_sim": "进行至多五段的连续剑击。"
-      },
-      "paramList": [43.5, 42.4, 53.1, 54.5, 68.4],
-      "paramDescList": [
-        "第1段伤害{param1:F1P}%攻击力",
-        "第2段伤害{param2:F1P}%攻击力",
-        "第3段伤害{param3:F1P}%攻击力",
-        "第4段伤害{param4:F1P}%攻击力",
-        "第5段伤害{param5:F1P}%攻击力",
-        "重击伤害{param6:F1P}%攻击力"
-      ]
-    }]
-  }
-}
-```
-
-**分析步骤**：
-
-1. **从paramDescList提取indexes**：
-
-   - `{param1:F1P}` 对应第1段 → index 0
-   - `{param2:F1P}` 对应第2段 → index 1
-   - `{param3:F1P}` 对应第3段 → index 2
-   - `{param4:F1P}` 对应第4段 → index 3
-   - `{param5:F1P}` 对应第5段 → index 4
-   - `{param6:F1P}` 对应重击 → index 5
-
-2. **判断base属性**：
-
-   - 所有paramDescList中都包含"攻击力"
-   - 因此 base = "ATTACK"
-
-3. **判断elementBonusType**：
-
-   - 神里绫华是冰元素单手剑角色
-   - 单手剑角色的普通攻击默认为物理类型
-   - 因此 elementBonusType = "DMG_BONUS_PHYSICAL"
-
-4. **判断attackBonusType**：
-
-   - 这是普通攻击
-   - 因此 attackBonusType = "DMG_BONUS_NORMAL"
-
-5. **判断canOverride**：
-   - 法器角色的普通攻击默认为元素伤害，不可覆盖
-   - 因此 canOverride = false
-
-**生成的配置**：
-
+**推断过程**:
+1. **提取 indexes**:
+   - `param1` → `index = 1-1 = 0` (数组从0开始)
+   - `param2` → `index = 1`
+   - `param3` → `index = 2`
+   - `param4` → `index = 3`
+   - 跳过 param5, param6 (不存在)
+   - `param7` → `index = 6`
+   - 结果: `indexes = [0, 1, 2, 3, 6]`
+
+2. **判断 base**: 描述中无特殊说明 → `base = "ATTACK"`
+
+3. **判断 canOverride**:
+   - 技能类型: normal (普通攻击)
+   - 武器类型: WEAPON_SWORD_ONE_HAND (非法器)
+   - 结果: `canOverride = true`
+
+4. **判断 elementBonusType**:
+   - 普通攻击，非法器角色
+   - 结果: `elementBonusType = "DMG_BONUS_PHYSICAL"`
+
+5. **判断 attackBonusType**:
+   - 技能类型: normal
+   - 结果: `attackBonusType = "DMG_BONUS_NORMAL"`
+
+**最终配置**:
 ```javascript
 {
   "damage": {
-    "indexes": [0, 1, 2, 3, 4],
+    "indexes": [0, 1, 2, 3, 6],
     "base": "ATTACK",
     "canOverride": true,
     "elementBonusType": "DMG_BONUS_PHYSICAL",
@@ -1025,467 +567,743 @@ python3 export_data.py --type character --id 10000002
 }
 ```
 
-### 示例4：处理带有buff的天赋
+---
 
-**输入数据**：
+#### 示例1.2: 法器角色普通攻击 - 元素伤害
 
-```json
-{
-  "skills": {
-    "proudSkills": [{
-      "name": {"cn_sim": "冰华"},
-      "desc": {
-        "cn_sim": "普通攻击与重击命中时，有50%概率对敌人施加冰元素附魔，持续3秒。"
-      },
-      "paramList": [0.5],
-      "paramDescList": ["触发概率{param0:F1P}"]
-    }]
-  }
-}
+**角色**: 可莉 (假设) - 普通攻击
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "一段伤害|{param1:F1P}",  // 火元素伤害
+  "二段伤害|{param2:F1P}",
+  ...
+]
+
+// 武器类型: WEAPON_HEXENZIRKEL (法器)
 ```
 
-**分析步骤**：
+**推断过程**:
+1. **提取 indexes**: `param1` → `index = 0`
 
-1. **判断是否包含buff**：
+2. **判断 base**: `base = "ATTACK"`
 
-   - desc中包含"施加"、"附魔"等关键词
-   - 这是一个buff效果
+3. **判断 canOverride**:
+   - 技能类型: normal
+   - 武器类型: 法器
+   - 结果: `canOverride = false` (法器不可覆盖)
 
-2. **判断buff类型**：
+4. **判断 elementBonusType**:
+   - 法器角色普通攻击使用角色元素
+   - 火元素角色 → `elementBonusType = "DMG_BONUS_PYRO"`
 
-   - "施加冰元素附魔" → 这是元素覆盖效果
-   - 使用 `overrideElement` 字段
+5. **判断 attackBonusType**: `attackBonusType = "DMG_BONUS_NORMAL"`
 
-3. **从paramDescList判断indexes**：
-   - `{param0:F1P}` 对应触发概率
-   - 因此 index = 0
-
-**生成的配置**：
-
+**最终配置**:
 ```javascript
 {
-  "buffs": [{
-    "index": 0,
-    "overrideElement": "DMG_BONUS_CRYO",
-    "target": [],
-    "settingType": "switch",
-    "defaultEnable": false
-  }]
-}
-```
-
-### 示例5：处理带有滑块层数的buff
-
-**输入数据**：
-
-```json
-{
-  "skills": {
-    "proudSkills": [{
-      "name": {"cn_sim": "冰莲护盾"},
-      "desc": {
-        "cn_sim": "每层获得5%攻击力提升，最多5层，持续8秒。"
-      },
-      "paramList": [0.05],
-      "paramDescList": ["每层提升{param0:F1P}%攻击力"]
-    }]
+  "damage": {
+    "indexes": [0],
+    "base": "ATTACK",
+    "canOverride": false,  // 法器普通攻击不可覆盖
+    "elementBonusType": "DMG_BONUS_PYRO",  // 使用角色元素
+    "attackBonusType": "DMG_BONUS_NORMAL"
   }
 }
 ```
 
-**分析步骤**：
+---
 
-1. **判断是否需要滑块**：
+#### 示例1.3: 参考技能配置 - 雷泽狼魂伤害
 
-   - desc中包含"每层"、"最多5层"
-   - 这是一个需要滑块的buff
+**角色**: 雷泽 (10000020) - 雷牙（元素爆发）
 
-2. **从paramDescList判断indexes和target**：
+**源数据**:
+```javascript
+// elementalBurst 的 paramDescList
+[
+  "爆发伤害|{param1:P}",
+  "狼魂伤害|{param2:F1P}普通攻击伤害",  // 关键！参考普通攻击
+  "普通攻击速度提升|{param3:P}",
+  ...
+]
 
-   - `{param0:F1P}%攻击力` → index = 0, target = ["ATTACK_UP"]
+// normal 的 paramDescList
+[
+  "一段伤害|{param1:F1P}",  // 被引用的参数
+  ...
+]
+```
 
-3. **设置滑块参数**：
-   - 初始值：0
-   - 步长：1（每层）
-   - 最大值：4（最多5层，从0开始计数）
+**推断过程**:
+1. **识别参考技能**:
+   - 描述: "狼魂伤害|{param2:F1P}**普通攻击伤害**"
+   - "普通攻击伤害" → 参考 `normal` 技能
 
-**生成的配置**：
+2. **提取当前技能的 indexes**:
+   - `param2` → `indexes = [1]`
 
+3. **提取 originIndexes**:
+   - normal 的 `param1` → `originIndexes = [0]`
+
+4. **确定 originRelations**:
+   - 描述格式: "X%普通攻击伤害" → 乘法关系
+   - 结果: `originRelations = ["*"]`
+
+5. **判断其他字段**:
+   - 技能类型: elementalBurst
+   - 元素: 雷 → `elementBonusType = "DMG_BONUS_ELECTRO"`
+   - 攻击类型: 参考了normal，因此即使是元素爆发，攻击类型为普通攻击 → `attackBonusType = "DMG_BONUS_NORMAL"`
+   - 特殊机制: 狼魂 → `tag = "RAZOR_SOUL_COMPANION"`
+
+**最终配置**:
 ```javascript
 {
-  "buffs": [{
-    "index": 0,
-    "target": ["ATTACK_UP"],
-    "settingType": "slider",
-    "sliderInitialValue": 0,
-    "sliderStep": 1,
-    "sliderMax": 4
-  }]
-}
-```
-
-### 示例6：处理队伍buff
-
-**输入数据**：
-
-```json
-{
-  "skills": {
-    "proudSkills": [{
-      "name": {"cn_sim": "风神之眼"},
-      "desc": {
-        "cn_sim": "队伍中所有角色的风元素伤害提升15%。"
-      },
-      "paramList": [0.15],
-      "paramDescList": ["风元素伤害提升{param0:F1P}%"]
-    }]
+  "damage": {
+    "originSkills": ["normal"],        // 参考普通攻击
+    "originIndexes": [0],              // normal的param[0]（一段伤害）
+    "originRelations": ["*"],          // 乘法关系
+    "indexes": [1],                    // 当前技能的param[1]
+    "base": "ATTACK",
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_ELECTRO",
+    "attackBonusType": "DMG_BONUS_NORMAL",
+    "tag": "RAZOR_SOUL_COMPANION"      // 狼魂专属标签
   }
 }
 ```
 
-**分析步骤**：
+**计算公式**:
+```
+狼魂伤害 = normal[0] × param[1] × 攻击力
+         = (一段伤害倍率) × (狼魂倍率) × 攻击力
+```
 
-1. **判断是否是队伍buff**：
+---
 
-   - desc中包含"队伍中所有角色"
-   - 这是一个队伍buff
+#### 示例1.4: 复合倍率伤害 - 纳西妲
 
-2. **判断buff类型**：
+**角色**: 纳西妲 - 元素战技
 
-   - "风元素伤害提升" → target = ["DMG_BONUS_ANEMO"]
+**源数据**:
+```javascript
+// paramDescList
+[
+  "灭净三业伤害|{param3:F1P}攻击力+{param4:F1P}元素精通",
+  ...
+]
+```
 
-3. **设置isAllTeam标记**：
-   - isAllTeam = true
+**推断过程**:
+1. **提取主要倍率**:
+   - `param3攻击力` → `indexes = [2]`, `base = "ATTACK"`
 
-**生成的配置**：
+2. **提取额外倍率**:
+   - `+ param4元素精通` → `indexesAttach = [[3]]`, `baseAttach = ["ELEMENTAL_MASTERY"]`
 
+3. **其他字段**:
+   - 元素: 草 → `elementBonusType = "DMG_BONUS_DENDRO"`
+   - 技能类型: skill → `attackBonusType = "DMG_BONUS_SKILL"`
+   - 特殊机制（因为在其他天赋中有描述只针对灭净三业伤害的增益，为了防止影响元素技能中不为灭净三业而追加此特殊Tag）: 蕴灭净三业 → `tag = "NAHIDA_TRI_KARMA"`
+
+**最终配置**:
 ```javascript
 {
-  "buffs": [{
-    "index": 0,
-    "target": ["DMG_BONUS_ANEMO"],
-    "customValue": 0.15,
-    "settingType": "switch",
-    "defaultEnable": false,
-    "isAllTeam": true
-  }]
-}
-```
-
-## 常见问题
-
-### Q1: 生成的配置不生效？
-
-**A**: 检查以下几点：
-
-1. indexes是否正确映射到paramDescList（不是paramList！）
-2. base属性是否正确（ATTACK/HP/DEFENSE），根据paramDescList判断
-3. elementBonusType和attackBonusType是否匹配技能类型（desc仅用于特殊情况）
-4. canOverride是否根据武器类型和技能类型正确设置
-
-**排查步骤**：
-
-```bash
-# 1. 导出该角色的解包数据
-cd .claude/skills/genshin-data-generator/scripts
-python3 export_data.py --type character --id 10000002
-
-# 2. 打开导出的文件，对比 paramDescList 和生成的配置
-# 检查：{paramX:F1P} 是否对应 indexes[X]
-
-# 3. 查看 data.json 中的配置，检查常量名称是否正确
-# 常量应该在 const.ts 中定义
-
-# 4. 如果是特殊机制，检查是否需要添加标签
-# 在 const.ts 的 PROPS_TAG_MAP 中查找该角色ID
-```
-
-### Q2: 如何处理新角色的特殊机制？
-
-**A**:
-
-1. 参考[游戏机制参考](references/game-mechanics.md)
-2. 查看[高级配置指南](references/advanced-config.md)中的示例
-3. 如果是新标签，在const.ts添加`PROP*TAG*`常量
-4. 如果是新反应，在calculator.service.ts实现
-
-**添加新标签的步骤**：
-
-1. 在 const.ts 中定义标签常量（约 line 730）：
-
-   ```typescript
-   static readonly PROP_TAG_NEW_MECHANIC = 'NEW_MECHANIC';
-   ```
-
-2. 在 PROPS_TAG_MAP 中绑定角色ID（约 line 800）：
-
-   ```typescript
-   static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
-     ...
-     ['1000XXXX', [Const.PROP_TAG_NEW_MECHANIC]],
-     ...
-   ]);
-   ```
-
-3. 在 data.json 配置中使用标签：
-
-   ```javascript
-   {
-     "damage": {
-       "tag": "NEW_MECHANIC",
-       ...
-     }
-   }
-   ```
-
-4. 在 calculator.service.ts 中实现标签逻辑
-
-### Q3: levelMap数据很大，会影响性能吗？
-
-**A**: 不会！预处理脚本会移除levelMap，大幅减少文件大小。每次版本更新后务必先运行预处理。
-
-**为什么需要预处理**：
-
-- avatar_map.json 有约 90 个等级的数据 × 每个角色的技能
-- 这会导致文件体积巨大（12MB+），且对配置生成无用
-- 预处理脚本只保留核心字段（name, desc, paramList, paramDescList）
-- 压缩率通常在 80-90%
-
-### Q4: 配置是如何生成的？
-
-**A**: 配置由 AI 根据预处理后的数据进行推理和分析后生成。
-
-**配置生成流程**：
-
-1. **数据预处理**：运行 `preprocess.py` 精简原始数据
-2. **数据导出**：使用 `export_data.py` 导出目标角色/武器/圣遗物数据
-3. **AI 分析**：
-   - 分析 `paramDescList` 判断 `indexes` 映射关系
-   - 分析 `desc` 判断特殊机制（buff、治疗、护盾等）
-   - 根据武器类型和技能类型判断元素类型和攻击类型
-   - 参考 `interface.ts` 和 `const.ts` 确保配置符合规范
-4. **配置生成**：AI 生成符合规范的 JSON 配置
-5. **手动验证**：将配置添加到 `data.json` 并在应用中验证
-
-**AI 依赖的信息**：
-- `paramDescList`：参数索引的核心依据
-- `desc`：特殊机制判断的辅助依据
-- `interface.ts`：配置结构和类型定义
-- `const.ts`：常量和枚举定义
-- 本 SKILL.md：配置生成指南
-
-### Q5: paramDescList 和 desc 的区别是什么？
-
-**A**:
-
-- **paramDescList**：配置生成的核心依据
-
-  - 用于判断 indexes 和 base 属性
-  - 格式：`第1段伤害{param0:F1P}%攻击力`
-  - `{paramX:F1P}` 表示参数索引 X
-  - 后面的文本说明 base 属性
-
-- **desc**：特殊情况判断的辅助依据
-  - 用于判断特殊的伤害类型和元素类型
-  - 用于判断是否包含治疗/护盾
-  - 用于判断是否是队伍buff、是否需要滑块
-  - 不能单独用来判断 indexes 和 base
-
-**重要**：配置生成时，优先使用 paramDescList 判断，desc 仅用于特殊情况！
-
-### Q6: 如何调试生成的配置？
-
-**A**:
-
-1. **验证 JSON 格式**：
-
-   ```bash
-   python3 -m json.tool src/assets/init/data.json
-   ```
-
-2. **在应用中测试**：
-
-   - 打开浏览器开发者工具
-   - 查看控制台是否有错误
-   - 测试技能是否正确显示
-
-3. **对比预期数值**：
-
-   - 在游戏中记录技能的实际伤害
-   - 在计算器中设置相同的面板属性
-   - 对比计算结果
-
-4. **检查日志**（如果启用了输出日志）：
-   - 查看 calculator.service.ts 的调试输出
-   - 确认每个乘区的计算过程
-
-### Q7: 如何更新 i18n 翻译？
-
-**A**:
-
-i18n 的所有内容都从解包数据的 `desc` 字段中提取！
-
-**更新步骤**：
-
-1. 使用 `export_data.py` 导出新角色/武器/圣遗物的数据
-2. 从导出的 JSON 中提取 `name` 和 `desc` 字段
-3. 将提取的内容添加到对应的 i18n 文件中
-4. 确保四种语言（cn_sim, cn_tra, en, jp）都添加
-
-**示例**：
-
-```json
-// 从导出的数据中提取
-{
-  "name": {
-    "cn_sim": "神里绫华",
-    "cn_tra": "神里綾華",
-    "en": "Kamisato Ayaka",
-    "jp": "神里綾華"
-  },
-  "desc": {
-    "cn_sim": "稻妻「社奉行」神里家的大小姐...",
-    "cn_tra": "稻妻「社奉行」神里家的大小姐...",
-    "en": "The daughter of the Yashiro Commission's Kamisato Clan...",
-    "jp": "稲妻「社奉行」神里家のお嬢様..."
+  "damage": {
+    "indexes": [2],                    // 主要倍率: param[2] × 攻击力
+    "indexesAttach": [[3]],            // 额外倍率: param[3] × 元素精通
+    "base": "ATTACK",
+    "baseAttach": ["ELEMENTAL_MASTERY"],
+    "elementBonusType": "DMG_BONUS_DENDRO",
+    "attackBonusType": "DMG_BONUS_SKILL",
+    "tag": "NAHIDA_TRI_KARMA"
   }
 }
+```
 
-// 添加到 i18n 文件中
+**计算公式**:
+```
+伤害 = (param[2] × 攻击力) + (param[3] × 元素精通)
+```
+
+---
+
+#### 示例1.5: 显示控制队列 - 闲云
+
+**角色**: 闲云 - 风元素转化普通攻击
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  ...
+  "普通攻击风化伤害|{param12:F1P}普通攻击伤害",
+  ...
+]
+
+// desc: "...施放天风工坊后，普通攻击将被风元素附魔..."
+```
+
+**推断过程**:
+1. **识别参考技能**: `param12普通攻击伤害` → `originSkills = ["normal"]`
+
+2. **提取参数**: `param12` → `indexes = [11]`
+
+3. **特殊机制**: 只有在风附魔激活时才显示此伤害
+   - 使用 `displayCalQueue` 控制显示
+   - `VAR_CHARA_2` 表示风附魔状态
+
+**最终配置**:
+```javascript
 {
-  "CHARACTERS.10000002.NAME": "神里绫华",
-  "CHARACTERS.10000002.DESC": "稻妻「社奉行」神里家的大小姐..."
+  "damage": {
+    "originSkills": ["normal"],
+    "originIndexes": [0],
+    "originRelations": ["*"],
+    "indexes": [11],                   // param[12]
+    "base": "ATTACK",
+    "canOverride": false,
+    "displayCalQueue": [               // 只有风附魔激活时才显示
+      {
+        "relation": "+",
+        "inner": [
+          {
+            "relation": "+",
+            "variable": "VAR_CHARA_2"   // 风附魔状态变量
+          }
+        ]
+      }
+    ],
+    "elementBonusType": "DMG_BONUS_ANEMO",
+    "attackBonusType": "DMG_BONUS_NORMAL"
+  }
 }
 ```
 
-## 技巧和最佳实践
-
-### 1. paramDescList分析技巧
-
-**重要**：配置生成的核心依据是`paramDescList`，而不是`desc`！
-
-| paramDescList关键词       | 自动解析结果                  |
-| ------------------------- | ----------------------------- |
-| `{param0:F1P}%攻击力伤害` | indexes: [0], base: "ATTACK"  |
-| `{param0:F1P}%生命值伤害` | indexes: [0], base: "HP"      |
-| `{param0:F1P}%防御力伤害` | indexes: [0], base: "DEFENSE" |
-| `{param0:F1P}%攻击力伤害` | indexes: [0], base: "ATTACK"  |
-| 第1段伤害{param0:F1P}%    | indexes: [0]                  |
-| 重击伤害{param1:F1P}%     | indexes: [1]                  |
-| `{paramX:F1P}`后无说明    | base: "ATTACK"（默认）        |
-
-**注意**：
-
-- `paramDescList`中的`{paramX:F1P}`表示对应的参数
-- 需要根据具体内容判断base属性（攻击力/生命值/防御力）
-- desc只是对技能的整体描述，不能单独用来判断indexes和base
-
-### 2. desc分析技巧（用于判断特殊情况）
-
-| desc关键词                             | 判断结果                                                  |
-| -------------------------------------- | --------------------------------------------------------- |
-| "造成相当于普通攻击伤害的XXX%"         | attackBonusType: "DMG_BONUS_NORMAL"                       |
-| "造成相当于元素技能伤害的XXX%"         | attackBonusType: "DMG_BONUS_SKILL"                        |
-| "造成相当于元素爆发伤害的XXX%"         | attackBonusType: "DMG_BONUS_ELEMENTAL_BURST"              |
-| "造成冰元素伤害"                       | elementBonusType: "DMG_BONUS_CRYO"                        |
-| "造成火元素伤害"                       | elementBonusType: "DMG_BONUS_PYRO"                        |
-| 法器角色的普通/重击/下落攻击（无说明） | canOverride: false, 元素类型为角色元素                    |
-| 弓箭角色的满蓄力重击（无说明）         | canOverride: false, 元素类型为角色元素                    |
-| 其他武器的普通攻击（无说明）           | canOverride: true, elementBonusType: "DMG_BONUS_PHYSICAL" |
-
-**注意**：
-
-- desc主要用于判断特殊的伤害类型和元素类型
-- 正常情况下，attackBonusType根据技能类型判断，elementBonusType根据武器类型和技能类型判断
-
-### 4. 特殊情况处理
-
-**需要手动检查的场景**：
-
-- 技能有多层嵌套效果
-- buff有复杂条件（如"基于队友元素类型"）
-- constellation的衍生伤害
-- 特殊机制（如芙宁娜的Salon Solitaire）
-
-## 测试和问题排查
-
-### 配置未生效
-
-1. 检查indexes是否正确映射到paramList
-2. 检查base属性是否正确（ATTACK/HP/DEFENSE）
-3. 检查elementBonusType和attackBonusType是否匹配
-
-### JSON格式错误
-
-1. 运行`python3 -m json.tool data.json`验证格式
-2. 检查是否有缺少的逗号或引号
-
-### 性能问题
-
-如果解包数据文件太大导致上下文不足：
-
-1. 桮保运行过预处理脚本
-2. 检查processed_data.json大小（应该比原始数据小很多）
-
-## 回滚和紧急修复
-
-### 如果配置有问题
-
-1. 使用 `export_data.py` 重新导出数据进行分析
-2. 手动分析 `paramDescList` 和 `desc`
-3. 参考 `interface.ts` 和 `const.ts` 重新生成配置
-4. 验证修复
-
-### 如果代码有问题
-
-1. 回滚到上一个稳定提交：`git reset --hard HEAD~1`
-2. 重新分析问题
-3. 重新修改
-
-## 版本标记
-
-在提交时建议使用规范的commit message格式：
-
+**显示逻辑**:
 ```
-update data.json for version X.Y.Z
-
-- Add character: <角色名>
-- Add weapon: <武器名>
-- Add artifact: <圣遗物名>
-- Update constants: <新常量>
-- Fix calculation: <修复的计算>
+显示与否: (0 + VAR_CHARA_2) != 0
+如果 VAR_CHARA_2 > 0 (风附魔激活)，则显示此伤害
+否则不显示
 ```
 
-## 扩展和定制
+---
 
-### 添加新的分析规则
+#### 示例1.6: 最终计算队列 - 阿贝多生灭之花
 
-当遇到新的游戏机制或特殊配置需求时：
+**角色**: 阿贝多 (10000038) - 元素爆发
 
-1. 在 SKILL.md 中添加新的分析指南
-2. 在 `archive/` 目录保存特殊配置示例
-3. 更新 `references/` 目录下的参考文档
+**源数据**:
+```javascript
+// paramDescList
+[
+  "爆发伤害|{param1:P}",
+  "生灭之花伤害|每朵{param2:F1P}",
+  "冷却时间|{param3:F1}秒",
+  "元素能量|{param4:I}"
+]
 
-### 归档特殊配置
+// desc: "场上存在阿贝多自己创造的阳华时，会在阳华的领域内生成7朵生灭之花..."
+// paramMap["01"] = [3.672, 0.72, 12, 40, ...]
+```
 
-当遇到特殊配置（如新反应、新机制）时：
+**推断过程**:
+1. **提取基础参数**: `生灭之花伤害|每朵{param2:F1P}` → `indexes = [1]`
 
-1. 在 `archive/vX.Y.Z/` 创建版本文件夹
-2. 保存配置示例和推理过程
-3. 添加 README 说明分析思路
-4. 作为后续类似配置的参考
+2. **特殊机制**: 生灭之花伤害基于花朵数量计算
+   - `VAR_CHARA_1` = 生灭之花数量（由技能滑块控制，1-7朵）
+   - 使用 `finalResCalQueue` 对每朵花的伤害进行计算
+   - 计算公式: 每朵花伤害 × (1 + VAR_CHARA_1)
 
-## 贡献指南
+3. **标签**: 生灭之花专属标签 → `tag = "ALBEDO_FATAL_BLOSSOM"`
 
-如果这个 Skill 对你有帮助，欢迎贡献改进：
+**最终配置**:
+```javascript
+{
+  "damage": {
+    "indexes": [1],                      // param[2] 每朵花伤害
+    "base": "ATTACK",
+    "finalResCalQueue": [                // 基于花朵数量的计算
+      {
+        "relation": "*",                 // 乘法
+        "inner": [
+          {
+            "relation": "+",
+            "variable": "VAR_CHARA_1"   // 花朵数量
+          }
+        ]
+      }
+    ],
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_GEO",
+    "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+    "tag": "ALBEDO_FATAL_BLOSSOM"        // 生灭之花专属
+  }
+}
+```
 
-1. 添加更多分析案例和示例
-2. 完善配置生成指南
-3. 优化预处理脚本性能
-4. 改进数据导出格式
+**计算公式**:
+```
+每朵花伤害 = param[2] × 攻击力
+总伤害 = 每朵花伤害 × (1 + VAR_CHARA_1)
+       = param[2] × 攻击力 × (1 + 花朵数量)
+```
 
-## 相关资源
+---
 
-- [interface.ts定义](../../src/app/shared/interface/interface.ts)
-- [const.ts定义](../../src/app/shared/const/const.ts)
-- [计算器服务](../../src/app/shared/service/genshin/calculator.service.ts)
+#### 示例1.8: 特殊伤害类型 - 菈乌玛月主题伤害
+
+**角色**: 菈乌玛 (10000119) - 元素战技
+
+**源数据**:
+```javascript
+// paramDescList (元素战技)
+[
+  "点按伤害|{param1:F1P}",
+  "长按一段伤害|{param2:F1P}",
+  "长按二段伤害|每枚草露{param3:F1P}元素精通",
+  ...
+]
+
+// desc: "...咏唱狩猎的祷歌，造成草元素范围伤害..."
+```
+
+**推断过程**:
+1. **特殊伤害类型**: 月主题专属伤害（Month Rupture）
+   - 使用 `specialDamageType = "moon-rupture-direction"`
+
+2. **攻击类型**: 特殊伤害 → `attackBonusType = "DMG_BONUS_OTHER"`
+
+3. **基础属性**: 元素精通 → `base = "ELEMENTAL_MASTERY"`
+
+**最终配置**:
+```javascript
+{
+  "damage": {
+    "indexes": [2],
+    "base": "ELEMENTAL_MASTERY",
+    "finalResCalQueue": [
+      {
+        "relation": "*",
+        "inner": [
+          {
+            "relation": "+",
+            "variable": "VAR_CHARA_5"
+          }
+        ]
+      }
+    ],
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_DENDRO",
+    "attackBonusType": "DMG_BONUS_OTHER",                // 特殊伤害
+    "specialDamageType": "moon-rupture-direction"         // 月主题伤害
+  }
+}
+```
+
+---
+
+### 2. 增益配置示例
+
+#### 示例2.1: 开关型增益 - 元素附魔
+
+**角色**: 神里绫华 - other 技能（冰元素附魔）
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  ...
+  "霜寒一役的冰华|普通攻击和重击转为冰元素伤害",
+  ...
+]
+```
+
+**推断过程**:
+1. **识别增益类型**: 开关型效果 → `settingType = "switch"`
+
+2. **覆盖元素**: 冰元素 → `overrideElement = "DMG_BONUS_CRYO"`
+
+3. **参数索引**: 第3个参数 → `index = 2`
+
+**最终配置**:
+```javascript
+{
+  "buffs": [
+    {
+      "index": 2,                          // 对应param[2]
+      "overrideElement": "DMG_BONUS_CRYO",  // 覆盖为冰元素
+      "target": [],                        // 空=自身
+      "settingType": "switch",             // 开关型
+      "defaultEnable": false               // 默认关闭
+    }
+  ]
+}
+```
+
+---
+
+#### 示例2.2: 开关型增益 - 班尼特攻击力提升
+
+**角色**: 班尼特 (10000032) - 元素爆发
+
+**源数据**:
+```javascript
+// paramDescList (简体中文)
+[
+  ...
+  "攻击力提升幅度|{param4:P}",           // param4 = 基础攻击力的百分比
+  ...
+]
+
+// desc (简体中文): "依据班尼特的基础攻击力，以一定比例提升领域内角色的攻击力。"
+```
+
+**推断过程**:
+1. **识别增益类型**: 开关型效果（领域内持续生效）→ `settingType = "switch"`
+
+2. **基础属性**: 基于班尼特的基础攻击力 → `base = "ATTACK_BASE"`
+
+3. **目标效果**: 提升攻击力数值 → `target = ["ATTACK_VAL_UP"]`
+
+4. **目标范围**: 领域内所有角色 → `isAllTeam = true`
+
+5. **参数索引**: `param4` → `index = 3`
+
+**最终配置**:
+```javascript
+{
+  "buffs": [
+    {
+      "index": 3,                          // 对应param[3]
+      "base": "ATTACK_BASE",               // 基于基础攻击力
+      "target": ["ATTACK_VAL_UP"],         // 提升攻击力数值
+      "settingType": "switch",             // 开关型
+      "defaultEnable": false,              // 默认关闭
+      "isAllTeam": true                    // 全队生效
+    }
+  ]
+}
+```
+
+**计算公式**:
+```
+攻击力提升 = param[3] × 班尼特的基础攻击力
+```
+
+---
+
+#### 示例2.3: 滑块型增益 - 芙宁娜众水水平
+
+**角色**: 芙宁娜 (10000051) - 元素爆发
+
+**源数据**:
+```javascript
+// paramDescList (简体中文)
+[
+  "持续期间|{param1:F1}秒",               // param1 = 持续时间
+  "众水水平每层|{param2:F1P}",            // param2 = 每层伤害提升
+  ...
+]
+
+// desc (简体中文): "根据队伍中生命值百分比高于50%的角色数量，获得最多3层'众水水平'，每层提升芙宁娜造成的伤害与受到的治疗。"
+```
+
+**推断过程**:
+1. **识别增益类型**: 滑块型效果（基于角色数量的层数）→ `settingType = "slider"`
+
+2. **层数范围**: 0-3层（最多4名角色生命值>50%）→ `sliderMax = 300`（对应3.0倍率）
+
+3. **目标效果**: 提升伤害（反向提升）→ `target = ["REVERSE_HEALING_BONUS"]`
+
+4. **参数索引**: `param2` → `index = 1`
+
+5. **滑块设置**: 以10为单位（0.1倍率=10%），最大300（3.0倍率=300%）
+
+**最终配置**:
+```javascript
+{
+  "buffs": [
+    {
+      "index": 1,                              // 对应param[1]
+      "target": ["REVERSE_HEALING_BONUS"],     // 众水水平（反向提升伤害与治疗）
+      "settingType": "slider",                 // 滑块型
+      "sliderInitialValue": 0,                 // 初始值0（无层数）
+      "sliderStep": 10,                        // 步长10（0.1倍率）
+      "sliderMax": 300                         // 最大300（3.0倍率=3层）
+    }
+  ]
+}
+```
+
+**计算公式**:
+```
+伤害/治疗提升 = param[1] × 众水水平层数
+众水水平层数 = min(队伍中生命值>50%的角色数, 3)
+```
+
+---
+
+### 3. 治疗配置示例
+
+#### 示例3.1: 单倍率治疗 - 芭芭拉
+
+**角色**: 芭芭拉 - 元素战技
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "卖艺·歌声治疗量|{param1:F1P}生命值",
+  ...
+]
+```
+
+**推断过程**:
+1. **提取参数**: `param1` → `index = 0`
+2. **基础属性**: 生命值 → `base = "HP"`
+3. **治疗类型**: 技能治疗 → `healingBonusType = "HEALING_BONUS_SKILL"`
+
+**最终配置**:
+```javascript
+{
+  "healing": {
+    "index": 0,                           // param[0]
+    "base": "HP",
+    "healingBonusType": "HEALING_BONUS_SKILL"
+  }
+}
+```
+
+**计算公式**:
+```
+治疗量 = param[0] × 生命值
+```
+
+---
+
+#### 示例3.2: 双参数治疗 - 久岐忍
+
+**角色**: 久岐忍 - 元素战技
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "御后之血治疗量|{param1:F1P}生命值+{param2:I}",
+  ...
+]
+```
+
+**推断过程**:
+1. **主要倍率**: `param1生命值` → `index = 0`, `base = "HP"`
+2. **固定值**: `+ param2` → `constIndex = 1`, `constCalRelation = "+"`
+
+**最终配置**:
+```javascript
+{
+  "healing": {
+    "index": 0,                           // param[0] × HP
+    "constIndex": 1,                      // + param[1]
+    "constCalRelation": "+",              // 加法关系
+    "base": "HP",
+    "healingBonusType": "HEALING_BONUS_SKILL"
+  }
+}
+```
+
+**计算公式**:
+```
+治疗量 = (param[0] × 生命值) + param[1]
+```
+
+---
+
+#### 示例3.3: 基于攻击力的治疗
+
+**角色**: 琴 - 元素爆发
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "蒲公英领域治疗量|{param3:F1P}攻击力+{param4:I}",
+  ...
+]
+```
+
+**推断过程**:
+1. **主要倍率**: `param3攻击力` → `index = 2`, `base = "ATTACK"`
+2. **固定值**: `+ param4` → `constIndex = 3`
+
+**最终配置**:
+```javascript
+{
+  "healing": {
+    "index": 2,                           // param[2] × 攻击力
+    "constIndex": 3,                      // + param[3]
+    "constCalRelation": "+",
+    "base": "ATTACK",                     // 基于攻击力
+    "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
+  }
+}
+```
+
+---
+
+### 4. 护盾配置示例
+
+#### 示例4.1: 基于生命的护盾 - 钟离
+
+**角色**: 钟离 - 元素战技
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "护盾吸收量|{param1:F1P}生命值+{param2:I}",
+  ...
+]
+```
+
+**推断过程**:
+1. **主要倍率**: `param1生命值` → `index = 0`, `base = "HP"`
+2. **固定值**: `+ param2` → `constIndex = 1`
+3. **护盾元素**: 岩元素 → `shieldElementType = "GEO"`
+
+**最终配置**:
+```javascript
+{
+  "shield": {
+    "index": 0,                           // param[0] × HP
+    "constIndex": 1,                      // + param[1]
+    "constCalRelation": "+",
+    "base": "HP",
+    "shieldBonusType": "SHIELD_BONUS_SKILL",
+    "shieldElementType": "GEO"            // 岩元素护盾
+  }
+}
+```
+
+**计算公式**:
+```
+护盾量 = (param[0] × 生命值) + param[1]
+```
+
+---
+
+#### 示例4.2: 基于防御力的护盾 - 迪奥娜
+
+**角色**: 迪奥娜 - 元素战技
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "猫爪护盾吸收量|{param1:F1P}防御力",
+  ...
+]
+```
+
+**推断过程**:
+1. **主要倍率**: `param1防御力` → `index = 0`, `base = "DEFENSE"`
+2. **护盾元素**: 冰元素 → `shieldElementType = "CRYO"`
+
+**最终配置**:
+```javascript
+{
+  "shield": {
+    "index": 0,                           // param[0] × 防御力
+    "base": "DEFENSE",
+    "shieldBonusType": "SHIELD_BONUS_SKILL",
+    "shieldElementType": "CRYO"           // 冰元素护盾
+  }
+}
+```
+
+---
+
+#### 示例4.3: 火元素护盾 - 辛焱
+
+**角色**: 辛焱 - 元素战技
+
+**源数据**:
+```javascript
+// paramDescList
+[
+  "赤璋护盾吸收量|{param2:F1P}防御力",
+  ...
+]
+```
+
+**最终配置**:
+```javascript
+{
+  "shield": {
+    "index": 1,                           // param[1]
+    "base": "DEFENSE",
+    "constIndex": 2,
+    "constCalRelation": "+",
+    "shieldBonusType": "SHIELD_BONUS_SKILL",
+    "shieldElementType": "PYRO"           // 火元素护盾
+  }
+}
+```
+
+---
+
+### 5. 特殊配置汇总表
+
+| 配置类型 | 关键字段 | 判断依据 |
+|---------|---------|---------|
+| **基础伤害** | `indexes`, `base`, `elementBonusType` | `{paramX}` 提取indexes |
+| **参考技能** | `originSkills`, `originIndexes` | 描述包含"XX伤害" |
+| **复合倍率** | `indexesAttach`, `baseAttach` | 描述包含 `+` 连接多个属性 |
+| **显示控制** | `displayCalQueue` | 需要条件判断才显示 |
+| **最终修正** | `finalResCalQueue` | 对最终伤害进行额外计算 |
+| **特殊标签** | `tag` | 生成物、召唤物等特殊机制 |
+| **自定义倍率** | `customValues` | 固定倍率而非参数 |
+| **特殊伤害** | `specialDamageType` | 月反应、后台伤害等 |
+
+---
+
+### 配置推断快速参考
+
+#### 从 paramDescList 提取配置
+
+```
+"一段伤害|{param1:F1P}"              → indexes: [0]
+"二段伤害|{param2:F1P}"              → indexes: [1]
+"伤害|{param1:F1P}攻击力"            → base: "ATTACK"
+"伤害|{param1:F1P}生命值"            → base: "HP"
+"伤害|{param1:F1P}防御力"            → base: "DEFENSE"
+"伤害|{param1:F1P}元素精通"          → base: "ELEMENTAL_MASTERY"
+"伤害|{param1:F1P}+{param2:I}"       → index: 0, constIndex: 1
+"伤害|{param1:F1P}普通攻击伤害"      → originSkills: ["normal"]
+"伤害|{param1:F1P}攻击力+{param2:F1P}元素精通" → indexesAttach, baseAttach
+```
+
+#### 从技能类型判断字段
+
+```
+普通攻击 + 非法器 → canOverride: true, elementBonusType: "DMG_BONUS_PHYSICAL"
+普通攻击 + 法器   → canOverride: false, elementBonusType: 角色元素
+元素战技          → canOverride: false, elementBonusType: 角色元素
+元素爆发          → canOverride: false, elementBonusType: 角色元素
+```
+
+#### 从元素关键词判断
+
+```
+"火元素"/"燃烧"   → DMG_BONUS_PYRO
+"水元素"/"感电"   → DMG_BONUS_HYDRO
+"风元素"/"扩散"   → DMG_BONUS_ANEMO
+"雷元素"/"超载"   → DMG_BONUS_ELECTRO
+"冰元素"/"融化"   → DMG_BONUS_CRYO
+"岩元素"/"结晶"   → DMG_BONUS_GEO
+"草元素"/"绽放"   → DMG_BONUS_DENDRO
+```
+
+---

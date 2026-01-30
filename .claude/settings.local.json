@@ -14,7 +14,11 @@
       "Bash(robocopy:*)",
       "Bash(powershell:*)",
       "Bash(python3 -m py_compile:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(npx openspec validate:*)",
+      "Bash(npx openspec show:*)",
+      "Bash(git checkout:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
