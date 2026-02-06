@@ -106,7 +106,6 @@ def extract_skill_data(skill):
         "desc": skill.get("desc"),
         "paramMap": filtered_param_map,
         "paramDescList": skill.get("paramDescList", {}),
-        "paramDescSplitedList": skill.get("paramDescSplitedList", {}),
         "paramValidIndexes": skill.get("paramValidIndexes"),
     }
 

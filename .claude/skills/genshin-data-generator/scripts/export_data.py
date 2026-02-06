@@ -31,6 +31,25 @@ def load_processed_data():
         sys.exit(1)
 
 
+def clean_skill_data(data):
+    """清理技能数据，移除不需要的字段"""
+    if not isinstance(data, dict):
+        return data
+
+    result = data.copy()
+    if "paramDescSplitedList" in result:
+        del result["paramDescSplitedList"]
+
+    # 递归清理嵌套结构
+    for key, value in result.items():
+        if isinstance(value, dict):
+            result[key] = clean_skill_data(value)
+        elif isinstance(value, list):
+            result[key] = [clean_skill_data(item) if isinstance(item, dict) else item for item in value]
+
+    return result
+
+
 def export_character(chara_id, processed_data, output_dir):
     """导出单个角色的解包数据"""
     characters = processed_data.get("characters", {})
@@ -40,7 +59,8 @@ def export_character(chara_id, processed_data, output_dir):
         print(f"可用的角色ID: {list(characters.keys())[:10]}...")
         return
 
-    chara_data = characters[chara_id]
+    # 清理数据后再导出
+    chara_data = clean_skill_data(characters[chara_id])
 
     # 创建输出文件
     output_file = output_dir / f"character_{chara_id}.json"
@@ -75,7 +95,8 @@ def export_weapon(weapon_id, processed_data, output_dir):
         print(f"可用的武器ID: {list(weapons.keys())[:10]}...")
         return
 
-    weapon_data = weapons[weapon_id]
+    # 清理数据后再导出
+    weapon_data = clean_skill_data(weapons[weapon_id])
 
     # 创建输出文件
     output_file = output_dir / f"weapon_{weapon_id}.json"
@@ -109,7 +130,8 @@ def export_artifact(set_id, processed_data, output_dir):
         print(f"可用的套装ID: {list(artifacts.keys())[:10]}...")
         return
 
-    artifact_data = artifacts[set_id]
+    # 清理数据后再导出
+    artifact_data = clean_skill_data(artifacts[set_id])
 
     # 创建输出文件
     output_file = output_dir / f"artifact_{set_id}.json"

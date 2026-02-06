@@ -450,8 +450,8 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 - `PROP_DMG_RATE_MULTI_CRYO/...`: 元素倍率倍乘
 - `PROP_DMG_BONUS_PYRO/...`: 火元素伤害加成
 - `PROP_DMG_VAL_UP_CRYO/...`: 火元素伤害数值提升
-- `PROP_DMG_ANTI_CRYO/...`: 火元素抗性
-- `PROP_DMG_ANTI_CRYO_MINUS/...`: 火元素抗性降低
+- `PROP_DMG_ANTI_CRYO/...`: 火元素抗性(敌人用)
+- `PROP_DMG_ANTI_CRYO_MINUS/...`: 火元素抗性降低(针对敌人)
 - `PROP_DMG_CRIT_RATE_UP_CRYO/...`: 火元素会心率提升
 - `PROP_DMG_CRIT_DMG_UP_CRYO/...`: 火元素会心伤害提升
 
@@ -463,7 +463,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 - `PROP_DMG_VAL_UP_NORMAL/...`: 普通攻击伤害数值提升
 - `PROP_DMG_CRIT_RATE_UP_NORMAL/...`: 普通攻击会心率提升
 - `PROP_DMG_CRIT_DMG_UP_NORMAL/...`: 普通攻击会心伤害提升
-- **特殊**：一些特殊的技能TAG如果存在，则需要额外加成对应TAG的Buff
+- **特殊**：一些特殊的技能TAG如果存在，则需要**额外**加成对应TAG的Buff
 
 **重要**：一个伤害总是同时具备两个分类（元素类型和攻击类型（又包含了TAG）），两组常量互不冲突！
 
@@ -473,8 +473,8 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 - `PROP_DMG_RATE_MULTI_ALL`: 全局倍率倍乘
 - `PROP_DMG_BONUS_ALL`: 全伤害加成
 - `PROP_DMG_VAL_UP_ALL`: 全局伤害数值提升
-- `PROP_DMG_CRIT_RATE_UP_ALL`: 全局会心率提升
-- `PROP_DMG_CRIT_DMG_UP_ALL`: 全局会心伤害提升
+- `PROP_DMG_CRIT_RATE_UP_ALL`: 全局伤害会心率提升
+- `PROP_DMG_CRIT_DMG_UP_ALL`: 全局伤害会心伤害提升
 
 #### 版本更新场景
 
@@ -517,16 +517,16 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 // paramDescList (简体中文)
 [
   "一段伤害|{param1:F1P}",           // param1 = 0.457253 (等级1)
-  "二段伤害|{param2:F1P}",           // param2 = 0.486846
-  "三段伤害|{param3:F1P}",           // param3 = 0.626218
-  "四段伤害|{param4:F1P}*3",         // param4 = 0.226464 (3次)
-  "五段伤害|{param7:F1P}",           // param7 = 0
-  "重击伤害|{param8:F1P}*3",         // param8 = 0.781817 (3次)
+  "二段伤害|{param2:F1P}",           // param2 = 0.486846 -> 普通攻击伤害类型
+  "三段伤害|{param3:F1P}",           // param3 = 0.626218 -> 普通攻击伤害类型
+  "四段伤害|{param4:F1P}*3",         // param4 = 0.226464 (3次) -> 普通攻击伤害类型
+  "五段伤害|{param7:F1P}",           // param7 = 0.781817 -> 普通攻击伤害类型
+  "重击伤害|{param8:F1P}*3",         // param8 = 0.515464 (3次) -> 重击伤害类型
   ...
 ]
 
 // paramMap["01"] (等级1的参数值)
-[0.457253, 0.486846, 0.626218, 0.226464, 0, 0, 0.781817, ...]
+[0.457253, 0.486846, 0.626218, 0.226464, 0, 0, 0.781817, 0.515464,...]
 ```
 
 **推断过程**:
@@ -535,7 +535,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
    - `param2` → `index = 1`
    - `param3` → `index = 2`
    - `param4` → `index = 3`
-   - 跳过 param5, param6 (不存在)
+   - 跳过 param5, param6 (paramDescList中没有使用)
    - `param7` → `index = 6`
    - 结果: `indexes = [0, 1, 2, 3, 6]`
 
@@ -582,7 +582,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
   ...
 ]
 
-// 武器类型: WEAPON_HEXENZIRKEL (法器)
+// 武器类型: WEAPON_CATALYST (法器)
 ```
 
 **推断过程**:
@@ -646,7 +646,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
    - `param2` → `indexes = [1]`
 
 3. **提取 originIndexes**:
-   - normal 的 `param1` → `originIndexes = [0]`
+   - normal 的 `param1` → `originIndexes = [0]`(这里作为例子只使用第一段的普通攻击，其他段数的普通攻击同理)
 
 4. **确定 originRelations**:
    - 描述格式: "X%普通攻击伤害" → 乘法关系
@@ -654,9 +654,9 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 5. **判断其他字段**:
    - 技能类型: elementalBurst
-   - 元素: 雷 → `elementBonusType = "DMG_BONUS_ELECTRO"`
+   - 元素: 雷 → `elementBonusType = "DMG_BONUS_ELECTRO"`（技能Desc中有提及是造成雷元素伤害）
    - 攻击类型: 参考了normal，因此即使是元素爆发，攻击类型为普通攻击 → `attackBonusType = "DMG_BONUS_NORMAL"`
-   - 特殊机制: 狼魂 → `tag = "RAZOR_SOUL_COMPANION"`
+   - 特殊机制: 狼魂 → `tag = "RAZOR_SOUL_COMPANION"`（其他天赋中存在针对这个狼魂伤害的单独加成，因此追加一个tag来区别爆发伤害与狼魂伤害，注意“狼魂”需要作为i18n值以后续完善多语言，命名方式为角色名_伤害名<都是英语大写，需要从en中提取>）
 
 **最终配置**:
 ```javascript
@@ -706,7 +706,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 3. **其他字段**:
    - 元素: 草 → `elementBonusType = "DMG_BONUS_DENDRO"`
    - 技能类型: skill → `attackBonusType = "DMG_BONUS_SKILL"`
-   - 特殊机制（因为在其他天赋中有描述只针对灭净三业伤害的增益，为了防止影响元素技能中不为灭净三业而追加此特殊Tag）: 蕴灭净三业 → `tag = "NAHIDA_TRI_KARMA"`
+   - 特殊机制（因为在其他天赋中有描述只针对灭净三业伤害的增益，为了防止影响元素技能中不属于灭净三业櫖伤害而追加此特殊Tag）: 灭净三业 → `tag = "NAHIDA_TRI_KARMA"` （命名方式为角色名_伤害名<都是英语大写，需要从en中提取>）
 
 **最终配置**:
 ```javascript
@@ -730,9 +730,9 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 ---
 
-#### 示例1.5: 显示控制队列 - 闲云
+#### 示例1.5: 显示控制队列 （一般不使用） - 闲云（假设）
 
-**角色**: 闲云 - 风元素转化普通攻击
+**角色**: 闲云（假设） - 风元素转化普通攻击
 
 **源数据**:
 ```javascript
@@ -809,13 +809,13 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 // paramMap["01"] = [3.672, 0.72, 12, 40, ...]
 ```
 
-**推断过程**:
+**推断过程（针对生灭之花）**:
 1. **提取基础参数**: `生灭之花伤害|每朵{param2:F1P}` → `indexes = [1]`
 
 2. **特殊机制**: 生灭之花伤害基于花朵数量计算
-   - `VAR_CHARA_1` = 生灭之花数量（由技能滑块控制，1-7朵）
-   - 使用 `finalResCalQueue` 对每朵花的伤害进行计算
-   - 计算公式: 每朵花伤害 × (1 + VAR_CHARA_1)
+   - `VAR_CHARA_1` = 生灭之花数量（由Buff滑块控制，1-7朵）
+   - 使用 `finalResCalQueue` 对命中花的数量的伤害进行计算
+   - 计算公式: 一朵花伤害 × (0 + VAR_CHARA_1)
 
 3. **标签**: 生灭之花专属标签 → `tag = "ALBEDO_FATAL_BLOSSOM"`
 
@@ -847,13 +847,13 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 **计算公式**:
 ```
 每朵花伤害 = param[2] × 攻击力
-总伤害 = 每朵花伤害 × (1 + VAR_CHARA_1)
-       = param[2] × 攻击力 × (1 + 花朵数量)
+总伤害 = 每朵花伤害 × (0 + VAR_CHARA_1)
+       = param[2] × 攻击力 × (0 + 花朵数量)
 ```
 
 ---
 
-#### 示例1.8: 特殊伤害类型 - 菈乌玛月主题伤害
+#### 示例1.8: 特殊伤害类型 - 菈乌玛月反应伤害
 
 **角色**: 菈乌玛 (10000119) - 元素战技
 
@@ -867,11 +867,12 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
   ...
 ]
 
-// desc: "...咏唱狩猎的祷歌，造成草元素范围伤害..."
+// desc: "...咏唱狩猎的祷歌，造成草元素范围伤害...与一次视为月绽放反应伤害的草元素范围伤害" -> 推断出长按二段伤害是被视为月绽放反应伤害
 ```
 
 **推断过程**:
-1. **特殊伤害类型**: 月主题专属伤害（Month Rupture）
+1. **特殊伤害类型**: 直接月绽放伤害（Moon Rupture）
+   - 由于技能中有明确技能倍率，因此视为**直接**月绽放伤害
    - 使用 `specialDamageType = "moon-rupture-direction"`
 
 2. **攻击类型**: 特殊伤害 → `attackBonusType = "DMG_BONUS_OTHER"`
@@ -882,15 +883,15 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 ```javascript
 {
   "damage": {
-    "indexes": [2],
+    "indexes": [2],                      // param[3]
     "base": "ELEMENTAL_MASTERY",
-    "finalResCalQueue": [
+    "finalResCalQueue": [                // 基于草露数量计算合计伤害
       {
         "relation": "*",
         "inner": [
           {
             "relation": "+",
-            "variable": "VAR_CHARA_5"
+            "variable": "VAR_CHARA_5"    // 草露数量（1-3个）
           }
         ]
       }
@@ -898,7 +899,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
     "canOverride": false,
     "elementBonusType": "DMG_BONUS_DENDRO",
     "attackBonusType": "DMG_BONUS_OTHER",                // 特殊伤害
-    "specialDamageType": "moon-rupture-direction"         // 月主题伤害
+    "specialDamageType": "moon-rupture-direction"         // 直接月绽放伤害
   }
 }
 ```
@@ -909,16 +910,18 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 #### 示例2.1: 开关型增益 - 元素附魔
 
-**角色**: 神里绫华 - other 技能（冰元素附魔）
+**角色**: 神里绫华 - other 技能（冰元素附魔）神里流·霰步
 
 **源数据**:
 ```javascript
 // paramDescList
 [
-  ...
-  "霜寒一役的冰华|普通攻击和重击转为冰元素伤害",
-  ...
+  "启动体力消耗|{param1:F1}点",
+  "持续体力消耗|每秒{param2:F1}点",
+  "附魔持续时间|{param3:F1}秒"
 ]
+
+// desc: "...将寒气凝聚在剑上，使神里绫华在短时间内获得冰元素附魔..."
 ```
 
 **推断过程**:
@@ -933,9 +936,9 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 {
   "buffs": [
     {
-      "index": 2,                          // 对应param[2]
-      "overrideElement": "DMG_BONUS_CRYO",  // 覆盖为冰元素
-      "target": [],                        // 空=自身
+      "index": 1,                          // 任意一个Index即可
+      "overrideElement": "DMG_BONUS_CRYO",  // 设置普通攻击，重击，下落攻击为冰元素附魔
+      "target": [],                        // 空=>不追加实际Buff
       "settingType": "switch",             // 开关型
       "defaultEnable": false               // 默认关闭
     }
@@ -954,7 +957,7 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 // paramDescList (简体中文)
 [
   ...
-  "攻击力提升幅度|{param4:P}",           // param4 = 基础攻击力的百分比
+  "攻击力加成比例|{param4:P}",           // param4 = 基础攻击力的百分比
   ...
 ]
 
@@ -995,44 +998,53 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 ---
 
-#### 示例2.3: 滑块型增益 - 芙宁娜众水水平
+#### 示例2.3: 滑块型增益 - 芙宁娜气氛值
 
-**角色**: 芙宁娜 (10000051) - 元素爆发
+**角色**: 芙宁娜 (10000089) - 元素爆发
 
 **源数据**:
 ```javascript
 // paramDescList (简体中文)
 [
-  "持续期间|{param1:F1}秒",               // param1 = 持续时间
-  "众水水平每层|{param2:F1P}",            // param2 = 每层伤害提升
+  "技能伤害|{param1:F1P}生命值上限",
+  "持续时间|{param2:F1}秒",
+  "气氛值上限|{param4:I}",                   // param4 = 300
+  "气氛值转化提升伤害比例|{param5:F2P}",     // param5 = 0.0007 (每点气氛值)
+  "气氛值转化受治疗加成比例|{param6:F2P}",   // param6 = 0.0001 (每点气氛值)
   ...
 ]
 
-// desc (简体中文): "根据队伍中生命值百分比高于50%的角色数量，获得最多3层'众水水平'，每层提升芙宁娜造成的伤害与受到的治疗。"
+// desc (简体中文): "凝聚狂欢之意...使队伍中附近的角色进入「普世欢腾」状态：持续期间，角色的当前生命值提升或降低时，基于提升或降低数值相对于生命值上限的比例，每1%都将使芙宁娜获得1点「气氛值」。同时，基于芙宁娜持有的「气氛值」，附近的队伍中所有角色造成的伤害提升，受治疗加成提升。"
 ```
 
 **推断过程**:
-1. **识别增益类型**: 滑块型效果（基于角色数量的层数）→ `settingType = "slider"`
+1. **识别增益类型**: 滑块型效果（模拟0-300之间的任意气氛值）→ `settingType = "slider"`
 
-2. **层数范围**: 0-3层（最多4名角色生命值>50%）→ `sliderMax = 300`（对应3.0倍率）
+2. **数值范围**: 0-300点（气氛值上限）→ `sliderMax = 300`（根据其他信息来决定）
 
-3. **目标效果**: 提升伤害（反向提升）→ `target = ["REVERSE_HEALING_BONUS"]`
+3. **目标效果**: 同时提升所有伤害与受到治疗→ `target = ["DMG_BONUS_ALL"]`, `target = ["REVERSE_HEALING_BONUS"]`
 
-4. **参数索引**: `param2` → `index = 1`
+4. **参数索引**: `param5` → `index = 4`，`param6` → `index = 5`
 
-5. **滑块设置**: 以10为单位（0.1倍率=10%），最大300（3.0倍率=300%）
+5. **转化比例**: 伤害加成 = param[5] × 每点气氛值 , 受到治疗加成 = param[6] × 每点气氛值 
 
 **最终配置**:
 ```javascript
 {
-  "buffs": [
+  "buffs": [ // 注意这里在一个Buff内使用了两个不同Object配置，这样是为了让两个不同Index的target共享同一个settingType（这里是滑块）的设定值，因此第二个Object不需要培植settingType相关内容，仅仅需要填写Buff相关内容即可
     {
-      "index": 1,                              // 对应param[1]
-      "target": ["REVERSE_HEALING_BONUS"],     // 众水水平（反向提升伤害与治疗）
+      "index": 5,                              // 对应param[6]
+      "target": ["REVERSE_HEALING_BONUS"],     // 受到治疗加成
       "settingType": "slider",                 // 滑块型
-      "sliderInitialValue": 0,                 // 初始值0（无层数）
-      "sliderStep": 10,                        // 步长10（0.1倍率）
-      "sliderMax": 300                         // 最大300（3.0倍率=3层）
+      "sliderInitialValue": 0,                 // 初始值0
+      "sliderMax": 300,                        // 最大300点气氛值
+      "sliderStep": 1,                         // 步长1
+      "isAllTeam": true                        // 全队生效
+    },
+    {
+      "index": 4,                              // 对应param[5]
+      "target": ["DMG_BONUS_ALL"],             // 所有伤害加成
+      "isAllTeam": true                        // 全队生效
     }
   ]
 }
@@ -1040,9 +1052,12 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 **计算公式**:
 ```
-伤害/治疗提升 = param[1] × 众水水平层数
-众水水平层数 = min(队伍中生命值>50%的角色数, 3)
+伤害提升 = 气氛值 × param[5]
+受治疗提升 = 气氛值 × param[6]
+气氛值 = 队友HP变化%总和 (上限300) -> 通过Slider来模拟
 ```
+
+**机制说明**: 队友每变化1%生命值上限，芙宁娜获得1点气氛值，每点气氛值提供 param[5] 的伤害与 param[6] 受治疗加成。
 
 ---
 
