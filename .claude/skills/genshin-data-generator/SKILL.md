@@ -506,6 +506,78 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 ---
 
+## 核心概念
+
+**重要**: `paramDescList` 中的每一行代表一个独立的效果，需要在 `skills` 数组中创建对应的配置对象。
+
+### 理解配置数组结构
+
+每个技能的 `skills` 属性是一个数组，数组中的每个对象对应 `paramDescList` 中的一行（或多行相关的效果）：
+
+```javascript
+// data.json 中的配置结构
+{
+  "10000002": {  // 角色ID
+    "skills": {
+      "normal": [        // ← 数组！每个对象是一个独立配置
+        { "damage": { ... } },   // 第1个配置对象
+        { "damage": { ... } },   // 第2个配置对象
+        { "damage": { ... } }    // 第3个配置对象
+      ],
+      "skill": [         // ← 数组！
+        { "damage": { ... } },
+        { "shield": { ... } },
+        { "healing": { ... } }
+      ]
+    }
+  }
+}
+```
+
+### 配置映射规则
+
+| paramDescList 中的行 | 需要创建的配置对象 | 配置类型 |
+|---------------------|-------------------|---------|
+| 伤害相关描述 | `{ "damage": { ... } }` | 伤害配置 |
+| 治疗量描述 | `{ "healing": { ... } }` | 治疗配置 |
+| 护盾吸收量描述 | `{ "shield": { ... } }` | 护盾配置 |
+| 增益效果描述 | `{ "buffs": [ ... ] }` | 增益配置 |
+| 生成物生命值 | `{ "product": { ... } }` | 生成物配置 |
+
+**关键原则**:
+- 每一行描述 = 一个配置对象（除非多行属于同一效果）
+- 配置顺序通常按照 paramDescList 的行顺序排列
+- 不同类型的效果（伤害/治疗/护盾/增益）**建议分开写**，虽然技术上可以合并到同一个对象，但分开写更清晰易读
+
+### 配置对象合并 vs 分开
+
+**推荐做法：分开写**
+```javascript
+"skill": [
+  { "damage": { ... } },    // 第1个配置对象
+  { "shield": { ... } },    // 第2个配置对象
+  { "healing": { ... } }    // 第3个配置对象
+]
+```
+
+**技术上可行但不推荐：合并**
+```javascript
+"skill": [
+  {                                 // 合并的配置对象（不推荐）
+    "damage": { ... },
+    "shield": { ... },
+    "healing": { ... }
+  }
+]
+```
+
+**建议分开写的原因**:
+- 更易读和维护
+- 与 paramDescList 的行顺序对应关系更清晰
+- 便于后续修改和调试
+
+---
+
 ### 1. 伤害配置示例
 
 #### 示例1.1: 基础物理普通攻击（神里绫华）
@@ -530,29 +602,35 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 ```
 
 **推断过程**:
-1. **提取 indexes**:
-   - `param1` → `index = 1-1 = 0` (数组从0开始)
-   - `param2` → `index = 1`
-   - `param3` → `index = 2`
-   - `param4` → `index = 3`
-   - 跳过 param5, param6 (paramDescList中没有使用)
-   - `param7` → `index = 6`
-   - 结果: `indexes = [0, 1, 2, 3, 6]`
 
-2. **判断 base**: 描述中无特殊说明 → `base = "ATTACK"`
+**步骤1: 识别普通攻击伤害的行**
+- 第1-5行: 普通攻击的各段伤害
+- 第6行: 重击伤害（需要单独配置）
 
-3. **判断 canOverride**:
-   - 技能类型: normal (普通攻击)
-   - 武器类型: WEAPON_SWORD_ONE_HAND (非法器)
-   - 结果: `canOverride = true`
+**步骤2: 提取普通攻击的参数索引**
+- `param1` (一段) → index = 0
+- `param2` (二段) → index = 1
+- `param3` (三段) → index = 2
+- `param4` (四段) → index = 3
+- 跳过 param5, param6 (paramDescList中没有使用)
+- `param7` (五段) → index = 6
+- 结果: `indexes = [0, 1, 2, 3, 6]`
 
-4. **判断 elementBonusType**:
-   - 普通攻击，非法器角色
-   - 结果: `elementBonusType = "DMG_BONUS_PHYSICAL"`
+**步骤3: 确定基础属性**
+- 描述中没有特殊说明（如"生命值"、"防御力"等）
+- 默认使用攻击力 → `base = "ATTACK"`
 
-5. **判断 attackBonusType**:
-   - 技能类型: normal
-   - 结果: `attackBonusType = "DMG_BONUS_NORMAL"`
+**步骤4: 判断是否可被覆盖 (canOverride)**
+- 技能类型: normal (普通攻击)
+- 武器类型: WEAPON_SWORD_ONE_HAND (单手剑，非法器)
+- 非法器角色的普通攻击可以被元素附魔覆盖 → `canOverride = true`
+
+**步骤5: 判断元素加成类型 (elementBonusType)**
+- 普通攻击 + 非法器角色 = 物理伤害
+- 结果: `elementBonusType = "DMG_BONUS_PHYSICAL"`
+
+**步骤6: 判断攻击加成类型 (attackBonusType)**
+- 普通攻击类型 → `attackBonusType = "DMG_BONUS_NORMAL"`
 
 **最终配置**:
 ```javascript
@@ -925,11 +1003,19 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 ```
 
 **推断过程**:
-1. **识别增益类型**: 开关型效果 → `settingType = "switch"`
 
-2. **覆盖元素**: 冰元素 → `overrideElement = "DMG_BONUS_CRYO"`
+**步骤1: 从desc识别增益类型**
+- desc描述: "将寒气凝聚在剑上，使神里绫华在短时间内获得冰元素附魔"
+- 这是元素附魔效果，可以开关 → `settingType = "switch"`
 
-3. **参数索引**: 第3个参数 → `index = 2`
+**步骤2: 确定附魔的元素类型**
+- desc中明确提到: "冰元素附魔"
+- 结果: `overrideElement = "DMG_BONUS_CRYO"`
+
+**步骤3: 设置其他必要字段**
+- 附魔不需要实际数值buff → `target = []` (空数组)
+- 默认关闭 → `defaultEnable = false`
+- index可以是任意值（因为不涉及实际数值计算）→ `index = 1`
 
 **最终配置**:
 ```javascript
@@ -965,15 +1051,23 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 ```
 
 **推断过程**:
-1. **识别增益类型**: 开关型效果（领域内持续生效）→ `settingType = "switch"`
 
-2. **基础属性**: 基于班尼特的基础攻击力 → `base = "ATTACK_BASE"`
+**步骤1: 从paramDescList和desc识别增益类型**
+- desc描述: "依据班尼特的基础攻击力，以一定比例提升领域内角色的攻击力"
+- 领域内持续生效，可以开关 → `settingType = "switch"`
 
-3. **目标效果**: 提升攻击力数值 → `target = ["ATTACK_VAL_UP"]`
+**步骤2: 确定基础属性**
+- desc明确提到: "基础攻击力"
+- 注意: 是 ATTACK_BASE (基础攻击力)，不是 ATTACK (最终攻击力) → `base = "ATTACK_BASE"`
 
-4. **目标范围**: 领域内所有角色 → `isAllTeam = true`
+**步骤3: 确定目标效果**
+- 提升攻击力数值 (百分比形式的数值提升) → `target = ["ATTACK_VAL_UP"]`
 
-5. **参数索引**: `param4` → `index = 3`
+**步骤4: 确定目标范围**
+- desc描述: "领域内角色的攻击力" → 影响全队 → `isAllTeam = true`
+
+**步骤5: 提取参数索引**
+- `param4` (攻击力加成比例) → index = 4-1 = 3
 
 **最终配置**:
 ```javascript
@@ -1018,15 +1112,28 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 ```
 
 **推断过程**:
-1. **识别增益类型**: 滑块型效果（模拟0-300之间的任意气氛值）→ `settingType = "slider"`
 
-2. **数值范围**: 0-300点（气氛值上限）→ `sliderMax = 300`（根据其他信息来决定）
+**步骤1: 从desc识别增益类型**
+- desc描述: "每1%都将使芙宁娜获得1点「气氛值」。同时，基于芙宁娜持有的「气氛值」...伤害提升，受治疗加成提升"
+- 这是一个可变数值的效果，用滑块模拟 → `settingType = "slider"`
 
-3. **目标效果**: 同时提升所有伤害与受到治疗→ `target = ["DMG_BONUS_ALL"]`, `target = ["REVERSE_HEALING_BONUS"]`
+**步骤2: 确定数值范围**
+- `param4` = 300 (气氛值上限)
+- 设置滑块最大值 → `sliderMax = 300`
+- 初始值 → `sliderInitialValue = 0`
 
-4. **参数索引**: `param5` → `index = 4`，`param6` → `index = 5`
+**步骤3: 确定目标效果**
+- desc描述: "造成的伤害提升，受治疗加成提升"
+- 需要两个不同的target → 伤害加成 + 受到治疗加成
+- 全队生效 → `isAllTeam = true`
 
-5. **转化比例**: 伤害加成 = param[5] × 每点气氛值 , 受到治疗加成 = param[6] × 每点气氛值 
+**步骤4: 提取参数索引**
+- `param5` (伤害转化比例) → index = 5-1 = 4
+- `param6` (治疗转化比例) → index = 6-1 = 5
+
+**步骤5: 理解双对象配置**
+- 因为两个不同的param需要共享同一个滑块值
+- 所以使用两个buff对象，第一个对象定义滑块，第二个对象仅定义target
 
 **最终配置**:
 ```javascript
@@ -1063,29 +1170,136 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 ### 3. 治疗配置示例
 
-#### 示例3.1: 单倍率治疗 - 芭芭拉
+**重要**: 原神中的治疗技能通常同时包含**百分比倍率**和**固定数值**两部分。以下示例基于实际游戏数据。
 
-**角色**: 芭芭拉 - 元素战技
+#### 示例3.1: 多重治疗 - 芭芭拉
+
+**角色**: 芭芭拉 (10000014) - 元素战技「演唱，开始♪」
 
 **源数据**:
 ```javascript
-// paramDescList
+// paramDescList (元素战技)
 [
-  "卖艺·歌声治疗量|{param1:F1P}生命值",
+  "持续治疗量|{param1:F2P}生命值上限+{param2:I}",
+  "命中治疗量|{param3:F2P}生命值上限+{param4:I}",
+  "水珠伤害|{param5:F1P}",
+  "持续时间|{param6:F1}秒",
+  "冷却时间|{param7:F1}秒"
+]
+```
+
+**说明**: 芭芭拉的元素战技有**两种不同的治疗效果**，每个都需要单独的配置对象。
+
+**推断过程**:
+
+**步骤1: 分析每一行的含义和参数**
+- 第1行: `"持续治疗量|{param1:F2P}生命值上限+{param2:I}"`
+  - 效果类型: 治疗量
+  - 主要倍率: `param1` (百分比)
+  - 固定值: `param2` (整数)
+  - 基础属性: 生命值上限
+- 第2行: `"命中治疗量|{param3:F2P}生命值上限+{param4:I}"`
+  - 效果类型: 治疗量
+  - 主要倍率: `param3` (百分比)
+  - 固定值: `param4` (整数)
+  - 基础属性: 生命值上限
+- 第3行: `"水珠伤害|{param5:F1P}"`
+  - 效果类型: 伤害
+
+**步骤2: 提取参数索引 (index/constIndex)**
+- 数组索引从0开始，所以 `paramX` 对应 `index = X-1`
+- 持续治疗量: `param1` → `index = 0`, `param2` → `constIndex = 1`
+- 命中治疗量: `param3` → `index = 2`, `param4` → `constIndex = 3`
+- 水珠伤害: `param5` → `indexes = [4]`
+
+**步骤3: 确定其他必要字段**
+- 基础属性: "生命值上限" → `base = "HP"`
+- 治疗加成类型: 元素战技 → `healingBonusType = "HEALING_BONUS_SKILL"`
+- 计算关系: 有`+`号 → `constCalRelation = "+"`
+
+**步骤4: 为每个效果创建配置对象**
+- 持续治疗 → 创建第1个 `healing` 对象
+- 命中治疗 → 创建第2个 `healing` 对象
+- 水珠伤害 → 创建 `damage` 对象
+
+**最终配置** (data.json中的实际配置):
+```javascript
+"skill": [
+  {
+    "healing": {
+      "index": 0,                           // param[0] × HP (持续治疗)
+      "constIndex": 1,                      // + param[1]
+      "constCalRelation": "+",
+      "base": "HP",
+      "healingBonusType": "HEALING_BONUS_SKILL"
+    }
+  },
+  {
+    "healing": {
+      "index": 2,                           // param[2] × HP (命中治疗)
+      "constIndex": 3,                      // + param[3]
+      "constCalRelation": "+",
+      "base": "HP",
+      "healingBonusType": "HEALING_BONUS_SKILL"
+    }
+  },
+  {
+    "damage": {                             // 水珠伤害
+      "indexes": [4],
+      "base": "ATTACK",
+      "canOverride": false,
+      "elementBonusType": "DMG_BONUS_HYDRO",
+      "attackBonusType": "DMG_BONUS_SKILL"
+    }
+  }
+]
+```
+
+**计算公式**:
+```
+持续治疗量 = (param[0] × 生命值上限) + param[1]
+命中治疗量 = (param[2] × 生命值上限) + param[3]
+```
+
+---
+
+#### 示例3.2: 基于生命的治疗 - 久岐忍
+
+**角色**: 久岐忍 (10000065) - 元素战技「越祓雷草之轮」
+
+**源数据**:
+```javascript
+// paramDescList (元素战技)
+[
+  "技能伤害|{param1:P}",
+  "越祓草轮治疗量|{param2:F1P}生命值上限+{param3:I}",
+  "越祓草轮伤害|{param4:F1P}",
   ...
 ]
 ```
 
 **推断过程**:
-1. **提取参数**: `param1` → `index = 0`
-2. **基础属性**: 生命值 → `base = "HP"`
-3. **治疗类型**: 技能治疗 → `healingBonusType = "HEALING_BONUS_SKILL"`
+
+**步骤1: 识别治疗效果的行**
+- 第2行: `"越祓草轮治疗量|{param2:F1P}生命值上限+{param3:I}"` - 这是治疗效果
+
+**步骤2: 提取参数和计算关系**
+- 描述格式: `{param2:F1P}生命值上限+{param3:I}`
+- 百分比参数: `param2` → 数组索引 = 2-1 = 1
+- 固定值参数: `param3` → 数组索引 = 3-1 = 2
+- 计算关系: 有`+`号，表示加法
+
+**步骤3: 确定基础属性和类型**
+- 基础属性: "生命值上限" → `base = "HP"`
+- 治疗加成类型: 元素战技 → `healingBonusType = "HEALING_BONUS_SKILL"`
 
 **最终配置**:
 ```javascript
 {
   "healing": {
-    "index": 0,                           // param[0]
+    "index": 1,                           // param[1] = param2 in desc
+    "constIndex": 2,                      // param[2] = param3 in desc
+    "constCalRelation": "+",
     "base": "HP",
     "healingBonusType": "HEALING_BONUS_SKILL"
   }
@@ -1094,73 +1308,49 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 **计算公式**:
 ```
-治疗量 = param[0] × 生命值
+治疗量 = (param[1] × 生命值上限) + param[2]
 ```
 
 ---
 
-#### 示例3.2: 双参数治疗 - 久岐忍
+#### 示例3.3: 基于攻击力的治疗 - 琴
 
-**角色**: 久岐忍 - 元素战技
+**角色**: 琴 (10000003) - 元素爆发「蒲公英之风」
 
 **源数据**:
 ```javascript
-// paramDescList
+// paramDescList (元素爆发)
 [
-  "御后之血治疗量|{param1:F1P}生命值+{param2:I}",
+  "爆发伤害|{param1:P}",
+  "出入领域伤害|{param2:F1P}",
+  "领域发动治疗量|{param3:P}攻击力+{param4:I}",
+  "持续治疗|每秒{param5:F2P}攻击力+{param6:I}",
   ...
 ]
 ```
 
 **推断过程**:
-1. **主要倍率**: `param1生命值` → `index = 0`, `base = "HP"`
-2. **固定值**: `+ param2` → `constIndex = 1`, `constCalRelation = "+"`
 
-**最终配置**:
-```javascript
-{
-  "healing": {
-    "index": 0,                           // param[0] × HP
-    "constIndex": 1,                      // + param[1]
-    "constCalRelation": "+",              // 加法关系
-    "base": "HP",
-    "healingBonusType": "HEALING_BONUS_SKILL"
-  }
-}
-```
+**步骤1: 识别治疗效果的行**
+- 第3行: `"领域发动治疗量|{param3:P}攻击力+{param4:I}"` - 初始治疗
+- 第4行: `"持续治疗|每秒{param5:F2P}攻击力+{param6:I}"` - 持续治疗（每秒）
 
-**计算公式**:
-```
-治疗量 = (param[0] × 生命值) + param[1]
-```
+**步骤2: 提取参数 (以初始治疗为例)**
+- 百分比参数: `param3` → 数组索引 = 3-1 = 2
+- 固定值参数: `param4` → 数组索引 = 4-1 = 3
 
----
+**步骤3: 确定基础属性**
+- 注意: 描述中是"攻击力"而非"生命值" → `base = "ATTACK"`
+- 治疗加成类型: 元素爆发 → `healingBonusType = "HEALING_BONUS_ELEMENTAL_BURST"`
 
-#### 示例3.3: 基于攻击力的治疗
-
-**角色**: 琴 - 元素爆发
-
-**源数据**:
-```javascript
-// paramDescList
-[
-  "蒲公英领域治疗量|{param3:F1P}攻击力+{param4:I}",
-  ...
-]
-```
-
-**推断过程**:
-1. **主要倍率**: `param3攻击力` → `index = 2`, `base = "ATTACK"`
-2. **固定值**: `+ param4` → `constIndex = 3`
-
-**最终配置**:
+**最终配置** (仅展示初始治疗):
 ```javascript
 {
   "healing": {
     "index": 2,                           // param[2] × 攻击力
     "constIndex": 3,                      // + param[3]
     "constCalRelation": "+",
-    "base": "ATTACK",                     // 基于攻击力
+    "base": "ATTACK",                     // 基于攻击力！
     "healingBonusType": "HEALING_BONUS_ELEMENTAL_BURST"
   }
 }
@@ -1170,32 +1360,52 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 ### 4. 护盾配置示例
 
-#### 示例4.1: 基于生命的护盾 - 钟离
+**重要**: 原神中的护盾技能通常同时包含**百分比倍率**和**固定数值**两部分。以下示例基于实际游戏数据。
 
-**角色**: 钟离 - 元素战技
+**⚠️ 护盾属性说明**: 护盾可以基于不同的属性计算，**必须从实际`paramDescList`确认**，不能想当然：
+- **HP (生命值)**: 最常见的护盾属性（如：钟离、迪奥娜、莱依拉、瑶瑶、闲云等）
+- **DEFENSE (防御力)**: 较少见（如：诺艾尔、辛焱）
+- **其他**: 极少数特殊情况
+
+#### 示例4.1: 基于防御力的护盾 - 诺艾尔
+
+**角色**: 诺艾尔 (10000034) - 元素战技「护心铠」
 
 **源数据**:
 ```javascript
-// paramDescList
+// paramDescList (元素战技)
 [
-  "护盾吸收量|{param1:F1P}生命值+{param2:I}",
-  ...
+  "技能伤害|{param6:P}防御力",
+  "吸收量|{param1:P}防御力+{param7:I}",
+  "治疗量|{param2:F1P}防御力+{param8:I}",
+  "治疗触发几率|{param3:P}",
+  "持续时间|{param4:F1}秒",
+  "冷却时间|{param5:F1}秒"
 ]
 ```
 
 **推断过程**:
-1. **主要倍率**: `param1生命值` → `index = 0`, `base = "HP"`
-2. **固定值**: `+ param2` → `constIndex = 1`
-3. **护盾元素**: 岩元素 → `shieldElementType = "GEO"`
+
+**步骤1: 识别护盾效果的行**
+- 第2行: `"吸收量|{param1:P}防御力+{param7:I}"` - 这是护盾吸收量
+
+**步骤2: 提取参数**
+- 注意参数顺序: `param1`和`param7`不是连续的！
+- 百分比参数: `param1` → 数组索引 = 1-1 = 0
+- 固定值参数: `param7` → 数组索引 = 7-1 = 6
+
+**步骤3: 确定基础属性**
+- 从描述中明确看到: "防御力" → `base = "DEFENSE"`
+- 护盾元素: 诺艾尔是岩元素角色 → `shieldElementType = "GEO"`
 
 **最终配置**:
 ```javascript
 {
   "shield": {
-    "index": 0,                           // param[0] × HP
-    "constIndex": 1,                      // + param[1]
+    "index": 0,                           // param[0] × 防御力
+    "constIndex": 6,                      // + param[6] (固定值)
     "constCalRelation": "+",
-    "base": "HP",
+    "base": "DEFENSE",
     "shieldBonusType": "SHIELD_BONUS_SKILL",
     "shieldElementType": "GEO"            // 岩元素护盾
   }
@@ -1204,68 +1414,169 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 
 **计算公式**:
 ```
-护盾量 = (param[0] × 生命值) + param[1]
+护盾量 = (param[0] × 防御力) + param[6]
 ```
 
 ---
 
-#### 示例4.2: 基于防御力的护盾 - 迪奥娜
+#### 示例4.2: 基于生命值的护盾 - 迪奥娜
 
-**角色**: 迪奥娜 - 元素战技
+**角色**: 迪奥娜 (10000039) - 元素战技「猫爪冻冻」
 
 **源数据**:
 ```javascript
-// paramDescList
+// paramDescList (元素战技)
 [
-  "猫爪护盾吸收量|{param1:F1P}防御力",
-  ...
+  "猫爪伤害|每个{param1:F1P}",
+  "护盾基础吸收量|{param2:F1P}最大生命值+{param3:I}",
+  "持续时间|每个猫爪{param6:F1}秒",
+  "冷却时间|{param7:F1}秒"
 ]
 ```
 
 **推断过程**:
-1. **主要倍率**: `param1防御力` → `index = 0`, `base = "DEFENSE"`
-2. **护盾元素**: 冰元素 → `shieldElementType = "CRYO"`
+
+**步骤1: 识别护盾效果的行**
+- 第2行: `"护盾基础吸收量|{param2:F1P}最大生命值+{param3:I}"` - 这是护盾吸收量
+
+**步骤2: 提取参数**
+- 百分比参数: `param2` → 数组索引 = 2-1 = 1
+- 固定值参数: `param3` → 数组索引 = 3-1 = 2
+
+**步骤3: 确定基础属性**
+- ⚠️ **重要**: 从描述中看到: "最大生命值" → `base = "HP"`
+- **不是防御力！** 虽然迪奥娜的突破加成是防御力，但护盾本身是基于生命值计算的
+- 护盾元素: 迪奥娜是冰元素角色 → `shieldElementType = "CRYO"`
 
 **最终配置**:
 ```javascript
 {
   "shield": {
-    "index": 0,                           // param[0] × 防御力
-    "base": "DEFENSE",
+    "index": 1,                           // param[1] × 最大生命值
+    "constIndex": 2,                      // + param[2]
+    "constCalRelation": "+",
+    "base": "HP",                         // ⚠️ 基于生命值
     "shieldBonusType": "SHIELD_BONUS_SKILL",
     "shieldElementType": "CRYO"           // 冰元素护盾
   }
 }
 ```
 
+**计算公式**:
+```
+护盾量 = (param[1] × 最大生命值) + param[2]
+```
+
+**⚠️ 重要说明**:
+- 迪奥娜的护盾是基于**生命值**计算的，不是防御力
+- 这个例子说明：**不能根据角色的突破属性来推断护盾的base属性**
+- 必须从实际的`paramDescList`描述中确认基础属性
+
 ---
 
-#### 示例4.3: 火元素护盾 - 辛焱
+#### 示例4.3: 多等级护盾 - 辛焱
 
-**角色**: 辛焱 - 元素战技
+**角色**: 辛焱 (10000044) - 元素战技「热情拂扫」
 
 **源数据**:
 ```javascript
-// paramDescList
+// paramDescList (元素战技)
 [
-  "赤璋护盾吸收量|{param2:F1P}防御力",
-  ...
+  "挥舞伤害|{param1:P}",
+  "一级护盾吸收量|{param2:F1P}防御力+{param3:I}",
+  "二级护盾吸收量|{param4:F1P}防御力+{param5:I}",
+  "三级护盾吸收量|{param6:F1P}防御力+{param7:I}",
+  "持续伤害|{param8:F1P}",
+  "护盾持续时间|{param9:F1}秒",
+  "冷却时间|{param10:F1}秒"
 ]
 ```
 
-**最终配置**:
+**说明**: 辛焱的护盾根据命中敌人数量有**三个等级**，每个等级都需要单独的配置对象。
+
+**推断过程**:
+
+**步骤1: 识别所有效果的行**
+- 第1行: `"挥舞伤害|{param1:P}"` - 伤害效果
+- 第2行: `"一级护盾吸收量|{param2:F1P}防御力+{param3:I}"` - 护盾等级1
+- 第3行: `"二级护盾吸收量|{param4:F1P}防御力+{param5:I}"` - 护盾等级2
+- 第4行: `"三级护盾吸收量|{param6:F1P}防御力+{param7:I}"` - 护盾等级3
+- 第5行: `"持续伤害|{param8:F1P}"` - 持续伤害（仅三级护盾时）
+
+**步骤2: 为每个护盾等级提取参数**
+- 一级护盾: `param2` → index = 1, `param3` → constIndex = 2
+- 二级护盾: `param4` → index = 3, `param5` → constIndex = 4
+- 三级护盾: `param6` → index = 5, `param7` → constIndex = 6
+
+**步骤3: 确定基础属性**
+- 所有等级的护盾描述都明确写: "防御力" → `base = "DEFENSE"`
+- 护盾元素: 辛焱是火元素角色 → `shieldElementType = "PYRO"`
+
+**步骤4: 为每个效果创建配置对象**
+- 挥舞伤害 → 创建 `damage` 对象
+- 一级护盾 → 创建第1个 `shield` 对象
+- 二级护盾 → 创建第2个 `shield` 对象
+- 三级护盾 → 创建第3个 `shield` 对象
+- 持续伤害 → 创建第2个 `damage` 对象
+
+**最终配置** (data.json中的实际配置):
 ```javascript
-{
-  "shield": {
-    "index": 1,                           // param[1]
-    "base": "DEFENSE",
-    "constIndex": 2,
-    "constCalRelation": "+",
-    "shieldBonusType": "SHIELD_BONUS_SKILL",
-    "shieldElementType": "PYRO"           // 火元素护盾
+"skill": [
+  {
+    "damage": {                             // 挥舞伤害
+      "indexes": [0],
+      "base": "ATTACK",
+      "canOverride": false,
+      "elementBonusType": "DMG_BONUS_PYRO",
+      "attackBonusType": "DMG_BONUS_SKILL"
+    }
+  },
+  {
+    "shield": {                             // 一级护盾 (命中0-1人)
+      "index": 1,
+      "constIndex": 2,
+      "constCalRelation": "+",
+      "base": "DEFENSE",
+      "shieldBonusType": "SHIELD_BONUS_SKILL",
+      "shieldElementType": "PYRO"
+    }
+  },
+  {
+    "shield": {                             // 二级护盾 (命中2人)
+      "index": 3,
+      "constIndex": 4,
+      "constCalRelation": "+",
+      "base": "DEFENSE",
+      "shieldBonusType": "SHIELD_BONUS_SKILL",
+      "shieldElementType": "PYRO"
+    }
+  },
+  {
+    "shield": {                             // 三级护盾 (命中3人以上)
+      "index": 5,
+      "constIndex": 6,
+      "constCalRelation": "+",
+      "base": "DEFENSE",
+      "shieldBonusType": "SHIELD_BONUS_SKILL",
+      "shieldElementType": "PYRO"
+    }
+  },
+  {
+    "damage": {                             // 持续伤害 (三级护盾时)
+      "indexes": [7],
+      "base": "ATTACK",
+      "canOverride": false,
+      "elementBonusType": "DMG_BONUS_PYRO",
+      "attackBonusType": "DMG_BONUS_SKILL"
+    }
   }
-}
+]
 ```
+
+**重要说明**:
+- 所有三个护盾等级都需要配置，不是"选择其一"
+- 不同等级根据命中敌人数量自动触发
+- 三级护盾还会造成持续伤害
 
 ---
 
