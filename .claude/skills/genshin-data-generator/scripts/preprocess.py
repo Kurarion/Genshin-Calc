@@ -33,7 +33,7 @@ def compact_json_dump(obj, f, ensure_ascii=False):
     f.write(json_str)
 
 
-def process_avatar_data(data):
+def process_avatar_data(data, output_dir=None):
     """处理角色数据
 
     数据结构说明：
@@ -41,6 +41,10 @@ def process_avatar_data(data):
     - skills.proudSkills/talents 是列表
     - skills.constellation 是字典，键是 "0", "1", ..., "5"，值是技能列表
     - 参数存储在 paramMap 中（等级→参数列表），不是 paramList
+
+    Args:
+        data: 原始角色数据
+        output_dir: 如果提供，将为每个角色单独导出JSON文件
     """
     processed = {}
     for chara_id, chara_data in data.items():
@@ -86,6 +90,12 @@ def process_avatar_data(data):
                         ]
             processed[chara_id]["skills"]["constellation"] = constellation_data
 
+        # 为每个角色单独导出JSON文件
+        if output_dir:
+            char_output_file = output_dir / f"character_{chara_id}.json"
+            with open(char_output_file, "w", encoding="utf-8") as f:
+                json.dump(processed[chara_id], f, ensure_ascii=False, indent=2)
+
     return processed
 
 
@@ -110,8 +120,13 @@ def extract_skill_data(skill):
     }
 
 
-def process_weapon_data(data):
-    """处理武器数据"""
+def process_weapon_data(data, output_dir=None):
+    """处理武器数据
+
+    Args:
+        data: 原始武器数据
+        output_dir: 如果提供，将为每个武器单独导出JSON文件
+    """
     processed = {}
     for weapon_id, weapon_data in data.items():
         processed[weapon_id] = {
@@ -137,11 +152,22 @@ def process_weapon_data(data):
                     "addProps": affix_data.get("addProps", []),
                 }
 
+        # 为每个武器单独导出JSON文件
+        if output_dir:
+            weapon_output_file = output_dir / f"weapon_{weapon_id}.json"
+            with open(weapon_output_file, "w", encoding="utf-8") as f:
+                json.dump(processed[weapon_id], f, ensure_ascii=False, indent=2)
+
     return processed
 
 
-def process_artifact_data(data):
-    """处理圣遗物数据"""
+def process_artifact_data(data, output_dir=None):
+    """处理圣遗物数据
+
+    Args:
+        data: 原始圣遗物数据
+        output_dir: 如果提供，将为每个圣遗物套装单独导出JSON文件
+    """
     processed = {}
     for set_id, set_data in data.items():
         processed[set_id] = {
@@ -165,10 +191,90 @@ def process_artifact_data(data):
                 }
             )
 
+        # 为每个圣遗物套装单独导出JSON文件
+        if output_dir:
+            artifact_output_file = output_dir / f"artifact_{set_id}.json"
+            with open(artifact_output_file, "w", encoding="utf-8") as f:
+                json.dump(processed[set_id], f, ensure_ascii=False, indent=2)
+
     return processed
 
 
+def generate_name_id_map(processed_data, output_path):
+    """生成名称到ID的映射文件
+
+    Args:
+        processed_data: 预处理后的数据
+        output_path: 映射文件输出路径
+    """
+    name_map = {
+        "characters": {},
+        "weapons": {},
+        "artifacts": {}
+    }
+
+    # 处理角色名称映射
+    for chara_id, chara_data in processed_data["characters"].items():
+        name_obj = chara_data.get("name", {})
+        name_map["characters"][chara_id] = {
+            "cn_sim": name_obj.get("cn_sim", ""),
+            "cn_tra": name_obj.get("cn_tra", ""),
+            "jp": name_obj.get("jp", ""),
+            "en": name_obj.get("en", ""),
+        }
+
+    # 处理武器名称映射
+    for weapon_id, weapon_data in processed_data["weapons"].items():
+        name_obj = weapon_data.get("name", {})
+        name_map["weapons"][weapon_id] = {
+            "cn_sim": name_obj.get("cn_sim", ""),
+            "cn_tra": name_obj.get("cn_tra", ""),
+            "jp": name_obj.get("jp", ""),
+            "en": name_obj.get("en", ""),
+        }
+
+    # 处理圣遗物套装名称映射
+    for set_id, set_data in processed_data["artifacts"].items():
+        name_obj = set_data.get("setName", {})
+        name_map["artifacts"][set_id] = {
+            "cn_sim": name_obj.get("cn_sim", ""),
+            "cn_tra": name_obj.get("cn_tra", ""),
+            "jp": name_obj.get("jp", ""),
+            "en": name_obj.get("en", ""),
+        }
+
+    # 输出映射文件
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(name_map, f, ensure_ascii=False, indent=2)
+
+    # 统计信息
+    total_count = (
+        len(name_map["characters"])
+        + len(name_map["weapons"])
+        + len(name_map["artifacts"])
+    )
+    print(f"  已生成名称-ID映射文件: {output_path.resolve()}")
+    print(f"    - 角色: {len(name_map['characters'])} 个")
+    print(f"    - 武器: {len(name_map['weapons'])} 个")
+    print(f"    - 圣遗物: {len(name_map['artifacts'])} 个")
+    print(f"    - 总计: {total_count} 个")
+
+    return name_map
+
+
 def main():
+    import argparse
+
+    # 命令行参数解析
+    parser = argparse.ArgumentParser(description="原神数据预处理脚本")
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="指定输出目录（默认为 .claude/skills/genshin-data-generator/output/）"
+    )
+    args = parser.parse_args()
+
     # 设置路径（从脚本位置计算）
     script_dir = Path(__file__).resolve().parent
     # 向上查找项目根目录（包含src目录）
@@ -177,39 +283,58 @@ def main():
         project_root = project_root.parent
 
     genshin_dir = project_root / "src" / "assets" / "genshin"
-    output_file = (
-        project_root
-        / ".claude"
-        / "skills"
-        / "genshin-data-generator"
-        / "output"
-        / "processed_data.json"
-    )
+
+    # 确定输出目录
+    if args.output_dir:
+        output_file = args.output_dir / "processed_data.json"
+    else:
+        output_file = (
+            project_root
+            / ".claude"
+            / "skills"
+            / "genshin-data-generator"
+            / "output"
+            / "processed_data.json"
+        )
 
     # 确保output目录存在
     output_file.parent.mkdir(parents=True, exist_ok=True)
+    # 创建characters子目录用于单独导出角色文件
+    characters_dir = output_file.parent / "characters"
+    characters_dir.mkdir(parents=True, exist_ok=True)
+    # 创建weapons子目录用于单独导出武器文件
+    weapons_dir = output_file.parent / "weapons"
+    weapons_dir.mkdir(parents=True, exist_ok=True)
+    # 创建artifacts子目录用于单独导出圣遗物文件
+    artifacts_dir = output_file.parent / "artifacts"
+    artifacts_dir.mkdir(parents=True, exist_ok=True)
 
     print("开始预处理数据...")
     print(f"  输入目录: {genshin_dir.resolve()}")
     print(f"  输出文件: {output_file.resolve()}")
+    print(f"  角色单独导出目录: {characters_dir.resolve()}")
+    print(f"  武器单独导出目录: {weapons_dir.resolve()}")
+    print(f"  圣遗物单独导出目录: {artifacts_dir.resolve()}")
 
     # 处理avatar_map.json
     print("  处理角色数据...")
     with open(genshin_dir / "avatar_map.json", "r", encoding="utf-8") as f:
         avatar_data = json.load(f)
-    processed_avatar = process_avatar_data(avatar_data)
+    processed_avatar = process_avatar_data(avatar_data, output_dir=characters_dir)
+    print(f"    已导出 {len(processed_avatar)} 个角色单独文件")
 
     # 处理weapon_map.json
     print("  处理武器数据...")
     with open(genshin_dir / "weapon_map.json", "r", encoding="utf-8") as f:
         weapon_data = json.load(f)
-    processed_weapon = process_weapon_data(weapon_data)
+    processed_weapon = process_weapon_data(weapon_data, output_dir=weapons_dir)
 
     # 处理reliquary_set_map.json
     print("  处理圣遗物数据...")
     with open(genshin_dir / "reliquary_set_map.json", "r", encoding="utf-8") as f:
         artifact_data = json.load(f)
-        processed_artifact = process_artifact_data(artifact_data)
+        processed_artifact = process_artifact_data(artifact_data, output_dir=artifacts_dir)
+    print(f"    已导出 {len(processed_artifact)} 个圣遗物套装单独文件")
 
     # 合并输出
     processed_data = {
@@ -221,6 +346,10 @@ def main():
     # 输出（使用紧凑格式，列表显示在一行）
     with open(output_file, "w", encoding="utf-8") as f:
         compact_json_dump(processed_data, f, ensure_ascii=False)
+
+    # 生成名称-ID映射文件
+    name_map_file = output_file.parent / "name_id_map.json"
+    generate_name_id_map(processed_data, name_map_file)
 
     # 统计信息
     original_avatar_size = os.path.getsize(genshin_dir / "avatar_map.json")
