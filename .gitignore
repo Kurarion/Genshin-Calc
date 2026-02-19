@@ -44,5 +44,19 @@ Thumbs.db
 # GenshinData
 src/assets/genshin
 
+# Skill: genshin-data-generator - Version data
+.claude/skills/genshin-data-generator/versions
+# Note: All files in versions/ are ignored, including metadata.json and meta.json
+# The metadata is generated locally and should not be tracked by Git
+.claude/skills/genshin-data-generator/diffs
+# Note: Diff reports are generated locally and should not be tracked by Git
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
 # eslint
 .eslintcache
