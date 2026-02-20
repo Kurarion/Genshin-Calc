@@ -1477,7 +1477,10 @@ export class CalculatorService {
               '*',
               'end',
             );
-            const extraVal = data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP] ?? 0;
+            let extraVal = data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP] ?? 0;
+            if (hasTag) {
+              extraVal += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP + tag] ?? 0;
+            }
             damgeValue += extraVal
             directlyMoonHydroCrystallizeProcessFunc(damgeValue, extraVal, '+', 'end');
             moonHydroCrystallizeDirectlyBaseProcess = directlyMoonHydroCrystallizeProcessFunc();
@@ -1488,10 +1491,14 @@ export class CalculatorService {
             const elementalMasteryUp = elementMoonHydroCrystallize;
             damgeUp += elementalMasteryUp;
             moonHydroCrystallizeDmgUpProcessFunc(damgeUp, elementalMasteryUp, '+', 'end');
-            damgeUp += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0;
+            let moonHydroCrystallizeUp = data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0;
+            if (hasTag) {
+              moonHydroCrystallizeUp += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP + tag] ?? 0;
+            }
+            damgeUp += moonHydroCrystallizeUp;
             moonHydroCrystallizeDmgUpProcessFunc(
               damgeUp,
-              data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0,
+              moonHydroCrystallizeUp,
               '+',
               'end',
             );

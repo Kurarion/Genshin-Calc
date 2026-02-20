@@ -14,7 +14,9 @@
       "Bash(robocopy:*)",
       "Bash(powershell:*)",
       "Bash(npx openspec validate:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(python3:*)",
+      "Bash(set PYTHONIOENCODING=utf-8)"
     ],
     "deny": [],
     "ask": []

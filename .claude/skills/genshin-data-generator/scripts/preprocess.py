@@ -203,45 +203,129 @@ def process_artifact_data(data, output_dir=None):
 def generate_name_id_map(processed_data, output_path):
     """生成名称到ID的映射文件
 
+    **重要**：此函数会读取现有的 data.json 来获取正确的 ID 顺序，
+    确保生成的 name_id_map.json 与 data.json 保持相同的顺序。
+    这样 AI 可以通过 name_id_map.json 来确定新配置的正确插入位置。
+
     Args:
         processed_data: 预处理后的数据
         output_path: 映射文件输出路径
     """
+    # 尝试读取现有的 data.json 来获取 ID 顺序
+    # 从 scripts/ 目录需要向上 4 层才能到达项目根目录
+    data_json_path = Path(__file__).resolve().parent.parent.parent.parent.parent / "src" / "assets" / "init" / "data.json"
+
+    existing_order = {
+        "characters": [],
+        "weapons": [],
+        "artifacts": []
+    }
+
+    if data_json_path.exists():
+        try:
+            with open(data_json_path, "r", encoding="utf-8") as f:
+                data_json = json.load(f)
+
+            # 提取 ID 顺序
+            if "characters" in data_json:
+                existing_order["characters"] = list(data_json["characters"].keys())
+            if "weapons" in data_json:
+                existing_order["weapons"] = list(data_json["weapons"].keys())
+            if "artifact" in data_json:  # 注意：data.json 中是 "artifact"（单数）
+                existing_order["artifacts"] = list(data_json["artifact"].keys())
+
+        except Exception as e:
+            print(f"  警告: 无法读取 data.json 获取顺序: {e}")
+            print(f"  将使用默认顺序（按 ID 排序）")
+
     name_map = {
         "characters": {},
         "weapons": {},
         "artifacts": {}
     }
 
-    # 处理角色名称映射
-    for chara_id, chara_data in processed_data["characters"].items():
-        name_obj = chara_data.get("name", {})
-        name_map["characters"][chara_id] = {
-            "cn_sim": name_obj.get("cn_sim", ""),
-            "cn_tra": name_obj.get("cn_tra", ""),
-            "jp": name_obj.get("jp", ""),
-            "en": name_obj.get("en", ""),
-        }
+    # 辅助函数：按正确的顺序生成映射
+    def build_ordered_map(processed_items, existing_ids, data_type):
+        """完全保持 data.json 的顺序，新项目按 ID 数值插入到合适位置"""
+        existing_id_set = set(existing_ids)
 
-    # 处理武器名称映射
-    for weapon_id, weapon_data in processed_data["weapons"].items():
-        name_obj = weapon_data.get("name", {})
-        name_map["weapons"][weapon_id] = {
-            "cn_sim": name_obj.get("cn_sim", ""),
-            "cn_tra": name_obj.get("cn_tra", ""),
-            "jp": name_obj.get("jp", ""),
-            "en": name_obj.get("en", ""),
-        }
+        # 收集所有需要包含的项目（现有 + 新的）
+        all_items = []
 
-    # 处理圣遗物套装名称映射
-    for set_id, set_data in processed_data["artifacts"].items():
-        name_obj = set_data.get("setName", {})
-        name_map["artifacts"][set_id] = {
-            "cn_sim": name_obj.get("cn_sim", ""),
-            "cn_tra": name_obj.get("cn_tra", ""),
-            "jp": name_obj.get("jp", ""),
-            "en": name_obj.get("en", ""),
-        }
+        # 首先按 data.json 顺序添加现有项目
+        for existing_id in existing_ids:
+            if existing_id in processed_items:
+                all_items.append((existing_id, processed_items[existing_id]))
+
+        # 收集新项目（不在现有顺序中的），并按数值排序
+        new_items = []
+        for item_id, item_data in processed_items.items():
+            if item_id not in existing_id_set:
+                new_items.append((item_id, item_data))
+        new_items.sort(key=lambda x: int(x[0]) if x[0].isdigit() else 0)
+
+        # 将新项目插入到合适的位置
+        for new_item in new_items:
+            new_id = new_item[0]
+            inserted = False
+            for i, (existing_id, _) in enumerate(all_items):
+                if int(new_id) < int(existing_id):
+                    all_items.insert(i, new_item)
+                    inserted = True
+                    break
+            if not inserted:
+                all_items.append(new_item)
+
+        # 按最终顺序生成映射
+        ordered_map = {}
+        for item_id, item_data in all_items:
+            if data_type == "character":
+                name_obj = item_data.get("name", {})
+                ordered_map[item_id] = {
+                    "cn_sim": name_obj.get("cn_sim", ""),
+                    "cn_tra": name_obj.get("cn_tra", ""),
+                    "jp": name_obj.get("jp", ""),
+                    "en": name_obj.get("en", ""),
+                }
+            elif data_type == "weapon":
+                name_obj = item_data.get("name", {})
+                ordered_map[item_id] = {
+                    "cn_sim": name_obj.get("cn_sim", ""),
+                    "cn_tra": name_obj.get("cn_tra", ""),
+                    "jp": name_obj.get("jp", ""),
+                    "en": name_obj.get("en", ""),
+                }
+            elif data_type == "artifact":
+                name_obj = item_data.get("setName", {})
+                ordered_map[item_id] = {
+                    "cn_sim": name_obj.get("cn_sim", ""),
+                    "cn_tra": name_obj.get("cn_tra", ""),
+                    "jp": name_obj.get("jp", ""),
+                    "en": name_obj.get("en", ""),
+                }
+
+        return ordered_map
+
+    # 处理角色名称映射（保持 data.json 中的顺序）
+    name_map["characters"] = build_ordered_map(
+        processed_data["characters"],
+        existing_order["characters"],
+        "character"
+    )
+
+    # 处理武器名称映射（保持 data.json 中的顺序）
+    name_map["weapons"] = build_ordered_map(
+        processed_data["weapons"],
+        existing_order["weapons"],
+        "weapon"
+    )
+
+    # 处理圣遗物套装名称映射（保持 data.json 中的顺序）
+    name_map["artifacts"] = build_ordered_map(
+        processed_data["artifacts"],
+        existing_order["artifacts"],
+        "artifact"
+    )
 
     # 输出映射文件
     with open(output_path, "w", encoding="utf-8") as f:
@@ -258,6 +342,7 @@ def generate_name_id_map(processed_data, output_path):
     print(f"    - 武器: {len(name_map['weapons'])} 个")
     print(f"    - 圣遗物: {len(name_map['artifacts'])} 个")
     print(f"    - 总计: {total_count} 个")
+    print(f"    - 映射文件保持与 data.json 相同的 ID 顺序")
 
     return name_map
 

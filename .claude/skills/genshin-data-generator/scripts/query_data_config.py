@@ -40,6 +40,8 @@ DATA_FILE = project_root / "src" / "assets" / "init" / "data.json"
 DEFAULT_NAME_MAP_FILE = (
     project_root / ".claude/skills/genshin-data-generator/output/name_id_map.json"
 )
+# 默认输出目录：项目内部的 exports 目录
+DEFAULT_OUTPUT_DIR = script_dir.parent / "exports"
 
 # 类型配置
 TYPE_CONFIG = {
@@ -282,6 +284,28 @@ def main():
         # 导出到文件时使用纯JSON格式（便于程序读取）
         output = json.dumps(config, ensure_ascii=False, indent=2)
         output_path = Path(args.output)
+
+        # 确保输出路径在项目内部
+        # 如果是相对路径或临时路径，重定向到项目内部的 exports 目录
+        try:
+            # 检查路径是否是绝对路径且在项目外部
+            if output_path.is_absolute():
+                # 解析路径，检查是否在项目根目录外
+                try:
+                    output_path.relative_to(project_root)
+                    # 在项目内部，使用原路径
+                    pass
+                except ValueError:
+                    # 在项目外部，重定向到 exports 目录
+                    output_path = DEFAULT_OUTPUT_DIR / output_path.name
+                    print(f"警告: 输出路径在项目外部，已重定向到项目内部目录")
+            else:
+                # 相对路径，放到 exports 目录
+                output_path = DEFAULT_OUTPUT_DIR / output_path
+        except Exception:
+            # 出错时使用安全的默认路径
+            output_path = DEFAULT_OUTPUT_DIR / "config_export.json"
+
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(output)

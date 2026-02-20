@@ -16,6 +16,8 @@ description: 原神角色伤害计算器数据配置辅助工具。从游戏解�
 
 ## ⚠️ 重要规则
 
+### 1. 数据读取规则
+
 **永远不要直接读取 `src/assets/genshin` 以下的内容！**
 
 这些解包数据文件（avatar_map.json 12MB, weapon_map.json 13MB等）体积巨大，直接读取会：
@@ -23,7 +25,195 @@ description: 原神角色伤害计算器数据配置辅助工具。从游戏解�
 - 导致处理缓慢
 - 可能超出token限制
 
-**正确做法**：使用 `scripts/preprocess.py` 预处理后，只读取 `processed_data.json`。
+**正确做法**：使用版本系统读取预处理后的数据（见下方"数据读取流程"）。
+
+### 1.1 数据读取流程（⚠️ 重要）
+
+**`fetch_version.py` 是判断是否需要获取新数据的最权威工具。**
+
+推荐工作流程：**始终优先使用 `fetch_version.py`**，它会自动处理以下所有判断：
+- 检查本地已有版本
+- 比较远程最新版本
+- 自动跳过已存在的版本
+- 自动运行预处理
+
+#### 标准流程（推荐）⭐
+
+```bash
+# 步骤1：进入脚本目录
+cd .claude/skills/genshin-data-generator/scripts
+
+# 步骤2：运行 fetch_version.py（它将自动判断并执行）
+# Windows 系统（使用 UTF-8 编码）
+$env:PYTHONIOENCODING="utf-8"; python3 fetch_version.py
+
+# Linux/Mac 系统
+PYTHONIOENCODING=utf-8 python3 fetch_version.py
+
+# 步骤3：使用预处理数据进行配置生成
+# 预处理数据已生成在 versions/[commit-id]/processed/ 目录中
+# 直接读取对应的单独文件
+
+# 获取最新版本的 commit ID
+COMMIT_ID=$(cat ../versions/metadata.json | grep -o '"latest": "[^"]*"' | cut -d'"' -f4)
+
+# 读取角色数据（预处理后的原始游戏数据）
+cat ../versions/$COMMIT_ID/processed/characters/character_10000073.json
+
+# 读取武器数据
+cat ../versions/$COMMIT_ID/processed/weapons/weapon_11301.json
+
+# 读取 name_id_map.json（用于查找 ID）
+cat ../versions/$COMMIT_ID/processed/name_id_map.json
+```
+
+**`fetch_version.py` 的自动判断逻辑**：
+1. 读取 `versions/metadata.json` 获取本地版本列表
+2. 调用 Git API 获取远程仓库最新的 N 个 commit（默认3个）
+3. 对比本地和远程，筛选出需要获取的新版本
+4. 按顺序处理每个新版本：
+   - 执行 GenshinData Go 工具获取原始数据
+   - 自动运行 `preprocess.py` 预处理数据
+   - 更新 `metadata.json`
+5. 如果所有远程版本都已存在，直接退出（无需重复获取）
+
+#### 手动检查（可选，用于调试）
+
+如果需要手动检查版本状态（不推荐替代上述流程）：
+
+```bash
+# 检查 metadata.json 获取版本信息
+cat .claude/skills/genshin-data-generator/versions/metadata.json
+
+# 输出示例：
+{
+  "versions": [
+    {
+      "commitId": "fe7c8592b2fd1cd3f285de5039285c99e641a5e1",
+      "shortId": "fe7c859",
+      "timestamp": "2026-02-19T17:59:23.975011Z",
+      "sourceUrl": "https://gitlab.com/Dimbreath/AnimeGameData",
+      "branch": "master",
+      "fetchSource": "gitlab",
+      "stats": {
+        "characters": 136,
+        "weapons": 227,
+        "artifacts": 42
+      }
+    }
+  ],
+  "latest": "fe7c8592b2fd1cd3f285de5039285c99e641a5e1"
+}
+```
+
+检查 `stats` 字段：
+- 存在且包含数据 → 预处理已完成，可以直接使用
+- 不存在或为空 → 需要运行 `fetch_version.py`
+
+#### 验证预处理结果
+
+```bash
+# 检查最新版本的 processed 目录
+COMMIT_ID=$(cat ../versions/metadata.json | grep -o '"latest": "[^"]*"' | cut -d'"' -f4)
+ls ../versions/$COMMIT_ID/processed/
+
+# 应该看到：
+# - processed_data.json
+# - name_id_map.json
+# - characters/ (目录)
+# - weapons/ (目录)
+# - artifacts/ (目录)
+```
+
+**⚠️ 重要提示**：
+- **始终优先使用 `fetch_version.py`**，它会自动处理所有判断和预处理
+- `latest` 是 metadata.json 中的一个**字段**，指向最新版本的 commit ID，**不是实际的文件夹**
+- 不要直接访问 `versions/latest/` 路径，这个路径不存在
+- 使用 `--version latest` 参数时，query_data_config.py 会自动解析 metadata.json 中的 latest 字段
+- **Windows 系统务必设置 `PYTHONIOENCODING=utf-8`** 环境变量，避免中文乱码
+
+### 2. data.json 配置插入规则（⚠️ 极其重要）
+
+**在向 `src/assets/init/data.json` 添加新配置时，必须遵循以下规则：**
+
+#### 使用 name_id_map.json 确定插入顺序
+
+**正确的做法**：通过 `name_id_map.json` 来确定新配置的插入位置。
+
+1. **读取 name_id_map.json**：这个文件保持了与 data.json 完全相同的 ID 顺序
+2. **找到最接近的 ID**：在 name_id_map.json 中查找与新 ID 最接近的现有 ID
+3. **插入位置正确**：新配置必须插入在最接近的现有 ID **之后**
+4. **特殊 ID 之前**：不要插入到特殊 ID 之后（如旅行者的元素形态）
+
+**重要**：`preprocess.py` 现在会自动读取 data.json 来保持 name_id_map.json 与 data.json 的顺序一致。
+
+#### 查找方法示例
+```bash
+# 方法1：使用 query_data_config.py（推荐）
+cd .claude/skills/genshin-data-generator/scripts
+# Windows 系统
+$env:PYTHONIOENCODING="utf-8"; python3 query_data_config.py --type character --list
+
+# 方法2：直接读取 name_id_map.json
+# 首先获取最新版本的 commit ID
+cd .claude/skills/genshin-data-generator
+COMMIT_ID=$(cat versions/metadata.json | grep -o '"latest": "[^"]*"' | cut -d'"' -f4)
+
+# Windows PowerShell 替代方案
+$COMMIT_ID = (Get-Content versions/metadata.json | Select-String '"latest"' | ForEach-Object { $_ -replace '.*"latest": "(.*?)".*', '$1' })
+
+# 然后读取对应版本的 name_id_map.json
+cat versions/$COMMIT_ID/processed/name_id_map.json | python -c "
+import json, sys
+data = json.load(sys.stdin)
+char_ids = list(data['characters'].keys())
+print('最后10个角色ID:')
+for cid in char_ids[-10:]:
+    print(f'  {cid}: {data[\"characters\"][cid][\"en\"]}')
+"
+
+# Windows PowerShell 替代方案（使用 UTF-8）
+$env:PYTHONIOENCODING="utf-8"; Get-Content versions/$COMMIT_ID/processed/name_id_map.json | python -c "import json, sys; data = json.load(sys.stdin); char_ids = list(data['characters'].keys())[-10:]; [print(f'  {cid}: {data[\"characters\"][cid][\"en\"]}') for cid in char_ids]"
+```
+
+#### 特殊 ID 识别
+特殊 ID 通常有以下特征：
+- 旅行者元素形态：`10000005502` (火), `10000005503` (水), `10000005504` (风), `10000005506` (岩), `10000005507` (雷), `10000005508` (草)
+- 荧元素形态：`10000007702` (火), `10000007703` (水), `10000007704` (风), `10000007706` (岩), `10000007707` (雷), `10000007708` (草)
+- 10位以上 ID：`1000011711702`, `1000011811802` 等
+
+#### 正确的插入示例
+```javascript
+// 假设要添加 10000126 和 10000127
+// 在 name_id_map.json 中看到：
+{
+  "characters": {
+    ...
+    "10000125": "Columbina",  ← 最后一个普通 ID
+    "1000011711702": "Manekin (Pyro)",  ← 第一个特殊 ID
+    ...
+  }
+}
+
+// 正确做法：在 10000125 之后插入 10000126 和 10000127
+// 错误做法：插入到文件最后或特殊 ID 之后
+```
+
+#### 适用范围
+此规则适用于：
+- **角色** (`characters`)
+- **武器** (`weapons`)
+- **圣遗物** (`artifact`)
+
+### 3. 输出路径安全规则
+
+**所有脚本的输出文件必须保存在项目内部！**
+
+- `query_data_config.py`: 默认输出到 `exports/` 目录
+- `export_data.py`: 默认输出到 `exports/` 目录
+- `diff_analyzer.py`: 默认输出到 `diffs/` 目录
+
+如果用户指定了项目外路径，脚本会自动重定向到项目内部对应目录。
 
 ## 文件管理结构
 
@@ -120,7 +310,7 @@ python3 fetch_version.py --repo https://gitlab.com/Dimbreath/AnimeGameData --bra
    - 执行 GenshinData Go 工具获取原始数据（使用特定commit ID）
    - 运行 preprocess.py 预处理数据
    - 生成版本元数据和校验和
-4. 更新版本索引，并将 latest 符号链接指向最新的版本
+4. 更新版本索引
 
 ### 1.1 直接使用 GenshinData Go 工具（高级用法）
 
@@ -202,25 +392,80 @@ python3 diff_analyzer.py --from abc1234 --to def5678 --focus characters weapons
 
 ### 3. 读取版本数据
 
-**方式1：从版本目录读取（推荐）**
+#### 3.1 读取预处理的游戏数据（⚠️ 生成配置时使用）
 
-版本系统自动为每个版本生成完整的预处理数据：
+**重要**：预处理后的游戏数据已经自动生成单独文件，**这是生成新配置时的标准数据来源**。
+
+> **⚠️ 重要**：
+> - **永远不要直接读取 `src/assets/genshin` 以下的原始解包数据**
+> - **始终使用预处理后的数据**（文件体积小、结构清晰）
+> - 预处理数据已自动生成单独文件，按 ID 直接读取即可
+
+**对比示例：查询叶洛亚 (10000127) 的游戏数据**
+
+| 错误做法 ❌ | 正确做法 ✅ |
+|------------|------------|
+| ```bash<br># 直接读取原始解包数据（12MB+）<br>cat src/assets/genshin/avatar_map.json \| grep 10000127<br>``` | ```bash<br># 读取预处理后的单独文件（~50KB）<br>cd .claude/skills/genshin-data-generator<br>COMMIT_ID=$(cat versions/metadata.json \| grep -o '"latest": "[^"]*"' \| cut -d'"' -f4)<br>cat versions/$COMMIT_ID/processed/characters/character_10000127.json<br>``` |
+| **问题**：<br>- 文件巨大（12MB+）<br>- 输出混乱，包含无关数据<br>- 占用大量上下文 | **优势**：<br>- 文件小巧（~50KB）<br>- 结构清晰，只包含目标角色数据<br>- 节省上下文 |
+
+**标准流程**：
 
 ```bash
-# 查询特定版本的预处理数据
-cd .claude/skills/genshin-data-generator/scripts
-python3 query_data_config.py --version abc1234 --type character --id 10000073
+# 获取最新版本的 commit ID
+cd .claude/skills/genshin-data-generator
+COMMIT_ID=$(cat versions/metadata.json | grep -o '"latest": "[^"]*"' | cut -d'"' -f4)
 
-# 查询最新版本
-python3 query_data_config.py --version latest --type character --id 10000073
+# 读取角色数据（预处理后的原始游戏数据）
+cat versions/$COMMIT_ID/processed/characters/character_10000073.json
 
-# 使用版本目录中的单独文件
-cat versions/[commit-id]/processed/characters/character_10000073.json
-cat versions/[commit-id]/processed/weapons/weapon_11301.json
-cat versions/[commit-id]/processed/artifacts/artifact_301.json
+# 读取武器数据
+cat versions/$COMMIT_ID/processed/weapons/weapon_11301.json
+
+# 读取圣遗物数据
+cat versions/$COMMIT_ID/processed/artifacts/artifact_301.json
+
+# 读取 name_id_map.json（用于查找 ID）
+cat versions/$COMMIT_ID/processed/name_id_map.json
 ```
 
-**方式2：使用 export_data.py 导出（临时分析用）**
+#### 3.2 查询已配置的数据（⚠️ 优先使用此方法）
+
+**query_data_config.py** 用于查询 `src/assets/init/data.json` 中已配置的数据，**这是检查和参考已有配置的标准方法**。
+
+> **⚠️ 重要**：
+> - **检查已配置数据时，必须优先使用 `query_data_config.py`**
+> - **不要使用 grep 搜索 data.json**（效率低且输出不友好）
+> - **不要直接读取 data.json**（文件巨大，占用大量上下文）
+
+**对比示例：查询叶洛亚 (10000127) 的已配置数据**
+
+| 错误做法 ❌ | 正确做法 ✅ |
+|------------|------------|
+| ```bash<br># 使用 grep 搜索 data.json<br>grep -A 100 '"10000127":' src/assets/init/data.json<br>``` | ```bash<br># 使用专用脚本查询<br>cd .claude/skills/genshin-data-generator/scripts<br>PYTHONIOENCODING=utf-8 python query_data_config.py --type character --id 10000127<br>``` |
+| **问题**：<br>- 输出格式混乱<br>- 可能截断或不完整<br>- 难以阅读 | **优势**：<br>- 输出格式化，易读<br>- 完整显示配置<br>- 高效精准 |
+
+**标准流程**：
+
+```bash
+cd .claude/skills/genshin-data-generator/scripts
+
+# 根据ID查询已配置的角色数据（推荐）
+python3 query_data_config.py --type character --id 10000073
+
+# 根据名称搜索（需要在 output/ 目录有 name_id_map.json）
+python3 query_data_config.py --type character --name 纳西妲
+
+# 模糊搜索
+python3 query_data_config.py --type character --fuzzy 纳
+
+# 列出所有已配置的ID
+python3 query_data_config.py --type character --list
+
+# 导出到文件
+python3 query_data_config.py --type character --id 10000073 --output config_export.json
+```
+
+#### 3.3 临时导出分析（可选）
 
 **输出示例**：
 
@@ -674,6 +919,219 @@ data.json中已实现的角色数: 85
 
 **重要**：特殊标签系统用于区分技能内部多种不同类型的伤害，不是特殊机制！，主要用于实现对同技能内不同伤害进行追加该伤害专用的BUFF使用
 
+##### 9.1 添加新tag的完整流程
+
+当需要添加新的特殊标签（tag）时，必须完成以下步骤：
+
+**步骤1: 在 data.json 中使用 tag**
+
+在技能配置中添加 tag 字段，用于区分技能内部不同类型的伤害或增益。
+
+**示例：兹白(10000126)的配置**
+
+1. **在 damage 配置中添加 tag**（技能伤害）：
+
+```javascript
+"skill": [
+  {
+    "damage": {
+      "indexes": [0],
+      "base": "DEFENSE",
+      "elementBonusType": "DMG_BONUS_GEO",
+      "attackBonusType": "DMG_BONUS_SKILL",
+      "specialDamageType": "moon-hydro-crystallize-direction"
+    }
+  },
+  {
+    "damage": {
+      "indexes": [1],
+      "base": "DEFENSE",
+      "elementBonusType": "DMG_BONUS_GEO",
+      "attackBonusType": "DMG_BONUS_SKILL",
+      "specialDamageType": "moon-hydro-crystallize-direction",
+      "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"  // 灵驹飞踏第二段伤害
+    }
+  },
+  {
+    "damage": {
+      "indexes": [2],
+      "base": "DEFENSE",
+      "elementBonusType": "DMG_BONUS_GEO",
+      "attackBonusType": "DMG_BONUS_NORMAL",
+      "specialDamageType": "moon-hydro-crystallize-direction",
+      "tag": "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"  // 月转时隙第四段额外伤害
+    }
+  }
+]
+```
+
+2. **在 buff 配置中添加 tag**（用于指定该增益只对特定tag生效）：
+
+```javascript
+"proudSkills": [
+  [
+    {
+      "buffs": [
+        {
+          "index": 0,
+          "base": "DEFENSE",
+          "target": ["DMG_VAL_UP_SKILL"],
+          "settingType": "switch",
+          "defaultEnable": false,
+          "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"  // 只对灵驹飞踏第二段生效
+        }
+      ]
+    }
+  ]
+]
+```
+
+3. **在 constellation 配置中使用 tag**（命座对特定tag的伤害加成）：
+
+```javascript
+"constellation": {
+  "1": [
+    {
+      "buffs": [
+        {
+          "index": 1,
+          "base": "DEFENSE",
+          "target": ["DMG_VAL_UP_SKILL"],
+          "settingType": "switch",
+          "defaultEnable": false,
+          "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"
+        }
+      ]
+    }
+  ],
+  "3": [
+    {
+      "buffs": [
+        {
+          "index": 0,
+          "base": "DEFENSE",
+          "target": ["DMG_VAL_UP_NORMAL"],
+          "settingType": "switch",
+          "defaultEnable": false,
+          "tag": "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**说明**：
+- tag 用于区分技能内部不同类型的伤害
+- buff 中的 tag 字段指定该增益只对带有该 tag 的伤害生效
+- 同一个伤害配置可以有 tag，buff 配置也可以有 tag（用于筛选作用目标）
+
+**步骤2: 在 const.ts 中添加 tag 常量**
+
+在 `src/app/shared/const/const.ts` 中：
+
+1. 添加新的常量定义（按字母顺序插入）：
+
+```typescript
+static readonly PROP_TAG_ZIBAI_SPIRIT_STEED_SECOND_HIT = 'ZIBAI_SPIRIT_STEED_SECOND_HIT';
+static readonly PROP_TAG_ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA = 'ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA';
+```
+
+2. 添加到 `PROPS_TAG_LIST` 数组：
+
+```typescript
+static readonly PROPS_TAG_LIST = [
+  // ... 其他tag
+  Const.PROP_TAG_ZIBAI_SPIRIT_STEED_SECOND_HIT,
+  Const.PROP_TAG_ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA,
+];
+```
+
+3. 添加到 `PROPS_TAG_MAP` 映射（关联角色ID）：
+
+```typescript
+static readonly PROPS_TAG_MAP: Map<string, string[]> = new Map([
+  // ... 其他角色
+  ['10000126', [Const.PROP_TAG_ZIBAI_SPIRIT_STEED_SECOND_HIT, Const.PROP_TAG_ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA]],
+]);
+```
+
+4. 添加到 `PROPS_ALL_BASE_SPACIAL` 或 `PROPS_ALL_BASE_SPACIAL_PERCENT`：
+
+根据 tag 对应的 buff 加成类型，将 `[属性常量, Tag常量]` 添加到对应的集合：
+
+- `PROPS_ALL_BASE_SPACIAL`: 用于**非百分比**的数值加成（如 `DMG_VAL_UP_*`）
+- `PROPS_ALL_BASE_SPACIAL_PERCENT`: 用于**百分比**加成（如 `DMG_BONUS_*`）
+
+**判断规则**：
+- 查看 data.json 中该 tag 使用的 `target` 类型
+- `DMG_VAL_UP_*` 系列 → 添加到 `PROPS_ALL_BASE_SPACIAL`
+- `DMG_BONUS_*` 系列 → 添加到 `PROPS_ALL_BASE_SPACIAL_PERCENT`
+
+**示例**：
+
+```typescript
+// 兹白的两个tag都使用 DMG_VAL_UP_* 类型，添加到 PROPS_ALL_BASE_SPACIAL
+static readonly PROPS_ALL_BASE_SPACIAL = [
+  // ... 其他配置
+  [Const.PROP_DMG_VAL_UP_NORMAL, Const.PROP_TAG_ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA],
+  // ... 其他配置
+  [Const.PROP_DMG_VAL_UP_SKILL, Const.PROP_TAG_ZIBAI_SPIRIT_STEED_SECOND_HIT],
+  // ... 其他配置
+];
+```
+
+**重要**：这两个集合用于将 tag 与其对应的伤害属性关联起来，是伤害计算系统正确识别和应用 tag 加成的关键。
+
+**步骤3: 在 i18n 文件中添加翻译**
+
+⚠️ **重要**：翻译必须从预处理数据中提取，不要自己翻译！
+
+1. 读取预处理数据查找官方翻译：
+
+```bash
+# 获取最新版本的commit ID
+cd .claude/skills/genshin-data-generator
+COMMIT_ID=$(cat versions/metadata.json | grep -o '"latest": "[^"]*"' | cut -d'"' -f4)
+
+# 读取角色数据
+cat versions/$COMMIT_ID/processed/characters/character_10000126.json
+```
+
+2. 从 desc 字段中提取各语言的官方翻译
+
+3. 在所有 i18n 文件中添加翻译：
+
+**en.json**:
+```json
+"TAG": {
+  // ...
+  "ZIBAI_SPIRIT_STEED_SECOND_HIT": "Spirit Steed's Stride 2nd Hit",
+  "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA": "Lunar Phase Shift 4th Additional Attack"
+}
+```
+
+**cn_sim.json**:
+```json
+"TAG": {
+  // ...
+  "ZIBAI_SPIRIT_STEED_SECOND_HIT": "灵驹飞踏第二段",
+  "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA": "月转时隙第四段额外攻击"
+}
+```
+
+**jp.json**:
+```json
+"TAG": {
+  // ...
+  "ZIBAI_SPIRIT_STEED_SECOND_HIT": "翔ける霊駒2段目",
+  "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA": "隙を過ぐる月・四段目の追加攻撃"
+}
+```
+
+**命名规范**：
+- Tag 常量名使用大写蛇形命名：`ROLE_SKILL_NAME_DETAIL`
+
 ##### 10. 基础属性常量
 
 **基础属性**：
@@ -744,7 +1202,116 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 - 某些技能的伤害基于其他技能中的值，比如：叠加层数，需要先定义变量，并在影响技能内使用这个变量进行计算
 - 某些效果需要中间变量计算
 
-##### 13. 伤害计算参考（两大组选择）
+##### 13. 月兆buff配置
+
+**触发条件**：当技能/天赋描述中出现类似"此外，兹白在队伍中时，队伍的月兆将会上升一级"的效果时，需要添加月兆buff配置。
+
+**月兆buff包含两部分**：
+
+1. **月兆等级变量设置**（`VAR_CHARA_1`）
+   - 控制月相等级（0-2级）
+   - 使用slider类型，步长为1
+
+2. **月元素伤害加成**（`DMG_ELEMENT_MOON_ALL_UP`）
+   - 基于月兆队伍的月元素伤害加成
+   - 每级12%，共3级（0-36）
+   - 使用slider类型，步长为1
+   - 影响全队（`isAllTeam: true`）
+
+**配置示例**（兹白"月兆祝赐·浮明若流"天赋）：
+
+```javascript
+// proudSkills 数组中添加两个新的buff对象
+[
+  {
+    "buffs": [
+      {
+        "showIndex": 0,
+        "setTos": ["VAR_CHARA_1"],        // 设置月兆等级变量
+        "settingType": "slider",
+        "sliderInitialValue": 0,          // 初始值：0级
+        "sliderMin": 0,                   // 最小值：0级
+        "sliderMax": 2,                   // 最大值：2级
+        "sliderStep": 1,                  // 步长：1级
+        "title": "BUFF.MOON_LEVEL.TITLE"  // i18n显示标题
+      }
+    ]
+  },
+  {
+    "buffs": [
+      {
+        "customValue": 0.01,              // 单位转换（整数转百分比）
+        "target": ["DMG_ELEMENT_MOON_ALL_UP"],  // 月元素伤害加成
+        "settingType": "slider",
+        "sliderInitialValue": 0,          // 初始值：0%
+        "sliderMin": 0,                   // 最小值：0%
+        "sliderMax": 36,                  // 最大值：36%（3级×12%）
+        "sliderStep": 1,                  // 步长：1%
+        "isAllTeam": true                 // 影响全队
+      }
+    ]
+  }
+]
+```
+
+**说明**：
+- 第一个buff对象设置`VAR_CHARA_1`变量，用于记录月兆等级（0-2）
+- 第二个buff对象使用`customValue: 0.01`将slider值转换为百分比（如slider值12 → 12%伤害加成）
+
+##### 14. 月结晶伤害的tag处理（calculator.service.ts特殊处理）
+
+**背景**：月结晶直接伤害（`specialDamageType: "moon-hydro-crystallize-direction"`）有两类buff需要特殊处理：
+
+1. **数值区buff**：`DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP`
+2. **增伤区buff**：`DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP`
+
+**问题**：当这些buff使用tag时（如`ZIBAI_SPIRIT_STEED_SECOND_HIT`），buff的值存储在`target + "__" + tag`属性中，需要额外读取。
+
+**解决**：在`calculator.service.ts`的月结晶直接伤害计算中添加hasTag处理：
+
+```typescript
+// 数值区处理（extraVal）
+let extraVal = data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP] ?? 0;
+if (hasTag) {
+  extraVal += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP + tag] ?? 0;
+}
+damgeValue += extraVal;
+
+// 增伤区处理（damgeUp）
+let moonHydroCrystallizeUp = data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP] ?? 0;
+if (hasTag) {
+  moonHydroCrystallizeUp += data[Const.PROP_DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP + tag] ?? 0;
+}
+damgeUp += moonHydroCrystallizeUp;
+```
+
+**配置要求**：
+
+1. **const.ts映射**：
+   - `DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP` → `PROPS_ALL_BASE_SPACIAL`
+   - `DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP` → `PROPS_ALL_BASE_SPACIAL_PERCENT`
+
+2. **示例配置**（兹白C0）：
+```javascript
+{
+  "buffs": [
+    {
+      "index": 0,
+      "base": "DEFENSE",
+      "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP"],  // 增伤区（百分比）
+      "settingType": "switch",
+      "defaultEnable": false,
+      "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"
+    }
+  ]
+}
+```
+
+**判断规则**：
+- 如果描述是"提升X%"（如220%）→ 使用`DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP`（增伤区）
+- 如果描述是"提升X防御力"（如550%防御力）→ 使用`DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP`（数值区）
+
+##### 15. 伤害计算参考（两大组选择）
 
 **第一组：根据elementBonusType选择（元素类型）**
 
@@ -907,6 +1474,364 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
     }
   }
 ]
+```
+
+### ⚠️ indexMultiValue 使用规则（重要）
+
+**核心原则**：只有当预处理数据中的值需要单位转换时，才使用 `indexMultiValue`。
+
+**判断规则**：
+| 预处理数据值 | 描述 | 是否需要 indexMultiValue | 示例 |
+|------------|------|------------------------|------|
+| `0.007`（每100点防御力提升0.7%） | 需要按"每100点"计算 | 需要 `0.01`（转换为每1点） | 兹白天赋3：0.007 × 0.01 = 0.00007 |
+| `5.5`（550%防御力） | 直接的倍率值 | ❌ 不需要！直接使用index读取 | 兹白C2：5.5已在数据中 |
+| `2.5`（250%防御力） | 直接的倍率值 | ❌ 不需要！直接使用index读取 | 兹白C4：2.5已在数据中 |
+
+**错误示例**（常见）：
+```javascript
+// ❌ 错误：5.5已经在预处理数据中，不需要转换
+{
+  "index": 1,
+  "base": "DEFENSE",
+  "indexMultiValue": 5.5,  // 错误！
+  "target": ["DMG_VAL_UP_SKILL"]
+}
+
+// ✅ 正确：直接使用index读取
+{
+  "index": 1,
+  "base": "DEFENSE",
+  "target": ["DMG_VAL_UP_SKILL"]
+}
+```
+
+**重要提示**：
+- `indexMultiValue` 是一个**乘数**，用于将预处理数据中的值转换为实际计算所需的单位
+- 如果预处理数据中的值已经是最终需要的值（如5.5倍防御力），**绝不要使用indexMultiValue**
+- 只有当数据单位与计算单位不一致时（如"每100点"vs"每1点"）才需要使用indexMultiValue
+
+### ⚠️ customValue 使用规则（极重要）
+
+**核心原则**：`customValue` 和 `index` **永远不要同时使用**！
+
+**判断规则**：
+| 场景 | 使用方式 | 实际例子 |
+|------|---------|---------|
+| **默认情况** → `paramMap` 中有需要的值 | **只使用 `index`** | 叶洛亚天赋1：param[0]=0.05对应描述"暴击率5%" → 只写 `"index": 0` |
+| `paramMap` 中**找不到**需要的值 | **只使用 `customValue`** | 描述中有明确数值但paramMap中无此值 → 只写 `"customValue"` |
+
+**重要提示**：
+- 绝大多数情况下，`paramMap` 中都包含需要的数值，应使用 `index`
+- `customValue` 仅用于 `paramMap` 中完全没有对应值的特殊情况
+
+**判断流程**：
+1. 先检查 `paramMap` 中是否有对应数值
+2. 如果有 → 使用 `index`
+3. 如果没有 → 使用 `customValue`
+
+**重要提示**：
+- `index` 用于从 `paramMap` 中读取数值
+- `customValue` 用于手动指定固定值（仅当paramMap中完全找不到对应值时使用）
+- **两者永远互斥，不能同时使用**
+- 绝大多数情况应使用 `index`，`customValue` 仅用于特殊例外情况
+
+### ⚠️ buffs数组配置规则
+
+**核心原则**：当多个buff效果共享同一个触发条件（switch）时，应该放在同一个buffs数组中。
+
+**属性继承规则**：
+- `settingType` 和 `defaultEnable`：只需在第一个buff object设置，后续buff继承
+- `isAllTeam`：每个buff独立设置，必须保留（因为不同buff可能影响范围不同）
+
+**使用场景**：
+
+1. **暴击率和暴击伤害使用不同index但共享switch**
+   ```javascript
+   // 游戏数据：paramMap[0]=0.05(暴击率5%), paramMap[1]=0.1(暴击伤害10%)
+   // 描述："施放元素战技后，暴击率提升5%，暴击伤害提升10%"
+   // 分析：两个效果同时触发，共享一个switch，但数值不同需用不同index
+
+   // ✅ 正确配置
+   "proudSkills": [
+     [
+       {
+         "buffs": [
+           {
+             "index": 0,
+             "target": ["CRIT_RATE"],
+             "settingType": "switch",
+             "defaultEnable": false,
+             "isAllTeam": true
+           },
+           {
+             "index": 1,
+             "target": ["CRIT_DMG"],
+             "isAllTeam": true
+             // 继承第一个buff的settingType和defaultEnable
+           }
+         ]
+       }
+     ]
+   ]
+   ```
+
+2. **错误配置：分成多个独立object**
+   ```javascript
+   // ❌ 错误：三个独立的object = 三个独立的switch
+   [
+     {"buffs": [{"index": 0, "target": ["CRIT_RATE"], "settingType": "switch", ...}]},
+     {"buffs": [{"index": 1, "target": ["CRIT_DMG"], "settingType": "switch", ...}]},
+     {"buffs": [{"index": 4, "target": ["ELEMENTAL_MASTERY"], "settingType": "switch", ...}]}
+   ]
+   ```
+
+**判断是否合并到同一个buffs数组**：
+- ✅ 同时触发的效果（如"暴击率提升X%且暴击伤害提升Y%"）→ 合并
+- ✅ 共享触发条件的不同属性加成 → 合并
+- ❌ 独立触发或独立控制的效果 → 分开
+
+**⚠️ target选择注意**：
+- 描述"对岩元素伤害，暴击率提升X%" → 使用 `CRIT_RATE`（全局暴击率），不是 `CRIT_RATE_GEO`（岩元素暴击率）
+- 这是因为效果是：当造成岩元素伤害时，全局暴击率提升，而不是岩元素伤害本身的暴击率提升
+
+### ⚠️ 命座3和5的配置规则
+
+**核心原则**：命座3和5通常只提升技能等级+3，不需要配置。
+
+**规则**：
+- 命座3/5描述仅为"元素战技/爆发等级提高3级" → **不写配置**
+- 命座3/5描述包含额外效果 → **只写额外效果的配置**
+
+**示例**：
+```javascript
+// ❌ 错误：仅为技能等级+3，不应该有配置
+"4": [
+  {
+    "buffs": [
+      {
+        "index": 2,
+        "target": ["DMG_BONUS_SKILL"],  // 技能等级+3不需要配置！
+        "settingType": "switch",
+        "defaultEnable": false
+      }
+    ]
+  }
+]
+
+// ✅ 正确：技能等级+3不写配置
+// （命座3在data.json中直接跳过，写"4"时对应实际C4）
+
+// ✅ 有额外效果时，只写额外效果（10000125）
+// 元素爆发她的乡愁的技能等级提高3级。至多提升至15级。队伍中附近的所有角色造成的月曜反应伤害擢升1.5%。
+"4": [
+  {
+    "buffs": [
+      {
+        "index": 0,
+        "target": ["DMG_ELEMENT_MOON_PROMOTION"],
+        "settingType":"switch",
+        "isAllTeam": true
+      }
+    ]
+  }
+],
+```
+
+**重要**：data.json中的命座编号是字符串类型，与实际命座对应关系：
+- `"0"` = 天赋1（突破天赋）
+- `"1"` = C1
+- `"2"` = C2
+- `"3"` = C4（跳过C3，因为C3只是技能等级+3）
+- `"5"` = C6（跳过C5，因为C5只是技能等级+3）
+
+### ⚠️ 不影响数值的效果不配置
+
+**核心原则**：只配置影响最终伤害/治疗/护盾数值的效果。
+
+**不需要配置的效果**：
+- CD减少
+- 非充能相关的积攒效率提升（如兹白时隙浮光积攒效率）
+- 元素能量恢复值
+- 使用次数增加
+- 持续时间延长
+- 范围扩大
+- 纯功能性效果
+
+**需要配置的效果**：
+- 伤害倍率提升（直接/间接）
+- 增伤区加成
+- 属性值提升（攻击力/防御力/HP/元素精通/元素充能效率）
+- 暴击率/暴击伤害提升
+- 伤害加成（元素/物理/反应）
+
+**注意**：元素充能效率（ENERGY_RECHARGE）是基础属性，会影响某些伤害计算（如充能效率转攻击力/伤害等），因此需要配置。但"元素能量恢复"（恢复点数）不需要配置。
+
+**示例：兹白C6**
+```javascript
+// 描述：
+// 1. "积攒时隙浮光的效率提升50%" → 不配置（不影响伤害）
+// 2. "每额外消耗1点时隙浮光，月结晶反应伤害擢升1.6%" → 需要配置
+
+// ✅ 正确：使用slider模拟超过70的部分（0-30）
+"5": [
+  {
+    "buffs": [
+      {
+        "index": 0,
+        "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION"],
+        "settingType": "slider",
+        "sliderMin": 0,
+        "sliderMax": 30,
+        "sliderInitialValue": 0,
+        "isAllTeam": true
+      }
+    ]
+  }
+]
+
+// 说明：时隙浮光范围0-100，超过70点部分最多30点（100-70）
+// slider值直接乘以预处理数据中的1.6%得到最终伤害擢升
+// 注意：使用PROMOTION而非UP，因为"擢升"是特殊的独立提升
+```
+
+### ⚠️ 基础属性 vs 角色特有机制的配置原则
+
+**核心原则**：项目目的是计算伤害，不是完全模拟游戏机制。只要能达到最终目的，优先选择简洁的配置方式。
+
+| 配置类型 | 配置方式 | 示例 |
+|---------|---------|------|
+| **基础属性** | 使用`base + baseModifyValue + baseModifyRelation` | DEFENSE、ATTACK、HP、ELEMENTAL_MASTERY、ENERGY_RECHARGE等 |
+| **角色特有机制** | 直接用slider/switch模拟结果 | 时隙浮光等角色特有资源 |
+
+**基础属性列表**：
+- `ATTACK` - 攻击力
+- `DEFENSE` - 防御力
+- `HP` - 生命值
+- `ELEMENTAL_MASTERY` - 元素精通
+- `ENERGY_RECHARGE` - 元素充能效率
+- 其他通用属性（暴击率、暴击伤害、伤害加成等）
+
+> **⚠️ target 命名注意事项**：
+> - 基础属性作为 target 时，**直接使用属性名本身**，如 `ELEMENTAL_MASTERY`
+> - ❌ 错误写法：`ELEMENTAL_MASTERY_UP` 带有 `_UP` 后缀的形式不存在
+> - `_UP` 后缀用于伤害相关常量（如 `DMG_RATE_UP_*`），不用于元素精通
+
+**角色特有机制**：
+- 兹白的时隙浮光
+- 其他角色独有的资源/层数系统
+
+**配置示例对比**：
+
+```javascript
+// ✅ 正确：基础属性使用base方式
+{
+  "index": 0,
+  "base": "DEFENSE",
+  "baseModifyValue": 1000,
+  "baseModifyRelation": "+",
+  "target": ["ATTACK_UP"]
+}
+
+// ✅ 正确：角色特有机制直接用slider模拟结果
+// 描述：每额外消耗1点时隙浮光，月结晶反应伤害擢升1.6%
+{
+  "index": 0,
+  "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION"],
+  "settingType": "slider",
+  "sliderMin": 0,
+  "sliderMax": 30,  // 时隙浮光超过70的部分（0-30）
+  "sliderInitialValue": 0
+}
+
+// ❌ 错误：角色特有机制使用不存在的base
+{
+  "index": 0,
+  "base": "PHASE_SHIFT_RADIANCE",  // 这不是基础属性！
+  "baseModifyValue": 70,
+  "baseModifyRelation": "-",
+  "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION"]
+}
+```
+
+**判断规则**：
+- 如果是所有角色都可能有的属性 → 使用base方式
+- 如果是某个角色独有的机制 → 用slider/switch直接模拟结果
+- 不确定时优先选择slider/switch，更简洁直观
+
+### ⚠️ buff settingType 选择规则
+
+**核心原则**：buff 的 settingType 取决于效果是否有触发条件和叠加层数。
+
+| settingType | 用途 | 示例 |
+|-------------|------|------|
+| **resident** | 无条件自动生效的被动效果，始终存在 | 武器特效的防御力提升 |
+| **switch** | 有条件触发的效果（开/关两种状态） | 伤害加成、技能效果等 |
+| **slider** | 有叠加层数的效果（switch无法模拟） | 叠加层数、气氛值、月兆等级等 |
+
+**判断规则**：
+1. **无条件自动生效** → `resident`
+   - 没有任何触发条件，始终生效
+   - 示例：武器特效的防御力/攻击力提升
+
+2. **有条件触发（只有开/关两种状态）** → `switch` (+ `defaultEnable` 根据情况设置)
+   - 需要满足特定条件才能生效（如造成伤害、触发反应等）
+   - 只有"生效"和"不生效"两种状态
+   - 示例：武器特效的伤害提升、技能的主动效果、天赋效果
+
+3. **有叠加层数（多个不同数值的状态）** → `slider`
+   - 有多个不同的数值状态，switch无法模拟
+   - 需要用户选择当前的叠加层数/等级
+   - 示例：叠加层数（0-N层）、气氛值（0-300）、月兆等级（0-2）
+
+2. **有条件触发** → `switch` (+ `defaultEnable` 根据情况设置)
+   - 需要满足特定条件才能生效（如造成伤害、触发反应等）
+   - 用户可以选择开启/关闭来测试
+   - 示例：武器特效的伤害提升、技能的主动效果、天赋效果
+
+3. **可变数值效果** → `slider`
+   - 需要用户手动设置具体数值的效果
+   - 示例：叠加层数、芙宁娜的气氛值、月兆等级
+
+**defaultEnable 设置规则**：
+- **基本原则**：基本上都是 `defaultEnable: false`（默认关闭）
+- 使用者根据需要手动开启要测试的buff
+
+**示例对比**（朏魄含光 11519 武器特效）：
+
+```javascript
+// ✅ 正确配置
+"effect": [
+  {
+    "buffs": [
+      {
+        "index": 0,
+        "target": ["DEFENSE_UP"],
+        "settingType": "resident"  // 无条件自动生效
+      }
+    ]
+  },
+  {
+    "buffs": [
+      {
+        "index": 0,
+        "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP"],
+        "settingType": "switch",      // 有条件触发
+        "defaultEnable": false         // 默认关闭
+      }
+    ]
+  }
+]
+
+// ❌ 错误配置
+{
+  "index": 0,
+  "target": ["DEFENSE_UP"],
+  "settingType": "slider",          // 无条件生效不需要slider
+  "sliderInitialValue": 1,
+  "sliderMin": 1,
+  "sliderMax": 5,
+  "sliderStep": 1
+}
 ```
 
 ### 配置对象合并 vs 分开
@@ -1605,6 +2530,124 @@ product = base * rate + Σ(rateAttach[i] * data[baseAttach[i]]) + extra
 总伤害 = 每枚草露伤害 × (0 + VAR_CHARA_5)
        = param[2] × 元素精通 × (0 + 草露数量)
 ```
+
+---
+
+#### 示例1.7: 特殊伤害类型 - 月结晶直接伤害（兹白）
+
+**角色**: 兹白 (10000126) - 技能月转时隙
+
+**源数据**:
+```javascript
+// desc (简体中文): "...第四段攻击将额外造成一次岩元素伤害，该伤害视为月结晶反应伤害。"
+
+// paramDescList (简体中文)
+[
+  "灵驹飞踏第一段伤害|{param1:F1P}防御力",
+  "灵驹飞踏第二段伤害|{param2:F1P}防御力",
+  "月转时隙第四段额外伤害|{param3:F1P}防御力",  // 关键！月结晶伤害
+  ...
+]
+```
+
+**说明**: 兹白的月转时隙第四段额外伤害被明确说明为"视为月结晶反应伤害"。这种特殊伤害类型需要使用`specialDamageType`标记为`moon-hydro-crystallize-direction`。
+
+**推断过程**:
+
+**步骤1: 识别特殊伤害类型**
+- desc明确说明: "视为月结晶反应伤害"
+- 这是**直接**月结晶伤害，使用 `specialDamageType = "moon-hydro-crystallize-direction"`
+
+**步骤2: 提取参数**
+- 描述: "月转时隙第四段额外伤害|{param3:F1P}防御力"
+- `param3` → `indexes = [2]`
+- 基础属性: 防御力 → `base = "DEFENSE"`
+
+**步骤3: 判断其他字段**
+- 攻击类型: 普通攻击 → `attackBonusType = "DMG_BONUS_NORMAL"`
+- 元素: 岩 → `elementBonusType = "DMG_BONUS_GEO"`
+- 特殊伤害类型: 月结晶直接 → `specialDamageType = "moon-hydro-crystallize-direction"`
+
+**步骤4: 添加tag标识**
+- 为了区分不同来源的月结晶伤害，添加tag: `tag = "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"`
+
+**最终配置**:
+```javascript
+{
+  "damage": {
+    "indexes": [2],
+    "base": "DEFENSE",
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_GEO",
+    "attackBonusType": "DMG_BONUS_NORMAL",
+    "specialDamageType": "moon-hydro-crystallize-direction",
+    "tag": "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"
+  }
+}
+```
+
+---
+
+#### 示例1.8: 命座origin引用 - 兹白C4
+
+**角色**: 兹白 (10000126) - 命座4"魂魄往而身从之"
+
+**源数据**:
+```javascript
+// desc (简体中文): "...第四段额外攻击将造成相当于原本250%的月结晶反应伤害。"
+
+// paramMap (C4)
+{
+  "01": [2.5, 0, 0, 0, 0, 0, 0, 0]
+}
+// paramValidIndexes: [0]
+```
+
+**说明**: C4的效果是使技能中的第四段额外月结晶伤害造成250%的伤害。这需要使用`origin`引用技能中的damage配置，然后乘以C4的参数倍率。
+
+**推断过程**:
+
+**步骤1: 确定引用源**
+- 需要引用skill中的第四段额外月结晶伤害（index 2）
+- 使用`originSkills: ["skill"]`
+- 使用`originIndexes: [2]`
+
+**步骤2: 确定倍率来源**
+- C4的paramMap[0] = 2.5
+- 使用`indexes: [0]`从C4的paramMap读取倍率
+
+**步骤3: 确定运算关系**
+- 250%伤害 = 原伤害 × 2.5
+- 使用`originRelations: ["*"]`表示乘法关系
+
+**最终配置**:
+```javascript
+{
+  "damage": {
+    "originSkills": ["skill"],        // 引用skill中的damage
+    "originIndexes": [2],              // 引用skill的index 2（第四段额外月结晶伤害）
+    "originRelations": ["*"],          // 关系是乘法
+    "indexes": [0],                    // 从C4的paramMap读取index 0（值为2.5）
+    "canOverride": false,
+    "elementBonusType": "DMG_BONUS_GEO",
+    "attackBonusType": "DMG_BONUS_NORMAL",
+    "specialDamageType": "moon-hydro-crystallize-direction",
+    "tag": "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"
+  }
+}
+```
+
+**计算公式**:
+```
+C4伤害 = skill[2]（第四段额外月结晶伤害）× C4 paramMap[0]（2.5）
+       = 原伤害 × 250%
+```
+
+**origin引用说明**:
+- `originSkills`: 指定引用的技能类型（"normal"/"skill"/"elementalBurst"等）
+- `originIndexes`: 指定引用该技能中的哪个damage index
+- `originRelations`: 指定引用值与当前值的关系（["*"]为乘法，["+"]为加法）
+- 引用的damage会与当前damage的paramMap[indexes]值进行运算
 
 ---
 

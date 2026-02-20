@@ -22341,6 +22341,513 @@
         ]
       }
     },
+    "10000126": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5, 6],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [8, 9, 10],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [5, 6, 7, 8],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [9, 10],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_SKILL",
+              "specialDamageType": "moon-hydro-crystallize-direction"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_SKILL",
+              "specialDamageType": "moon-hydro-crystallize-direction",
+              "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_NORMAL",
+              "specialDamageType": "moon-hydro-crystallize-direction",
+              "tag": "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [1],
+              "base": "DEFENSE",
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST",
+              "specialDamageType": "moon-hydro-crystallize-direction"
+            }
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "DEFENSE",
+                  "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["DEFENSE_UP"],
+                  "settingType": "slider",
+                  "sliderMin": 0,
+                  "sliderMax": 3,
+                  "sliderInitialValue": 0
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 1,
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "settingType": "slider",
+                  "sliderMin": 0,
+                  "sliderMax": 3,
+                  "sliderInitialValue": 0
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "DEFENSE",
+                  "indexMultiValue": 0.01,
+                  "maxValConstIndex": 1,
+                  "target": ["DMG_RATE_MULTI_MOON_HYDROCRYSTALLIZE"],
+                  "settingType": "switch",
+                  "defaultEnable": true,
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 2,
+                  "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION"],
+                  "settingType": "switch",
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_1"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 0,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          []
+        ]
+      },
+      "constellation": {
+        "0": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"
+              }
+            ]
+          }
+        ],
+        "1": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 1,
+                "base": "DEFENSE",
+                "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "tag": "ZIBAI_SPIRIT_STEED_SECOND_HIT"
+              }
+            ]
+          }
+        ],
+        "3": [
+          {
+            "damage": {
+              "originSkills": ["skill"],
+              "originIndexes": [2],
+              "originRelations": ["*"],
+              "indexes": [0],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_NORMAL",
+              "specialDamageType": "moon-hydro-crystallize-direction",
+              "tag": "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA"
+            }
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_PROMOTION"],
+                "settingType": "slider",
+                "sliderMin": 0,
+                "sliderMax": 30,
+                "sliderInitialValue": 0,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "10000127": {
+      "skills": {
+        "normal": [
+          {
+            "damage": {
+              "indexes": [0, 1, 2, 3, 4],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_NORMAL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [5],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_CHARGED"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [7, 8, 9],
+              "base": "ATTACK",
+              "canOverride": true,
+              "elementBonusType": "DMG_BONUS_PHYSICAL",
+              "attackBonusType": "DMG_BONUS_PLUNGING"
+            }
+          }
+        ],
+        "skill": [
+          {
+            "damage": {
+              "indexes": [0],
+              "indexesAttach": [[1]],
+              "base": "ELEMENTAL_MASTERY",
+              "baseAttach": ["DEFENSE"],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          },
+          {
+            "damage": {
+              "indexes": [2],
+              "indexesAttach": [[3]],
+              "base": "ELEMENTAL_MASTERY",
+              "baseAttach": ["DEFENSE"],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_SKILL"
+            }
+          }
+        ],
+        "elementalBurst": [
+          {
+            "damage": {
+              "indexes": [0],
+              "indexesAttach": [[1]],
+              "base": "ELEMENTAL_MASTERY",
+              "baseAttach": ["DEFENSE"],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          },
+          {
+            "buffs": [
+              {
+                "index": 2,
+                "base": "ELEMENTAL_MASTERY",
+                "target": ["DMG_VAL_UP_GEO"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 3,
+                "base": "ELEMENTAL_MASTERY",
+                "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "proudSkills": [
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "target": ["CRIT_RATE"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                },
+                {
+                  "index": 1,
+                  "target": ["CRIT_DMG"],
+                  "isAllTeam": true
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "index": 4,
+                  "target": ["ELEMENTAL_MASTERY"],
+                  "settingType": "switch",
+                  "defaultEnable": false,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "index": 0,
+                  "base": "ELEMENTAL_MASTERY",
+                  "target": ["DMG_VAL_UP_GEO"],
+                  "settingType": "slider",
+                  "sliderMin": 0,
+                  "sliderMax": 3,
+                  "sliderInitialValue": 0,
+                  "isAllTeam": true
+                },
+                {
+                  "index": 3,
+                  "base": "ELEMENTAL_MASTERY",
+                  "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_EXTRA_VAL_UP"],
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "buffs": [
+                {
+                  "showIndex": 0,
+                  "setTos": ["VAR_CHARA_1"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 1,
+                  "sliderMin": 0,
+                  "sliderMax": 2,
+                  "sliderStep": 1,
+                  "title": "BUFF.MOON_LEVEL.TITLE"
+                }
+              ]
+            },
+            {
+              "buffs": [
+                {
+                  "customValue": 0.01,
+                  "target": ["DMG_ELEMENT_MOON_ALL_UP"],
+                  "settingType": "slider",
+                  "sliderInitialValue": 12,
+                  "sliderMin": 0,
+                  "sliderMax": 36,
+                  "sliderStep": 1,
+                  "isAllTeam": true
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constellation": {
+        "1": [
+          {
+            "damage": {
+              "indexes": [0],
+              "indexesAttach": [[1]],
+              "base": "ELEMENTAL_MASTERY",
+              "baseAttach": ["DEFENSE"],
+              "canOverride": false,
+              "elementBonusType": "DMG_BONUS_GEO",
+              "attackBonusType": "DMG_BONUS_ELEMENTAL_BURST"
+            }
+          }
+        ],
+        "3": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["DEFENSE_VAL_UP"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ],
+        "5": [
+          {
+            "buffs": [
+              {
+                "index": 0,
+                "target": ["CRIT_RATE"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              },
+              {
+                "index": 1,
+                "target": ["CRIT_DMG"],
+                "isAllTeam": true
+              }
+            ]
+          },
+          {
+            "buffs": [
+              {
+                "index": 4,
+                "target": ["ELEMENTAL_MASTERY"],
+                "settingType": "switch",
+                "defaultEnable": false,
+                "isAllTeam": true
+              }
+            ]
+          }
+        ]
+      }
+    },
     "1000011711702": {
       "skills": {
         "normal": [
@@ -25113,6 +25620,29 @@
                 }
               ],
               "isOnlyForOther": true
+            }
+          ]
+        }
+      ]
+    },
+    "11519": {
+      "effect": [
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DEFENSE_UP"],
+              "settingType": "resident"
+            }
+          ]
+        },
+        {
+          "buffs": [
+            {
+              "index": 0,
+              "target": ["DMG_ELEMENT_MOON_HYDROCRYSTALLIZE_UP"],
+              "settingType": "switch",
+              "defaultEnable": false
             }
           ]
         }

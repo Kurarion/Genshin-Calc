@@ -107,14 +107,27 @@ def main():
     print("加载预处理数据...")
     processed_data = load_processed_data()
 
-    # 设置输出目录
+    # 设置输出目录（确保在项目内部）
+    default_output_dir = script_dir.parent / "exports"
+
     if args.output:
         output_dir = Path(args.output)
+        # 确保输出路径在项目内部
+        if output_dir.is_absolute():
+            try:
+                output_dir.relative_to(project_root)
+                # 在项目内部，使用原路径
+                pass
+            except ValueError:
+                # 在项目外部，重定向到 exports 目录
+                print(f"警告: 输出路径在项目外部，已重定向到项目内部目录")
+                output_dir = default_output_dir
+        else:
+            # 相对路径，放到 exports 目录
+            output_dir = default_output_dir / output_dir
     else:
-        output_dir = (
-            project_root
-            / ".claude/skills/genshin-data-generator/output/exports"
-        )
+        output_dir = default_output_dir
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # 根据类型获取数据

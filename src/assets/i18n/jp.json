@@ -553,7 +553,9 @@
     "RAZOR_SOUL_COMPANION": "狼の魂",
     "VENTI_SKILL_PRESS": "高天の歌一回押し",
     "ALBEDO_TRANSIENT_BLOSSOM": "刹那の花",
-    "ALBEDO_FATAL_BLOSSOM": "生滅の花"
+    "ALBEDO_FATAL_BLOSSOM": "生滅の花",
+    "ZIBAI_SPIRIT_STEED_SECOND_HIT": "翔ける霊駒2段目",
+    "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA": "隙を過ぐる月・四段目の追加攻撃"
   },
   "AUTO": {
     "CALC": "計算",

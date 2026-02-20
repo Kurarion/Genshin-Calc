@@ -31,13 +31,15 @@ while not (PROJECT_ROOT / "src").exists() and PROJECT_ROOT.parent != PROJECT_ROO
     PROJECT_ROOT = PROJECT_ROOT.parent
 
 DATA_FILE = PROJECT_ROOT / "src" / "assets" / "init" / "data.json"
+# 默认输出目录：项目内部的 diffs 目录
+DEFAULT_OUTPUT_DIR = SCRIPT_DIR.parent / "diffs"
 
 
 def load_processed_data(version_spec: str) -> Optional[dict]:
     """加载指定版本的预处理数据
 
     Args:
-        version_spec: 版本标识符 (latest/短ID/完整commit ID)
+        version_spec: 版本标识符 (短ID/完整commit ID)
 
     Returns:
         预处理数据字典，失败返回 None
@@ -916,9 +918,22 @@ def main():
         else:
             content = format_diff_markdown(diff, include_unimplemented=False)
 
-    # 输出
+    # 输出（确保在项目内部）
     if args.output:
         output_path = Path(args.output)
+        # 确保输出路径在项目内部
+        if output_path.is_absolute():
+            try:
+                output_path.relative_to(PROJECT_ROOT)
+                # 在项目内部，使用原路径
+                pass
+            except ValueError:
+                # 在项目外部，重定向到 diffs 目录
+                print(f"警告: 输出路径在项目外部，已重定向到项目内部目录")
+                output_path = DEFAULT_OUTPUT_DIR / output_path.name
+        else:
+            # 相对路径，放到 diffs 目录
+            output_path = DEFAULT_OUTPUT_DIR / output_path
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)

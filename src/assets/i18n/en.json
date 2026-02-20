@@ -553,7 +553,9 @@
     "RAZOR_SOUL_COMPANION": "Soul Companion",
     "VENTI_SKILL_PRESS": "Skyward Sonnet Press",
     "ALBEDO_TRANSIENT_BLOSSOM": "Transient Blossom",
-    "ALBEDO_FATAL_BLOSSOM": "Fatal Blossom"
+    "ALBEDO_FATAL_BLOSSOM": "Fatal Blossom",
+    "ZIBAI_SPIRIT_STEED_SECOND_HIT": "Spirit Steed's Stride 2nd Hit",
+    "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA": "Lunar Phase Shift 4th Additional Attack"
   },
   "AUTO": {
     "CALC": "Calculate",

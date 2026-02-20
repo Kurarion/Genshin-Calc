@@ -553,7 +553,9 @@
     "RAZOR_SOUL_COMPANION": "狼魂",
     "VENTI_SKILL_PRESS": "高天之歌点按",
     "ALBEDO_TRANSIENT_BLOSSOM": "刹那之花",
-    "ALBEDO_FATAL_BLOSSOM": "生灭之花"
+    "ALBEDO_FATAL_BLOSSOM": "生灭之花",
+    "ZIBAI_SPIRIT_STEED_SECOND_HIT": "灵驹飞踏第二段",
+    "ZIBAI_LUNAR_PHASE_SHIFT_4TH_EXTRA": "月转时隙第四段额外攻击"
   },
   "AUTO": {
     "CALC": "计算",

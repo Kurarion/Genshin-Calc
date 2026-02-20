@@ -253,13 +253,22 @@ def run_preprocess(version_dir: Path) -> bool:
         shutil.move(str(GENSHIN_SRC_DIR), str(backup_dir))
 
     try:
-        # 创建符号链接
+        # 直接复制源数据（不使用符号链接）
         source_dir = version_dir / "source"
         GENSHIN_SRC_DIR.parent.mkdir(parents=True, exist_ok=True)
-        GENSHIN_SRC_DIR.symlink_to(source_dir.resolve())
+
+        # 清理并复制
+        if GENSHIN_SRC_DIR.exists():
+            if GENSHIN_SRC_DIR.is_dir():
+                shutil.rmtree(GENSHIN_SRC_DIR)
+            else:
+                GENSHIN_SRC_DIR.unlink()
+
+        shutil.copytree(source_dir, GENSHIN_SRC_DIR)
+        print(f"    已复制源数据到临时目录")
 
         cmd = [sys.executable, str(preprocess_script), "--output-dir", str(output_dir)]
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120, encoding='utf-8', errors='replace')
 
         if result.returncode != 0:
             print(f"    错误: 预处理失败 - {result.stderr[:200]}")
@@ -273,9 +282,12 @@ def run_preprocess(version_dir: Path) -> bool:
         return False
 
     finally:
-        # 恢复
-        if GENSHIN_SRC_DIR.is_symlink() or GENSHIN_SRC_DIR.exists():
-            GENSHIN_SRC_DIR.unlink()
+        # 恢复备份
+        if GENSHIN_SRC_DIR.exists():
+            if GENSHIN_SRC_DIR.is_dir():
+                shutil.rmtree(GENSHIN_SRC_DIR)
+            else:
+                GENSHIN_SRC_DIR.unlink()
         if backup_dir and backup_dir.exists():
             shutil.move(str(backup_dir), str(GENSHIN_SRC_DIR))
 
